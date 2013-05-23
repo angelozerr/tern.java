@@ -10,3 +10,5 @@ Tern Server with Eclipse :
 
  * contentassist which uses tern.java. If you start the SWT [TernEditor](https://github.com/angelozerr/tern.java/blob/master/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/TernEditor.java) demo, you will contentassist 
 available for Javascript : 
+
+![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
