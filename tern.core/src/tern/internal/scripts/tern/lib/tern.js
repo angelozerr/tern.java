@@ -6,11 +6,12 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    return mod(exports, require("./infer"), require("acorn/acorn"), require("acorn/util/walk"));
+    return mod(exports, require("./infer"), require("./signal"),
+               require("acorn/acorn"), require("acorn/util/walk"));
   if (typeof define == "function" && define.amd) // AMD
-    return define(["exports", "./infer", "acorn/acorn", "acorn/util/walk"], mod);
-  mod(self.tern || (self.tern = {}), tern, acorn, acorn.walk); // Plain browser env
-})(function(exports, infer, acorn, walk) {
+    return define(["exports", "./infer", "./signal", "acorn/acorn", "acorn/util/walk"], mod);
+  mod(self.tern || (self.tern = {}), tern, tern.signal, acorn, acorn.walk); // Plain browser env
+})(function(exports, infer, signal, acorn, walk) {
   "use strict";
 
   var plugins = Object.create(null);
@@ -95,7 +96,7 @@
 
     this.reset();
   };
-  Server.prototype = {
+  Server.prototype = signal.mixin({
     addFile: function(name, /*optional*/ text) {
       ensureFile(this, name, text);
     },
@@ -139,19 +140,6 @@
       });
     },
 
-    on: function(type, f) {
-      (this.handlers[type] || (this.handlers[type] = [])).push(f);
-    },
-    off: function(type, f) {
-      var arr = this.handlers[type];
-      if (arr) for (var i = 0; i < arr.length; ++i)
-        if (arr[i] == f) { arr.splice(i, 1); break; }
-    },
-    signal: function(type, v1, v2, v3, v4) {
-      var arr = this.handlers[type];
-      if (arr) for (var i = 0; i < arr.length; ++i) arr[i].call(this, v1, v2, v3, v4);
-    },
-
     startAsyncAction: function() {
       ++this.pending;
     },
@@ -159,7 +147,7 @@
       if (err) this.asyncError = err;
       if (--this.pending == 0) this.signal("everythingFetched");
     }
-  };
+  });
 
   function doRequest(srv, doc, c) {
     if (doc.query && !queryTypes.hasOwnProperty(doc.query.type))
@@ -501,13 +489,15 @@
     if (query.expandWordForward !== false)
       while (wordEnd < text.length && acorn.isIdentifierChar(text.charCodeAt(wordEnd))) ++wordEnd;
     var word = text.slice(wordStart, wordEnd), completions = [];
+    if (query.caseInsensitive) word = word.toLowerCase();
     var wrapAsObjs = query.types || query.depths || query.docs || query.urls || query.origins;
 
     function gather(prop, obj, depth) {
       // 'hasOwnProperty' and such are usually just noise, leave them
       // out when no prefix is provided.
       if (query.omitObjectPrototype !== false && obj == srv.cx.protos.Object && !word) return;
-      if (query.filter !== false && word && prop.indexOf(word) != 0) return;
+      if (query.filter !== false && word &&
+          (query.caseInsensitive ? prop.toLowerCase() : prop).indexOf(word) != 0) return;
       for (var i = 0; i < completions.length; ++i) {
         var c = completions[i];
         if ((wrapAsObjs ? c.name : c) == prop) return;
@@ -640,22 +630,19 @@
   function findDef(srv, query, file) {
     var expr = findExpr(file, query), fileName, guess = false;
     infer.resetGuessing();
-    var type = infer.expressionType(expr), node, fileName, result;
-    if (query.typeOnly && !(type instanceof infer.Type)) {
-      result = {};
-    } else {
-      node = type.originNode;
-      fileName = type.origin;
-      result = {url: type.url, doc: type.doc, origin: type.origin};
-    }
+    var type = infer.expressionType(expr);
+    if (infer.didGuess()) return {};
+
+    var node = type.originNode, fileName = type.origin;
+    var result = {url: type.url, doc: type.doc, origin: type.origin};
+
     if (type.types) for (var i = type.types.length - 1; i >= 0; --i) {
       var tp = type.types[i];
       storeTypeDocs(tp, result);
       if (!node && tp.originNode) { node = tp.originNode; fileName = tp.origin; break; }
     }
-    if (!query.typeOnly && node && /^Function/.test(node.type) && node.id) node = node.id;
+    if (node && /^Function/.test(node.type) && node.id) node = node.id;
 
-    result.guess = infer.didGuess();
     if (node) {
       var nodeFile = findFile(srv.files, fileName);
       if (file.type == "part" && file.name == fileName && isInAST(node, file.ast)) nodeFile = file;

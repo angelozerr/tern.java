@@ -15,15 +15,12 @@
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
     return mod(exports, require("acorn/acorn"), require("acorn/acorn_loose"), require("acorn/util/walk"),
-               require("./def"));
+               require("./def"), require("./signal"));
   if (typeof define == "function" && define.amd) // AMD
-    return define(["exports", "acorn/acorn", "acorn/acorn_loose", "acorn/util/walk", "./def"], mod);
-  mod(self.tern || (self.tern = {}), acorn, acorn, acorn.walk, tern.def); // Plain browser env
-})(function(exports, acorn, acorn_loose, walk, def) {
+    return define(["exports", "acorn/acorn", "acorn/acorn_loose", "acorn/util/walk", "./def", "./signal"], mod);
+  mod(self.tern || (self.tern = {}), acorn, acorn, acorn.walk, tern.def, tern.signal); // Plain browser env
+})(function(exports, acorn, acorn_loose, walk, def, signal) {
   "use strict";
-
-  // Delayed initialization because of cyclic dependencies.
-  def = exports.def = def.init({}, exports);
 
   var toString = exports.toString = function(type, maxDepth, parent) {
     return !type || type == parent ? "?": type.toString(maxDepth);
@@ -33,7 +30,7 @@
   // as prototype for AVals, Types, and Constraints because it
   // implements 'empty' versions of all the methods that the code
   // expects.
-  var ANull = exports.ANull = {
+  var ANull = exports.ANull = signal.mixin({
     addType: function() {},
     propagate: function() {},
     getProp: function() { return ANull; },
@@ -46,7 +43,7 @@
     propagatesTo: function() {},
     typeHint: function() {},
     propHint: function() {}
-  };
+  });
 
   function extend(proto, props) {
     var obj = Object.create(proto);
@@ -56,7 +53,8 @@
 
   // ABSTRACT VALUES
 
-  var WG_DEFAULT = 100, WG_MADEUP_PROTO = 10, WG_MULTI_MEMBER = 5, WG_GLOBAL_THIS = 2, WG_SPECULATIVE_THIS = 2;
+  var WG_DEFAULT = 100, WG_NEW_INSTANCE = 90, WG_MADEUP_PROTO = 10, WG_MULTI_MEMBER = 5,
+      WG_CATCH_ERROR = 5, WG_GLOBAL_THIS = 2, WG_SPECULATIVE_THIS = 2;
 
   var AVal = exports.AVal = function() {
     this.types = [];
@@ -73,6 +71,7 @@
         return;
       }
 
+      this.signal("addType", type);
       this.types.push(type);
       var forward = this.forward;
       if (forward) withWorklist(function(add) {
@@ -289,7 +288,7 @@
     propHint: function() { return this.propName; }
   });
 
-  var IsCtor = constraint("target, noReuse", {
+  var IsCtor = exports.IsCtor = constraint("target, noReuse", {
     addType: function(f, weight) {
       if (!(f instanceof Fn)) return;
       f.getProp("prototype").propagate(new IsProto(this.noReuse ? false : f, this.target), weight);
@@ -311,7 +310,7 @@
     return instance;
   };
 
-  var IsProto = constraint("ctor, target", {
+  var IsProto = exports.IsProto = constraint("ctor, target", {
     addType: function(o, weight) {
       if (!(o instanceof Obj)) return;
       if (o == cx.protos.Array)
@@ -446,8 +445,11 @@
       return this.maybeProps[prop] = new AVal;
     },
     broadcastProp: function(prop, val, local) {
-      // If this is a scope, it shouldn't be registered
-      if (local && !this.prev) registerProp(prop, this);
+      if (local) {
+        this.signal("addProp", prop, val);
+        // If this is a scope, it shouldn't be registered
+        if (!(this instanceof Scope)) registerProp(prop, this);
+      }
 
       if (this.onNewProp) for (var i = 0; i < this.onNewProp.length; ++i) {
         var h = this.onNewProp[i];
@@ -615,7 +617,7 @@
     if (cx.origins.indexOf(origin) < 0) cx.origins.push(origin);
   };
 
-  var baseMaxWorkDepth = 20, reduceMaxWorkDepth = .0005;
+  var baseMaxWorkDepth = 20, reduceMaxWorkDepth = .0001;
   function withWorklist(f) {
     if (cx.workList) return f(cx.workList);
 
@@ -767,8 +769,10 @@
       c(node.block, scope, "Statement");
       if (node.handler) {
         var name = node.handler.param.name;
-        addVar(scope, node.handler.param);
+        var v = addVar(scope, node.handler.param);
         c(node.handler.body, scope, "ScopeBody");
+        var e5 = cx.definitions.ecma5;
+        if (e5 && v.isEmpty()) getInstance(e5["Error.prototype"]).propagate(v, WG_CATCH_ERROR);
       }
       if (node.finalizer) c(node.finalizer, scope, "Statement");
     },
@@ -950,7 +954,7 @@
         }
         obj.propagate(new PropHasSubset(pName, rhs, node.left.property));
       } else { // Identifier
-        var v = scope.defVar(node.left.name, node);
+        var v = scope.defVar(node.left.name, node.left);
         if (v.maybePurge) v.maybePurge = false;
         rhs.propagate(v);
       }
@@ -973,8 +977,8 @@
         args.push(infer(node.arguments[i], scope, c));
       var callee = infer(node.callee, scope, c);
       var self = new AVal;
-      self.propagate(out);
       callee.propagate(new IsCtor(self, name && /\.prototype$/.test(name)));
+      self.propagate(out, WG_NEW_INSTANCE);
       callee.propagate(new IsCallee(self, args, node.arguments, new IfObj(out)));
     }),
     CallExpression: fill(function(node, scope, c, out) {
@@ -1396,4 +1400,9 @@
     var scope = scopeAt(ast, pos, defaultScope), locals = [];
     scope.gatherProperties(f, 0);
   };
+
+  // INIT DEF MODULE
+
+  // Delayed initialization because of cyclic dependencies.
+  def = exports.def = def.init({}, exports);
 });

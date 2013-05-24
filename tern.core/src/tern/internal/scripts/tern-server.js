@@ -35,6 +35,7 @@ function registerDoc(doc) {
 function ternHints(cm, handler, dataAsJson) {
   var req = buildRequest(cm, {
     type : "completions",
+    caseInsensitive: true,
     types : true,
     docs : true
   });

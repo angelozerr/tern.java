@@ -17,9 +17,9 @@ public class Server {
 	private final IScriptLoader loader;
 
 	private final String[] TERN_SCRIPTS = { "json/json.js", "acorn/acorn.js",
-			"acorn/acorn_loose.js", "acorn/util/walk.js", "tern/lib/tern.js",
-			"tern/lib/def.js", "tern/lib/comment.js", "tern/lib/infer.js",
-			"tern-server.js" };
+			"acorn/acorn_loose.js", "acorn/util/walk.js", "tern/lib/signal.js",
+			"tern/lib/tern.js", "tern/lib/def.js", "tern/lib/comment.js",
+			"tern/lib/infer.js", "tern-server.js" };
 
 	public Server() throws IOException {
 		this(ClassPathScriptLoader.getInstance());
