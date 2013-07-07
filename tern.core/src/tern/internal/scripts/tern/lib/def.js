@@ -45,7 +45,7 @@
     parseFnType: function(name, top) {
       var args = [], names = [];
       if (!this.eat(")")) for (var i = 0; ; ++i) {
-        var colon = this.spec.indexOf(": ", this.pos), argname, aval;
+        var colon = this.spec.indexOf(": ", this.pos), argname;
         if (colon != -1) {
           argname = this.spec.slice(this.pos, colon);
           if (/^[$\w?]+$/.test(argname))
@@ -115,7 +115,7 @@
         var arg = this.word(/\d/);
         if (arg) {
           arg = Number(arg);
-          return function(self, args) {return args[arg] || infer.ANull;};
+          return function(_self, args) {return args[arg] || infer.ANull;};
         } else if (this.eat("this")) {
           return function(self) {return self;};
         } else if (this.eat("custom:")) {
@@ -142,7 +142,7 @@
       while (this.eat(".")) tp = this.extendRetType(tp);
       return tp;
     }
-  }
+  };
 
   function parseType(spec, name, base, forceNew) {
     var type = new TypeParser(spec, null, base, forceNew).parseType(name, true);
@@ -228,7 +228,6 @@
       }
     }
 
-    var isdate = /^Date.prototype/.test(path);
     var parts = path.split(".");
     for (var i = 0; i < parts.length && base != infer.ANull; ++i) {
       var prop = parts[i];
@@ -293,6 +292,7 @@
     for (var name in spec) if (hop(spec, name) && name.charCodeAt(0) != 33) {
       var inner = spec[name];
       if (typeof inner == "string" || isSimpleAnnotation(inner)) continue;
+      if (!base.defProp) console.log("base=" + (window.badBase = base));
       var prop = base.defProp(name);
       passOne(prop.getType(), inner, path ? path + "." + name : name).propagate(prop);
     }
@@ -328,7 +328,7 @@
           parseType(inner["!type"], innerPath, null, true).propagate(known);
           type = known.getType();
         } else continue;
-        var doc = inner["!doc"], url = inner["!url"];
+        var doc = inner["!doc"], url = inner["!url"], span = inner["!span"];
         if (doc) {
           if (type && type instanceof infer.Obj) type.doc = doc;
           known.doc = doc;
@@ -336,6 +336,10 @@
         if (url) {
           if (type && type instanceof infer.Obj) type.url = url;
           known.url = url;
+        }
+        if (span) {
+          if (type && type instanceof infer.Obj) type.span = span;
+          known.span = span;
         }
       }
     }
@@ -396,13 +400,13 @@
             if (vtp) p.addType(vtp);
           }
         }
-        this.target.addType(derived)
+        this.target.addType(derived);
       }
     }
   });
 
-  infer.registerFunction("Object_create", function(self, args, argNodes) {
-    if (argNodes.length && argNodes[0].type == "Literal" && argNodes[0].value == null)
+  infer.registerFunction("Object_create", function(_self, args, argNodes) {
+    if (argNodes && argNodes.length && argNodes[0].type == "Literal" && argNodes[0].value == null)
       return new infer.Obj();
 
     var result = new infer.AVal;
@@ -425,7 +429,7 @@
     return result;
   });
 
-  infer.registerFunction("Array_ctor", function(self, args) {
+  infer.registerFunction("Array_ctor", function(_self, args) {
     var arr = new infer.Arr;
     if (args.length != 1 || !args[0].hasType(infer.cx().num)) {
       var content = arr.getProp("<i>");

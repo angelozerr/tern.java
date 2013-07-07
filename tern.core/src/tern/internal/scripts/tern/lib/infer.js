@@ -65,8 +65,9 @@
     addType: function(type, weight) {
       weight = weight || WG_DEFAULT;
       if (this.maxWeight < weight) {
-        this.types.length = 0;
         this.maxWeight = weight;
+        if (this.types.length == 1 && this.types[0] == type) return;
+        this.types.length = 0;
       } else if (this.maxWeight > weight || this.types.indexOf(type) > -1) {
         return;
       }
@@ -296,7 +297,7 @@
   });
 
   var getInstance = exports.getInstance = function(obj, ctor) {
-    if (ctor == false) return new Obj(obj);
+    if (ctor === false) return new Obj(obj);
 
     if (!ctor) ctor = obj.hasCtor;
     if (!obj.instances) obj.instances = [];
@@ -311,7 +312,7 @@
   };
 
   var IsProto = exports.IsProto = constraint("ctor, target", {
-    addType: function(o, weight) {
+    addType: function(o, _weight) {
       if (!(o instanceof Obj)) return;
       if (o == cx.protos.Array)
         this.target.addType(new Arr);
@@ -321,9 +322,15 @@
   });
 
   var FnPrototype = constraint("fn", {
-    addType: function(o, weight) {
-      if (o instanceof Obj && !o.hasCtor)
+    addType: function(o, _weight) {
+      if (o instanceof Obj && !o.hasCtor) {
         o.hasCtor = this.fn;
+        var adder = new SpeculativeThis(o, this.fn);
+        adder.addType(this.fn);
+        o.forAllProps(function(_prop, val, local) {
+          if (local) val.propagate(adder);
+        });
+      }
     }
   });
 
@@ -344,12 +351,11 @@
     propagatesTo: function() { return this.target; }
   });
 
-  var AutoInstance = constraint("target", {
-    addType: function(tp, weight) {
-      if (tp instanceof Obj && tp.name && /\.prototype$/.test(tp.name))
-        getInstance(tp).propagate(this.target, weight);
-    },
-    propagatesTo: function() { return this.target; }
+  var SpeculativeThis = constraint("obj, ctor", {
+    addType: function(tp) {
+      if (tp instanceof Fn && tp.self && tp.self.isEmpty())
+        tp.self.addType(getInstance(this.obj, this.ctor), WG_SPECULATIVE_THIS);
+    }
   });
 
   var Muffle = constraint("inner, weight", {
@@ -369,7 +375,7 @@
     hasType: function(other) { return other == this; },
     isEmpty: function() { return false; },
     typeHint: function() { return this; },
-    getType: function() { return this; },
+    getType: function() { return this; }
   });
 
   var Prim = exports.Prim = function(proto, name) { this.name = name; this.proto = proto; };
@@ -456,7 +462,7 @@
         h.onProtoProp ? h.onProtoProp(prop, val, local) : h(prop, val, local);
       }
     },
-    onProtoProp: function(prop, val, local) {
+    onProtoProp: function(prop, val, _local) {
       var maybe = this.maybeProps && this.maybeProps[prop];
       if (maybe) {
         delete this.maybeProps[prop];
@@ -571,7 +577,7 @@
 
   // INFERENCE CONTEXT
 
-  var Context = exports.Context = function(defs, parent) {
+  exports.Context = function(defs, parent) {
     this.parent = parent;
     this.props = Object.create(null);
     this.protos = Object.create(null);
@@ -661,12 +667,25 @@
       scope.fnType.instantiateScore = (scope.fnType.instantiateScore || 0) + score;
   }
 
+  var NotSmaller = {};
+  function nodeSmallerThan(node, n) {
+    try {
+      walk.simple(node, {Expression: function() { if (--n <= 0) throw NotSmaller; }});
+      return true;
+    } catch(e) {
+      if (e == NotSmaller) return false;
+      throw e;
+    }
+  }
+
   function maybeTagAsInstantiated(node, scope) {
     var score = scope.fnType.instantiateScore;
-    if (score && score / (node.end - node.start) > .01) {
+    if (!disabledComputing && score && scope.fnType.args.length && nodeSmallerThan(node, score * 5)) {
       maybeInstantiate(scope.prev, score / 2);
       setFunctionInstantiated(node, scope);
       return true;
+    } else {
+      scope.fnType.instantiateScore = null;
     }
   }
 
@@ -675,7 +694,7 @@
     // Disconnect the arg avals, so that we can add info to them without side effects
     for (var i = 0; i < fn.args.length; ++i) fn.args[i] = new AVal;
     fn.self = new AVal;
-    var computeRet = fn.computeRet = function(self, args) {
+    fn.computeRet = function(self, args) {
       // Prevent recursion
       return withDisabledComputing(fn, function() {
         var oldOrigin = cx.curOrigin;
@@ -686,7 +705,9 @@
           for (var i = 0; i < args.length; ++i) if (fn.argNames[i] == v && i < args.length)
             args[i].propagate(local);
         }
-        scopeCopy.fnType = new Fn(fn.name, self, args, fn.argNames, ANull);
+        var argNames = fn.argNames.length != args.length ? fn.argNames.slice(0, args.length) : fn.argNames;
+        while (argNames.length < args.length) argNames.push("?");
+        scopeCopy.fnType = new Fn(fn.name, self, args, argNames, ANull);
         if (fn.arguments) {
           var argset = scopeCopy.fnType.arguments = new AVal;
           scopeCopy.defProp("arguments").addType(new Arr(argset));
@@ -701,7 +722,7 @@
     };
   }
 
-  function maybeTagAsGeneric(node, scope) {
+  function maybeTagAsGeneric(scope) {
     var fn = scope.fnType, target = fn.retval;
     if (target == ANull) return;
     var targetInner, asArray;
@@ -768,7 +789,6 @@
     TryStatement: function(node, scope, c) {
       c(node.block, scope, "Statement");
       if (node.handler) {
-        var name = node.handler.param.name;
         var v = addVar(scope, node.handler.param);
         c(node.handler.body, scope, "ScopeBody");
         var e5 = cx.definitions.ecma5;
@@ -793,19 +813,6 @@
     if (prop.type == "Literal" && typeof prop.value == "string") return prop.value;
     if (c) infer(prop, scope, c, ANull);
     return "<i>";
-  }
-
-  function lvalName(node) {
-    if (node.type == "Identifier") return node.name;
-    if (node.type == "MemberExpression" && !node.computed) {
-      if (node.object.type != "Identifier") return node.property.name;
-      return node.object.name + "." + node.property.name;
-    }
-  }
-
-  function maybeMethod(node, obj) {
-    if (node.type != "FunctionExpression") return;
-    obj.propagate(new AutoInstance(node.body.scope.fnType.self), WG_SPECULATIVE_THIS);
   }
 
   function unopResultType(op) {
@@ -874,7 +881,6 @@
         var val = obj.defProp(name, key);
         val.initializer = true;
         infer(prop.value, scope, c, val, name);
-        maybeMethod(prop.value, obj);
       }
       return obj;
     }),
@@ -882,7 +888,7 @@
       var inner = node.body.scope, fn = inner.fnType;
       if (name && !fn.name) fn.name = name;
       c(node.body, scope, "ScopeBody");
-      maybeTagAsInstantiated(node, inner) || maybeTagAsGeneric(node, inner);
+      maybeTagAsInstantiated(node, inner) || maybeTagAsGeneric(inner);
       if (node.id) inner.getProp(node.id.name).addType(fn);
       return fn;
     }),
@@ -934,7 +940,6 @@
 
       if (node.left.type == "MemberExpression") {
         var obj = infer(node.left.object, scope, c);
-        if (!obj.hasType(cx.topScope)) maybeMethod(node.right, obj);
         if (pName == "prototype") maybeInstantiate(scope, 20);
         if (pName == "<i>") {
           // This is a hack to recognize for/in loops that copy
@@ -987,7 +992,7 @@
       if (node.callee.type == "MemberExpression") {
         var self = infer(node.callee.object, scope, c);
         var pName = propName(node.callee, scope, c);
-        if ((pName == "call" || pName == "apply") && 
+        if ((pName == "call" || pName == "apply") &&
             scope.fnType && scope.fnType.args.indexOf(self) > -1)
           maybeInstantiate(scope, 30);
         self.propagate(new HasMethodCall(pName, args, node.arguments, out));
@@ -1005,11 +1010,6 @@
       var name = propName(node, scope);
       var obj = infer(node.object, scope, c);
       var prop = obj.getProp(name);
-      if (name == "prototype") {
-        var ctor = obj.getType();
-        if (ctor instanceof Fn && ctor.self.isEmpty())
-          prop.propagate(new AutoInstance(ctor.self), WG_SPECULATIVE_THIS);
-      }
       if (name == "<i>") {
         var propType = infer(node.property, scope, c);
         if (!propType.hasType(cx.num)) {
@@ -1026,10 +1026,10 @@
           .addType(new Arr(scope.fnType.arguments = new AVal));
       return scope.getProp(node.name);
     }),
-    ThisExpression: ret(function(node, scope) {
+    ThisExpression: ret(function(_node, scope) {
       return scope.fnType ? scope.fnType.self : cx.topScope;
     }),
-    Literal: ret(function(node, scope) {
+    Literal: ret(function(node) {
       return literalType(node.value);
     })
   };
@@ -1046,7 +1046,7 @@
     FunctionDeclaration: function(node, scope, c) {
       var inner = node.body.scope, fn = inner.fnType;
       c(node.body, scope, "ScopeBody");
-      maybeTagAsInstantiated(node, inner) || maybeTagAsGeneric(node, inner);
+      maybeTagAsInstantiated(node, inner) || maybeTagAsGeneric(inner);
       var prop = scope.getProp(node.id.name);
       prop.addType(fn);
     },
@@ -1115,7 +1115,7 @@
     runPasses(passes, "preInfer", ast, scope);
     walk.recursive(ast, scope, null, inferWrapper);
     runPasses(passes, "postInfer", ast, scope);
-    
+
     cx.curOrigin = null;
   };
 
@@ -1139,7 +1139,7 @@
     if (arr && origins.length == 1) { origins = origins[0]; arr = false; }
     if (arr) {
       if (end == null) return function(n) { return origins.indexOf(n.origin) > -1; };
-      return function(n, pos) { return pos && pos.start >= start && pos.end <= end && origins.indexOf(n.origin) > -1; }
+      return function(n, pos) { return pos && pos.start >= start && pos.end <= end && origins.indexOf(n.origin) > -1; };
     } else {
       if (end == null) return function(n) { return n.origin == origins; };
       return function(n, pos) { return pos && pos.start >= start && pos.end <= end && n.origin == origins; };
@@ -1280,7 +1280,7 @@
     Identifier: function(node, scope) {
       return scope.hasProp(node.name) || ANull;
     },
-    ThisExpression: function(node, scope) {
+    ThisExpression: function(_node, scope) {
       return scope.fnType ? scope.fnType.self : cx.topScope;
     },
     Literal: function(node) {
@@ -1294,7 +1294,7 @@
   }
 
   var searchVisitor = exports.searchVisitor = walk.make({
-    Function: function(node, st, c) {
+    Function: function(node, _st, c) {
       var scope = node.body.scope;
       if (node.id) c(node.id, scope);
       for (var i = 0; i < node.params.length; ++i)
@@ -1314,7 +1314,7 @@
       }
     }
   });
-  var fullVisitor = exports.fullVisitor = walk.make({
+  exports.fullVisitor = walk.make({
     MemberExpression: function(node, st, c) {
       c(node.object, st, "Expression");
       c(node.property, st, node.computed ? "Expression" : null);
@@ -1369,7 +1369,7 @@
   };
 
   var simpleWalker = walk.make({
-    Function: function(node, st, c) { c(node.body, node.body.scope, "ScopeBody"); }
+    Function: function(node, _st, c) { c(node.body, node.body.scope, "ScopeBody"); }
   });
 
   exports.findPropRefs = function(ast, scope, objType, propName, f) {
@@ -1397,7 +1397,7 @@
   };
 
   exports.forAllLocalsAt = function(ast, pos, defaultScope, f) {
-    var scope = scopeAt(ast, pos, defaultScope), locals = [];
+    var scope = scopeAt(ast, pos, defaultScope);
     scope.gatherProperties(f, 0);
   };
 

@@ -67,6 +67,8 @@
     this.name = name;
     this.scope = this.text = this.ast = this.lineOffsets = null;
   }
+  File.prototype.asLineChar = function(pos) { return asLineChar(this, pos); };
+
   function updateText(file, text, srv) {
     file.text = text;
     file.ast = infer.parse(text, srv.passes);
@@ -161,7 +163,7 @@
     if (files.length) ++srv.uses;
     for (var i = 0; i < files.length; ++i) {
       var file = files[i];
-      ensureFile(srv, file.name, file.type == "full" ? file.text : null)
+      ensureFile(srv, file.name, file.type == "full" ? file.text : null);
     }
 
     if (!query) {
@@ -266,7 +268,7 @@
       srv.off("everythingFetched", done);
       clearTimeout(timeout);
       analyzeAll(srv, c);
-    }
+    };
     srv.on("everythingFetched", done);
     var timeout = setTimeout(done, srv.options.fetchTimeout);
   }
@@ -602,7 +604,7 @@
   }
 
   function findDocs(_srv, query, file) {
-    var expr = findExpr(file, query), prop;
+    var expr = findExpr(file, query);
     var type = infer.expressionType(expr);
     var result = {url: type.url, doc: type.doc};
     var inner = type.getType();
@@ -627,31 +629,56 @@
     }
   }
 
+  var getSpan = exports.getSpan = function(obj) {
+    if (!obj.origin) return;
+    if (obj.originNode) {
+      var node = obj.originNode;
+      if (/^Function/.test(node.type) && node.id) node = node.id;
+      return {origin: obj.origin, node: node};
+    }
+    if (obj.span) return {origin: obj.origin, span: obj.span};
+  };
+
+  var storeSpan = exports.storeSpan = function(srv, query, span, target) {
+    target.origin = span.origin;
+    if (span.span) {
+      var m = /^(\d+)\[(\d+):(\d+)\]-(\d+)\[(\d+):(\d+)\]$/.exec(span.span);
+      target.start = query.lineCharPositions ? {line: Number(m[2]), ch: Number(m[3])} : Number(m[1]);
+      target.end = query.lineCharPositions ? {line: Number(m[5]), ch: Number(m[6])} : Number(m[4]);
+    } else {
+      var file = findFile(srv.files, span.origin);
+      target.start = outputPos(query, file, span.node.start);
+      target.end = outputPos(query, file, span.node.end);
+    }
+  };
+
   function findDef(srv, query, file) {
-    var expr = findExpr(file, query), fileName, guess = false;
+    var expr = findExpr(file, query);
     infer.resetGuessing();
     var type = infer.expressionType(expr);
     if (infer.didGuess()) return {};
 
-    var node = type.originNode, fileName = type.origin;
+    var span = getSpan(type);
     var result = {url: type.url, doc: type.doc, origin: type.origin};
 
     if (type.types) for (var i = type.types.length - 1; i >= 0; --i) {
       var tp = type.types[i];
       storeTypeDocs(tp, result);
-      if (!node && tp.originNode) { node = tp.originNode; fileName = tp.origin; break; }
+      if (!span) span = getSpan(tp);
     }
-    if (node && /^Function/.test(node.type) && node.id) node = node.id;
 
-    if (node) {
-      var nodeFile = findFile(srv.files, fileName);
-      if (file.type == "part" && file.name == fileName && isInAST(node, file.ast)) nodeFile = file;
-      var start = outputPos(query, nodeFile, node.start), end = outputPos(query, nodeFile, node.end);
+    if (span && span.node) { // refers to a loaded file
+      var spanFile = findFile(srv.files, span.origin);
+      if (file.type == "part" && file.name == span.origin && span.node && isInAST(span.node, file.ast)) spanFile = file;
+      var start = outputPos(query, spanFile, span.node.start), end = outputPos(query, spanFile, span.node.end);
       result.start = start; result.end = end;
-      result.file = fileName;
-      var cxStart = Math.max(0, node.start - 50);
-      result.contextOffset = node.start - cxStart;
-      result.context = nodeFile.text.slice(cxStart, cxStart + 50);
+      result.file = span.origin;
+      var cxStart = Math.max(0, span.node.start - 50);
+      result.contextOffset = span.node.start - cxStart;
+      result.context = spanFile.text.slice(cxStart, cxStart + 50);
+    } else if (span) { // external
+      result.file = span.origin;
+      storeSpan(srv, query, span, result);
     }
     return clean(result);
   }
@@ -758,9 +785,9 @@
     return data;
   }
 
-  function listFiles(srv, query) {
+  function listFiles(srv) {
     return {files: srv.files.map(function(f){return f.name;})};
   }
 
-  exports.version = "0.1.1";
+  exports.version = "0.2.1";
 });
