@@ -147,14 +147,14 @@
     getToken.jumpTo = function(pos, reAllowed) {
       tokPos = pos;
       if (options.locations) {
-        tokCurLine = tokLineStart = lineBreak.lastIndex = 0;
+        tokCurLine = 1;
+        tokLineStart = lineBreak.lastIndex = 0;
         var match;
         while ((match = lineBreak.exec(input)) && match.index < pos) {
           ++tokCurLine;
           tokLineStart = match.index + match[0].length;
         }
       }
-      var ch = input.charAt(pos - 1);
       tokRegexpAllowed = reAllowed;
       skipSpace();
     };
@@ -227,6 +227,10 @@
     err.pos = pos; err.loc = loc; err.raisedAt = tokPos;
     throw err;
   }
+
+  // Reused empty array added for node fields that are always empty.
+
+  var empty = [];
 
   // ## Token types
 
@@ -536,7 +540,7 @@
         } else if (next === 47) { // '/'
           skipLineComment();
         } else break;
-      } else if ((ch < 14 && ch > 8) || ch === 32 || ch === 160) { // ' ', '\xa0'
+      } else if (ch === 160) { // '\xa0'
         ++tokPos;
       } else if (ch >= 5760 && nonASCIIwhitespace.test(String.fromCharCode(ch))) {
         ++tokPos;
@@ -1248,6 +1252,7 @@
         clause.body = parseBlock();
         node.handler = finishNode(clause, "CatchClause");
       }
+      node.guardedHandlers = empty;
       node.finalizer = eat(_finally) ? parseBlock() : null;
       if (!node.handler && !node.finalizer)
         raise(node.start, "Missing catch or finally clause");
@@ -1327,11 +1332,11 @@
     while (!eat(_braceR)) {
       var stmt = parseStatement();
       node.body.push(stmt);
-      if (first && isUseStrict(stmt)) {
+      if (first && allowStrict && isUseStrict(stmt)) {
         oldStrict = strict;
         setStrict(strict = true);
       }
-      first = false
+      first = false;
     }
     if (strict && !oldStrict) setStrict(false);
     return finishNode(node, "BlockStatement");
@@ -1439,7 +1444,7 @@
   // Start the precedence parser.
 
   function parseExprOps(noIn) {
-    return parseExprOp(parseMaybeUnary(noIn), -1, noIn);
+    return parseExprOp(parseMaybeUnary(), -1, noIn);
   }
 
   // Parse binary operators with the operator precedence parsing
@@ -1456,7 +1461,7 @@
         node.left = left;
         node.operator = tokVal;
         next();
-        node.right = parseExprOp(parseMaybeUnary(noIn), prec, noIn);
+        node.right = parseExprOp(parseMaybeUnary(), prec, noIn);
         var node = finishNode(node, /&&|\|\|/.test(node.operator) ? "LogicalExpression" : "BinaryExpression");
         return parseExprOp(node, minPrec, noIn);
       }
@@ -1466,13 +1471,13 @@
 
   // Parse unary operators, both prefix and postfix.
 
-  function parseMaybeUnary(noIn) {
+  function parseMaybeUnary() {
     if (tokType.prefix) {
       var node = startNode(), update = tokType.isUpdate;
       node.operator = tokVal;
       node.prefix = true;
       next();
-      node.argument = parseMaybeUnary(noIn);
+      node.argument = parseMaybeUnary();
       if (update) checkLVal(node.argument);
       else if (strict && node.operator === "delete" &&
                node.argument.type === "Identifier")
@@ -1543,7 +1548,7 @@
     case _null: case _true: case _false:
       var node = startNode();
       node.value = tokType.atomValue;
-      node.raw = tokType.keyword
+      node.raw = tokType.keyword;
       next();
       return finishNode(node, "Literal");
 
@@ -1593,7 +1598,7 @@
     next();
     node.callee = parseSubscripts(parseExprAtom(), true);
     if (eat(_parenL)) node.arguments = parseExprList(_parenR, false);
-    else node.arguments = [];
+    else node.arguments = empty;
     return finishNode(node, "NewExpression");
   }
 

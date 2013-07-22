@@ -230,12 +230,12 @@
     }
   });
 
-  var PropHasSubset = exports.PropHasSubset = constraint("prop, target, originNode", {
+  var PropHasSubset = exports.PropHasSubset = constraint("prop, type, originNode", {
     addType: function(type, weight) {
       if (!(type instanceof Obj)) return;
       var prop = type.defProp(this.prop, this.originNode);
       prop.origin = this.origin;
-      this.target.propagate(prop, weight);
+      this.type.propagate(prop, weight);
     },
     propHint: function() { return this.prop; }
   });
@@ -247,16 +247,18 @@
     }
   });
 
-  var disabledComputing = null;
   function withDisabledComputing(fn, body) {
-    disabledComputing = {fn: fn, prev: disabledComputing};
-    try { return body(); } finally { disabledComputing = disabledComputing.prev; }
+    cx.disabledComputing = {fn: fn, prev: cx.disabledComputing};
+    try {
+      return body();
+    } finally {
+      cx.disabledComputing = cx.disabledComputing.prev;
+    }
   }
-
   var IsCallee = exports.IsCallee = constraint("self, args, argNodes, retval", {
     init: function() {
       Constraint.prototype.init();
-      this.disabled = disabledComputing;
+      this.disabled = cx.disabledComputing;
     },
     addType: function(fn, weight) {
       if (!(fn instanceof Fn)) return;
@@ -266,7 +268,8 @@
       }
       this.self.propagate(fn.self, this.self == cx.topScope ? WG_GLOBAL_THIS : weight);
       var compute = fn.computeRet;
-      if (compute) for (var d = this.disabled; d; d = d.prev) if (d.fn == fn) compute = null;
+      if (compute) for (var d = this.disabled; d; d = d.prev)
+        if (d.fn == fn || fn.name && d.fn.name == fn.name) compute = null;
       if (compute)
         compute(this.self, this.args, this.argNodes).propagate(this.retval, weight);
       else
@@ -283,8 +286,14 @@
   });
 
   var HasMethodCall = constraint("propName, args, argNodes, retval", {
+    init: function() {
+      Constraint.prototype.init();
+      this.disabled = cx.disabledComputing;
+    },
     addType: function(obj, weight) {
-      obj.getProp(this.propName).propagate(new IsCallee(obj, this.args, this.argNodes, this.retval), weight);
+      var callee = new IsCallee(obj, this.args, this.argNodes, this.retval);
+      callee.disabled = this.disabled;
+      obj.getProp(this.propName).propagate(callee, weight);
     },
     propHint: function() { return this.propName; }
   });
@@ -314,6 +323,7 @@
   var IsProto = exports.IsProto = constraint("ctor, target", {
     addType: function(o, _weight) {
       if (!(o instanceof Obj)) return;
+      if ((this.count = (this.count || 0) + 1) > 8) return;
       if (o == cx.protos.Array)
         this.target.addType(new Arr);
       else
@@ -588,6 +598,7 @@
     this.definitions = Object.create(null);
     this.purgeGen = 0;
     this.workList = null;
+    this.disabledComputing = null;
 
     exports.withContext(this, function() {
       cx.protos.Object = new Obj(null, "Object.prototype");
@@ -680,7 +691,7 @@
 
   function maybeTagAsInstantiated(node, scope) {
     var score = scope.fnType.instantiateScore;
-    if (!disabledComputing && score && scope.fnType.args.length && nodeSmallerThan(node, score * 5)) {
+    if (!cx.disabledComputing && score && scope.fnType.args.length && nodeSmallerThan(node, score * 5)) {
       maybeInstantiate(scope.prev, score / 2);
       setFunctionInstantiated(node, scope);
       return true;

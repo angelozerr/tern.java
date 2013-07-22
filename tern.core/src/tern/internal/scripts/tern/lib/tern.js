@@ -188,7 +188,7 @@
         try {
           result = queryType.run(srv, query, file);
         } catch (e) {
-          if (srv.options.debug) console.log(e.stack);
+          if (srv.options.debug && e.name != "TernError") console.log(e.stack);
           return c(e);
         }
         c(null, result);
@@ -319,12 +319,18 @@
     return i;
   }
 
+  function ternError(msg) {
+    var err = new Error(msg);
+    err.name = "TernError";
+    return err;
+  }
+
   function resolveFile(srv, localFiles, name) {
     var isRef = name.match(/^#(\d+)$/);
     if (!isRef) return findFile(srv.files, name);
 
     var file = localFiles[isRef[1]];
-    if (!file) throw new Error("Reference to unknown file " + name);
+    if (!file) throw ternError("Reference to unknown file " + name);
     if (file.type == "full") return findFile(srv.files, file.name);
 
     // This is a partial file
@@ -341,11 +347,18 @@
       infer.purgeTypes(file.name, pos, pos + file.text.length);
 
       var text = file.text, m;
+      if (m = text.match(/(?:"([^"]*)"|([\w$]+))\s*:\s*function\b/)) {
+        var objNode = walk.findNodeAround(file.backing.ast, pos, "ObjectExpression");
+        if (objNode && objNode.node.objType)
+          var inObject = {type: objNode.node.objType, prop: m[2] || m[1]};
+      }
       if (foundPos && (m = line.match(/^(.*?)\bfunction\b/))) {
         var cut = m[1].length, white = "";
         for (var i = 0; i < cut; ++i) white += " ";
         text = white + text.slice(cut);
+        var atFunction = true;
       }
+
       var scopeStart = infer.scopeAt(realFile.ast, pos, realFile.scope);
       var scopeEnd = infer.scopeAt(realFile.ast, pos + text.length, realFile.scope);
       var scope = file.scope = scopeDepth(scopeStart) < scopeDepth(scopeEnd) ? scopeEnd : scopeStart;
@@ -357,11 +370,17 @@
       // This is a kludge to tie together the function types (if any)
       // outside and inside of the fragment, so that arguments and
       // return values have some information known about them.
-      var inner = infer.scopeAt(realFile.ast, pos + line.length, realFile.scope);
-      if (m && inner != scope && inner.fnType) {
-        var newInner = infer.scopeAt(file.ast, line.length, scope);
-        var fOld = inner.fnType, fNew = newInner.fnType;
-        if (fNew && (fNew.name == fOld.name || !fOld.name)) {
+      tieTogether: if (inObject || atFunction) {
+        var newInner = infer.scopeAt(file.ast, line.length, scopeStart);
+        if (!newInner.fnType) break tieTogether;
+        if (inObject) {
+          var prop = inObject.type.getProp(inObject.prop);
+          prop.addType(newInner.fnType);
+        } else if (atFunction) {
+          var inner = infer.scopeAt(realFile.ast, pos + line.length, realFile.scope);
+          if (inner == scopeStart || !inner.fnType) break tieTogether;
+          var fOld = inner.fnType, fNew = newInner.fnType;
+          if (!fNew || (fNew.name != fOld.name && fOld.name)) break tieTogether;
           for (var i = 0, e = Math.min(fOld.args.length, fNew.args.length); i < e; ++i)
             fOld.args[i].propagate(fNew.args[i]);
           fOld.self.propagate(fNew.self);
@@ -421,14 +440,14 @@
       var lineStart = findLineStart(file, pos.line);
       if (lineStart == null) {
         if (tolerant) pos = file.text.length;
-        else throw new Error("File doesn't contain a line " + pos.line);
+        else throw ternError("File doesn't contain a line " + pos.line);
       } else {
         pos = lineStart + pos.ch;
       }
     }
     if (pos > file.text.length) {
       if (tolerant) pos = file.text.length;
-      else throw new Error("Position " + pos + " is outside of file.");
+      else throw ternError("Position " + pos + " is outside of file.");
     }
     return pos;
   }
@@ -485,7 +504,7 @@
   }
 
   function findCompletions(srv, query, file) {
-    if (query.end == null) throw new Error("missing .query.end field");
+    if (query.end == null) throw ternError("missing .query.end field");
     var wordStart = resolvePos(file, query.end), wordEnd = wordStart, text = file.text;
     while (wordStart && acorn.isIdentifierChar(text.charCodeAt(wordStart - 1))) --wordStart;
     if (query.expandWordForward !== false)
@@ -560,7 +579,7 @@
   }
 
   var findExpr = exports.findQueryExpr = function(file, query, wide) {
-    if (query.end == null) throw new Error("missing .query.end field");
+    if (query.end == null) throw ternError("missing .query.end field");
 
     if (query.variable) {
       var scope = infer.scopeAt(file.ast, resolvePos(file, query.end), file.scope);
@@ -573,7 +592,7 @@
       expr = infer.findExpressionAround(file.ast, start, end, file.scope);
       if (expr && (wide || (start == null ? end : start) - expr.node.start < 20 || expr.node.end - end < 20))
         return expr;
-      throw new Error("No expression at the given position.");
+      throw ternError("No expression at the given position.");
     }
   };
 
@@ -592,7 +611,7 @@
       var exprName = expr.node.property.name;
 
     if (query.depth != null && typeof query.depth != "number")
-      throw new Error(".query.depth must be a number");
+      throw ternError(".query.depth must be a number");
 
     var result = {guess: infer.didGuess(),
                   type: infer.toString(type, query.depth),
@@ -687,7 +706,7 @@
     var name = expr.node.name;
 
     for (var scope = expr.state; scope && !(name in scope.props); scope = scope.prev) {}
-    if (!scope) throw new Error("Could not find a definition for " + name + " " + !!srv.cx.topScope.props.x);
+    if (!scope) throw ternError("Could not find a definition for " + name + " " + !!srv.cx.topScope.props.x);
 
     var type, refs = [];
     function storeRef(file) {
@@ -695,7 +714,7 @@
         if (checkShadowing) for (var s = scopeHere; s != scope; s = s.prev) {
           var exists = s.hasProp(checkShadowing);
           if (exists)
-            throw new Error("Renaming `" + name + "` to `" + checkShadowing + "` would make a variable at line " +
+            throw ternError("Renaming `" + name + "` to `" + checkShadowing + "` would make a variable at line " +
                             (asLineChar(file, node.start).line + 1) + " point to the definition at line " +
                             (asLineChar(file, exists.name.start).line + 1));
         }
@@ -711,7 +730,7 @@
         for (var prev = scope.prev; prev; prev = prev.prev)
           if (checkShadowing in prev.props) break;
         if (prev) infer.findRefs(scope.node, scope, checkShadowing, prev, function(node) {
-          throw new Error("Renaming `" + name + "` to `" + checkShadowing + "` would shadow the definition used at line " +
+          throw ternError("Renaming `" + name + "` to `" + checkShadowing + "` would shadow the definition used at line " +
                           (asLineChar(file, node.start).line + 1));
         });
       }
@@ -729,7 +748,7 @@
 
   function findRefsToProperty(srv, query, expr, prop) {
     var objType = infer.expressionType(expr).getType();
-    if (!objType) throw new Error("Couldn't determine type of base object.");
+    if (!objType) throw ternError("Couldn't determine type of base object.");
 
     var refs = [];
     function storeRef(file) {
@@ -763,13 +782,13 @@
           return findRefsToProperty(srv, query, expr, k);
       }
     }
-    throw new Error("Not at a variable or property name.");
+    throw ternError("Not at a variable or property name.");
   }
 
   function buildRename(srv, query, file) {
-    if (typeof query.newName != "string") throw new Error(".query.newName should be a string");
+    if (typeof query.newName != "string") throw ternError(".query.newName should be a string");
     var expr = findExpr(file, query);
-    if (!expr || expr.node.type != "Identifier") throw new Error("Not at a variable.");
+    if (!expr || expr.node.type != "Identifier") throw ternError("Not at a variable.");
 
     var data = findRefsToVariable(srv, query, file, expr, query.newName), refs = data.refs;
     delete data.refs;
@@ -789,5 +808,5 @@
     return {files: srv.files.map(function(f){return f.name;})};
   }
 
-  exports.version = "0.2.1";
+  exports.version = "0.3.1";
 });
