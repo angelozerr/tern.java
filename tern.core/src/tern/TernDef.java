@@ -2,7 +2,7 @@ package tern;
 
 public enum TernDef {
 
-	browser("tern/defs/browser.json"), ecma5("tern/defs/ecma5.json"), jquery("tern:defs/jquery.json");
+	browser("tern/defs/browser.json"), ecma5("tern/defs/ecma5.json"), jquery("tern/defs/jquery.json");
 
 	private final String path;
 

@@ -1,114 +1,153 @@
-var defs = [];
-var docs = [];
 
-function setTimeout() {
-}
+
+(function() {
+  "use strict";
+  
+  TernServer = function() {
+    var self = this;
+    //this.options = options || {};
+    
+    this.docs = Object.create(null);
+    this.trackChange = function(doc, change) { trackChange(self, doc, change); };
+
+    this.cachedArgHints = null;
+    this.activeArgHints = null;
+    this.jumpStack = [];
+    
+    this.defs = [];
+    this.plugins = [];
+    this.server = null;
+    this.getServer = function() {
+      if (self.server == null) {
+        self.server = new tern.Server({
+          getFile: function(name, c) { return getFile(self, name, c); },
+          async: true,
+          defs: self.defs || [],
+          plugins: self.plugins || []
+        });
+      }
+      return self.server;
+    }
+  };
+
+  TernServer.prototype = {
+    addDoc: function(name, doc) {
+      //var data = {doc: doc, name: name, changed: null};
+      this.getServer().addFile(name, doc.getValue());
+      //CodeMirror.on(doc, "change", this.trackChange);
+      return this.docs[name] = doc;
+    },
+
+    delDoc: function(name) {
+      var found = this.docs[name];
+      if (!found) return;
+      //CodeMirror.off(found.doc, "change", this.trackChange);
+      delete this.docs[name];
+      this.getServer().delFile(name);
+    },
+
+    hideDoc: function(name) {
+      closeArgHints(this);
+      var found = this.docs[name];
+      if (found && found.changed) sendDoc(this, found);
+    },
+
+    complete: function(cm, handler, dataAsJson) {
+      this.request(cm, {type: "completions", types: true, docs: true, urls: true}, handler, dataAsJson);
+    },
+
+    getHint: function(cm, c) { return hint(this, cm, c); },
+
+    showType: function(cm) { showType(this, cm); },
+
+    updateArgHints: function(cm) { updateArgHints(this, cm); },
+
+    jumpToDef: function(cm) { jumpToDef(this, cm); },
+
+    jumpBack: function(cm) { jumpBack(this, cm); },
+
+    rename: function(cm) { rename(this, cm); },
+
+    request: function (cm, query, handler, dataAsJson) {
+      var self = this;
+   
+      var request = buildRequest(this, cm, query);
+      var server = this.getServer();
+      this.server.request(request, function (error, data) {
+        if (error)
+          return handler.onError(error.message || String(error));
+        var json = null;
+        if (dataAsJson)
+          json = JSON.stringify(data);
+        handler.onSuccess(data, json);
+      });
+    
+    }
+  };
+
+  function buildRequest(ts, cm, query, allowFragments) {
+    var files = [], offsetLines = 0;
+    if (typeof query == "string")
+      query = {
+        type : query
+      };
+    query.lineCharPositions = true;
+    if (query.end == null) {
+      query.end = cm.getCursor("end");
+      if (cm.somethingSelected())
+        query.start = cm.getCursor("start");
+    }
+    var startPos = query.start || query.end;
+    /*
+     * if (curDoc.changed) { if (cm.lineCount() > bigDoc && allowFragments !==
+     * false && curDoc.changed.to - curDoc.changed.from < 100 &&
+     * curDoc.changed.from <= startPos.line && curDoc.changed.to > query.end.line) {
+     * files.push(getFragmentAround(cm, startPos, query.end)); query.file = "#0";
+     * var offsetLines = files[0].offsetLines; if (query.start != null)
+     * query.start = incLine(-offsetLines, query.start); query.end =
+     * incLine(-offsetLines, query.end); } else { files.push({type: "full", name:
+     * curDoc.name, text: cm.getValue()}); query.file = curDoc.name;
+     * curDoc.changed = null; } } else { query.file = curDoc.name; }
+     */
+
+    query.file = cm.name;
+
+    for ( var i = 0; i < ts.docs.length; ++i) {
+      var doc = ts.docs[i];
+      if (doc.changed) {// && doc != curDoc) {
+        files.push({
+          type : "full",
+          name : doc.name,
+          text : doc.getValue()
+        });
+        // java.lang.System.out.println(files[0].text)
+        // doc.changed = false;
+      }
+    }
+
+    return {
+      query : query,
+      files : files
+    };
+  }
+
+})();
+
+var server = new TernServer();
 
 function addDef(def) {
-  defs.push(def);
+  server.defs.push(def);
 }
 
-function getFile() {
-
-}
-
-var server = null;
-function getServer() {
-  if (server == null) {
-    server = new tern.Server({
-      getFile : getFile,
-      async : true,
-      defs : defs,
-      debug : true
-    });
-  }
-  return server;
+function addPlugin(plugin) {
+  server.plugins.push(plugin);
 }
 
 function registerDoc(doc) {
-  docs.push(doc);
   var name = doc.name;
-  var server = getServer();
-  server.addFile(name, doc.getValue());
+  server.addDoc(name, doc);
 }
 
 function ternHints(cm, handler, dataAsJson) {
-  var req = buildRequest(cm, {
-    type : "completions",
-    caseInsensitive: true,
-    types : true,
-    docs : true
-  });
-  var server = getServer();
-  server.request(req, function(error, data) {
-    if (error)
-      return handler.onError(error.message || String(error));
-    /*
-     * var completions = [], after = ""; var from = data.start, to = data.end;
-     * /*if (cm.getRange(Pos(from.line, from.ch - 2), from) == "[\"" &&
-     * cm.getRange(to, Pos(to.line, to.ch + 2)) != "\"]") after = "\"]";
-     */
-    /*
-     * for (var i = 0; i < data.completions.length; ++i) { var completion =
-     * data.completions[i], className = typeToIcon(completion.type); if
-     * (data.guess) className += " Tern-completion-guess";
-     * completions.push({text: completion.name + after, displayText:
-     * completion.name, className: className, doc: completion.doc}); }
-     * 
-     * var obj = {from: from, to: to, list: completions};
-     */
-    var json = null;
-    if (dataAsJson)
-      json = JSON.stringify(data);
-    handler.onSuccess(data, json);
-  });
-}
-
-function typeToIcon() {
-
-}
-function buildRequest(cm, query, allowFragments) {
-  var files = [], offsetLines = 0;
-  if (typeof query == "string")
-    query = {
-      type : query
-    };
-  query.lineCharPositions = true;
-  if (query.end == null) {
-    query.end = cm.getCursor("end");
-    if (cm.somethingSelected())
-      query.start = cm.getCursor("start");
-  }
-  var startPos = query.start || query.end;
-  /*
-   * if (curDoc.changed) { if (cm.lineCount() > bigDoc && allowFragments !==
-   * false && curDoc.changed.to - curDoc.changed.from < 100 &&
-   * curDoc.changed.from <= startPos.line && curDoc.changed.to > query.end.line) {
-   * files.push(getFragmentAround(cm, startPos, query.end)); query.file = "#0";
-   * var offsetLines = files[0].offsetLines; if (query.start != null)
-   * query.start = incLine(-offsetLines, query.start); query.end =
-   * incLine(-offsetLines, query.end); } else { files.push({type: "full", name:
-   * curDoc.name, text: cm.getValue()}); query.file = curDoc.name;
-   * curDoc.changed = null; } } else { query.file = curDoc.name; }
-   */
-
-  query.file = cm.name;
-
-  for ( var i = 0; i < docs.length; ++i) {
-    var doc = docs[i];
-    if (doc.changed) {// && doc != curDoc) {
-      files.push({
-        type : "full",
-        name : doc.name,
-        text : doc.getValue()
-      });
-      // java.lang.System.out.println(files[0].text)
-      // doc.changed = false;
-    }
-  }
-
-  return {
-    query : query,
-    files : files
-  };
+  server.complete(cm, handler, dataAsJson);
 }
