@@ -158,6 +158,8 @@ public class TernEditorWithFiles {
 						document), keyStroke, autoActivationCharacters);
 		// adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
+		tabFolder.setSelection(tab);
 	}
 
 	private String readFile(File file) throws IOException {

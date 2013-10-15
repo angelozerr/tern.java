@@ -1,8 +1,10 @@
 package tern.eclipse.swt;
+
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Text;
 
+import tern.DefaultResponseHandler;
 import tern.Server;
 import tern.doc.AbstractJSDocument;
 
@@ -17,6 +19,13 @@ public class JSDocumentText extends AbstractJSDocument {
 
 			@Override
 			public void modifyText(ModifyEvent e) {
+				getServer().sendDoc(JSDocumentText.this,
+						new DefaultResponseHandler() {
+					@Override
+					public void onError(String error) {
+					System.err.println(error);
+					}
+				});
 				JSDocumentText.this.setChanged(true);
 			}
 		});

@@ -99,6 +99,20 @@ public class Server {
 		}
 	}
 
+	public void sendDoc(IJSDocument doc, IResponseHandler handler) {
+		Context cx = Context.enter();
+		try {
+			Object jsObject = Context.javaToJS(doc, ternScope);
+			Object functionArgs[] = { jsObject, handler };
+			Object fObj = ternScope.get("sendDoc", ternScope);
+			Function f = (Function) fObj;
+			f.call(cx, ternScope, ternScope, functionArgs);
+		} finally {
+			// Exit from the context.
+			Context.exit();
+		}
+	}
+
 	public void requestCompletion(IJSDocument doc, IResponseHandler handler,
 			boolean dataAsJson) {
 		Context cx = Context.enter();

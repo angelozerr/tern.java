@@ -52,6 +52,14 @@
       if (found && found.changed) sendDoc(this, found);
     },
 
+    sendDoc: function(doc, handler) {
+	  this.getServer().request({files: [{type: "full", name: String(doc.name), text: String(doc.getValue())}]}, function(error) {
+	      if (error) 
+			return handler.onError(error.message || String(error));
+	      else doc.changed = false;
+	  });
+	},
+  	
     complete: function(cm, handler, dataAsJson) {
       this.request(cm, {type: "completions", types: true, docs: true, urls: true}, handler, dataAsJson);
     },
@@ -70,7 +78,7 @@
 
     request: function (cm, query, handler, dataAsJson) {
       var self = this;
-   
+   java.lang.System.out.println(query.type)
       var request = buildRequest(this, cm, query);
       var server = this.getServer();
       this.server.request(request, function (error, data) {
@@ -132,7 +140,7 @@
   }
 
 })();
-
+  
 var server = new TernServer();
 
 function addDef(def) {
@@ -150,4 +158,9 @@ function registerDoc(doc) {
 
 function ternHints(cm, handler, dataAsJson) {
   server.complete(cm, handler, dataAsJson);
+}
+
+function sendDoc(doc, handler) {
+  var d = server.docs[doc.name];
+  server.sendDoc(d, handler);
 }
