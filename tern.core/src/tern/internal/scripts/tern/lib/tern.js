@@ -110,10 +110,13 @@
       }
     },
     reset: function() {
+      this.signal("reset");
       this.cx = new infer.Context(this.defs, this);
       this.uses = 0;
-      for (var i = 0; i < this.files.length; ++i) clearFile(this, this.files[i]);
-      this.signal("reset");
+      for (var i = 0; i < this.files.length; ++i) {
+        var file = this.files[i];
+        file.scope = null;
+      }
     },
 
     request: function(doc, c) {
@@ -188,7 +191,7 @@
         try {
           result = queryType.run(srv, query, file);
         } catch (e) {
-          if (srv.options.debug && e.name != "TernError") console.log(e.stack);
+          if (srv.options.debug && e.name != "TernError") console.error(e.stack);
           return c(e);
         }
         c(null, result);
@@ -232,10 +235,12 @@
 
   function clearFile(srv, file, newText) {
     if (file.scope) {
-      // FIXME try to batch purges into a single pass (each call needs
-      // to traverse the whole graph)
       infer.withContext(srv.cx, function() {
+        // FIXME try to batch purges into a single pass (each call needs
+        // to traverse the whole graph)
         infer.purgeTypes(file.name);
+        infer.markVariablesDefinedBy(file.scope, file.name);
+        infer.purgeMarkedVariables(file.scope);
       });
       file.scope = null;
     }
@@ -808,5 +813,5 @@
     return {files: srv.files.map(function(f){return f.name;})};
   }
 
-  exports.version = "0.3.1";
+  exports.version = "0.5.1";
 });

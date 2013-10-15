@@ -111,6 +111,9 @@
         var inner = this.parseRetType();
         this.eat("]") || this.error();
         return function(self, args) { return new infer.Arr(inner(self, args)); };
+      } else if (this.eat("+")) {
+        var base = this.parseRetType();
+        return function(self, args) { return infer.getInstance(base(self, args)); };
       } else if (this.eat("!")) {
         var arg = this.word(/\d/);
         if (arg) {
@@ -148,7 +151,7 @@
     var type = new TypeParser(spec, null, base, forceNew).parseType(name, true);
     if (/^fn\(/.test(spec)) for (var i = 0; i < type.args.length; ++i) (function(i) {
       var arg = type.args[i];
-      if (arg instanceof infer.Fn && arg.args.length) addEffect(type, function(_self, fArgs) {
+      if (arg instanceof infer.Fn && arg.args && arg.args.length) addEffect(type, function(_self, fArgs) {
         var fArg = fArgs[i];
         if (fArg) fArg.propagate(new infer.IsCallee(infer.cx().topScope, arg.args, null, infer.ANull));
       });
@@ -158,14 +161,15 @@
 
   function addEffect(fn, handler, replaceRet) {
     var oldCmp = fn.computeRet, rv = fn.retval;
-    fn.computeRet = function(self, args) {
-      var handled = handler(self, args);
-      var old = oldCmp ? oldCmp(self, args) : rv;
+    fn.computeRet = function(self, args, argNodes) {
+      var handled = handler(self, args, argNodes);
+      var old = oldCmp ? oldCmp(self, args, argNodes) : rv;
       return replaceRet ? handled : old;
     };
   }
 
   var parseEffect = exports.parseEffect = function(effect, fn) {
+    var m;
     if (effect.indexOf("propagate ") == 0) {
       var p = new TypeParser(effect, 10);
       var getOrigin = p.parseRetType();
@@ -188,9 +192,9 @@
         callee.propagate(new infer.IsCallee(slf, as, null, result));
         return result;
       }, andRet);
-    } else if (effect.indexOf("custom ") == 0) {
-      var customFunc = customFunctions[effect.slice(7).trim()];
-      if (customFunc) addEffect(fn, customFunc);
+    } else if (m = effect.match(/^custom (\S+)\s*(.*)/)) {
+      var customFunc = customFunctions[m[1]];
+      if (customFunc) addEffect(fn, m[2] ? customFunc(m[2]) : customFunc);
     } else if (effect.indexOf("copy ") == 0) {
       var p = new TypeParser(effect, 5);
       var getFrom = p.parseRetType();
@@ -239,9 +243,9 @@
           if (!fn) {
             base = infer.ANull;
           } else if (prop == "!ret") {
-            base = fn.retval.getType() || infer.ANull;
+            base = fn.retval && fn.retval.getType() || infer.ANull;
           } else {
-            var arg = fn.args[Number(prop.slice(1))];
+            var arg = fn.args && fn.args[Number(prop.slice(1))];
             base = (arg && arg.getType()) || infer.ANull;
           }
         }
@@ -254,7 +258,7 @@
       }
     }
     // Uncomment this to get feedback on your poorly written .json files
-    // if (base == infer.ANull) console.log("bad path: " + path + " (" + cx.curOrigin + ")");
+    // if (base == infer.ANull) console.error("bad path: " + origPath + " (" + cx.curOrigin + ")");
     cx.paths[origPath] = base == infer.ANull ? null : base;
     return base;
   };
@@ -269,7 +273,7 @@
   function isSimpleAnnotation(spec) {
     if (!spec["!type"]) return false;
     for (var prop in spec)
-      if (prop != "!type" && prop != "!doc" && prop != "!url" && prop != "!span")
+      if (prop != "!type" && prop != "!doc" && prop != "!url" && prop != "!span" && prop != "!data")
         return false;
     return true;
   }
@@ -292,7 +296,6 @@
     for (var name in spec) if (hop(spec, name) && name.charCodeAt(0) != 33) {
       var inner = spec[name];
       if (typeof inner == "string" || isSimpleAnnotation(inner)) continue;
-      if (!base.defProp) console.log("base=" + (window.badBase = base));
       var prop = base.defProp(name);
       passOne(prop.getType(), inner, path ? path + "." + name : name).propagate(prop);
     }
@@ -341,6 +344,8 @@
           if (type && type instanceof infer.Obj) type.span = span;
           known.span = span;
         }
+        if (inner["!data"] && type instanceof infer.Obj)
+          type.metaData = inner["!data"];
       }
     }
   }
@@ -414,18 +419,21 @@
     return result;
   });
 
-  var IsBound = infer.constraint("args, target", {
+  var IsBound = infer.constraint("self, args, target", {
     addType: function(tp) {
       if (!(tp instanceof infer.Fn)) return;
-      var cut = Math.max(0, this.args.length - 1);
-      this.target.addType(new infer.Fn(tp.name, this.args[0] || infer.ANull,
-                                       tp.args.slice(cut), tp.argNames.slice(cut), tp.retval));
+      this.target.addType(new infer.Fn(tp.name, tp.self, tp.args.slice(this.args.length),
+                                       tp.argNames.slice(this.args.length), tp.retval));
+      this.self.propagate(tp.self);
+      for (var i = 0; i < Math.min(tp.args.length, this.args.length); ++i)
+        this.args[i].propagate(tp.args[i]);
     }
   });
 
   infer.registerFunction("Function_bind", function(self, args) {
+    if (!args.length) return infer.ANull;
     var result = new infer.AVal;
-    self.propagate(new IsBound(args, result));
+    self.propagate(new IsBound(args[0], args.slice(1), result));
     return result;
   });
 
