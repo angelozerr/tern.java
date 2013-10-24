@@ -8,5 +8,5 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: tern,
  tern.doc,
- tern.loader
-Import-Package: org.mozilla.javascript
+ tern.server,
+ tern.utils

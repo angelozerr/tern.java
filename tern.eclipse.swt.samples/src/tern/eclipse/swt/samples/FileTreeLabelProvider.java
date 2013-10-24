@@ -15,7 +15,7 @@ import org.eclipse.swt.graphics.Image;
  * This class provides the labels for the file tree
  */
 
-class FileTreeLabelProvider implements ILabelProvider {
+public class FileTreeLabelProvider implements ILabelProvider {
 	// The listeners
 	private List listeners;
 

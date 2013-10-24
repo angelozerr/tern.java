@@ -9,7 +9,7 @@ import org.eclipse.jface.viewers.Viewer;
  * This class provides the content for the tree in FileTree
  */
 
-class FileTreeContentProvider implements ITreeContentProvider {
+public class FileTreeContentProvider implements ITreeContentProvider {
 	/**
 	 * Gets the children of the specified object
 	 * 

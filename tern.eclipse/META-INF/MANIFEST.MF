@@ -9,7 +9,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
  org.eclipse.jface;bundle-version="3.7.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
- tern.core;bundle-version="1.0.0"
-Import-Package: org.mozilla.javascript
+ tern.core;bundle-version="1.0.0",
+ tern.server.nodejs;bundle-version="1.0.0";resolution:=optional,
+ tern.server.rhino;bundle-version="1.0.0";resolution:=optional
 Export-Package: tern.eclipse.jface,
+ tern.eclipse.jface.nodejs,
+ tern.eclipse.jface.rhino,
  tern.eclipse.swt
+Import-Package: org.mozilla.javascript;resolution:=optional

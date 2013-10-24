@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.server.rhino
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.mozilla.javascript
+Require-Bundle: tern.core;bundle-version="1.0.0"
+Export-Package: tern.server.rhino,
+ tern.server.rhino.loader

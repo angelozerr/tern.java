@@ -1,6 +1,6 @@
 package tern.doc;
 
-import tern.Server;
+import tern.server.ITernServer;
 
 public interface IJSDocument {
 
@@ -16,5 +16,5 @@ public interface IJSDocument {
 
 	boolean somethingSelected();
 
-	Server getServer();
+	ITernServer getServer();
 }
