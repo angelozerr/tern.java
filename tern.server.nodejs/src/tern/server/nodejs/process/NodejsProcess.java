@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.soap.Node;
-
 public class NodejsProcess {
 
 	private final File nodejsTernFile;
