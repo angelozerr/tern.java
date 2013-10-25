@@ -2,6 +2,12 @@ package tern.server.nodejs;
 
 import java.io.IOException;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
@@ -12,7 +18,7 @@ public class NodejsTernServer implements ITernServer {
 	private final String baseURL;
 
 	public NodejsTernServer(int port) {
-		this.baseURL = "http://localhost:" + port;
+		this.baseURL = "http://localhost:" + port + "/";
 	}
 
 	@Override
@@ -51,5 +57,6 @@ public class NodejsTernServer implements ITernServer {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }
