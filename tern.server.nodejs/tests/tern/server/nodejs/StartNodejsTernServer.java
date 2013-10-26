@@ -18,6 +18,7 @@ public class StartNodejsTernServer {
 		File projectDir = new File(".");
 		NodejsProcess server = new NodejsProcess(nodejsTernBaseDir, projectDir);
 		server.setPort(12345);
+		server.setVerbose(true);
 		
 		server.addProcessListener(PrintNodejsProcessListener.getInstance());
 

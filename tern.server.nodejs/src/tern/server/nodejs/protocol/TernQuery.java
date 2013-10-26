@@ -12,7 +12,7 @@ public class TernQuery extends JSONObject {
 		super.put("file", file);
 	}
 
-	public void setPos(Integer pos) {
-		super.put("pos", pos);
+	public void setEnd(Integer pos) {
+		super.put("end", pos);
 	}
 }

@@ -12,8 +12,14 @@ public class TernDoc extends JSONObject {
 	}
 
 	public TernDoc(TernQuery query) {
+		setQuery(query);
+	}
+
+	public void setQuery(TernQuery query) {
 		if (query != null) {
 			super.put("query", query);
+		} else {
+			super.remove("query");
 		}
 	}
 
@@ -24,5 +30,5 @@ public class TernDoc extends JSONObject {
 		}
 		files.add(new TernFile(name, text, offset));
 	}
-	
+
 }
