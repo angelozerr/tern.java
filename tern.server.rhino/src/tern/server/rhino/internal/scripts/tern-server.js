@@ -76,7 +76,6 @@
 
     request: function (cm, query, handler, dataAsJson) {
       var self = this;
-   java.lang.System.out.println(query.type)
       var request = buildRequest(this, cm, query);
       var server = this.getServer();
       this.server.request(request, function (error, data) {

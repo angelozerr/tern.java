@@ -2,6 +2,8 @@ package tern.server.nodejs;
 
 import java.io.IOException;
 
+import org.json.simple.JSONObject;
+
 import tern.server.nodejs.protocol.TernProtocolHelper;
 import tern.server.nodejs.protocol.TernDoc;
 
@@ -21,7 +23,8 @@ public class SendBuffer {
 		doc.addFile(name, text, null);
 		System.out.println(doc);
 
-		TernProtocolHelper.makeRequest("http://localhost:12345/", doc,
-				false);
+		JSONObject json = TernProtocolHelper.makeRequest(
+				"http://localhost:12345/", doc, false);
+		System.err.println(json);
 	}
 }

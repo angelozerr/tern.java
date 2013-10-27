@@ -18,7 +18,7 @@ import org.json.simple.parser.ParseException;
 
 public class TernProtocolHelper {
 
-	public static void makeRequest(String baseURL, JSONObject doc,
+	public static JSONObject makeRequest(String baseURL, JSONObject doc,
 			boolean silent) throws IOException {
 
 		HttpClient httpClient = new DefaultHttpClient();
@@ -28,17 +28,12 @@ public class TernProtocolHelper {
 			HttpResponse response = httpClient.execute(httpPost);
 			HttpEntity entity = response.getEntity();
 
-			String result = EntityUtils.toString(entity);
-			System.err.println(result);
-
 			InputStream in = entity.getContent();
 			JSONParser parser = new JSONParser();
 			try {
-				Object o = parser.parse(new InputStreamReader(in));
-				System.err.println(o);
+				return (JSONObject) parser.parse(new InputStreamReader(in));
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new IOException(e);
 			}
 		} finally {
 			httpClient.getConnectionManager().shutdown();

@@ -7,11 +7,15 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.simple.JSONObject;
 
 import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernDef;
+import tern.server.nodejs.protocol.TernCompletionQuery;
+import tern.server.nodejs.protocol.TernDoc;
+import tern.server.nodejs.protocol.TernProtocolHelper;
 
 public class NodejsTernServer implements ITernServer {
 
@@ -41,22 +45,56 @@ public class NodejsTernServer implements ITernServer {
 
 	@Override
 	public void sendDoc(IJSDocument doc, IResponseHandler handler) {
-		// TODO Auto-generated method stub
+		TernDoc t = new TernDoc();
+		t.addFile(doc.getName(), doc.getValue(), null);
+		System.out.println(doc);
 
+		try {
+			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void registerDoc(IJSDocument doc) {
-		// TODO Auto-generated method stub
+		TernDoc t = new TernDoc();
+		t.addFile(doc.getName(), doc.getValue(), null);
+		System.out.println(doc);
 
+		try {
+			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void requestCompletion(IJSDocument doc, IResponseHandler handler,
 			boolean dataAsJson) {
-		// TODO Auto-generated method stub
+
+		TernDoc t = new TernDoc();
+
+		TernCompletionQuery query = new TernCompletionQuery();
+		query.setTypes(true);
+		query.setFile("#0");
+		query.setEnd(doc.getCursor("end"));
+		query.setLineCharPositions(true);
+		t.setQuery(query);
+		
+		t.addFile(doc.getName(), doc.getValue(), null);
+
+		System.out.println(doc);
+
+		try {
+			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
+			handler.onSuccess(json, null);
+		} catch (IOException e) {
+			handler.onError(e.getMessage());
+		}
 
 	}
-
 
 }

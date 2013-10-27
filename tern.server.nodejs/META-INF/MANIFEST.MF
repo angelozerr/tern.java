@@ -7,7 +7,9 @@ Bundle-SymbolicName: tern.server.nodejs
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-BundleShape: dir
-Export-Package: tern.server.nodejs,
+Export-Package: org.json.simple,
+ org.json.simple.parser,
+ tern.server.nodejs,
  tern.server.nodejs.process
 Require-Bundle: tern.core;bundle-version="1.0.0"
 Bundle-ClassPath: lib/json-simple-1.1.1.jar,
