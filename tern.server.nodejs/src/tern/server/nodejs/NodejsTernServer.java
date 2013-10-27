@@ -1,5 +1,6 @@
 package tern.server.nodejs;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.apache.http.HttpEntity;
@@ -19,9 +20,14 @@ import tern.server.nodejs.protocol.TernProtocolHelper;
 
 public class NodejsTernServer implements ITernServer {
 
-	private final String baseURL;
+	private TernProject project;
 
-	public NodejsTernServer(int port) {
+	private final String baseURL;
+	
+	private final File projectDir;
+
+	public NodejsTernServer(int port, File projectDir) {
+		this.projectDir = projectDir;
 		this.baseURL = "http://localhost:" + port + "/";
 	}
 
@@ -33,8 +39,11 @@ public class NodejsTernServer implements ITernServer {
 
 	@Override
 	public void addDef(TernDef def) throws IOException {
-		// TODO Auto-generated method stub
-
+		if (project == null) {
+			setProject(new TernProject(projectDir));
+		}
+		project.addLib(def.name());
+		project.save();
 	}
 
 	@Override
@@ -83,18 +92,26 @@ public class NodejsTernServer implements ITernServer {
 		query.setEnd(doc.getCursor("end"));
 		query.setLineCharPositions(true);
 		t.setQuery(query);
-		
+
 		t.addFile(doc.getName(), doc.getValue(), null);
 
-		System.out.println(doc);
+		System.out.println(t.toJSONString());
 
 		try {
 			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
-			handler.onSuccess(json, null);
+			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
 		} catch (IOException e) {
 			handler.onError(e.getMessage());
 		}
 
+	}
+
+	public TernProject getProject() {
+		return project;
+	}
+
+	public void setProject(TernProject project) {
+		this.project = project;
 	}
 
 }

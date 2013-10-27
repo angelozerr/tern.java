@@ -66,7 +66,7 @@ public class NodejsTernEditorWithFiles {
 
 		nodejs.start();
 
-		this.server = new NodejsTernServer(12345);
+		this.server = new NodejsTernServer(12345, projectDir);
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
 
