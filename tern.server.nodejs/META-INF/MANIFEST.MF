@@ -7,13 +7,10 @@ Bundle-SymbolicName: tern.server.nodejs
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-BundleShape: dir
-Export-Package: org.json.simple,
- org.json.simple.parser,
- tern.server.nodejs,
+Export-Package: tern.server.nodejs,
  tern.server.nodejs.process
 Require-Bundle: tern.core;bundle-version="1.0.0"
-Bundle-ClassPath: lib/json-simple-1.1.1.jar,
- .
+Bundle-ClassPath: .
 Import-Package: org.apache.commons.logging,
  org.apache.http,
  org.apache.http.client,
@@ -21,4 +18,6 @@ Import-Package: org.apache.commons.logging,
  org.apache.http.conn,
  org.apache.http.entity,
  org.apache.http.impl.client,
- org.apache.http.util
+ org.apache.http.util,
+ org.json.simple,
+ org.json.simple.parser

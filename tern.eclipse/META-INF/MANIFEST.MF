@@ -16,4 +16,5 @@ Export-Package: tern.eclipse.jface,
  tern.eclipse.jface.nodejs,
  tern.eclipse.jface.rhino,
  tern.eclipse.swt
-Import-Package: org.mozilla.javascript;resolution:=optional
+Import-Package: org.json.simple,
+ org.mozilla.javascript;resolution:=optional
