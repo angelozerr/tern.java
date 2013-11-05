@@ -14,6 +14,7 @@ import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernDef;
+import tern.server.TernPlugin;
 import tern.server.nodejs.protocol.TernCompletionQuery;
 import tern.server.nodejs.protocol.TernDoc;
 import tern.server.nodejs.protocol.TernProtocolHelper;
@@ -23,7 +24,7 @@ public class NodejsTernServer implements ITernServer {
 	private TernProject project;
 
 	private final String baseURL;
-	
+
 	private final File projectDir;
 
 	public NodejsTernServer(int port, File projectDir) {
@@ -39,11 +40,22 @@ public class NodejsTernServer implements ITernServer {
 
 	@Override
 	public void addDef(TernDef def) throws IOException {
+		initializeProjectIfNeeded();
+		project.addLib(def.name());
+		project.save();
+	}
+
+	@Override
+	public void addPlugin(TernPlugin plugin) throws IOException {
+		initializeProjectIfNeeded();
+		project.addPlugin(plugin);
+		project.save();
+	}
+
+	private void initializeProjectIfNeeded() {
 		if (project == null) {
 			setProject(new TernProject(projectDir));
 		}
-		project.addLib(def.name());
-		project.save();
 	}
 
 	@Override

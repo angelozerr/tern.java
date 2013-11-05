@@ -1,4 +1,4 @@
-package tern.eclipse.swt.samples.rhino;
+package tern.eclipse.swt.samples.nodejs;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,36 +30,50 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import tern.doc.IJSDocument;
-import tern.eclipse.jface.rhino.RhinoTernContentProposalProvider;
+import tern.eclipse.jface.nodejs.NodejsTernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
 import tern.eclipse.swt.samples.FileTreeContentProvider;
 import tern.eclipse.swt.samples.FileTreeLabelProvider;
 import tern.server.ITernServer;
 import tern.server.TernDef;
-import tern.server.rhino.RhinoTernServer;
+import tern.server.TernPlugin;
+import tern.server.nodejs.NodejsTernServer;
+import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.PrintNodejsProcessListener;
 import tern.utils.IOUtils;
 
-public class RhinoTernEditorWithFiles {
+public class NodejsTernEditorWithAngularJS {
 
 	private CTabFolder tabFolder;
 	private ITernServer server;
 	private Map<String, CTabItem> tabItemsMap = new HashMap<String, CTabItem>();
 
 	public static void main(String[] args) {
-		RhinoTernEditorWithFiles editor = new RhinoTernEditorWithFiles();
+		NodejsTernEditorWithAngularJS editor = new NodejsTernEditorWithAngularJS();
 		try {
 			editor.createUI();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void createUI() throws IOException {
+	private void createUI() throws IOException, InterruptedException {
 
-		this.server = new RhinoTernServer();
+		int port = 12345;
+
+		File nodejsTernBaseDir = new File("../tern.server.nodejs");
+		File projectDir = new File(".");
+		NodejsProcess nodejs = new NodejsProcess(nodejsTernBaseDir, projectDir);
+		nodejs.setPort(port);
+		nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
+
+		nodejs.start();
+
+		this.server = new NodejsTernServer(12345, projectDir);
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
+		server.addPlugin(TernPlugin.angular);
 
 		Display display = new Display();
 		Shell shell = new Shell(display);
@@ -122,7 +136,7 @@ public class RhinoTernEditorWithFiles {
 			}
 		});
 
-		File baseDir = new File("scripts");
+		File baseDir = new File("angularjs/calculator-sample");
 		long start = System.currentTimeMillis();
 		loadJS(baseDir);
 		System.err.println("load JS=" + (System.currentTimeMillis() - start)
@@ -201,8 +215,9 @@ public class RhinoTernEditorWithFiles {
 		}
 		// La vraie chose !
 		ContentProposalAdapter adapter = new ContentProposalAdapter(text,
-				new TextContentAdapter(), new RhinoTernContentProposalProvider(
-						document), keyStroke, autoActivationCharacters);
+				new TextContentAdapter(),
+				new NodejsTernContentProposalProvider(document), keyStroke,
+				autoActivationCharacters);
 		// adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
 

@@ -12,6 +12,7 @@ import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernDef;
+import tern.server.TernPlugin;
 import tern.server.rhino.loader.ClassPathScriptLoader;
 import tern.server.rhino.loader.IScriptLoader;
 import tern.utils.IOUtils;
@@ -102,6 +103,11 @@ public class RhinoTernServer implements ITernServer {
 			throws IOException {
 		loader.loadScript(cx, ternScope, def, "(function() {var def = ",
 				"addDef(def);})();");
+	}
+
+	public void addPlugin(TernPlugin plugin) throws IOException {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void registerDoc(IJSDocument doc) {

@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jface.bindings.keys.KeyStroke;
 import org.eclipse.jface.bindings.keys.ParseException;
@@ -43,6 +45,7 @@ public class NodejsTernEditorWithFiles {
 
 	private CTabFolder tabFolder;
 	private ITernServer server;
+	private Map<String, CTabItem> tabItemsMap = new HashMap<String, CTabItem>();
 
 	public static void main(String[] args) {
 		NodejsTernEditorWithFiles editor = new NodejsTernEditorWithFiles();
@@ -121,7 +124,12 @@ public class NodejsTernEditorWithFiles {
 					IStructuredSelection selection = (IStructuredSelection) event
 							.getSelection();
 					File file = (File) selection.getFirstElement();
-					createEditor(tabFolder, file, server);
+					CTabItem tabItem = tabItemsMap.get(file.getPath());
+					if (tabItem == null) {
+						tabItem = createEditor(tabFolder, file, server);
+						tabItemsMap.put(file.getPath(), tabItem);
+					}
+					tabFolder.setSelection(tabItem);
 				}
 			}
 		});
@@ -168,12 +176,12 @@ public class NodejsTernEditorWithFiles {
 		composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 		composite.setLayout(new GridLayout(1, false));
 
-		this.tabFolder = new CTabFolder(composite, SWT.TOP);
+		this.tabFolder = new CTabFolder(composite, SWT.TOP | SWT.CLOSE);
 		tabFolder.setBorderVisible(true);
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH));
 	}
 
-	private void createEditor(CTabFolder tabFolder, File file,
+	private CTabItem createEditor(CTabFolder tabFolder, File file,
 			ITernServer server) {
 
 		CTabItem tab = new CTabItem(tabFolder, SWT.NONE);
@@ -186,7 +194,8 @@ public class NodejsTernEditorWithFiles {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		Text text = new Text(tabFolder, SWT.MULTI | SWT.BORDER);
+		Text text = new Text(tabFolder, SWT.MULTI | SWT.BORDER | SWT.H_SCROLL
+				| SWT.V_SCROLL);
 		text.setText(js);
 
 		tab.setControl(text);
@@ -210,7 +219,7 @@ public class NodejsTernEditorWithFiles {
 		// adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
 
-		tabFolder.setSelection(tab);
+		return tab;
 	}
 
 	private String readFile(File file) throws IOException {

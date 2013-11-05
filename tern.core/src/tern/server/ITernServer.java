@@ -10,6 +10,8 @@ public interface ITernServer {
 
 	void addDef(TernDef def) throws IOException;
 
+	void addPlugin(TernPlugin plugin) throws IOException;
+
 	void addFile(String name, String text);
 
 	void sendDoc(IJSDocument doc, IResponseHandler handler);
