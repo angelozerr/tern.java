@@ -13,14 +13,14 @@ public class RunCommand {
 	public static void main(String[] args) throws IOException {
 
 		TernDoc doc = new TernDoc();
-		
+
 		// query
 		TernCompletionQuery query = new TernCompletionQuery();
 		query.setTypes(true);
 		query.setFile("#0");
 		query.setEnd(13);
 		doc.setQuery(query);
-		
+
 		// files
 		String name = "myfile.js";
 		String text = "var a = [];a.";
@@ -28,7 +28,8 @@ public class RunCommand {
 
 		System.out.println(doc);
 
-		JSONObject json = TernProtocolHelper.makeRequest("http://localhost:12345/", doc, false);
+		JSONObject json = TernProtocolHelper.makeRequest(
+				"http://localhost:12345/", doc, false, null, null, null);
 		System.err.println(json);
 	}
 }

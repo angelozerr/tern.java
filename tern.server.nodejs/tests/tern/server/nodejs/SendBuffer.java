@@ -24,7 +24,7 @@ public class SendBuffer {
 		System.out.println(doc);
 
 		JSONObject json = TernProtocolHelper.makeRequest(
-				"http://localhost:12345/", doc, false);
+				"http://localhost:12345/", doc, false, null, null, null);
 		System.err.println(json);
 	}
 }

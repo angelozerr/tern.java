@@ -29,9 +29,6 @@ public abstract class AbstractTernContentProposalProvider implements
 		server.requestCompletion(document, response, true);
 		try {
 			List<IContentProposal> proposals = new ArrayList<IContentProposal>();
-
-			System.err.println(response.getDataAsJsonString());
-
 			// ex:
 			// {"start":{"line":1,"ch":0},"end":{"line":1,"ch":1},"completions":[{"name":"a","type":"[?]"}]}
 

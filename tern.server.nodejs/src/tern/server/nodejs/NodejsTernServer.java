@@ -2,6 +2,8 @@ package tern.server.nodejs;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,6 +28,8 @@ public class NodejsTernServer implements ITernServer {
 	private final String baseURL;
 
 	private final File projectDir;
+
+	private List<IInterceptor> interceptors;
 
 	public NodejsTernServer(int port, File projectDir) {
 		this.projectDir = projectDir;
@@ -68,10 +72,9 @@ public class NodejsTernServer implements ITernServer {
 	public void sendDoc(IJSDocument doc, IResponseHandler handler) {
 		TernDoc t = new TernDoc();
 		t.addFile(doc.getName(), doc.getValue(), null);
-		System.out.println(doc);
-
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
+			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
+					interceptors, "sendDoc", this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,10 +85,9 @@ public class NodejsTernServer implements ITernServer {
 	public void registerDoc(IJSDocument doc) {
 		TernDoc t = new TernDoc();
 		t.addFile(doc.getName(), doc.getValue(), null);
-		System.out.println(doc);
-
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
+			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
+					interceptors, "registerDoc", this);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -104,13 +106,11 @@ public class NodejsTernServer implements ITernServer {
 		query.setEnd(doc.getCursor("end"));
 		query.setLineCharPositions(true);
 		t.setQuery(query);
-
 		t.addFile(doc.getName(), doc.getValue(), null);
 
-		System.out.println(t.toJSONString());
-
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false);
+			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
+					interceptors, "requestCompletion", this);
 			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
 		} catch (IOException e) {
 			handler.onError(e.getMessage());
@@ -124,6 +124,13 @@ public class NodejsTernServer implements ITernServer {
 
 	public void setProject(TernProject project) {
 		this.project = project;
+	}
+
+	public void addInterceptor(IInterceptor interceptor) {
+		if (interceptors == null) {
+			interceptors = new ArrayList<IInterceptor>();
+		}
+		interceptors.add(interceptor);
 	}
 
 }

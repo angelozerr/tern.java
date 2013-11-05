@@ -37,6 +37,7 @@ import tern.eclipse.swt.samples.FileTreeLabelProvider;
 import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
+import tern.server.nodejs.LoggingInterceptor;
 import tern.server.nodejs.NodejsTernServer;
 import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.PrintNodejsProcessListener;
@@ -71,6 +72,8 @@ public class NodejsTernEditorWithAngularJS {
 		nodejs.start();
 
 		this.server = new NodejsTernServer(12345, projectDir);
+		((NodejsTernServer) server).addInterceptor(new LoggingInterceptor());
+
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
 		server.addPlugin(TernPlugin.angular);
