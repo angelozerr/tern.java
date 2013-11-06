@@ -10,4 +10,12 @@ public class TernCompletionQuery extends TernQuery {
 		super.put("types", types);
 	}
 
+	public void setDocs(boolean docs) {
+		super.put("docs", docs);
+	}
+
+	public void setUrls(boolean urls) {
+		super.put("urls", urls);
+	}
+
 }

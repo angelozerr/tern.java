@@ -39,8 +39,9 @@ public class NodejsTernContentProposalProvider extends
 	protected IContentProposal createProposal(JSONObject completion, int pos) {
 		String name = completion.get("name").toString();
 		String type = completion.get("type").toString();
+		Object doc = completion.get("doc");
 		return new ContentProposal(name.substring(pos, name.length()), name,
-				name + " - " + type);
+				name + " - " + type + "\n" + doc);
 	}
 
 }

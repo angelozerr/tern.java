@@ -24,8 +24,9 @@ public class TernProtocolHelper {
 	public static JSONObject makeRequest(String baseURL, TernDoc doc,
 			boolean silent, List<IInterceptor> interceptors, String methodName,
 			ITernServer server) throws IOException {
-
+		long starTime = 0;
 		if (interceptors != null) {
+			starTime = System.currentTimeMillis();
 			for (IInterceptor interceptor : interceptors) {
 				interceptor.handleRequest(doc, server, methodName);
 			}
@@ -44,8 +45,9 @@ public class TernProtocolHelper {
 						.parse(new InputStreamReader(in));
 				if (interceptors != null) {
 					for (IInterceptor interceptor : interceptors) {
-						interceptor
-								.handleResponse(response, server, methodName);
+						interceptor.handleResponse(response, server,
+								methodName, System.currentTimeMillis()
+										- starTime);
 					}
 				}
 				return response;

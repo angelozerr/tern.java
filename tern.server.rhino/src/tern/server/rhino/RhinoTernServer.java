@@ -106,8 +106,26 @@ public class RhinoTernServer implements ITernServer {
 	}
 
 	public void addPlugin(TernPlugin plugin) throws IOException {
-		// TODO Auto-generated method stub
+		addPlugin(plugin.name());
+	}
 
+	public void addPlugin(String plugin) throws IOException {
+		Context cx = Context.enter();
+		try {
+			Object functionArgs[] = { plugin };
+			Object fObj = ternScope.get("addPlugin", ternScope);
+			Function f = (Function) fObj;
+			f.call(cx, ternScope, ternScope, functionArgs);
+		} finally {
+			// Exit from the context.
+			Context.exit();
+		}
+	}
+
+	protected void addPlugin(Context cx, String plugin, IScriptLoader loader)
+			throws IOException {
+		loader.loadScript(cx, ternScope, plugin, "(function() {var plugin = ",
+				"addPlugin(plugin);})();");
 	}
 
 	public void registerDoc(IJSDocument doc) {

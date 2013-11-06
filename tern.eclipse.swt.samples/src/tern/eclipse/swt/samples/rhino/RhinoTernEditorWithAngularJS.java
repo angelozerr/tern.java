@@ -1,4 +1,4 @@
-package tern.eclipse.swt.samples.nodejs;
+package tern.eclipse.swt.samples.rhino;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,52 +30,42 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import tern.doc.IJSDocument;
-import tern.eclipse.jface.nodejs.NodejsTernContentProposalProvider;
+import tern.eclipse.jface.rhino.RhinoTernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
 import tern.eclipse.swt.samples.FileTreeContentProvider;
 import tern.eclipse.swt.samples.FileTreeLabelProvider;
 import tern.server.ITernServer;
 import tern.server.TernDef;
-import tern.server.nodejs.NodejsTernServer;
-import tern.server.nodejs.process.NodejsProcess;
-import tern.server.nodejs.process.PrintNodejsProcessListener;
+import tern.server.TernPlugin;
+import tern.server.rhino.RhinoTernServer;
 import tern.utils.IOUtils;
 
-public class NodejsTernEditorWithFiles {
+public class RhinoTernEditorWithAngularJS {
 
 	private CTabFolder tabFolder;
 	private ITernServer server;
 	private Map<String, CTabItem> tabItemsMap = new HashMap<String, CTabItem>();
 
 	public static void main(String[] args) {
-		NodejsTernEditorWithFiles editor = new NodejsTernEditorWithFiles();
+		RhinoTernEditorWithAngularJS editor = new RhinoTernEditorWithAngularJS();
 		try {
 			editor.createUI();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void createUI() throws IOException, InterruptedException {
+	private void createUI() throws IOException {
 
-		int port = 12345;
-
-		File nodejsTernBaseDir = new File("../tern.server.nodejs");
-		File projectDir = new File(".");
-		NodejsProcess nodejs = new NodejsProcess(nodejsTernBaseDir, projectDir);
-		nodejs.setPort(port);
-		nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
-
-		nodejs.start();
-
-		this.server = new NodejsTernServer(12345, projectDir);
+		this.server = new RhinoTernServer();
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
-
+		server.addPlugin(TernPlugin.angular);
+		
 		Display display = new Display();
 		Shell shell = new Shell(display);
-		shell.setSize(500, 500);
+		shell.setSize(800, 500);
 		shell.setText("Tern SWT Eclipse");
 		shell.setLayout(new GridLayout(2, true));
 
@@ -134,7 +124,7 @@ public class NodejsTernEditorWithFiles {
 			}
 		});
 
-		File baseDir = new File("scripts/terndemo");
+		File baseDir = new File("scripts/angularjs/calculator-sample");
 		long start = System.currentTimeMillis();
 		loadJS(baseDir);
 		System.err.println("load JS=" + (System.currentTimeMillis() - start)
@@ -213,9 +203,8 @@ public class NodejsTernEditorWithFiles {
 		}
 		// La vraie chose !
 		ContentProposalAdapter adapter = new ContentProposalAdapter(text,
-				new TextContentAdapter(),
-				new NodejsTernContentProposalProvider(document), keyStroke,
-				autoActivationCharacters);
+				new TextContentAdapter(), new RhinoTernContentProposalProvider(
+						document), keyStroke, autoActivationCharacters);
 		// adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
 

@@ -80,7 +80,7 @@ public class NodejsTernEditorWithAngularJS {
 
 		Display display = new Display();
 		Shell shell = new Shell(display);
-		shell.setSize(500, 500);
+		shell.setSize(800, 500);
 		shell.setText("Tern SWT Eclipse");
 		shell.setLayout(new GridLayout(2, true));
 
@@ -139,7 +139,7 @@ public class NodejsTernEditorWithAngularJS {
 			}
 		});
 
-		File baseDir = new File("angularjs/calculator-sample");
+		File baseDir = new File("scripts/angularjs/calculator-sample");
 		long start = System.currentTimeMillis();
 		loadJS(baseDir);
 		System.err.println("load JS=" + (System.currentTimeMillis() - start)

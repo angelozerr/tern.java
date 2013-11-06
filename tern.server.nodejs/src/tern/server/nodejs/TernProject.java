@@ -18,6 +18,8 @@ public class TernProject extends JSONObject {
 	private final List<String> libs;
 	private final JSONObject plugins;
 
+	private List<String> patterns;
+
 	public TernProject(File projectDir) {
 		this.projectDir = projectDir;
 		this.libs = new ArrayList<String>();
@@ -32,6 +34,14 @@ public class TernProject extends JSONObject {
 
 	public void addPlugin(TernPlugin plugin) {
 		this.plugins.put(plugin.name(), "./");
+	}
+
+	public void addLoadEagerlyPattern(String pattern) {
+		if (patterns == null) {
+			patterns = new ArrayList<String>();
+			super.put("loadEagerly", patterns);
+		}
+		patterns.add(pattern);
 	}
 
 	public void save() throws IOException {

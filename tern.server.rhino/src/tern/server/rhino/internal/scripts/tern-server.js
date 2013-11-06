@@ -117,7 +117,14 @@
 
     query.file = cm.name;
 
-    for ( var i = 0; i < ts.docs.length; ++i) {
+	var doc = cm;
+	files.push({
+          type : "full",
+          name : doc.name,
+          text : doc.getValue()
+        });
+        
+    /*for ( var i = 0; i < ts.docs.length; ++i) {
       var doc = ts.docs[i];
       if (doc.changed) {// && doc != curDoc) {
         files.push({
@@ -128,7 +135,7 @@
         // java.lang.System.out.println(files[0].text)
         // doc.changed = false;
       }
-    }
+    }*/
 
     return {
       query : query,
@@ -145,7 +152,7 @@ function addDef(def) {
 }
 
 function addPlugin(plugin) {
-  server.plugins.push(plugin);
+  server.plugins.push({plugin : "./"});
 }
 
 function registerDoc(doc) {

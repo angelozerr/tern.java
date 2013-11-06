@@ -10,6 +10,6 @@ public interface IInterceptor {
 	void handleRequest(TernDoc request, ITernServer server, String methodName);
 
 	void handleResponse(JSONObject response, ITernServer server,
-			String methodName);
+			String methodName, long ellapsedTime);
 
 }

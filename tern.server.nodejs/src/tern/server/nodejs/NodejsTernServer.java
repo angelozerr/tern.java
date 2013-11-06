@@ -102,12 +102,21 @@ public class NodejsTernServer implements ITernServer {
 
 		TernCompletionQuery query = new TernCompletionQuery();
 		query.setTypes(true);
-		query.setFile("#0");
+		// query.setDocs(true);
+		query.setUrls(true);
 		query.setEnd(doc.getCursor("end"));
 		query.setLineCharPositions(true);
 		t.setQuery(query);
-		t.addFile(doc.getName(), doc.getValue(), null);
 
+		boolean changed = doc.isChanged();
+		if (changed) {
+			// the js doc has changed since last completion, reparse the js doc.
+			query.setFile("#0");
+			t.addFile(doc.getName(), doc.getValue(), null);
+		} else {
+			// non changes, the js doc must not reparsed.
+			query.setFile(doc.getName());
+		}
 		try {
 			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
 					interceptors, "requestCompletion", this);
@@ -115,6 +124,7 @@ public class NodejsTernServer implements ITernServer {
 		} catch (IOException e) {
 			handler.onError(e.getMessage());
 		}
+		doc.setChanged(false);
 
 	}
 

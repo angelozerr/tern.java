@@ -12,24 +12,26 @@ public class JSDocumentText extends AbstractJSDocument {
 
 	private final Text text;
 
-	public JSDocumentText(String name, ITernServer server, Text text) {
+	public JSDocumentText(String name, ITernServer server, final Text text) {
 		super(name, server, false);
 		this.text = text;
 		text.addModifyListener(new ModifyListener() {
 
 			@Override
 			public void modifyText(ModifyEvent e) {
-				getServer().sendDoc(JSDocumentText.this,
-						new DefaultResponseHandler() {
-					@Override
-					public void onError(String error) {
-					System.err.println(error);
-					}
-				});
+				// getServer().sendDoc(JSDocumentText.this,
+				// new DefaultResponseHandler() {
+				// @Override
+				// public void onError(String error) {
+				// System.err.println(error);
+				// }
+				// });
+				int pos = text.getCaretPosition();
+				System.err.println(pos);
 				JSDocumentText.this.setChanged(true);
 			}
 		});
-		super.setChanged(true);
+		setChanged(false);
 		server.registerDoc(this);
 	}
 

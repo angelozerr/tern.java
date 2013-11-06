@@ -122,7 +122,7 @@ public class RhinoTernEditorWithFiles {
 			}
 		});
 
-		File baseDir = new File("scripts");
+		File baseDir = new File("scripts/terndemo");
 		long start = System.currentTimeMillis();
 		loadJS(baseDir);
 		System.err.println("load JS=" + (System.currentTimeMillis() - start)
