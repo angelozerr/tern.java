@@ -25,7 +25,7 @@
 			<properties>
 				<!-- Properties relative to the distant host where to upload the repo -->
 				<ftp.url>ftp://ftp.online.net</ftp.url>
-				<ftp.toDir>/oss/angularjs-eclipse/${project.version}</ftp.toDir>
+				<ftp.toDir>/oss/${project.artifactId}/${project.version}</ftp.toDir>
 				<!-- Relative path to the repo being uploaded -->
 				<repo.path>${project.build.directory}/repository/</repo.path>
 			</properties>
