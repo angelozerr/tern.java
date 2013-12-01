@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <bundle id="tern.core" version="1.0.0.qualifier"/>
+   <bundle id="tern.eclipse" version="1.0.0.qualifier"/>
+   <bundle id="tern.server.nodejs" version="1.0.0.qualifier"/>
+   <bundle id="tern.server.rhino" version="1.0.0.qualifier"/>
+</site>
