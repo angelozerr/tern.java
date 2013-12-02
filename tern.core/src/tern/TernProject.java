@@ -1,4 +1,4 @@
-package tern.server.nodejs;
+package tern;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -17,7 +17,6 @@ public class TernProject extends JSONObject {
 	private final File projectDir;
 	private final List<String> libs;
 	private final JSONObject plugins;
-
 	private List<String> patterns;
 
 	public TernProject(File projectDir) {
@@ -26,6 +25,10 @@ public class TernProject extends JSONObject {
 		super.put("libs", libs);
 		this.plugins = new JSONObject();
 		super.put("plugins", plugins);
+	}
+
+	public File getProjectDir() {
+		return projectDir;
 	}
 
 	public void addLib(String lib) {

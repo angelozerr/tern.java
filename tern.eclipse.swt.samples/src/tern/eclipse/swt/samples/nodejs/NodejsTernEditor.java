@@ -50,7 +50,7 @@ public class NodejsTernEditor {
 
 		nodejs.start();
 
-		ITernServer server = new NodejsTernServer(12345, projectDir);
+		ITernServer server = new NodejsTernServer(projectDir, port);
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
 

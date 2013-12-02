@@ -3,6 +3,7 @@ package tern.server;
 import java.io.IOException;
 
 import tern.doc.IJSDocument;
+import tern.server.protocol.TernDoc;
 
 public interface ITernServer {
 
@@ -18,6 +19,8 @@ public interface ITernServer {
 
 	void registerDoc(IJSDocument doc);
 
+	void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson);
+	
 	void requestCompletion(IJSDocument doc, IResponseHandler handler,
 			boolean dataAsJson);
 }

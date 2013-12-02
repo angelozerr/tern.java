@@ -9,4 +9,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: tern,
  tern.doc,
  tern.server,
+ tern.server.protocol,
  tern.utils
+Import-Package: org.json.simple

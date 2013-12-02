@@ -3,7 +3,7 @@ package tern.server.nodejs;
 import org.json.simple.JSONObject;
 
 import tern.server.ITernServer;
-import tern.server.nodejs.protocol.TernDoc;
+import tern.server.protocol.TernDoc;
 
 public class LoggingInterceptor implements IInterceptor {
 

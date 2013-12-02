@@ -1,4 +1,4 @@
-package tern.server.nodejs.protocol;
+package tern.server.protocol;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -1,4 +1,4 @@
-package tern.server.nodejs.protocol;
+package tern.server.nodejs;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,7 +17,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import tern.server.ITernServer;
-import tern.server.nodejs.IInterceptor;
+import tern.server.protocol.TernDoc;
 
 public class TernProtocolHelper {
 

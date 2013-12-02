@@ -1,4 +1,4 @@
-package tern.server.nodejs.protocol;
+package tern.server.protocol;
 
 public class TernCompletionQuery extends TernQuery {
 

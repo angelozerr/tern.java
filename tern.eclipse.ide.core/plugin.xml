@@ -1,3 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!--
 ###############################################################################
 # Copyright (c) 2013 Angelo Zerr and others.
 # All rights reserved. This program and the accompanying materials
@@ -8,7 +11,18 @@
 # Contributors:
 #     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
 ###############################################################################
-pluginName=Tern - Eclipse - Core IDE
-providerName=Angelo ZERR
-
-ternNature.name=Tern Nature
+ -->
+<plugin>
+	
+	<!-- Tern Nature -->
+	<extension
+		id="ternnature"
+		name="%ternNature.name"
+		point="org.eclipse.core.resources.natures">
+		<runtime>
+			<run
+				class="tern.eclipse.ide.core.TernNature">
+			</run>
+		</runtime>
+	</extension>	
+</plugin>        

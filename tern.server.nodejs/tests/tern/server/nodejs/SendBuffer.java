@@ -4,8 +4,7 @@ import java.io.IOException;
 
 import org.json.simple.JSONObject;
 
-import tern.server.nodejs.protocol.TernProtocolHelper;
-import tern.server.nodejs.protocol.TernDoc;
+import tern.server.protocol.TernDoc;
 
 public class SendBuffer {
 

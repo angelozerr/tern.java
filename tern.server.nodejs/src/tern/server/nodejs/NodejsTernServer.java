@@ -5,35 +5,67 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.simple.JSONObject;
 
+import tern.TernProject;
 import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
-import tern.server.nodejs.protocol.TernCompletionQuery;
-import tern.server.nodejs.protocol.TernDoc;
-import tern.server.nodejs.protocol.TernProtocolHelper;
+import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.NodejsProcessAdapter;
+import tern.server.nodejs.process.NodejsProcessListener;
+import tern.server.nodejs.process.NodejsProcessManager;
+import tern.server.protocol.TernCompletionQuery;
+import tern.server.protocol.TernDoc;
 
 public class NodejsTernServer implements ITernServer {
 
-	private TernProject project;
+	private final TernProject project;
 
-	private final String baseURL;
-
-	private final File projectDir;
+	private String baseURL;
 
 	private List<IInterceptor> interceptors;
 
-	public NodejsTernServer(int port, File projectDir) {
-		this.projectDir = projectDir;
-		this.baseURL = "http://localhost:" + port + "/";
+	private NodejsProcess process;
+	private List<NodejsProcessListener> listeners;
+
+	private long timeout = 1000;
+
+	private final NodejsProcessListener listener = new NodejsProcessAdapter() {
+
+		@Override
+		public void onStop(NodejsProcess server) {
+			NodejsTernServer.this.baseURL = null;
+			NodejsTernServer.this.process = null;
+		}
+
+	};
+
+	public NodejsTernServer(File projectDir, int port) {
+		this(new TernProject(projectDir), port);
+	}
+
+	public NodejsTernServer(TernProject project, int port) {
+		this.project = project;
+		this.baseURL = computeBaseURL(port);
+	}
+
+	public NodejsTernServer(TernProject project) {
+		this(project, NodejsProcessManager.getInstance().create(
+				project.getProjectDir()));
+	}
+
+	public NodejsTernServer(TernProject project, NodejsProcess process) {
+		this.project = project;
+		this.process = process;
+		process.addProcessListener(listener);
+	}
+
+	private String computeBaseURL(Integer port) {
+		return new StringBuilder("http://localhost:").append(port).append("/")
+				.toString();
 	}
 
 	@Override
@@ -44,22 +76,14 @@ public class NodejsTernServer implements ITernServer {
 
 	@Override
 	public void addDef(TernDef def) throws IOException {
-		initializeProjectIfNeeded();
 		project.addLib(def.name());
 		project.save();
 	}
 
 	@Override
 	public void addPlugin(TernPlugin plugin) throws IOException {
-		initializeProjectIfNeeded();
 		project.addPlugin(plugin);
 		project.save();
-	}
-
-	private void initializeProjectIfNeeded() {
-		if (project == null) {
-			setProject(new TernProject(projectDir));
-		}
 	}
 
 	@Override
@@ -73,9 +97,9 @@ public class NodejsTernServer implements ITernServer {
 		TernDoc t = new TernDoc();
 		t.addFile(doc.getName(), doc.getValue(), null);
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
-					interceptors, "sendDoc", this);
-		} catch (IOException e) {
+			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), t,
+					false, interceptors, "sendDoc", this);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -86,9 +110,9 @@ public class NodejsTernServer implements ITernServer {
 		TernDoc t = new TernDoc();
 		t.addFile(doc.getName(), doc.getValue(), null);
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
-					interceptors, "registerDoc", this);
-		} catch (IOException e) {
+			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), t,
+					false, interceptors, "registerDoc", this);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -117,23 +141,24 @@ public class NodejsTernServer implements ITernServer {
 			// non changes, the js doc must not reparsed.
 			query.setFile(doc.getName());
 		}
-		try {
-			JSONObject json = TernProtocolHelper.makeRequest(baseURL, t, false,
-					interceptors, "requestCompletion", this);
-			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
-		} catch (IOException e) {
-			handler.onError(e.getMessage());
-		}
+		request(t, handler, dataAsJson);
 		doc.setChanged(false);
 
 	}
 
-	public TernProject getProject() {
-		return project;
+	@Override
+	public void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson) {
+		try {
+			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), doc,
+					false, interceptors, "requestCompletion", this);
+			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
+		} catch (Exception e) {
+			handler.onError(e.getMessage());
+		}
 	}
 
-	public void setProject(TernProject project) {
-		this.project = project;
+	public TernProject getProject() {
+		return project;
 	}
 
 	public void addInterceptor(IInterceptor interceptor) {
@@ -141,6 +166,42 @@ public class NodejsTernServer implements ITernServer {
 			interceptors = new ArrayList<IInterceptor>();
 		}
 		interceptors.add(interceptor);
+	}
+
+	public String getBaseURL() throws InterruptedException, IOException {
+		if (baseURL == null) {
+			int port = getProcess().start(timeout);
+			this.baseURL = computeBaseURL(port);
+		}
+		return baseURL;
+	}
+
+	private NodejsProcess getProcess() {
+		if (process != null) {
+			return process;
+		}
+		process = NodejsProcessManager.getInstance().create(
+				project.getProjectDir());
+		return process;
+	}
+
+	public void addProcessListener(NodejsProcessListener listener) {
+		if (listeners == null) {
+			listeners = new ArrayList<NodejsProcessListener>();
+		}
+		listeners.add(listener);
+		if (process != null) {
+			process.addProcessListener(listener);
+		}
+	}
+
+	public void removeProcessListener(NodejsProcessListener listener) {
+		if (listeners != null && listener != null) {
+			listeners.remove(listener);
+		}
+		if (process != null) {
+			process.removeProcessListener(listener);
+		}
 	}
 
 }

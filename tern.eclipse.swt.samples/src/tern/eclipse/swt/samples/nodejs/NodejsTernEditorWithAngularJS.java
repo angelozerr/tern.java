@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import tern.TernProject;
 import tern.doc.IJSDocument;
 import tern.eclipse.jface.nodejs.NodejsTernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
@@ -40,6 +41,7 @@ import tern.server.TernPlugin;
 import tern.server.nodejs.LoggingInterceptor;
 import tern.server.nodejs.NodejsTernServer;
 import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.nodejs.process.PrintNodejsProcessListener;
 import tern.utils.IOUtils;
 
@@ -60,19 +62,17 @@ public class NodejsTernEditorWithAngularJS {
 	}
 
 	private void createUI() throws IOException, InterruptedException {
-
-		int port = 12345;
-
 		File nodejsTernBaseDir = new File("../tern.server.nodejs");
+		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
+
 		File projectDir = new File(".");
-		NodejsProcess nodejs = new NodejsProcess(nodejsTernBaseDir, projectDir);
-		nodejs.setPort(port);
-		nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
+		TernProject project = new TernProject(projectDir);
 
-		nodejs.start();
+		// nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
 
-		this.server = new NodejsTernServer(12345, projectDir);
+		this.server = new NodejsTernServer(project);
 		((NodejsTernServer) server).addInterceptor(new LoggingInterceptor());
+		((NodejsTernServer) server).addProcessListener(PrintNodejsProcessListener.getInstance());
 
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
@@ -105,6 +105,7 @@ public class NodejsTernEditorWithAngularJS {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
+		NodejsProcessManager.getInstance().dispose();
 		display.dispose();
 	}
 

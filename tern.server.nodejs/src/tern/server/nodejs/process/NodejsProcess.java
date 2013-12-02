@@ -20,10 +20,11 @@ public class NodejsProcess {
 
 	private List<NodejsProcessListener> listeners;
 
+	private final Object lock = new Object();
+
 	public NodejsProcess(File nodejsTernBaseDir, File projectDir) {
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
-
 	}
 
 	private File getNodejsTernFile(File nodejsTernBaseDir) {
@@ -31,13 +32,13 @@ public class NodejsProcess {
 	}
 
 	public void start() throws IOException, InterruptedException {
-		if (process != null) {
+		if (isStarted()) {
 			throw new IOException("Nodejs tern Server is already started.");
 		}
 		List<String> commands = createCommands();
 		ProcessBuilder builder = new ProcessBuilder(commands);
 		builder.redirectErrorStream(true);
-		final Process process = builder.start();
+		this.process = builder.start();
 
 		processThread = new Thread(new Runnable() {
 			@Override
@@ -58,6 +59,10 @@ public class NodejsProcess {
 											"Listening on port ".length(),
 											line.length()));
 									setPort(port);
+
+									synchronized (lock) {
+										lock.notifyAll();
+									}
 
 									if (listeners != null) {
 										for (NodejsProcessListener listener : listeners) {
@@ -83,6 +88,7 @@ public class NodejsProcess {
 							listener.onStop(NodejsProcess.this);
 						}
 					}
+					kill();
 				} catch (InterruptedException e) {
 					Thread.currentThread().interrupt();
 				}
@@ -122,6 +128,20 @@ public class NodejsProcess {
 		return port;
 	}
 
+	public int start(long timeout) throws InterruptedException, IOException {
+		if (!isStarted()) {
+			start();
+		}
+		synchronized (lock) {
+			lock.wait(timeout);
+		}
+		return getPort();
+	}
+
+	public boolean isStarted() {
+		return process != null;
+	}
+
 	public void setPort(Integer port) {
 		this.port = port;
 	}
@@ -156,4 +176,5 @@ public class NodejsProcess {
 			listeners.remove(listener);
 		}
 	}
+
 }

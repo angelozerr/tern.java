@@ -13,6 +13,7 @@ import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
+import tern.server.protocol.TernDoc;
 import tern.server.rhino.loader.ClassPathScriptLoader;
 import tern.server.rhino.loader.IScriptLoader;
 import tern.utils.IOUtils;
@@ -193,6 +194,11 @@ public class RhinoTernServer implements ITernServer {
 			// Exit from the context.
 			Context.exit();
 		}
+	}
+	
+	@Override
+	public void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson) {
+		
 	}
 
 	public void loadJS(File baseDir) {
