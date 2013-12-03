@@ -195,10 +195,11 @@ public class RhinoTernServer implements ITernServer {
 			Context.exit();
 		}
 	}
-	
+
 	@Override
-	public void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson) {
-		
+	public void request(TernDoc doc, IResponseHandler handler,
+			String methodName, boolean dataAsJson) {
+
 	}
 
 	public void loadJS(File baseDir) {

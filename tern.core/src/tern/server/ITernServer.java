@@ -18,9 +18,10 @@ public interface ITernServer {
 	void sendDoc(IJSDocument doc, IResponseHandler handler);
 
 	void registerDoc(IJSDocument doc);
-
-	void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson);
 	
 	void requestCompletion(IJSDocument doc, IResponseHandler handler,
+			boolean dataAsJson);
+
+	void request(TernDoc doc, IResponseHandler handler, String methodName,
 			boolean dataAsJson);
 }

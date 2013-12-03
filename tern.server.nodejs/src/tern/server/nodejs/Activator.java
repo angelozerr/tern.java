@@ -2,6 +2,7 @@ package tern.server.nodejs;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.FileLocator;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -24,9 +25,9 @@ public class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
-		File nodejsTernBaseDir = new File(bundleContext.getBundle().getLocation());
-		NodejsProcessManager.getInstance().init(
-				nodejsTernBaseDir);
+		File nodejsTernBaseDir = FileLocator.getBundleFile(bundleContext
+				.getBundle());
+		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 	}
 
 	/*

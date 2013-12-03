@@ -141,16 +141,16 @@ public class NodejsTernServer implements ITernServer {
 			// non changes, the js doc must not reparsed.
 			query.setFile(doc.getName());
 		}
-		request(t, handler, dataAsJson);
+		request(t, handler, "requestCompletion", dataAsJson);
 		doc.setChanged(false);
 
 	}
 
 	@Override
-	public void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson) {
+	public void request(TernDoc doc, IResponseHandler handler, String methodName, boolean dataAsJson) {
 		try {
 			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), doc,
-					false, interceptors, "requestCompletion", this);
+					false, interceptors, methodName, this);
 			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
 		} catch (Exception e) {
 			handler.onError(e.getMessage());
