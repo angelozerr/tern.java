@@ -7,4 +7,8 @@ public class TernException extends Exception {
 	public TernException(String message) {
 		super(message);
 	}
+
+	public TernException(Throwable e) {
+		super(e);
+	}
 }

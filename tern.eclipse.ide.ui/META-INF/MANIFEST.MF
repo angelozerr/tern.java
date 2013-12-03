@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  tern.eclipse.ide.core;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: tern.eclipse.ide.internal.ui.TernUIPlugin

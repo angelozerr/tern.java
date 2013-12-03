@@ -7,9 +7,11 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 
+import tern.TernException;
 import tern.TernProject;
 import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
+import tern.server.ITernCompletionCollector;
 import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
@@ -97,8 +99,7 @@ public class NodejsTernServer implements ITernServer {
 		TernDoc t = new TernDoc();
 		t.addFile(doc.getName(), doc.getValue(), null);
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), t,
-					false, interceptors, "sendDoc", this);
+			JSONObject json = makeRequest(t);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,8 +111,7 @@ public class NodejsTernServer implements ITernServer {
 		TernDoc t = new TernDoc();
 		t.addFile(doc.getName(), doc.getValue(), null);
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), t,
-					false, interceptors, "registerDoc", this);
+			JSONObject json = makeRequest(t);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,20 +141,27 @@ public class NodejsTernServer implements ITernServer {
 			// non changes, the js doc must not reparsed.
 			query.setFile(doc.getName());
 		}
-		request(t, handler, "requestCompletion", dataAsJson);
+		request(t, handler, dataAsJson);
 		doc.setChanged(false);
 
 	}
 
 	@Override
-	public void request(TernDoc doc, IResponseHandler handler, String methodName, boolean dataAsJson) {
+	public void request(TernDoc doc, IResponseHandler handler,
+			boolean dataAsJson) {
 		try {
-			JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), doc,
-					false, interceptors, methodName, this);
+			JSONObject json = makeRequest(doc);
 			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
 		} catch (Exception e) {
 			handler.onError(e.getMessage());
 		}
+	}
+
+	private JSONObject makeRequest(TernDoc doc) throws IOException,
+			InterruptedException {
+		JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), doc,
+				false, interceptors, this);
+		return json;
 	}
 
 	public TernProject getProject() {
@@ -182,6 +189,7 @@ public class NodejsTernServer implements ITernServer {
 		}
 		process = NodejsProcessManager.getInstance().create(
 				project.getProjectDir());
+		process.addProcessListener(listener);
 		return process;
 	}
 
@@ -204,4 +212,38 @@ public class NodejsTernServer implements ITernServer {
 		}
 	}
 
+	@Override
+	public void request(TernDoc doc, ITernCompletionCollector collector)
+			throws TernException {
+		try {
+			JSONObject jsonObject = makeRequest(doc);
+			if (jsonObject != null) {
+				Long startCh = getCh(jsonObject, "start");
+				Long endCh = getCh(jsonObject, "end");
+				int pos = 0;
+				if (startCh != null && endCh != null) {
+					pos = endCh.intValue() - startCh.intValue();
+				}
+				List completions = (List) jsonObject.get("completions");
+				for (Object object : completions) {
+					addProposal((JSONObject) object, pos, collector);
+				}
+			}
+		} catch (Throwable e) {
+			throw new TernException(e);
+		}
+	}
+
+	protected void addProposal(JSONObject completion, int pos,
+			ITernCompletionCollector collector) {
+		String name = completion.get("name").toString();
+		String type = completion.get("type").toString();
+		Object doc = completion.get("doc");
+		collector.addProposal(name, type, doc, pos);
+	}
+
+	private Long getCh(JSONObject data, String pos) {
+		JSONObject loc = (JSONObject) data.get(pos);
+		return loc != null ? (Long) loc.get("ch") : null;
+	}
 }

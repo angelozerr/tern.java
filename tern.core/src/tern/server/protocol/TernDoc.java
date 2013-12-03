@@ -31,4 +31,8 @@ public class TernDoc extends JSONObject {
 		files.add(new TernFile(name, text, offset));
 	}
 
+	public TernQuery getQuery() {
+		return (TernQuery)super.get("query");
+	}
+
 }

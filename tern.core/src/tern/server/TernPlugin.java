@@ -13,4 +13,8 @@ public enum TernPlugin {
 	public String getPath() {
 		return path;
 	}
+	
+	public String getName() {
+		return name();
+	}
 }

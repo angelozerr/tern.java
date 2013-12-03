@@ -1,5 +1,9 @@
-package tern.server.nodejs;
+package tern.eclipse.internal;
 
+import java.io.File;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -7,8 +11,6 @@ import tern.server.nodejs.process.NodejsProcessManager;
 
 public class Activator implements BundleActivator {
 
-	public static final String PLUGIN_ID = "tern.server.nodejs";
-	
 	private static BundleContext context;
 
 	static BundleContext getContext() {
@@ -24,6 +26,9 @@ public class Activator implements BundleActivator {
 	 */
 	public void start(BundleContext bundleContext) throws Exception {
 		Activator.context = bundleContext;
+		File nodejsTernBaseDir = FileLocator.getBundleFile(Platform
+				.getBundle(tern.server.nodejs.Activator.PLUGIN_ID));
+		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 	}
 
 	/*

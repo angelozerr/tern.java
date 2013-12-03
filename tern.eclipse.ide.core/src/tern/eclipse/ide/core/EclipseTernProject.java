@@ -35,7 +35,7 @@ public class EclipseTernProject extends TernProject {
 	private ITernServer ternServer;
 
 	EclipseTernProject(IProject project) throws CoreException {
-		super(project.getFullPath().toFile());
+		super(project.getLocation().toFile());
 		this.project = project;
 		project.setSessionProperty(TERN_PROJECT, this);
 	}
@@ -58,8 +58,11 @@ public class EclipseTernProject extends TernProject {
 		if (ternServer == null) {
 			// TODO : manage implementation of tern server (Nodejs, Rhino, etc)
 			this.ternServer = new NodejsTernServer(this);
-			((NodejsTernServer) ternServer).addInterceptor(new LoggingInterceptor());
-			((NodejsTernServer) ternServer).addProcessListener(PrintNodejsProcessListener.getInstance());
+			((NodejsTernServer) ternServer)
+					.addInterceptor(new LoggingInterceptor());
+			((NodejsTernServer) ternServer)
+					.addProcessListener(PrintNodejsProcessListener
+							.getInstance());
 		}
 		return ternServer;
 	}

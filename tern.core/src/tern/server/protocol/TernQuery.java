@@ -15,8 +15,12 @@ public class TernQuery extends JSONObject {
 	public void setEnd(Integer pos) {
 		super.put("end", pos);
 	}
-	
+
 	public void setLineCharPositions(boolean lineCharPositions) {
 		super.put("lineCharPositions", lineCharPositions);
+	}
+
+	public String getType() {
+		return (String) super.get("type");
 	}
 }

@@ -38,6 +38,7 @@ public class NodejsProcess {
 		List<String> commands = createCommands();
 		ProcessBuilder builder = new ProcessBuilder(commands);
 		builder.redirectErrorStream(true);
+		builder.directory(getProjectDir());
 		this.process = builder.start();
 
 		processThread = new Thread(new Runnable() {

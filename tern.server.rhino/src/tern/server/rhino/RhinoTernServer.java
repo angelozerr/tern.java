@@ -8,8 +8,10 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 
+import tern.TernException;
 import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
+import tern.server.ITernCompletionCollector;
 import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
@@ -198,7 +200,7 @@ public class RhinoTernServer implements ITernServer {
 
 	@Override
 	public void request(TernDoc doc, IResponseHandler handler,
-			String methodName, boolean dataAsJson) {
+			boolean dataAsJson) {
 
 	}
 
@@ -238,5 +240,12 @@ public class RhinoTernServer implements ITernServer {
 			}
 		}
 
+	}
+	
+	@Override
+	public void request(TernDoc doc, ITernCompletionCollector collector)
+			throws TernException {
+		// TODO Auto-generated method stub
+		
 	}
 }

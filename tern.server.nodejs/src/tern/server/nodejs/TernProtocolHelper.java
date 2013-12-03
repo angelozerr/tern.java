@@ -18,12 +18,15 @@ import org.json.simple.parser.ParseException;
 
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.TernQuery;
 
 public class TernProtocolHelper {
 
 	public static JSONObject makeRequest(String baseURL, TernDoc doc,
-			boolean silent, List<IInterceptor> interceptors, String methodName,
-			ITernServer server) throws IOException {
+			boolean silent, List<IInterceptor> interceptors, ITernServer server)
+			throws IOException {
+		TernQuery query = doc.getQuery();
+		String methodName = query != null ? query.getType() : "";
 		long starTime = 0;
 		if (interceptors != null) {
 			starTime = System.currentTimeMillis();

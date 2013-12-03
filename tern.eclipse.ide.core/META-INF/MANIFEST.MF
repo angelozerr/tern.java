@@ -9,7 +9,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  tern.core;bundle-version="1.0.0",
- tern.server.nodejs;bundle-version="1.0.0"
+ tern.server.nodejs;bundle-version="1.0.0",
+ tern.eclipse;bundle-version="1.0.0"
 Export-Package: tern.eclipse.ide.core
 Bundle-ActivationPolicy: lazy
 Import-Package: org.json.simple
+Bundle-Activator: tern.eclipse.ide.internal.core.TernCorePlugin

@@ -36,7 +36,7 @@ public class TernProject extends JSONObject {
 	}
 
 	public void addPlugin(TernPlugin plugin) {
-		this.plugins.put(plugin.name(), "./");
+		this.plugins.put(plugin.getName(), "../");
 	}
 
 	public void addLoadEagerlyPattern(String pattern) {
