@@ -16,6 +16,7 @@
 		<module>tern.eclipse.ide.core</module>
 		<module>tern.eclipse.ide.ui</module>
 		<module>tern.server.nodejs</module>
+		<module>tern.eclipse.jsdt</module>
 		<module>tern.repository</module>
 	</modules>
 	<build>
