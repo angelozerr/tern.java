@@ -10,14 +10,8 @@
 		<tycho-version>0.19.0</tycho-version>
 	</properties>
 	<modules>
-		 <module>tern.core</module> 
-		<module>tern.server.rhino</module>
-		<module>tern.eclipse</module>
-		<module>tern.eclipse.ide.core</module>
-		<module>tern.eclipse.ide.ui</module>
-		<module>tern.server.nodejs</module>
-		<module>tern.eclipse.jsdt</module>
-		<module>tern.repository</module>
+		<module>core</module>
+		<module>eclipse</module>
 	</modules>
 	<build>
 		<defaultGoal>clean install</defaultGoal>
