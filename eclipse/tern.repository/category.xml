@@ -34,7 +34,7 @@
    <bundle id="tern.eclipse.ide.server.rhino.core" version="1.0.0.qualifier">
       <category name="Tern"/>
    </bundle>
-   <bundle id="tern.eclipse.jsdt" version="1.0.0.qualifier">
+   <bundle id="tern.eclipse.ide.jsdt" version="1.0.0.qualifier">
       <category name="Tern"/>
    </bundle>
    <category-def name="Tern" label="Tern">
