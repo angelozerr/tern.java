@@ -10,3 +10,4 @@ Require-Bundle: tern.eclipse.ide.server.nodejs.core;bundle-version="1.0.0"
 Eclipse-PlatformFilter: (& (osgi.ws=win32) (osgi.os=win32) (osgi.arch=
  x86))
 Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir
