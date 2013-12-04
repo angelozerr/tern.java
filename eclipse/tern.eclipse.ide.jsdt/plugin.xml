@@ -23,8 +23,8 @@
 	<extension point="org.eclipse.wst.jsdt.ui.javaCompletionProposalComputer"
 	   id="TernCompletionProposalComputer">
 	   <javaCompletionProposalComputer
-	      class="tern.eclipse.jsdt.internal.TernCompletionProposalComputer"
-	      categoryId="tern.eclipse.jsdt.TernCompletionProposalCategory">
+	      class="tern.eclipse.ide.jsdt.internal.TernCompletionProposalComputer"
+	      categoryId="tern.eclipse.ide.jsdt.TernCompletionProposalCategory">
 	   </javaCompletionProposalComputer>
 	 </extension>
 	 

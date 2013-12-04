@@ -1,4 +1,4 @@
-package tern.eclipse.jsdt.internal;
+package tern.eclipse.ide.jsdt.internal;
 
 import java.util.Arrays;
 import java.util.List;
