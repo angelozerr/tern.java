@@ -16,7 +16,7 @@ import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.server.nodejs.process.NodejsProcess;
-import tern.server.nodejs.process.NodejsProcessAdapter;
+import tern.server.nodejs.process.NodejsProcessListenerAdapter;
 import tern.server.nodejs.process.NodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernCompletionQuery;
@@ -35,7 +35,7 @@ public class NodejsTernServer implements ITernServer {
 
 	private long timeout = 1000;
 
-	private final NodejsProcessListener listener = new NodejsProcessAdapter() {
+	private final NodejsProcessListener listener = new NodejsProcessListenerAdapter() {
 
 		@Override
 		public void onStop(NodejsProcess server) {

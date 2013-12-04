@@ -9,6 +9,7 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.Scriptable;
 
 import tern.TernException;
+import tern.TernProject;
 import tern.doc.IJSDocument;
 import tern.server.IResponseHandler;
 import tern.server.ITernCompletionCollector;
@@ -30,6 +31,10 @@ public class RhinoTernServer implements ITernServer {
 			"acorn/acorn.js", "acorn/acorn_loose.js", "acorn/util/walk.js",
 			"tern/lib/signal.js", "tern/lib/tern.js", "tern/lib/def.js",
 			"tern/lib/comment.js", "tern/lib/infer.js", "tern-server.js" };
+
+	public RhinoTernServer(TernProject project) throws IOException {
+		this();
+	}
 
 	public RhinoTernServer() throws IOException {
 		this(ClassPathScriptLoader.getInstance());
@@ -241,11 +246,11 @@ public class RhinoTernServer implements ITernServer {
 		}
 
 	}
-	
+
 	@Override
 	public void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

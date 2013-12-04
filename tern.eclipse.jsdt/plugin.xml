@@ -15,13 +15,22 @@
 <plugin>
 
 	<extension point="org.eclipse.wst.jsdt.ui.javaCompletionProposalComputer"
-	   id="WordCompletionProposalComputer"
-	   name="Word Completion Proposal Computer">
-	   <javaCompletionProposalComputer
-	      class="tern.eclipse.jsdt.internal.TernProposalComputer"
-	      categoryId="org.eclipse.ui.texteditor.textual_proposals">
-	      <partition type="__java_javadoc"/>
-	   </javaCompletionProposalComputer>
+	   id="TernCompletionProposalCategory"
+	   name="%TernCompletionProposalCategory.name">
+	   <proposalCategory/>
 	 </extension>
 
+	<extension point="org.eclipse.wst.jsdt.ui.javaCompletionProposalComputer"
+	   id="TernCompletionProposalComputer">
+	   <javaCompletionProposalComputer
+	      class="tern.eclipse.jsdt.internal.TernCompletionProposalComputer"
+	      categoryId="tern.eclipse.jsdt.TernCompletionProposalCategory">
+	   </javaCompletionProposalComputer>
+	 </extension>
+	 
+	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
+	 <extension
+	       point="org.eclipse.ui.startup">	       
+	 </extension>
+	 
 </plugin>        

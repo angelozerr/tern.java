@@ -11,6 +11,7 @@ import java.util.List;
 
 public class NodejsProcess {
 
+	private final File nodejsBaseDir;
 	private final File nodejsTernFile;
 	private final File projectDir;
 	private Integer port;
@@ -23,6 +24,12 @@ public class NodejsProcess {
 	private final Object lock = new Object();
 
 	public NodejsProcess(File nodejsTernBaseDir, File projectDir) {
+		this(null, nodejsTernBaseDir, projectDir);
+	}
+
+	public NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir,
+			File projectDir) {
+		this.nodejsBaseDir = nodejsBaseDir;
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
 	}
@@ -101,7 +108,11 @@ public class NodejsProcess {
 
 	protected List<String> createCommands() throws IOException {
 		List<String> commands = new LinkedList<String>();
-		commands.add("node");
+		if (nodejsBaseDir == null) {
+			commands.add("node");
+		} else {
+			commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());
+		}
 		commands.add(nodejsTernFile.getCanonicalPath());
 		Integer port = getPort();
 		if (port != null) {

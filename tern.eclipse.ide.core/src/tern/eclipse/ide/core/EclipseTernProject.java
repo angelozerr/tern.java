@@ -15,7 +15,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 
 import tern.TernProject;
-import tern.eclipse.ide.internal.core.TernCorePlugin;
 import tern.server.ITernServer;
 import tern.server.nodejs.LoggingInterceptor;
 import tern.server.nodejs.NodejsTernServer;

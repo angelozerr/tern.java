@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+		
+	<extension-point id="nodeJSInstalls" name="%nodeJSInstallsContribution.name"
+		schema="schema/nodeJSInstalls.exsd" />		
+	
+	<!-- Tern Nodejs server type -->
+	<extension
+		      point="tern.eclipse.ide.core.ternServerTypes">
+     <serverType
+           id="tern.eclipse.ide.server.nodejs"
+           name="%TernNodeJS.name"
+           factory="tern.eclipse.ide.server.nodejs.internal.core.TernNodejsServerFactory">
+     </serverType>
+	</extension>
+	
+</plugin>

@@ -14,8 +14,6 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
 
-import tern.eclipse.ide.internal.core.TernCorePlugin;
-
 /**
  * Eclipse Tern nature with ID "tern.eclipse.ide.core.ternature".
  * 

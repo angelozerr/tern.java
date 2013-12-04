@@ -66,5 +66,15 @@
 		</menuContribution>
 		
 	</extension>
-		  	
+		 
+	<!--Preferences:-->
+    <extension
+       point="org.eclipse.ui.preferencePages">  
+       <!-- Tern Global preferences page -->  
+       <page
+	          class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
+	          id="tern.eclipse.ide.preferences"
+	          name="%TernPreferencePage.name"/>
+	</extension>
+		          		  	
 </plugin>        

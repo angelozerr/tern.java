@@ -25,7 +25,12 @@ public final class TernUIMessages extends NLS {
 
 	private static ResourceBundle fResourceBundle;
 
+	// Commands
 	public static String ConvertProjectToTern_converting_project_job_title;
+
+	// Preferences
+	public static String TernGlobalPreferencesPage_desc;
+	public static String TernGlobalPreferencesPage_serverType;
 
 	private TernUIMessages() {
 	}

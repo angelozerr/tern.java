@@ -43,11 +43,17 @@ public class NodejsProcessManager {
 	}
 
 	public NodejsProcess create(File projectDir) {
-		return create(projectDir, nodejsTernBaseDir);
+		return create(projectDir, null, nodejsTernBaseDir);
 	}
 
-	public NodejsProcess create(File projectDir, File nodejsTernBaseDir) {
-		NodejsProcess process = new NodejsProcess(nodejsTernBaseDir, projectDir);
+	public NodejsProcess create(File projectDir, File nodejsBaseDir) {
+		return create(projectDir, nodejsBaseDir, nodejsTernBaseDir);
+	}
+
+	public NodejsProcess create(File projectDir, File nodejsBaseDir,
+			File nodejsTernBaseDir) {
+		NodejsProcess process = new NodejsProcess(nodejsBaseDir,
+				nodejsTernBaseDir, projectDir);
 		process.addProcessListener(listener);
 		return process;
 	}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+		
+	<!-- Tern Rhino server type -->
+	<extension
+		      point="tern.eclipse.ide.core.ternServerTypes">
+     <serverType
+           id="tern.eclipse.ide.server.rhino"
+           name="%TernRhino.name"
+           factory="tern.eclipse.ide.server.rhino.internal.core.TernRhinoServerFactory">
+     </serverType>
+	</extension>
+	
+</plugin>
