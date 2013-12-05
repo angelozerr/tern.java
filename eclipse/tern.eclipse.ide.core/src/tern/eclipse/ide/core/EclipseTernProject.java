@@ -68,4 +68,13 @@ public class EclipseTernProject extends TernProject {
 		return ternServer;
 	}
 
+	public static boolean hasTernNature(IProject project) {
+		try {
+			return project.hasNature(TernNature.ID);
+		} catch (CoreException e) {
+			Trace.trace(Trace.SEVERE, "Error tern nature", e);
+			return false;
+		}
+	}
+
 }
