@@ -15,10 +15,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
 
 import tern.TernProject;
+import tern.eclipse.ide.internal.core.Trace;
+import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.server.ITernServer;
-import tern.server.nodejs.LoggingInterceptor;
-import tern.server.nodejs.NodejsTernServer;
-import tern.server.nodejs.process.PrintNodejsProcessListener;
 
 /**
  * Eclipse IDE Tern project.
@@ -54,15 +53,19 @@ public class EclipseTernProject extends TernProject {
 	}
 
 	public ITernServer getTernServer() {
-		if (ternServer == null) {
-			// TODO : manage implementation of tern server (Nodejs, Rhino, etc)
-			this.ternServer = new NodejsTernServer(this);
-			((NodejsTernServer) ternServer)
-					.addInterceptor(new LoggingInterceptor());
-			((NodejsTernServer) ternServer)
-					.addProcessListener(PrintNodejsProcessListener
-							.getInstance());
+		if (ternServer == null || ternServer.isDisposed()) {
+			try {
+				ITernServerType type = TernCorePreferencesSupport.getInstance()
+						.getServerType();
+				ITernServerConfiguration configuration = TernCorePreferencesSupport
+						.getInstance().getServerConfiguration(type);
+				this.ternServer = type.createServer(this, configuration);
+			} catch (Exception e) {
+				// should be improved?
+				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
+			}
 		}
 		return ternServer;
 	}
+
 }

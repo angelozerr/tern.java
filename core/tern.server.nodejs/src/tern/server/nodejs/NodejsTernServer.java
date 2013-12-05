@@ -10,19 +10,19 @@ import org.json.simple.JSONObject;
 import tern.TernException;
 import tern.TernProject;
 import tern.doc.IJSDocument;
+import tern.server.AbstractTernServer;
 import tern.server.IResponseHandler;
 import tern.server.ITernCompletionCollector;
-import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.server.nodejs.process.NodejsProcess;
-import tern.server.nodejs.process.NodejsProcessListenerAdapter;
 import tern.server.nodejs.process.NodejsProcessListener;
+import tern.server.nodejs.process.NodejsProcessListenerAdapter;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernCompletionQuery;
 import tern.server.protocol.TernDoc;
 
-public class NodejsTernServer implements ITernServer {
+public class NodejsTernServer extends AbstractTernServer {
 
 	private final TernProject project;
 
@@ -246,4 +246,13 @@ public class NodejsTernServer implements ITernServer {
 		JSONObject loc = (JSONObject) data.get(pos);
 		return loc != null ? (Long) loc.get("ch") : null;
 	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (process != null) {
+			process.kill();
+		}
+	}
+
 }

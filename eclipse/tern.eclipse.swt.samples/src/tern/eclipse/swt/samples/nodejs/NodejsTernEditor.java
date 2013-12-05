@@ -24,6 +24,7 @@ import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.nodejs.NodejsTernServer;
 import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.nodejs.process.PrintNodejsProcessListener;
 
 public class NodejsTernEditor {
@@ -44,7 +45,8 @@ public class NodejsTernEditor {
 
 		File nodejsTernBaseDir = new File("../tern.server.nodejs");
 		File projectDir = new File(".");
-		NodejsProcess nodejs = new NodejsProcess(nodejsTernBaseDir, projectDir);
+		NodejsProcess nodejs = NodejsProcessManager.getInstance().create(
+				nodejsTernBaseDir, projectDir);
 		nodejs.setPort(port);
 		nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
 

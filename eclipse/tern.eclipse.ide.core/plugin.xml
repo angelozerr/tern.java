@@ -28,4 +28,12 @@
 			</run>
 		</runtime>
 	</extension>	
+	
+	<!-- Preferences initialization -->
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer
+			class="tern.eclipse.ide.internal.core.preferences.TernCorePreferenceInitializer" />
+	</extension>
+	
 </plugin>        

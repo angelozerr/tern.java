@@ -11,6 +11,7 @@
 package tern.eclipse.ide.core;
 
 import java.io.File;
+import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -18,6 +19,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
+import tern.server.ITernServer;
 import tern.server.nodejs.process.NodejsProcessManager;
 
 public class TernCorePlugin extends Plugin {
@@ -36,19 +38,21 @@ public class TernCorePlugin extends Plugin {
 	}
 
 	@Override
-	public void start(BundleContext context) throws Exception {		
+	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		
-		// Initialize the NodeJs tern base dir usefull if (if tern.eclipse is not started).
+
+		// Initialize the NodeJs tern base dir usefull if (if tern.eclipse is
+		// not started).
 		File nodejsTernBaseDir = FileLocator.getBundleFile(Platform
 				.getBundle(tern.server.nodejs.Activator.PLUGIN_ID));
-		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);		
+		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 	}
-	
+
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+		NodejsProcessManager.getInstance().dispose();
 		TernServerTypeManager.getManager().destroy();
 	}
 
@@ -60,9 +64,9 @@ public class TernCorePlugin extends Plugin {
 	public static TernCorePlugin getDefault() {
 		return plugin;
 	}
-	
+
 	public static ITernServerTypeManager getTernServerTypeManager() {
 		return TernServerTypeManager.getManager();
 	}
-	
+
 }

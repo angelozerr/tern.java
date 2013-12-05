@@ -1,6 +1,6 @@
-package tern.eclipse.ide.internal.ui.preferences;
+package tern.eclipse.ide.core;
 
-public class TernUIPreferenceNames {
+public class TernCoreConstants {
 
 	public static final String TERN_SERVER_TYPE = "ternServerType"; //$NON-NLS-1$
 	

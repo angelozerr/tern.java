@@ -8,6 +8,8 @@ import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 
 public class NodejsInstall implements INodejsInstall {
 
+	public static final String NODE_NATIVE = "node-native";
+	
 	private final String id;
 	private final String name;
 	private File path;
@@ -42,5 +44,9 @@ public class NodejsInstall implements INodejsInstall {
 
 	public void dispose() {
 
+	}
+	
+	public boolean isNative() {
+		return NODE_NATIVE.equals(getId());
 	}
 }

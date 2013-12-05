@@ -28,4 +28,8 @@ public interface ITernServer {
 	void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException;
 
+	boolean isDisposed();
+	
+	void dispose();
+
 }

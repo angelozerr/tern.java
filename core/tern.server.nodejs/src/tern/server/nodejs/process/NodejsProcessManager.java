@@ -67,14 +67,16 @@ public class NodejsProcessManager {
 	}
 
 	public void dispose() {
-		List<NodejsProcess> processes = new ArrayList<NodejsProcess>(
-				this.processes);
-		for (NodejsProcess server : processes) {
-			try {
-				server.kill();
-			} catch (Throwable e) {
-				e.printStackTrace();
+		synchronized (processes) {
+			for (NodejsProcess server : processes) {
+				try {
+					server.kill();
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
 			}
+			processes.clear();
 		}
 	}
+
 }

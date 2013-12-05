@@ -1,5 +1,6 @@
 package tern.eclipse.ide.core;
 
+
 /**
  * Tern server type manager API.
  * 
@@ -29,5 +30,7 @@ public interface ITernServerTypeManager {
 	 *         server type with the given id
 	 */
 	ITernServerType findTernServerType(String id);
+
+	void refresh();
 
 }

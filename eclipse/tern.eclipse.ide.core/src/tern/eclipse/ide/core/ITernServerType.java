@@ -10,9 +10,12 @@
  *******************************************************************************/
 package tern.eclipse.ide.core;
 
+import tern.TernProject;
+import tern.server.ITernServer;
+
 /**
  * Tern server type API.
- *
+ * 
  */
 public interface ITernServerType {
 
@@ -35,5 +38,8 @@ public interface ITernServerType {
 	 */
 	String getName();
 
-	ITernServerFactory getFactory();
+	ITernServer createServer(TernProject project,
+			ITernServerConfiguration configuration) throws Exception;
+
+	void dispose();
 }

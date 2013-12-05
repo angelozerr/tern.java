@@ -11,9 +11,9 @@ import org.mozilla.javascript.Scriptable;
 import tern.TernException;
 import tern.TernProject;
 import tern.doc.IJSDocument;
+import tern.server.AbstractTernServer;
 import tern.server.IResponseHandler;
 import tern.server.ITernCompletionCollector;
-import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.server.protocol.TernDoc;
@@ -21,7 +21,7 @@ import tern.server.rhino.loader.ClassPathScriptLoader;
 import tern.server.rhino.loader.IScriptLoader;
 import tern.utils.IOUtils;
 
-public class RhinoTernServer implements ITernServer {
+public class RhinoTernServer extends AbstractTernServer {
 
 	private final Scriptable ternScope;
 
@@ -252,5 +252,10 @@ public class RhinoTernServer implements ITernServer {
 			throws TernException {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
 	}
 }

@@ -17,7 +17,7 @@ import tern.eclipse.ide.server.nodejs.internal.core.NodejsInstallManager;
 
 public class TernNodejsCorePlugin extends Plugin {
 
-	public static final String PLUGIN_ID = "tern.eclipse.ide.server.core"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "tern.eclipse.ide.server.nodejs.core"; //$NON-NLS-1$
 
 	// The shared instance.
 	private static TernNodejsCorePlugin plugin;
