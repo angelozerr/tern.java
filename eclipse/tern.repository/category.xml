@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <bundle id="com.googlecode.json-simple" version="1.1.1"/>
+   <bundle id="com.googlecode.json-simple" version="1.1.1">
+      <category name="Tern"/>
+   </bundle>
    <bundle id="tern.core" version="1.0.0.qualifier">
       <category name="Tern"/>
    </bundle>
    <bundle id="tern.eclipse" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.server.nodejs" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.server.rhino" version="1.0.0.qualifier">
       <category name="Tern"/>
    </bundle>
    <bundle id="tern.eclipse.ide.core" version="1.0.0.qualifier">
@@ -19,27 +15,48 @@
    <bundle id="tern.eclipse.ide.ui" version="1.0.0.qualifier">
       <category name="Tern"/>
    </bundle>
-   <bundle id="tern.eclipse.ide.server.nodejs.core" version="1.0.0.qualifier">
-      <category name="Tern"/>
+   <bundle id="tern.eclipse.ide.jsdt" version="1.0.0.qualifier">
+      <category name="Tern - JSDT"/>
+   </bundle>      
+   <bundle id="tern.server.rhino" version="1.0.0.qualifier">
+      <category name="Tern server - Rhino"/>
    </bundle>
+   <bundle id="tern.eclipse.ide.server.rhino.core" version="1.0.0.qualifier">
+      <category name="Tern server - Rhino"/>
+   </bundle>      
+   <bundle id="tern.server.nodejs" version="1.0.0.qualifier">
+      <category name="Tern server - Node.js"/>
+   </bundle>
+   <bundle id="tern.eclipse.ide.server.nodejs.core" version="1.0.0.qualifier">
+      <category name="Tern server - Node.js"/>
+   </bundle>
+   <bundle id="tern.eclipse.ide.server.nodejs.ui" version="1.0.0.qualifier">
+      <category name="Tern server - Node.js"/>
+   </bundle>      
    <bundle id="tern.eclipse.ide.server.nodejs.embed.gtk.linux.x86" version="1.0.0.qualifier">
       <category name="Embed Node.js"/>
    </bundle>
    <bundle id="tern.eclipse.ide.server.nodejs.embed.win32.win32.x86" version="1.0.0.qualifier">
       <category name="Embed Node.js"/>
    </bundle>
-   <bundle id="tern.eclipse.ide.server.nodejs.ui" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.server.rhino.core" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.jsdt" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
    <category-def name="Tern" label="Tern">
       <description>
-         Tern plugins
+         Tern core plugins.
+      </description>
+   </category-def>
+   <category-def name="Tern - JSDT" label="Tern - JSDT">
+      <description>
+         Extension of JSDT with Tern.
+      </description>
+   </category-def>   
+   <category-def name="Tern server - Rhino" label="Tern server - Rhino">
+      <description>
+         Execution of the tern.js javascripts is done with Rhino.
+      </description>
+   </category-def>
+   <category-def name="Tern server - Node.js" label="Tern server - Node.js">
+      <description>
+         Execution of the tern.js javascripts is done with Node.js.
       </description>
    </category-def>
    <category-def name="Embed Node.js" label="Embed Node.js">
