@@ -76,5 +76,32 @@
 	          id="tern.eclipse.ide.preferences"
 	          name="%TernPreferencePage.name"/>
 	</extension>
-		          		  	
+
+	<extension
+         point="org.eclipse.ui.propertyPages">		      
+      <page
+            name="%TernMainPropertyPage.name"        
+            class="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"
+            id="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" 
+		          		value="tern.eclipse.ide.core.ternnature"/>
+		     </adapt>         
+         </enabledWhen>
+      </page>
+	  <page
+            name="%TernPluginPropertyPage.name"
+            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
+            class="tern.eclipse.ide.internal.ui.properties.TernPluginPropertyPage"
+            id="tern.eclipse.ide.internal.ui.properties.TernPluginPropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" 
+		          		value="tern.eclipse.ide.core.ternnature"/>
+		     </adapt>         
+         </enabledWhen>
+      </page>      		          		  	
+	</extension>
+      
 </plugin>        
