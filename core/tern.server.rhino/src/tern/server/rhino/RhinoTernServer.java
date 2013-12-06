@@ -3,15 +3,20 @@ package tern.server.rhino;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
+import org.mozilla.javascript.NativeJSON;
+import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import tern.TernException;
 import tern.TernProject;
 import tern.doc.IJSDocument;
 import tern.server.AbstractTernServer;
+import tern.server.DefaultResponseHandler;
 import tern.server.IResponseHandler;
 import tern.server.ITernCompletionCollector;
 import tern.server.TernDef;
@@ -136,20 +141,6 @@ public class RhinoTernServer extends AbstractTernServer {
 				"addPlugin(plugin);})();");
 	}
 
-	public void registerDoc(IJSDocument doc) {
-		Context cx = Context.enter();
-		try {
-			Object jsObject = Context.javaToJS(doc, ternScope);
-			Object functionArgs[] = { jsObject };
-			Object fObj = ternScope.get("registerDoc", ternScope);
-			Function f = (Function) fObj;
-			f.call(cx, ternScope, ternScope, functionArgs);
-		} finally {
-			// Exit from the context.
-			Context.exit();
-		}
-	}
-
 	public void sendDoc(IJSDocument doc, IResponseHandler handler) {
 		Context cx = Context.enter();
 		try {
@@ -182,8 +173,7 @@ public class RhinoTernServer extends AbstractTernServer {
 		}
 	}
 
-	public void requestCompletion(IJSDocument doc, IResponseHandler handler,
-			boolean dataAsJson) {
+	public void requestCompletion(IJSDocument doc, IResponseHandler handler) {
 		Context cx = Context.enter();
 		try {
 			// tern.js checks if file.text is typeof string
@@ -192,7 +182,7 @@ public class RhinoTernServer extends AbstractTernServer {
 			cx.getWrapFactory().setJavaPrimitiveWrap(false);
 
 			Object jsObject = Context.javaToJS(doc, ternScope);
-			Object functionArgs[] = { jsObject, handler, dataAsJson };
+			Object functionArgs[] = { jsObject, handler };
 			Object fObj = ternScope.get("ternHints", ternScope);
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
@@ -201,12 +191,6 @@ public class RhinoTernServer extends AbstractTernServer {
 			// Exit from the context.
 			Context.exit();
 		}
-	}
-
-	@Override
-	public void request(TernDoc doc, IResponseHandler handler,
-			boolean dataAsJson) {
-
 	}
 
 	public void loadJS(File baseDir) {
@@ -248,10 +232,61 @@ public class RhinoTernServer extends AbstractTernServer {
 	}
 
 	@Override
+	public void request(TernDoc doc, IResponseHandler handler) {
+
+		Context cx = Context.enter();
+		try {
+			// tern.js checks if file.text is typeof string
+			// set java primitive wrap to false, otherwise tern.js throws error
+			// ".files[n].text must be a string"
+			cx.getWrapFactory().setJavaPrimitiveWrap(false);
+			
+			//Object jsObject = NativeJSON.parse(cx, ternScope, doc.toJSONString(), null); 
+			Object jsObject = Context.javaToJS(doc.toJSONString(), ternScope);
+			Object functionArgs[] = { jsObject, handler, handler.isDataAsJsonString() };
+			Object fObj = ternScope.get("request2", ternScope);
+			Function f = (Function) fObj;
+			f.call(cx, ternScope, ternScope, functionArgs);
+
+		} finally {
+			// Exit from the context.
+			Context.exit();
+		}
+
+	}
+
+	@Override
 	public void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException {
-		// TODO Auto-generated method stub
+		DefaultResponseHandler handler = new DefaultResponseHandler(
+				true);
+		request(doc, handler);
+		Object data = handler.getData();
+		NativeObject rhinoObject = (NativeObject) data;
+		if (rhinoObject != null) {
+			Double startCh = getCh(rhinoObject, "start");
+			Double endCh = getCh(rhinoObject, "end");
+			int pos = endCh.intValue() - startCh.intValue();
+			List completions = (List) rhinoObject.get("completions",
+					rhinoObject);
+			for (Object object : completions) {
+				
+				addProposal((NativeObject) object, pos, collector);
+			}
+		}
+	}
+	
+	protected void addProposal(NativeObject completion, int pos,
+			ITernCompletionCollector collector) {
+		String name = completion.get("name").toString();
+		String type = completion.get("type").toString();
+		Object doc = completion.get("doc");
+		collector.addProposal(name, type, doc, pos);
+	}
 
+	private Double getCh(NativeObject data, String pos) {
+		NativeObject loc = (NativeObject) data.get(pos, data);
+		return (Double) loc.get("ch", loc);
 	}
 
 	@Override

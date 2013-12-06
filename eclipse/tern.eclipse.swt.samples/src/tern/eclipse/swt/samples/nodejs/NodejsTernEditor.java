@@ -17,13 +17,15 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import tern.TernProject;
 import tern.doc.IJSDocument;
-import tern.eclipse.jface.nodejs.NodejsTernContentProposalProvider;
+import tern.eclipse.jface.TernLabelProvider;
+import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
 import tern.server.ITernServer;
 import tern.server.TernDef;
+import tern.server.nodejs.LoggingInterceptor;
 import tern.server.nodejs.NodejsTernServer;
-import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.nodejs.process.PrintNodejsProcessListener;
 
@@ -41,18 +43,16 @@ public class NodejsTernEditor {
 
 	private void createUI() throws IOException, InterruptedException {
 
-		int port = 12345;
+		File nodejsTernBaseDir = new File("../../core/tern.server.nodejs");
+		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 
-		File nodejsTernBaseDir = new File("../tern.server.nodejs");
 		File projectDir = new File(".");
-		NodejsProcess nodejs = NodejsProcessManager.getInstance().create(
-				nodejsTernBaseDir, projectDir);
-		nodejs.setPort(port);
-		nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
+		TernProject project = new TernProject(projectDir);
+		ITernServer server = new NodejsTernServer(project);
+		((NodejsTernServer) server).addInterceptor(new LoggingInterceptor());
+		((NodejsTernServer) server)
+				.addProcessListener(PrintNodejsProcessListener.getInstance());
 
-		nodejs.start();
-
-		ITernServer server = new NodejsTernServer(projectDir, port);
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
 
@@ -81,20 +81,11 @@ public class NodejsTernEditor {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		// La vraie chose !
 		ContentProposalAdapter adapter = new ContentProposalAdapter(text,
-				new TextContentAdapter(),
-				new NodejsTernContentProposalProvider(document), keyStroke,
-				autoActivationCharacters);
-		// adapter.setLabelProvider(TernLabelProvider.getInstance());
+				new TextContentAdapter(), new TernContentProposalProvider(
+						document), keyStroke, autoActivationCharacters);
+		adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
-		// Text textField = new Text(shell, SWT.BORDER | SWT.MULTI);
-		// new AutoCompleteField(
-		// textField,
-		// new TextContentAdapter(),
-		// new String[] { "autocomplete option 1", "autocomplete option 2" });
-		//
-		// textField.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		saveButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -108,7 +99,7 @@ public class NodejsTernEditor {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		nodejs.kill();
+		server.dispose();
 		display.dispose();
 	}
 

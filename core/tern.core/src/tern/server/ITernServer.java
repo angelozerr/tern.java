@@ -20,16 +20,19 @@ public interface ITernServer {
 
 	void registerDoc(IJSDocument doc);
 
-	void requestCompletion(IJSDocument doc, IResponseHandler handler,
-			boolean dataAsJson);
+	void requestCompletion(IJSDocument doc, IResponseHandler handler);
 
-	void request(TernDoc doc, IResponseHandler handler, boolean dataAsJson);
+	void request(TernDoc doc, IResponseHandler handler);
 
 	void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException;
 
+	boolean isDataAsJsonString();
+
+	void setDataAsJsonString(boolean dataAsJsonString);
+
 	boolean isDisposed();
-	
+
 	void dispose();
 
 }

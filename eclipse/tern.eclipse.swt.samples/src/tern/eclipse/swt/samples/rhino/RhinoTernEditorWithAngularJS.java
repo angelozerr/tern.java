@@ -1,9 +1,7 @@
 package tern.eclipse.swt.samples.rhino;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +28,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import tern.doc.IJSDocument;
-import tern.eclipse.jface.rhino.RhinoTernContentProposalProvider;
+import tern.eclipse.jface.TernLabelProvider;
+import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
 import tern.eclipse.swt.samples.FileTreeContentProvider;
 import tern.eclipse.swt.samples.FileTreeLabelProvider;
@@ -62,7 +61,7 @@ public class RhinoTernEditorWithAngularJS {
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
 		server.addPlugin(TernPlugin.angular);
-		
+
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setSize(800, 500);
@@ -201,27 +200,16 @@ public class RhinoTernEditorWithAngularJS {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		// La vraie chose !
 		ContentProposalAdapter adapter = new ContentProposalAdapter(text,
-				new TextContentAdapter(), new RhinoTernContentProposalProvider(
+				new TextContentAdapter(), new TernContentProposalProvider(
 						document), keyStroke, autoActivationCharacters);
-		// adapter.setLabelProvider(TernLabelProvider.getInstance());
+		adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		return tab;
 	}
 
 	private String readFile(File file) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		String line = null;
-		StringBuilder stringBuilder = new StringBuilder();
-		String ls = System.getProperty("line.separator");
-
-		while ((line = reader.readLine()) != null) {
-			stringBuilder.append(line);
-			stringBuilder.append(ls);
-		}
-
-		return stringBuilder.toString();
+		return IOUtils.toString(new FileInputStream(file));
 	}
 }

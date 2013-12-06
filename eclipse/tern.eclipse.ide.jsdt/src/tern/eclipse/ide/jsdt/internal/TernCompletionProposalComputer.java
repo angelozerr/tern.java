@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.eclipse.ide.jsdt.internal;
 
 import java.util.ArrayList;
@@ -9,20 +19,20 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.jface.text.contentassist.IContextInformation;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
 import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
 
+/**
+ * JSDT completion extension with Tern.
+ */
 import tern.eclipse.ide.core.EclipseTernProject;
+import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.ITernCompletionCollector;
 import tern.server.ITernServer;
 import tern.server.protocol.TernCompletionQuery;
 import tern.server.protocol.TernDoc;
-import tern.utils.IOUtils;
 
 public class TernCompletionProposalComputer implements
 		IJavaCompletionProposalComputer {
@@ -33,8 +43,8 @@ public class TernCompletionProposalComputer implements
 			JavaContentAssistInvocationContext javaContext = (JavaContentAssistInvocationContext) context;
 			IProject project = javaContext.getProject().getProject();
 			if (EclipseTernProject.hasTernNature(project)) {
-				
-				IDocument document = javaContext.getDocument();				
+
+				IDocument document = javaContext.getDocument();
 				IResource resource = javaContext.getCompilationUnit()
 						.getResource();
 				if (resource.getType() == IResource.FILE) {
@@ -59,39 +69,24 @@ public class TernCompletionProposalComputer implements
 
 						if (scriptFile != null && scriptFile.exists()) {
 							String name = scriptFile.getName();
-							/*String text = IOUtils.toString(
-									scriptFile.getContents(),
-									scriptFile.getCharset());*/
+							/*
+							 * String text = IOUtils.toString(
+							 * scriptFile.getContents(),
+							 * scriptFile.getCharset());
+							 */
 							String text = document.get();
 							doc.addFile(name, text, null);
 							query.setFile("#0");
 						}
 
+						final int startOffset = context.getInvocationOffset();
 						ternServer.request(doc, new ITernCompletionCollector() {
 
 							@Override
 							public void addProposal(String name, String type,
 									Object doc, int pos) {
-
-								String replacementString = name;
-								int replacementOffset = 1;
-								int replacementLength = 1;
-								int cursorPosition = 1;
-
-								Image image = null;
-								String displayString = name;
-								IContextInformation contextInformation = null;
-								String additionalProposalInfo = doc != null ? doc
-										.toString() : null;
-
-								ICompletionProposal proposal = new CompletionProposal(
-										replacementString, replacementOffset,
-										replacementLength, cursorPosition,
-										image, displayString,
-										contextInformation,
-										additionalProposalInfo);
-								proposals.add(proposal);
-								// proposals
+								proposals.add(new TernCompletionProposal(name,
+										type, doc, pos, startOffset));
 
 							}
 						});

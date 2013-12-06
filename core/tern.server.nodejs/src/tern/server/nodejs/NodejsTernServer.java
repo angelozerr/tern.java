@@ -90,7 +90,14 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	@Override
 	public void addFile(String name, String text) {
-		// TODO Auto-generated method stub
+		TernDoc t = new TernDoc();
+		t.addFile(name, text, null);
+		try {
+			JSONObject json = makeRequest(t);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -107,20 +114,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void registerDoc(IJSDocument doc) {
-		TernDoc t = new TernDoc();
-		t.addFile(doc.getName(), doc.getValue(), null);
-		try {
-			JSONObject json = makeRequest(t);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void requestCompletion(IJSDocument doc, IResponseHandler handler,
-			boolean dataAsJson) {
+	public void requestCompletion(IJSDocument doc, IResponseHandler handler) {
 
 		TernDoc t = new TernDoc();
 
@@ -141,17 +135,17 @@ public class NodejsTernServer extends AbstractTernServer {
 			// non changes, the js doc must not reparsed.
 			query.setFile(doc.getName());
 		}
-		request(t, handler, dataAsJson);
+		request(t, handler);
 		doc.setChanged(false);
 
 	}
 
 	@Override
-	public void request(TernDoc doc, IResponseHandler handler,
-			boolean dataAsJson) {
+	public void request(TernDoc doc, IResponseHandler handler) {
 		try {
 			JSONObject json = makeRequest(doc);
-			handler.onSuccess(json, dataAsJson ? json.toJSONString() : null);
+			handler.onSuccess(json,
+					handler.isDataAsJsonString() ? json.toJSONString() : null);
 		} catch (Exception e) {
 			handler.onError(e.getMessage());
 		}
