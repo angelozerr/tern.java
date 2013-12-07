@@ -15,4 +15,18 @@
      </serverType>
 	</extension>
 	
+	<!-- Native node.js-->
+	<extension point="tern.eclipse.ide.server.nodejs.core.nodeJSInstalls" >
+		<install id="node-native"
+				 name="%nodeJSInstall.name" 
+				 path="" />
+	 </extension>
+	 	
+	<!-- Preferences initialization -->
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer
+			class="tern.eclipse.ide.server.nodejs.internal.core.preferences.TernNodejsCorePreferenceInitializer" />
+	</extension>
+		 	
 </plugin>

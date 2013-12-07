@@ -166,6 +166,20 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	}
 
 	public void destroy() {
+		List<ITernServerType> types = new ArrayList<ITernServerType>(
+				ternServerTypes);
+		for (ITernServerType type : types) {
+			type.dispose();
+			ternServerTypes.remove(type);
+		}
 		Platform.getExtensionRegistry().removeRegistryChangeListener(this);
 	}
+
+	@Override
+	public void refresh() {
+		for (ITernServerType type : ternServerTypes) {
+			type.dispose();
+		}
+	}
+
 }

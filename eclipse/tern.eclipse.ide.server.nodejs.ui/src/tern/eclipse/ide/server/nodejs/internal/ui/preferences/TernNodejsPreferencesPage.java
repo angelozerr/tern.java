@@ -10,99 +10,70 @@
  *******************************************************************************/
 package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 
-import org.eclipse.jface.preference.PreferencePage;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.preference.ComboFieldEditor;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
+import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
+import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
+import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
 
 /**
- * Tern Nodejs preferences page.
+ * Tern Node.js preferences page.
  * 
  */
-public class TernNodejsPreferencesPage extends PreferencePage implements
-		IWorkbenchPreferencePage {
+public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
+		implements IWorkbenchPreferencePage {
 
-	private Composite createComposite(Composite parent, int numColumns) {
-		noDefaultAndApplyButton();
-
-		Composite composite = new Composite(parent, SWT.NULL);
-
-		// GridLayout
-		GridLayout layout = new GridLayout();
-		layout.numColumns = numColumns;
-		composite.setLayout(layout);
-
-		// GridData
-		GridData data = new GridData(GridData.FILL);
-		data.horizontalIndent = 0;
-		data.verticalAlignment = GridData.FILL;
-		data.horizontalAlignment = GridData.FILL;
-		composite.setLayoutData(data);
-
-		return composite;
+	public TernNodejsPreferencesPage() {
+		super(GRID);
+		setDescription(TernNodejsUIMessages.TernNodejsPreferencesPage_desc);
 	}
 
-	protected Control createContents(Composite parent) {
-		Composite composite = createScrolledComposite(parent);
+	@Override
+	protected void createFieldEditors() {
 
-		String description = TernNodejsUIMessages.TernNodejsPreferencesPage_desc;
-		Text text = new Text(composite, SWT.READ_ONLY);
-		// some themes on GTK have different background colors for Text and
-		// Labels
-		text.setBackground(composite.getBackground());
-		text.setText(description);
+		// Tern Server type combo
+		INodejsInstall[] installs = TernNodejsCorePlugin
+				.getNodejsInstallManager().getNodejsInstalls();
+		String[][] data = new String[installs.length + 1][2];
+		data[0][0] = " -- Choose your node.js install --";
+		data[0][1] = "";
 
-		setSize(composite);
-		return composite;
-	}
-
-	private Composite createScrolledComposite(Composite parent) {
-		// create scrollbars for this parent when needed
-		final ScrolledComposite sc1 = new ScrolledComposite(parent,
-				SWT.H_SCROLL | SWT.V_SCROLL);
-		sc1.setLayoutData(new GridData(GridData.FILL_BOTH));
-		Composite composite = createComposite(sc1, 1);
-		sc1.setContent(composite);
-
-		// not calling setSize for composite will result in a blank composite,
-		// so calling it here initially
-		// setSize actually needs to be called after all controls are created,
-		// so scrolledComposite
-		// has correct minSize
-		setSize(composite);
-		return composite;
-	}
-
-	public void init(IWorkbench workbench) {
-	}
-
-	private void setSize(Composite composite) {
-		if (composite != null) {
-			// Note: The font is set here in anticipation that the class
-			// inheriting
-			// this base class may add widgets to the dialog. setSize
-			// is assumed to be called just before we go live.
-			applyDialogFont(composite);
-			Point minSize = composite.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-			composite.setSize(minSize);
-			// set scrollbar composite's min size so page is expandable but
-			// has scrollbars when needed
-			if (composite.getParent() instanceof ScrolledComposite) {
-				ScrolledComposite sc1 = (ScrolledComposite) composite
-						.getParent();
-				sc1.setMinSize(minSize);
-				sc1.setExpandHorizontal(true);
-				sc1.setExpandVertical(true);
-			}
+		for (int i = 0; i < installs.length; i++) {
+			data[i + 1][0] = installs[i].getName();
+			data[i + 1][1] = installs[i].getId();
 		}
+
+		ComboFieldEditor ternServerEditor = new ComboFieldEditor(
+				TernNodejsCoreConstants.NODEJS_INSTALL,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall,
+				data, getFieldEditorParent());
+		addField(ternServerEditor);
+	}
+
+	@Override
+	public void init(IWorkbench workbench) {
+
+	}
+
+	@Override
+	protected IPreferenceStore doGetPreferenceStore() {
+		IScopeContext scope = new InstanceScope();
+		return new ScopedPreferenceStore(scope, TernNodejsCorePlugin.PLUGIN_ID);
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		super.propertyChange(event);
+		TernCorePlugin.getTernServerTypeManager().refresh();
 	}
 }

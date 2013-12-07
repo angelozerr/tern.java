@@ -10,16 +10,20 @@
  *******************************************************************************/
 package tern.eclipse.ide.internal.ui.preferences;
 
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import tern.eclipse.ide.core.ITernServerType;
-import tern.eclipse.ide.core.ITernServerTypeManager;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.TernCoreConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.TernUIPlugin;
 
 /**
  * Tern Global preferences page.
@@ -30,7 +34,7 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 
 	public TernGlobalPreferencesPage() {
 		super(GRID);
-		super.setPreferenceStore(TernUIPlugin.getDefault().getPreferenceStore());
+		setDescription(TernUIMessages.TernGlobalPreferencesPage_desc);
 	}
 
 	@Override
@@ -39,14 +43,17 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 		// Tern Server type combo
 		ITernServerType[] serverTypes = TernCorePlugin
 				.getTernServerTypeManager().getTernServerTypes();
-		String[][] types = new String[serverTypes.length][2];
+		String[][] types = new String[serverTypes.length + 1][2];
+		types[0][0] = " -- Choose your server type --";
+		types[0][1] = "";
+
 		for (int i = 0; i < serverTypes.length; i++) {
-			types[i][0] = serverTypes[i].getName();
-			types[i][1] = serverTypes[i].getId();
+			types[i + 1][0] = serverTypes[i].getName();
+			types[i + 1][1] = serverTypes[i].getId();
 		}
 
 		ComboFieldEditor ternServerEditor = new ComboFieldEditor(
-				TernUIPreferenceNames.TERN_SERVER_TYPE,
+				TernCoreConstants.TERN_SERVER_TYPE,
 				TernUIMessages.TernGlobalPreferencesPage_serverType, types,
 				getFieldEditorParent());
 		addField(ternServerEditor);
@@ -54,7 +61,34 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 
 	@Override
 	public void init(IWorkbench workbench) {
-		setDescription(TernUIMessages.TernGlobalPreferencesPage_desc);
+
+	}
+
+	@Override
+	protected IPreferenceStore doGetPreferenceStore() {
+		// IProject project = getProject();
+		// ScopedPreferenceStore store;
+		// if (project == null) {
+		// // workspace settings
+		// IScopeContext scope = new InstanceScope();
+		// return new ScopedPreferenceStore(scope, TernCorePlugin.PLUGIN_ID);
+		// } else {
+		// // project settings
+		// IScopeContext projectScope = new ProjectScope(project);
+		// preferences = projectScope.getNode(TernCorePlugin.PLUGIN_ID);
+		// store = new ScopedPreferenceStore(projectScope,
+		// TernCorePlugin.PLUGIN_ID);
+		// }
+		// return store;
+		IScopeContext scope = new InstanceScope();
+		return new ScopedPreferenceStore(scope, TernCorePlugin.PLUGIN_ID);
+
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent event) {
+		super.propertyChange(event);
+		TernCorePlugin.getTernServerTypeManager().refresh();
 	}
 
 }

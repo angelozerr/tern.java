@@ -87,7 +87,20 @@
         handler.onSuccess(data, json);
       });
     
-    }
+    },
+    
+    request2: function (request, handler, dataAsJson) {
+        var self = this;
+        var server = this.getServer();
+        this.server.request(request, function (error, data) {
+          if (error)
+            return handler.onError(error.message || String(error));
+          var json = null;
+          if (dataAsJson)
+            json = JSON.stringify(data);
+          handler.onSuccess(data, json);
+        });      
+      }
   };
 
   function buildRequest(ts, cm, query, allowFragments) {
@@ -173,6 +186,6 @@ function sendDoc(doc, handler) {
   server.sendDoc(d, handler);
 }
 
-function getMyFile(name) {
-  return _server.getFile(name);
+function request2(request, handler, dataAsJson) {
+	server.request2(JSON.parse(request), handler, dataAsJson)
 }

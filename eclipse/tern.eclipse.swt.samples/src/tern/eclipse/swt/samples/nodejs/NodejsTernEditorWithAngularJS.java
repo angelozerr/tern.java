@@ -1,9 +1,7 @@
 package tern.eclipse.swt.samples.nodejs;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +29,8 @@ import org.eclipse.swt.widgets.Text;
 
 import tern.TernProject;
 import tern.doc.IJSDocument;
-import tern.eclipse.jface.nodejs.NodejsTernContentProposalProvider;
+import tern.eclipse.jface.TernLabelProvider;
+import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
 import tern.eclipse.swt.samples.FileTreeContentProvider;
 import tern.eclipse.swt.samples.FileTreeLabelProvider;
@@ -40,7 +39,6 @@ import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.server.nodejs.LoggingInterceptor;
 import tern.server.nodejs.NodejsTernServer;
-import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.nodejs.process.PrintNodejsProcessListener;
 import tern.utils.IOUtils;
@@ -62,17 +60,16 @@ public class NodejsTernEditorWithAngularJS {
 	}
 
 	private void createUI() throws IOException, InterruptedException {
-		File nodejsTernBaseDir = new File("../tern.server.nodejs");
+
+		File nodejsTernBaseDir = new File("../../core/tern.server.nodejs");
 		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 
 		File projectDir = new File(".");
 		TernProject project = new TernProject(projectDir);
-
-		// nodejs.addProcessListener(PrintNodejsProcessListener.getInstance());
-
 		this.server = new NodejsTernServer(project);
 		((NodejsTernServer) server).addInterceptor(new LoggingInterceptor());
-		((NodejsTernServer) server).addProcessListener(PrintNodejsProcessListener.getInstance());
+		((NodejsTernServer) server)
+				.addProcessListener(PrintNodejsProcessListener.getInstance());
 
 		server.addDef(TernDef.browser);
 		server.addDef(TernDef.ecma5);
@@ -105,7 +102,7 @@ public class NodejsTernEditorWithAngularJS {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
-		NodejsProcessManager.getInstance().dispose();
+		server.dispose();
 		display.dispose();
 	}
 
@@ -217,28 +214,16 @@ public class NodejsTernEditorWithAngularJS {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		// La vraie chose !
 		ContentProposalAdapter adapter = new ContentProposalAdapter(text,
-				new TextContentAdapter(),
-				new NodejsTernContentProposalProvider(document), keyStroke,
-				autoActivationCharacters);
-		// adapter.setLabelProvider(TernLabelProvider.getInstance());
+				new TextContentAdapter(), new TernContentProposalProvider(
+						document), keyStroke, autoActivationCharacters);
+		adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		return tab;
 	}
 
 	private String readFile(File file) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(file));
-		String line = null;
-		StringBuilder stringBuilder = new StringBuilder();
-		String ls = System.getProperty("line.separator");
-
-		while ((line = reader.readLine()) != null) {
-			stringBuilder.append(line);
-			stringBuilder.append(ls);
-		}
-
-		return stringBuilder.toString();
+		return IOUtils.toString(new FileInputStream(file));
 	}
 }

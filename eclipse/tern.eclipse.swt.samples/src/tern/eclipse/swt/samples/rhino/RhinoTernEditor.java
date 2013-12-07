@@ -17,7 +17,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import tern.doc.IJSDocument;
-import tern.eclipse.jface.rhino.RhinoTernContentProposalProvider;
+import tern.eclipse.jface.TernLabelProvider;
+import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
 import tern.server.ITernServer;
 import tern.server.TernDef;
@@ -66,19 +67,11 @@ public class RhinoTernEditor {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		// La vraie chose !
 		ContentProposalAdapter adapter = new ContentProposalAdapter(text,
-				new TextContentAdapter(), new RhinoTernContentProposalProvider(
+				new TextContentAdapter(), new TernContentProposalProvider(
 						document), keyStroke, autoActivationCharacters);
-		// adapter.setLabelProvider(TernLabelProvider.getInstance());
+		adapter.setLabelProvider(TernLabelProvider.getInstance());
 		text.setLayoutData(new GridData(GridData.FILL_BOTH));
-		// Text textField = new Text(shell, SWT.BORDER | SWT.MULTI);
-		// new AutoCompleteField(
-		// textField,
-		// new TextContentAdapter(),
-		// new String[] { "autocomplete option 1", "autocomplete option 2" });
-		//
-		// textField.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		saveButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -92,6 +85,7 @@ public class RhinoTernEditor {
 			if (!display.readAndDispatch())
 				display.sleep();
 		}
+		server.dispose();
 		display.dispose();
 	}
 

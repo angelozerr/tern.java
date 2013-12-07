@@ -25,10 +25,12 @@
     var field = this.fields[name] = new infer.AVal;
     return field;
   };
-  Injector.prototype.set = function(name, val, doc, node, depth) {
+  Injector.prototype.set = function(name, val, doc, node, depth, fieldType) {
     if (name == "$scope" || depth && depth > 10) return;
     var field = this.fields[name] || (this.fields[name] = new infer.AVal);
     if (!depth) field.local = true;
+    field.type = fieldType;
+    field.fnType = val.fnType;
     if (!field.origin) field.origin = infer.cx().curOrigin;
     if (typeof node == "string" && !field.span) field.span = node;
     else if (node && typeof node == "object" && !field.originNode) field.originNode = node;
@@ -76,6 +78,7 @@
     }
     var result = new infer.AVal;
     fnType.propagate(new infer.IsCallee(infer.cx().topScope, deps, null, result));
+    result.fnType = fnType
     return result;
   }
 
@@ -87,14 +90,38 @@
     };
   });
 
-  infer.registerFunction("angular_regFieldCall", function(self, args, argNodes) {
+  infer.registerFunction("angular_regFieldCallController", function(self, args, argNodes) {
+    angular_regFieldCall(self, args, argNodes, 'controller')
+  });
+
+  infer.registerFunction("angular_regFieldCallDirective", function(self, args, argNodes) {
+    angular_regFieldCall(self, args, argNodes, 'directive')
+  });
+
+  infer.registerFunction("angular_regFieldCallDecorator", function(self, args, argNodes) {
+    angular_regFieldCall(self, args, argNodes, 'decorator')
+  });
+
+  infer.registerFunction("angular_regFieldCallFactory", function(self, args, argNodes) {
+    angular_regFieldCall(self, args, argNodes, 'factory')
+  });
+  
+  infer.registerFunction("angular_regFieldCallProvider", function(self, args, argNodes) {
+    angular_regFieldCall(self, args, argNodes, 'provider')
+  });
+  
+  infer.registerFunction("angular_regFieldCallService", function(self, args, argNodes) {
+    angular_regFieldCall(self, args, argNodes, 'service')
+  });
+  
+  function angular_regFieldCall(self, args, argNodes, callType) {
     var mod = self.getType();
     if (mod && argNodes && argNodes.length > 1) {
       var result = applyWithInjection(mod, args[1], argNodes[1]);
       if (mod.injector && argNodes[0].type == "Literal")
-        mod.injector.set(argNodes[0].value, result, argNodes[0].angularDoc, argNodes[0]);
+        mod.injector.set(argNodes[0].value, result, argNodes[0].angularDoc, argNodes[0], null, callType);
     }
-  });
+  };
 
   infer.registerFunction("angular_regField", function(self, args, argNodes) {
     var mod = self.getType();
@@ -122,7 +149,7 @@
     var cx = infer.cx(), data = cx.parent._angular;
     var proto = moduleProto(cx);
     var mod = new infer.Obj(proto || true);
-    if (!proto) data.nakedModules.push(mod);
+    if (!proto) data.nakedModules.push(mod);    
     mod.origin = cx.curOrigin;
     mod.injector = new Injector();
     mod.metaData = {includes: includes};
@@ -298,13 +325,13 @@
           constant: "service.$provide.constant",
           controller: {
             "!type": "fn(name: string, constructor: fn()) -> !this",
-            "!effects": ["custom angular_regFieldCall"],
+            "!effects": ["custom angular_regFieldCallController"],
             "!url": "http://docs.angularjs.org/api/ng.$controllerProvider",
             "!doc": "Register a controller."
           },
           directive: {
             "!type": "fn(name: string, directiveFactory: fn()) -> !this",
-            "!effects": ["custom angular_regFieldCall"],
+            "!effects": ["custom angular_regFieldCallDirective"],
             "!url": "http://docs.angularjs.org/api/ng.$compileProvider#directive",
             "!doc": "Register a new directive with the compiler."
           },
@@ -701,25 +728,25 @@
           },
           decorator: {
             "!type": "fn(name: string, decorator: fn())",
-            "!effects": ["custom angular_regFieldCall"],
+            "!effects": ["custom angular_regFieldCallDecorator"],
             "!url": "http://docs.angularjs.org/api/AUTO.$provide#decorator",
             "!doc": "Decoration of service, allows the decorator to intercept the service instance creation."
           },
           factory: {
             "!type": "fn(name: string, providerFunction: fn()) -> !this",
-            "!effects": ["custom angular_regFieldCall"],
+            "!effects": ["custom angular_regFieldCallFactory"],
             "!url": "http://docs.angularjs.org/api/AUTO.$provide#factory",
             "!doc": "A short hand for configuring services if only $get method is required."
           },
           provider: {
             "!type": "fn(name: string, providerType: fn()) -> !this",
-            "!effects": ["custom angular_regFieldCall"],
+            "!effects": ["custom angular_regFieldCallProvider"],
             "!url": "http://docs.angularjs.org/api/AUTO.$provide#provider",
             "!doc": "Register a provider for a service."
           },
           service: {
             "!type": "fn(name: string, constructor: fn()) -> !this",
-            "!effects": ["custom angular_regFieldCall"],
+            "!effects": ["custom angular_regFieldCallService"],
             "!url": "http://docs.angularjs.org/api/AUTO.$provide#provider",
             "!doc": "Register a provider for a service."
           },
@@ -905,4 +932,91 @@
       }
     }
   };
+  
+  function startsWithString(str, token) {
+    return str.slice(0, token.length).toUpperCase() == token.toUpperCase();
+  }
+  
+  function getModule(name, _angular) {
+    for ( var moduleName in _angular.modules) {
+      if (moduleName === name) {
+        return _angular.modules[moduleName];
+      }
+    }    
+  }
+    tern.defineQueryType("angular", {
+    takesFile : true,
+    run : function(server, query, file) {
+      var angularType = query.angularType;
+      var startsWith = query.startsWith;
+      var _angular = server.cx.parent._angular;
+
+      var completions = [];
+      var result = {"completions" : completions}
+      if (angularType == 'module') {
+        var found = [];
+        for ( var moduleName in _angular.modules) {
+          if (startsWithString(moduleName, startsWith)) {
+        	  completions.push({"name" : moduleName, "type" : angularType})
+          }
+        }
+        return result;
+      } else {
+        var moduleName = query.angularModule;
+        if (moduleName) {
+	        var module = getModule(moduleName, _angular);
+	        if (module) {
+	          var fields = module.injector.fields;
+	          for (var fieldName in fields) {
+	            if (startsWithString(fieldName, startsWith)) {
+	              var field = fields[fieldName];
+	              if (field.type === angularType) {
+	            	  completions.push({"name" : fieldName, "type" : angularType})
+	              }
+	            }
+	          }
+	          return result;
+	       }
+        } else {
+    	   var props = file.scope.props;
+    	   if (props) {
+	    	   for (var prop in props) if (prop != "<i>") {
+	    	  		var item = props[prop];
+	    	  		if (item.types && item.types.length > 0) {
+	    	  			for(var i=0; i<item.types.length; i++) {
+	    	  				var type = item.types[i]; 
+	    	  				var argNames = type.argNames;
+	    	  				if (argNames) {
+	    	  					var args = type.args;
+	    		  				var arg = null;
+	    		  				for(var j = 0; j<argNames.length; j++) {
+	    		  					if (argNames[j] =="$scope") {
+	    		  					    arg = args[j];
+	    		  						break;
+	    		  					}
+	    		  				} 
+	    		  				if (arg) {
+	    		  					completions.push({"name" : type.name, "type" : angularType})
+	    		  					//alert(type.name);
+	    		  					var forward = arg.forward;
+	    		  					if (forward) {
+	    		  						var s = '';
+	    		  						for(var j = 0; j<forward.length; j++) {
+	    		  							s+=',';
+	    		  							s+=forward[j].prop;
+	    		  						}
+	    		  						//alert(s);
+	    		  					}
+	    		  				}
+	    	  				}
+	    	  			}
+	    	  		}
+	    	   }
+	    	   return result;
+    	   }
+         }        
+      }
+    }
+  });
+  
 });

@@ -23,12 +23,11 @@ public class NodejsProcess {
 
 	private final Object lock = new Object();
 
-	public NodejsProcess(File nodejsTernBaseDir, File projectDir) {
+	NodejsProcess(File nodejsTernBaseDir, File projectDir) {
 		this(null, nodejsTernBaseDir, projectDir);
 	}
 
-	public NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir,
-			File projectDir) {
+	NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir) {
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
@@ -90,7 +89,9 @@ public class NodejsProcess {
 						e.printStackTrace();
 					}
 
-					process.waitFor();
+					if (process != null) {
+						process.waitFor();
+					}
 					if (listeners != null) {
 						for (NodejsProcessListener listener : listeners) {
 							listener.onStop(NodejsProcess.this);
@@ -127,12 +128,12 @@ public class NodejsProcess {
 	}
 
 	public void kill() {
-		if (processThread != null) {
-			processThread.interrupt();
-		}
 		if (process != null) {
 			process.destroy();
 			process = null;
+		}
+		if (processThread != null) {
+			processThread.interrupt();
 		}
 	}
 

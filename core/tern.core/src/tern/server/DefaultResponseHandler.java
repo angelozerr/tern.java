@@ -6,10 +6,12 @@ public class DefaultResponseHandler implements IResponseHandler {
 
 	private String error;
 	private Object data;
-	private String dataAsJsonString;
+	private boolean dataAsJsonString;
+	private String json;
 
-	public DefaultResponseHandler() {
+	public DefaultResponseHandler(boolean dataAsJsonString) {
 		this.error = null;
+		this.dataAsJsonString = dataAsJsonString;
 	}
 
 	@Override
@@ -18,9 +20,9 @@ public class DefaultResponseHandler implements IResponseHandler {
 	}
 
 	@Override
-	public void onSuccess(Object data, String dataAsJsonString) {
+	public void onSuccess(Object data, String json) {
 		this.data = data;
-		this.dataAsJsonString = dataAsJsonString;
+		this.json = json;
 	}
 
 	public Object getData() throws TernException {
@@ -30,10 +32,15 @@ public class DefaultResponseHandler implements IResponseHandler {
 		return data;
 	}
 
-	public String getDataAsJsonString() throws TernException {
+	public String getJsonString() throws TernException {
 		if (error != null) {
 			throw new TernException(error);
 		}
+		return json;
+	}
+
+	@Override
+	public boolean isDataAsJsonString() {
 		return dataAsJsonString;
 	}
 }
