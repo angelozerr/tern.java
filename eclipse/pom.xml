@@ -12,22 +12,14 @@
 		<module>tern.eclipse</module>
 		<module>tern.eclipse.ide.core</module>
 		<module>tern.eclipse.ide.ui</module>
-<<<<<<< HEAD
-		<module>tern.eclipse.jsdt</module>
-
-		<module>tern.eclipse.ide.server.nodejs.core</module>
-		<module>tern.eclipse.ide.server.nodejs.embed.gtk.linux.x86</module> 
-		<module>tern.eclipse.ide.server.nodejs.embed.win32.win32.x86</module>
-		<module>tern.eclipse.win32.win32.x86.feature</module>
-=======
 		<module>tern.eclipse.ide.jsdt</module>
 		<module>tern.eclipse.ide.server.nodejs.core</module>
 		<module>tern.eclipse.ide.server.nodejs.ui</module>
 		<module>tern.eclipse.ide.server.nodejs.embed.gtk.linux.x86</module>
 		<module>tern.eclipse.ide.server.nodejs.embed.win32.win32.x86</module>
 		<module>tern.eclipse.ide.server.rhino.core</module>
->>>>>>> 65c0283ba7d0658a8dce834d63c149cef22e9d0c
-		<module>tern.repository</module>
+		<module>tern.eclipse.win32.win32.x86.feature</module>
 		<module>tern.eclipse.gtk.linux.x86.feature</module>
+		<module>tern.repository</module>
 	</modules>
 </project>
