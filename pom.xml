@@ -10,6 +10,7 @@
 		<tycho-version>0.19.0</tycho-version>
 	</properties>
 	<modules>
+		<module>org.mozilla.javascript</module>
 		<module>core</module>
 		<module>eclipse</module>
 	</modules>
