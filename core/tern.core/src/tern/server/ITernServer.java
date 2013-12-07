@@ -10,9 +10,9 @@ public interface ITernServer {
 
 	String getFile(String name);
 
-	void addDef(TernDef def) throws IOException;
+	void addDef(ITernDef def) throws IOException;
 
-	void addPlugin(TernPlugin plugin) throws IOException;
+	void addPlugin(ITernPlugin plugin) throws IOException;
 
 	void addFile(String name, String text);
 

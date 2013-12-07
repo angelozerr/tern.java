@@ -13,8 +13,8 @@ import tern.doc.IJSDocument;
 import tern.server.AbstractTernServer;
 import tern.server.IResponseHandler;
 import tern.server.ITernCompletionCollector;
-import tern.server.TernDef;
-import tern.server.TernPlugin;
+import tern.server.ITernDef;
+import tern.server.ITernPlugin;
 import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessListenerAdapter;
@@ -77,13 +77,13 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void addDef(TernDef def) throws IOException {
-		project.addLib(def.name());
+	public void addDef(ITernDef def) throws IOException {
+		project.addLib(def.getName());
 		project.save();
 	}
 
 	@Override
-	public void addPlugin(TernPlugin plugin) throws IOException {
+	public void addPlugin(ITernPlugin plugin) throws IOException {
 		project.addPlugin(plugin);
 		project.save();
 	}

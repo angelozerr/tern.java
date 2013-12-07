@@ -10,6 +10,8 @@
  *******************************************************************************/
 package tern.eclipse.ide.core;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
@@ -44,6 +46,12 @@ public class EclipseTernProject extends TernProject {
 				.getSessionProperty(TERN_PROJECT);
 		if (ternProject == null) {
 			ternProject = new EclipseTernProject(project);
+			try {
+				ternProject.load();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return ternProject;
 	}

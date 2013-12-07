@@ -1,5 +1,6 @@
 package tern.eclipse.ide.core;
 
+import tern.server.ITernPlugin;
 
 /**
  * Tern server type manager API.
@@ -32,5 +33,9 @@ public interface ITernServerTypeManager {
 	ITernServerType findTernServerType(String id);
 
 	void refresh();
+
+	ITernPlugin[] getTernPlugins();
+
+	ITernPlugin findTernPlugin(String name);
 
 }

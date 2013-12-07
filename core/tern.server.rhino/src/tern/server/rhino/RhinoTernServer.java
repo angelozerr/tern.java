@@ -5,10 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.List;
 
-import org.json.simple.JSONObject;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
-import org.mozilla.javascript.NativeJSON;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
@@ -19,8 +17,8 @@ import tern.server.AbstractTernServer;
 import tern.server.DefaultResponseHandler;
 import tern.server.IResponseHandler;
 import tern.server.ITernCompletionCollector;
-import tern.server.TernDef;
-import tern.server.TernPlugin;
+import tern.server.ITernDef;
+import tern.server.ITernPlugin;
 import tern.server.protocol.TernDoc;
 import tern.server.rhino.loader.ClassPathScriptLoader;
 import tern.server.rhino.loader.IScriptLoader;
@@ -90,42 +88,25 @@ public class RhinoTernServer extends AbstractTernServer {
 		loader.loadScript(cx, ternScope, src);
 	}
 
-	public void addDef(TernDef def) throws IOException {
+	public void addDef(ITernDef def) throws IOException {
 		addDef(def, loader);
 	}
 
-	public void addDef(TernDef def, IScriptLoader loader) throws IOException {
-		addDef(def.getPath(), loader);
-	}
-
-	public void addDef(String def) throws IOException {
-		addDef(def, loader);
-	}
-
-	public void addDef(String def, IScriptLoader loader) throws IOException {
+	public void addDef(ITernDef def, IScriptLoader loader) throws IOException {
 		Context cx = Context.enter();
 		try {
-			addDef(cx, def, loader);
+			loader.loadScript(cx, ternScope, def.getPath(),
+					"(function() {var def = ", "addDef(def);})();");
 		} finally {
 			// Exit from the context.
 			Context.exit();
 		}
 	}
 
-	protected void addDef(Context cx, String def, IScriptLoader loader)
-			throws IOException {
-		loader.loadScript(cx, ternScope, def, "(function() {var def = ",
-				"addDef(def);})();");
-	}
-
-	public void addPlugin(TernPlugin plugin) throws IOException {
-		addPlugin(plugin.name());
-	}
-
-	public void addPlugin(String plugin) throws IOException {
+	public void addPlugin(ITernPlugin plugin) throws IOException {
 		Context cx = Context.enter();
 		try {
-			Object functionArgs[] = { plugin };
+			Object functionArgs[] = { plugin.getPath() };
 			Object fObj = ternScope.get("addPlugin", ternScope);
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
@@ -240,10 +221,12 @@ public class RhinoTernServer extends AbstractTernServer {
 			// set java primitive wrap to false, otherwise tern.js throws error
 			// ".files[n].text must be a string"
 			cx.getWrapFactory().setJavaPrimitiveWrap(false);
-			
-			//Object jsObject = NativeJSON.parse(cx, ternScope, doc.toJSONString(), null); 
+
+			// Object jsObject = NativeJSON.parse(cx, ternScope,
+			// doc.toJSONString(), null);
 			Object jsObject = Context.javaToJS(doc.toJSONString(), ternScope);
-			Object functionArgs[] = { jsObject, handler, handler.isDataAsJsonString() };
+			Object functionArgs[] = { jsObject, handler,
+					handler.isDataAsJsonString() };
 			Object fObj = ternScope.get("request2", ternScope);
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
@@ -258,8 +241,7 @@ public class RhinoTernServer extends AbstractTernServer {
 	@Override
 	public void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException {
-		DefaultResponseHandler handler = new DefaultResponseHandler(
-				true);
+		DefaultResponseHandler handler = new DefaultResponseHandler(true);
 		request(doc, handler);
 		Object data = handler.getData();
 		NativeObject rhinoObject = (NativeObject) data;
@@ -270,17 +252,17 @@ public class RhinoTernServer extends AbstractTernServer {
 			List completions = (List) rhinoObject.get("completions",
 					rhinoObject);
 			for (Object object : completions) {
-				
+
 				addProposal((NativeObject) object, pos, collector);
 			}
 		}
 	}
-	
+
 	protected void addProposal(NativeObject completion, int pos,
 			ITernCompletionCollector collector) {
-		String name = completion.get("name").toString();
-		String type = completion.get("type").toString();
-		Object doc = completion.get("doc");
+		String name = completion.get("name", completion).toString();
+		String type = completion.get("type", completion).toString();
+		Object doc = completion.get("doc", completion);
 		collector.addProposal(name, type, doc, pos);
 	}
 

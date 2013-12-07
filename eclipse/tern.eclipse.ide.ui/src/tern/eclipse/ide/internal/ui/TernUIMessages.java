@@ -32,6 +32,11 @@ public final class TernUIMessages extends NLS {
 	public static String TernGlobalPreferencesPage_desc;
 	public static String TernGlobalPreferencesPage_serverType;
 
+	// Properties page
+	public static String TernPluginsBlock_desc;
+	public static String TernPluginsBlock_pluginName;
+	public static String TernPluginsBlock_pluginPath;
+
 	private TernUIMessages() {
 	}
 

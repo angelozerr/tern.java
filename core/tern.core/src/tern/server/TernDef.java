@@ -1,8 +1,9 @@
 package tern.server;
 
-public enum TernDef {
+public enum TernDef implements ITernDef {
 
-	browser("tern/defs/browser.json"), ecma5("tern/defs/ecma5.json"), jquery("tern/defs/jquery.json");
+	browser("tern/defs/browser.json"), ecma5("tern/defs/ecma5.json"), jquery(
+			"tern/defs/jquery.json");
 
 	private final String path;
 
@@ -10,7 +11,13 @@ public enum TernDef {
 		this.path = path;
 	}
 
+	@Override
 	public String getPath() {
 		return path;
+	}
+
+	@Override
+	public String getName() {
+		return name();
 	}
 }

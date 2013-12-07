@@ -12,4 +12,5 @@ Export-Package: tern,
  tern.server.protocol,
  tern.server.protocol.angular,
  tern.utils
-Import-Package: org.json.simple
+Import-Package: org.json.simple,
+ org.json.simple.parser
