@@ -25,7 +25,7 @@ public enum TernPlugin implements ITernPlugin {
 		TernPlugin plugin = null;
 		for (int i = 0; i < plugins.length; i++) {
 			plugin = plugins[i];
-			if (plugin != null) {
+			if (plugin.getName().equals(name)) {
 				return plugin;
 			}
 		}

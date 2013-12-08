@@ -20,4 +20,16 @@ public enum TernDef implements ITernDef {
 	public String getName() {
 		return name();
 	}
+
+	public static ITernDef getTernDef(String name) {
+		TernDef[] defs = values();
+		TernDef def = null;
+		for (int i = 0; i < defs.length; i++) {
+			def = defs[i];
+			if (def.getName().equals(name)) {
+				return def;
+			}
+		}
+		return null;
+	}
 }

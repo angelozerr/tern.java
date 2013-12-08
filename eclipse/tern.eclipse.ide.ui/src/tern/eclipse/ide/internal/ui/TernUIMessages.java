@@ -36,7 +36,10 @@ public final class TernUIMessages extends NLS {
 	public static String TernPluginsBlock_desc;
 	public static String TernPluginsBlock_pluginName;
 	public static String TernPluginsBlock_pluginPath;
-
+	public static String TernDefsBlock_desc;
+	public static String TernDefsBlock_defName;
+	public static String TernDefsBlock_defPath;
+	
 	private TernUIMessages() {
 	}
 

@@ -24,7 +24,9 @@ import org.eclipse.core.runtime.Platform;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.ITernServerTypeManager;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.server.ITernDef;
 import tern.server.ITernPlugin;
+import tern.server.TernDef;
 import tern.server.TernPlugin;
 
 public class TernServerTypeManager implements ITernServerTypeManager,
@@ -195,4 +197,14 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 		return TernPlugin.getTernPlugin(name);
 	}
 
+	@Override
+	public ITernDef[] getTernDefs() {
+		// TODO : manage tern plugins with extension point
+		return TernDef.values();
+	}
+
+	@Override
+	public ITernDef findTernDef(String name) {
+		return TernDef.getTernDef(name);
+	}
 }

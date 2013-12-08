@@ -27,19 +27,19 @@ import tern.eclipse.ide.core.EclipseTernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIPlugin;
 import tern.eclipse.ide.internal.ui.Trace;
-import tern.server.ITernPlugin;
+import tern.server.ITernDef;
 
 /**
- * Tern plugins property page.
+ * Tern defs property page.
  * 
  */
-public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
-		IWorkbenchPreferencePage {
+public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
+		implements IWorkbenchPreferencePage {
 
-	private TernPluginsBlock pluginsBlock;
-	private List<ITernPlugin> initialPlugins;
+	private TernDefsBlock defsBlock;
+	private List<ITernDef> initialDefs;
 
-	public TernPluginsPropertyPage() {
+	public TernTypeDefinitionsPropertyPage() {
 		super();
 	}
 
@@ -59,14 +59,14 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		pluginsBlock = new TernPluginsBlock();
-		pluginsBlock.createControl(parent);
-		Control control = pluginsBlock.getControl();
+		defsBlock = new TernDefsBlock();
+		defsBlock.createControl(parent);
+		Control control = defsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		loadPlugins();
+		loadDefs();
 
 		applyDialogFont(parent);
 		return parent;
@@ -75,14 +75,14 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 	@Override
 	public boolean performOk() {
 		// save column settings
-		pluginsBlock.saveColumnSettings();
-		// save the checked plugins in the tern project
-		Object[] checkedPlugins = pluginsBlock.getCheckedPlugins();
+		defsBlock.saveColumnSettings();
+		// save the checked defs in the tern project
+		Object[] checkedDefs = defsBlock.getCheckedDefs();
 		try {
 			EclipseTernProject ternProject = getTernProject();
-			ternProject.getPlugins().clear();
-			for (Object plugin : checkedPlugins) {
-				ternProject.addPlugin((ITernPlugin) plugin);
+			ternProject.getLibs().clear();
+			for (Object def : checkedDefs) {
+				ternProject.addLib(((ITernDef) def).getName());
 			}
 			ternProject.save();
 		} catch (Exception e) {
@@ -92,25 +92,25 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 	}
 
 	/**
-	 * Load plugins from tern project.
+	 * Load defs from tern project.
 	 */
-	private void loadPlugins() {
+	private void loadDefs() {
 		try {
 			TernProject ternProject = getTernProject();
-			JSONObject plugins = ternProject.getPlugins();
+			List defs = ternProject.getLibs();
 
-			initialPlugins = new ArrayList<ITernPlugin>();
-			for (Object name : plugins.keySet()) {
-				ITernPlugin plugin = TernCorePlugin.getTernServerTypeManager()
-						.findTernPlugin(name.toString());
-				if (plugin != null) {
-					initialPlugins.add(plugin);
+			initialDefs = new ArrayList<ITernDef>();
+			for (Object name : defs) {
+				ITernDef def = TernCorePlugin.getTernServerTypeManager()
+						.findTernDef(name.toString());
+				if (def != null) {
+					initialDefs.add(def);
 				}
 			}
-			pluginsBlock.setCheckedPlugins(initialPlugins.toArray());
+			defsBlock.setCheckedDefs(initialDefs.toArray());
 
 		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
+			Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
 		}
 	}
 

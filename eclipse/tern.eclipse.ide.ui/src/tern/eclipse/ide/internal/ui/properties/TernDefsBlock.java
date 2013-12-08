@@ -36,16 +36,16 @@ import org.eclipse.swt.widgets.TableColumn;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.TernUIPlugin;
-import tern.server.ITernPlugin;
+import tern.server.ITernDef;
 
 /**
  * Table of Tern plugins.
  * 
  */
-public class TernPluginsBlock extends AbstractTableBlock {
+public class TernDefsBlock extends AbstractTableBlock {
 
 	private Composite fControl;
-	private final List<ITernPlugin> ternPlugins = new ArrayList<ITernPlugin>();
+	private final List<ITernDef> ternDefs = new ArrayList<ITernDef>();
 	private CheckboxTableViewer tableViewer;
 
 	public void createControl(Composite ancestor) {
@@ -63,7 +63,7 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		GridData data;
 
 		Label tableLabel = new Label(parent, SWT.NONE);
-		tableLabel.setText(TernUIMessages.TernPluginsBlock_desc);
+		tableLabel.setText(TernUIMessages.TernDefsBlock_desc);
 		data = new GridData();
 		data.horizontalSpan = 2;
 		tableLabel.setLayoutData(data);
@@ -83,7 +83,7 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		TableColumn column1 = new TableColumn(fTable, SWT.NONE);
 		column1.setWidth(180);
 		column1.setResizable(true);
-		column1.setText(TernUIMessages.TernPluginsBlock_pluginName);
+		column1.setText(TernUIMessages.TernDefsBlock_defName);
 		column1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -94,7 +94,7 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		TableColumn column2 = new TableColumn(fTable, SWT.NONE);
 		column2.setWidth(180);
 		column2.setResizable(true);
-		column2.setText(TernUIMessages.TernPluginsBlock_pluginPath);
+		column2.setText(TernUIMessages.TernDefsBlock_defPath);
 		column2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -103,17 +103,17 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		});
 
 		tableViewer = new CheckboxTableViewer(fTable);
-		tableViewer.setLabelProvider(new TernPluginabelProvider());
+		tableViewer.setLabelProvider(new TernDefabelProvider());
 		tableViewer.setContentProvider(new ProcessorsContentProvider());
 
-		fillWithWorkspaceTernPlugins();
+		fillWithWorkspaceTernDefs();
 
 		restoreColumnSettings();
 	}
 
-	protected void fillWithWorkspaceTernPlugins() {
-		setTernPlugins(TernCorePlugin.getTernServerTypeManager()
-				.getTernPlugins());
+	protected void fillWithWorkspaceTernDefs() {
+		setTernDefs(TernCorePlugin.getTernServerTypeManager()
+				.getTernDefs());
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class TernPluginsBlock extends AbstractTableBlock {
 	// tableViewer.setSorter(new ViewerSorter() {
 	// @Override
 	// public int compare(Viewer viewer, Object e1, Object e2) {
-	// ITernPlugin left = (ITernPlugin) e1;
-	// ITernPlugin right = (ITernPlugin) e2;
+	// ITernDef left = (ITernDef) e1;
+	// ITernDef right = (ITernDef) e2;
 	// return left
 	// .getProcessorType()
 	// .getLabel()
@@ -143,8 +143,8 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		tableViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				ITernPlugin left = (ITernPlugin) e1;
-				ITernPlugin right = (ITernPlugin) e2;
+				ITernDef left = (ITernDef) e1;
+				ITernDef right = (ITernDef) e2;
 				return left.getPath().compareToIgnoreCase(right.getPath());
 			}
 
@@ -162,9 +162,9 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		tableViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				if ((e1 instanceof ITernPlugin) && (e2 instanceof ITernPlugin)) {
-					ITernPlugin left = (ITernPlugin) e1;
-					ITernPlugin right = (ITernPlugin) e2;
+				if ((e1 instanceof ITernDef) && (e2 instanceof ITernDef)) {
+					ITernDef left = (ITernDef) e1;
+					ITernDef right = (ITernDef) e2;
 					return left.getName().compareToIgnoreCase(right.getName());
 				}
 				return super.compare(viewer, e1, e2);
@@ -181,26 +181,26 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		return fControl;
 	}
 
-	protected void setTernPlugins(ITernPlugin[] vms) {
-		ternPlugins.clear();
-		for (ITernPlugin element : vms) {
-			ternPlugins.add(element);
+	protected void setTernDefs(ITernDef[] vms) {
+		ternDefs.clear();
+		for (ITernDef element : vms) {
+			ternDefs.add(element);
 		}
-		tableViewer.setInput(ternPlugins);
+		tableViewer.setInput(ternDefs);
 		// tableViewer.refresh();
 	}
 
-	public Object[] getCheckedPlugins() {
+	public Object[] getCheckedDefs() {
 		return tableViewer.getCheckedElements();
 	}
 
-	public void setCheckedPlugins(Object[] selectedPlugins) {
-		tableViewer.setCheckedElements(selectedPlugins);
+	public void setCheckedDefs(Object[] selectedDefs) {
+		tableViewer.setCheckedElements(selectedDefs);
 
 		/*
-		 * if (selectedPlugins == null) { setSelection(new
+		 * if (selectedDefs == null) { setSelection(new
 		 * StructuredSelection()); } else { setSelection(new
-		 * StructuredSelection(selectedPlugins)); }
+		 * StructuredSelection(selectedDefs)); }
 		 */
 	}
 
@@ -230,7 +230,7 @@ public class TernPluginsBlock extends AbstractTableBlock {
 	private class ProcessorsContentProvider implements
 			IStructuredContentProvider {
 		public Object[] getElements(Object input) {
-			return ternPlugins.toArray();
+			return ternDefs.toArray();
 		}
 
 		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
@@ -240,11 +240,11 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		}
 	}
 
-	private static class TernPluginabelProvider extends LabelProvider implements
+	private static class TernDefabelProvider extends LabelProvider implements
 			ITableLabelProvider {
 		public String getColumnText(Object element, int columnIndex) {
-			if (element instanceof ITernPlugin) {
-				ITernPlugin install = (ITernPlugin) element;
+			if (element instanceof ITernDef) {
+				ITernDef install = (ITernDef) element;
 				switch (columnIndex) {
 				case 0:
 					return install.getName();

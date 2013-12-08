@@ -85,4 +85,12 @@ public class EclipseTernProject extends TernProject {
 		}
 	}
 
+	@Override
+	public void save() throws IOException {
+		super.save();
+		if (ternServer != null) {
+			ternServer.dispose();
+		}
+	}
+
 }

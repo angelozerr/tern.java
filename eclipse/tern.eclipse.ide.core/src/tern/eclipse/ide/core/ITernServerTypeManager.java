@@ -1,5 +1,6 @@
 package tern.eclipse.ide.core;
 
+import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 
 /**
@@ -37,5 +38,9 @@ public interface ITernServerTypeManager {
 	ITernPlugin[] getTernPlugins();
 
 	ITernPlugin findTernPlugin(String name);
+
+	ITernDef[] getTernDefs();
+
+	ITernDef findTernDef(String string);
 
 }

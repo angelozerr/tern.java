@@ -35,7 +35,7 @@ public class TernProject extends JSONObject {
 		getLibs().add(lib);
 	}
 
-	private List getLibs() {
+	public List getLibs() {
 		List libs = (List) super.get("libs");
 		if (libs == null) {
 			libs = new JSONArray();
