@@ -23,6 +23,9 @@ you will see contentassist available for Javascript :
 
 ![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
 
+# Eclipse IDE
+
+http://oss.opensagres.fr/tern.repository/1.0.0-SNAPSHOT/
 # Build
 
 See cloudbees job: https://opensagres.ci.cloudbees.com/job/tern.java/
