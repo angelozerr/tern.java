@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="tern.eclipse.macosx.cocoa.x86_64.feature"
-      label="Feature"
+      label="Mac OSX Feature"
       version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
