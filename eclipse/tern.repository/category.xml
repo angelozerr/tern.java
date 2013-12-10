@@ -39,9 +39,9 @@
    <bundle id="tern.eclipse.ide.server.nodejs.ui" version="1.0.0.qualifier">
       <category name="Tern server - Node.js"/>
    </bundle>
-   <bundle id="org.mozilla.javascript" version="1.7R4">
+   <!--<bundle id="org.mozilla.javascript" version="1.7R4">
       <category name="Tern server - Rhino"/>
-   </bundle>
+   </bundle>-->
    <category-def name="Tern" label="Tern">
       <description>
          Tern core plugins.
