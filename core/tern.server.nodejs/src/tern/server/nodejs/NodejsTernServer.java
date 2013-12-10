@@ -65,6 +65,11 @@ public class NodejsTernServer extends AbstractTernServer {
 		process.addProcessListener(listener);
 	}
 
+	public NodejsTernServer(TernProject project, File installPath) {
+		this(project, NodejsProcessManager.getInstance().create(
+				project.getProjectDir(), installPath));
+	}
+
 	private String computeBaseURL(Integer port) {
 		return new StringBuilder("http://localhost:").append(port).append("/")
 				.toString();

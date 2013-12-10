@@ -15,7 +15,6 @@ import tern.server.ITernServer;
 
 public interface ITernServerFactory {
 
-	ITernServer create(TernProject project,
-			ITernServerConfiguration configuration) throws Exception;
+	ITernServer create(TernProject project) throws Exception;
 
 }

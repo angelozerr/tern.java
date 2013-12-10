@@ -65,9 +65,7 @@ public class EclipseTernProject extends TernProject {
 			try {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
 						.getServerType();
-				ITernServerConfiguration configuration = TernCorePreferencesSupport
-						.getInstance().getServerConfiguration(type);
-				this.ternServer = type.createServer(this, configuration);
+				this.ternServer = type.createServer(this);
 			} catch (Exception e) {
 				// should be improved?
 				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);

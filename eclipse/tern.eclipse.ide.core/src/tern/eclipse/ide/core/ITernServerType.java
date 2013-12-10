@@ -38,8 +38,8 @@ public interface ITernServerType {
 	 */
 	String getName();
 
-	ITernServer createServer(TernProject project,
-			ITernServerConfiguration configuration) throws Exception;
+	ITernServer createServer(TernProject project) throws Exception;
 
 	void dispose();
+
 }

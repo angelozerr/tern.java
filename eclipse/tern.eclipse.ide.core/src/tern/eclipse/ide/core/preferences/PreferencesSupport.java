@@ -9,7 +9,7 @@
  *     IBM Corporation - initial API and implementation
  *     Zend Technologies
  *******************************************************************************/
-package tern.eclipse.ide.internal.core.preferences;
+package tern.eclipse.ide.core.preferences;
 
 import java.util.HashMap;
 

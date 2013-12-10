@@ -2,10 +2,10 @@ package tern.eclipse.ide.internal.core.preferences;
 
 import org.eclipse.core.runtime.Preferences;
 
-import tern.eclipse.ide.core.ITernServerConfiguration;
 import tern.eclipse.ide.core.ITernServerType;
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernCoreConstants;
+import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.preferences.PreferencesSupport;
 
 public class TernCorePreferencesSupport {
 
@@ -15,8 +15,6 @@ public class TernCorePreferencesSupport {
 	private PreferencesSupport preferencesSupport;
 
 	private TernCorePreferencesSupport() {
-		// preferencesPropagator = PreferencePropagatorFactory
-		// .getPreferencePropagator(NODES_QUALIFIER, store);
 		preferencesSupport = new PreferencesSupport(TernCorePlugin.PLUGIN_ID,
 				store);
 	}
@@ -36,7 +34,4 @@ public class TernCorePreferencesSupport {
 		return TernCorePlugin.getTernServerTypeManager().findTernServerType(id);
 	}
 
-	public ITernServerConfiguration getServerConfiguration(ITernServerType type) {
-		return null;
-	}
 }

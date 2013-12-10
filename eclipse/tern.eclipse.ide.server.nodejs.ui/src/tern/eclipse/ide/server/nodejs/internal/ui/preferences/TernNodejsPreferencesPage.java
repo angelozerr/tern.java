@@ -15,7 +15,6 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -72,8 +71,12 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	}
 
 	@Override
-	public void propertyChange(PropertyChangeEvent event) {
-		super.propertyChange(event);
-		TernCorePlugin.getTernServerTypeManager().refresh();
+	public boolean performOk() {
+		boolean result = super.performOk();
+		if (result) {
+			TernCorePlugin.getTernServerTypeManager().refresh();
+		}
+		return result;
 	}
+
 }

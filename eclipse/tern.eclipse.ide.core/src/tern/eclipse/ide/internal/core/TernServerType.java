@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 
 import tern.TernProject;
-import tern.eclipse.ide.core.ITernServerConfiguration;
 import tern.eclipse.ide.core.ITernServerFactory;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.server.ITernServer;
@@ -55,10 +54,10 @@ public class TernServerType implements ITernServerType {
 	}
 
 	@Override
-	public ITernServer createServer(TernProject project,
-			ITernServerConfiguration configuration) throws Exception {
-		ITernServer server = getFactory().create(project, configuration);
+	public ITernServer createServer(TernProject project) throws Exception {
+		ITernServer server = getFactory().create(project);
 		servers.add(server);
 		return server;
 	}
+
 }
