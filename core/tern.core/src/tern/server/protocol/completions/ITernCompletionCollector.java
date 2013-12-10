@@ -1,4 +1,4 @@
-package tern.server;
+package tern.server.protocol.completions;
 
 public interface ITernCompletionCollector {
 

@@ -27,6 +27,8 @@ import tern.server.ITernServer;
  */
 public class EclipseTernProject extends TernProject {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final QualifiedName TERN_PROJECT = new QualifiedName(
 			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernProject");
 
@@ -49,8 +51,7 @@ public class EclipseTernProject extends TernProject {
 			try {
 				ternProject.load();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Trace.trace(Trace.SEVERE, "Error while loading tern project", e);
 			}
 		}
 		return ternProject;

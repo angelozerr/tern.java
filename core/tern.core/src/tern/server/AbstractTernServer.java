@@ -1,16 +1,10 @@
 package tern.server;
 
-import tern.doc.IJSDocument;
 
 public abstract class AbstractTernServer implements ITernServer {
 
 	private boolean dataAsJsonString;
 	private boolean dispose;
-
-	@Override
-	public void registerDoc(IJSDocument doc) {
-		addFile(doc.getName(), doc.getValue());
-	}
 
 	public boolean isDataAsJsonString() {
 		return dataAsJsonString;

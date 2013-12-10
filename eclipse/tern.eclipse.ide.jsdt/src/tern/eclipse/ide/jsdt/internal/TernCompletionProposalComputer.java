@@ -24,15 +24,16 @@ import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
 import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
 
+
 /**
  * JSDT completion extension with Tern.
  */
 import tern.eclipse.ide.core.EclipseTernProject;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
-import tern.server.ITernCompletionCollector;
 import tern.server.ITernServer;
-import tern.server.protocol.TernCompletionQuery;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.completions.TernCompletionQuery;
 
 public class TernCompletionProposalComputer implements
 		IJavaCompletionProposalComputer {
@@ -59,12 +60,12 @@ public class TernCompletionProposalComputer implements
 
 						ITernServer ternServer = ternProject.getTernServer();
 						TernDoc doc = new TernDoc();
-						TernCompletionQuery query = new TernCompletionQuery();
+						TernCompletionQuery query = new TernCompletionQuery(
+								"#0", context.getInvocationOffset());
 						query.setTypes(true);
 						query.setDocs(true);
 						query.setUrls(true);
 						query.setLineCharPositions(true);
-						query.setEnd(context.getInvocationOffset());
 						doc.setQuery(query);
 
 						if (scriptFile != null && scriptFile.exists()) {

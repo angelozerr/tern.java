@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.rhino;
 
 import java.io.File;
@@ -12,18 +22,21 @@ import org.mozilla.javascript.Scriptable;
 
 import tern.TernException;
 import tern.TernProject;
-import tern.doc.IJSDocument;
 import tern.server.AbstractTernServer;
 import tern.server.DefaultResponseHandler;
 import tern.server.IResponseHandler;
-import tern.server.ITernCompletionCollector;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.rhino.loader.ClassPathScriptLoader;
 import tern.server.rhino.loader.IScriptLoader;
 import tern.utils.IOUtils;
 
+/**
+ * Tern server implemented with Mozilla Rhino.
+ * 
+ */
 public class RhinoTernServer extends AbstractTernServer {
 
 	private final Scriptable ternScope;
@@ -66,16 +79,6 @@ public class RhinoTernServer extends AbstractTernServer {
 		}
 	}
 
-	public String getFile(String name) {
-		try {
-			return IOUtils.toString(new FileInputStream(new File(name)));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return "";
-		}
-	}
-
 	protected void loadTernScripts(Context cx, IScriptLoader loader)
 			throws IOException {
 		for (int i = 0; i < TERN_SCRIPTS.length; i++) {
@@ -88,22 +91,25 @@ public class RhinoTernServer extends AbstractTernServer {
 		loader.loadScript(cx, ternScope, src);
 	}
 
-	public void addDef(ITernDef def) throws IOException {
+	public void addDef(ITernDef def) throws TernException {
 		addDef(def, loader);
 	}
 
-	public void addDef(ITernDef def, IScriptLoader loader) throws IOException {
+	public void addDef(ITernDef def, IScriptLoader loader) throws TernException {
 		Context cx = Context.enter();
 		try {
 			loader.loadScript(cx, ternScope, def.getPath(),
 					"(function() {var def = ", "addDef(def);})();");
+		} catch (IOException e) {
+			throw new TernException(e);
 		} finally {
 			// Exit from the context.
 			Context.exit();
 		}
 	}
 
-	public void addPlugin(ITernPlugin plugin) throws IOException {
+	@Override
+	public void addPlugin(ITernPlugin plugin) throws TernException {
 		Context cx = Context.enter();
 		try {
 			Object functionArgs[] = { plugin.getPath() };
@@ -116,26 +122,7 @@ public class RhinoTernServer extends AbstractTernServer {
 		}
 	}
 
-	protected void addPlugin(Context cx, String plugin, IScriptLoader loader)
-			throws IOException {
-		loader.loadScript(cx, ternScope, plugin, "(function() {var plugin = ",
-				"addPlugin(plugin);})();");
-	}
-
-	public void sendDoc(IJSDocument doc, IResponseHandler handler) {
-		Context cx = Context.enter();
-		try {
-			Object jsObject = Context.javaToJS(doc, ternScope);
-			Object functionArgs[] = { jsObject, handler };
-			Object fObj = ternScope.get("sendDoc", ternScope);
-			Function f = (Function) fObj;
-			f.call(cx, ternScope, ternScope, functionArgs);
-		} finally {
-			// Exit from the context.
-			Context.exit();
-		}
-	}
-
+	@Override
 	public void addFile(String name, String text) {
 		Context cx = Context.enter();
 		try {
@@ -148,26 +135,6 @@ public class RhinoTernServer extends AbstractTernServer {
 			Object fObj = ternScope.get("addFile", ternScope);
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
-		} finally {
-			// Exit from the context.
-			Context.exit();
-		}
-	}
-
-	public void requestCompletion(IJSDocument doc, IResponseHandler handler) {
-		Context cx = Context.enter();
-		try {
-			// tern.js checks if file.text is typeof string
-			// set java primitive wrap to false, otherwise tern.js throws error
-			// ".files[n].text must be a string"
-			cx.getWrapFactory().setJavaPrimitiveWrap(false);
-
-			Object jsObject = Context.javaToJS(doc, ternScope);
-			Object functionArgs[] = { jsObject, handler };
-			Object fObj = ternScope.get("ternHints", ternScope);
-			Function f = (Function) fObj;
-			f.call(cx, ternScope, ternScope, functionArgs);
-
 		} finally {
 			// Exit from the context.
 			Context.exit();

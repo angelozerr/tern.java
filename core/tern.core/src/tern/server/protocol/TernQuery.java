@@ -4,8 +4,10 @@ import org.json.simple.JSONObject;
 
 public class TernQuery extends JSONObject {
 
+	private static final String TYPE_QUERY = "type";
+
 	public TernQuery(String type) {
-		super.put("type", type);
+		super.put(TYPE_QUERY, type);
 	}
 
 	public void setFile(String file) {
@@ -21,6 +23,14 @@ public class TernQuery extends JSONObject {
 	}
 
 	public String getType() {
-		return (String) super.get("type");
+		return (String) super.get(TYPE_QUERY);
+	}
+
+	protected boolean getBoolean(String name, boolean defaultValue) {
+		Boolean result = (Boolean) super.get(name);
+		if (result == null) {
+			return defaultValue;
+		}
+		return result;
 	}
 }

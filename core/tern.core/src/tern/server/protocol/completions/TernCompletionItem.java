@@ -1,4 +1,4 @@
-package tern.server.protocol;
+package tern.server.protocol.completions;
 
 public class TernCompletionItem {
 

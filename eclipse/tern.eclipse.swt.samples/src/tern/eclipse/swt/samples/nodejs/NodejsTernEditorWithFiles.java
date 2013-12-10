@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import tern.TernException;
 import tern.TernProject;
 import tern.doc.IJSDocument;
 import tern.eclipse.jface.TernLabelProvider;
@@ -58,7 +59,8 @@ public class NodejsTernEditorWithFiles {
 		}
 	}
 
-	private void createUI() throws IOException, InterruptedException {
+	private void createUI() throws TernException, IOException,
+			InterruptedException {
 
 		File nodejsTernBaseDir = new File("../../core/tern.server.nodejs");
 		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);

@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import tern.TernException;
 import tern.doc.IJSDocument;
 import tern.eclipse.jface.TernLabelProvider;
 import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
@@ -49,13 +50,13 @@ public class RhinoTernEditorWithAngularJS {
 		RhinoTernEditorWithAngularJS editor = new RhinoTernEditorWithAngularJS();
 		try {
 			editor.createUI();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private void createUI() throws IOException {
+	private void createUI() throws TernException, IOException {
 
 		this.server = new RhinoTernServer();
 		server.addDef(TernDef.browser);

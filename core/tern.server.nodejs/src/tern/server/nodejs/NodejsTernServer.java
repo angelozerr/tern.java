@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.nodejs;
 
 import java.io.File;
@@ -9,19 +19,21 @@ import org.json.simple.JSONObject;
 
 import tern.TernException;
 import tern.TernProject;
-import tern.doc.IJSDocument;
 import tern.server.AbstractTernServer;
 import tern.server.IResponseHandler;
-import tern.server.ITernCompletionCollector;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessListenerAdapter;
 import tern.server.nodejs.process.NodejsProcessManager;
-import tern.server.protocol.TernCompletionQuery;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.completions.ITernCompletionCollector;
 
+/**
+ * Tern server implemented with node.js
+ * 
+ */
 public class NodejsTernServer extends AbstractTernServer {
 
 	private final TernProject project;
@@ -76,21 +88,23 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public String getFile(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addDef(ITernDef def) throws IOException {
+	public void addDef(ITernDef def) throws TernException {
 		project.addLib(def.getName());
-		project.save();
+		try {
+			project.save();
+		} catch (IOException e) {
+			throw new TernException(e);
+		}
 	}
 
 	@Override
-	public void addPlugin(ITernPlugin plugin) throws IOException {
+	public void addPlugin(ITernPlugin plugin) throws TernException {
 		project.addPlugin(plugin);
-		project.save();
+		try {
+			project.save();
+		} catch (IOException e) {
+			throw new TernException(e);
+		}
 	}
 
 	@Override
@@ -103,45 +117,6 @@ public class NodejsTernServer extends AbstractTernServer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}
-
-	@Override
-	public void sendDoc(IJSDocument doc, IResponseHandler handler) {
-		TernDoc t = new TernDoc();
-		t.addFile(doc.getName(), doc.getValue(), null);
-		try {
-			JSONObject json = makeRequest(t);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void requestCompletion(IJSDocument doc, IResponseHandler handler) {
-
-		TernDoc t = new TernDoc();
-
-		TernCompletionQuery query = new TernCompletionQuery();
-		query.setTypes(true);
-		// query.setDocs(true);
-		query.setUrls(true);
-		query.setEnd(doc.getCursor("end"));
-		query.setLineCharPositions(true);
-		t.setQuery(query);
-
-		boolean changed = doc.isChanged();
-		if (changed) {
-			// the js doc has changed since last completion, reparse the js doc.
-			query.setFile("#0");
-			t.addFile(doc.getName(), doc.getValue(), null);
-		} else {
-			// non changes, the js doc must not reparsed.
-			query.setFile(doc.getName());
-		}
-		request(t, handler);
-		doc.setChanged(false);
 
 	}
 

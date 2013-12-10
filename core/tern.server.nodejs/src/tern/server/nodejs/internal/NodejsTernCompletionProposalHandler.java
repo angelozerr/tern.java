@@ -5,7 +5,7 @@ import java.util.List;
 import org.json.simple.JSONObject;
 
 import tern.server.IResponseHandler;
-import tern.server.ITernCompletionCollector;
+import tern.server.protocol.completions.ITernCompletionCollector;
 
 public abstract class NodejsTernCompletionProposalHandler implements
 		IResponseHandler {

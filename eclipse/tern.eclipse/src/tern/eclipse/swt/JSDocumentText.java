@@ -5,7 +5,7 @@ import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Text;
 
 import tern.doc.AbstractJSDocument;
-import tern.server.DefaultResponseHandler;
+import tern.doc.JSDocumentHelper;
 import tern.server.ITernServer;
 
 public class JSDocumentText extends AbstractJSDocument {
@@ -19,20 +19,11 @@ public class JSDocumentText extends AbstractJSDocument {
 
 			@Override
 			public void modifyText(ModifyEvent e) {
-				// getServer().sendDoc(JSDocumentText.this,
-				// new DefaultResponseHandler() {
-				// @Override
-				// public void onError(String error) {
-				// System.err.println(error);
-				// }
-				// });
-				int pos = text.getCaretPosition();
-				System.err.println(pos);
 				JSDocumentText.this.setChanged(true);
 			}
 		});
 		setChanged(false);
-		server.registerDoc(this);
+		JSDocumentHelper.registerDoc(this, server);
 	}
 
 	@Override

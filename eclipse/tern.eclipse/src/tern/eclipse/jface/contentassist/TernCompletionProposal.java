@@ -7,7 +7,7 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
-import tern.server.protocol.TernCompletionItem;
+import tern.server.protocol.completions.TernCompletionItem;
 
 public class TernCompletionProposal extends TernCompletionItem implements
 		ICompletionProposal {

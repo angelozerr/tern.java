@@ -30,7 +30,8 @@
 	 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension
-	       point="org.eclipse.ui.startup">	       
+	       point="org.eclipse.ui.startup">	
+	       <startup class="tern.eclipse.ide.jsdt.internal.JSDTTernStartup" />       
 	 </extension>
 	 
 </plugin>        

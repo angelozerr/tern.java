@@ -2,7 +2,7 @@ package tern.eclipse.jface.fieldassist;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
 
-import tern.server.protocol.TernCompletionItem;
+import tern.server.protocol.completions.TernCompletionItem;
 
 public class TernContentProposal extends TernCompletionItem implements
 		IContentProposal {

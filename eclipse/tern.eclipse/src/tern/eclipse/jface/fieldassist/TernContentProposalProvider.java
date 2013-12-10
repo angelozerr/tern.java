@@ -1,9 +1,11 @@
 package tern.eclipse.jface.fieldassist;
 
+import org.eclipse.jface.fieldassist.IContentProposal;
+
 import tern.doc.IJSDocument;
+import tern.doc.JSDocumentHelper;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
-import tern.server.protocol.TernDocHelper;
 
 public class TernContentProposalProvider extends
 		AbstractTernContentProposalProvider {
@@ -15,13 +17,20 @@ public class TernContentProposalProvider extends
 	}
 
 	@Override
+	public IContentProposal[] getProposals(String contents, int position) {
+		IContentProposal[] proposals = super.getProposals(contents, position);
+		doc.setChanged(false);
+		return proposals;
+	}
+
+	@Override
 	protected ITernServer getServer() {
 		return doc.getServer();
 	}
 
 	@Override
 	protected TernDoc createDoc() {
-		return TernDocHelper.createDoc(doc);
+		return JSDocumentHelper.createDoc(doc);
 	}
 
 }

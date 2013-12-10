@@ -12,9 +12,9 @@ public class TernAngularQuery extends TernQuery {
 		super("angular");
 		super.put("angularType", angularType.name());
 	}
-	
-	public void setStartsWith(String startsWith) {
-		super.put("startsWith", startsWith);
+
+	public void setExpression(String expression) {
+		super.put("expression", expression);
 	}
 
 }

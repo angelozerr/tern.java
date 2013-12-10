@@ -17,7 +17,7 @@ public abstract class AbstractJSDocument implements IJSDocument {
 		this.server = server;
 		this.changed = false;
 		if (register) {
-			server.registerDoc(this);
+			JSDocumentHelper.registerDoc(this, server);
 		}
 	}
 
