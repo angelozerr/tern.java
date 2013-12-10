@@ -24,5 +24,6 @@
 		<module>
 			tern.eclipse.ide.server.nodejs.embed.macosx.cocoa.x86_64
 		</module>
+		<module>tern.eclipse.macosx.cocoa.x86_64.feature</module>
 	</modules>
 </project>
