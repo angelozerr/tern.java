@@ -24,7 +24,6 @@ import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
 import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
 
-
 /**
  * JSDT completion extension with Tern.
  */
@@ -94,7 +93,8 @@ public class TernCompletionProposalComputer implements
 						return proposals;
 
 					} catch (Exception e) {
-						e.printStackTrace();
+						Trace.trace(Trace.SEVERE,
+								"Error while JSDT Tern completion.", e);
 					}
 				}
 			}
