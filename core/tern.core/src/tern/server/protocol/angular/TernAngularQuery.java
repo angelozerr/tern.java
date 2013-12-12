@@ -4,10 +4,6 @@ import tern.server.protocol.TernQuery;
 
 public class TernAngularQuery extends TernQuery {
 
-	public enum AngularType {
-		module, controller, directive, model;
-	}
-
 	public TernAngularQuery(AngularType angularType) {
 		super("angular");
 		super.put("angularType", angularType.name());
@@ -15,6 +11,15 @@ public class TernAngularQuery extends TernQuery {
 
 	public void setExpression(String expression) {
 		super.put("expression", expression);
+	}
+
+	public TernAngularScope getScope() {
+		TernAngularScope scope = (TernAngularScope) super.get("scope");
+		if (scope == null) {
+			scope = new TernAngularScope();
+			super.put("scope", scope);
+		}
+		return scope;
 	}
 
 }

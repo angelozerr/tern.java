@@ -1,0 +1,14 @@
+package tern.server.protocol.angular;
+
+import org.json.simple.JSONObject;
+
+public class TernAngularScope extends JSONObject {
+
+	public void setModule(String module) {
+		super.put("module", module);
+	}
+
+	public void setController(String controller) {
+		super.put("controller", controller);
+	}
+}
