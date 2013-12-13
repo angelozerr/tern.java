@@ -55,14 +55,60 @@
 
 <article>
 <h2>Tern Demo</h2>
-<select id="angularType" >
+<select id="angularType" onchange="onAngularTypeChanged()">
 	<option name="module" >module</option>
 	<option name="controller" >controller</option>
-	<option name="model" >model</option>
+	<option name="model." >model.</option>
+	<option name="model.todos." >model.todos.</option>
 </select>
-<input type="text" id="angularField" value="My" />
+<input type="text" id="angularField" value="" />
+<input type="checkbox" id="useAngularModule" value="use angular.module?" />
 <input type="button" onclick="f()" value="Click Me!"/>
 <form><textarea id="code" name="code">
+
+(function( ng ) {
+
+	"use strict";
+
+	// Define our AngularJS application module.
+	window.demo = ng.module( "Demo", [] );
+
+})( angular );
+(function( ng, app ) {
+
+	"use strict";
+
+	app.controller(
+		"SlaveController",
+		function( $scope ) {
+
+
+			// -- Define Scope Methods. --------------------- //
+
+
+			// I remove the current slave from the collection.
+			$scope.remove = function() {
+
+				// Pass this responsibility up the scope chain to the master controller (and its
+				// collection of slave instances).
+				$scope.removeSlave( $scope.slave );
+
+			};
+
+
+			// I reposition the current slave.
+			$scope.reposition = function( x, y ) {
+
+				$scope.slave.x = x;
+				$scope.slave.y = y;
+
+			};
+
+
+		}
+	);
+
+})( angular, demo );
 
 /*function SomeCtrl2($scope, $http) {
   $scope.save = [];
@@ -70,7 +116,7 @@
 
 angular.module('MyApp', [])
 .controller('SomeCtrl', function($scope, $http) {
-	$scope.todos = [];
+	$scope.save = function() {};
     $http. // <-- you'll have completions now
 });
 
@@ -138,7 +184,7 @@ overview.</p>
   //var server;
   //getURL("http://ternjs.net/defs/ecma5.json", function(err, code) {
   //  if (err) throw new Error("Request for ecma5.json: " + err);
-  var server = new CodeMirror.TernServer({plugins:{"angular":"../"}});
+  var server = new CodeMirror.TernServer({plugins:{"angular":"../", "browser":"../"}});
     editor.setOption("extraKeys", {
       "Ctrl-Space": function(cm) { server.complete(cm); },
       "Ctrl-I": function(cm) { server.showType(cm); },
@@ -149,11 +195,21 @@ overview.</p>
     editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); });
   //});
     
+  function onAngularTypeChanged() {
+	  var angularType = document.getElementById('angularType').value;
+	  
+	  var indexDot = angularType.indexOf('.');
+	  	if (indexDot != -1) {
+	  		document.getElementById('angularField').value = angularType.substring(indexDot + 1, angularType.length);
+	  	}  
+  }
+  
   function f() {
 	
 	var angularType = document.getElementById('angularType').value;
 	var angularField = document.getElementById('angularField').value;
-  	
+	var useAngularModule = document.getElementById('useAngularModule').checked;
+	
   	var files = [];
   	files.push({type: "full",
                     name: "[doc]",
@@ -161,14 +217,21 @@ overview.</p>
 
   	var scope = {};
   	if (angularType != 'module') {
-  		//scope.module = 'MyApp';  		
+  		if (useAngularModule) {
+  	  		scope.module = 'Demo';
+  		}  		
   		if (angularType != 'controller') {
-  			scope.controller = 'TodoCtrl';
+  			if (useAngularModule) {
+  				scope.controller = 'SlaveController';
+  			} else {
+  				scope.controller = 'TodoCtrl';
+  			}
+  			angularType = 'model';
   	  	}
   	}        
   	
   	var query = {type: "angular", 
-  			     file: "#0",
+  			     files: ["[doc]"],
   				 angularType: angularType,
   				 expression: angularField,
   				 scope: scope
