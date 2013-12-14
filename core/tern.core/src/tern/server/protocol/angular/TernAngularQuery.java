@@ -1,7 +1,5 @@
 package tern.server.protocol.angular;
 
-import java.util.List;
-
 import org.json.simple.JSONArray;
 
 import tern.server.protocol.TernQuery;
