@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -19,6 +21,7 @@ import org.json.simple.parser.ParseException;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
+import tern.utils.IOUtils;
 
 public class TernProtocolHelper {
 
@@ -36,12 +39,20 @@ public class TernProtocolHelper {
 		}
 		HttpClient httpClient = new DefaultHttpClient();
 		try {
+			// Post JSON Tern doc
 			HttpPost httpPost = createHttpPost(baseURL, doc);
-
 			HttpResponse httpResponse = httpClient.execute(httpPost);
 			HttpEntity entity = httpResponse.getEntity();
-
 			InputStream in = entity.getContent();
+			// Check the status
+			StatusLine statusLine = httpResponse.getStatusLine();
+			int statusCode = statusLine.getStatusCode();
+			if (statusCode != HttpStatus.SC_OK) {
+				// node.js server throws error
+				throw new IOException(statusLine.toString() + "\n"
+						+ IOUtils.toString(in));
+			}
+
 			JSONParser parser = new JSONParser();
 			try {
 				JSONObject response = (JSONObject) parser
@@ -57,6 +68,12 @@ public class TernProtocolHelper {
 			} catch (ParseException e) {
 				throw new IOException(e);
 			}
+		} catch (IOException e) {
+			for (IInterceptor interceptor : interceptors) {
+				interceptor.handleError(e, server, methodName,
+						System.currentTimeMillis() - starTime);
+			}
+			throw e;
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}

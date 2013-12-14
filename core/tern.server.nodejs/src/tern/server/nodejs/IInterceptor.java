@@ -12,4 +12,6 @@ public interface IInterceptor {
 	void handleResponse(JSONObject response, ITernServer server,
 			String methodName, long ellapsedTime);
 
+	void handleError(Throwable error, ITernServer server, String methodName,
+			long ellapsedTime);
 }
