@@ -6,8 +6,9 @@ import tern.server.protocol.TernQuery;
 
 public class TernAngularQuery extends TernQuery {
 
-	public TernAngularQuery(AngularType angularType) {
+	public TernAngularQuery(String subtype, AngularType angularType) {
 		super("angular");
+		super.put("subtype", subtype);
 		super.put("angularType", angularType.name());
 	}
 

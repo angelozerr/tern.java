@@ -8,7 +8,7 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package tern.server.protocol.completions;
+package tern.server.protocol.definition;
 
 import tern.server.protocol.TernQuery;
 
@@ -16,7 +16,7 @@ import tern.server.protocol.TernQuery;
  * Tern completion query.
  * 
  */
-public class TernCompletionQuery extends TernQuery {
+public class TernDefinitionQuery extends TernQuery {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,7 +30,7 @@ public class TernCompletionQuery extends TernQuery {
 
 	private static final String ORIGINS_FIELD_NAME = "origins";
 
-	public TernCompletionQuery(String file, Integer pos) {
+	public TernDefinitionQuery(String file, Integer pos) {
 		super(COMPLETIONS_TYPE_QUERY);
 		setFile(file);
 		setEnd(pos);

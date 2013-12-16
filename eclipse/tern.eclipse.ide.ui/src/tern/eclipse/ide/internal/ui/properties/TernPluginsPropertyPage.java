@@ -23,7 +23,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.json.simple.JSONObject;
 
 import tern.TernProject;
-import tern.eclipse.ide.core.EclipseTernProject;
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIPlugin;
 import tern.eclipse.ide.internal.ui.Trace;
@@ -79,7 +79,7 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		// save the checked plugins in the tern project
 		Object[] checkedPlugins = pluginsBlock.getCheckedPlugins();
 		try {
-			EclipseTernProject ternProject = getTernProject();
+			IDETernProject ternProject = getTernProject();
 			ternProject.getPlugins().clear();
 			for (Object plugin : checkedPlugins) {
 				ternProject.addPlugin((ITernPlugin) plugin);

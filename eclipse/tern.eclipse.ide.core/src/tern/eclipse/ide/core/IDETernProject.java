@@ -25,7 +25,7 @@ import tern.server.ITernServer;
  * Eclipse IDE Tern project.
  * 
  */
-public class EclipseTernProject extends TernProject {
+public class IDETernProject extends TernProject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,18 +36,21 @@ public class EclipseTernProject extends TernProject {
 
 	private ITernServer ternServer;
 
-	EclipseTernProject(IProject project) throws CoreException {
+	private IDETernFileManager fileManager;
+
+	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
+		this.fileManager = new IDETernFileManager();
 		project.setSessionProperty(TERN_PROJECT, this);
 	}
 
-	public static EclipseTernProject getTernProject(IProject project)
+	public static IDETernProject getTernProject(IProject project)
 			throws CoreException {
-		EclipseTernProject ternProject = (EclipseTernProject) project
+		IDETernProject ternProject = (IDETernProject) project
 				.getSessionProperty(TERN_PROJECT);
 		if (ternProject == null) {
-			ternProject = new EclipseTernProject(project);
+			ternProject = new IDETernProject(project);
 			try {
 				ternProject.load();
 			} catch (IOException e) {
@@ -71,6 +74,7 @@ public class EclipseTernProject extends TernProject {
 				// should be improved?
 				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
 			}
+			this.fileManager.cleanFiles();
 		}
 		return ternServer;
 	}
@@ -90,6 +94,10 @@ public class EclipseTernProject extends TernProject {
 		if (ternServer != null) {
 			ternServer.dispose();
 		}
+		this.fileManager.cleanFiles();
 	}
 
+	public IDETernFileManager getFileManager() {
+		return fileManager;
+	}
 }

@@ -1,9 +1,30 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.protocol;
 
 import org.json.simple.JSONObject;
 
+/**
+ * Tern query.
+ * 
+ * <cite> A query is an object with at least a type property, which determines
+ * what kind of query it is. Depending on the type, other properties must or may
+ * be present in order to provide further details. </cite>
+ * 
+ * @see http://ternjs.net/doc/manual.html#protocol
+ * 
+ */
 public class TernQuery extends JSONObject {
 
+	private static final String FILE_FIELD_NAME = "file";
 	private static final String TYPE_QUERY = "type";
 
 	public TernQuery(String type) {
@@ -11,7 +32,7 @@ public class TernQuery extends JSONObject {
 	}
 
 	public void setFile(String file) {
-		super.put("file", file);
+		super.put(FILE_FIELD_NAME, file);
 	}
 
 	public void setEnd(Integer pos) {

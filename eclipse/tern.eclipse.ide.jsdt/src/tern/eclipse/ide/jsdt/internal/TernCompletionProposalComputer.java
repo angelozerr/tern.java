@@ -27,12 +27,12 @@ import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
 /**
  * JSDT completion extension with Tern.
  */
-import tern.eclipse.ide.core.EclipseTernProject;
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
-import tern.server.protocol.completions.TernCompletionQuery;
+import tern.server.protocol.completions.TernCompletionsQuery;
 
 public class TernCompletionProposalComputer implements
 		IJavaCompletionProposalComputer {
@@ -42,7 +42,7 @@ public class TernCompletionProposalComputer implements
 		if (context instanceof JavaContentAssistInvocationContext) {
 			JavaContentAssistInvocationContext javaContext = (JavaContentAssistInvocationContext) context;
 			IProject project = javaContext.getProject().getProject();
-			if (EclipseTernProject.hasTernNature(project)) {
+			if (IDETernProject.hasTernNature(project)) {
 
 				IDocument document = javaContext.getDocument();
 				IResource resource = javaContext.getCompilationUnit()
@@ -54,19 +54,19 @@ public class TernCompletionProposalComputer implements
 
 						final List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
 
-						EclipseTernProject ternProject = EclipseTernProject
+						IDETernProject ternProject = IDETernProject
 								.getTernProject(project);
 
 						ITernServer ternServer = ternProject.getTernServer();
-						TernDoc doc = new TernDoc();
-						TernCompletionQuery query = new TernCompletionQuery(
+
+						TernCompletionsQuery query = new TernCompletionsQuery(
 								"#0", context.getInvocationOffset());
 						query.setTypes(true);
 						query.setDocs(true);
 						query.setUrls(true);
 						query.setLineCharPositions(true);
-						doc.setQuery(query);
 
+						TernDoc doc = new TernDoc(query);
 						if (scriptFile != null && scriptFile.exists()) {
 							String name = scriptFile.getName();
 							/*

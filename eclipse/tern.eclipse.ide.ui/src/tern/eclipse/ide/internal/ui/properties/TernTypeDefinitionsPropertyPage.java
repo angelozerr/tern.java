@@ -23,7 +23,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.json.simple.JSONObject;
 
 import tern.TernProject;
-import tern.eclipse.ide.core.EclipseTernProject;
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIPlugin;
 import tern.eclipse.ide.internal.ui.Trace;
@@ -79,7 +79,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		// save the checked defs in the tern project
 		Object[] checkedDefs = defsBlock.getCheckedDefs();
 		try {
-			EclipseTernProject ternProject = getTernProject();
+			IDETernProject ternProject = getTernProject();
 			ternProject.getLibs().clear();
 			for (Object def : checkedDefs) {
 				ternProject.addLib(((ITernDef) def).getName());
