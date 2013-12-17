@@ -13,7 +13,16 @@ package tern.server.protocol.definition;
 import tern.server.protocol.TernQuery;
 
 /**
- * Tern completion query.
+ * Tern defintion query.
+ * 
+ * <cite> Asks for the definition of something. This will try, for a variable or
+ * property, to return the point at which it was defined. If that fails, or the
+ * chosen expression is not an identifier or property reference, it will try to
+ * return the definition site of the type the expression has. If no type is
+ * found, or the type is not an object or function (other types don’t store
+ * their definition site), it will fail to return useful information. </cite>
+ * 
+ * @see http://ternjs.net/doc/manual.html#req_definition
  * 
  */
 public class TernDefinitionQuery extends TernQuery {

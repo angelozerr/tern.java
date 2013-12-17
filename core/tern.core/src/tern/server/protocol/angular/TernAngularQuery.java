@@ -38,4 +38,7 @@ public class TernAngularQuery extends TernQuery {
 		return files;
 	}
 
+	public AngularType getAngularType() {
+		return AngularType.get((String)super.get("angularType"));
+	}
 }

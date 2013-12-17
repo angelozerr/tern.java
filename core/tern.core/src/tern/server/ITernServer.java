@@ -15,6 +15,7 @@ import java.io.IOException;
 import tern.TernException;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.definition.ITernDefinitionCollector;
 
 /**
  * Tern server API.
@@ -54,6 +55,9 @@ public interface ITernServer {
 	void request(TernDoc doc, IResponseHandler handler);
 
 	void request(TernDoc doc, ITernCompletionCollector collector)
+			throws TernException;
+
+	void request(TernDoc doc, ITernDefinitionCollector collector)
 			throws TernException;
 
 	boolean isDataAsJsonString();
