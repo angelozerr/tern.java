@@ -10,12 +10,15 @@ import tern.TernProject;
 import tern.eclipse.ide.core.ITernServerFactory;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.server.ITernServer;
+import tern.server.ITernServerListener;
 
 public class TernServerType implements ITernServerType {
+	
 	private final String id;
 	private final String name;
 	private ITernServerFactory factory;
 	private final List<ITernServer> servers;
+	private final ITernServerListener serverListener;
 
 	/**
 	 * GeneratorType constructor comment.
@@ -30,6 +33,22 @@ public class TernServerType implements ITernServerType {
 		this.name = element.getAttribute("name");
 		this.factory = (ITernServerFactory) element
 				.createExecutableExtension("factory");
+		this.serverListener = new ITernServerListener() {
+
+			@Override
+			public void onStart(ITernServer server) {
+				synchronized (servers) {
+					servers.add(server);
+				}
+			}
+
+			@Override
+			public void onEnd(ITernServer server) {
+				synchronized (servers) {
+					servers.remove(server);
+				}
+			}
+		};
 	}
 
 	@Override
@@ -47,16 +66,18 @@ public class TernServerType implements ITernServerType {
 	}
 
 	public void dispose() {
-		for (ITernServer server : servers) {
-			server.dispose();
+		synchronized (servers) {
+			for (ITernServer server : servers) {
+				server.dispose();
+			}
+			servers.clear();
 		}
-		servers.clear();
 	}
 
 	@Override
 	public ITernServer createServer(TernProject project) throws Exception {
 		ITernServer server = getFactory().create(project);
-		servers.add(server);
+		server.addServerListener(serverListener);
 		return server;
 	}
 

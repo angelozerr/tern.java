@@ -64,6 +64,10 @@ public interface ITernServer {
 
 	void setDataAsJsonString(boolean dataAsJsonString);
 
+	void addServerListener(ITernServerListener listener);
+
+	void removeServerListener(ITernServerListener listener);
+
 	boolean isDisposed();
 
 	void dispose();

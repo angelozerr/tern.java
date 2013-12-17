@@ -51,9 +51,13 @@ public class NodejsTernServer extends AbstractTernServer {
 	private final NodejsProcessListener listener = new NodejsProcessListenerAdapter() {
 
 		@Override
+		public void onStart(NodejsProcess server) {
+			NodejsTernServer.this.fireStartServer();
+		}
+
+		@Override
 		public void onStop(NodejsProcess server) {
-			NodejsTernServer.this.baseURL = null;
-			NodejsTernServer.this.process = null;
+			dispose();
 		}
 
 	};
@@ -245,11 +249,12 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void dispose() {
-		super.dispose();
+	public void doDispose() {
 		if (process != null) {
 			process.kill();
 		}
+		this.baseURL = null;
+		this.process = null;
 	}
 
 }

@@ -20,6 +20,7 @@ import tern.TernProject;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.server.ITernServer;
+import tern.server.TernServerAdapter;
 
 /**
  * Eclipse IDE Tern project.
@@ -70,11 +71,17 @@ public class IDETernProject extends TernProject {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
 						.getServerType();
 				this.ternServer = type.createServer(this);
+				this.ternServer.addServerListener(new TernServerAdapter() {
+					@Override
+					public void onEnd(ITernServer server) {
+						IDETernProject.this.fileManager.cleanFiles();
+					}
+				});
 			} catch (Exception e) {
 				// should be improved?
 				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
 			}
-			this.fileManager.cleanFiles();
+
 		}
 		return ternServer;
 	}
@@ -94,7 +101,6 @@ public class IDETernProject extends TernProject {
 		if (ternServer != null) {
 			ternServer.dispose();
 		}
-		this.fileManager.cleanFiles();
 	}
 
 	public IDETernFileManager getFileManager() {

@@ -246,7 +246,7 @@ public class RhinoTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void dispose() {
-		super.dispose();
+	public void doDispose() {
+		// do nothing
 	}
 }
