@@ -1,4 +1,4 @@
-package tern.server.protocol.angular.definitions;
+package tern.server.protocol.angular.definition;
 
 import tern.server.protocol.angular.AngularType;
 import tern.server.protocol.angular.TernAngularQuery;

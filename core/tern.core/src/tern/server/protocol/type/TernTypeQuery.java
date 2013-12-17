@@ -8,28 +8,23 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package tern.server.protocol.definition;
+package tern.server.protocol.type;
 
 import tern.server.protocol.TernQuery;
 
 /**
- * Tern defintion query.
+ * Tern type query.
  * 
- * <cite> Asks for the definition of something. This will try, for a variable or
- * property, to return the point at which it was defined. If that fails, or the
- * chosen expression is not an identifier or property reference, it will try to
- * return the definition site of the type the expression has. If no type is
- * found, or the type is not an object or function (other types don’t store
- * their definition site), it will fail to return useful information. </cite>
+ * <cite> Query the type of something. </cite>
  * 
- * @see http://ternjs.net/doc/manual.html#req_definition
+ * @see http://ternjs.net/doc/manual.html#req_type
  * 
  */
-public class TernDefinitionQuery extends TernQuery {
+public class TernTypeQuery extends TernQuery {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final String DEFINITION_TYPE_QUERY = "definition";
+	private static final String TYPE_TYPE_QUERY = "type";
 
 	private static final String TYPES_FIELD_NAME = "types";
 
@@ -39,8 +34,8 @@ public class TernDefinitionQuery extends TernQuery {
 
 	private static final String ORIGINS_FIELD_NAME = "origins";
 
-	public TernDefinitionQuery(String file, Integer pos) {
-		super(DEFINITION_TYPE_QUERY);
+	public TernTypeQuery(String file, Integer pos) {
+		super(TYPE_TYPE_QUERY);
 		setFile(file);
 		setEnd(pos);
 	}

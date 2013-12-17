@@ -30,6 +30,7 @@ import tern.server.ITernPlugin;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.type.ITernTypeCollector;
 import tern.server.rhino.loader.ClassPathScriptLoader;
 import tern.server.rhino.loader.IScriptLoader;
 import tern.utils.IOUtils;
@@ -250,6 +251,13 @@ public class RhinoTernServer extends AbstractTernServer {
 	@Override
 	public void request(TernDoc doc, ITernDefinitionCollector collector)
 			throws TernException {
+
+	}
+
+	@Override
+	public void request(TernDoc doc, ITernTypeCollector collector)
+			throws TernException {
+		// TODO Auto-generated method stub
 
 	}
 

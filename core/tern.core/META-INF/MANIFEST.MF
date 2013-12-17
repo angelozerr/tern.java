@@ -12,9 +12,11 @@ Export-Package: tern,
  tern.server.protocol,
  tern.server.protocol.angular,
  tern.server.protocol.angular.completions,
- tern.server.protocol.angular.definitions,
+ tern.server.protocol.angular.definition,
+ tern.server.protocol.angular.type,
  tern.server.protocol.completions,
  tern.server.protocol.definition,
+ tern.server.protocol.type,
  tern.utils
 Import-Package: org.json.simple,
  org.json.simple.parser

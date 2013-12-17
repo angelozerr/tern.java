@@ -30,6 +30,7 @@ import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.type.ITernTypeCollector;
 
 /**
  * Tern server implemented with node.js
@@ -248,8 +249,24 @@ public class NodejsTernServer extends AbstractTernServer {
 				if (startCh != null && endCh != null) {
 					pos = endCh.intValue() - startCh.intValue();
 				}
-				String file = (String) jsonObject.get("file");
+				String file = getText(jsonObject.get("file"));
 				collector.setDefinition(file, startCh, endCh);
+			}
+		} catch (Throwable e) {
+			throw new TernException(e);
+		}
+	}
+
+	@Override
+	public void request(TernDoc doc, ITernTypeCollector collector)
+			throws TernException {
+		try {
+			JSONObject jsonObject = makeRequest(doc);
+			if (jsonObject != null) {
+				String name = getText(jsonObject.get("name"));
+				String type = getText(jsonObject.get("type"));
+				String origin = getText(jsonObject.get("origin"));
+				collector.setType(name, type, origin);
 			}
 		} catch (Throwable e) {
 			throw new TernException(e);
