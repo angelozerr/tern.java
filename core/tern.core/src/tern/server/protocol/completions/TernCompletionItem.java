@@ -1,18 +1,21 @@
 package tern.server.protocol.completions;
 
+import tern.utils.StringUtils;
+
 public class TernCompletionItem {
 
 	private final String text;
 	private final String firstParam;
 	private final boolean function;
 
-	public TernCompletionItem(String text, String type) {
+	public TernCompletionItem(String name, String type, String origin) {
 		StringBuilder firstParam = null;
 		StringBuilder currentParam = null;
 		boolean typeParsing = false;
 		this.function = type.startsWith("fn(");
+		StringBuilder text = new StringBuilder(name);
 		if (function) {
-			text += '(';
+			text.append("(");
 			int bracket = 0;
 			String afterStartFn = type.substring(2, type.length());
 			int i = 0;
@@ -43,9 +46,9 @@ public class TernCompletionItem {
 										firstParam = new StringBuilder(
 												currentParam);
 									} else {
-										text += ", ";
+										text.append(", ");
 									}
-									text += currentParam;
+									text.append(currentParam.toString());
 									currentParam = null;
 								} else {
 									if (c != ' ' && c != '?') {
@@ -59,9 +62,13 @@ public class TernCompletionItem {
 				if (bracket == 0)
 					break;
 			}
-			text += ')';
+			text.append(")");
 		}
-		this.text = text;
+		if (!StringUtils.isEmpty(origin)) {
+			text.append(" - ");
+			text.append(origin);
+		}
+		this.text = text.toString();
 		this.firstParam = firstParam != null ? firstParam.toString() : null;
 	}
 

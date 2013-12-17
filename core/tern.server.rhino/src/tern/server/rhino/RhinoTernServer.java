@@ -228,10 +228,18 @@ public class RhinoTernServer extends AbstractTernServer {
 
 	protected void addProposal(NativeObject completion, int pos,
 			ITernCompletionCollector collector) {
-		String name = completion.get("name", completion).toString();
-		String type = completion.get("type", completion).toString();
-		Object doc = completion.get("doc", completion);
-		collector.addProposal(name, type, doc, pos);
+		String name = getText(completion.get("name"));
+		String type = getText(completion.get("type"));
+		String origin = getText(completion.get("origin"));
+		Object doc = completion.get("doc");
+		collector.addProposal(name, type, origin, doc, pos);
+	}
+
+	private String getText(Object value) {
+		if (value == null) {
+			return null;
+		}
+		return value.toString();
 	}
 
 	private Double getCh(NativeObject data, String pos) {

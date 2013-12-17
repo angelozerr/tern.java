@@ -8,8 +8,9 @@ public abstract class AbstractTernContentProposalCollector implements
 		ITernCompletionCollector {
 
 	@Override
-	public void addProposal(String name, String type, Object doc, int pos) {
-		addProposal(new TernContentProposal(name, type,
+	public void addProposal(String name, String type, String origin,
+			Object doc, int pos) {
+		addProposal(new TernContentProposal(name, type, origin,
 				doc != null ? doc.toString() : null, pos));
 	}
 

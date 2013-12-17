@@ -28,7 +28,7 @@ public class IDETernFileManager extends TernFileManager<IFile> {
 
 	@Override
 	public String getFileName(IFile file) {
-		return file.getProjectRelativePath().toOSString();
+		return file.getProjectRelativePath().toString();
 	}
 
 	@Override

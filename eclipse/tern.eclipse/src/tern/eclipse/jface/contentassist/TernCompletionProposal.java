@@ -21,9 +21,9 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	private IContextInformation fContextInformation;
 	private String fAdditionalProposalInfo;
 
-	public TernCompletionProposal(String name, String type, Object doc,
-			int pos, int startOffset) {
-		super(name, type);
+	public TernCompletionProposal(String name, String type, String origin,
+			Object doc, int pos, int startOffset) {
+		super(name, type, origin);
 
 		String text = super.getText();
 		this.fReplacementString = text;
