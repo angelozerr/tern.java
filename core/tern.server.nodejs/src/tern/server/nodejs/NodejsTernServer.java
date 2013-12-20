@@ -25,7 +25,7 @@ import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessListener;
-import tern.server.nodejs.process.NodejsProcessListenerAdapter;
+import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
@@ -49,7 +49,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private long timeout = 1000;
 
-	private final NodejsProcessListener listener = new NodejsProcessListenerAdapter() {
+	private final NodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
 		public void onStart(NodejsProcess server) {
@@ -138,7 +138,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	private JSONObject makeRequest(TernDoc doc) throws IOException,
-			InterruptedException {
+			InterruptedException, TernException {
 		JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), doc,
 				false, interceptors, this);
 		return json;
@@ -155,7 +155,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		interceptors.add(interceptor);
 	}
 
-	public String getBaseURL() throws InterruptedException, IOException {
+	public String getBaseURL() throws InterruptedException, IOException, TernException {
 		if (baseURL == null) {
 			int port = getProcess().start(timeout);
 			this.baseURL = computeBaseURL(port);
@@ -233,9 +233,9 @@ public class NodejsTernServer extends AbstractTernServer {
 	private Long getCh(JSONObject data, String pos) {
 		Object loc = data.get(pos);
 		if (loc instanceof Long) {
-			return (Long)loc;
+			return (Long) loc;
 		}
-		return loc != null ? (Long) ((JSONObject)loc).get("ch") : null;
+		return loc != null ? (Long) ((JSONObject) loc).get("ch") : null;
 	}
 
 	@Override
@@ -244,14 +244,8 @@ public class NodejsTernServer extends AbstractTernServer {
 		try {
 			JSONObject jsonObject = makeRequest(doc);
 			if (jsonObject != null) {
-				Long startCh = (Long) jsonObject.get("start");// getCh(jsonObject,
-																// "start");
-				Long endCh = (Long) jsonObject.get("end");// getCh(jsonObject,
-															// "end");
-				int pos = 0;
-				if (startCh != null && endCh != null) {
-					pos = endCh.intValue() - startCh.intValue();
-				}
+				Long startCh = getCh(jsonObject, "start");
+				Long endCh = getCh(jsonObject, "end");
 				String file = getText(jsonObject.get("file"));
 				collector.setDefinition(file, startCh, endCh);
 			}

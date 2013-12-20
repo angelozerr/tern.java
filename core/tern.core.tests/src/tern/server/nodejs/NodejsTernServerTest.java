@@ -1,4 +1,4 @@
-package tern.core.tests;
+package tern.server.nodejs;
 
 import java.io.File;
 
@@ -7,7 +7,9 @@ import org.junit.Test;
 import tern.TernException;
 import tern.TernProject;
 import tern.server.DefaultResponseHandler;
-import tern.server.nodejs.NodejsTernServer;
+import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.NodejsProcessAdapter;
+import tern.server.nodejs.process.PathHelper;
 import tern.server.protocol.TernDoc;
 
 /**
@@ -23,18 +25,16 @@ public class NodejsTernServerTest {
 	@Test
 	public void startServerServer() throws TernException {
 
-		/*
-		 * String s = "name: " + System.getProperty ("os.name"); s +=
-		 * ", version: " + System.getProperty ("os.version"); s += ", arch: " +
-		 * System.getProperty ("os.arch"); System.out.println ("OS=" + s);
-		 */
-
-		File installPath = new File(
-				"../../eclipse/tern.eclipse.ide.server.nodejs.embed.win32.win32.x86/nodejs/node-v0.10.22-win32-x86");
+		File installPath = PathHelper.getNodejsBasedir();
 		TernProject project = new TernProject(new File("."));
 
 		NodejsTernServer server = new NodejsTernServer(project, installPath);
-
+		server.addProcessListener(new NodejsProcessAdapter() {
+			@Override
+			public void onData(NodejsProcess server, String line) {
+				System.err.println(line);
+			}
+		});
 		TernDoc doc = createTernDoc();
 		DefaultResponseHandler response = new DefaultResponseHandler(true);
 		server.request(doc, response);
@@ -44,7 +44,7 @@ public class NodejsTernServerTest {
 
 	private TernDoc createTernDoc() {
 		String name = "myfile.js";
-		String text = "var a = [];";
+		String text = "var arr = [];";
 
 		TernDoc doc = new TernDoc();
 		doc.addFile(name, text, null);

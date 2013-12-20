@@ -16,7 +16,7 @@ public class NodejsProcessManager {
 
 	private File nodejsTernBaseDir;
 
-	private final NodejsProcessListener listener = new NodejsProcessListener() {
+	private final NodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
 		public void onStart(NodejsProcess server) {
@@ -32,10 +32,6 @@ public class NodejsProcessManager {
 			}
 		}
 
-		@Override
-		public void onData(NodejsProcess server, String line) {
-
-		}
 	};
 
 	public NodejsProcessManager() {

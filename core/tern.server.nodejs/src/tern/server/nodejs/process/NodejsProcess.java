@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.nodejs.process;
 
 import java.io.BufferedReader;
@@ -9,6 +19,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import tern.TernException;
+
+/**
+ * node.js process which start tern server with node.js
+ */
 public class NodejsProcess {
 
 	private final File nodejsBaseDir;
@@ -17,11 +32,78 @@ public class NodejsProcess {
 	private Integer port;
 	private boolean verbose;
 	private Process process;
-	private Thread processThread;
+	private Thread outThread;
+	private Thread errThread;
 
-	private List<NodejsProcessListener> listeners;
+	private final List<NodejsProcessListener> listeners;
 
+	/**
+	 * Lock used to wait the start of the server to retrieve port in the getPort
+	 * method.
+	 */
 	private final Object lock = new Object();
+
+	private class StdOut implements Runnable {
+		@Override
+		public void run() {
+			try {
+
+				Integer port = null;
+
+				String line = null;
+				InputStream is = process.getInputStream();
+				InputStreamReader isr = new InputStreamReader(is);
+				BufferedReader br = new BufferedReader(isr);
+				try {
+					while ((line = br.readLine()) != null) {
+						if (port == null) {
+							if (line.startsWith("Listening on port ")) {
+								port = Integer.parseInt(line.substring(
+										"Listening on port ".length(),
+										line.length()));
+								setPort(port);
+
+								synchronized (lock) {
+									lock.notifyAll();
+								}
+
+								notifyStartProcess();
+							}
+						}
+						notifyDataProcess(line);
+					}
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				if (process != null) {
+					process.waitFor();
+				}
+				notifyStopProcess();
+				kill();
+			} catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
+			}
+		}
+	};
+
+	private class StdErr implements Runnable {
+		@Override
+		public void run() {
+			String line = null;
+			InputStream is = process.getErrorStream();
+			InputStreamReader isr = new InputStreamReader(is);
+			BufferedReader br = new BufferedReader(isr);
+			try {
+				while ((line = br.readLine()) != null) {
+					notifyErrorProcess(line);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	NodejsProcess(File nodejsTernBaseDir, File projectDir) {
 		this(null, nodejsTernBaseDir, projectDir);
@@ -31,6 +113,7 @@ public class NodejsProcess {
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
+		this.listeners = new ArrayList<NodejsProcessListener>();
 	}
 
 	private File getNodejsTernFile(File nodejsTernBaseDir) {
@@ -43,68 +126,17 @@ public class NodejsProcess {
 		}
 		List<String> commands = createCommands();
 		ProcessBuilder builder = new ProcessBuilder(commands);
-		builder.redirectErrorStream(true);
+		// builder.redirectErrorStream(true);
 		builder.directory(getProjectDir());
 		this.process = builder.start();
 
-		processThread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
+		outThread = new Thread(new StdOut());
+		outThread.setDaemon(true);
+		outThread.start();
 
-					Integer port = null;
-
-					String line = null;
-					InputStream is = process.getInputStream();
-					InputStreamReader isr = new InputStreamReader(is);
-					BufferedReader br = new BufferedReader(isr);
-					try {
-						while ((line = br.readLine()) != null) {
-							if (port == null) {
-								if (line.startsWith("Listening on port ")) {
-									port = Integer.parseInt(line.substring(
-											"Listening on port ".length(),
-											line.length()));
-									setPort(port);
-
-									synchronized (lock) {
-										lock.notifyAll();
-									}
-
-									if (listeners != null) {
-										for (NodejsProcessListener listener : listeners) {
-											listener.onStart(NodejsProcess.this);
-										}
-									}
-								}
-							}
-							if (listeners != null) {
-								for (NodejsProcessListener listener : listeners) {
-									listener.onData(NodejsProcess.this, line);
-								}
-							}
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-					if (process != null) {
-						process.waitFor();
-					}
-					if (listeners != null) {
-						for (NodejsProcessListener listener : listeners) {
-							listener.onStop(NodejsProcess.this);
-						}
-					}
-					kill();
-				} catch (InterruptedException e) {
-					Thread.currentThread().interrupt();
-				}
-			}
-		});
-		processThread.setDaemon(true);
-		processThread.start();
+		errThread = new Thread(new StdErr());
+		errThread.setDaemon(true);
+		errThread.start();
 	}
 
 	protected List<String> createCommands() throws IOException {
@@ -132,8 +164,13 @@ public class NodejsProcess {
 			process.destroy();
 			process = null;
 		}
-		if (processThread != null) {
-			processThread.interrupt();
+		if (outThread != null) {
+			outThread.interrupt();
+			outThread = null;
+		}
+		if (errThread != null) {
+			errThread.interrupt();
+			errThread = null;
 		}
 	}
 
@@ -141,12 +178,16 @@ public class NodejsProcess {
 		return port;
 	}
 
-	public int start(long timeout) throws InterruptedException, IOException {
+	public int start(long timeout) throws InterruptedException, IOException,
+			TernException {
 		if (!isStarted()) {
 			start();
 		}
 		synchronized (lock) {
 			lock.wait(timeout);
+		}
+		if (port == null) {
+			throw new TernException("Cannot start node process.");
 		}
 		return getPort();
 	}
@@ -172,22 +213,52 @@ public class NodejsProcess {
 	}
 
 	public void join() throws InterruptedException {
-		if (processThread != null) {
-			processThread.join();
+		if (outThread != null) {
+			outThread.join();
 		}
 	}
 
 	public void addProcessListener(NodejsProcessListener listener) {
-		if (listeners == null) {
-			listeners = new ArrayList<NodejsProcessListener>();
+		synchronized (listeners) {
+			listeners.add(listener);
 		}
-		listeners.add(listener);
 	}
 
 	public void removeProcessListener(NodejsProcessListener listener) {
-		if (listeners != null && listener != null) {
+		synchronized (listeners) {
 			listeners.remove(listener);
 		}
 	}
 
+	private void notifyDataProcess(String line) {
+		synchronized (listeners) {
+			for (NodejsProcessListener listener : listeners) {
+				listener.onData(this, line);
+			}
+		}
+	}
+
+	private void notifyStartProcess() {
+		synchronized (listeners) {
+			for (NodejsProcessListener listener : listeners) {
+				listener.onStart(this);
+			}
+		}
+	}
+
+	private void notifyStopProcess() {
+		synchronized (listeners) {
+			for (NodejsProcessListener listener : listeners) {
+				listener.onStop(this);
+			}
+		}
+	}
+
+	private void notifyErrorProcess(String line) {
+		synchronized (listeners) {
+			for (NodejsProcessListener listener : listeners) {
+				listener.onError(NodejsProcess.this, line);
+			}
+		}
+	}
 }

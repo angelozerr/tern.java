@@ -1,13 +1,13 @@
 package tern.server.nodejs.process;
 
-public class PrintNodejsProcessListener implements NodejsProcessListener {
+public class PrintNodejsProcessListener extends NodejsProcessAdapter {
 
 	private static final NodejsProcessListener INSTANCE = new PrintNodejsProcessListener();
-	
+
 	public static NodejsProcessListener getInstance() {
 		return INSTANCE;
 	}
-	
+
 	@Override
 	public void onStart(NodejsProcess server) {
 		System.out.println("Server started at " + server.getPort());
