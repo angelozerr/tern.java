@@ -76,10 +76,15 @@ public class TernCompletionItem {
 	}
 
 	public String getText() {
-		if (StringUtils.isEmpty(origin)) {
+		if (StringUtils.isEmpty(origin) && StringUtils.isEmpty(type)) {
 			return signature;
 		}
 		StringBuilder text = new StringBuilder(signature);
+		/*
+		if (!StringUtils.isEmpty(type)) {
+			text.append(" ");
+			text.append(type);			
+		}*/
 		if (!StringUtils.isEmpty(origin)) {
 			text.append(" - ");
 			text.append(origin);

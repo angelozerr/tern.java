@@ -231,8 +231,11 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	private Long getCh(JSONObject data, String pos) {
-		JSONObject loc = (JSONObject) data.get(pos);
-		return loc != null ? (Long) loc.get("ch") : null;
+		Object loc = data.get(pos);
+		if (loc instanceof Long) {
+			return (Long)loc;
+		}
+		return loc != null ? (Long) ((JSONObject)loc).get("ch") : null;
 	}
 
 	@Override
