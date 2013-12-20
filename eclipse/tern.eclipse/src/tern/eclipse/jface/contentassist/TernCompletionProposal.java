@@ -25,14 +25,14 @@ public class TernCompletionProposal extends TernCompletionItem implements
 			Object doc, int pos, int startOffset) {
 		super(name, type, origin);
 
-		String text = super.getText();
+		String text = super.getSignature();
 		this.fReplacementString = text;
 		this.fReplacementOffset = startOffset - pos;
 		this.fReplacementLength = pos;
 		this.fCursorPosition = text.length();
 
 		this.fImage = null;
-		this.fDisplayString = text;
+		this.fDisplayString = super.getText();
 		this.fContextInformation = null;
 		this.fAdditionalProposalInfo = doc != null ? doc.toString() : null;
 
