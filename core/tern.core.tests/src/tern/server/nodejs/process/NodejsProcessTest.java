@@ -21,12 +21,14 @@ public class NodejsProcessTest {
 	 * 
 	 * @throws IOException
 	 * @throws InterruptedException
+	 * @throws TernException
 	 */
 	@Test
-	public void badNodejsBaseDir() throws IOException, InterruptedException {
+	public void badNodejsBaseDir() throws IOException, InterruptedException,
+			TernException {
 
 		File nodejsBaseDir = new File(".");
-		File nodejsTernBaseDir = new File(".");
+		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
 		NodejsProcess process = new NodejsProcess(nodejsBaseDir,
@@ -54,32 +56,12 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = new File(".");
 		File projectDir = new File(".");
 
-		NodejsProcess process = new NodejsProcess(nodejsBaseDir,
-				nodejsTernBaseDir, projectDir);
-
-		final StringBuilder error = new StringBuilder();
-		process.addProcessListener(new NodejsProcessAdapter() {
-
-			@Override
-			public void onError(NodejsProcess server, String line) {
-				error.append(line);
-			}
-		});
-
 		try {
-			process.start(TIMEOUT);
+			new NodejsProcess(nodejsBaseDir, nodejsTernBaseDir, projectDir);
+			Assert.assertTrue(false);
 		} catch (Exception e) {
-
+			Assert.assertTrue(e.getMessage(), true);
 		}
-		Assert.assertNotEquals(0, error.toString().length());
-		System.err.println(error.toString());
-		// TernDoc doc = new TernDoc();
-		// doc.addFile("test.js", "var a = '';", null);
-		//
-		// String baseURL = "http://localhost:" + port;
-		// JSONObject json = TernProtocolHelper.makeRequest(baseURL, doc, false,
-		// null, null);
-
 	}
 
 	@Test

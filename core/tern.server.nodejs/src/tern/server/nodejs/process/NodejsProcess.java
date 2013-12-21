@@ -157,8 +157,9 @@ public class NodejsProcess {
 	 *            the node.js tern base dir.
 	 * @param projectDir
 	 *            the project base dir where .tern-project is hosted.
+	 * @throws TernException
 	 */
-	NodejsProcess(File nodejsTernBaseDir, File projectDir) {
+	NodejsProcess(File nodejsTernBaseDir, File projectDir) throws TernException {
 		this(null, nodejsTernBaseDir, projectDir);
 	}
 
@@ -171,8 +172,10 @@ public class NodejsProcess {
 	 *            the node.js tern base dir.
 	 * @param projectDir
 	 *            the project base dir where .tern-project is hosted.
+	 * @throws TernException
 	 */
-	NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir) {
+	NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir)
+			throws TernException {
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
@@ -185,9 +188,25 @@ public class NodejsProcess {
 	 * @param nodejsTernBaseDir
 	 *            tern base dir.
 	 * @return the node.js tern file.
+	 * @throws TernException
 	 */
-	private File getNodejsTernFile(File nodejsTernBaseDir) {
-		return new File(nodejsTernBaseDir, "node_modules/tern/bin/tern");
+	private File getNodejsTernFile(File nodejsTernBaseDir) throws TernException {
+		if (nodejsTernBaseDir == null) {
+			throw new TernException(
+					"You must initialize the base dir of the tern node.js server.");
+		}
+		File ternServerFile = new File(nodejsTernBaseDir,
+				"node_modules/tern/bin/tern");
+		if (!ternServerFile.exists()) {
+			try {
+				throw new TernException("Cannot find tern node.js server at "
+						+ ternServerFile.getCanonicalPath());
+			} catch (IOException e) {
+				throw new TernException("Cannot find tern node.js server at "
+						+ ternServerFile.getPath());
+			}
+		}
+		return ternServerFile;
 	}
 
 	/**

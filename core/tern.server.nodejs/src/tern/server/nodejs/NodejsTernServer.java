@@ -72,7 +72,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		this.baseURL = computeBaseURL(port);
 	}
 
-	public NodejsTernServer(TernProject project) {
+	public NodejsTernServer(TernProject project) throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir()));
 	}
@@ -83,13 +83,14 @@ public class NodejsTernServer extends AbstractTernServer {
 		process.addProcessListener(listener);
 	}
 
-	public NodejsTernServer(TernProject project, File nodejsBaseDir) {
+	public NodejsTernServer(TernProject project, File nodejsBaseDir)
+			throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir(), nodejsBaseDir));
 	}
 
 	public NodejsTernServer(TernProject project, File nodejsBaseDir,
-			File nodejsTernBaseDir) {
+			File nodejsTernBaseDir) throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
 	}
@@ -170,7 +171,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		return baseURL;
 	}
 
-	private NodejsProcess getProcess() {
+	private NodejsProcess getProcess() throws TernException {
 		if (process != null) {
 			return process;
 		}

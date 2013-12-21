@@ -2,6 +2,7 @@ package tern.server.nodejs;
 
 import java.io.File;
 
+import tern.TernException;
 import tern.TernProject;
 import tern.server.ITernServer;
 import tern.server.nodejs.process.NodejsProcess;
@@ -11,7 +12,7 @@ import tern.server.nodejs.process.PathHelper;
 
 public class NodejsTernServerFactory {
 
-	public static ITernServer createServer() {
+	public static ITernServer createServer() throws TernException {
 		NodejsProcessManager.getInstance().init(
 				PathHelper.getNodejsTernBaseDir());
 

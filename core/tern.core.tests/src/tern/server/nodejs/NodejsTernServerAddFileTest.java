@@ -1,5 +1,6 @@
 package tern.server.nodejs;
 
+import tern.TernException;
 import tern.server.AbstractTernServerAddFileTest;
 import tern.server.ITernServer;
 
@@ -9,7 +10,7 @@ import tern.server.ITernServer;
 public class NodejsTernServerAddFileTest extends AbstractTernServerAddFileTest {
 
 	@Override
-	protected ITernServer createServer() {
+	protected ITernServer createServer() throws TernException {
 		return NodejsTernServerFactory.createServer();
 	}
 
