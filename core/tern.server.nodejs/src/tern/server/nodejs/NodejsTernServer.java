@@ -214,8 +214,17 @@ public class NodejsTernServer extends AbstractTernServer {
 				}
 				List completions = (List) jsonObject.get("completions");
 				if (completions != null) {
+					Boolean isString = null;
 					for (Object object : completions) {
-						addProposal((JSONObject) object, pos, collector);
+						if (isString == null) {
+							isString = (object instanceof String);
+						}
+						if (isString) {
+							collector.addProposal((String) object, null, null,
+									null, pos);
+						} else {
+							addProposal((JSONObject) object, pos, collector);
+						}
 					}
 				}
 			}

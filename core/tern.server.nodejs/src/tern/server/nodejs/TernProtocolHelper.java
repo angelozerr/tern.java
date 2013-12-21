@@ -69,9 +69,11 @@ public class TernProtocolHelper {
 				throw new IOException(e);
 			}
 		} catch (IOException e) {
-			for (IInterceptor interceptor : interceptors) {
-				interceptor.handleError(e, server, methodName,
-						System.currentTimeMillis() - starTime);
+			if (interceptors != null) {
+				for (IInterceptor interceptor : interceptors) {
+					interceptor.handleError(e, server, methodName,
+							System.currentTimeMillis() - starTime);
+				}
 			}
 			throw e;
 		} finally {

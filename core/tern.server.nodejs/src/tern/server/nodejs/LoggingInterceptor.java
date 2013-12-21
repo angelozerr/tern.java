@@ -7,6 +7,12 @@ import tern.server.protocol.TernDoc;
 
 public class LoggingInterceptor implements IInterceptor {
 
+	private static final IInterceptor INSTANCE = new LoggingInterceptor();
+
+	public static IInterceptor getInstance() {
+		return INSTANCE;
+	}
+
 	@Override
 	public void handleRequest(TernDoc request, ITernServer server,
 			String methodName) {

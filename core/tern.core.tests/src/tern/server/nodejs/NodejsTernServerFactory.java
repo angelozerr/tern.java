@@ -5,10 +5,9 @@ import java.io.File;
 import tern.TernException;
 import tern.TernProject;
 import tern.server.ITernServer;
-import tern.server.nodejs.process.NodejsProcess;
-import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.nodejs.process.PathHelper;
+import tern.server.nodejs.process.PrintNodejsProcessListener;
 
 public class NodejsTernServerFactory {
 
@@ -20,12 +19,9 @@ public class NodejsTernServerFactory {
 		TernProject project = new TernProject(new File("."));
 
 		NodejsTernServer server = new NodejsTernServer(project, nodejsBaseDir);
-		server.addProcessListener(new NodejsProcessAdapter() {
-			@Override
-			public void onData(NodejsProcess server, String line) {
-				System.err.println(line);
-			}
-		});
+		// trace process
+		server.addProcessListener(PrintNodejsProcessListener.getInstance());
+		server.addInterceptor(LoggingInterceptor.getInstance());
 		return server;
 	}
 }

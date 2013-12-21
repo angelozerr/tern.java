@@ -18,7 +18,7 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 		File installPath = getInstallPath();
 		NodejsTernServer server = new NodejsTernServer(project, installPath);
 		// TODO : remove that
-		server.addInterceptor(new LoggingInterceptor());
+		server.addInterceptor(LoggingInterceptor.getInstance());
 		server.addProcessListener(PrintNodejsProcessListener.getInstance());
 		return server;
 	}

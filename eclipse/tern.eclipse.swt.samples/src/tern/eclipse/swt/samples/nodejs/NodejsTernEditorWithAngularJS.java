@@ -69,7 +69,8 @@ public class NodejsTernEditorWithAngularJS {
 		File projectDir = new File(".");
 		TernProject project = new TernProject(projectDir);
 		this.server = new NodejsTernServer(project);
-		((NodejsTernServer) server).addInterceptor(new LoggingInterceptor());
+		((NodejsTernServer) server).addInterceptor(LoggingInterceptor
+				.getInstance());
 		((NodejsTernServer) server)
 				.addProcessListener(PrintNodejsProcessListener.getInstance());
 
