@@ -22,19 +22,53 @@ import java.util.List;
 import tern.TernException;
 
 /**
- * node.js process which start tern server with node.js
+ * node.js process which starts tern server with node.js
  */
 public class NodejsProcess {
 
+	/**
+	 * The node.js base dir.
+	 */
 	private final File nodejsBaseDir;
+
+	/**
+	 * The node.js tern file.
+	 */
 	private final File nodejsTernFile;
+
+	/**
+	 * The project dir where .tern-project is hosted.
+	 */
 	private final File projectDir;
+
+	/**
+	 * Port of the node.js server.
+	 */
 	private Integer port;
+
+	/**
+	 * true if tern server must be verbose and false otherwise.
+	 */
 	private boolean verbose;
+
+	/**
+	 * node.js process.
+	 */
 	private Process process;
+
+	/**
+	 * StdOut thread.
+	 */
 	private Thread outThread;
+
+	/**
+	 * StdErr thread.
+	 */
 	private Thread errThread;
 
+	/**
+	 * Process listeners.
+	 */
 	private final List<NodejsProcessListener> listeners;
 
 	/**
@@ -43,13 +77,17 @@ public class NodejsProcess {
 	 */
 	private final Object lock = new Object();
 
+	/**
+	 * StdOut of the node.js process.
+	 */
 	private class StdOut implements Runnable {
+
 		@Override
 		public void run() {
 			try {
 
+				// start the node.js process with tern.
 				Integer port = null;
-
 				String line = null;
 				InputStream is = process.getInputStream();
 				InputStreamReader isr = new InputStreamReader(is);
@@ -57,23 +95,27 @@ public class NodejsProcess {
 				try {
 					while ((line = br.readLine()) != null) {
 						if (port == null) {
+							// port was not getted, try to get it.
 							if (line.startsWith("Listening on port ")) {
 								port = Integer.parseInt(line.substring(
 										"Listening on port ".length(),
 										line.length()));
+
+								// port is getted, notify that process is
+								// started.
 								setPort(port);
 
 								synchronized (lock) {
 									lock.notifyAll();
 								}
-
 								notifyStartProcess();
 							}
+						} else {
+							// notify data
+							notifyDataProcess(line);
 						}
-						notifyDataProcess(line);
 					}
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
@@ -88,6 +130,9 @@ public class NodejsProcess {
 		}
 	};
 
+	/**
+	 * StdErr of the node.js process.
+	 */
 	private class StdErr implements Runnable {
 		@Override
 		public void run() {
@@ -105,10 +150,28 @@ public class NodejsProcess {
 		}
 	}
 
+	/**
+	 * Nodejs process constructor which uses the installed node.js.
+	 * 
+	 * @param nodejsTernBaseDir
+	 *            the node.js tern base dir.
+	 * @param projectDir
+	 *            the project base dir where .tern-project is hosted.
+	 */
 	NodejsProcess(File nodejsTernBaseDir, File projectDir) {
 		this(null, nodejsTernBaseDir, projectDir);
 	}
 
+	/**
+	 * Nodejs process constructor.
+	 * 
+	 * @param nodejsBaseDir
+	 *            the node.js base dir.
+	 * @param nodejsTernBaseDir
+	 *            the node.js tern base dir.
+	 * @param projectDir
+	 *            the project base dir where .tern-project is hosted.
+	 */
 	NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir) {
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
@@ -116,29 +179,23 @@ public class NodejsProcess {
 		this.listeners = new ArrayList<NodejsProcessListener>();
 	}
 
+	/**
+	 * Returns the node.js tern file.
+	 * 
+	 * @param nodejsTernBaseDir
+	 *            tern base dir.
+	 * @return the node.js tern file.
+	 */
 	private File getNodejsTernFile(File nodejsTernBaseDir) {
 		return new File(nodejsTernBaseDir, "node_modules/tern/bin/tern");
 	}
 
-	public void start() throws IOException, InterruptedException {
-		if (isStarted()) {
-			throw new IOException("Nodejs tern Server is already started.");
-		}
-		List<String> commands = createCommands();
-		ProcessBuilder builder = new ProcessBuilder(commands);
-		// builder.redirectErrorStream(true);
-		builder.directory(getProjectDir());
-		this.process = builder.start();
-
-		outThread = new Thread(new StdOut());
-		outThread.setDaemon(true);
-		outThread.start();
-
-		errThread = new Thread(new StdErr());
-		errThread.setDaemon(true);
-		errThread.start();
-	}
-
+	/**
+	 * Create process commands to start tern with node.js
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	protected List<String> createCommands() throws IOException {
 		List<String> commands = new LinkedList<String>();
 		if (nodejsBaseDir == null) {
@@ -159,6 +216,68 @@ public class NodejsProcess {
 		return commands;
 	}
 
+	/**
+	 * Start process.
+	 * 
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
+	public void start() throws IOException, InterruptedException {
+		if (isStarted()) {
+			throw new IOException("Nodejs tern Server is already started.");
+		}
+		List<String> commands = createCommands();
+		ProcessBuilder builder = new ProcessBuilder(commands);
+		// builder.redirectErrorStream(true);
+		builder.directory(getProjectDir());
+		this.process = builder.start();
+
+		outThread = new Thread(new StdOut());
+		outThread.setDaemon(true);
+		outThread.start();
+
+		errThread = new Thread(new StdErr());
+		errThread.setDaemon(true);
+		errThread.start();
+	}
+
+	/**
+	 * Start the process and returns the port of the started process.
+	 * 
+	 * @param timeout
+	 *            to wait until the process start to retrieve the port to
+	 *            return.
+	 * @return
+	 * @throws InterruptedException
+	 * @throws IOException
+	 * @throws TernException
+	 */
+	public int start(long timeout) throws InterruptedException, IOException,
+			TernException {
+		if (!isStarted()) {
+			start();
+		}
+		synchronized (lock) {
+			lock.wait(timeout);
+		}
+		if (port == null) {
+			throw new TernException("Cannot start node process.");
+		}
+		return getPort();
+	}
+
+	/**
+	 * Return true id process is started and false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isStarted() {
+		return process != null;
+	}
+
+	/**
+	 * Kill the process.
+	 */
 	public void kill() {
 		if (process != null) {
 			process.destroy();
@@ -174,62 +293,89 @@ public class NodejsProcess {
 		}
 	}
 
+	/**
+	 * Return the node.js port and null if not started.
+	 * 
+	 * @return
+	 */
 	public Integer getPort() {
 		return port;
 	}
 
-	public int start(long timeout) throws InterruptedException, IOException,
-			TernException {
-		if (!isStarted()) {
-			start();
-		}
-		synchronized (lock) {
-			lock.wait(timeout);
-		}
-		if (port == null) {
-			throw new TernException("Cannot start node process.");
-		}
-		return getPort();
-	}
-
-	public boolean isStarted() {
-		return process != null;
-	}
-
-	public void setPort(Integer port) {
+	/**
+	 * Set the port when process is started;
+	 * 
+	 * @param port
+	 */
+	void setPort(Integer port) {
 		this.port = port;
 	}
 
+	/**
+	 * Set the verbose.
+	 * 
+	 * @param verbose
+	 */
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
 	}
 
+	/**
+	 * Returns true if tern is verbose and false otherwise.
+	 * 
+	 * @return
+	 */
 	public boolean isVerbose() {
 		return verbose;
 	}
 
+	/**
+	 * return the project dir where .tern-project is hosted.
+	 * 
+	 * @return
+	 */
 	public File getProjectDir() {
 		return projectDir;
 	}
 
+	/**
+	 * Joint to the stdout thread;
+	 * 
+	 * @throws InterruptedException
+	 */
 	public void join() throws InterruptedException {
 		if (outThread != null) {
 			outThread.join();
 		}
 	}
 
+	/**
+	 * Add the given process listener.
+	 * 
+	 * @param listener
+	 */
 	public void addProcessListener(NodejsProcessListener listener) {
 		synchronized (listeners) {
 			listeners.add(listener);
 		}
 	}
 
+	/**
+	 * Remove the given process listener.
+	 * 
+	 * @param listener
+	 */
 	public void removeProcessListener(NodejsProcessListener listener) {
 		synchronized (listeners) {
 			listeners.remove(listener);
 		}
 	}
 
+	/**
+	 * Notify data process.
+	 * 
+	 * @param line
+	 */
 	private void notifyDataProcess(String line) {
 		synchronized (listeners) {
 			for (NodejsProcessListener listener : listeners) {
@@ -238,6 +384,9 @@ public class NodejsProcess {
 		}
 	}
 
+	/**
+	 * Notify start process.
+	 */
 	private void notifyStartProcess() {
 		synchronized (listeners) {
 			for (NodejsProcessListener listener : listeners) {
@@ -246,6 +395,9 @@ public class NodejsProcess {
 		}
 	}
 
+	/**
+	 * Notify stop process.
+	 */
 	private void notifyStopProcess() {
 		synchronized (listeners) {
 			for (NodejsProcessListener listener : listeners) {
@@ -254,6 +406,9 @@ public class NodejsProcess {
 		}
 	}
 
+	/**
+	 * Notify error process.
+	 */
 	private void notifyErrorProcess(String line) {
 		synchronized (listeners) {
 			for (NodejsProcessListener listener : listeners) {
