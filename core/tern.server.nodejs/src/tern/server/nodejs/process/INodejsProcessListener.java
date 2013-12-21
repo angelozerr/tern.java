@@ -16,14 +16,38 @@ package tern.server.nodejs.process;
  * @author azerr
  * 
  */
-public interface NodejsProcessListener {
+public interface INodejsProcessListener {
 
+	/**
+	 * Callback called when the given node.js process start.
+	 * 
+	 * @param process
+	 */
 	void onStart(NodejsProcess process);
 
+	/**
+	 * Callback called when the given node.js process send data.
+	 * 
+	 * @param process
+	 * @param line
+	 *            the data.
+	 */
 	void onData(NodejsProcess process, String line);
 
+	/**
+	 * Callback called when the given node.js process stop.
+	 * 
+	 * @param process
+	 */
 	void onStop(NodejsProcess process);
 
+	/**
+	 * Callback called when the given node.js throws error.
+	 * 
+	 * @param process
+	 * @param line
+	 *            the error.
+	 */
 	void onError(NodejsProcess process, String line);
 
 }

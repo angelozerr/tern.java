@@ -24,7 +24,7 @@ import tern.server.IResponseHandler;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.nodejs.process.NodejsProcess;
-import tern.server.nodejs.process.NodejsProcessListener;
+import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernDoc;
@@ -45,11 +45,11 @@ public class NodejsTernServer extends AbstractTernServer {
 	private List<IInterceptor> interceptors;
 
 	private NodejsProcess process;
-	private List<NodejsProcessListener> listeners;
+	private List<INodejsProcessListener> listeners;
 
 	private long timeout = 1000;
 
-	private final NodejsProcessListener listener = new NodejsProcessAdapter() {
+	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
 		public void onStart(NodejsProcess server) {
@@ -83,9 +83,15 @@ public class NodejsTernServer extends AbstractTernServer {
 		process.addProcessListener(listener);
 	}
 
-	public NodejsTernServer(TernProject project, File installPath) {
+	public NodejsTernServer(TernProject project, File nodejsBaseDir) {
 		this(project, NodejsProcessManager.getInstance().create(
-				project.getProjectDir(), installPath));
+				project.getProjectDir(), nodejsBaseDir));
+	}
+
+	public NodejsTernServer(TernProject project, File nodejsBaseDir,
+			File nodejsTernBaseDir) {
+		this(project, NodejsProcessManager.getInstance().create(
+				project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
 	}
 
 	private String computeBaseURL(Integer port) {
@@ -155,7 +161,8 @@ public class NodejsTernServer extends AbstractTernServer {
 		interceptors.add(interceptor);
 	}
 
-	public String getBaseURL() throws InterruptedException, IOException, TernException {
+	public String getBaseURL() throws InterruptedException, IOException,
+			TernException {
 		if (baseURL == null) {
 			int port = getProcess().start(timeout);
 			this.baseURL = computeBaseURL(port);
@@ -173,9 +180,9 @@ public class NodejsTernServer extends AbstractTernServer {
 		return process;
 	}
 
-	public void addProcessListener(NodejsProcessListener listener) {
+	public void addProcessListener(INodejsProcessListener listener) {
 		if (listeners == null) {
-			listeners = new ArrayList<NodejsProcessListener>();
+			listeners = new ArrayList<INodejsProcessListener>();
 		}
 		listeners.add(listener);
 		if (process != null) {
@@ -183,7 +190,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 	}
 
-	public void removeProcessListener(NodejsProcessListener listener) {
+	public void removeProcessListener(INodejsProcessListener listener) {
 		if (listeners != null && listener != null) {
 			listeners.remove(listener);
 		}
@@ -205,8 +212,10 @@ public class NodejsTernServer extends AbstractTernServer {
 					pos = endCh.intValue() - startCh.intValue();
 				}
 				List completions = (List) jsonObject.get("completions");
-				for (Object object : completions) {
-					addProposal((JSONObject) object, pos, collector);
+				if (completions != null) {
+					for (Object object : completions) {
+						addProposal((JSONObject) object, pos, collector);
+					}
 				}
 			}
 		} catch (Throwable e) {

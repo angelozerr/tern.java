@@ -1,9 +1,23 @@
+/*******************************************************************************
+ * Copyright (c) 2013 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.nodejs.process;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * {@link NodejsProcess} manager.
+ * 
+ */
 public class NodejsProcessManager {
 
 	private final static NodejsProcessManager INSTANCE = new NodejsProcessManager();
@@ -16,7 +30,7 @@ public class NodejsProcessManager {
 
 	private File nodejsTernBaseDir;
 
-	private final NodejsProcessListener listener = new NodejsProcessAdapter() {
+	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
 		public void onStart(NodejsProcess server) {

@@ -69,7 +69,7 @@ public class NodejsProcess {
 	/**
 	 * Process listeners.
 	 */
-	private final List<NodejsProcessListener> listeners;
+	private final List<INodejsProcessListener> listeners;
 
 	/**
 	 * Lock used to wait the start of the server to retrieve port in the getPort
@@ -176,7 +176,7 @@ public class NodejsProcess {
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
-		this.listeners = new ArrayList<NodejsProcessListener>();
+		this.listeners = new ArrayList<INodejsProcessListener>();
 	}
 
 	/**
@@ -354,7 +354,7 @@ public class NodejsProcess {
 	 * 
 	 * @param listener
 	 */
-	public void addProcessListener(NodejsProcessListener listener) {
+	public void addProcessListener(INodejsProcessListener listener) {
 		synchronized (listeners) {
 			listeners.add(listener);
 		}
@@ -365,7 +365,7 @@ public class NodejsProcess {
 	 * 
 	 * @param listener
 	 */
-	public void removeProcessListener(NodejsProcessListener listener) {
+	public void removeProcessListener(INodejsProcessListener listener) {
 		synchronized (listeners) {
 			listeners.remove(listener);
 		}
@@ -378,7 +378,7 @@ public class NodejsProcess {
 	 */
 	private void notifyDataProcess(String line) {
 		synchronized (listeners) {
-			for (NodejsProcessListener listener : listeners) {
+			for (INodejsProcessListener listener : listeners) {
 				listener.onData(this, line);
 			}
 		}
@@ -389,7 +389,7 @@ public class NodejsProcess {
 	 */
 	private void notifyStartProcess() {
 		synchronized (listeners) {
-			for (NodejsProcessListener listener : listeners) {
+			for (INodejsProcessListener listener : listeners) {
 				listener.onStart(this);
 			}
 		}
@@ -400,7 +400,7 @@ public class NodejsProcess {
 	 */
 	private void notifyStopProcess() {
 		synchronized (listeners) {
-			for (NodejsProcessListener listener : listeners) {
+			for (INodejsProcessListener listener : listeners) {
 				listener.onStop(this);
 			}
 		}
@@ -411,7 +411,7 @@ public class NodejsProcess {
 	 */
 	private void notifyErrorProcess(String line) {
 		synchronized (listeners) {
-			for (NodejsProcessListener listener : listeners) {
+			for (INodejsProcessListener listener : listeners) {
 				listener.onError(NodejsProcess.this, line);
 			}
 		}
