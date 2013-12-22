@@ -1,14 +1,11 @@
 package tern.server;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import tern.TernException;
 import tern.server.protocol.TernDoc;
-import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.completions.TernCompletionItem;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
 /**
@@ -22,14 +19,7 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 	public void completionWithMissingEnd() throws TernException {
 
 		TernDoc doc = createTernDocWithMissingEnd();
-		ITernCompletionCollector collector = new ITernCompletionCollector() {
-
-			@Override
-			public void addProposal(String name, String type, String origin,
-					Object doc, int pos) {
-
-			}
-		};
+		MapTernCompletionCollector collector = new MapTernCompletionCollector();
 		try {
 			server.request(doc, collector);
 			Assert.assertTrue(false);
@@ -53,20 +43,14 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 
 	@Test
 	public void completionWithStringResult() throws TernException {
-
-		final List<String> completions = new ArrayList<String>();
-
 		TernDoc doc = createTernDocWithStringResult();
-		ITernCompletionCollector collector = new ITernCompletionCollector() {
-
-			@Override
-			public void addProposal(String name, String type, String origin,
-					Object doc, int pos) {
-				completions.add(name);
-			}
-		};
+		MapTernCompletionCollector collector = new MapTernCompletionCollector();
 		server.request(doc, collector);
-		Assert.assertTrue(completions.size() > 0);
+
+		Assert.assertTrue(collector.getCompletions().size() > 0);
+		TernCompletionItem item = collector.get("concat");
+		Assert.assertNotNull(item);
+		Assert.assertNull(item.getType());
 	}
 
 	private TernDoc createTernDocWithStringResult() {
@@ -84,20 +68,14 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 
 	@Test
 	public void completionWithComplexResult() throws TernException {
-
-		final List<String> completions = new ArrayList<String>();
-
 		TernDoc doc = createTernDocWithComplexResult();
-		ITernCompletionCollector collector = new ITernCompletionCollector() {
-
-			@Override
-			public void addProposal(String name, String type, String origin,
-					Object doc, int pos) {
-				completions.add(name);
-			}
-		};
+		MapTernCompletionCollector collector = new MapTernCompletionCollector();
 		server.request(doc, collector);
-		Assert.assertTrue(completions.size() > 0);
+
+		Assert.assertTrue(collector.getCompletions().size() > 0);
+		TernCompletionItem item = collector.get("concat");
+		Assert.assertNotNull(item);
+		Assert.assertEquals("fn(other: [?])", item.getType());
 	}
 
 	private TernDoc createTernDocWithComplexResult() {

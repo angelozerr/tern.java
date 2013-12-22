@@ -18,58 +18,63 @@ public class TernCompletionItem {
 		this.origin = origin;
 		StringBuilder firstParam = null;
 		StringBuilder currentParam = null;
-		boolean typeParsing = false;
-		this.function = type.startsWith("fn(");
 		StringBuilder signature = new StringBuilder(name);
-		if (function) {
-			signature.append("(");
-			int bracket = 0;
-			String afterStartFn = type.substring(2, type.length());
-			int i = 0;
-			for (i = 0; i < afterStartFn.length(); i++) {
-				char c = afterStartFn.charAt(i);
-				switch (c) {
-				case '(':
-					bracket++;
-					break;
-				case ')':
-					bracket--;
-					break;
-				default:
-					if (bracket == 1) {
-						if (typeParsing) {
-							if (c == ',')
-								typeParsing = false;
-						} else {
-							if (currentParam == null) {
-								if (c != ' ' && c != '?') {
-									currentParam = new StringBuilder();
-									currentParam.append(c);
-								}
+		boolean typeParsing = false;
+		if (!StringUtils.isEmpty(type)) {
+			this.function = type.startsWith("fn(");
+			if (function) {
+				signature.append("(");
+				int bracket = 0;
+				String afterStartFn = type.substring(2, type.length());
+				int i = 0;
+				for (i = 0; i < afterStartFn.length(); i++) {
+					char c = afterStartFn.charAt(i);
+					switch (c) {
+					case '(':
+						bracket++;
+						break;
+					case ')':
+						bracket--;
+						break;
+					default:
+						if (bracket == 1) {
+							if (typeParsing) {
+								if (c == ',')
+									typeParsing = false;
 							} else {
-								if (c == ':') {
-									typeParsing = true;
-									if (firstParam == null) {
-										firstParam = new StringBuilder(
-												currentParam);
-									} else {
-										signature.append(", ");
-									}
-									signature.append(currentParam.toString());
-									currentParam = null;
-								} else {
+								if (currentParam == null) {
 									if (c != ' ' && c != '?') {
+										currentParam = new StringBuilder();
 										currentParam.append(c);
+									}
+								} else {
+									if (c == ':') {
+										typeParsing = true;
+										if (firstParam == null) {
+											firstParam = new StringBuilder(
+													currentParam);
+										} else {
+											signature.append(", ");
+										}
+										signature.append(currentParam
+												.toString());
+										currentParam = null;
+									} else {
+										if (c != ' ' && c != '?') {
+											currentParam.append(c);
+										}
 									}
 								}
 							}
 						}
 					}
+					if (bracket == 0)
+						break;
 				}
-				if (bracket == 0)
-					break;
+				signature.append(")");
 			}
-			signature.append(")");
+		} else {
+			this.function = false;
 		}
 		this.signature = signature.toString();
 		this.firstParam = firstParam != null ? firstParam.toString() : null;
@@ -81,10 +86,9 @@ public class TernCompletionItem {
 		}
 		StringBuilder text = new StringBuilder(signature);
 		/*
-		if (!StringUtils.isEmpty(type)) {
-			text.append(" ");
-			text.append(type);			
-		}*/
+		 * if (!StringUtils.isEmpty(type)) { text.append(" ");
+		 * text.append(type); }
+		 */
 		if (!StringUtils.isEmpty(origin)) {
 			text.append(" - ");
 			text.append(origin);
@@ -110,5 +114,9 @@ public class TernCompletionItem {
 
 	public String getSignature() {
 		return signature;
+	}
+
+	public String getType() {
+		return type;
 	}
 }
