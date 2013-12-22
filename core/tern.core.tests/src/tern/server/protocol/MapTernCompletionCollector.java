@@ -1,4 +1,4 @@
-package tern.server;
+package tern.server.protocol;
 
 import java.util.Collection;
 import java.util.HashMap;

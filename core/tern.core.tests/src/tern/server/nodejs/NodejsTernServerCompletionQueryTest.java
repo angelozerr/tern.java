@@ -1,8 +1,8 @@
 package tern.server.nodejs;
 
 import tern.TernException;
-import tern.server.AbstractTernServerCompletionQueryTest;
 import tern.server.ITernServer;
+import tern.server.protocol.AbstractTernServerCompletionQueryTest;
 
 /**
  * Test with Tern server executed with node.js

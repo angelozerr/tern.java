@@ -1,9 +1,10 @@
-package tern.server;
+package tern.server.protocol;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import tern.TernException;
+import tern.server.AbstractTernServerTest;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.TernCompletionItem;
 import tern.server.protocol.completions.TernCompletionsQuery;

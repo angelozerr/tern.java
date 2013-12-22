@@ -1,8 +1,8 @@
 package tern.server.nodejs;
 
 import tern.TernException;
-import tern.server.AbstractTernServerAddFileTest;
 import tern.server.ITernServer;
+import tern.server.protocol.AbstractTernServerAddFileTest;
 
 /**
  * Test with Tern server executed with node.js
