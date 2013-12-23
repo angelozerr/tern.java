@@ -228,6 +228,8 @@ public class NodejsTernServer extends AbstractTernServer {
 					}
 				}
 			}
+		} catch (TernException e) {
+			throw e;
 		} catch (Throwable e) {
 			throw new TernException(e);
 		}

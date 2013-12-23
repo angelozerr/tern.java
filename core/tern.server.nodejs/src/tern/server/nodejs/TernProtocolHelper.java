@@ -18,16 +18,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import tern.TernException;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
 import tern.utils.IOUtils;
+import tern.utils.StringUtils;
 
 public class TernProtocolHelper {
 
 	public static JSONObject makeRequest(String baseURL, TernDoc doc,
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)
-			throws IOException {
+			throws IOException, TernException {
 		TernQuery query = doc.getQuery();
 		String methodName = query != null ? query.getType() : "";
 		long starTime = 0;
@@ -49,8 +51,11 @@ public class TernProtocolHelper {
 			int statusCode = statusLine.getStatusCode();
 			if (statusCode != HttpStatus.SC_OK) {
 				// node.js server throws error
-				throw new IOException(statusLine.toString() + "\n"
-						+ IOUtils.toString(in));
+				String message = IOUtils.toString(in);
+				if (StringUtils.isEmpty(message)) {
+					throw new TernException(statusLine.toString());
+				}
+				throw new TernException(message);
 			}
 
 			JSONParser parser = new JSONParser();
