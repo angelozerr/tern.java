@@ -220,7 +220,14 @@ public class NodejsProcess {
 		if (nodejsBaseDir == null) {
 			commands.add("node");
 		} else {
-			commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());
+			if(new File(nodejsBaseDir.getPath(), "bin").exists()){
+				//linux /macosx
+				commands.add(new File(nodejsBaseDir.getPath()+"/bin", "node").getPath());
+			} else {
+				//windows
+				commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());	
+			}
+			
 		}
 		commands.add(nodejsTernFile.getCanonicalPath());
 		Integer port = getPort();
