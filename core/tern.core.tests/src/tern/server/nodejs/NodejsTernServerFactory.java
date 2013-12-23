@@ -11,12 +11,12 @@ import tern.server.nodejs.process.PrintNodejsProcessListener;
 
 public class NodejsTernServerFactory {
 
-	public static ITernServer createServer() throws TernException {
+	public static ITernServer createServer(TernProject project)
+			throws TernException {
 		NodejsProcessManager.getInstance().init(
 				PathHelper.getNodejsTernBaseDir());
 
 		File nodejsBaseDir = PathHelper.getNodejsBasedir();
-		TernProject project = new TernProject(new File("."));
 
 		NodejsTernServer server = new NodejsTernServer(project, nodejsBaseDir);
 		// trace process

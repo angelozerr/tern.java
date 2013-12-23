@@ -24,10 +24,10 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 		try {
 			server.request(doc, collector);
 			Assert.assertTrue(false);
-		} catch (Exception e) {
-			Assert.assertTrue(e.getMessage(), true);
+		} catch (TernException e) {
+			Assert.assertEquals("TernError: missing .query.end field",
+					e.getMessage());
 		}
-
 	}
 
 	private TernDoc createTernDocWithMissingEnd() {

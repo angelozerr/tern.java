@@ -86,6 +86,15 @@ public class IDETernProject extends TernProject {
 		return ternServer;
 	}
 
+	/**
+	 * Return true if the given project have tern nature
+	 * "tern.eclipse.ide.core.ternnature" and false otherwise.
+	 * 
+	 * @param project
+	 *            Eclipse project.
+	 * @return true if the given project have tern nature
+	 *         "tern.eclipse.ide.core.ternnature" and false otherwise.
+	 */
 	public static boolean hasTernNature(IProject project) {
 		try {
 			return project.hasNature(TernNature.ID);
