@@ -3,6 +3,7 @@ package tern.server.nodejs.process;
 import java.io.File;
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +16,11 @@ import tern.TernException;
 public class NodejsProcessTest {
 
 	private static final int TIMEOUT = 1000;
+
+	@After
+	public void shutdown() {
+		NodejsProcessManager.getInstance().dispose();
+	}
 
 	/**
 	 * Test when node.js base dir is not well configurated.
@@ -31,8 +37,8 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
-		NodejsProcess process = new NodejsProcess(nodejsBaseDir,
-				nodejsTernBaseDir, projectDir);
+		NodejsProcess process = NodejsProcessManager.getInstance().create(
+				nodejsBaseDir, nodejsTernBaseDir, projectDir);
 		process.addProcessListener(new NodejsProcessAdapter() {
 
 			@Override
@@ -57,7 +63,8 @@ public class NodejsProcessTest {
 		File projectDir = new File(".");
 
 		try {
-			new NodejsProcess(nodejsBaseDir, nodejsTernBaseDir, projectDir);
+			NodejsProcessManager.getInstance().create(nodejsBaseDir,
+					nodejsTernBaseDir, projectDir);
 			Assert.assertTrue(false);
 		} catch (Exception e) {
 			Assert.assertTrue(e.getMessage(), true);
@@ -71,8 +78,8 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
-		NodejsProcess process = new NodejsProcess(nodejsBaseDir,
-				nodejsTernBaseDir, projectDir);
+		NodejsProcess process = NodejsProcessManager.getInstance().create(
+				nodejsBaseDir, nodejsTernBaseDir, projectDir);
 
 		final StringBuilder error = new StringBuilder();
 		process.addProcessListener(new NodejsProcessAdapter() {
