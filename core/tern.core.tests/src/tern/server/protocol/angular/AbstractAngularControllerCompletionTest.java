@@ -138,4 +138,35 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		return doc;
 	}
 
+	@Test
+	public void completionWithGlobalControllersCheckFiles()
+			throws TernException {
+
+		server.addFile("myfile.js", "function TodoCtrl($scope) {};");
+		server.addFile("myfile2.js", "function SomeCtrl($scope) {};");
+
+		TernDoc doc = createDocForGlobalControllersCheckFiles();
+		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() == 1);
+		TernCompletionItem item = collector.get("TodoCtrl");
+		Assert.assertNotNull(item);
+		Assert.assertEquals("TodoCtrl", item.getName());
+		Assert.assertEquals("fn($scope: ?)", item.getType());
+		Assert.assertEquals("myfile.js", item.getOrigin());
+	}
+
+	private TernDoc createDocForGlobalControllersCheckFiles() {
+
+		TernDoc doc = new TernDoc();
+		
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.controller);
+		query.addFile("myfile.js");
+		query.setExpression("");
+
+		doc.setQuery(query);
+		return doc;
+	}
 }
