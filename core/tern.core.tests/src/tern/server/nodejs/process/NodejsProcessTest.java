@@ -38,7 +38,7 @@ public class NodejsProcessTest {
 		File projectDir = new File(".");
 
 		NodejsProcess process = NodejsProcessManager.getInstance().create(
-				nodejsBaseDir, nodejsTernBaseDir, projectDir);
+				projectDir, nodejsBaseDir, nodejsTernBaseDir);
 		process.addProcessListener(new NodejsProcessAdapter() {
 
 			@Override
@@ -63,8 +63,8 @@ public class NodejsProcessTest {
 		File projectDir = new File(".");
 
 		try {
-			NodejsProcessManager.getInstance().create(nodejsBaseDir,
-					nodejsTernBaseDir, projectDir);
+			NodejsProcessManager.getInstance().create(projectDir,
+					nodejsBaseDir, nodejsTernBaseDir);
 			Assert.assertTrue(false);
 		} catch (Exception e) {
 			Assert.assertTrue(e.getMessage(), true);
@@ -79,7 +79,7 @@ public class NodejsProcessTest {
 		File projectDir = new File(".");
 
 		NodejsProcess process = NodejsProcessManager.getInstance().create(
-				nodejsBaseDir, nodejsTernBaseDir, projectDir);
+				projectDir, nodejsBaseDir, nodejsTernBaseDir);
 
 		final StringBuilder error = new StringBuilder();
 		process.addProcessListener(new NodejsProcessAdapter() {
