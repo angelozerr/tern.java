@@ -173,15 +173,16 @@ overview.</p>
   	if (angularType != 'module') {
   		//if (useAngularModule) {
   	  		scope.module = 'yeomanApp';
-  		//}  		
-  		if (angularType != 'controller') {
-  			if (useAngularModule) {
-  				scope.controller = 'MovieListCtrl';
-  			} else {
-  				scope.controller = 'MovieListCtrl';
-  			}
-  			angularType = 'model';
-  	  	}
+  		//}  
+ 	  	if (angularType != 'controller') {
+ 	  		scope.controllers = [];
+   			if (useAngularModule) {
+   				scope.controllers.push('MovieListCtrl');
+   			} else {
+   				scope.controllers.push('MovieListCtrl');
+   			}
+   			angularType = 'model';
+   	  	}
   	}        
   	//if (angularField.slice('movie.')) {
   		scope.repeat = {};

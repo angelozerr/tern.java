@@ -233,10 +233,11 @@ overview.</p>
   	  		scope.module = 'Demo';
   		}  		
   		if (angularType != 'controller') {
+	  		scope.controllers = [];
   			if (useAngularModule) {
-  				scope.controller = 'SlaveController';
+  				scope.controllers.push('SlaveController');
   			} else {
-  				scope.controller = 'TodoCtrl';
+  				scope.controllers.push('TodoCtrl');
   			}
   			angularType = 'model';
   	  	}

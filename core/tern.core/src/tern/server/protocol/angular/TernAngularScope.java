@@ -1,5 +1,6 @@
 package tern.server.protocol.angular;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class TernAngularScope extends JSONObject {
@@ -12,11 +13,16 @@ public class TernAngularScope extends JSONObject {
 		return (String) super.get("module");
 	}
 
-	public void setController(String controller) {
-		super.put("controller", controller);
+	public void addController(String controller) {
+		getControllers().add(controller);
 	}
 
-	public String getController() {
-		return (String) super.get("controller");
+	public JSONArray getControllers() {
+		JSONArray controllers = (JSONArray) super.get("controllers");
+		if (controllers == null) {
+			controllers = new JSONArray();
+			super.put("controllers", controllers);
+		}
+		return controllers;
 	}
 }
