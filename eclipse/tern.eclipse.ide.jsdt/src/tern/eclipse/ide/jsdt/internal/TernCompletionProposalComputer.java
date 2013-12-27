@@ -84,7 +84,8 @@ public class TernCompletionProposalComputer implements
 
 							@Override
 							public void addProposal(String name, String type,
-									String origin, Object doc, int pos) {
+									String origin, Object doc, int pos,
+									Object completion) {
 								proposals.add(new TernCompletionProposal(name,
 										type, origin, doc, pos, startOffset));
 

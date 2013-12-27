@@ -68,6 +68,8 @@ public interface ITernServer {
 
 	void setDataAsJsonString(boolean dataAsJsonString);
 
+	String getText(Object value, String name);
+
 	void addServerListener(ITernServerListener listener);
 
 	void removeServerListener(ITernServerListener listener);

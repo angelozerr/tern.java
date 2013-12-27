@@ -4,10 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import tern.TernException;
-import tern.server.protocol.MapTernCompletionCollector;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.angular.completions.TernAngularCompletionItem;
 import tern.server.protocol.angular.completions.TernAngularCompletionsQuery;
-import tern.server.protocol.completions.TernCompletionItem;
 
 /**
  * Tests with tern angular controller completion.
@@ -20,7 +19,8 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	public void completionWithModuleControllersAndBadModule()
 			throws TernException {
 		TernDoc doc = createDocForCompletionModuleControllers(null);
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+				server);
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 0);
@@ -29,12 +29,14 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	@Test
 	public void completionWithModuleControllersAndModule() throws TernException {
 		TernDoc doc = createDocForCompletionModuleControllers("phonecatControllers");
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+				server);
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 2);
-		TernCompletionItem item = collector.get("PhoneListCtrl");
+		TernAngularCompletionItem item = collector.get("PhoneListCtrl");
 		Assert.assertNotNull(item);
+		Assert.assertEquals("phonecatControllers", item.getModule());
 		Assert.assertEquals("PhoneListCtrl", item.getName());
 		Assert.assertEquals("fn($scope: $scope, Phone: Resource.prototype)",
 				item.getType());
@@ -78,12 +80,14 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	@Test
 	public void completionWithGlobalControllers() throws TernException {
 		TernDoc doc = createDocForGlobalControllers();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+				server);
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 2);
-		TernCompletionItem item = collector.get("TodoCtrl");
+		TernAngularCompletionItem item = collector.get("TodoCtrl");
 		Assert.assertNotNull(item);
+		Assert.assertEquals(null, item.getModule());
 		Assert.assertEquals("TodoCtrl", item.getName());
 		Assert.assertEquals("fn($scope: ?)", item.getType());
 		Assert.assertEquals("myfile.js", item.getOrigin());
@@ -110,11 +114,12 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	public void completionWithGlobalControllersStartsWith()
 			throws TernException {
 		TernDoc doc = createDocForGlobalControllersStartsWith();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+				server);
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 1);
-		TernCompletionItem item = collector.get("SomeCtrl");
+		TernAngularCompletionItem item = collector.get("SomeCtrl");
 		Assert.assertNotNull(item);
 		Assert.assertEquals("SomeCtrl", item.getName());
 		Assert.assertEquals("fn($scope: ?)", item.getType());
@@ -146,12 +151,14 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		server.addFile("myfile2.js", "function SomeCtrl($scope) {};");
 
 		TernDoc doc = createDocForGlobalControllersCheckFiles();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+				server);
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 1);
-		TernCompletionItem item = collector.get("TodoCtrl");
+		TernAngularCompletionItem item = collector.get("TodoCtrl");
 		Assert.assertNotNull(item);
+		Assert.assertEquals(null, item.getModule());
 		Assert.assertEquals("TodoCtrl", item.getName());
 		Assert.assertEquals("fn($scope: ?)", item.getType());
 		Assert.assertEquals("myfile.js", item.getOrigin());
@@ -160,7 +167,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	private TernDoc createDocForGlobalControllersCheckFiles() {
 
 		TernDoc doc = new TernDoc();
-		
+
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
 		query.addFile("myfile.js");

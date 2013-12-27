@@ -11,7 +11,7 @@ public class MapTernCompletionCollector extends
 
 	@Override
 	public void addProposal(String name, String type, String origin,
-			Object doc, int pos) {
+			Object doc, int pos, Object completion) {
 		super.put(name, new TernCompletionItem(name, type, origin));
 	}
 

@@ -23,8 +23,8 @@ import tern.server.AbstractTernServer;
 import tern.server.IResponseHandler;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
-import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.INodejsProcessListener;
+import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernDoc;
@@ -221,9 +221,9 @@ public class NodejsTernServer extends AbstractTernServer {
 						}
 						if (isString) {
 							collector.addProposal((String) object, null, null,
-									null, pos);
+									null, pos, object);
 						} else {
-							addProposal((JSONObject) object, pos, collector);
+							addProposal(object, pos, collector);
 						}
 					}
 				}
@@ -235,20 +235,9 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 	}
 
-	protected void addProposal(JSONObject completion, int pos,
-			ITernCompletionCollector collector) {
-		String name = getText(completion.get("name"));
-		String type = getText(completion.get("type"));
-		String origin = getText(completion.get("origin"));
-		Object doc = completion.get("doc");
-		collector.addProposal(name, type, origin, doc, pos);
-	}
-
-	private String getText(Object value) {
-		if (value == null) {
-			return null;
-		}
-		return value.toString();
+	@Override
+	public Object getValue(Object value, String name) {
+		return ((JSONObject) value).get(name);
 	}
 
 	private Long getCh(JSONObject data, String pos) {
