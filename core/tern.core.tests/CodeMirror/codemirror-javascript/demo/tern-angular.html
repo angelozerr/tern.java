@@ -243,8 +243,8 @@ overview.</p>
   	  	}
   	}        
   	if (angularField.slice('todo.')) {
-  		scope.repeat = {};
-  		scope.repeat.todo = "todos";
+  		scope.props = {};
+  		scope.props.todo = {repeat : "todos"};
   	}
   	var query = {type: "angular", 
   			     subtype: "completions",
