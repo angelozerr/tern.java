@@ -3,8 +3,8 @@ package tern.server.protocol.angular;
 import java.util.Collection;
 import java.util.HashMap;
 
+import tern.angular.protocol.completions.TernAngularCompletionItem;
 import tern.server.ITernServer;
-import tern.server.protocol.angular.completions.TernAngularCompletionItem;
 import tern.server.protocol.completions.ITernCompletionCollector;
 
 public class MapTernAngularCompletionCollector extends

@@ -4,9 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import tern.TernException;
+import tern.angular.AngularType;
+import tern.angular.protocol.completions.TernAngularCompletionItem;
+import tern.angular.protocol.completions.TernAngularCompletionsQuery;
 import tern.server.protocol.TernDoc;
-import tern.server.protocol.angular.completions.TernAngularCompletionItem;
-import tern.server.protocol.angular.completions.TernAngularCompletionsQuery;
 
 /**
  * Tests with tern angular controller completion.

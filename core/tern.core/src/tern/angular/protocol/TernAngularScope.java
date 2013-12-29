@@ -1,4 +1,4 @@
-package tern.server.protocol.angular;
+package tern.angular.protocol;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

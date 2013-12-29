@@ -23,6 +23,10 @@ public class PathHelper {
 		System.out.println("ws "+ws);
 		//System.out.println(System.getProperties());
 		
+		os = "win32";
+		ws = "win32";
+		arch = "x86";
+		
 		// TODO : manage the patch switch OS.
 		File file= new File(
 				"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch);

@@ -1,4 +1,4 @@
-package tern.server.protocol.angular;
+package tern.angular;
 
 import tern.utils.StringUtils;
 

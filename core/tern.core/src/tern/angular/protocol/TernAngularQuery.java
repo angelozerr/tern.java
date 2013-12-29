@@ -1,7 +1,8 @@
-package tern.server.protocol.angular;
+package tern.angular.protocol;
 
 import org.json.simple.JSONArray;
 
+import tern.angular.AngularType;
 import tern.server.protocol.TernQuery;
 
 public class TernAngularQuery extends TernQuery {

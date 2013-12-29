@@ -1,4 +1,4 @@
-package tern.server.protocol.angular.completions;
+package tern.angular.protocol.completions;
 
 import tern.server.protocol.completions.TernCompletionItem;
 

@@ -1,7 +1,7 @@
-package tern.server.protocol.angular.completions;
+package tern.angular.protocol.completions;
 
-import tern.server.protocol.angular.AngularType;
-import tern.server.protocol.angular.TernAngularQuery;
+import tern.angular.AngularType;
+import tern.angular.protocol.TernAngularQuery;
 
 public class TernAngularCompletionsQuery extends TernAngularQuery {
 

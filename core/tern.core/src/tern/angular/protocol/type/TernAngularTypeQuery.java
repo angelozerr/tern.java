@@ -1,7 +1,7 @@
-package tern.server.protocol.angular.type;
+package tern.angular.protocol.type;
 
-import tern.server.protocol.angular.AngularType;
-import tern.server.protocol.angular.TernAngularQuery;
+import tern.angular.AngularType;
+import tern.angular.protocol.TernAngularQuery;
 
 public class TernAngularTypeQuery extends TernAngularQuery {
 
