@@ -15,9 +15,9 @@
 <plugin>
 
 	<extension point="tern.eclipse.ide.server.nodejs.core.nodeJSInstalls" >
-		<install id="node-v0.10.22-darwin-x64"
+		<install id="node-v0.10.22-macosx-x86_64"
 				 name="%nodeJSInstall_v0.10.22.name"
-				 path="/nodejs/node-v0.10.22-darwin-x64/bin" />
+				 path="/nodejs/node-v0.10.22-macosx-x86_64/bin" />
 	 </extension>
 	  
 </plugin>        
