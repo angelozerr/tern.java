@@ -26,10 +26,18 @@ public class PathHelper {
 		/*os = "win32";
 		ws = "win32";
 		arch = "x86";*/
-		
+		File file;
 		// TODO : manage the patch switch OS.
-		File file= new File(
-				"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch);
+		//no "bin" subfolder for windows...
+		if("win32".equals(os)){
+			 file= new File(
+						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch);
+					
+		} else {
+			 //Linux, mac...
+			 file= new File(
+						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch+"/bin");
+		}
 		
 		System.out.println("file path "+file.getAbsolutePath());
 		System.out.println("file path exists ? "+file.exists());
