@@ -23,5 +23,6 @@
 		<module>tern.repository</module>
 		<module>tern.eclipse.ide.server.nodejs.embed.macosx.cocoa.x86_64</module>
 		<module>tern.eclipse.macosx.cocoa.x86_64.feature</module>
+		<module>tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86_64</module>
 	</modules>
 </project>
