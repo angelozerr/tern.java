@@ -13,7 +13,7 @@ import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 
 public class TernServerType implements ITernServerType {
-	
+
 	private final String id;
 	private final String name;
 	private ITernServerFactory factory;
@@ -67,10 +67,11 @@ public class TernServerType implements ITernServerType {
 
 	public void dispose() {
 		synchronized (servers) {
+			List<ITernServer> servers = new ArrayList<ITernServer>(this.servers);
 			for (ITernServer server : servers) {
 				server.dispose();
 			}
-			servers.clear();
+			this.servers.clear();
 		}
 	}
 
