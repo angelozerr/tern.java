@@ -11,6 +11,8 @@ public class TernCompletionItem {
 	private final String signature;
 	private final String firstParam;
 	private final boolean function;
+	private boolean array;
+	private String jsType;
 
 	public TernCompletionItem(String name, String type, String origin) {
 		this.name = name;
@@ -20,6 +22,7 @@ public class TernCompletionItem {
 		StringBuilder currentParam = null;
 		StringBuilder signature = new StringBuilder(name);
 		boolean typeParsing = false;
+		this.jsType = type;
 		if (!StringUtils.isEmpty(type)) {
 			this.function = type.startsWith("fn(");
 			if (function) {
@@ -72,23 +75,39 @@ public class TernCompletionItem {
 						break;
 				}
 				signature.append(")");
+				StringBuilder s = null;
+				for (int j = i + 1; j < afterStartFn.length(); j++) {
+					char c = afterStartFn.charAt(j);
+					if (s != null) {
+						s.append(c);
+					} else {
+						if (c == '>') {
+							s = new StringBuilder();
+						}
+					}
+				}
+				jsType = s != null ? s.toString().trim() : null;
+			} else {
+				this.array = type.indexOf("[") != -1;
 			}
 		} else {
 			this.function = false;
+			this.array = false;
 		}
 		this.signature = signature.toString();
 		this.firstParam = firstParam != null ? firstParam.toString() : null;
 	}
 
 	public String getText() {
-		if (StringUtils.isEmpty(origin) && StringUtils.isEmpty(type)) {
+		if (StringUtils.isEmpty(origin) && StringUtils.isEmpty(jsType)) {
 			return signature;
 		}
 		StringBuilder text = new StringBuilder(signature);
-		/*
-		 * if (!StringUtils.isEmpty(type)) { text.append(" ");
-		 * text.append(type); }
-		 */
+
+		if (!StringUtils.isEmpty(jsType)) {
+			text.append(" : ");
+			text.append(jsType);
+		}
 		if (!StringUtils.isEmpty(origin)) {
 			text.append(" - ");
 			text.append(origin);
@@ -102,6 +121,10 @@ public class TernCompletionItem {
 
 	public boolean isFunction() {
 		return function;
+	}
+
+	public boolean isArray() {
+		return array;
 	}
 
 	public String getName() {
@@ -118,5 +141,9 @@ public class TernCompletionItem {
 
 	public String getType() {
 		return type;
+	}
+
+	public String getJsType() {
+		return jsType;
 	}
 }

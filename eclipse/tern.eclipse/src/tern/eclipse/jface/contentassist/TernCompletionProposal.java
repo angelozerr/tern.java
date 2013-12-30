@@ -7,6 +7,7 @@ import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
+import tern.eclipse.jface.TernImagesRegistry;
 import tern.server.protocol.completions.TernCompletionItem;
 
 public class TernCompletionProposal extends TernCompletionItem implements
@@ -23,15 +24,22 @@ public class TernCompletionProposal extends TernCompletionItem implements
 
 	public TernCompletionProposal(String name, String type, String origin,
 			Object doc, int pos, int startOffset) {
+		this(name, type, origin, doc, pos, startOffset, null, null);
+	}
+
+	public TernCompletionProposal(String name, String type, String origin,
+			Object doc, int pos, int startOffset, String replacementString,
+			Image image) {
 		super(name, type, origin);
 
-		String text = super.getSignature();
+		String text = replacementString != null ? replacementString : super
+				.getSignature();
 		this.fReplacementString = text;
 		this.fReplacementOffset = startOffset - pos;
 		this.fReplacementLength = pos;
 		this.fCursorPosition = text.length();
 
-		this.fImage = null;
+		this.fImage = image != null ? image : TernImagesRegistry.getImage(this);
 		this.fDisplayString = super.getText();
 		this.fContextInformation = null;
 		this.fAdditionalProposalInfo = doc != null ? doc.toString() : null;

@@ -6,6 +6,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import tern.eclipse.jface.fieldassist.TernContentProposal;
+import tern.server.protocol.completions.TernCompletionItem;
 
 /**
  * Label provider to manage image with {@link TernContentProposal}.
@@ -29,6 +30,10 @@ public class TernLabelProvider extends LabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
+		if (element instanceof TernCompletionItem) {
+			TernCompletionItem item = ((TernCompletionItem)element);
+			return TernImagesRegistry.getImage(item);
+		}
 		return super.getImage(element);
 	}
 
