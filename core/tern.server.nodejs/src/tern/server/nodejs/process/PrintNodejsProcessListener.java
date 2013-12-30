@@ -10,6 +10,10 @@
  *******************************************************************************/
 package tern.server.nodejs.process;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 /**
  * Print the each event of node.js process {@link NodejsProcess} in the
  * {@link System#out} and {@link System#err}.
@@ -20,6 +24,33 @@ public class PrintNodejsProcessListener extends NodejsProcessAdapter {
 
 	public static INodejsProcessListener getInstance() {
 		return INSTANCE;
+	}
+
+	@Override
+	public void onCreate(NodejsProcess process, List<String> commands,
+			File projectDir) {
+		StringBuilder commandsAsString = new StringBuilder();
+		int i = 0;
+		for (String cmd : commands) {
+			if (i > 0) {
+				commandsAsString.append(" ");
+			}
+			if (i <= 1) {
+				commandsAsString.append("\"");
+			}
+			commandsAsString.append(cmd);
+			if (i <= 1) {
+				commandsAsString.append("\"");
+			}
+			i++;
+		}
+		System.out.println("Nodejs Commnand: " + commandsAsString.toString());
+		String path = projectDir.getPath();
+		try {
+			path = projectDir.getCanonicalPath();
+		} catch (IOException e) {
+		}
+		System.out.println("Project dir: " + path);
 	}
 
 	@Override

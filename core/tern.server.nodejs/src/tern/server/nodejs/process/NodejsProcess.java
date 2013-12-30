@@ -220,9 +220,7 @@ public class NodejsProcess {
 		if (nodejsBaseDir == null) {
 			commands.add("node");
 		} else {
-
-			commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());	
-			
+			commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());
 		}
 		commands.add(nodejsTernFile.getCanonicalPath());
 		Integer port = getPort();
@@ -251,6 +249,7 @@ public class NodejsProcess {
 		ProcessBuilder builder = new ProcessBuilder(commands);
 		// builder.redirectErrorStream(true);
 		builder.directory(getProjectDir());
+		notifyCreateProcess(commands, projectDir);
 		this.process = builder.start();
 
 		outThread = new Thread(new StdOut());
@@ -393,14 +392,12 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * Notify data process.
-	 * 
-	 * @param line
+	 * Notify start process.
 	 */
-	private void notifyDataProcess(String line) {
+	private void notifyCreateProcess(List<String> commands, File projectDir) {
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
-				listener.onData(this, line);
+				listener.onCreate(this, commands, projectDir);
 			}
 		}
 	}
@@ -423,6 +420,19 @@ public class NodejsProcess {
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
 				listener.onStop(this);
+			}
+		}
+	}
+
+	/**
+	 * Notify data process.
+	 * 
+	 * @param line
+	 */
+	private void notifyDataProcess(String line) {
+		synchronized (listeners) {
+			for (INodejsProcessListener listener : listeners) {
+				listener.onData(this, line);
 			}
 		}
 	}

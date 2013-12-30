@@ -10,6 +10,9 @@
  *******************************************************************************/
 package tern.server.nodejs.process;
 
+import java.io.File;
+import java.util.List;
+
 /**
  * Listener for node.js process.
  * 
@@ -17,6 +20,15 @@ package tern.server.nodejs.process;
  * 
  */
 public interface INodejsProcessListener {
+
+	/**
+	 * Callback called when the given node.js process is created.
+	 * 
+	 * @param process
+	 * @param commands
+	 * @param projectDir
+	 */
+	void onCreate(NodejsProcess process, List<String> commands, File projectDir);
 
 	/**
 	 * Callback called when the given node.js process start.

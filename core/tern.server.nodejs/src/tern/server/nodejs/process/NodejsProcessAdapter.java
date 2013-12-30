@@ -10,6 +10,9 @@
  *******************************************************************************/
 package tern.server.nodejs.process;
 
+import java.io.File;
+import java.util.List;
+
 /**
  * This adapter class provides default implementations for the methods described
  * by the {@link INodejsProcessListener} interface.
@@ -19,6 +22,11 @@ package tern.server.nodejs.process;
  * 
  */
 public class NodejsProcessAdapter implements INodejsProcessListener {
+
+	@Override
+	public void onCreate(NodejsProcess process, List<String> commands,
+			File projectDir) {
+	}
 
 	@Override
 	public void onStart(NodejsProcess process) {
@@ -35,4 +43,5 @@ public class NodejsProcessAdapter implements INodejsProcessListener {
 	@Override
 	public void onError(NodejsProcess process, String line) {
 	}
+
 }
