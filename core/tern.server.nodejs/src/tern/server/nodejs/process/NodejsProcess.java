@@ -218,7 +218,13 @@ public class NodejsProcess {
 	protected List<String> createCommands() throws IOException {
 		List<String> commands = new LinkedList<String>();
 		if (nodejsBaseDir == null) {
-			commands.add("node");
+			// for osx, path of node.js should be setted?
+			File binPath = new File("/usr/local/bin");
+			if (binPath.exists()) {
+				commands.add("/usr/local/bin/node");
+			} else {
+				commands.add("node");
+			}
 		} else {
 			commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());
 		}
