@@ -23,7 +23,8 @@ CodeMirror.tern.addDef = function(def) {
 }
 </script>
     <script src="../addon/hint/tern/defs/ecma5.json.js"></script>    
-    
+    <script src="../addon/hint/tern/defs/browser.json.js"></script> 
+        
   <!-- Tern JS -->
   <script src="../../../../tern.server.nodejs/node_modules/tern/node_modules/acorn/acorn.js"></script>
   <script src="	../../../../tern.server.nodejs/node_modules/tern/node_modules/acorn/acorn_loose.js"></script>
@@ -68,15 +69,14 @@ CodeMirror.tern.addDef = function(def) {
 	<option name="module" >module</option>
 	<option name="controller" >controller</option>
 	<option name="model." >model.</option>
-	<option name="model.todos." >model.todos.</option>
-	<option name="model.todo." >model.todo.</option>
+	<option name="model.slaves." >model.slaves.</option>
+	<option name="model.slave." >model.slave.</option>
 </select>
 <input type="text" id="angularField" value="" />
 <input type="checkbox" id="useAngularModule" value="use angular.module?" />
 <input type="button" onclick="completions()" value="Completions"/>
 <input type="button" onclick="definition()" value="Definition"/>
 <form><textarea id="code" name="code">
-
 (function( ng ) {
 
 	"use strict";
@@ -85,35 +85,86 @@ CodeMirror.tern.addDef = function(def) {
 	window.demo = ng.module( "Demo", [] );
 
 })( angular );
+
 (function( ng, app ) {
 
 	"use strict";
 
 	app.controller(
-		"SlaveController",
+		"MasterController",
 		function( $scope ) {
+
+
+			// -- Define Controller Methods. ---------------- //
+
+
+			// I get the next available ID for a new slave.
+			function getNextID() {
+
+				if ( ! $scope.slaves.length ) {
+
+					return( 1 );
+
+				}
+
+				var lastSlave = $scope.slaves[ $scope.slaves.length - 1 ];
+
+				return( lastSlave.id + 1 );
+
+			}
+
+
+			// I get a random coordinate based on the given constraints.
+			function getRandomCoordinate( minCoordinate, maxCoordinate ) {
+
+				var delta = ( maxCoordinate - minCoordinate );
+
+				return(
+					minCoordinate + Math.floor( Math.random() * delta )
+				);
+
+			}
 
 
 			// -- Define Scope Methods. --------------------- //
 
 
-			// I remove the current slave from the collection.
-			$scope.remove = function() {
+			// I add a new slave at the given position.
+			$scope.addSlave = function( x, y ) {
 
-				// Pass this responsibility up the scope chain to the master controller (and its
-				// collection of slave instances).
-				$scope.removeSlave( $scope.slave );
+				$scope.slaves.push({
+					id: getNextID(),
+					x: x,
+					y: y
+				});
+
+			};
+
+
+			// I remove the given slave from the collection.
+			$scope.removeSlave = function( slave ) {
+
+				// Find the slave in the collection.
+				var index = $scope.slaves.indexOf( slave );
+
+				// Splice out slave.
+				$scope.slaves.splice( index, 1 );
 
 			};
 
 
-			// I reposition the current slave.
-			$scope.reposition = function( x, y ) {
+			// -- Set Scope Variables. ---------------------- //
 
-				$scope.slave.x = x;
-				$scope.slave.y = y;
 
-			};
+			// This is our list of slaves and their coordinates. Starting with an initial
+			// collection of one (at a random position).
+			$scope.slaves = [
+				{
+					id: 1,
+					x: getRandomCoordinate( 50, 400 ),
+					y: getRandomCoordinate( 50, 200 )
+				}
+			];
 
 
 		}
@@ -121,42 +172,6 @@ CodeMirror.tern.addDef = function(def) {
 
 })( angular, demo );
 
-/*function SomeCtrl2($scope, $http) {
-  $scope.save = [];
-}*/
-
-angular.module('MyApp', [])
-.controller('SomeCtrl', function($scope, $http) {
-	$scope.save = function() {};
-    $http. // <-- you'll have completions now
-});
-
-function TodoCtrl($scope) {
-  $scope.todos = [
-    {text:'learn angular', done:true},
-    {text:'build an angular app', done:false}];
- 
-  $scope.addTodo = function() {
-    $scope.todos.push({text:$scope.todoText, done:false});
-    $scope.todoText = '';
-  };
- 
-  $scope.remaining = function() {
-    var count = 0;
-    angular.forEach($scope.todos, function(todo) {
-      count += todo.done ? 0 : 1;
-    });
-    return count;
-  };
- 
-  $scope.archive = function() {
-    var oldTodos = $scope.todos;
-    $scope.todos = [];
-    angular.forEach(oldTodos, function(todo) {
-      if (!todo.done) $scope.todos.push(todo);
-    });
-  };
-}
 </textarea></p>
 
 <p>Demonstrates integration of <a href="http://ternjs.net/">Tern</a>
@@ -229,23 +244,23 @@ overview.</p>
 
   	var scope = {};
   	if (angularType != 'module') {
-  		if (useAngularModule) {
+  		//if (useAngularModule) {
   	  		scope.module = 'Demo';
-  		}  		
-  		if (angularType != 'controller') {
-	  		scope.controllers = [];
-  			if (useAngularModule) {
-  				scope.controllers.push('SlaveController');
-  			} else {
-  				scope.controllers.push('TodoCtrl');
-  			}
-  			angularType = 'model';
-  	  	}
+  		//}  
+ 	  	if (angularType != 'controller') {
+ 	  		scope.controllers = [];
+   			if (useAngularModule) {
+   				scope.controllers.push('MasterController');
+   			} else {
+   				scope.controllers.push('MasterController');
+   			}
+   			angularType = 'model';
+   	  	}
   	}        
-  	if (angularField.slice('todo.')) {
-  		scope.props = {};
-  		scope.props.todo = {repeat : "todos"};
-  	}
+  	if (angularField.slice('slaves.')) {
+		scope.props = {};
+		scope.props.slave = {repeat : "slaves"};
+	}
   	var query = {type: "angular", 
   			     subtype: "completions",
   			     files: ["[doc]"],

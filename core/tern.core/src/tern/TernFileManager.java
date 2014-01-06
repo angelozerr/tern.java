@@ -84,7 +84,7 @@ public abstract class TernFileManager<T> {
 
 	public void updateFiles(T domFile, Element scriptElt, int localScriptNb,
 			TernDoc doc, List names) {
-		String name = getFileName(domFile) + (localScriptNb);
+		String name = getFileName(domFile) + "#" + (localScriptNb);
 		if (!isIndexedFile(name)) {
 			String text = DOMUtils.getTextNodeAsString(scriptElt);
 			addFile(doc, name, text);
