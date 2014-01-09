@@ -23,22 +23,21 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import tern.TernProject;
 import tern.eclipse.ide.core.IDETernProject;
-import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.internal.ui.TernUIPlugin;
 import tern.eclipse.ide.internal.ui.Trace;
-import tern.server.ITernDef;
 
 /**
- * Tern defs property page.
+ * Tern script paths property page.
  * 
  */
-public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
+public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
 		implements IWorkbenchPreferencePage {
 
-	private TernDefsBlock defsBlock;
-	private List<ITernDef> initialDefs;
+	private TernScriptPathsBlock scriptPathsBlock;
+	private List<ITernScriptPath> initialScriptPaths;
 
-	public TernTypeDefinitionsPropertyPage() {
+	public TernScriptPathsPropertyPage() {
 		super();
 	}
 
@@ -58,14 +57,20 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		defsBlock = new TernDefsBlock();
-		defsBlock.createControl(parent);
-		Control control = defsBlock.getControl();
+		IDETernProject ternProject = null;
+		try {
+			ternProject = getTernProject();
+		} catch (CoreException e1) {
+		}
+		scriptPathsBlock = new TernScriptPathsBlock(ternProject);
+		scriptPathsBlock.createControl(parent);
+
+		Control control = scriptPathsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		loadDefs();
+		loadScriptPaths();
 
 		applyDialogFont(parent);
 		return parent;
@@ -74,15 +79,13 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 	@Override
 	public boolean performOk() {
 		// save column settings
-		defsBlock.saveColumnSettings();
-		// save the checked defs in the tern project
-		Object[] checkedDefs = defsBlock.getCheckedDefs();
+		scriptPathsBlock.saveColumnSettings();
+		// save the checked scriptPaths in the tern project
+		List<ITernScriptPath> scriptPaths = scriptPathsBlock
+				.getTernScriptPaths();
 		try {
 			IDETernProject ternProject = getTernProject();
-			ternProject.getLibs().clear();
-			for (Object def : checkedDefs) {
-				ternProject.addLib(((ITernDef) def).getName());
-			}
+			ternProject.setScriptPaths(scriptPaths);
 			ternProject.save();
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
@@ -91,25 +94,14 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 	}
 
 	/**
-	 * Load defs from tern project.
+	 * Load scriptPaths from tern project.
 	 */
-	private void loadDefs() {
+	private void loadScriptPaths() {
 		try {
-			TernProject ternProject = getTernProject();
-			List defs = ternProject.getLibs();
-
-			initialDefs = new ArrayList<ITernDef>();
-			for (Object name : defs) {
-				ITernDef def = TernCorePlugin.getTernServerTypeManager()
-						.findTernDef(name.toString());
-				if (def != null) {
-					initialDefs.add(def);
-				}
-			}
-			defsBlock.setCheckedDefs(initialDefs.toArray());
-
+			IDETernProject ternProject = getTernProject();
+			scriptPathsBlock.setTernScriptPaths(ternProject.getScriptPaths());
 		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
+			Trace.trace(Trace.SEVERE, "Error while loading scriptPaths.", e);
 		}
 	}
 

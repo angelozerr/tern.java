@@ -113,7 +113,19 @@
 		          		value="tern.eclipse.ide.core.ternnature"/>
 		     </adapt>         
          </enabledWhen>
-      </page>      		          		  	
+      </page>     
+	  <page
+            name="%TernScriptPathsPropertyPage.name"
+            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
+            class="tern.eclipse.ide.internal.ui.properties.TernScriptPathsPropertyPage"
+            id="tern.eclipse.ide.internal.ui.properties.TernScriptPathsPropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" 
+		          		value="tern.eclipse.ide.core.ternnature"/>
+		     </adapt>         
+         </enabledWhen>
+      </page>        		          		  	
 	</extension>
       
 </plugin>        

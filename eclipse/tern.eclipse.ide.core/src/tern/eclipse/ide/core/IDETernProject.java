@@ -11,14 +11,22 @@
 package tern.eclipse.ide.core;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import tern.TernProject;
+import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
+import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
+import tern.eclipse.ide.internal.core.scriptpath.PageTernScriptPath;
 import tern.server.ITernServer;
 import tern.server.TernServerAdapter;
 
@@ -39,11 +47,14 @@ public class IDETernProject extends TernProject {
 
 	private IDETernFileManager fileManager;
 
+	private final List<ITernScriptPath> scriptPaths;
+
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
 		this.fileManager = new IDETernFileManager();
 		project.setSessionProperty(TERN_PROJECT, this);
+		this.scriptPaths = new ArrayList<ITernScriptPath>();
 	}
 
 	public static IDETernProject getTernProject(IProject project)
@@ -106,13 +117,93 @@ public class IDETernProject extends TernProject {
 
 	@Override
 	public void save() throws IOException {
+		// Store IDE tern project info.
+		saveIDEInfos();
 		super.save();
 		if (ternServer != null) {
 			ternServer.dispose();
+			ternServer = null;
 		}
+	}
+
+	private void saveIDEInfos() {
+		JSONObject ide = new JSONObject();
+		// script path
+		if (scriptPaths.size() > 0) {
+			JSONArray jsonScripts = new JSONArray();
+			for (ITernScriptPath scriptPath : scriptPaths) {
+				JSONObject jsonScript = new JSONObject();
+				jsonScript.put("type", scriptPath.getType().name());
+				jsonScript.put("path", scriptPath.getResource()
+						.getProjectRelativePath().toString());
+				jsonScripts.add(jsonScript);
+			}
+			ide.put("scriptPaths", jsonScripts);
+		}
+		super.put("ide", ide);
 	}
 
 	public IDETernFileManager getFileManager() {
 		return fileManager;
+	}
+
+	@Override
+	public void load() throws IOException {
+		super.load();
+		loadIDEInfos();
+	}
+
+	private void loadIDEInfos() {
+		this.scriptPaths.clear();
+		JSONObject ide = (JSONObject) super.get("ide");
+		if (ide != null) {
+			JSONArray jsonScripts = (JSONArray) ide.get("scriptPaths");
+			if (jsonScripts != null) {
+				JSONObject jsonScript = null;
+				String type = null;
+				String path = null;
+				for (Object object : jsonScripts) {
+					jsonScript = (JSONObject) object;
+					type = (String) jsonScript.get("type");
+					path = (String) jsonScript.get("path");
+					if (type != null && path != null) {
+						if (ScriptPathsType.PAGE.name().equals(type)) {
+							IFile file = getProject().getFile(path);
+							if (file.exists()) {
+								this.scriptPaths
+										.add(createPageScriptPath(file));
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
+
+	/*
+	 * public void addScriptPath(ITernScriptPath scriptPath) {
+	 * scriptPaths.add(scriptPath); }
+	 */
+
+	public List<ITernScriptPath> getScriptPaths() {
+		return scriptPaths;
+	}
+
+	public ITernScriptPath createPageScriptPath(IFile file) {
+		return new PageTernScriptPath(file);
+	}
+
+	public void setScriptPaths(List<ITernScriptPath> scriptPaths) {
+		this.scriptPaths.clear();
+		this.scriptPaths.addAll(scriptPaths);
+	}
+
+	@Override
+	public boolean equals(Object value) {
+		if (value instanceof IDETernProject) {
+			return ((IDETernProject) value).getProject().equals(getProject());
+		}
+		return super.equals(value);
 	}
 }

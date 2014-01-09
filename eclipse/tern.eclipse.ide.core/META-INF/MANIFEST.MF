@@ -12,7 +12,9 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.server.nodejs;bundle-version="1.0.0",
  tern.eclipse;bundle-version="1.0.0"
 Export-Package: tern.eclipse.ide.core,
- tern.eclipse.ide.core.preferences
+ tern.eclipse.ide.core.dom,
+ tern.eclipse.ide.core.preferences,
+ tern.eclipse.ide.core.scriptpath
 Bundle-ActivationPolicy: lazy
 Import-Package: org.json.simple
 Bundle-Activator: tern.eclipse.ide.core.TernCorePlugin

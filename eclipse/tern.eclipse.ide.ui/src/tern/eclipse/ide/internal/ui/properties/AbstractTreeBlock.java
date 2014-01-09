@@ -11,17 +11,17 @@
 package tern.eclipse.ide.internal.ui.properties;
 
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Tree;
 
 /**
  * Blocks that contain a table. This abstract class conveniently saves and
  * restores the table's column settings.
  * 
  */
-public abstract class AbstractTableBlock {
+public abstract class AbstractTreeBlock {
 	private int fSortColumn;
 
-	protected abstract Table getTable();
+	protected abstract Tree getTree();
 
 	protected abstract IDialogSettings getDialogSettings();
 
@@ -36,10 +36,10 @@ public abstract class AbstractTableBlock {
 	 * given key.
 	 */
 	public void saveColumnSettings() {
-		int columnCount = getTable().getColumnCount();
+		int columnCount = getTree().getColumnCount();
 		for (int i = 0; i < columnCount; i++) {
 			getDialogSettings()
-					.put(getQualifier() + ".columnWidth" + i, getTable().getColumn(i).getWidth()); //$NON-NLS-1$
+					.put(getQualifier() + ".columnWidth" + i, getTree().getColumn(i).getWidth()); //$NON-NLS-1$
 		}
 		getDialogSettings().put(getQualifier() + ".sortColumn", fSortColumn); //$NON-NLS-1$
 	}
@@ -48,7 +48,7 @@ public abstract class AbstractTableBlock {
 	 * Restore table settings from the given dialog store using the given key.
 	 */
 	public void restoreColumnSettings() {
-		getTable().layout(true);
+		getTree().layout(true);
 		restoreColumnWidths(getDialogSettings(), getQualifier());
 		int col = 0;
 		try {
@@ -60,7 +60,7 @@ public abstract class AbstractTableBlock {
 	}
 
 	private void restoreColumnWidths(IDialogSettings settings, String qualifier) {
-		int columnCount = getTable().getColumnCount();
+		int columnCount = getTree().getColumnCount();
 		for (int i = 0; i < columnCount; i++) {
 			int width = -1;
 			try {
@@ -69,12 +69,12 @@ public abstract class AbstractTableBlock {
 			}
 
 			if (width > 0)
-				getTable().getColumn(i).setWidth(width);
+				getTree().getColumn(i).setWidth(width);
 		}
 	}
 
 	public void dispose() {
-		if (getTable() != null && !getTable().isDisposed())
+		if (getTree() != null && !getTree().isDisposed())
 			saveColumnSettings();
 	}
 }
