@@ -170,6 +170,8 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	}
 
 	public void destroy() {
+		if (ternServerTypes == null) // not loaded yet
+			return;
 		List<ITernServerType> types = new ArrayList<ITernServerType>(
 				ternServerTypes);
 		for (ITernServerType type : types) {
