@@ -18,6 +18,11 @@ public abstract class AbstractTernScriptPath implements ITernScriptPath {
 	}
 
 	@Override
+	public String getPath() {
+		return getResource().getProjectRelativePath().toString();
+	}
+
+	@Override
 	public ScriptPathsType getType() {
 		return type;
 	}

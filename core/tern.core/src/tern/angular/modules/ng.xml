@@ -104,6 +104,13 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngInclude"
+		url="http://docs.angularjs.org/api/ng.directive:ngInclude" >
+		<description>
+			Fetches, compiles and includes an external HTML fragment.
+		</description>
+	</directive>
+	
 	<directive name="ngModel"
 		url="http://docs.angularjs.org/api/ng.directive:ngModel" tags="input, select, textarea"
 		type="model" >
@@ -124,6 +131,17 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngShow"
+		url="http://docs.angularjs.org/api/ng.directive:ngShow" >
+		<description>
+		<![CDATA[
+			The ngShow directive shows or hides the given HTML element based on the expression provided to the ngShow attribute. 
+			The element is shown or hidden by removing or adding the ng-hide CSS class onto the element. 
+			The .ng-hide CSS class is predefined in AngularJS and sets the display style to none (using an !important flag).
+			]]>
+		</description>
+	</directive>
+	
 	<directive name="ngSrc"
 		url="http://docs.angularjs.org/api/ng.directive:ngSrc"
 		tags="img" >

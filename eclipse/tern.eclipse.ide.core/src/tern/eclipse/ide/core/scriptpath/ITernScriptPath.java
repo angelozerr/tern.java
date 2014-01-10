@@ -21,6 +21,8 @@ public interface ITernScriptPath {
 	}
 
 	IResource getResource();
+	
+	String getPath();
 
 	ScriptPathsType getType();
 

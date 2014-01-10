@@ -134,8 +134,7 @@ public class IDETernProject extends TernProject {
 			for (ITernScriptPath scriptPath : scriptPaths) {
 				JSONObject jsonScript = new JSONObject();
 				jsonScript.put("type", scriptPath.getType().name());
-				jsonScript.put("path", scriptPath.getResource()
-						.getProjectRelativePath().toString());
+				jsonScript.put("path", scriptPath.getPath());
 				jsonScripts.add(jsonScript);
 			}
 			ide.put("scriptPaths", jsonScripts);
@@ -205,5 +204,14 @@ public class IDETernProject extends TernProject {
 			return ((IDETernProject) value).getProject().equals(getProject());
 		}
 		return super.equals(value);
+	}
+
+	public ITernScriptPath getScriptPath(String path) {
+		for (ITernScriptPath scriptPath : scriptPaths) {
+			if (scriptPath.getPath().equals(path)) {
+				return scriptPath;
+			}
+		}
+		return null;
 	}
 }
