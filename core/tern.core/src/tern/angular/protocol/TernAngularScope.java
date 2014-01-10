@@ -29,6 +29,14 @@ public class TernAngularScope extends JSONObject {
 		return controllers;
 	}
 
+	public boolean hasControllers() {
+		JSONArray controllers = (JSONArray) super.get("controllers");
+		if (controllers == null) {
+			return false;
+		}
+		return controllers.size() > 0;
+	}
+
 	public void addModel(String model) {
 		// JSONObject json = new JSONObject();
 		if (model.indexOf('.') == -1) {

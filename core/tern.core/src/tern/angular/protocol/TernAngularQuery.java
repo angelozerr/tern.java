@@ -26,6 +26,23 @@ public class TernAngularQuery extends TernQuery {
 		return scope;
 	}
 
+	public boolean hasScope() {
+		TernAngularScope scope = (TernAngularScope) super.get("scope");
+		if (scope == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean hasControllers() {
+		if (!hasScope()) {
+			return false;
+		}
+		TernAngularScope scope = (TernAngularScope) super.get("scope");
+		return scope.hasControllers();
+		
+	}
+
 	public void addFile(String file) {
 		getFiles().add(file);
 	}
@@ -39,7 +56,15 @@ public class TernAngularQuery extends TernQuery {
 		return files;
 	}
 
+	public boolean hasFiles() {
+		JSONArray files = (JSONArray) super.get("files");
+		if (files == null) {
+			return false;
+		}
+		return files.size() > 0;
+	}
+
 	public AngularType getAngularType() {
-		return AngularType.get((String)super.get("angularType"));
+		return AngularType.get((String) super.get("angularType"));
 	}
 }

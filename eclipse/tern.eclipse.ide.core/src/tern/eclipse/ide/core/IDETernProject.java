@@ -17,7 +17,9 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.core.runtime.Status;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -57,8 +59,23 @@ public class IDETernProject extends TernProject {
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
 	}
 
+	/**
+	 * Returns the tern project of the given eclipse projectand throws exception
+	 * if the eclipse project has not tern nature.
+	 * 
+	 * @param project
+	 *            eclipse project.
+	 * @return the tern project of the given eclipse projectand throws exception
+	 *         if the eclipse project has not tern nature.
+	 * @throws CoreException
+	 */
 	public static IDETernProject getTernProject(IProject project)
 			throws CoreException {
+		if (!hasTernNature(project)) {
+			throw new CoreException(new Status(IStatus.ERROR,
+					TernCorePlugin.PLUGIN_ID, "The project "
+							+ project.getName() + " is not a tern project."));
+		}
 		IDETernProject ternProject = (IDETernProject) project
 				.getSessionProperty(TERN_PROJECT);
 		if (ternProject == null) {
