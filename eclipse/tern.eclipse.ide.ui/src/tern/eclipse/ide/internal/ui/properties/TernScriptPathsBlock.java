@@ -17,6 +17,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -43,7 +47,7 @@ import tern.eclipse.ide.ui.viewers.TernScriptPathContentProvider;
 import tern.eclipse.ide.ui.viewers.TernScriptPathLabelProvider;
 
 /**
- * Tree of Tern scripts path.
+ * Block which hosts the Tree of the Tern scripts path.
  * 
  */
 public class TernScriptPathsBlock extends AbstractTreeBlock {
@@ -53,7 +57,6 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	private TreeViewer treeViewer;
 	private Button fAddPageButton;
 	private Button fRemoveButton;
-	private Button fEditButton;
 
 	private final IDETernProject ternProject;
 
@@ -73,50 +76,47 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		parent.setFont(font);
 		fControl = parent;
 
-		GridData data;
-
+		// Description
 		Label treeLabel = new Label(parent, SWT.NONE);
 		treeLabel.setText(TernUIMessages.TernScriptPathsBlock_desc);
-		data = new GridData();
+		GridData data = new GridData();
 		data.horizontalSpan = 2;
 		treeLabel.setLayoutData(data);
 		treeLabel.setFont(font);
 
-		Tree fTree = new Tree(parent, SWT.BORDER | SWT.FULL_SELECTION
-				| SWT.V_SCROLL);
+		// Tree
+		Tree tree = new Tree(parent, SWT.BORDER | SWT.FULL_SELECTION
+				| SWT.V_SCROLL | SWT.MULTI);
 
 		data = new GridData(GridData.FILL_BOTH);
 		data.widthHint = 450;
-		fTree.setLayoutData(data);
-		fTree.setFont(font);
+		tree.setLayoutData(data);
+		tree.setFont(font);
 
-		fTree.setHeaderVisible(false);
-		fTree.setLinesVisible(false);
+		tree.setHeaderVisible(false);
+		tree.setLinesVisible(false);
 
-		// TreeColumn column1 = new TreeColumn(fTree, SWT.NONE);
-		// column1.setWidth(180);
-		// column1.setResizable(true);
-		// column1.setText(TernUIMessages.TernScriptPathsBlock_scriptPathName);
-
-		/*
-		 * TreeColumn column2 = new TreeColumn(fTree, SWT.NONE);
-		 * column2.setWidth(180); column2.setResizable(true);
-		 * column2.setText(TernUIMessages.TernScriptPathsBlock_scriptPathPath);
-		 * column2.addSelectionListener(new SelectionAdapter() {
-		 * 
-		 * @Override public void widgetSelected(SelectionEvent e) {
-		 * sortByPath(); } });
-		 */
-
-		treeViewer = new TreeViewer(fTree);
+		treeViewer = new TreeViewer(tree);
 		treeViewer.setLabelProvider(new TernScriptPathLabelProvider());
 		treeViewer.setContentProvider(new TernScriptPathContentProvider());
 
-		fTree.addKeyListener(new KeyAdapter() {
+		// Add tree selection listener to enable "Remove" button when a script
+		// path is selected.
+		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				fRemoveButton.setEnabled(!((IStructuredSelection) event
+						.getSelection()).isEmpty());
+			}
+		});
+
+		// Add tree listener to remove selected script path with del key.
+		tree.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent event) {
 				if (event.character == SWT.DEL && event.stateMask == 0) {
-					removeProcessors();
+					removeScriptPaths();
 				}
 			}
 		});
@@ -142,7 +142,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 				TernUIMessages.TernScriptPathsBlock_removeButton);
 		fRemoveButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
-				removeProcessors();
+				removeScriptPaths();
 			}
 		});
 		fRemoveButton.setEnabled(false);
@@ -155,41 +155,78 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		gd.verticalAlignment = GridData.BEGINNING;
 		gd.heightHint = 4;
 		separator.setLayoutData(gd);
-		fillWithProjectTernScriptPaths();
 
 		restoreColumnSettings();
 	}
 
+	/**
+	 * Add script path page type.
+	 */
 	protected void addPageScriptPath() {
+		// Select the resource which contains scripts to load.
 		OpenResourceDialog dialog = new OpenResourceDialog(getShell(), true,
 				ternProject.getProject(), IResource.FILE);
 		if (dialog.open() != Window.OK) {
 			return;
 		}
+		ITernScriptPath firstExistingScriptPath = null;
 		Object[] results = dialog.getResult();
 		if (results != null) {
+			// Add selected file as script path page type.
 			IFile resource = null;
+			ITernScriptPath scriptPath = null;
 			for (Object result : results) {
 				resource = (IFile) result;
-				ternScriptPaths.add(ternProject.createPageScriptPath(resource));
+				scriptPath = getScriptPath(resource);
+				if (scriptPath != null) {
+					// The current resource to add already exists as script
+					// path.
+					if (firstExistingScriptPath == null)
+						firstExistingScriptPath = scriptPath;
+				} else {
+					// Create a script path and add it.
+					ternScriptPaths.add(ternProject
+							.createPageScriptPath(resource));
+				}
 			}
 		}
 
-		treeViewer.setInput(ternScriptPaths);
+		treeViewer.refresh();
+		if (firstExistingScriptPath != null) {
+			treeViewer.setSelection(new StructuredSelection(
+					firstExistingScriptPath));
+		}
+	}
+
+	/**
+	 * Returns the script path of the given resource and null otherwise.
+	 * 
+	 * @param resource
+	 * @return
+	 */
+	private ITernScriptPath getScriptPath(IResource resource) {
+		for (ITernScriptPath scriptPath : ternScriptPaths) {
+			if (resource.equals(scriptPath.getResource())) {
+				return scriptPath;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Remove selected script paths.
+	 */
+	protected void removeScriptPaths() {
+		IStructuredSelection selection = (IStructuredSelection) treeViewer
+				.getSelection();
+		if (!selection.isEmpty()) {
+			this.ternScriptPaths.removeAll(selection.toList());
+			treeViewer.refresh();
+		}
 	}
 
 	private Shell getShell() {
 		return fControl.getShell();
-	}
-
-	protected void removeProcessors() {
-		// TODO Auto-generated method stub
-
-	}
-
-	protected void fillWithProjectTernScriptPaths() {
-		// setTernScriptPaths(TernCoreScriptPath.getTernServerTypeManager()
-		// .getTernScriptPaths());
 	}
 
 	public Control getControl() {
@@ -206,17 +243,6 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		return ternScriptPaths;
 	}
 
-	//
-	// public void setCheckedScriptPaths(Object[] selectedScriptPaths) {
-	// treeViewer.setCheckedElements(selectedScriptPaths);
-	//
-	// /*
-	// * if (selectedScriptPaths == null) { setSelection(new
-	// * StructuredSelection()); } else { setSelection(new
-	// * StructuredSelection(selectedScriptPaths)); }
-	// */
-	// }
-
 	@Override
 	protected Tree getTree() {
 		return treeViewer.getTree();
@@ -229,7 +255,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 	@Override
 	protected String getQualifier() {
-		return "";
+		return TernUIPlugin.PLUGIN_ID;
 	}
 
 	protected Button createPushButton(Composite parent, String label) {
