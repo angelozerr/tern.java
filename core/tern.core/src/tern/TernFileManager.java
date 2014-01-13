@@ -20,7 +20,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
 import tern.utils.DOMUtils;
@@ -351,11 +350,4 @@ public abstract class TernFileManager<T> {
 	 */
 	public abstract T getRelativeFile(T file, String path);
 
-	public void run(ITernServer server) {
-		synchronized (indexedFiles) {
-			// create tern doc with files
-
-			// execute tern server
-		}
-	}
 }
