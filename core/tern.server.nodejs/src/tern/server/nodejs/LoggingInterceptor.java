@@ -34,11 +34,11 @@ public class LoggingInterceptor implements IInterceptor {
 	@Override
 	public void handleError(Throwable error, ITernServer server,
 			String methodName, long ellapsedTime) {
-		System.out.println("");
-		System.out.println("Tern error#" + methodName + " with " + ellapsedTime
+		System.err.println("");
+		System.err.println("Tern error#" + methodName + " with " + ellapsedTime
 				+ "ms: ");
-		error.printStackTrace(System.out);
-		System.out.println("-----------------------------------");
+		error.printStackTrace(System.err);
+		System.err.println("-----------------------------------");
 
 	}
 

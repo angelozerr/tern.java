@@ -43,7 +43,7 @@ public class TernServerType implements ITernServerType {
 			}
 
 			@Override
-			public void onEnd(ITernServer server) {
+			public void onStop(ITernServer server) {
 				synchronized (servers) {
 					servers.remove(server);
 				}

@@ -36,7 +36,7 @@ import tern.server.TernServerAdapter;
  * Eclipse IDE Tern project.
  * 
  */
-public class IDETernProject extends TernProject {
+public class IDETernProject extends TernProject<IFile> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -47,14 +47,12 @@ public class IDETernProject extends TernProject {
 
 	private ITernServer ternServer;
 
-	private IDETernFileManager fileManager;
-
 	private final List<ITernScriptPath> scriptPaths;
 
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
-		this.fileManager = new IDETernFileManager();
+		super.setFileManager(new IDETernFileManager());
 		project.setSessionProperty(TERN_PROJECT, this);
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
 	}
@@ -99,12 +97,12 @@ public class IDETernProject extends TernProject {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
 						.getServerType();
 				this.ternServer = type.createServer(this);
-				this.ternServer.addServerListener(new TernServerAdapter() {
-					@Override
-					public void onEnd(ITernServer server) {
-						IDETernProject.this.fileManager.cleanFiles();
-					}
-				});
+				// this.ternServer.addServerListener(new TernServerAdapter() {
+				// @Override
+				// public void onEnd(ITernServer server) {
+				// IDETernProject.this.fileManager.cleanFiles();
+				// }
+				// });
 			} catch (Exception e) {
 				// should be improved?
 				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
@@ -157,10 +155,6 @@ public class IDETernProject extends TernProject {
 			ide.put("scriptPaths", jsonScripts);
 		}
 		super.put("ide", ide);
-	}
-
-	public IDETernFileManager getFileManager() {
-		return fileManager;
 	}
 
 	@Override

@@ -3,17 +3,31 @@ package tern.server;
 import java.util.ArrayList;
 import java.util.List;
 
+import tern.TernFileManager;
+import tern.TernProject;
 import tern.server.protocol.completions.ITernCompletionCollector;
 
 public abstract class AbstractTernServer implements ITernServer {
+
+	private final TernProject<?> project;
 
 	private final List<ITernServerListener> listeners;
 
 	private boolean dataAsJsonString;
 	private boolean dispose;
 
-	public AbstractTernServer() {
+	public AbstractTernServer(TernProject<?> project) {
+		this.project = project;
 		this.listeners = new ArrayList<ITernServerListener>();
+		final TernFileManager<?> fileManager = getFileManager();
+		if (fileManager != null) {
+			this.addServerListener(new TernServerAdapter() {
+				@Override
+				public void onStop(ITernServer server) {
+					fileManager.cleanIndexedFiles();
+				}
+			});
+		}
 	}
 
 	public boolean isDataAsJsonString() {
@@ -49,7 +63,7 @@ public abstract class AbstractTernServer implements ITernServer {
 	protected void fireEndServer() {
 		synchronized (listeners) {
 			for (ITernServerListener listener : listeners) {
-				listener.onEnd(this);
+				listener.onStop(this);
 			}
 		}
 	}
@@ -78,7 +92,7 @@ public abstract class AbstractTernServer implements ITernServer {
 		Object doc = getText(completion, "doc");
 		collector.addProposal(name, type, origin, doc, pos, completion);
 	}
-	
+
 	public String getText(Object value) {
 		if (value == null) {
 			return null;
@@ -91,4 +105,16 @@ public abstract class AbstractTernServer implements ITernServer {
 	}
 
 	public abstract Object getValue(Object value, String name);
+
+	@Override
+	public TernFileManager<?> getFileManager() {
+		if (project != null) {
+			return project.getFileManager();
+		}
+		return null;
+	}
+
+	public TernProject<?> getProject() {
+		return project;
+	}
 }

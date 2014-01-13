@@ -51,7 +51,7 @@ import tern.utils.IOUtils;
  * 
  * @see http://ternjs.net/doc/manual.html#configuration
  */
-public class TernProject extends JSONObject {
+public class TernProject<T> extends JSONObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +62,11 @@ public class TernProject extends JSONObject {
 
 	private final File projectDir;
 	private List<String> patterns;
+
+	/**
+	 * tern file managaer.
+	 */
+	private TernFileManager<T> fileManager;
 
 	/**
 	 * Tern project constructor.
@@ -175,4 +180,21 @@ public class TernProject extends JSONObject {
 		}
 	}
 
+	/**
+	 * Set the tern file manager.
+	 * 
+	 * @param fileManager
+	 */
+	public void setFileManager(TernFileManager<T> fileManager) {
+		this.fileManager = fileManager;
+	}
+
+	/**
+	 * Returns the setted tern file manager and null otherwise.
+	 * 
+	 * @return
+	 */
+	public TernFileManager<T> getFileManager() {
+		return fileManager;
+	}
 }

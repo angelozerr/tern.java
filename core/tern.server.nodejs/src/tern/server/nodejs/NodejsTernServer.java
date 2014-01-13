@@ -38,7 +38,7 @@ import tern.server.protocol.type.ITernTypeCollector;
  */
 public class NodejsTernServer extends AbstractTernServer {
 
-	private final TernProject project;
+	private static final long DEFAULT_TIMEOUT = 1000;
 
 	private String baseURL;
 
@@ -47,7 +47,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	private NodejsProcess process;
 	private List<INodejsProcessListener> listeners;
 
-	private long timeout = 1000;
+	private long timeout = DEFAULT_TIMEOUT;
 
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
@@ -68,19 +68,13 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	public NodejsTernServer(TernProject project, int port) {
-		this.project = project;
+		super(project);
 		this.baseURL = computeBaseURL(port);
 	}
 
 	public NodejsTernServer(TernProject project) throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir()));
-	}
-
-	public NodejsTernServer(TernProject project, NodejsProcess process) {
-		this.project = project;
-		this.process = process;
-		process.addProcessListener(listener);
 	}
 
 	public NodejsTernServer(TernProject project, File nodejsBaseDir)
@@ -95,6 +89,21 @@ public class NodejsTernServer extends AbstractTernServer {
 				project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
 	}
 
+	public NodejsTernServer(TernProject project, NodejsProcess process) {
+		super(project);
+		this.process = process;
+		process.addProcessListener(listener);
+		this.timeout = getTimeout(project);
+	}
+
+	private long getTimeout(TernProject project) {
+		Long timeout = (Long) project.get("node_timeout");
+		if (timeout != null) {
+			return timeout;
+		}
+		return DEFAULT_TIMEOUT;
+	}
+
 	private String computeBaseURL(Integer port) {
 		return new StringBuilder("http://localhost:").append(port).append("/")
 				.toString();
@@ -102,6 +111,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	@Override
 	public void addDef(ITernDef def) throws TernException {
+		TernProject project = getProject();
 		project.addLib(def.getName());
 		try {
 			project.save();
@@ -112,6 +122,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	@Override
 	public void addPlugin(ITernPlugin plugin) throws TernException {
+		TernProject project = getProject();
 		project.addPlugin(plugin);
 		try {
 			project.save();
@@ -151,10 +162,6 @@ public class NodejsTernServer extends AbstractTernServer {
 		return json;
 	}
 
-	public TernProject getProject() {
-		return project;
-	}
-
 	public void addInterceptor(IInterceptor interceptor) {
 		if (interceptors == null) {
 			interceptors = new ArrayList<IInterceptor>();
@@ -175,6 +182,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		if (process != null) {
 			return process;
 		}
+		TernProject project = super.getProject();
 		process = NodejsProcessManager.getInstance().create(
 				project.getProjectDir());
 		process.addProcessListener(listener);

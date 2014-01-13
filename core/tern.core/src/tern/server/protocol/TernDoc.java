@@ -102,4 +102,14 @@ public class TernDoc extends JSONObject {
 		return files;
 	}
 
+	/**
+	 * Returns true if tern doc has files and false otherwise.
+	 * 
+	 * @return true if tern doc has files and false otherwise.
+	 */
+	public boolean hasFiles() {
+		JSONArray files = (JSONArray) super.get(FILES_FIELD_NAME);
+		return files != null && files.size() > 0;
+	}
+
 }

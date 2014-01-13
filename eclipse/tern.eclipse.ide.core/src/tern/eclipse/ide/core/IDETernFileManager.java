@@ -22,7 +22,7 @@ public class IDETernFileManager extends TernFileManager<IFile> {
 	}
 
 	public void dispose() {
-		super.cleanFiles();
+		super.cleanIndexedFiles();
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(listener);
 	}
 

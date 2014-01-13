@@ -23,9 +23,9 @@ public class PathHelper {
 		System.out.println("ws "+ws);
 		//System.out.println(System.getProperties());
 		
-		/*os = "win32";
+		os = "win32";
 		ws = "win32";
-		arch = "x86";*/
+		arch = "x86";
 		File file;
 		// TODO : manage the patch switch OS.
 		//no "bin" subfolder for windows...

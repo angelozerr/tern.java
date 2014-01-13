@@ -19,6 +19,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import tern.TernException;
+import tern.TernFileManager;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
@@ -69,18 +70,29 @@ public class TernProtocolHelper {
 										- starTime);
 					}
 				}
+				// Update file manager if needed.
+				TernFileManager<?> fileManager = server.getFileManager();
+				if (fileManager != null) {
+					fileManager.updateIndexedFiles(doc);
+				}
 				return response;
 			} catch (ParseException e) {
 				throw new IOException(e);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			if (interceptors != null) {
 				for (IInterceptor interceptor : interceptors) {
 					interceptor.handleError(e, server, methodName,
 							System.currentTimeMillis() - starTime);
 				}
 			}
-			throw e;
+			if (e instanceof IOException) {
+				throw (IOException) e;
+			}
+			if (e instanceof TernException) {
+				throw (TernException) e;
+			}
+			throw new TernException(e);
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 		}

@@ -13,6 +13,7 @@ package tern.server;
 import java.io.IOException;
 
 import tern.TernException;
+import tern.TernFileManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
@@ -64,18 +65,24 @@ public interface ITernServer {
 	void request(TernDoc doc, ITernTypeCollector collector)
 			throws TernException;
 
+	void addServerListener(ITernServerListener listener);
+
+	void removeServerListener(ITernServerListener listener);
+
+	/**
+	 * Returns the tern file manager and null otherwise.
+	 * 
+	 * @return the tern file manager and null otherwise.
+	 */
+	TernFileManager<?> getFileManager();
+
 	boolean isDataAsJsonString();
 
 	void setDataAsJsonString(boolean dataAsJsonString);
 
 	String getText(Object value, String name);
 
-	void addServerListener(ITernServerListener listener);
-
-	void removeServerListener(ITernServerListener listener);
-
 	boolean isDisposed();
 
 	void dispose();
-
 }

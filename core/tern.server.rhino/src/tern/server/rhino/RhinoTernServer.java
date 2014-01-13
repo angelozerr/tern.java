@@ -21,6 +21,7 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
 import tern.TernException;
+import tern.TernFileManager;
 import tern.TernProject;
 import tern.server.AbstractTernServer;
 import tern.server.DefaultResponseHandler;
@@ -50,15 +51,21 @@ public class RhinoTernServer extends AbstractTernServer {
 			"tern/lib/signal.js", "tern/lib/tern.js", "tern/lib/def.js",
 			"tern/lib/comment.js", "tern/lib/infer.js", "tern-server.js" };
 
-	public RhinoTernServer(TernProject project) throws IOException {
-		this();
+	public RhinoTernServer() throws IOException {
+		this((TernProject) null);
 	}
 
-	public RhinoTernServer() throws IOException {
-		this(ClassPathScriptLoader.getInstance());
+	public RhinoTernServer(TernProject project) throws IOException {
+		this(project, ClassPathScriptLoader.getInstance());
 	}
 
 	public RhinoTernServer(IScriptLoader loader) throws IOException {
+		this(null, loader);
+	}
+
+	public RhinoTernServer(TernProject project, IScriptLoader loader)
+			throws IOException {
+		super(project);
 		this.loader = loader;
 		Context cx = Context.enter();
 		try {
@@ -200,6 +207,12 @@ public class RhinoTernServer extends AbstractTernServer {
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
 
+			// Update file manager if needed.
+			TernFileManager<?> fileManager = super.getFileManager();
+			if (fileManager != null) {
+				fileManager.updateIndexedFiles(doc);
+			}
+
 		} finally {
 			// Exit from the context.
 			Context.exit();
@@ -225,7 +238,7 @@ public class RhinoTernServer extends AbstractTernServer {
 				addProposal(object, pos, collector);
 			}
 		}
-	}	
+	}
 
 	@Override
 	public Object getValue(Object value, String name) {

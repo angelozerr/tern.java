@@ -13,7 +13,7 @@ public class TernContentProposal extends TernCompletionItem implements
 	public TernContentProposal(String name, String type, String origin,
 			String doc, int pos) {
 		super(name, type, origin);
-		this.content = getText().substring(pos, getText().length());
+		this.content = getSignature().substring(pos, getSignature().length());
 		this.description = doc;
 		
 	}
