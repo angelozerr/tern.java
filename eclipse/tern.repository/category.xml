@@ -12,9 +12,9 @@
    <feature url="features/tern-feature_1.0.0.qualifier.jar" id="tern-feature" version="1.0.0.qualifier">
       <category name="Tern"/>
    </feature>
-   <bundle id="tern.eclipse.ide.jsdt" version="1.0.0.qualifier">
+   <feature url="features/tern-jsdt-feature_1.0.0.qualifier.jar" id="tern-jsdt-feature" version="1.0.0.qualifier">
       <category name="Tern - JSDT"/>
-   </bundle>
+   </feature>
    <bundle id="tern.server.rhino" version="1.0.0.qualifier">
       <category name="Tern server - Rhino"/>
    </bundle>
