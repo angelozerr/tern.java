@@ -4,26 +4,30 @@ import java.io.IOException;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 
 import tern.TernFileManager;
+import tern.eclipse.ide.internal.core.Trace;
 import tern.utils.IOUtils;
 
-public class IDETernFileManager extends TernFileManager<IFile> {
-
-	private final IResourceChangeListener listener;
+public class IDETernFileManager extends TernFileManager<IFile> implements
+		IResourceChangeListener, IResourceDeltaVisitor {
 
 	public IDETernFileManager() {
-		this.listener = new IDETernFileChangeListener(this);
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(listener);
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
 	}
 
 	public void dispose() {
 		super.cleanIndexedFiles();
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(listener);
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
 	}
 
 	@Override
@@ -52,6 +56,47 @@ public class IDETernFileManager extends TernFileManager<IFile> {
 
 	void removeIndexedFile(IFile file) {
 		super.removeIndexedFile(getFileName(file));
+	}
+
+	@Override
+	public void resourceChanged(IResourceChangeEvent event) {
+		try {
+			IResourceDelta delta = event.getDelta();
+			if (delta != null) {
+				delta.accept(this);
+			}
+		} catch (Throwable e) {
+			Trace.trace(Trace.SEVERE, "", e);
+		}
+	}
+
+	@Override
+	public boolean visit(IResourceDelta delta) throws CoreException {
+		IResource resource = delta.getResource();
+		if (resource == null) {
+			return false;
+		}
+		switch (resource.getType()) {
+		case IResource.ROOT:
+		case IResource.FOLDER:
+			return true;
+		case IResource.PROJECT:
+			if (resource instanceof IProject) {
+				IProject project = (IProject) resource;
+				if (!(project.isAccessible())) {
+					return false;
+				}
+				if (!IDETernProject.hasTernNature(project)) {
+					return false;
+				}
+				return true;
+			}
+		case IResource.FILE:
+			// TODO check content type
+			removeIndexedFile((IFile) resource);
+			return true;
+		}
+		return false;
 	}
 
 }

@@ -14,8 +14,8 @@ package tern.eclipse.ide.internal.core.preferences;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernCoreConstants;
+import tern.eclipse.ide.core.TernCorePlugin;
 
 public class TernCorePreferenceConstants {
 
@@ -31,6 +31,8 @@ public class TernCorePreferenceConstants {
 		// By default Tern with Node.js is used.
 		node.put(TernCoreConstants.TERN_SERVER_TYPE,
 				"tern.eclipse.ide.server.nodejs");
+		// trace server on console
+		node.putBoolean(TernCoreConstants.TRACE_ON_CONSOLE, false);
 	}
 
 	// Don't instantiate

@@ -1,8 +1,7 @@
-package tern.server.nodejs;
+package tern.server;
 
 import org.json.simple.JSONObject;
 
-import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 
 public interface IInterceptor {

@@ -11,8 +11,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  tern.eclipse.ide.core;bundle-version="1.0.0",
  tern.core;bundle-version="1.0.0",
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.ui.console
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: tern.eclipse.ide.internal.ui.TernUIPlugin
+Bundle-Activator: tern.eclipse.ide.ui.TernUIPlugin
 Import-Package: org.json.simple
-Export-Package: tern.eclipse.ide.ui.viewers
+Export-Package: tern.eclipse.ide.ui,
+ tern.eclipse.ide.ui.console,
+ tern.eclipse.ide.ui.viewers

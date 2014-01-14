@@ -42,6 +42,8 @@ public final class TernUIMessages extends NLS {
 	public static String TernScriptPathsBlock_desc;
 	public static String TernScriptPathsBlock_addPageButton;
 	public static String TernScriptPathsBlock_removeButton;
+	public static String TernConsolePropertyPage_desc;
+	public static String TernConsolePropertyPage_traceOnConsole_label;
 	
 	private TernUIMessages() {
 	}

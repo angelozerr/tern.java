@@ -8,13 +8,17 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package tern.eclipse.ide.internal.ui;
+package tern.eclipse.ide.ui;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import tern.eclipse.ide.internal.ui.console.TernConsole;
+import tern.eclipse.ide.ui.console.ITernConsole;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -26,6 +30,8 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 	// The shared instance
 	private static TernUIPlugin plugin;
+
+	private TernConsole console;
 
 	/**
 	 * The constructor
@@ -43,6 +49,22 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+
+		Display.getDefault().asyncExec(new Runnable() {
+
+			public void run() {
+				try {
+					console = new TernConsole();
+					/*
+					 * if (prefStoreHelper.isOpenIvyConsoleOnStartup()) {
+					 * IvyConsoleFactory.showConsole(); }
+					 */
+				} catch (RuntimeException e) {
+					// Don't let the console bring down the IvyDE UI
+					// logError("Errors occurred starting the Ivy console", e);
+				}
+			}
+		});
 	}
 
 	/*
@@ -84,4 +106,9 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	public static IWorkbenchPage getActivePage() {
 		return getActiveWorkbenchWindow().getActivePage();
 	}
+
+	public ITernConsole getConsole() {
+		return console;
+	}
+
 }

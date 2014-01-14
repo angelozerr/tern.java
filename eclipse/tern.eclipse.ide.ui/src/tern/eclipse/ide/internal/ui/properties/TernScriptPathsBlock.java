@@ -41,8 +41,8 @@ import org.eclipse.swt.widgets.Tree;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.TernUIPlugin;
 import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
+import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernScriptPathContentProvider;
 import tern.eclipse.ide.ui.viewers.TernScriptPathLabelProvider;
 

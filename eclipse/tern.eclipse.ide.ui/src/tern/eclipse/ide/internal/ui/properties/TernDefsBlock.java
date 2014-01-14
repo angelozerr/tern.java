@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernDef;
 
 /**

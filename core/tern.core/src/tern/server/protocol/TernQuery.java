@@ -54,4 +54,8 @@ public class TernQuery extends JSONObject {
 		}
 		return result;
 	}
+
+	public String getLabel() {
+		return getType();
+	}
 }
