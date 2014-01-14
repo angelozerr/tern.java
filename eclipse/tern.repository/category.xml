@@ -9,21 +9,9 @@
    <feature url="features/tern.eclipse.linux.gtk.x86.feature_1.0.0.qualifier.jar" id="tern.eclipse.linux.gtk.x86.feature" version="1.0.0.qualifier">
       <category name="Embed Node.js"/>
    </feature>
-   <bundle id="com.googlecode.json-simple" version="1.1.1">
+   <feature url="features/tern-feature_1.0.0.qualifier.jar" id="tern-feature" version="1.0.0.qualifier">
       <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.core" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.eclipse" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.core" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.ui" version="1.0.0.qualifier">
-      <category name="Tern"/>
-   </bundle>
+   </feature>
    <bundle id="tern.eclipse.ide.jsdt" version="1.0.0.qualifier">
       <category name="Tern - JSDT"/>
    </bundle>
