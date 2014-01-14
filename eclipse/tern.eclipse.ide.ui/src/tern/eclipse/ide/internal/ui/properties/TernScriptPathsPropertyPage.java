@@ -24,8 +24,8 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import tern.TernProject;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
-import tern.eclipse.ide.internal.ui.TernUIPlugin;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.ui.TernUIPlugin;
 
 /**
  * Tern script paths property page.

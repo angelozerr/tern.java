@@ -5,6 +5,7 @@ import java.io.File;
 import tern.TernException;
 import tern.TernProject;
 import tern.server.ITernServer;
+import tern.server.LoggingInterceptor;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.nodejs.process.PathHelper;
 import tern.server.nodejs.process.PrintNodejsProcessListener;

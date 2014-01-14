@@ -16,7 +16,9 @@
 	
 	<extension-point id="ternServerTypes" name="%ternServerTypes.name"
 		schema="schema/ternServerTypes.exsd" />	
-			
+	<extension-point id="ternConsoleConnectors" name="%ternConsoleConnectors.name"
+		schema="schema/ternConsoleConnectors.exsd" />	
+					
 	<!-- Tern Nature -->
 	<extension
 		id="ternnature"

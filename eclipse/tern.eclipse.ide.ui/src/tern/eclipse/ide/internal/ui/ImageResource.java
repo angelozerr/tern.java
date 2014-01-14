@@ -21,6 +21,8 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
+import tern.eclipse.ide.ui.TernUIPlugin;
+
 /**
  * Utility class to handle image resources.
  */

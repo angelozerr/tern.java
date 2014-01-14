@@ -13,4 +13,8 @@
 	          name="%TernNodejsPreferencesPage.name"/>
 	</extension>	
 		
+	<extension point="tern.eclipse.ide.core.ternConsoleConnectors" >
+		<connector class="tern.eclipse.ide.server.nodejs.internal.ui.TernConsoleNodejsConnector" />
+	 </extension>
+		
 </plugin>

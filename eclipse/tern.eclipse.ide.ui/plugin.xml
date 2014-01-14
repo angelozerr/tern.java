@@ -125,7 +125,39 @@
 		          		value="tern.eclipse.ide.core.ternnature"/>
 		     </adapt>         
          </enabledWhen>
-      </page>        		          		  	
+      </page>
+	  <page
+            name="%TernConsolePropertyPage.name"
+            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
+            class="tern.eclipse.ide.internal.ui.properties.TernConsolePropertyPage"
+            id="tern.eclipse.ide.internal.ui.properties.TernConsolePropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+		          <test property="org.eclipse.core.resources.projectNature" 
+		          		value="tern.eclipse.ide.core.ternnature"/>
+		     </adapt>         
+         </enabledWhen>
+      </page>                    		          		  	
 	</extension>
-      
+     
+    <!-- Tern Console -->
+	<extension point="org.eclipse.ui.console.consoleFactories">
+	  <consoleFactory 
+	     label="Tern Console"
+	     class="tern.eclipse.ide.internal.ui.console.TernConsoleFactory"
+	     icon="icons/logo16x16.gif">
+	  </consoleFactory>
+	</extension>
+ 	<extension
+       point="org.eclipse.ui.console.consolePageParticipants">
+	    <consolePageParticipant
+	          class="tern.eclipse.ide.internal.ui.console.TernConsolePageParticipant"
+	          id="org.apache.Ternde.eclipse.TernConsolePageParticipant">
+	       <enablement>
+	          <instanceof
+	                value="tern.eclipse.ide.internal.ui.console.TernConsole">
+	          </instanceof></enablement>
+	    </consolePageParticipant>
+	 </extension>
+	       
 </plugin>        

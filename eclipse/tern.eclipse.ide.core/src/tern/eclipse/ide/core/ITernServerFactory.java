@@ -13,8 +13,19 @@ package tern.eclipse.ide.core;
 import tern.TernProject;
 import tern.server.ITernServer;
 
+/**
+ * Tern server factory.
+ */
 public interface ITernServerFactory {
 
+	/**
+	 * Create an instance of tern server by using the given tern project.
+	 * 
+	 * @param project
+	 *            tern project.
+	 * @return an instance of tern server by using the given tern project.
+	 * @throws Exception
+	 */
 	ITernServer create(TernProject project) throws Exception;
 
 }

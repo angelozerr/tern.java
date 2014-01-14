@@ -16,7 +16,7 @@ public class TernServerType implements ITernServerType {
 
 	private final String id;
 	private final String name;
-	private ITernServerFactory factory;
+	private final ITernServerFactory factory;
 	private final List<ITernServer> servers;
 	private final ITernServerListener serverListener;
 

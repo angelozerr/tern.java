@@ -38,8 +38,19 @@ public interface ITernServerType {
 	 */
 	String getName();
 
+	/**
+	 * Create an instance of tern server by using the given tern project.
+	 * 
+	 * @param project
+	 *            tern project.
+	 * @return an instance of tern server by using the given tern project.
+	 * @throws Exception
+	 */
 	ITernServer createServer(TernProject project) throws Exception;
 
+	/**
+	 * Dispose the whole tern server created.
+	 */
 	void dispose();
 
 }

@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 import tern.TernException;
 import tern.TernProject;
 import tern.server.AbstractTernServer;
+import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
@@ -167,6 +168,12 @@ public class NodejsTernServer extends AbstractTernServer {
 			interceptors = new ArrayList<IInterceptor>();
 		}
 		interceptors.add(interceptor);
+	}
+
+	public void removeInterceptor(IInterceptor interceptor) {
+		if (interceptors != null) {
+			interceptors.remove(interceptor);
+		}
 	}
 
 	public String getBaseURL() throws InterruptedException, IOException,

@@ -26,6 +26,7 @@ import org.json.simple.JSONObject;
 import tern.TernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.PageTernScriptPath;
@@ -97,12 +98,14 @@ public class IDETernProject extends TernProject<IFile> {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
 						.getServerType();
 				this.ternServer = type.createServer(this);
-				// this.ternServer.addServerListener(new TernServerAdapter() {
-				// @Override
-				// public void onEnd(ITernServer server) {
-				// IDETernProject.this.fileManager.cleanFiles();
-				// }
-				// });
+				this.ternServer.addServerListener(new TernServerAdapter() {
+					@Override
+					public void onStop(ITernServer server) {
+						IDETernProject.this.getFileManager()
+								.cleanIndexedFiles();
+					}
+				});
+				configureConsole();
 			} catch (Exception e) {
 				// should be improved?
 				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
@@ -224,5 +227,24 @@ public class IDETernProject extends TernProject<IFile> {
 			}
 		}
 		return null;
+	}
+
+	public boolean isTraceOnConsole() {
+		return TernCorePreferencesSupport.getInstance().isTraceOnConsole(
+				project);
+	}
+
+	public void configureConsole() {
+		if (ternServer != null) {
+			ITernConsoleConnector connector = TernConsoleConnectorManager
+					.getManager().getConnector(ternServer);
+			if (connector != null) {
+				if (isTraceOnConsole()) {
+					connector.connectToConsole(ternServer);
+				} else {
+					connector.disconnectToConsole(ternServer);
+				}
+			}
+		}
 	}
 }

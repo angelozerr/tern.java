@@ -20,6 +20,7 @@ import org.json.simple.parser.ParseException;
 
 import tern.TernException;
 import tern.TernFileManager;
+import tern.server.IInterceptor;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
@@ -32,7 +33,7 @@ public class TernProtocolHelper {
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)
 			throws IOException, TernException {
 		TernQuery query = doc.getQuery();
-		String methodName = query != null ? query.getType() : "";
+		String methodName = query != null ? query.getLabel() : "";
 		long starTime = 0;
 		if (interceptors != null) {
 			starTime = System.currentTimeMillis();
