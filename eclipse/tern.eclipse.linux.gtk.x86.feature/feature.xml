@@ -2,7 +2,10 @@
 <feature
       id="tern.eclipse.linux.gtk.x86.feature"
       label="Feature Gtk Linux x86"
-      version="1.0.0.qualifier">
+      version="1.0.0.qualifier"
+      license-feature="org.eclipse.license"
+      license-feature-version="1.0.0.qualifier"> 
+      
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
