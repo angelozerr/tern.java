@@ -15,7 +15,7 @@
    <feature url="features/tern-jsdt-feature_1.0.0.qualifier.jar" id="tern-jsdt-feature" version="1.0.0.qualifier">
       <category name="Tern - JSDT"/>
    </feature>
-   <feature url="features/tern-server-rhino_1.0.0.qualifier.jar" id="tern-server-rhino" version="1.0.0.qualifier">
+   <feature url="features/tern-server-rhino-feature_1.0.0.qualifier.jar" id="tern-server-rhino-feature" version="1.0.0.qualifier">
       <category name="Tern server - Rhino"/>
    </feature>
    <bundle id="tern.server.nodejs" version="1.0.0.qualifier">

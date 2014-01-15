@@ -26,6 +26,6 @@
 		<module>tern.repository</module>
 		<module>tern-feature</module>
 		<module>tern-jsdt-feature</module>
-		<module>tern-server-rhino</module>
+		<module>tern-server-rhino-feature</module>
 	</modules>
 </project>
