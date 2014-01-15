@@ -15,12 +15,9 @@
    <feature url="features/tern-jsdt-feature_1.0.0.qualifier.jar" id="tern-jsdt-feature" version="1.0.0.qualifier">
       <category name="Tern - JSDT"/>
    </feature>
-   <bundle id="tern.server.rhino" version="1.0.0.qualifier">
+   <feature url="features/tern-server-rhino_1.0.0.qualifier.jar" id="tern-server-rhino" version="1.0.0.qualifier">
       <category name="Tern server - Rhino"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.server.rhino.core" version="1.0.0.qualifier">
-      <category name="Tern server - Rhino"/>
-   </bundle>
+   </feature>
    <bundle id="tern.server.nodejs" version="1.0.0.qualifier">
       <category name="Tern server - Node.js"/>
    </bundle>
