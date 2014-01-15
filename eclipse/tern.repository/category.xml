@@ -18,15 +18,9 @@
    <feature url="features/tern-server-rhino-feature_1.0.0.qualifier.jar" id="tern-server-rhino-feature" version="1.0.0.qualifier">
       <category name="Tern server - Rhino"/>
    </feature>
-   <bundle id="tern.server.nodejs" version="1.0.0.qualifier">
+   <feature url="features/tern-server-nodejs-feature_1.0.0.qualifier.jar" id="tern-server-nodejs-feature" version="1.0.0.qualifier">
       <category name="Tern server - Node.js"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.server.nodejs.core" version="1.0.0.qualifier">
-      <category name="Tern server - Node.js"/>
-   </bundle>
-   <bundle id="tern.eclipse.ide.server.nodejs.ui" version="1.0.0.qualifier">
-      <category name="Tern server - Node.js"/>
-   </bundle>
+   </feature>
    <category-def name="Tern" label="Tern">
       <description>
          Tern core plugins.
