@@ -145,7 +145,7 @@
 	  <consoleFactory 
 	     label="Tern Console"
 	     class="tern.eclipse.ide.internal.ui.console.TernConsoleFactory"
-	     icon="icons/logo16x16.gif">
+	     icon="icons/full/obj16/logo.png">
 	  </consoleFactory>
 	</extension>
  	<extension

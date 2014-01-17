@@ -20,6 +20,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
@@ -35,6 +36,8 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	public TernNodejsPreferencesPage() {
 		super(GRID);
 		setDescription(TernNodejsUIMessages.TernNodejsPreferencesPage_desc);
+		setImageDescriptor(ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	@Override

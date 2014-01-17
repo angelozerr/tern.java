@@ -24,6 +24,7 @@ import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernCoreConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.ui.ImageResource;
 
 /**
  * Tern Global preferences page.
@@ -35,6 +36,7 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 	public TernGlobalPreferencesPage() {
 		super(GRID);
 		setDescription(TernUIMessages.TernGlobalPreferencesPage_desc);
+		setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	@Override

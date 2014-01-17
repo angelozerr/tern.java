@@ -11,7 +11,7 @@
  *     
  *     Code comes from org.eclipse.jst.server.ui.internal.ImageResource     
  *******************************************************************************/
-package tern.eclipse.ide.internal.ui;
+package tern.eclipse.ide.ui;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 
-import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.internal.ui.Trace;
 
 /**
  * Utility class to handle image resources.
@@ -41,6 +41,7 @@ public class ImageResource {
 
 	// General Object Images
 	public static final String IMG_SCRIPT = "script";
+	public static final String IMG_LOGO = "logo";
 
 	static {
 		try {
@@ -124,6 +125,7 @@ public class ImageResource {
 
 		// load general object images
 		registerImage(IMG_SCRIPT, URL_OBJ + IMG_SCRIPT + ".gif");
+		registerImage(IMG_LOGO, URL_OBJ + IMG_LOGO + ".png");
 	}
 
 	/**

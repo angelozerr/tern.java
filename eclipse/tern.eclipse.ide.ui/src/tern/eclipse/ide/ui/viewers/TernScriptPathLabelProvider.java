@@ -6,7 +6,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
-import tern.eclipse.ide.internal.ui.ImageResource;
+import tern.eclipse.ide.ui.ImageResource;
 
 public class TernScriptPathLabelProvider extends LabelProvider {
 

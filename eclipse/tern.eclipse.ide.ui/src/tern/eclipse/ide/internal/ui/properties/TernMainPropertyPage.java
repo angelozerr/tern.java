@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 import org.eclipse.ui.dialogs.PropertyPage;
 
+import tern.eclipse.ide.ui.ImageResource;
+
 /**
  * Tern Main page for project properties.
  * 
@@ -27,11 +29,15 @@ public class TernMainPropertyPage extends PropertyPage implements
 
 	public static final String PROP_ID = "tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage";
 
+	public TernMainPropertyPage() {
+		setImageDescriptor(ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
+	}
+
 	protected Control createContents(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(4, 4, true, true));
 		composite.setLayout(new GridLayout());
-
 		return composite;
 	}
 

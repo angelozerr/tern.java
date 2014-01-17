@@ -21,6 +21,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import tern.eclipse.ide.core.TernCoreConstants;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.ui.ImageResource;
 
 /**
  * Tern Console preferences page.
@@ -32,6 +33,8 @@ public class TernConsolePropertyPage extends
 	public TernConsolePropertyPage() {
 		super(GRID);
 		setDescription(TernUIMessages.TernConsolePropertyPage_desc);
+		setImageDescriptor(ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	@Override

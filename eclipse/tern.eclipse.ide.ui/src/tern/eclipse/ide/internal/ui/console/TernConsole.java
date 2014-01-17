@@ -9,7 +9,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
-import tern.eclipse.ide.internal.ui.ImageResource;
+import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.console.LineType;
 

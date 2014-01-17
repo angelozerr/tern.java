@@ -25,6 +25,7 @@ import tern.TernProject;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernDef;
 
@@ -40,6 +41,8 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 
 	public TernTypeDefinitionsPropertyPage() {
 		super();
+		setImageDescriptor(ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	public void init(IWorkbench workbench) {

@@ -10,7 +10,6 @@
  *******************************************************************************/
 package tern.eclipse.ide.internal.ui.properties;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.CoreException;
@@ -21,10 +20,10 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import tern.TernProject;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 
 /**
@@ -35,10 +34,11 @@ public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
 		implements IWorkbenchPreferencePage {
 
 	private TernScriptPathsBlock scriptPathsBlock;
-	private List<ITernScriptPath> initialScriptPaths;
 
 	public TernScriptPathsPropertyPage() {
 		super();
+		setImageDescriptor(ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	public void init(IWorkbench workbench) {
