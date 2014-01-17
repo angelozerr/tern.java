@@ -45,7 +45,7 @@ public class LoggingInterceptor implements IInterceptor {
 	}
 
 	protected void errPrintln(String line) {
-		errPrintln(line);
+		System.err.println(line);
 	}
 
 	protected void printStackTrace(Throwable error) {
