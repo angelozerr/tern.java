@@ -20,7 +20,7 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 	public void completionWithMissingEnd() throws TernException {
 
 		TernDoc doc = createTernDocWithMissingEnd();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		try {
 			server.request(doc, collector);
 			Assert.assertTrue(false);
@@ -45,7 +45,7 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 	@Test
 	public void completionWithStringResult() throws TernException {
 		TernDoc doc = createTernDocWithStringResult();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() > 0);
@@ -70,7 +70,7 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 	@Test
 	public void completionWithComplexResult() throws TernException {
 		TernDoc doc = createTernDocWithComplexResult();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() > 0);

@@ -7,13 +7,13 @@ import tern.angular.protocol.completions.TernAngularCompletionItem;
 import tern.server.ITernServer;
 import tern.server.protocol.completions.ITernCompletionCollector;
 
-public class MapTernAngularCompletionCollector extends
+public class MockTernAngularCompletionCollector extends
 		HashMap<String, TernAngularCompletionItem> implements
 		ITernCompletionCollector {
 
 	private final ITernServer server;
 
-	public MapTernAngularCompletionCollector(ITernServer server) {
+	public MockTernAngularCompletionCollector(ITernServer server) {
 		this.server = server;
 	}
 

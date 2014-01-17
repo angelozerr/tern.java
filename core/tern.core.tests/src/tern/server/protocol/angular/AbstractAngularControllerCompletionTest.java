@@ -20,7 +20,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	public void completionWithModuleControllersAndBadModule()
 			throws TernException {
 		TernDoc doc = createDocForCompletionModuleControllers(null);
-		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
 				server);
 		server.request(doc, collector);
 
@@ -30,7 +30,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	@Test
 	public void completionWithModuleControllersAndModule() throws TernException {
 		TernDoc doc = createDocForCompletionModuleControllers("phonecatControllers");
-		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
 				server);
 		server.request(doc, collector);
 
@@ -81,7 +81,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	@Test
 	public void completionWithGlobalControllers() throws TernException {
 		TernDoc doc = createDocForGlobalControllers();
-		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
 				server);
 		server.request(doc, collector);
 
@@ -115,7 +115,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	public void completionWithGlobalControllersStartsWith()
 			throws TernException {
 		TernDoc doc = createDocForGlobalControllersStartsWith();
-		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
 				server);
 		server.request(doc, collector);
 
@@ -152,7 +152,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		server.addFile("myfile2.js", "function SomeCtrl($scope) {};");
 
 		TernDoc doc = createDocForGlobalControllersCheckFiles();
-		MapTernAngularCompletionCollector collector = new MapTernAngularCompletionCollector(
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
 				server);
 		server.request(doc, collector);
 

@@ -6,7 +6,7 @@ import org.junit.Test;
 import tern.TernException;
 import tern.angular.AngularType;
 import tern.angular.protocol.completions.TernAngularCompletionsQuery;
-import tern.server.protocol.MapTernCompletionCollector;
+import tern.server.protocol.MockTernCompletionCollector;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.TernCompletionItem;
 
@@ -20,7 +20,7 @@ public abstract class AbstractAngularModuleCompletionTest extends
 	@Test
 	public void noCompletionWithModule() throws TernException {
 		TernDoc doc = createDocForNoCompletionModule();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 0);
@@ -46,7 +46,7 @@ public abstract class AbstractAngularModuleCompletionTest extends
 	@Test
 	public void completionWithModule() throws TernException {
 		TernDoc doc = createDocForCompletionModule();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 2);
@@ -77,7 +77,7 @@ public abstract class AbstractAngularModuleCompletionTest extends
 	@Test
 	public void completionWithModuleStartsWith() throws TernException {
 		TernDoc doc = createDocForCompletionModuleStartsWith();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 1);
@@ -111,7 +111,7 @@ public abstract class AbstractAngularModuleCompletionTest extends
 		server.addFile("myfile2.js", "angular.module('phonecatApp');");
 
 		TernDoc doc = createDocForCompletionModuleCheckFiles();
-		MapTernCompletionCollector collector = new MapTernCompletionCollector();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 1);

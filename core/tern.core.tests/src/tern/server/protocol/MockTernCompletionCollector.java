@@ -6,7 +6,7 @@ import java.util.HashMap;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionItem;
 
-public class MapTernCompletionCollector extends
+public class MockTernCompletionCollector extends
 		HashMap<String, TernCompletionItem> implements ITernCompletionCollector {
 
 	@Override
