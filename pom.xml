@@ -12,6 +12,7 @@
 	<modules>
 		<module>core</module>
 		<module>eclipse</module>
+		<module>update-site</module>
 	</modules>
 	<build>
 		<defaultGoal>clean install</defaultGoal>
