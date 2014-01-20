@@ -29,11 +29,13 @@ import org.json.simple.JSONObject;
 import tern.TernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
+import tern.eclipse.ide.internal.core.scriptpath.DOMElementsScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
-import tern.eclipse.ide.internal.core.scriptpath.PageScriptPath;
+import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
 import tern.server.ITernServer;
 import tern.server.TernServerAdapter;
 
@@ -186,6 +188,9 @@ public class IDETernProject extends TernProject<IFile> {
 					if (type != null && path != null) {
 						ScriptPathsType pathType = ScriptPathsType
 								.getType(type);
+						if (pathType == null) {
+							pathType = ScriptPathsType.FILE;
+						}
 						if (pathType != null) {
 							// script path type exists.
 							IResource resource = getResource(path, pathType);
@@ -271,12 +276,14 @@ public class IDETernProject extends TernProject<IFile> {
 	public ITernScriptPath createScriptPath(IResource resource,
 			ScriptPathsType type) {
 		switch (type) {
-		case PAGE:
-			return new PageScriptPath((IFile) resource);
 		case FOLDER:
 			return new FolderScriptPath((IFolder) resource);
 		default:
-			return null;
+			IFile file = (IFile) resource;
+			if (FileUtils.isJSFile(file)) {
+				return new JSFileScriptPath(file);
+			}
+			return new DOMElementsScriptPath(file);
 		}
 
 	}

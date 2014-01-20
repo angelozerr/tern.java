@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.CoreException;
 
 import tern.TernFileManager;
 import tern.eclipse.ide.core.scriptpath.IScriptResource;
+import tern.eclipse.ide.core.utils.FileUtils;
 import tern.server.protocol.TernDoc;
 
 /**
@@ -34,8 +35,6 @@ import tern.server.protocol.TernDoc;
  * 
  */
 public class FolderScriptPath extends AbstractTernScriptPath {
-
-	private static final String JS_EXTENSION = "js";
 
 	private final Collection<IScriptResource> scripts;
 
@@ -79,7 +78,7 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 					switch (resource.getType()) {
 					case IResource.FILE:
 						IFile file = (IFile) resource;
-						if (JS_EXTENSION.equals(file.getFileExtension())) {
+						if (FileUtils.isJSFile(file)) {
 							FolderScriptPath.this.scripts
 									.add(new JSFileScriptResource(file));
 							return true;
@@ -106,7 +105,7 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 				switch (resource.getType()) {
 				case IResource.FILE:
 					IFile file = (IFile) resource;
-					if (JS_EXTENSION.equals(file.getFileExtension())) {
+					if (FileUtils.isJSFile(file)) {
 						try {
 							ternFileManager.updateFile(file, doc, names);
 						} catch (IOException e) {

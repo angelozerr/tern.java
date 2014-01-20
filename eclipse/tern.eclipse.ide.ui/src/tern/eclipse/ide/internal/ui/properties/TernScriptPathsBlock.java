@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -67,7 +66,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	private Composite fControl;
 	private final List<ITernScriptPath> ternScriptPaths = new ArrayList<ITernScriptPath>();
 	private TreeViewer treeViewer;
-	private Button fAddPageButton;
+	private Button fAddFileButton;
 	private Button fAddFolderButton;
 	private Button fRemoveButton;
 
@@ -142,6 +141,16 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		buttons.setLayout(layout);
 		buttons.setFont(font);
 
+		// Add "File" button
+		fAddFileButton = createPushButton(buttons,
+				TernUIMessages.TernScriptPathsBlock_addFileButton);
+		fAddFileButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event evt) {
+				addScriptPath(ScriptPathsType.FILE);
+			}
+		});
+		fAddFileButton.setEnabled(true);
+
 		// "Add Folder" button
 		fAddFolderButton = createPushButton(buttons,
 				TernUIMessages.TernScriptPathsBlock_addFolderButton);
@@ -151,16 +160,6 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 			}
 		});
 		fAddFolderButton.setEnabled(true);
-
-		// Add page button
-		fAddPageButton = createPushButton(buttons,
-				TernUIMessages.TernScriptPathsBlock_addPageButton);
-		fAddPageButton.addListener(SWT.Selection, new Listener() {
-			public void handleEvent(Event evt) {
-				addScriptPath(ScriptPathsType.PAGE);
-			}
-		});
-		fAddPageButton.setEnabled(true);
 
 		// Remove button
 		fRemoveButton = createPushButton(buttons,
@@ -293,7 +292,8 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		return fControl;
 	}
 
-	protected void setTernScriptPaths(Collection<ITernScriptPath> ternScriptPaths) {
+	protected void setTernScriptPaths(
+			Collection<ITernScriptPath> ternScriptPaths) {
 		this.ternScriptPaths.clear();
 		this.ternScriptPaths.addAll(ternScriptPaths);
 		treeViewer.setInput(this.ternScriptPaths);

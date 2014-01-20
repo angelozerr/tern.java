@@ -31,7 +31,7 @@ public interface ITernScriptPath {
 	 * 
 	 */
 	public enum ScriptPathsType {
-		PAGE, FOLDER, FILE;
+		FILE, FOLDER;
 
 		public static ScriptPathsType getType(String type) {
 			ScriptPathsType[] types = ScriptPathsType.values();

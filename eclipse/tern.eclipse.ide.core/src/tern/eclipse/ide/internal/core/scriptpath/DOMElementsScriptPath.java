@@ -29,19 +29,19 @@ import tern.utils.StringUtils;
 
 /**
  * HTML/JSP page script path. This script path implementation gives the
- * capability to select an HTML/JSP file with "Add Page" of the Tern
+ * capability to select an HTML/JSP file with "Add File" of the Tern
  * "Script Path" property page project and retrieve list of JS files declared in
- * the DOM script elements.
+ * the DOM "script" elements.
  * 
  */
-public class PageScriptPath extends AbstractTernScriptPath {
+public class DOMElementsScriptPath extends AbstractTernScriptPath {
 
 	private static final String SCRIPT_ELT = "script";
 	private static final String HTTP_ATTR = "http";
 	private static final String SRC_ATTR = "src";
 
-	public PageScriptPath(IFile resource) {
-		super(resource, ScriptPathsType.PAGE);
+	public DOMElementsScriptPath(IFile resource) {
+		super(resource, ScriptPathsType.FILE);
 	}
 
 	@Override
