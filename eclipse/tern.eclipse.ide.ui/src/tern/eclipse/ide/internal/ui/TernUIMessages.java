@@ -41,9 +41,13 @@ public final class TernUIMessages extends NLS {
 	public static String TernDefsBlock_defPath;
 	public static String TernScriptPathsBlock_desc;
 	public static String TernScriptPathsBlock_addPageButton;
+	public static String TernScriptPathsBlock_addFolderButton;
 	public static String TernScriptPathsBlock_removeButton;
 	public static String TernConsolePropertyPage_desc;
 	public static String TernConsolePropertyPage_traceOnConsole_label;
+
+	// Dialogs
+	public static String MultipleFolderSelectionDialog_button;
 	
 	private TernUIMessages() {
 	}

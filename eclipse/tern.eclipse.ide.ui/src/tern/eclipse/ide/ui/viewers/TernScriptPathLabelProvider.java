@@ -5,6 +5,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
+import tern.eclipse.ide.core.scriptpath.IScriptResource;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.ui.ImageResource;
 
@@ -14,6 +15,9 @@ public class TernScriptPathLabelProvider extends LabelProvider {
 
 	@Override
 	public String getText(Object element) {
+		if (element instanceof IScriptResource) {
+			return ((IScriptResource) element).getLabel();
+		}
 		if (!(element instanceof ITernScriptPath)) {
 			return super.getText(element);
 		}
@@ -27,11 +31,11 @@ public class TernScriptPathLabelProvider extends LabelProvider {
 
 	@Override
 	public Image getImage(Object element) {
-		if ((element instanceof ITernScriptPath)) {
+		if (element instanceof ITernScriptPath) {
 			IResource res = ((ITernScriptPath) element).getResource();
 			return provider.getImage(res);
 		}
-		if ((element instanceof String)) {
+		if (element instanceof IScriptResource) {
 			return ImageResource.getImage(ImageResource.IMG_SCRIPT);
 		}
 		return super.getImage(element);

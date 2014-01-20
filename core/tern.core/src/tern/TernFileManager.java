@@ -76,7 +76,7 @@ public abstract class TernFileManager<T> {
 
 		// Get the list of script element of the given DOM node
 		NodeList scripts = domNode.getNodeType() == Node.DOCUMENT_NODE ? ((Document) domNode)
-				.getDocumentElement().getElementsByTagName(SCRIPT_ELT)
+				.getElementsByTagName(SCRIPT_ELT)
 				: domNode.getOwnerDocument().getElementsByTagName(SCRIPT_ELT);
 
 		// Update the files of tern doc with scripts elements by using indexed

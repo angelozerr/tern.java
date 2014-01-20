@@ -13,15 +13,21 @@ package tern.eclipse.ide.internal.ui.properties;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -37,10 +43,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.ui.dialogs.SelectionDialog;
+import org.eclipse.ui.model.WorkbenchContentProvider;
+import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
+import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.internal.ui.dialogs.MultipleFolderSelectionDialog;
 import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernScriptPathContentProvider;
@@ -56,6 +67,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	private final List<ITernScriptPath> ternScriptPaths = new ArrayList<ITernScriptPath>();
 	private TreeViewer treeViewer;
 	private Button fAddPageButton;
+	private Button fAddFolderButton;
 	private Button fRemoveButton;
 
 	private final IDETernProject ternProject;
@@ -129,15 +141,27 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		buttons.setLayout(layout);
 		buttons.setFont(font);
 
+		// "Add Folder" button
+		fAddFolderButton = createPushButton(buttons,
+				TernUIMessages.TernScriptPathsBlock_addFolderButton);
+		fAddFolderButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event evt) {
+				addScriptPath(ScriptPathsType.FOLDER);
+			}
+		});
+		fAddFolderButton.setEnabled(true);
+
+		// Add page button
 		fAddPageButton = createPushButton(buttons,
 				TernUIMessages.TernScriptPathsBlock_addPageButton);
 		fAddPageButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
-				addPageScriptPath();
+				addScriptPath(ScriptPathsType.PAGE);
 			}
 		});
 		fAddPageButton.setEnabled(true);
 
+		// Remove button
 		fRemoveButton = createPushButton(buttons,
 				TernUIMessages.TernScriptPathsBlock_removeButton);
 		fRemoveButton.addListener(SWT.Selection, new Listener() {
@@ -162,21 +186,21 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	/**
 	 * Add script path page type.
 	 */
-	protected void addPageScriptPath() {
+	protected void addScriptPath(ScriptPathsType type) {
 		// Select the resource which contains scripts to load.
-		OpenResourceDialog dialog = new OpenResourceDialog(getShell(), true,
-				ternProject.getProject(), IResource.FILE);
+		SelectionDialog dialog = createDialog(type);
 		if (dialog.open() != Window.OK) {
 			return;
 		}
+
 		ITernScriptPath firstExistingScriptPath = null;
 		Object[] results = dialog.getResult();
-		if (results != null) {
+		if (results != null && results.length > 0) {
 			// Add selected file as script path page type.
-			IFile resource = null;
+			IResource resource = null;
 			ITernScriptPath scriptPath = null;
 			for (Object result : results) {
-				resource = (IFile) result;
+				resource = (IResource) result;
 				scriptPath = getScriptPath(resource);
 				if (scriptPath != null) {
 					// The current resource to add already exists as script
@@ -185,17 +209,52 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 						firstExistingScriptPath = scriptPath;
 				} else {
 					// Create a script path and add it.
-					ternScriptPaths.add(ternProject
-							.createPageScriptPath(resource));
+					ternScriptPaths.add(ternProject.createScriptPath(resource,
+							type));
 				}
+			}
+
+			treeViewer.refresh();
+			if (firstExistingScriptPath != null) {
+				treeViewer.setSelection(new StructuredSelection(
+						firstExistingScriptPath));
 			}
 		}
 
-		treeViewer.refresh();
-		if (firstExistingScriptPath != null) {
-			treeViewer.setSelection(new StructuredSelection(
-					firstExistingScriptPath));
+	}
+
+	public SelectionDialog createDialog(ScriptPathsType type) {
+		final IProject project = ternProject.getProject();
+		if (type == ScriptPathsType.FOLDER) {
+			ILabelProvider lp = new WorkbenchLabelProvider();
+			ITreeContentProvider cp = new WorkbenchContentProvider();
+			MultipleFolderSelectionDialog dialog = new MultipleFolderSelectionDialog(
+					getShell(), lp, cp);
+			dialog.setInput(project.getParent());
+			dialog.setInitialFocus(project);
+			ViewerFilter filter = new ViewerFilter() {
+
+				@Override
+				public boolean select(Viewer viewer, Object parentElement,
+						Object element) {
+					if (element instanceof IContainer) {
+						IContainer container = (IContainer) element;
+						if (container.getType() == IResource.FOLDER) {
+							return true;
+						}
+						if (container.getType() == IResource.PROJECT) {
+							return project.equals(container);
+						}
+						return false;
+					}
+					return false;
+				}
+			};
+			dialog.addFilter(filter);
+			return dialog;
+
 		}
+		return new OpenResourceDialog(getShell(), true, project, IResource.FILE);
 	}
 
 	/**

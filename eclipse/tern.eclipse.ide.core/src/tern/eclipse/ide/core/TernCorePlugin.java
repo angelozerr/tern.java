@@ -11,7 +11,6 @@
 package tern.eclipse.ide.core;
 
 import java.io.File;
-import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -19,8 +18,11 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
-import tern.server.ITernServer;
 import tern.server.nodejs.process.NodejsProcessManager;
+
+/**
+ * The activator class controls the plug-in life cycle
+ */
 
 public class TernCorePlugin extends Plugin {
 
@@ -65,6 +67,11 @@ public class TernCorePlugin extends Plugin {
 		return plugin;
 	}
 
+	/**
+	 * Returns the instance of the tern server type manager.
+	 * 
+	 * @return the instance of the tern server type manager.
+	 */
 	public static ITernServerTypeManager getTernServerTypeManager() {
 		return TernServerTypeManager.getManager();
 	}

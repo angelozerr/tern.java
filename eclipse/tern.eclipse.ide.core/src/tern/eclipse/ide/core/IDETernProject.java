@@ -12,10 +12,13 @@ package tern.eclipse.ide.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
@@ -29,7 +32,8 @@ import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
-import tern.eclipse.ide.internal.core.scriptpath.PageTernScriptPath;
+import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
+import tern.eclipse.ide.internal.core.scriptpath.PageScriptPath;
 import tern.server.ITernServer;
 import tern.server.TernServerAdapter;
 
@@ -38,6 +42,14 @@ import tern.server.TernServerAdapter;
  * 
  */
 public class IDETernProject extends TernProject<IFile> {
+
+	private static final String PATH_JSON_FIELD = "path";
+
+	private static final String TYPE_JSON_FIELD = "type";
+
+	private static final String SCRIPT_PATHS_JSON_FIELD = "scriptPaths";
+
+	private static final String IDE_JSON_FIELD = "ide";
 
 	private static final long serialVersionUID = 1L;
 
@@ -88,10 +100,20 @@ public class IDETernProject extends TernProject<IFile> {
 		return ternProject;
 	}
 
+	/**
+	 * Returns the Eclispe project.
+	 * 
+	 * @return
+	 */
 	public IProject getProject() {
 		return project;
 	}
 
+	/**
+	 * Returns the linked instance of tern server.
+	 * 
+	 * @return
+	 */
 	public ITernServer getTernServer() {
 		if (ternServer == null || ternServer.isDisposed()) {
 			try {
@@ -134,6 +156,69 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	@Override
+	public void load() throws IOException {
+		super.load();
+		// Load IDE informatiosn of the tern project.
+		loadIDEInfos();
+	}
+
+	/**
+	 * Load IDE informatiosn from the JSON .tern-project file.
+	 */
+	private void loadIDEInfos() {
+		// Load script paths
+		this.scriptPaths.clear();
+		JSONObject ide = (JSONObject) super.get(IDE_JSON_FIELD);
+		if (ide != null) {
+			// There is ide information.
+			JSONArray jsonScripts = (JSONArray) ide
+					.get(SCRIPT_PATHS_JSON_FIELD);
+			if (jsonScripts != null) {
+				// There is scriptPaths defined.
+				JSONObject jsonScript = null;
+				String type = null;
+				String path = null;
+				// Loop for each script path.
+				for (Object object : jsonScripts) {
+					jsonScript = (JSONObject) object;
+					type = (String) jsonScript.get(TYPE_JSON_FIELD);
+					path = (String) jsonScript.get(PATH_JSON_FIELD);
+					if (type != null && path != null) {
+						ScriptPathsType pathType = ScriptPathsType
+								.getType(type);
+						if (pathType != null) {
+							// script path type exists.
+							IResource resource = getResource(path, pathType);
+							if (resource != null && resource.exists()) {
+								// the script path exists, add it.
+								this.scriptPaths.add(createScriptPath(resource,
+										pathType));
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
+
+	/**
+	 * Returns the resource of the given path and type.
+	 * 
+	 * @param path
+	 *            the path of the script path
+	 * @param pathType
+	 *            the type of the script path.
+	 * @return
+	 */
+	private IResource getResource(String path, ScriptPathsType pathType) {
+		if (pathType.equals(ScriptPathsType.FOLDER)) {
+			return getProject().getFolder(path);
+		}
+		return getProject().getFile(path);
+	}
+
+	@Override
 	public void save() throws IOException {
 		// Store IDE tern project info.
 		saveIDEInfos();
@@ -144,69 +229,63 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
+	/**
+	 * Save IDE informations in the JSON file .tern-project.
+	 */
 	private void saveIDEInfos() {
 		JSONObject ide = new JSONObject();
 		// script path
 		if (scriptPaths.size() > 0) {
 			JSONArray jsonScripts = new JSONArray();
+			// Loop for each script path and save it in the JSON file
+			// .tern-project.
 			for (ITernScriptPath scriptPath : scriptPaths) {
 				JSONObject jsonScript = new JSONObject();
-				jsonScript.put("type", scriptPath.getType().name());
-				jsonScript.put("path", scriptPath.getPath());
+				jsonScript.put(TYPE_JSON_FIELD, scriptPath.getType().name());
+				jsonScript.put(PATH_JSON_FIELD, scriptPath.getPath());
 				jsonScripts.add(jsonScript);
 			}
-			ide.put("scriptPaths", jsonScripts);
+			ide.put(SCRIPT_PATHS_JSON_FIELD, jsonScripts);
 		}
-		super.put("ide", ide);
+		super.put(IDE_JSON_FIELD, ide);
 	}
 
-	@Override
-	public void load() throws IOException {
-		super.load();
-		loadIDEInfos();
-	}
-
-	private void loadIDEInfos() {
-		this.scriptPaths.clear();
-		JSONObject ide = (JSONObject) super.get("ide");
-		if (ide != null) {
-			JSONArray jsonScripts = (JSONArray) ide.get("scriptPaths");
-			if (jsonScripts != null) {
-				JSONObject jsonScript = null;
-				String type = null;
-				String path = null;
-				for (Object object : jsonScripts) {
-					jsonScript = (JSONObject) object;
-					type = (String) jsonScript.get("type");
-					path = (String) jsonScript.get("path");
-					if (type != null && path != null) {
-						if (ScriptPathsType.PAGE.name().equals(type)) {
-							IFile file = getProject().getFile(path);
-							if (file.exists()) {
-								this.scriptPaths
-										.add(createPageScriptPath(file));
-							}
-						}
-					}
-				}
-			}
-
-		}
-	}
-
-	/*
-	 * public void addScriptPath(ITernScriptPath scriptPath) {
-	 * scriptPaths.add(scriptPath); }
+	/**
+	 * Returns the list of script paths.
+	 * 
+	 * @return
 	 */
-
-	public List<ITernScriptPath> getScriptPaths() {
+	public Collection<ITernScriptPath> getScriptPaths() {
 		return scriptPaths;
 	}
 
-	public ITernScriptPath createPageScriptPath(IFile file) {
-		return new PageTernScriptPath(file);
+	/**
+	 * Create the script path instance from the given resource and type.
+	 * 
+	 * @param resource
+	 *            the root resource.
+	 * @param type
+	 *            of the script path.
+	 * @return
+	 */
+	public ITernScriptPath createScriptPath(IResource resource,
+			ScriptPathsType type) {
+		switch (type) {
+		case PAGE:
+			return new PageScriptPath((IFile) resource);
+		case FOLDER:
+			return new FolderScriptPath((IFolder) resource);
+		default:
+			return null;
+		}
+
 	}
 
+	/**
+	 * Set the new script paths to use.
+	 * 
+	 * @param scriptPaths
+	 */
 	public void setScriptPaths(List<ITernScriptPath> scriptPaths) {
 		this.scriptPaths.clear();
 		this.scriptPaths.addAll(scriptPaths);
@@ -220,6 +299,13 @@ public class IDETernProject extends TernProject<IFile> {
 		return super.equals(value);
 	}
 
+	/**
+	 * Returns the script path instance from the given path and null otherwise.
+	 * 
+	 * @param path
+	 *            of the script path resource.
+	 * @return the script path instance from the given path and null otherwise.
+	 */
 	public ITernScriptPath getScriptPath(String path) {
 		for (ITernScriptPath scriptPath : scriptPaths) {
 			if (scriptPath.getPath().equals(path)) {
@@ -229,22 +315,36 @@ public class IDETernProject extends TernProject<IFile> {
 		return null;
 	}
 
+	/**
+	 * Returns true if trace of the tern server (JSON request/response) should
+	 * be displayed on the Eclipse console and false otherwise.
+	 * 
+	 * @return
+	 */
 	public boolean isTraceOnConsole() {
 		return TernCorePreferencesSupport.getInstance().isTraceOnConsole(
 				project);
 	}
 
+	/**
+	 * Configure console to show/hide JSON request/response of the tern server.
+	 */
 	public void configureConsole() {
 		if (ternServer != null) {
+			// There is a tern server instance., Retrieve the well connector the
+			// the eclipse console.
 			ITernConsoleConnector connector = TernConsoleConnectorManager
 					.getManager().getConnector(ternServer);
 			if (connector != null) {
 				if (isTraceOnConsole()) {
+					// connect the tern server to the eclipse console.
 					connector.connectToConsole(ternServer);
 				} else {
+					// disconnect the tern server to the eclipse console.
 					connector.disconnectToConsole(ternServer);
 				}
 			}
 		}
 	}
+
 }

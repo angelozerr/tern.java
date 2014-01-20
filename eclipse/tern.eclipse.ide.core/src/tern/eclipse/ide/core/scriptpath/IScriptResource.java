@@ -8,17 +8,30 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package tern.eclipse.ide.core;
+package tern.eclipse.ide.core.scriptpath;
+
+import org.eclipse.core.resources.IFile;
 
 /**
- * Tern core constants.
+ * Script resource.
  * 
  */
-public class TernCoreConstants {
+public interface IScriptResource {
 
 	/**
-	 * Preferences constants of the tern.
+	 * The eclipse file script.
+	 * 
+	 * @return
 	 */
-	public static final String TERN_SERVER_TYPE = "ternServerType"; //$NON-NLS-1$
-	public static final String TRACE_ON_CONSOLE = "traceOnConsole"; //$NON-NLS-1$
+	IFile getFile();
+
+	/**
+	 * The label to use when the script resource is displayed in the angular
+	 * explorer view.
+	 * 
+	 * @return the label to use when the script resource is displayed in the
+	 *         angular explorer view.
+	 */
+	String getLabel();
+
 }

@@ -24,6 +24,10 @@ import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.server.ITernServer;
 
+/**
+ * Tern console connector manager.
+ * 
+ */
 public class TernConsoleConnectorManager implements IRegistryChangeListener {
 
 	private static final String EXTENSION_TERN_CONSOLE_CONNECTORS = "ternConsoleConnectors";
