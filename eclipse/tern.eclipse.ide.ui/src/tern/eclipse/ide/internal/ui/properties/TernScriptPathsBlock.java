@@ -11,6 +11,7 @@
 package tern.eclipse.ide.internal.ui.properties;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -292,7 +293,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		return fControl;
 	}
 
-	protected void setTernScriptPaths(List<ITernScriptPath> ternScriptPaths) {
+	protected void setTernScriptPaths(Collection<ITernScriptPath> ternScriptPaths) {
 		this.ternScriptPaths.clear();
 		this.ternScriptPaths.addAll(ternScriptPaths);
 		treeViewer.setInput(this.ternScriptPaths);
