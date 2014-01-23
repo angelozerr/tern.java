@@ -64,7 +64,9 @@ public class TernCompletionProposalComputer implements
 						query.setTypes(true);
 						query.setDocs(true);
 						query.setUrls(true);
+						query.setCaseInsensitive(true);
 						query.setLineCharPositions(true);
+						query.setExpandWordForward (false);
 
 						TernDoc doc = new TernDoc(query);
 						if (scriptFile != null && scriptFile.exists()) {

@@ -33,6 +33,10 @@ public class TernCompletionsQuery extends TernQuery {
 
 	private static final String ORIGINS_FIELD_NAME = "origins";
 
+	private static final String CASEINSENSITIVE_FIELD_NAME = "caseInsensitive";
+
+	private static final String EXPANDWORDFORWARD_FIELD_NAME = "expandWordForward";
+
 	public TernCompletionsQuery(String file, Integer pos) {
 		super(COMPLETIONS_TYPE_QUERY);
 		setFile(file);
@@ -79,6 +83,48 @@ public class TernCompletionsQuery extends TernQuery {
 
 	public boolean isOrigins() {
 		return super.getBoolean(ORIGINS_FIELD_NAME, false);
+	}
+
+	/**
+	 * Whether to use a case-insensitive compare between the current word and
+	 * potential completions.
+	 * 
+	 * @param caseInsensitive
+	 */
+	public void setCaseInsensitive(boolean caseInsensitive) {
+		super.put(CASEINSENSITIVE_FIELD_NAME, caseInsensitive);
+	}
+
+	/**
+	 * Whether to use a case-insensitive compare between the current word and
+	 * potential completions.
+	 * 
+	 * @return
+	 */
+	public boolean isCaseInsensitive() {
+		return super.getBoolean(CASEINSENSITIVE_FIELD_NAME, false);
+	}
+
+	/**
+	 * When disabled, only the text before the given position is considered part
+	 * of the word. When enabled (the default), the whole variable name that the
+	 * cursor is on will be included.
+	 * 
+	 * @param expandWordForward
+	 */
+	public void setExpandWordForward(boolean expandWordForward) {
+		super.put(EXPANDWORDFORWARD_FIELD_NAME, expandWordForward);
+	}
+
+	/**
+	 * When disabled, only the text before the given position is considered part
+	 * of the word. When enabled (the default), the whole variable name that the
+	 * cursor is on will be included.
+	 * 
+	 * @return
+	 */
+	public boolean isExpandWordForward() {
+		return super.getBoolean(EXPANDWORDFORWARD_FIELD_NAME, true);
 	}
 
 }
