@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -18,14 +19,10 @@ import tern.utils.StringUtils;
 class SAXModuleHandler extends DefaultHandler {
 
 	private Module module;
-
-	private String directiveName;
-	private String url;
-	private Collection<UseAs> useAs;
-	private boolean optionnal;
-	private AngularType directiveType;
-	private Collection<String> tagsName;
 	private StringBuilder description = null;
+
+	private Directive directive;
+	private DirectiveParameter directiveParameter;
 
 	public Module load(InputStream in) throws IOException, SAXException {
 		XMLReader xmlReader = XMLReaderFactory.createXMLReader();
@@ -41,11 +38,13 @@ class SAXModuleHandler extends DefaultHandler {
 			String moduleName = attributes.getValue("name");
 			module = new Module(moduleName);
 		} else if ("directive".equals(name)) {
-			this.directiveName = attributes.getValue("name");
-			this.url = attributes.getValue("url");
-			this.directiveType = AngularType.get(attributes.getValue("type"));
+
+			String directiveName = attributes.getValue("name");
+			String url = attributes.getValue("url");
+			AngularType directiveType = AngularType.get(attributes
+					.getValue("type"));
 			// tags name
-			this.tagsName = new ArrayList<String>();
+			List<String> tagsName = new ArrayList<String>();
 			String tags = attributes.getValue("tags");
 			if (!StringUtils.isEmpty(tags)) {
 				String[] names = tags.split(",");
@@ -54,31 +53,41 @@ class SAXModuleHandler extends DefaultHandler {
 				for (int i = 0; i < names.length; i++) {
 					tagName = names[i].trim();
 					if (tagName.length() > 0) {
-						this.tagsName.add(tagName);
+						tagsName.add(tagName);
 					}
 				}
 			}
 			// use-as
-			this.useAs = new ArrayList<UseAs>();
-			String useAs = attributes.getValue("use-as");
-			if (!StringUtils.isEmpty(useAs)) {
-				String[] uses = useAs.split(" ");
+			List<UseAs> useAs = new ArrayList<UseAs>();
+			String useAsString = attributes.getValue("use-as");
+			if (!StringUtils.isEmpty(useAsString)) {
+				String[] uses = useAsString.split(" ");
 				UseAs use = null;
 
 				for (int i = 0; i < uses.length; i++) {
 					use = UseAs.get(uses[i].trim());
 					if (use != null) {
-						this.useAs.add(use);
+						useAs.add(use);
 					}
 				}
 			}
-			if (this.useAs.isEmpty()) {
-				this.useAs.add(UseAs.attr);
+			if (useAs.isEmpty()) {
+				useAs.add(UseAs.attr);
 			}
-			// optionnal
-			this.optionnal = StringUtils.asBoolean(
-					attributes.getValue("optionnal"), false);
+			// optional
+			boolean optional = StringUtils.asBoolean(
+					attributes.getValue("optional"), false);
+			this.directive = new Directive(directiveName, directiveType, url,
+					tagsName, useAs, optional, module);
 		} else if ("description".equals(name)) {
+			this.description = new StringBuilder();
+		} else if ("parameter".equals(name)) {
+			String parameterName = attributes.getValue("name");
+			boolean optional = StringUtils.asBoolean(
+					attributes.getValue("optional"), false);
+			this.directiveParameter = new DirectiveParameter(parameterName,
+					optional, directive);
+			directive.addParameter(directiveParameter);
 			this.description = new StringBuilder();
 		}
 		super.startElement(uri, localName, name, attributes);
@@ -88,14 +97,14 @@ class SAXModuleHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String name)
 			throws SAXException {
 		if ("directive".equals(name)) {
-			new Directive(directiveName, directiveType, url, tagsName, useAs,
-					optionnal, description != null ? description.toString()
-							: null, module);
-			this.directiveName = null;
-			this.directiveType = null;
-			this.url = null;
-			this.tagsName = null;
-			this.useAs = null;
+			this.directive = null;
+		} else if ("parameter".equals(name)) {
+			if (description != null) {
+				directiveParameter.setDescription(description.toString());
+			}
+			this.directiveParameter = null;
+		} else if ("description".equals(name)) {
+			this.directive.setDescription(description.toString());
 			this.description = null;
 		}
 		super.endElement(uri, localName, name);

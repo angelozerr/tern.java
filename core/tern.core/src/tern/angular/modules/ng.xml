@@ -5,7 +5,7 @@
 	<directive name="ngApp"
 		url="http://docs.angularjs.org/api/ng.directive:ngApp"
 		type="module"
-		optionnal="true" >
+		optional="true" >
 		<description>
 		<![CDATA[
 			Use this directive to auto-bootstrap an AngularJS
@@ -70,7 +70,7 @@ The ngClick directive allows you to specify custom behavior when an element is c
 	<directive name="ngCloak"
 		url="http://docs.angularjs.org/api/ng.directive:ngCloak"
 		use-as="attr class"
-		optionnal="true" >
+		optional="true" >
 		<description>
 				<![CDATA[
 The ngCloak directive is used to prevent the Angular html template from being briefly displayed by the browser in its raw (uncompiled) form while your application is loading. Use this directive to avoid the undesirable flicker effect caused by the html template display.
@@ -104,13 +104,24 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngHref"
+		url="http://docs.angularjs.org/api/ng.directive:ngHref"
+		tags="a"
+		use-as="attr" >
+		<description>
+			Using Angular markup like {{hash}} in an href attribute will make the link go to the wrong URL if the user clicks it before Angular has a chance to replace the {{hash}} markup with its value. 
+			Until Angular replaces the markup the link will be broken and will most likely return a 404 error.
+			The ngHref directive solves this problem.
+		</description>
+	</directive>
+	
 	<directive name="ngInclude"
 		url="http://docs.angularjs.org/api/ng.directive:ngInclude" >
 		<description>
 			Fetches, compiles and includes an external HTML fragment.
 		</description>
 	</directive>
-	
+
 	<directive name="ngModel"
 		url="http://docs.angularjs.org/api/ng.directive:ngModel" tags="input, select, textarea"
 		type="model" >
@@ -121,6 +132,21 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngPluralize"
+		url="http://docs.angularjs.org/api/ng.directive:ngPluralize" 
+		optional="true" >
+		<description>
+			ngPluralize is a directive that displays messages according to en-US localization rules. 
+			These rules are bundled with angular.js, but can be overridden (see Angular i18n dev guide). 
+			You configure ngPluralize directive by specifying the mappings between plural categories and the strings to be displayed.
+		</description>
+		<parameters>
+		    <parameter name="count" types="string, expression">The variable to be bounded to.</parameter>
+		    <parameter name="when" types="string">The mapping between plural category to its corresponding strings.</parameter>
+		    <parameter name="offset" types="number" optional="true">Offset to deduct from the total number.</parameter>
+		</parameters>		
+	</directive>
+	
 	<directive name="ngRepeat"
 		url="http://docs.angularjs.org/api/ng.directive:ngRepeat"
 		type="directiveRepeat" >

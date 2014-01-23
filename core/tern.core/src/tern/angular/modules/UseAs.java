@@ -4,7 +4,7 @@ import tern.utils.StringUtils;
 
 public enum UseAs {
 
-	attr, clazz;
+	element, attr, clazz;
 
 	public static UseAs get(String value) {
 		if (StringUtils.isEmpty(value)) {

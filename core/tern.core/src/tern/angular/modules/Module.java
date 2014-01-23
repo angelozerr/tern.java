@@ -2,6 +2,7 @@ package tern.angular.modules;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,17 +56,19 @@ public class Module {
 	public Directive getDirective(String tagName, String name) {
 		DirectivesByTagName result = getDirectivesByTagName(tagName, false);
 		Directive directive = null;
-		if (result != null) {			
+		if (result != null) {
 			directive = result.get(name);
 		}
 		if (directive == null) {
-			return getDirectivesByTagName(DirectiveHelper.ANY_TAG, false).get(name);
+			return getDirectivesByTagName(DirectiveHelper.ANY_TAG, false).get(
+					name);
 		}
 		return directive;
 	}
 
 	public void collectDirectives(String tagName, String directiveName,
-			boolean fullMatch, IDirectiveCollector collector) {
+			boolean fullMatch, List<Directive> existingDirectives,
+			IDirectiveCollector collector) {
 		if (fullMatch) {
 			Directive directive = getDirective(tagName, directiveName);
 			if (directive != null) {
@@ -75,27 +78,39 @@ public class Module {
 			// collect directives from tag names.
 			DirectivesByTagName container = getDirectivesByTagName(tagName,
 					false);
-			collectDirectives(directiveName, collector, container);
+			collectDirectives(directiveName, existingDirectives, collector,
+					container);
 			// collect directives from 'any' tag names.
 			container = getDirectivesByTagName(DirectiveHelper.ANY_TAG, false);
-			collectDirectives(directiveName, collector, container);
+			collectDirectives(directiveName, existingDirectives, collector,
+					container);			
 		}
 	}
 
+	private boolean isIgnore(Directive directive,
+			List<Directive> ignoreDirectives) {
+		if (ignoreDirectives == null) {
+			return false;
+		}
+		return ignoreDirectives.contains(directive);
+	}
+
 	private void collectDirectives(String directiveName,
-			IDirectiveCollector collector, DirectivesByTagName container) {
+			List<Directive> ignoreDirectives, IDirectiveCollector collector,
+			DirectivesByTagName container) {
 		if (container != null) {
+			Directive directive = null;
 			Set<String> names = container.keySet();
 			for (String name : names) {
 				if (name.startsWith(directiveName)) {
-					collector.add(container.get(name), name);
+					directive = container.get(name);
+					if (!isIgnore(directive, ignoreDirectives)) {
+						// collect directive
+						collector.add(directive, name);
+					}
 				}
 			}
 		}
 	}
 
-	public boolean isDirective(String directiveName) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }

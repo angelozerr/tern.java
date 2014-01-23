@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.xml.sax.SAXException;
@@ -42,12 +43,30 @@ public class AngularModulesManager {
 		return modules.values();
 	}
 
+	public Module getModule(String name) {
+		return modules.get(name);
+	}
+
 	public void collectDirectives(String tagName, String directiveName,
-			boolean fullMatch, IDirectiveCollector collector) {
+			boolean fullMatch, List<Directive> existingDirectives,
+			IDirectiveCollector collector) {
+		// collect directives of each modules.
 		Collection<Module> modules = getModules();
 		for (Module module : modules) {
 			module.collectDirectives(tagName, directiveName, fullMatch,
-					collector);
+					existingDirectives, collector);
+		}
+		// collect directives parameters of directive to ignore
+		if (existingDirectives != null) {
+			for (Directive directive : existingDirectives) {
+				Collection<DirectiveParameter> parameters = directive
+						.getParameters();
+				for (DirectiveParameter parameter : parameters) {
+					if (parameter.getName().startsWith(directiveName)) {
+						collector.add(parameter);
+					}
+				}
+			}
 		}
 	}
 

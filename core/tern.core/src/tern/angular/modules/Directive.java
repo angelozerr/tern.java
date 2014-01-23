@@ -1,8 +1,12 @@
 package tern.angular.modules;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import tern.angular.AngularType;
 import tern.utils.StringUtils;
@@ -15,12 +19,13 @@ public class Directive {
 	private final Collection<UseAs> useAs;
 	private final Module module;
 	private final Collection<String> tagNames;
-	private final String description;
+	private String description;
 	private final boolean optionnal;
+	private Map<String, DirectiveParameter> parameters;
 
 	public Directive(String name, AngularType type, String url,
 			Collection<String> tagNames, Collection<UseAs> useAs,
-			boolean optionnal, String description, Module module) {
+			boolean optionnal, Module module) {
 		this.name = name;
 		this.type = type;
 		this.url = url;
@@ -28,7 +33,6 @@ public class Directive {
 		this.optionnal = optionnal;
 		this.module = module;
 		this.tagNames = tagNames;
-		this.description = description;
 		if (module != null) {
 			module.addDirective(this);
 		}
@@ -83,6 +87,10 @@ public class Directive {
 		return module;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -109,6 +117,18 @@ public class Directive {
 			info.append("<br/>");
 			info.append(description);
 		}
+		if (tagNames != null && tagNames.size() > 0) {
+			info.append("<br/>");
+			info.append("<br/>");
+			info.append("<b>tags:</b> ");
+			info.append(Arrays.toString(tagNames.toArray()));
+		}
+		if (parameters != null && !parameters.isEmpty()) {
+			info.append("<br/>");
+			info.append("<br/>");
+			info.append("<b>parameters:</b> ");
+			info.append(Arrays.toString(parameters.keySet().toArray()));
+		}
 		if (!StringUtils.isEmpty(url)) {
 			info.append("<br/>");
 			info.append("<br/>");
@@ -121,4 +141,33 @@ public class Directive {
 	public boolean isOptionnal() {
 		return optionnal;
 	}
+
+	public Collection<DirectiveParameter> getParameters() {
+		if (parameters != null) {
+			return parameters.values();
+		}
+		return Collections.emptyList();
+	}
+
+	public void addParameter(DirectiveParameter parameter) {
+		if (parameters == null) {
+			parameters = new HashMap<String, DirectiveParameter>();
+		}
+		parameters.put(parameter.getName(), parameter);
+	}
+
+	public boolean hasParameters() {
+		if (parameters != null) {
+			return !parameters.isEmpty();
+		}
+		return false;
+	}
+
+	public DirectiveParameter getParameter(String name) {
+		if (parameters != null) {
+			return parameters.get(name);
+		}
+		return null;
+	}
+
 }
