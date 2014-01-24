@@ -50,8 +50,8 @@ public final class TernUIMessages extends NLS {
 	public static String MultipleFolderSelectionDialog_button;
 
 	// Hyperlink
-	public static String TernHyperlinkTypeLabel;
-	public static String TernHyperlinkText;
+	public static String TernHyperlink_typeLabel;
+	public static String TernHyperlink_text;
 
 	private TernUIMessages() {
 	}
