@@ -27,6 +27,8 @@ you will see contentassist available for Javascript :
 
 Tern.java provides an Eclipse IDE integration with Tern. For more information please read [Tern Eclipse IDE](https://github.com/angelozerr/tern.java/wiki/Tern-Eclipse-IDE).
 
+You can see [AngularJS Eclipse](https://github.com/angelozerr/angularjs-eclipse) which is based on tern.java.
+
 
 The update site is available at http://oss.opensagres.fr/tern.repository/1.0.0-SNAPSHOT/
 
