@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.Status;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import tern.TernException;
 import tern.TernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
@@ -38,6 +39,10 @@ import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
 import tern.server.ITernServer;
 import tern.server.TernServerAdapter;
+import tern.server.protocol.TernDoc;
+import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.type.ITernTypeCollector;
 
 /**
  * Eclipse IDE Tern project.
@@ -116,7 +121,7 @@ public class IDETernProject extends TernProject<IFile> {
 	 * 
 	 * @return
 	 */
-	public ITernServer getTernServer() {
+	private ITernServer getTernServer() {
 		if (ternServer == null || ternServer.isDisposed()) {
 			try {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
@@ -352,6 +357,24 @@ public class IDETernProject extends TernProject<IFile> {
 				}
 			}
 		}
+	}
+
+	public void request(TernDoc doc, ITernCompletionCollector collector)
+			throws TernException {
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
+	}
+
+	public void request(TernDoc doc, ITernDefinitionCollector collector)
+			throws TernException {
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
+	}
+
+	public void request(TernDoc doc, ITernTypeCollector collector)
+			throws TernException {
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
 	}
 
 }

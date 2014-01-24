@@ -11,19 +11,17 @@ public class MockTernAngularCompletionCollector extends
 		HashMap<String, TernAngularCompletionItem> implements
 		ITernCompletionCollector {
 
-	private final ITernServer server;
+	public MockTernAngularCompletionCollector() {
 
-	public MockTernAngularCompletionCollector(ITernServer server) {
-		this.server = server;
 	}
 
 	@Override
 	public void addProposal(String name, String type, String origin,
-			Object doc, int pos, Object completion) {
+			Object doc, int pos, Object completion, ITernServer ternServer) {
 		super.put(
 				name,
-				new TernAngularCompletionItem(name, type, origin, server
-						.getText(completion, "module"), server.getText(
+				new TernAngularCompletionItem(name, type, origin, ternServer
+						.getText(completion, "module"), ternServer.getText(
 						completion, "controller")));
 	}
 

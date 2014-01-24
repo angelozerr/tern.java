@@ -236,7 +236,7 @@ public class NodejsTernServer extends AbstractTernServer {
 						}
 						if (isString) {
 							collector.addProposal((String) object, null, null,
-									null, pos, object);
+									null, pos, object, this);
 						} else {
 							addProposal(object, pos, collector);
 						}

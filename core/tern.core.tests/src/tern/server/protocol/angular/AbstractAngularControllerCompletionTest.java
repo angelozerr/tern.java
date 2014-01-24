@@ -20,8 +20,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	public void completionWithModuleControllersAndBadModule()
 			throws TernException {
 		TernDoc doc = createDocForCompletionModuleControllers(null);
-		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
-				server);
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 0);
@@ -30,8 +29,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	@Test
 	public void completionWithModuleControllersAndModule() throws TernException {
 		TernDoc doc = createDocForCompletionModuleControllers("phonecatControllers");
-		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
-				server);
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 2);
@@ -81,8 +79,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	@Test
 	public void completionWithGlobalControllers() throws TernException {
 		TernDoc doc = createDocForGlobalControllers();
-		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
-				server);
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 2);
@@ -115,8 +112,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	public void completionWithGlobalControllersStartsWith()
 			throws TernException {
 		TernDoc doc = createDocForGlobalControllersStartsWith();
-		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
-				server);
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 1);
@@ -152,8 +148,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		server.addFile("myfile2.js", "function SomeCtrl($scope) {};");
 
 		TernDoc doc = createDocForGlobalControllersCheckFiles();
-		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector(
-				server);
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
 		server.request(doc, collector);
 
 		Assert.assertTrue(collector.getCompletions().size() == 1);

@@ -28,6 +28,7 @@ import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
  * JSDT completion extension with Tern.
  */
 import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.ui.utils.IDETernProtcolHelper;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
@@ -57,8 +58,6 @@ public class TernCompletionProposalComputer implements
 						IDETernProject ternProject = IDETernProject
 								.getTernProject(project);
 
-						ITernServer ternServer = ternProject.getTernServer();
-
 						TernCompletionsQuery query = new TernCompletionsQuery(
 								"#0", context.getInvocationOffset());
 						query.setTypes(true);
@@ -66,33 +65,29 @@ public class TernCompletionProposalComputer implements
 						query.setUrls(true);
 						query.setCaseInsensitive(true);
 						query.setLineCharPositions(true);
-						query.setExpandWordForward (false);
+						query.setExpandWordForward(false);
 
 						TernDoc doc = new TernDoc(query);
-						if (scriptFile != null && scriptFile.exists()) {
-							String name = scriptFile.getName();
-							/*
-							 * String text = IOUtils.toString(
-							 * scriptFile.getContents(),
-							 * scriptFile.getCharset());
-							 */
-							String text = document.get();
-							doc.addFile(name, text, null);
-							query.setFile("#0");
-						}
+						IDETernProtcolHelper.updateDoc(doc, scriptFile,
+								document, ternProject.getFileManager());
 
 						final int startOffset = context.getInvocationOffset();
-						ternServer.request(doc, new ITernCompletionCollector() {
+						ternProject.request(doc,
+								new ITernCompletionCollector() {
 
-							@Override
-							public void addProposal(String name, String type,
-									String origin, Object doc, int pos,
-									Object completion) {
-								proposals.add(new TernCompletionProposal(name,
-										type, origin, doc, pos, startOffset));
+									@Override
+									public void addProposal(String name,
+											String type, String origin,
+											Object doc, int pos,
+											Object completion,
+											ITernServer ternServer) {
+										proposals
+												.add(new TernCompletionProposal(
+														name, type, origin,
+														doc, pos, startOffset));
 
-							}
-						});
+									}
+								});
 						return proposals;
 
 					} catch (Exception e) {

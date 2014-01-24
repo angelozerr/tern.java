@@ -159,5 +159,15 @@
 	          </instanceof></enablement>
 	    </consolePageParticipant>
 	 </extension>
-	       
+
+   <extension
+         point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+      <hyperlinkDetector
+            class="tern.eclipse.ide.internal.ui.hyperlink.TernHyperLinkDetector"
+            id="tern.eclipse.ide.internal.ui.hyperlink.TernHyperLinkDetector"
+            name="%TernHyperLinkDetector"
+            targetId="org.eclipse.wst.jsdt.ui.javaCode">
+      </hyperlinkDetector>
+   </extension>
+      	       	 
 </plugin>        

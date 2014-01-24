@@ -90,7 +90,7 @@ public abstract class AbstractTernServer implements ITernServer {
 		String type = getText(completion, "type");
 		String origin = getText(completion, "origin");
 		Object doc = getText(completion, "doc");
-		collector.addProposal(name, type, origin, doc, pos, completion);
+		collector.addProposal(name, type, origin, doc, pos, completion, this);
 	}
 
 	public String getText(Object value) {
