@@ -22,16 +22,6 @@ public abstract class AbstractTernHyperlink implements IHyperlink,
 	}
 
 	@Override
-	public void open() {
-		try {
-			TernDoc doc = createDoc();
-			ternProject.request(doc, this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
 	public IRegion getHyperlinkRegion() {
 		return region;
 	}
@@ -51,6 +41,4 @@ public abstract class AbstractTernHyperlink implements IHyperlink,
 		}
 		return ternProject.getProject().getFile(filename);
 	}
-
-	protected abstract TernDoc createDoc() throws Exception;
 }

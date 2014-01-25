@@ -28,10 +28,8 @@ import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
  * JSDT completion extension with Tern.
  */
 import tern.eclipse.ide.core.IDETernProject;
-import tern.eclipse.ide.ui.utils.IDETernProtcolHelper;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.ITernServer;
-import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
@@ -67,27 +65,20 @@ public class TernCompletionProposalComputer implements
 						query.setLineCharPositions(true);
 						query.setExpandWordForward(false);
 
-						TernDoc doc = new TernDoc(query);
-						IDETernProtcolHelper.updateDoc(doc, scriptFile,
-								document, ternProject.getFileManager());
-
 						final int startOffset = context.getInvocationOffset();
-						ternProject.request(doc,
-								new ITernCompletionCollector() {
+						ITernCompletionCollector collector = new ITernCompletionCollector() {
 
-									@Override
-									public void addProposal(String name,
-											String type, String origin,
-											Object doc, int pos,
-											Object completion,
-											ITernServer ternServer) {
-										proposals
-												.add(new TernCompletionProposal(
-														name, type, origin,
-														doc, pos, startOffset));
+							@Override
+							public void addProposal(String name, String type,
+									String origin, Object doc, int pos,
+									Object completion, ITernServer ternServer) {
+								proposals.add(new TernCompletionProposal(name,
+										type, origin, doc, pos, startOffset));
 
-									}
-								});
+							}
+						};
+						ternProject.request(query, scriptFile, document,
+								collector);
 						return proposals;
 
 					} catch (Exception e) {

@@ -23,8 +23,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.text.IDocument;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Node;
 
 import tern.TernException;
 import tern.TernProject;
@@ -37,9 +39,11 @@ import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.DOMElementsScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
+import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernServerAdapter;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.type.ITernTypeCollector;
@@ -68,6 +72,8 @@ public class IDETernProject extends TernProject<IFile> {
 	private ITernServer ternServer;
 
 	private final List<ITernScriptPath> scriptPaths;
+
+	private final Object lock = new Object();
 
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
@@ -359,19 +365,173 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
-	public void request(TernDoc doc, ITernCompletionCollector collector)
+	// ---------------- Completions
+
+	/**
+	 * 
+	 * @param query
+	 * @param scriptPath
+	 * @param names
+	 * @param collector
+	 * @throws IOException
+	 * @throws TernException
+	 */
+	public void request(TernQuery query, List names,
+			ITernScriptPath scriptPath, ITernCompletionCollector collector)
+			throws IOException, TernException {
+		// update files
+		TernDoc doc = new TernDoc(query);
+		syncFiles(doc, names, scriptPath);
+		request(doc, collector);
+	}
+
+	public void request(TernQuery query, List names, Node domNode,
+			IFile domFile, ITernCompletionCollector collector)
+			throws IOException, TernException {
+		TernDoc doc = new TernDoc(query);
+		synchFiles(names, domNode, domFile, doc);
+		request(doc, collector);
+	}
+
+	public void request(TernQuery query, IFile file, IDocument document,
+			ITernCompletionCollector collector) throws IOException,
+			TernException {
+		TernDoc doc = new TernDoc(query);
+		synchFiles(file, document, doc);
+		request(doc, collector);
+	}
+
+	private void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException {
 		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 
-	public void request(TernDoc doc, ITernDefinitionCollector collector)
+	// ---------- Definition
+
+	/**
+	 * 
+	 * @param query
+	 * @param names
+	 * @param scriptPath
+	 * @param collector
+	 * @throws IOException
+	 * @throws TernException
+	 */
+	public void request(TernQuery query, List names,
+			ITernScriptPath scriptPath, ITernDefinitionCollector collector)
+			throws IOException, TernException {
+		// update files
+		TernDoc doc = new TernDoc(query);
+		syncFiles(doc, names, scriptPath);
+		request(doc, collector);
+	}
+
+	public void request(TernQuery query, List names, Node domNode,
+			IFile domFile, ITernDefinitionCollector collector)
+			throws IOException, TernException {
+		TernDoc doc = new TernDoc(query);
+		synchFiles(names, domNode, domFile, doc);
+		request(doc, collector);
+	}
+
+	public void request(TernQuery query, IFile file, IDocument document,
+			ITernDefinitionCollector collector) throws IOException,
+			TernException {
+		TernDoc doc = new TernDoc(query);
+		synchFiles(file, document, doc);
+		request(doc, collector);
+	}
+
+	private void request(TernDoc doc, ITernDefinitionCollector collector)
 			throws TernException {
 		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 
-	public void request(TernDoc doc, ITernTypeCollector collector)
+	// ----------------------- synch
+
+	/**
+	 * 
+	 * @param doc
+	 * @param names
+	 * @param scriptPaths
+	 * @throws IOException
+	 */
+	private void syncFiles(TernDoc doc, List names,
+			ITernScriptPath... scriptPaths) throws IOException {
+		synchronized (lock) {
+			for (int i = 0; i < scriptPaths.length; i++) {
+				scriptPaths[i].updateFiles(getFileManager(), doc, names);
+			}
+			synchFiles(doc);
+		}
+	}
+
+	private void synchFiles(IFile file, IDocument document, TernDoc doc)
+			throws IOException {
+		synchronized (lock) {
+			syncFiles(doc, null,
+					scriptPaths.toArray(ITernScriptPath.EMPTY_SCRIPT_PATHS));
+			if (file != null && file.exists()) {
+				String name = getFileManager().getFileName(file);
+				String text = document.get();
+				doc.addFile(name, text, null);
+				TernQuery query = doc.getQuery();
+				if (query != null) {
+					query.setFile(name);
+				}
+			}
+			synchFiles(doc);
+		}
+	}
+
+	private void synchFiles(TernDoc doc) {
+		if (doc.hasFiles()) {
+			ITernServer server = getTernServer();
+			server.request(doc, new IResponseHandler() {
+
+				@Override
+				public void onSuccess(Object data, String dataAsJsonString) {
+				}
+
+				@Override
+				public void onError(String error) {
+					Trace.trace(Trace.SEVERE, error);
+				}
+
+				@Override
+				public boolean isDataAsJsonString() {
+					return false;
+				}
+			});
+			doc.cleanFiles();
+		}
+	}
+
+	private void synchFiles(List names, Node domNode, IFile domFile, TernDoc doc)
+			throws IOException {
+		synchronized (lock) {
+			getFileManager().updateFiles(domNode, domFile, doc, names);
+			if (!doc.hasFiles()) {
+				syncFiles(doc, names,
+						scriptPaths.toArray(ITernScriptPath.EMPTY_SCRIPT_PATHS));
+			}
+			synchFiles(doc);
+		}
+	}
+
+	// ------------- Type
+
+	public void request(TernQuery query, List names, Node domNode,
+			IFile domFile, ITernTypeCollector collector) throws IOException,
+			TernException {
+		TernDoc doc = new TernDoc(query);
+		synchFiles(names, domNode, domFile, doc);
+		request(doc, collector);
+	}
+
+	private void request(TernDoc doc, ITernTypeCollector collector)
 			throws TernException {
 		ITernServer server = getTernServer();
 		server.request(doc, collector);

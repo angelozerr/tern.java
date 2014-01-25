@@ -1,36 +1,14 @@
 package tern.angular.protocol;
 
-import java.io.IOException;
-
-import org.json.simple.JSONArray;
 import org.w3c.dom.Attr;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import tern.TernFileManager;
 import tern.angular.AngularType;
 import tern.angular.modules.Directive;
 import tern.angular.modules.IDirectiveProvider;
-import tern.server.protocol.TernDoc;
 
 public class HTMLTernAngularHelper {
-
-	public static <T> TernDoc createDoc(Node element,
-			IDirectiveProvider provider, T file,
-			TernFileManager<T> fileManager, TernAngularQuery query)
-			throws IOException {
-
-		populateScope(element, provider, query);
-
-		TernDoc doc = new TernDoc(query);
-
-		// Update TernDoc#addFile
-		JSONArray files = query.getFiles();
-		fileManager.updateFiles(element, file, doc, files);
-
-		return doc;
-
-	}
 
 	public static void populateScope(Node element, IDirectiveProvider provider,
 			TernAngularQuery query) {

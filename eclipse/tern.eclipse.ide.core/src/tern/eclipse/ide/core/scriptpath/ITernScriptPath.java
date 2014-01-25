@@ -26,6 +26,8 @@ import tern.server.protocol.TernDoc;
  */
 public interface ITernScriptPath {
 
+	public static final ITernScriptPath[] EMPTY_SCRIPT_PATHS = new ITernScriptPath[0];
+
 	/**
 	 * Path type.
 	 * 

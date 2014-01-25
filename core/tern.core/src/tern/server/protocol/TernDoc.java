@@ -112,4 +112,8 @@ public class TernDoc extends JSONObject {
 		return files != null && files.size() > 0;
 	}
 
+	public void cleanFiles() {
+		super.remove(FILES_FIELD_NAME);
+	}
+
 }
