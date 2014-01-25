@@ -52,6 +52,12 @@ public class NodejsProcess {
 	private boolean verbose;
 
 	/**
+	 * true if tern server server won’t write a .tern-port file and false
+	 * otherwise.
+	 */
+	private boolean noPortFile;
+
+	/**
 	 * node.js process.
 	 */
 	private Process process;
@@ -180,6 +186,7 @@ public class NodejsProcess {
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
 		this.listeners = new ArrayList<INodejsProcessListener>();
+		setNoPortFile(true);
 	}
 
 	/**
@@ -237,6 +244,9 @@ public class NodejsProcess {
 		if (isVerbose()) {
 			commands.add("--verbose");
 			commands.add("1");
+		}
+		if (isNoPortFile()) {
+			commands.add("--no-port-file");
 		}
 		return commands;
 	}
@@ -353,6 +363,20 @@ public class NodejsProcess {
 	 */
 	public boolean isVerbose() {
 		return verbose;
+	}
+
+	public void setNoPortFile(boolean noPortFile) {
+		this.noPortFile = noPortFile;
+	}
+
+	/**
+	 * return true if tern server server won’t write a .tern-port file and false
+	 * otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isNoPortFile() {
+		return noPortFile;
 	}
 
 	/**
