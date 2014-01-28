@@ -40,7 +40,14 @@ public class TernAngularQuery extends TernQuery {
 		}
 		TernAngularScope scope = (TernAngularScope) super.get("scope");
 		return scope.hasControllers();
+	}
 
+	public boolean hasModule() {
+		if (!hasScope()) {
+			return false;
+		}
+		TernAngularScope scope = (TernAngularScope) super.get("scope");
+		return scope.hasModule();
 	}
 
 	public void addFile(String file) {
@@ -69,8 +76,8 @@ public class TernAngularQuery extends TernQuery {
 	}
 
 	public String getLabel() {
-		return new StringBuilder(super.getLabel()).append("_").append(getSubType())
-				.toString();
+		return new StringBuilder(super.getLabel()).append("_")
+				.append(getSubType()).toString();
 	}
 
 	private String getSubType() {

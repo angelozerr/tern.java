@@ -31,7 +31,7 @@ public class TernFile extends JSONObject {
 		super.put(TEXT_FIELD_NAME, text);
 		if (offset != null) {
 			super.put(TYPE_FIELD_NAME, "part");
-			super.put(OFFSET_FIELD_NAME, offset);
+			super.put("offsetLines", offset);
 		} else {
 			super.put(TYPE_FIELD_NAME, "full");
 		}

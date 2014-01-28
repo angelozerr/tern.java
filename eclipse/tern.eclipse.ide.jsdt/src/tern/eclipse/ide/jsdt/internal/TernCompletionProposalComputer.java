@@ -57,7 +57,9 @@ public class TernCompletionProposalComputer implements
 								.getTernProject(project);
 
 						TernCompletionsQuery query = new TernCompletionsQuery(
-								"#0", context.getInvocationOffset());
+								ternProject.getFileManager().getFileName(
+										scriptFile),
+								context.getInvocationOffset());
 						query.setTypes(true);
 						query.setDocs(true);
 						query.setUrls(true);
@@ -78,7 +80,7 @@ public class TernCompletionProposalComputer implements
 							}
 						};
 						ternProject.request(query, scriptFile, document,
-								collector);
+								startOffset, collector);
 						return proposals;
 
 					} catch (Exception e) {

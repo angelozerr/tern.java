@@ -70,6 +70,9 @@ public abstract class TernFileManager<T> {
 	public void updateFiles(Node domNode, T domFile, TernDoc doc, List names)
 			throws IOException {
 
+		if (domNode == null) {
+			return;
+		}
 		int scriptIndex = 0;
 		Element scriptElt = null;
 		String src = null;

@@ -23,7 +23,10 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
@@ -380,24 +383,29 @@ public class IDETernProject extends TernProject<IFile> {
 			ITernScriptPath scriptPath, ITernCompletionCollector collector)
 			throws IOException, TernException {
 		// update files
+		syncFiles(new TernDoc(), names, scriptPath);
 		TernDoc doc = new TernDoc(query);
-		syncFiles(doc, names, scriptPath);
 		request(doc, collector);
 	}
 
 	public void request(TernQuery query, List names, Node domNode,
 			IFile domFile, ITernCompletionCollector collector)
 			throws IOException, TernException {
+		synchFiles(names, domNode, domFile, new TernDoc());
 		TernDoc doc = new TernDoc(query);
-		synchFiles(names, domNode, domFile, doc);
 		request(doc, collector);
 	}
 
 	public void request(TernQuery query, IFile file, IDocument document,
-			ITernCompletionCollector collector) throws IOException,
-			TernException {
+			int startOffset, ITernCompletionCollector collector)
+			throws IOException, TernException {
+		synchFiles(file, document, new TernDoc());
 		TernDoc doc = new TernDoc(query);
-		synchFiles(file, document, doc);
+		/*
+		 * String name = getFileManager().getFileName(file);
+		 * updateFragmentAround(doc, name, document, startOffset, startOffset);
+		 * query.setFile("#0");
+		 */
 		request(doc, collector);
 	}
 
@@ -422,24 +430,24 @@ public class IDETernProject extends TernProject<IFile> {
 			ITernScriptPath scriptPath, ITernDefinitionCollector collector)
 			throws IOException, TernException {
 		// update files
+		syncFiles(new TernDoc(), names, scriptPath);
 		TernDoc doc = new TernDoc(query);
-		syncFiles(doc, names, scriptPath);
 		request(doc, collector);
 	}
 
 	public void request(TernQuery query, List names, Node domNode,
 			IFile domFile, ITernDefinitionCollector collector)
 			throws IOException, TernException {
+		synchFiles(names, domNode, domFile, new TernDoc());
 		TernDoc doc = new TernDoc(query);
-		synchFiles(names, domNode, domFile, doc);
 		request(doc, collector);
 	}
 
 	public void request(TernQuery query, IFile file, IDocument document,
 			ITernDefinitionCollector collector) throws IOException,
 			TernException {
+		synchFiles(file, document, new TernDoc());
 		TernDoc doc = new TernDoc(query);
-		synchFiles(file, document, doc);
 		request(doc, collector);
 	}
 
@@ -486,6 +494,58 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
+	private void updateFragmentAround(TernDoc doc, String name,
+			IDocument document, int start, int end) {
+
+		FindReplaceDocumentAdapter adapter = new FindReplaceDocumentAdapter(
+				document);
+		try {
+			long s = System.currentTimeMillis();
+
+			IRegion region = adapter.find(end, "\\bfunction\\b", false, false,
+					false, true);
+			System.err.println(region);
+			System.err.println(System.currentTimeMillis() - s);
+
+			if (region != null) {
+				String text = document.get(region.getOffset(),
+						end - region.getOffset());
+				int n = document.getLineOfOffset(region.getOffset());
+				System.err.println(n);
+				doc.addFile(name, text, n);
+				doc.getQuery().setEnd(
+						(Integer) doc.getQuery().get("end")
+								- region.getOffset());
+			} else {
+				String text = document.get();
+				doc.addFile(name, text, null);
+			}
+
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/*
+	 * function getFragmentAround(data, start, end) { var doc = data.doc; var
+	 * minIndent = null, minLine = null, endLine, tabSize = 4; for (var p =
+	 * start.line - 1, min = Math.max(0, p - 50); p >= min; --p) { var line =
+	 * doc.getLine(p), fn = line.search(/\bfunction\b/); if (fn < 0) continue;
+	 * var indent = CodeMirror.countColumn(line, null, tabSize); if (minIndent
+	 * != null && minIndent <= indent) continue; minIndent = indent; minLine =
+	 * p; } if (minLine == null) minLine = min; var max =
+	 * Math.min(doc.lastLine(), end.line + 20); if (minIndent == null ||
+	 * minIndent == CodeMirror.countColumn(doc.getLine(start.line), null,
+	 * tabSize)) endLine = max; else for (endLine = end.line + 1; endLine < max;
+	 * ++endLine) { var indent = CodeMirror.countColumn(doc.getLine(endLine),
+	 * null, tabSize); if (indent <= minIndent) break; } var from = Pos(minLine,
+	 * 0); console.log(doc.getRange(from, Pos(endLine, 0))) return {type:
+	 * "part", name: data.name, offsetLines: from.line, text: doc.getRange(from,
+	 * Pos(endLine, 0))}; }
+	 */
+
 	private void synchFiles(TernDoc doc) {
 		if (doc.hasFiles()) {
 			ITernServer server = getTernServer();
@@ -522,6 +582,15 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	// ------------- Type
+
+	public void request(TernQuery query, List names,
+			ITernScriptPath scriptPath, ITernTypeCollector collector)
+			throws IOException, TernException {
+		// update files
+		syncFiles(new TernDoc(), names, scriptPath);
+		TernDoc doc = new TernDoc(query);
+		request(doc, collector);
+	}
 
 	public void request(TernQuery query, List names, Node domNode,
 			IFile domFile, ITernTypeCollector collector) throws IOException,

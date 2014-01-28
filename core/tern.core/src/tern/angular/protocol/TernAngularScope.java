@@ -16,6 +16,10 @@ public class TernAngularScope extends JSONObject {
 		return (String) super.get("module");
 	}
 
+	public boolean hasModule() {
+		return super.containsKey("module");
+	}
+
 	public void addController(String controller) {
 		getControllers().add(controller);
 	}
