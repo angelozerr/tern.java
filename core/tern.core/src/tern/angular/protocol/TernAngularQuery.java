@@ -7,10 +7,18 @@ import tern.server.protocol.TernQuery;
 
 public class TernAngularQuery extends TernQuery {
 
+	private final JSONArray angularTypes;
+
 	public TernAngularQuery(String subtype, AngularType angularType) {
 		super("angular");
 		super.put("subtype", subtype);
-		super.put("angularType", angularType.name());
+		angularTypes = new JSONArray();
+		super.put("angularTypes", angularTypes);
+		addType(angularType);
+	}
+
+	public void addType(AngularType angularType) {
+		angularTypes.add(angularType.name());
 	}
 
 	public void setExpression(String expression) {
@@ -71,8 +79,9 @@ public class TernAngularQuery extends TernQuery {
 		return files.size() > 0;
 	}
 
-	public AngularType getAngularType() {
-		return AngularType.get((String) super.get("angularType"));
+	public AngularType getFirstAngularType() {
+		return AngularType.get((String) ((JSONArray) super.get("angularTypes"))
+				.get(0));
 	}
 
 	public String getLabel() {

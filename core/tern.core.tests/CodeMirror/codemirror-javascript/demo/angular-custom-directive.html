@@ -66,10 +66,7 @@ CodeMirror.tern.addDef = function(def) {
 <h2>Tern Demo</h2>
 <select id="angularType" onchange="onAngularTypeChanged()">
 	<option name="module" >module</option>
-	<option name="controller" >controller</option>
-	<option name="model." >model.</option>
-	<option name="model.todos." >model.todos.</option>
-	<option name="model.todo." >model.todo.</option>
+	<option name="directive" >directive</option>
 </select>
 <input type="text" id="angularField" value="" />
 <input type="checkbox" id="useAngularModule" value="use angular.module?" />
@@ -178,12 +175,12 @@ overview.</p>
 
   	var scope = {};
   	if (angularType != 'module') {
-  	  	scope.module = 'app';  		
+  	  	scope.module = 'demoModule';  		
   	}       
   	var query = {type: "angular", 
   			     subtype: "completions",
   			     files: ["[doc]"],
-  				 angularType: angularType,
+  				 angularTypes: [angularType],
   				 expression: angularField,
   				 scope: scope
 				};

@@ -13,7 +13,7 @@ public class HTMLTernAngularHelper {
 	public static void populateScope(Node element, IDirectiveProvider provider,
 			TernAngularQuery query) {
 		TernAngularScope scope = query.getScope();
-		populateScope(element, scope, provider, query.getAngularType());
+		populateScope(element, scope, provider, query.getFirstAngularType());
 	}
 
 	public static void populateScope(Node element, TernAngularScope scope,
