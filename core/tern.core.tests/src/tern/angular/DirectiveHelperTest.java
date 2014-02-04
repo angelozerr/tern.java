@@ -64,4 +64,10 @@ public class DirectiveHelperTest {
 		String result = DirectiveHelper.normalize("a");
 		Assert.assertEquals("a", result);
 	}
+	
+	@Test
+	public void testNormalize9() throws Exception {
+		String result = DirectiveHelper.normalize("phone-row-directive");
+		Assert.assertEquals("phoneRowDirective", result);
+	}
 }

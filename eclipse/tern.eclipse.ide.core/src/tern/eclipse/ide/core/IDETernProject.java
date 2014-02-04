@@ -33,6 +33,7 @@ import org.w3c.dom.Node;
 
 import tern.TernException;
 import tern.TernProject;
+import tern.angular.protocol.completions.TernAngularCompletionsQuery;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.eclipse.ide.core.utils.FileUtils;
@@ -369,6 +370,15 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	// ---------------- Completions
+
+	public void request(TernAngularCompletionsQuery query, List names,
+			ITernCompletionCollector collector) throws IOException,
+			TernException {
+		syncFiles(new TernDoc(), names,
+				scriptPaths.toArray(ITernScriptPath.EMPTY_SCRIPT_PATHS));
+		TernDoc doc = new TernDoc(query);
+		request(doc, collector);
+	}
 
 	/**
 	 * 

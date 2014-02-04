@@ -4,7 +4,7 @@ import tern.utils.StringUtils;
 
 public enum AngularType {
 
-	module, controller, directive, model, directiveRepeat, unknown;
+	module, controller, directive, directives, model, directiveRepeat, unknown;
 
 	public static AngularType get(String value) {
 		if (StringUtils.isEmpty(value)) {

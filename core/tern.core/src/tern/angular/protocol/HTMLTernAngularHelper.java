@@ -27,6 +27,7 @@ public class HTMLTernAngularHelper {
 			populateScope(scope, element, provider, false);
 			break;
 		case model:
+		case directive:
 		case directiveRepeat:
 			// find model
 			populateScope(scope, element, provider, true);

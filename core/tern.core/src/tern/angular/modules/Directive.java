@@ -22,10 +22,17 @@ public class Directive {
 	private String description;
 	private final boolean optionnal;
 	private Map<String, DirectiveParameter> parameters;
+	private final boolean custom;
 
 	public Directive(String name, AngularType type, String url,
 			Collection<String> tagNames, Collection<UseAs> useAs,
 			boolean optionnal, Module module) {
+		this(name, type, url, tagNames, useAs, optionnal, module, true);
+	}
+
+	public Directive(String name, AngularType type, String url,
+			Collection<String> tagNames, Collection<UseAs> useAs,
+			boolean optionnal, Module module, boolean custom) {
 		this.name = name;
 		this.type = type;
 		this.url = url;
@@ -36,6 +43,7 @@ public class Directive {
 		if (module != null) {
 			module.addDirective(this);
 		}
+		this.custom = custom;
 	}
 
 	public String getName() {
@@ -50,36 +58,45 @@ public class Directive {
 		return tagNames;
 	}
 
-	public Collection<String> getNames() {
-		StringBuilder prefix = new StringBuilder();
-		StringBuilder suffix = new StringBuilder();
+	private List<String> buildTokensName(String name) {
 		char[] chars = name.toCharArray();
+		List<String> tokens = new ArrayList<String>();
+		StringBuilder current = new StringBuilder();
 		char c = 0;
 		for (int i = 0; i < chars.length; i++) {
 			c = chars[i];
-			if (suffix.length() > 0) {
-				suffix.append(c);
+			if (!Character.isUpperCase(c)) {
+				current.append(c);
 			} else {
-				if (Character.isUpperCase(c)) {
-					suffix.append(Character.toLowerCase(c));
-				} else {
-					prefix.append(c);
-				}
+				tokens.add(current.toString());
+				current.setLength(0);				
+				current.append(Character.toLowerCase(c));
 			}
 		}
-		String moduleName = prefix.toString();
-		String directiveName = suffix.toString();
+		if (current.length() > 0) {
+			tokens.add(current.toString());
+		}
+		return tokens;
+	}
 
+	public Collection<String> getNames() {
+		List<String> tokensName = buildTokensName(name);
 		List<String> names = new ArrayList<String>();
 		// ex ngBind
 		names.add(name);
+		StringBuilder s = null;
 		for (Character delimiter : DirectiveHelper.DELIMITERS) {
 			for (String startsWith : DirectiveHelper.STARTS_WITH) {
-				names.add(new StringBuilder(startsWith).append(moduleName)
-						.append(delimiter).append(directiveName).toString());
+				s = new StringBuilder(startsWith);
+				for (int i = 0; i < tokensName.size(); i++) {
+					if (i > 0) {
+						s.append(delimiter);
+					}
+					s.append(tokensName.get(i));
+				}
+				names.add(s.toString());
 			}
 		}
-
 		return names;
 	}
 
@@ -170,4 +187,7 @@ public class Directive {
 		return null;
 	}
 
+	public boolean isCustom() {
+		return custom;
+	}
 }

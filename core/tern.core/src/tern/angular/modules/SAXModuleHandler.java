@@ -78,7 +78,7 @@ class SAXModuleHandler extends DefaultHandler {
 			boolean optional = StringUtils.asBoolean(
 					attributes.getValue("optional"), false);
 			this.directive = new Directive(directiveName, directiveType, url,
-					tagsName, useAs, optional, module);
+					tagsName, useAs, optional, module, false);
 		} else if ("description".equals(name)) {
 			this.description = new StringBuilder();
 		} else if ("parameter".equals(name)) {

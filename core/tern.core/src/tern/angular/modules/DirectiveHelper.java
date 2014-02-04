@@ -6,7 +6,7 @@ import java.util.List;
 public class DirectiveHelper {
 
 	public static final String ANY_TAG = "any";
-	
+
 	public static final List<String> STARTS_WITH;
 	public static final List<Character> DELIMITERS;
 
@@ -69,21 +69,15 @@ public class DirectiveHelper {
 		// 2) Convert the :, -, or _-delimited name to camelCase.
 		StringBuilder normalizedName = new StringBuilder();
 		boolean delimiterFound = false;
-		boolean forceToUpper = false;
 		char c = 0;
 		for (int i = startIndex; i < chs.length; i++) {
 			c = chs[i];
 			if (delimiterFound) {
-				if (forceToUpper) {
-					normalizedName.append(Character.toUpperCase(c));
-				} else {
-					normalizedName.append(c);
-				}
-				forceToUpper = false;
+				normalizedName.append(Character.toUpperCase(c));
+				delimiterFound = false;
 			} else {
 				if (DELIMITERS.contains(c)) {
 					delimiterFound = true;
-					forceToUpper = true;
 				} else {
 					normalizedName.append(c);
 				}
