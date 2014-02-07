@@ -57,28 +57,13 @@ class SAXModuleHandler extends DefaultHandler {
 					}
 				}
 			}
-			// use-as
-			List<UseAs> useAs = new ArrayList<UseAs>();
-			String useAsString = attributes.getValue("use-as");
-			if (!StringUtils.isEmpty(useAsString)) {
-				String[] uses = useAsString.split(" ");
-				UseAs use = null;
-
-				for (int i = 0; i < uses.length; i++) {
-					use = UseAs.get(uses[i].trim());
-					if (use != null) {
-						useAs.add(use);
-					}
-				}
-			}
-			if (useAs.isEmpty()) {
-				useAs.add(UseAs.attr);
-			}
-			// optional
-			boolean optional = StringUtils.asBoolean(
-					attributes.getValue("optional"), false);
+			// restrict
+			String restrict = attributes.getValue("restrict");
+			// value : required|optional|none
+			DirectiveValue directiveValue = DirectiveValue.get(attributes
+					.getValue("value"));
 			this.directive = new Directive(directiveName, directiveType, url,
-					tagsName, useAs, optional, module, false);
+					tagsName, restrict, directiveValue, module, false);
 		} else if ("description".equals(name)) {
 			this.description = new StringBuilder();
 		} else if ("parameter".equals(name)) {

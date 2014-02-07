@@ -9,7 +9,7 @@ public interface IAngularModulesRegistry {
 	Directive getDirective(String tagName, String name);
 
 	void collectDirectives(String tagName, String directiveName,
-			boolean fullMatch, List<Directive> existingDirectives,
-			IDirectiveCollector collector);
+			DirectiveSyntax syntax, boolean fullMatch, List<Directive> existingDirectives,
+			Restriction restriction, IDirectiveCollector collector);
 
 }

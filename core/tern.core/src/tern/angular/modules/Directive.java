@@ -1,6 +1,5 @@
 package tern.angular.modules;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,28 +15,29 @@ public class Directive {
 	private final String name;
 	private final AngularType type;
 	private final String url;
-	private final Collection<UseAs> useAs;
+	private final String restrict;
 	private final Module module;
 	private final Collection<String> tagNames;
 	private String description;
-	private final boolean optionnal;
+	private final DirectiveValue directiveValue;
 	private Map<String, DirectiveParameter> parameters;
 	private final boolean custom;
 
 	public Directive(String name, AngularType type, String url,
-			Collection<String> tagNames, Collection<UseAs> useAs,
-			boolean optionnal, Module module) {
-		this(name, type, url, tagNames, useAs, optionnal, module, true);
+			Collection<String> tagNames, String restrict,
+			DirectiveValue directiveValue, Module module) {
+		this(name, type, url, tagNames, restrict, directiveValue, module, true);
 	}
 
 	public Directive(String name, AngularType type, String url,
-			Collection<String> tagNames, Collection<UseAs> useAs,
-			boolean optionnal, Module module, boolean custom) {
+			Collection<String> tagNames, String restrict,
+			DirectiveValue directiveValue, Module module, boolean custom) {
 		this.name = name;
 		this.type = type;
 		this.url = url;
-		this.useAs = useAs;
-		this.optionnal = optionnal;
+		this.restrict = StringUtils.isEmpty(restrict) ? Restriction.A.name()
+				: restrict;
+		this.directiveValue = directiveValue;
 		this.module = module;
 		this.tagNames = tagNames;
 		if (module != null) {
@@ -58,46 +58,8 @@ public class Directive {
 		return tagNames;
 	}
 
-	private List<String> buildTokensName(String name) {
-		char[] chars = name.toCharArray();
-		List<String> tokens = new ArrayList<String>();
-		StringBuilder current = new StringBuilder();
-		char c = 0;
-		for (int i = 0; i < chars.length; i++) {
-			c = chars[i];
-			if (!Character.isUpperCase(c)) {
-				current.append(c);
-			} else {
-				tokens.add(current.toString());
-				current.setLength(0);				
-				current.append(Character.toLowerCase(c));
-			}
-		}
-		if (current.length() > 0) {
-			tokens.add(current.toString());
-		}
-		return tokens;
-	}
-
-	public Collection<String> getNames() {
-		List<String> tokensName = buildTokensName(name);
-		List<String> names = new ArrayList<String>();
-		// ex ngBind
-		names.add(name);
-		StringBuilder s = null;
-		for (Character delimiter : DirectiveHelper.DELIMITERS) {
-			for (String startsWith : DirectiveHelper.STARTS_WITH) {
-				s = new StringBuilder(startsWith);
-				for (int i = 0; i < tokensName.size(); i++) {
-					if (i > 0) {
-						s.append(delimiter);
-					}
-					s.append(tokensName.get(i));
-				}
-				names.add(s.toString());
-			}
-		}
-		return names;
+	public List<String> getDirectiveNames() {
+		return DirectiveHelper.getDirectiveNames(name);
 	}
 
 	public Module getModule() {
@@ -116,10 +78,6 @@ public class Directive {
 		return url;
 	}
 
-	public Collection<UseAs> getUseAs() {
-		return useAs;
-	}
-
 	public String getHTMLDescription() {
 		StringBuilder info = new StringBuilder("");
 		info.append("<b>");
@@ -133,6 +91,12 @@ public class Directive {
 			info.append("<br/>");
 			info.append("<br/>");
 			info.append(description);
+		}
+		if (!StringUtils.isEmpty(restrict)) {
+			info.append("<br/>");
+			info.append("<br/>");
+			info.append("<b>restrict</b> ");
+			info.append(restrict);
 		}
 		if (tagNames != null && tagNames.size() > 0) {
 			info.append("<br/>");
@@ -155,8 +119,8 @@ public class Directive {
 		return info.toString();
 	}
 
-	public boolean isOptionnal() {
-		return optionnal;
+	public DirectiveValue getDirectiveValue() {
+		return directiveValue;
 	}
 
 	public Collection<DirectiveParameter> getParameters() {
@@ -189,5 +153,12 @@ public class Directive {
 
 	public boolean isCustom() {
 		return custom;
+	}
+
+	public boolean isMatch(Restriction restriction) {
+		if (restriction == null) {
+			return true;
+		}
+		return restriction.isMatch(restrict);
 	}
 }

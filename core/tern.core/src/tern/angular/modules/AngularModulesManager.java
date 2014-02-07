@@ -32,25 +32,27 @@ public class AngularModulesManager {
 	}
 
 	public void collectDirectives(Object project, String tagName,
-			String directiveName, boolean fullMatch,
-			List<Directive> existingDirectives, IDirectiveCollector collector) {
-		collectDirectives(tagName, directiveName, fullMatch,
-				existingDirectives, collector);
+			String directiveName, DirectiveSyntax syntax, boolean fullMatch,
+			List<Directive> existingDirectives, Restriction restriction,
+			IDirectiveCollector collector) {
+		collectDefaultDirectives(tagName, directiveName, syntax, fullMatch,
+				existingDirectives, restriction, collector);
 		if (project != null) {
 			IAngularModulesRegistry registry = customRegistries.get(project);
 			if (registry != null) {
-				registry.collectDirectives(tagName, directiveName, fullMatch,
-						existingDirectives, collector);
+				registry.collectDirectives(tagName, directiveName, syntax, fullMatch,
+						existingDirectives, restriction, collector);
 			}
 		}
 	}
 
-	public void collectDirectives(String tagName, String directiveName,
-			boolean fullMatch, List<Directive> existingDirectives,
+	private void collectDefaultDirectives(String tagName, String directiveName,
+			DirectiveSyntax syntax, boolean fullMatch,
+			List<Directive> existingDirectives, Restriction restriction,
 			IDirectiveCollector collector) {
 		for (IAngularModulesRegistry registry : defaultRegistries) {
-			registry.collectDirectives(tagName, directiveName, fullMatch,
-					existingDirectives, collector);
+			registry.collectDirectives(tagName, directiveName, syntax, fullMatch,
+					existingDirectives, restriction, collector);
 		}
 	}
 

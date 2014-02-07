@@ -28,7 +28,7 @@ public class HTMLTernAngularHelper {
 			break;
 		case model:
 		case directive:
-		case directiveRepeat:
+		case repeat_expression:
 			// find model
 			populateScope(scope, element, provider, true);
 			break;
@@ -63,7 +63,7 @@ public class HTMLTernAngularHelper {
 						String model = ((Attr) node).getValue();
 						scope.addModel(model);
 						break;
-					case directiveRepeat:
+					case repeat_expression:
 						String expression = ((Attr) node).getValue();
 						scope.addRepeat(expression);
 						break;

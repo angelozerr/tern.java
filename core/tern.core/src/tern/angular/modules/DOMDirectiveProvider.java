@@ -1,6 +1,7 @@
 package tern.angular.modules;
 
 import org.w3c.dom.Attr;
+import org.w3c.dom.Element;
 
 public class DOMDirectiveProvider implements IDirectiveProvider {
 
@@ -17,6 +18,15 @@ public class DOMDirectiveProvider implements IDirectiveProvider {
 		}
 		return AngularModulesManager.getInstance().getDirective(
 				attr.getOwnerElement().getNodeName(), attr.getName());
+	}
+
+	@Override
+	public Directive getAngularDirective(Element element) {
+		if (element == null) {
+			return null;
+		}
+		return AngularModulesManager.getInstance().getDirective(null,
+				element.getTagName());
 	}
 
 }

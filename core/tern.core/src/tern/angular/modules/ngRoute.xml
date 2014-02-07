@@ -4,7 +4,7 @@
 
 	<directive name="ngView"
 		url="http://docs.angularjs.org/api/ngRoute.directive:ngView" 
-		optionnal="true" >
+		value="none" >
 		<description>
 		<![CDATA[
 			ngView is a directive that complements the $route service by including the rendered template of the current route into the main layout (index.html) file. 
@@ -13,6 +13,14 @@
 			Requires the ngRoute module to be installed.
 			]]>
 		</description>
+		<parameters>
+		    <parameter name="onload" types="string" optional="true">Expression to evaluate whenever the view updates.</parameter>
+		    <parameter name="autoscroll" types="string" optional="true">Whether ngView should call $anchorScroll to scroll the viewport after the view is updated.
+
+ - If the attribute is not set, disable scrolling.
+ - If the attribute is set without value, enable scrolling.
+ - Otherwise enable scrolling only if the autoscroll attribute value evaluated as an expression yields a truthy value.</parameter>
+		</parameters>		
 	</directive>
 
 </module>

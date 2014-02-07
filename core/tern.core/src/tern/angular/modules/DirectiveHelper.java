@@ -86,4 +86,46 @@ public class DirectiveHelper {
 		return normalizedName.toString();
 	}
 
+	public static List<String> getDirectiveNames(String name) {
+		List<String> tokensName = buildTokensName(name);
+		List<String> names = new ArrayList<String>();
+		// ex ngBind
+		int index = 0;
+		names.add(name);
+		StringBuilder s = null;
+		for (Character delimiter : DirectiveHelper.DELIMITERS) {
+			for (String startsWith : DirectiveHelper.STARTS_WITH) {
+				s = new StringBuilder(startsWith);
+				for (int i = 0; i < tokensName.size(); i++) {
+					if (i > 0) {
+						s.append(delimiter);
+					}
+					s.append(tokensName.get(i));
+				}
+				names.add(s.toString());
+			}
+		}
+		return names;
+	}
+
+	private static List<String> buildTokensName(String name) {
+		char[] chars = name.toCharArray();
+		List<String> tokens = new ArrayList<String>();
+		StringBuilder current = new StringBuilder();
+		char c = 0;
+		for (int i = 0; i < chars.length; i++) {
+			c = chars[i];
+			if (!Character.isUpperCase(c)) {
+				current.append(c);
+			} else {
+				tokens.add(current.toString());
+				current.setLength(0);
+				current.append(Character.toLowerCase(c));
+			}
+		}
+		if (current.length() > 0) {
+			tokens.add(current.toString());
+		}
+		return tokens;
+	}
 }

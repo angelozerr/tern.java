@@ -27,13 +27,14 @@ public abstract class AbstractAngularModulesRegistry implements
 	}
 
 	public void collectDirectives(String tagName, String directiveName,
-			boolean fullMatch, List<Directive> existingDirectives,
+			DirectiveSyntax syntax, boolean fullMatch,
+			List<Directive> existingDirectives, Restriction restriction,
 			IDirectiveCollector collector) {
 		// collect directives of each modules.
 		Collection<Module> modules = getModules();
 		for (Module module : modules) {
-			module.collectDirectives(tagName, directiveName, fullMatch,
-					existingDirectives, collector);
+			module.collectDirectives(tagName, directiveName, syntax, fullMatch,
+					existingDirectives, restriction, collector);
 		}
 		// collect directives parameters of directive to ignore
 		if (existingDirectives != null) {
