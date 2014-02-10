@@ -1,0 +1,41 @@
+<module name="ngTouch">
+
+	<!-- See http://docs.angularjs.org/api/ng -->
+
+	<directive name="ngClick"
+		url="http://docs.angularjs.org/api/ngRoute.directive:ngClick" 
+		value="required" >
+		<description>
+		<![CDATA[
+			A more powerful replacement for the default ngClick designed to be used on touchscreen devices. 
+			Most mobile browsers wait about 300ms after a tap-and-release before sending the click event. 
+			This version handles them immediately, and then prevents the following click event from propagating.
+			]]>
+		</description>			
+	</directive>
+	
+	<directive name="ngSwipeLeft"
+		url="http://docs.angularjs.org/api/ngRoute.directive:ngSwipeLeft" 
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior when an element is swiped to the left on a touchscreen device. 
+			A leftward swipe is a quick, right-to-left slide of the finger. 
+			Though ngSwipeLeft is designed for touch-based devices, it will work with a mouse click and drag too.
+			]]>
+		</description>			
+	</directive>
+	
+	<directive name="ngSwipeRight"
+		url="http://docs.angularjs.org/api/ngRoute.directive:ngSwipeRight" 
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior when an element is swiped to the right on a touchscreen device. 
+			A rightward swipe is a quick, left-to-right slide of the finger. 
+			Though ngSwipeRight is designed for touch-based devices, it will work with a mouse click and drag too.
+			]]>
+		</description>			
+	</directive>
+	
+</module>

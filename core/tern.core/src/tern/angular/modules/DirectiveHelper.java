@@ -1,8 +1,22 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Directive helper.
+ * 
+ */
 public class DirectiveHelper {
 
 	public static final String ANY_TAG = "any";
@@ -17,9 +31,9 @@ public class DirectiveHelper {
 		STARTS_WITH.add("data-");
 
 		DELIMITERS = new ArrayList<Character>();
-		DELIMITERS.add(':');
-		DELIMITERS.add('-');
-		DELIMITERS.add('_');
+		DELIMITERS.add(':'); // colon delimiter
+		DELIMITERS.add('-'); // minus delimiter
+		DELIMITERS.add('_'); // underscore delimiter
 	}
 
 	/**
@@ -127,5 +141,36 @@ public class DirectiveHelper {
 			tokens.add(current.toString());
 		}
 		return tokens;
+	}
+
+	public static boolean isSupport(IDirectiveSyntax syntax, int i) {
+		if (syntax == null) {
+			return true;
+		}
+		switch (i) {
+		case 0:
+			return syntax.isUseOriginalName();
+		case 1:
+			return syntax.isColonDelimiter() && syntax.isStartsWithNothing();
+		case 2:
+			return syntax.isColonDelimiter() && syntax.isStartsWithX();
+		case 3:
+			return syntax.isColonDelimiter() && syntax.isStartsWithData();
+		case 4:
+			return syntax.isMinusDelimiter() && syntax.isStartsWithNothing();
+		case 5:
+			return syntax.isMinusDelimiter() && syntax.isStartsWithX();
+		case 6:
+			return syntax.isMinusDelimiter() && syntax.isStartsWithData();
+		case 7:
+			return syntax.isUnderscoreDelimiter()
+					&& syntax.isStartsWithNothing();
+		case 8:
+			return syntax.isUnderscoreDelimiter() && syntax.isStartsWithX();
+		case 9:
+			return syntax.isUnderscoreDelimiter() && syntax.isStartsWithData();
+
+		}
+		return false;
 	}
 }

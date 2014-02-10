@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.util.Collection;
@@ -5,10 +15,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Angular module.
+ * 
+ */
 public class Module {
 
 	private final String name;
-
 	private final DirectivesByTagName allDirectives;
 	private final Map<String, DirectivesByTagName> directivesByTagName;
 
@@ -66,32 +79,23 @@ public class Module {
 	}
 
 	public void collectDirectives(String tagName, String directiveName,
-			DirectiveSyntax syntax, boolean fullMatch,
-			List<Directive> existingDirectives, Restriction restriction,
-			IDirectiveCollector collector) {
-		if (fullMatch) {
-			Directive directive = getDirective(tagName, directiveName);
-			if (isMatch(existingDirectives, restriction, directive)) {
-				collector.add(directive, directiveName);
-			}
-		} else {
-			// collect directives from tag names.
-			DirectivesByTagName container = getDirectivesByTagName(tagName,
-					false);
+			IDirectiveSyntax syntax, List<Directive> existingDirectives,
+			Restriction restriction, IDirectiveCollector collector) {
+
+		// collect directives from tag names.
+		DirectivesByTagName container = getDirectivesByTagName(tagName, false);
+		collectDirectives(directiveName, syntax, existingDirectives,
+				restriction, collector, container);
+		if (!DirectiveHelper.ANY_TAG.equals(tagName)) {
+			// collect directives from 'any' tag names.
+			container = getDirectivesByTagName(DirectiveHelper.ANY_TAG, false);
 			collectDirectives(directiveName, syntax, existingDirectives,
 					restriction, collector, container);
-			if (!DirectiveHelper.ANY_TAG.equals(tagName)) {
-				// collect directives from 'any' tag names.
-				container = getDirectivesByTagName(DirectiveHelper.ANY_TAG,
-						false);
-				collectDirectives(directiveName, syntax, existingDirectives,
-						restriction, collector, container);
-			}
 		}
 	}
 
 	private void collectDirectives(String directiveName,
-			DirectiveSyntax syntax, List<Directive> ignoreDirectives,
+			IDirectiveSyntax syntax, List<Directive> ignoreDirectives,
 			Restriction restriction, IDirectiveCollector collector,
 			DirectivesByTagName container) {
 		if (container != null) {

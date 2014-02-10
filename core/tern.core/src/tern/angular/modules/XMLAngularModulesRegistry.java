@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.io.IOException;
@@ -14,6 +24,8 @@ public class XMLAngularModulesRegistry extends AbstractAngularModulesRegistry {
 					.getResourceAsStream("ng.xml"));
 			loadModule(XMLAngularModulesRegistry.class
 					.getResourceAsStream("ngRoute.xml"));
+			loadModule(XMLAngularModulesRegistry.class
+					.getResourceAsStream("ngTouch.xml"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

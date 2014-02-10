@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.util.ArrayList;
@@ -32,26 +42,25 @@ public class AngularModulesManager {
 	}
 
 	public void collectDirectives(Object project, String tagName,
-			String directiveName, DirectiveSyntax syntax, boolean fullMatch,
+			String directiveName, IDirectiveSyntax syntax,
 			List<Directive> existingDirectives, Restriction restriction,
 			IDirectiveCollector collector) {
-		collectDefaultDirectives(tagName, directiveName, syntax, fullMatch,
+		collectDefaultDirectives(tagName, directiveName, syntax,
 				existingDirectives, restriction, collector);
 		if (project != null) {
 			IAngularModulesRegistry registry = customRegistries.get(project);
 			if (registry != null) {
-				registry.collectDirectives(tagName, directiveName, syntax, fullMatch,
+				registry.collectDirectives(tagName, directiveName, syntax,
 						existingDirectives, restriction, collector);
 			}
 		}
 	}
 
 	private void collectDefaultDirectives(String tagName, String directiveName,
-			DirectiveSyntax syntax, boolean fullMatch,
-			List<Directive> existingDirectives, Restriction restriction,
-			IDirectiveCollector collector) {
+			IDirectiveSyntax syntax, List<Directive> existingDirectives,
+			Restriction restriction, IDirectiveCollector collector) {
 		for (IAngularModulesRegistry registry : defaultRegistries) {
-			registry.collectDirectives(tagName, directiveName, syntax, fullMatch,
+			registry.collectDirectives(tagName, directiveName, syntax,
 					existingDirectives, restriction, collector);
 		}
 	}

@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.util.ArrayList;
@@ -24,15 +34,15 @@ class DirectivesByTagName {
 		}
 	}
 
-	public void collectDirectives(String directiveName, DirectiveSyntax syntax,
-			List<Directive> ignoreDirectives, Restriction restriction,
-			IDirectiveCollector collector) {
+	public void collectDirectives(String directiveName,
+			IDirectiveSyntax syntax, List<Directive> ignoreDirectives,
+			Restriction restriction, IDirectiveCollector collector) {
 		String name = null;
 		for (Directive directive : directives) {
 			if (Module.isMatch(ignoreDirectives, restriction, directive)) {
 				List<String> names = directive.getDirectiveNames();
 				for (int i = 0; i < names.size(); i++) {
-					if (isSupport(syntax, i)) {
+					if (DirectiveHelper.isSupport(syntax, i)) {
 						name = names.get(i);
 						if (name.startsWith(directiveName)) {
 							collector.add(directive, name);
@@ -41,13 +51,6 @@ class DirectivesByTagName {
 				}
 			}
 		}
-	}
-
-	public boolean isSupport(DirectiveSyntax syntax, int i) {
-		if (syntax == null) {
-			return true;
-		}
-		return syntax.isSupport(i);
 	}
 
 	public Directive getDirective(String name) {

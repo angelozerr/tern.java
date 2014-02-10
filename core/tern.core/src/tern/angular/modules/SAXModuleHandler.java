@@ -1,9 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.xml.sax.Attributes;
@@ -16,6 +25,10 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import tern.angular.AngularType;
 import tern.utils.StringUtils;
 
+/**
+ * SAX Module to load module with XML file.
+ * 
+ */
 class SAXModuleHandler extends DefaultHandler {
 
 	private Module module;

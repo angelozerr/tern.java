@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.angular.modules;
 
 import java.util.Collection;
@@ -27,13 +37,12 @@ public abstract class AbstractAngularModulesRegistry implements
 	}
 
 	public void collectDirectives(String tagName, String directiveName,
-			DirectiveSyntax syntax, boolean fullMatch,
-			List<Directive> existingDirectives, Restriction restriction,
-			IDirectiveCollector collector) {
+			IDirectiveSyntax syntax, List<Directive> existingDirectives,
+			Restriction restriction, IDirectiveCollector collector) {
 		// collect directives of each modules.
 		Collection<Module> modules = getModules();
 		for (Module module : modules) {
-			module.collectDirectives(tagName, directiveName, syntax, fullMatch,
+			module.collectDirectives(tagName, directiveName, syntax,
 					existingDirectives, restriction, collector);
 		}
 		// collect directives parameters of directive to ignore
