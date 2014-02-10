@@ -193,6 +193,107 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngCopy"
+		url="http://docs.angularjs.org/api/ng.directive:ngCopy"
+		value="required"
+		tags="window, input, select, textarea, a" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on copy event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngCsp"
+		url="http://docs.angularjs.org/api/ng.directive:ngCsp"
+		value="none" >
+		<description>
+		<![CDATA[
+			Enables CSP (Content Security Policy) support.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngCut"
+		url="http://docs.angularjs.org/api/ng.directive:ngCut"
+		value="required"
+		tags="window, input, select, textarea, a" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on cut event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngDblclick"
+		url="http://docs.angularjs.org/api/ng.directive:ngDblclick"
+		value="required" >
+		<description>
+		<![CDATA[
+			The ngDblclick directive allows you to specify custom behavior on a dblclick event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngDisabled"
+		url="http://docs.angularjs.org/api/ng.directive:ngDisabled"
+		value="required"
+		tags="input" >
+		<description>
+		<![CDATA[
+			The HTML specification does not require browsers to preserve the values of boolean attributes such as disabled. (Their presence means true and their absence means false.) 
+			If we put an Angular interpolation expression into such an attribute then the binding information would be lost when the browser removes the attribute. The ngDisabled directive solves this problem for the disabled attribute. 
+			This complementary directive is not removed by the browser and so provides a permanent reliable place to store the binding information.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngFocus"
+		url="http://docs.angularjs.org/api/ng.directive:ngFocus"
+		value="required"
+		tags="window, input, select, textarea, a" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on focus event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngFocus"
+		url="http://docs.angularjs.org/api/ng.directive:ngFocus"
+		value="required"
+		tags="window, input, select, textarea, a" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on focus event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngForm"
+		url="http://docs.angularjs.org/api/ng.directive:ngForm"
+		value="required" >
+		<description>
+		<![CDATA[
+			Nestable alias of form directive. HTML does not allow nesting of form elements. 
+			It is useful to nest forms, for example if the validity of a sub-group of controls needs to be determined.
+			]]>
+		</description>
+		<parameters>
+		    <parameter name="name" types="string" optional="true" >Name of the form. If specified, the form controller will be published into related scope, under this name.</parameter>
+		</parameters>		
+	</directive>
+
+	<directive name="ngHide"
+		url="http://docs.angularjs.org/api/ng.directive:ngHide"
+		value="required" >
+		<description>
+		<![CDATA[
+			The ngHide directive shows or hides the given HTML element based on the expression provided to the ngHide attribute. 
+			]]>
+		</description>
+	</directive>
+									
 	<directive name="ngHref"
 		url="http://docs.angularjs.org/api/ng.directive:ngHref"
 		value="required"
@@ -204,8 +305,20 @@ and executed twice.</p>
 		</description>
 	</directive>
 	
+	<directive name="ngIf"
+		url="http://docs.angularjs.org/api/ng.directive:ngIf"
+		value="required" >
+		<description>
+		<![CDATA[
+			The ngIf directive removes or recreates a portion of the DOM tree based on an {expression}. 
+			If the expression assigned to ngIf evaluates to a false value then the element is removed from the DOM, otherwise a clone of the element is reinserted into the DOM.
+			]]>
+		</description>
+	</directive>
+		
 	<directive name="ngInclude"
 		url="http://docs.angularjs.org/api/ng.directive:ngInclude"
+		value="required"
 		restrict="ECA" >
 		<description>
 			Fetches, compiles and includes an external HTML fragment.
@@ -220,10 +333,64 @@ and executed twice.</p>
 		</parameters>
 	</directive>
 
+	<directive name="ngInit"
+		url="http://docs.angularjs.org/api/ng.directive:ngInit"
+		value="required"
+		restrict="AC" >
+		<description>
+		<![CDATA[
+			The ngInit directive allows you to evaluate an expression in the current scope.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngKeydown"
+		url="http://docs.angularjs.org/api/ng.directive:ngKeydown"
+		value="required">
+		<description>
+		<![CDATA[
+			Specify custom behavior on keydown event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngKeypress"
+		url="http://docs.angularjs.org/api/ng.directive:ngKeypress"
+		value="required">
+		<description>
+		<![CDATA[
+			Specify custom behavior on keypress event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngKeyup"
+		url="http://docs.angularjs.org/api/ng.directive:ngKeyup"
+		value="required">
+		<description>
+		<![CDATA[
+			Specify custom behavior on keyup event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngList"
+		url="http://docs.angularjs.org/api/ng.directive:ngList"
+		value="optional"
+		tags="input" >
+		<description>
+		<![CDATA[
+			Text input that converts between a delimited string and an array of strings. 
+			The delimiter can be a fixed string (by default a comma) or a regular expression.
+			]]>
+		</description>
+	</directive>
+					
 	<directive name="ngModel"
 		url="http://docs.angularjs.org/api/ng.directive:ngModel" 
 		tags="input, select, textarea"
-		type="model" >
+		type="model"
+		value="required" >
 		<description>
 			The ngModel directive binds an input,select, textarea (or
 			custom form control) to a property on the scope using
@@ -231,6 +398,103 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngMousedown"
+		url="http://docs.angularjs.org/api/ng.directive:ngMousedown"
+		value="required" >
+		<description>
+		<![CDATA[
+			The ngMousedown directive allows you to specify custom behavior on mousedown event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngMouseenter"
+		url="http://docs.angularjs.org/api/ng.directive:ngMouseenter"
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on mouseenter event.
+			]]>
+		</description>
+	</directive>
+		
+	<directive name="ngMouseleave"
+		url="http://docs.angularjs.org/api/ng.directive:ngMouseleave"
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on mouseleave event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngMousemove"
+		url="http://docs.angularjs.org/api/ng.directive:ngMousemove"
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on mousemove event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngMouseover"
+		url="http://docs.angularjs.org/api/ng.directive:ngMouseover"
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on mouseover event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngMouseup"
+		url="http://docs.angularjs.org/api/ng.directive:ngMouseup"
+		value="required" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on mouseup event.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngNonBindable"
+		url="http://docs.angularjs.org/api/ng.directive:ngNonBindable"
+		value="none"
+		restrict="AC" >
+		<description>
+		<![CDATA[
+			The ngNonBindable directive tells Angular not to compile or bind the contents of the current DOM element. 
+			This is useful if the element contains what appears to be Angular directives and bindings but which should be ignored by Angular. 
+			This could be the case if you have a site that displays snippets of code, for instance.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngOpen"
+		url="http://docs.angularjs.org/api/ng.directive:ngOpen"
+		value="required" >
+		<description>
+		<![CDATA[
+			The HTML specification does not require browsers to preserve the values of boolean attributes such as open. 
+			(Their presence means true and their absence means false.) If we put an Angular interpolation expression into such an attribute then the binding information would be lost when the browser removes the attribute. 
+			The ngOpen directive solves this problem for the open attribute. 
+			This complementary directive is not removed by the browser and so provides a permanent reliable place to store the binding information.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngPaste"
+		url="http://docs.angularjs.org/api/ng.directive:ngPaste"
+		value="required"
+		tags="window, input, select, textarea, a" >
+		<description>
+		<![CDATA[
+			Specify custom behavior on paste event.
+			]]>
+		</description>
+	</directive>
+									
 	<directive name="ngPluralize"
 		url="http://docs.angularjs.org/api/ng.directive:ngPluralize"
 		restrict="EA" >
@@ -246,6 +510,21 @@ and executed twice.</p>
 		</parameters>		
 	</directive>
 	
+	<directive name="ngReadonly"
+		url="http://docs.angularjs.org/api/ng.directive:ngReadonly"
+		value="required"
+		tags="input" >
+		<description>
+		<![CDATA[
+		The HTML specification does not require browsers to preserve the values of boolean attributes such as readonly. 
+		(Their presence means true and their absence means false.) 
+		If we put an Angular interpolation expression into such an attribute then the binding information would be lost when the browser removes the attribute. 
+		The ngReadonly directive solves this problem for the readonly attribute. 
+		This complementary directive is not removed by the browser and so provides a permanent reliable place to store the binding information.		
+			]]>
+		</description>
+	</directive>
+		
 	<directive name="ngRepeat"
 		url="http://docs.angularjs.org/api/ng.directive:ngRepeat"
 		type="repeat_expression"
@@ -257,6 +536,21 @@ and executed twice.</p>
 		</description>
 	</directive>
 
+	<directive name="ngSelected"
+		url="http://docs.angularjs.org/api/ng.directive:ngSelected"
+		value="required"
+		tags="option" >
+		<description>
+		<![CDATA[
+		The HTML specification does not require browsers to preserve the values of boolean attributes such as selected. 
+		(Their presence means true and their absence means false.) 
+		If we put an Angular interpolation expression into such an attribute then the binding information would be lost when the browser removes the attribute. T
+		he ngSelected directive solves this problem for the selected atttribute. 
+		This complementary directive is not removed by the browser and so provides a permanent reliable place to store the binding information.		
+			]]>
+		</description>
+	</directive>
+	
 	<directive name="ngShow"
 		url="http://docs.angularjs.org/api/ng.directive:ngShow"
 		value="required" >
@@ -318,4 +612,41 @@ Additionally it prevents the default action (which for form means sending the re
 		</description>
 	</directive>
 
+	<directive name="ngSwitch"
+		url="http://docs.angularjs.org/api/ng.directive:ngSwitch"
+		value="required" >
+		<description>
+		<![CDATA[
+			The ngSwitch directive is used to conditionally swap DOM structure on your template based on a scope expression. 
+			Elements within ngSwitch but without ngSwitchWhen or ngSwitchDefault directives will be preserved at the location as specified in the template.
+			]]>
+		</description>
+	</directive>
+
+	<directive name="ngTransclude"
+		url="http://docs.angularjs.org/api/ng.directive:ngTransclude"
+		value="none"
+		restrict="AC" >
+		<description>
+		<![CDATA[
+			Directive that marks the insertion point for the transcluded DOM of the nearest parent directive that uses transclusion.
+
+Any existing content of the element that this directive is placed on will be removed before the transcluded content is inserted.
+			]]>
+		</description>
+	</directive>
+		
+	<directive name="ngValue"
+		url="http://docs.angularjs.org/api/ng.directive:ngValue"
+		value="optional"
+		tags="input" >
+		<description>
+		<![CDATA[
+			Binds the given expression to the value of input[select] or input[radio], so that when the element is selected, the ngModel of that element is set to the bound value.
+
+ngValue is useful when dynamically generating lists of radio buttons using ng-repeat, as shown below.
+			]]>
+		</description>
+	</directive>
+			
 </module>
