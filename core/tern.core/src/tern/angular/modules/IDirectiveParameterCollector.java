@@ -11,17 +11,16 @@
 package tern.angular.modules;
 
 /**
- * Directive collector.
+ * Directive parameter collector.
  * 
  */
-public interface IDirectiveCollector extends IDirectiveParameterCollector {
+public interface IDirectiveParameterCollector {
 
 	/**
-	 * Collect the given directive.
+	 * Collect the given directive parameter.
 	 * 
-	 * @param directive
-	 * @param nameWhichMatch
+	 * @param parameter
 	 */
-	void add(Directive directive, String nameWhichMatch);
+	void add(DirectiveParameter parameter);
 
 }

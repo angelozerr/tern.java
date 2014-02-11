@@ -26,7 +26,16 @@ public interface IDirectiveProvider {
 	 * @param attr
 	 * @return
 	 */
-	Directive getAngularDirective(Attr attr);
+	Directive getAngularDirective(Object project, Attr attr);
+
+	/**
+	 * Returns the angular directive parameter from the given attribute and null
+	 * otherwise.
+	 * 
+	 * @param attr
+	 * @return
+	 */
+	DirectiveParameter getAngularDirectiveParameter(Object project, Attr attr);
 
 	/**
 	 * Returns the angular directive from the given element and null otherwise.
@@ -34,5 +43,5 @@ public interface IDirectiveProvider {
 	 * @param element
 	 * @return
 	 */
-	Directive getAngularDirective(Element element);
+	Directive getAngularDirective(Object project, Element element);
 }

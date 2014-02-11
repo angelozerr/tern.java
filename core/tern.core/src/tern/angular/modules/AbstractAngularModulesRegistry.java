@@ -45,18 +45,6 @@ public abstract class AbstractAngularModulesRegistry implements
 			module.collectDirectives(tagName, directiveName, syntax,
 					existingDirectives, restriction, collector);
 		}
-		// collect directives parameters of directive to ignore
-		if (existingDirectives != null) {
-			for (Directive directive : existingDirectives) {
-				Collection<DirectiveParameter> parameters = directive
-						.getParameters();
-				for (DirectiveParameter parameter : parameters) {
-					if (parameter.getName().startsWith(directiveName)) {
-						collector.add(parameter);
-					}
-				}
-			}
-		}
 	}
 
 	public Directive getDirective(String tagName, String name) {

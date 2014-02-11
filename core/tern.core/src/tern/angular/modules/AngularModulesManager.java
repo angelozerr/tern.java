@@ -11,6 +11,7 @@
 package tern.angular.modules;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class AngularModulesManager {
 			String directiveName, IDirectiveSyntax syntax,
 			List<Directive> existingDirectives, Restriction restriction,
 			IDirectiveCollector collector) {
+		// collect directives of each modules.
 		collectDefaultDirectives(tagName, directiveName, syntax,
 				existingDirectives, restriction, collector);
 		if (project != null) {
@@ -52,6 +54,23 @@ public class AngularModulesManager {
 			if (registry != null) {
 				registry.collectDirectives(tagName, directiveName, syntax,
 						existingDirectives, restriction, collector);
+			}
+		}
+		// collect directives parameters of directive to ignore
+		if (existingDirectives != null) {
+			for (Directive directive : existingDirectives) {
+				collectDirectiveParameters(directive, directiveName, collector);
+			}
+		}
+	}
+
+	public void collectDirectiveParameters(Directive directive, String name,
+			IDirectiveParameterCollector collector) {
+		Collection<DirectiveParameter> parameters = directive
+				.getParameters();
+		for (DirectiveParameter parameter : parameters) {
+			if (parameter.getName().startsWith(name)) {
+				collector.add(parameter);
 			}
 		}
 	}
