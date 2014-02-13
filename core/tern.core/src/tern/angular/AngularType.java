@@ -18,7 +18,7 @@ import tern.utils.StringUtils;
  */
 public enum AngularType {
 
-	module, controller, directive, directives, model, repeat_expression, unknown;
+	module, controller, directive, directives, filter, model, repeat_expression, unknown;
 
 	/**
 	 * Returns the angular type from the given value otherwise returns

@@ -63,6 +63,7 @@ public class TernCompletionProposalComputer implements
 						query.setTypes(true);
 						query.setDocs(true);
 						query.setUrls(true);
+						query.setOrigins(true);
 						query.setCaseInsensitive(true);
 						query.setLineCharPositions(true);
 						query.setExpandWordForward(false);
