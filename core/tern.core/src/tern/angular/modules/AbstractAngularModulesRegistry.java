@@ -47,10 +47,11 @@ public abstract class AbstractAngularModulesRegistry implements
 		}
 	}
 
-	public Directive getDirective(String tagName, String name) {
+	public Directive getDirective(String tagName, String name,
+			Restriction restriction) {
 		Collection<Module> modules = getModules();
 		for (Module module : modules) {
-			Directive directive = module.getDirective(tagName, name);
+			Directive directive = module.getDirective(tagName, name, restriction);
 			if (directive != null) {
 				return directive;
 			}

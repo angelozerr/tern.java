@@ -11,7 +11,8 @@ public class AngularModulesManagerGetDirectiveTest {
 
 	@Test
 	public void testNgPluralize() throws Exception {
-		Directive directive = AngularModulesManager.getInstance().getDirective(null, "ngPluralize");
+		Directive directive = AngularModulesManager.getInstance().getDirective(
+				null, "ngPluralize", null);
 		Assert.assertNotNull(directive);
 		Assert.assertTrue(directive.hasParameters());
 		DirectiveParameter parameter = directive.getParameter("count");

@@ -33,7 +33,7 @@ public interface IAngularModulesRegistry {
 	 * @param name
 	 * @return
 	 */
-	Directive getDirective(String tagName, String name);
+	Directive getDirective(String tagName, String name, Restriction restriction);
 
 	/**
 	 * Collect directives with several criteria.

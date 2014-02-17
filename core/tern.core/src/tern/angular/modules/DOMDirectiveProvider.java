@@ -36,7 +36,8 @@ public class DOMDirectiveProvider implements IDirectiveProvider {
 			return null;
 		}
 		return AngularModulesManager.getInstance().getDirective(project,
-				attr.getOwnerElement().getNodeName(), attr.getName());
+				attr.getOwnerElement().getNodeName(), attr.getName(),
+				Restriction.A);
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class DOMDirectiveProvider implements IDirectiveProvider {
 			return null;
 		}
 		return AngularModulesManager.getInstance().getDirective(project, null,
-				element.getTagName());
+				element.getTagName(), Restriction.E);
 	}
 
 	@Override

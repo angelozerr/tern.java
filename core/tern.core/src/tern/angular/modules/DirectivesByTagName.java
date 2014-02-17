@@ -53,12 +53,12 @@ class DirectivesByTagName {
 		}
 	}
 
-	public Directive getDirective(String name) {
+	public Directive getDirective(String name, Restriction restriction) {
 		DirectiveAndSyntax directiveAndSyntax = directivesMap.get(name);
-		if (directiveAndSyntax != null) {
+		if (directiveAndSyntax != null
+				&& directiveAndSyntax.getDirective().isMatch(restriction)) {
 			return directiveAndSyntax.getDirective();
 		}
 		return null;
 	}
-
 }

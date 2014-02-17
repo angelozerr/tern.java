@@ -65,15 +65,16 @@ public class Module {
 		return result;
 	}
 
-	public Directive getDirective(String tagName, String name) {
+	public Directive getDirective(String tagName, String name,
+			Restriction restriction) {
 		DirectivesByTagName result = getDirectivesByTagName(tagName, false);
 		Directive directive = null;
 		if (result != null) {
-			directive = result.getDirective(name);
+			directive = result.getDirective(name, restriction);
 		}
 		if (directive == null) {
 			return getDirectivesByTagName(DirectiveHelper.ANY_TAG, false)
-					.getDirective(name);
+					.getDirective(name, restriction);
 		}
 		return directive;
 	}

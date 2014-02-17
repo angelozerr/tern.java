@@ -66,8 +66,7 @@ public class AngularModulesManager {
 
 	public void collectDirectiveParameters(Directive directive, String name,
 			IDirectiveParameterCollector collector) {
-		Collection<DirectiveParameter> parameters = directive
-				.getParameters();
+		Collection<DirectiveParameter> parameters = directive.getParameters();
 		for (DirectiveParameter parameter : parameters) {
 			if (parameter.getName().startsWith(name)) {
 				collector.add(parameter);
@@ -84,10 +83,11 @@ public class AngularModulesManager {
 		}
 	}
 
-	public Directive getDirective(String tagName, String name) {
+	public Directive getDirective(String tagName, String name,
+			Restriction restriction) {
 		Directive directive = null;
 		for (IAngularModulesRegistry registry : defaultRegistries) {
-			directive = registry.getDirective(tagName, name);
+			directive = registry.getDirective(tagName, name, restriction);
 			if (directive != null) {
 				return directive;
 			}
@@ -106,15 +106,16 @@ public class AngularModulesManager {
 		return null;
 	}
 
-	public Directive getDirective(Object project, String tagName, String name) {
-		Directive directive = getDirective(tagName, name);
+	public Directive getDirective(Object project, String tagName, String name,
+			Restriction restriction) {
+		Directive directive = getDirective(tagName, name, restriction);
 		if (directive != null) {
 			return directive;
 		}
 		if (project != null) {
 			IAngularModulesRegistry registry = customRegistries.get(project);
 			if (registry != null) {
-				return registry.getDirective(tagName, name);
+				return registry.getDirective(tagName, name, restriction);
 			}
 		}
 		return null;
