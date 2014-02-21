@@ -12,9 +12,9 @@ package tern.server;
 
 public enum TernPlugin implements ITernPlugin {
 
-	angular("tern/plugin/angular"), component("tern/plugin/component"), doc_comment(
-			"tern/plugin/doc_comment"), node("tern/plugin/node"), requirejs(
-			"tern/plugin/requirejs");
+	alloyui("tern/plugin/alloyui"), angular("tern/plugin/angular"), component(
+			"tern/plugin/component"), doc_comment("tern/plugin/doc_comment"), node(
+			"tern/plugin/node"), requirejs("tern/plugin/requirejs");
 
 	private final String path;
 
