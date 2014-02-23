@@ -4,6 +4,7 @@
 
 	<directive name="ngView"
 		url="http://docs.angularjs.org/api/ngRoute.directive:ngView" 
+		restrict="ECA"
 		value="none" >
 		<description>
 		<![CDATA[

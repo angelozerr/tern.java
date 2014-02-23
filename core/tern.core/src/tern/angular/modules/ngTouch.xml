@@ -3,7 +3,7 @@
 	<!-- See http://docs.angularjs.org/api/ng -->
 
 	<directive name="ngClick"
-		url="http://docs.angularjs.org/api/ngRoute.directive:ngClick" 
+		url="http://docs.angularjs.org/api/ngTouch.directive:ngClick" 
 		value="required" >
 		<description>
 		<![CDATA[
@@ -15,7 +15,7 @@
 	</directive>
 	
 	<directive name="ngSwipeLeft"
-		url="http://docs.angularjs.org/api/ngRoute.directive:ngSwipeLeft" 
+		url="http://docs.angularjs.org/api/ngTouch.directive:ngSwipeLeft" 
 		value="required" >
 		<description>
 		<![CDATA[
