@@ -185,6 +185,8 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	@Override
 	public void refresh() {
+		if (ternServerTypes == null) // not loaded yet
+			return;
 		for (ITernServerType type : ternServerTypes) {
 			type.dispose();
 		}
