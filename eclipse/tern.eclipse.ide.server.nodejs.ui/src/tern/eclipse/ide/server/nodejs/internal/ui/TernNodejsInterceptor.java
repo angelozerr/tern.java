@@ -1,17 +1,20 @@
 package tern.eclipse.ide.server.nodejs.internal.ui;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
+import tern.TernProject;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.console.LineType;
 import tern.server.LoggingInterceptor;
 import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcess;
+import tern.utils.IOUtils;
 
 public class TernNodejsInterceptor extends LoggingInterceptor implements
 		INodejsProcessListener {
@@ -75,6 +78,16 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 			} catch (IOException e) {
 			}
 			outPrintln("Project dir: " + path);
+			String json = "";
+			try {
+				File ternProject = new File(projectDir,
+						TernProject.TERN_PROJECT);
+				json = IOUtils.toString(new FileInputStream(ternProject));
+			} catch (Throwable e) {
+				errPrintln(e.getMessage());
+			}
+
+			outPrintln(TernProject.TERN_PROJECT + ": " + json);
 		}
 	}
 

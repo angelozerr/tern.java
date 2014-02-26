@@ -28,7 +28,7 @@ import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
  * JSDT completion extension with Tern.
  */
 import tern.eclipse.ide.core.IDETernProject;
-import tern.eclipse.jface.contentassist.TernCompletionProposal;
+import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 import tern.server.ITernServer;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionsQuery;
@@ -75,7 +75,7 @@ public class TernCompletionProposalComputer implements
 							public void addProposal(String name, String type,
 									String origin, Object doc, int pos,
 									Object completion, ITernServer ternServer) {
-								proposals.add(new TernCompletionProposal(name,
+								proposals.add(new JSTernCompletionProposal(name,
 										type, origin, doc, pos, startOffset));
 
 							}

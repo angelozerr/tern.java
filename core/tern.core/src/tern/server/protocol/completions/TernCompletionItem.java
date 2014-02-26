@@ -1,5 +1,8 @@
 package tern.server.protocol.completions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import tern.utils.StringUtils;
 
 public class TernCompletionItem {
@@ -9,16 +12,16 @@ public class TernCompletionItem {
 	private final String origin;
 
 	private final String signature;
-	private final String firstParam;
 	private final boolean function;
 	private boolean array;
 	private String jsType;
+	private List<String> parameters;
 
 	public TernCompletionItem(String name, String type, String origin) {
 		this.name = name;
 		this.type = type;
 		this.origin = origin;
-		StringBuilder firstParam = null;
+		this.parameters = null;
 		StringBuilder currentParam = null;
 		StringBuilder signature = new StringBuilder(name);
 		boolean typeParsing = false;
@@ -53,14 +56,14 @@ public class TernCompletionItem {
 								} else {
 									if (c == ':') {
 										typeParsing = true;
-										if (firstParam == null) {
-											firstParam = new StringBuilder(
-													currentParam);
+										if (parameters == null) {
+											parameters = new ArrayList<String>();
 										} else {
 											signature.append(", ");
 										}
 										signature.append(currentParam
 												.toString());
+										parameters.add(currentParam.toString());
 										currentParam = null;
 									} else {
 										if (c != ' ' && c != '?') {
@@ -95,7 +98,6 @@ public class TernCompletionItem {
 			this.array = false;
 		}
 		this.signature = signature.toString();
-		this.firstParam = firstParam != null ? firstParam.toString() : null;
 	}
 
 	public String getText() {
@@ -115,8 +117,8 @@ public class TernCompletionItem {
 		return text.toString();
 	}
 
-	public String getFirstParam() {
-		return firstParam;
+	public List<String> getParameters() {
+		return parameters;
 	}
 
 	public boolean isFunction() {

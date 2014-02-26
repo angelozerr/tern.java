@@ -68,22 +68,18 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	}
 
 	private int getCursorPosition() {
-		// TODO Auto-generated method stub
 		return fCursorPosition;
 	}
 
-	private int getReplacementLength() {
-		// TODO Auto-generated method stub
+	protected int getReplacementLength() {
 		return fReplacementLength;
 	}
 
-	private int getReplacementOffset() {
-		// TODO Auto-generated method stub
+	protected int getReplacementOffset() {
 		return fReplacementOffset;
 	}
 
-	private String getReplacementString() {
-		// TODO Auto-generated method stub
+	protected String getReplacementString() {
 		return fReplacementString;
 	}
 
@@ -191,7 +187,7 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	public Image getImage() {
 		return this.fImage;
 	}
-	
+
 	public void setImage(Image fImage) {
 		this.fImage = fImage;
 	}
@@ -256,10 +252,7 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	// return proposal.getSelection(document);
 	// }
 
-	/**
-	 * @see org.eclipse.jface.text.contentassist.ICompletionProposalExtension#getTriggerCharacters()
-	 */
-
+	@Override
 	public char[] getTriggerCharacters() {
 		return fTriggers;
 	}

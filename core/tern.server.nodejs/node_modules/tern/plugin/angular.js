@@ -119,7 +119,16 @@
             mod.injector.set(argNodes[0].value + '#controller', result, argNodes[0].angularDoc, argNodes[0], null, 'controller');
           
           fn = args[1].retval.getType();
-        }
+        } else  if (type && type.props && type.props.link && type.props.link.getType()) {
+          var fn = args[1].retval.getType().props.link.getType();
+          var node = fn.originNode;        
+          
+          var result = applyWithInjection(mod, fn, node);
+          if (mod.injector && argNodes[0].type == "Literal")
+            mod.injector.set(argNodes[0].value + '#link', result, argNodes[0].angularDoc, argNodes[0], null, 'controller');
+          
+          fn = args[1].retval.getType();
+        } 
       }
       
       if (!mod.directives) mod.directives = {};

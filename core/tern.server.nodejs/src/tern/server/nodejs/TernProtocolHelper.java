@@ -36,7 +36,7 @@ public class TernProtocolHelper {
 		String methodName = query != null ? query.getLabel() : "";
 		long starTime = 0;
 		if (interceptors != null) {
-			starTime = System.currentTimeMillis();
+			starTime = System.nanoTime();
 			for (IInterceptor interceptor : interceptors) {
 				interceptor.handleRequest(doc, server, methodName);
 			}
@@ -67,8 +67,8 @@ public class TernProtocolHelper {
 				if (interceptors != null) {
 					for (IInterceptor interceptor : interceptors) {
 						interceptor.handleResponse(response, server,
-								methodName, System.currentTimeMillis()
-										- starTime);
+								methodName,
+								((System.nanoTime() - starTime) / 1000000L));
 					}
 				}
 				// Update file manager if needed.
@@ -84,7 +84,7 @@ public class TernProtocolHelper {
 			if (interceptors != null) {
 				for (IInterceptor interceptor : interceptors) {
 					interceptor.handleError(e, server, methodName,
-							System.currentTimeMillis() - starTime);
+							((System.nanoTime() - starTime) / 1000000L));
 				}
 			}
 			if (e instanceof IOException) {
