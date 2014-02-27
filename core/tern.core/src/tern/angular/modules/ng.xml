@@ -614,15 +614,41 @@ Additionally it prevents the default action (which for form means sending the re
 
 	<directive name="ngSwitch"
 		url="http://docs.angularjs.org/api/ng.directive:ngSwitch"
-		value="required" >
+		value="required" 
+		restrict="EA" >
 		<description>
 		<![CDATA[
 			The ngSwitch directive is used to conditionally swap DOM structure on your template based on a scope expression. 
 			Elements within ngSwitch but without ngSwitchWhen or ngSwitchDefault directives will be preserved at the location as specified in the template.
 			]]>
 		</description>
+		<parameters>
+		    <parameter name="on" types="*" optional="true" >expression to match against ng-switch-when..</parameter>
+		</parameters>				
 	</directive>
 
+	<directive name="ngSwitchWhen"
+		url="http://docs.angularjs.org/api/ng.directive:ngSwitch"
+		value="required" >
+		<description>
+		<![CDATA[
+			The ngSwitch directive is used to conditionally swap DOM structure on your template based on a scope expression. 
+			Elements within ngSwitch but without ngSwitchWhen or ngSwitchDefault directives will be preserved at the location as specified in the template.
+			]]>
+		</description>			
+	</directive>
+
+	<directive name="ngSwitchDefault"
+		url="http://docs.angularjs.org/api/ng.directive:ngSwitch"
+		value="none" >
+		<description>
+		<![CDATA[
+			The ngSwitch directive is used to conditionally swap DOM structure on your template based on a scope expression. 
+			Elements within ngSwitch but without ngSwitchWhen or ngSwitchDefault directives will be preserved at the location as specified in the template.
+			]]>
+		</description>			
+	</directive>
+		
 	<directive name="ngTransclude"
 		url="http://docs.angularjs.org/api/ng.directive:ngTransclude"
 		value="none"
