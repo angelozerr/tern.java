@@ -47,6 +47,7 @@ import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.TernServerAdapter;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.TernFile;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
@@ -57,6 +58,8 @@ import tern.server.protocol.type.ITernTypeCollector;
  * 
  */
 public class IDETernProject extends TernProject<IFile> {
+
+	private static final int MAX_FILES = 20;
 
 	private static final String PATH_JSON_FIELD = "path";
 
@@ -558,25 +561,46 @@ public class IDETernProject extends TernProject<IFile> {
 
 	private void synchFiles(TernDoc doc) {
 		if (doc.hasFiles()) {
-			ITernServer server = getTernServer();
-			server.request(doc, new IResponseHandler() {
-
-				@Override
-				public void onSuccess(Object data, String dataAsJsonString) {
+			JSONArray files = doc.getFiles();
+			if (files.size() > MAX_FILES) {
+				// max files size reached => send files grouped by MAX_FILES
+				TernDoc newDoc = new TernDoc();
+				for (int i = 0; i < files.size(); i++) {
+					newDoc.addFile((TernFile) files.get(i));
+					if (i > 0 && (i % MAX_FILES) == 0) {
+						request(newDoc);
+						newDoc.cleanFiles();
+					}
 				}
-
-				@Override
-				public void onError(String error) {
-					Trace.trace(Trace.SEVERE, error);
+				if (newDoc.hasFiles()) {
+					request(newDoc);
 				}
-
-				@Override
-				public boolean isDataAsJsonString() {
-					return false;
-				}
-			});
+			} else {
+				// no max files size reached => send all files.
+				request(doc);
+			}
 			doc.cleanFiles();
 		}
+	}
+
+	public void request(TernDoc doc) {
+		ITernServer server = getTernServer();
+		server.request(doc, new IResponseHandler() {
+
+			@Override
+			public void onSuccess(Object data, String dataAsJsonString) {
+			}
+
+			@Override
+			public void onError(String error) {
+				Trace.trace(Trace.SEVERE, error);
+			}
+
+			@Override
+			public boolean isDataAsJsonString() {
+				return false;
+			}
+		});
 	}
 
 	private void synchFiles(List names, Node domNode, IFile domFile, TernDoc doc)
