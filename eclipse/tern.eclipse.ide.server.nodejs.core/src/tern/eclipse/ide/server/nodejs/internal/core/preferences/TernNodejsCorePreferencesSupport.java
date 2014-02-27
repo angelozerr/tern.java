@@ -2,13 +2,11 @@ package tern.eclipse.ide.server.nodejs.internal.core.preferences;
 
 import org.eclipse.core.runtime.Preferences;
 
-import tern.eclipse.ide.core.ITernServerType;
-import tern.eclipse.ide.core.TernCoreConstants;
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
+import tern.server.nodejs.NodejsTernHelper;
 
 public class TernNodejsCorePreferencesSupport {
 
@@ -36,6 +34,16 @@ public class TernNodejsCorePreferencesSupport {
 				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_INSTALL);
 		return TernNodejsCorePlugin.getNodejsInstallManager()
 				.findNodejsInstall(id);
+	}
+
+	public long getNodejsTimeout() {
+		String timeout = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TIMEOUT);
+		try {
+			return Long.parseLong(timeout);
+		} catch (Throwable e) {
+			return NodejsTernHelper.DEFAULT_TIMEOUT;
+		}
 	}
 
 }

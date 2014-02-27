@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.nodejs;
 
 import java.io.IOException;
@@ -20,14 +30,51 @@ import org.json.simple.parser.ParseException;
 
 import tern.TernException;
 import tern.TernFileManager;
+import tern.TernProject;
 import tern.server.IInterceptor;
 import tern.server.ITernServer;
+import tern.server.nodejs.process.NodejsProcess;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
 import tern.utils.IOUtils;
 import tern.utils.StringUtils;
 
-public class TernProtocolHelper {
+/**
+ * Nodejs Tern helper.
+ * 
+ */
+public class NodejsTernHelper {
+
+	private static final String NODE_TIMEOUT = "node_timeout";
+	public static final long DEFAULT_TIMEOUT = 1000;
+
+	/**
+	 * Returns the timeout to use when node.js starts to retrieve the node.js
+	 * port in {@link NodejsProcess#start(long)} from the given project.
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public static long getTimeout(TernProject project) {
+		Long timeout = (Long) project.get(NODE_TIMEOUT);
+		if (timeout != null) {
+			return timeout;
+		}
+		return DEFAULT_TIMEOUT;
+	}
+
+	/**
+	 * Set the timeout to use when node.js starts to retrieve the node.js port
+	 * in {@link NodejsProcess#start(long)}
+	 * 
+	 * @param project
+	 *            tern project.
+	 * @param timeout
+	 *            to use when node.js starts.
+	 */
+	public static void setTimeout(TernProject project, long timeout) {
+		project.put(NODE_TIMEOUT, timeout);
+	}
 
 	public static JSONObject makeRequest(String baseURL, TernDoc doc,
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)

@@ -27,6 +27,7 @@ public final class TernNodejsUIMessages extends NLS {
 
 	// Preferences
 	public static String TernNodejsPreferencesPage_desc;
+	public static String TernNodejsPreferencesPage_nodeJSTimeout;
 	public static String TernNodejsPreferencesPage_nodeJSInstall;
 
 	private TernNodejsUIMessages() {

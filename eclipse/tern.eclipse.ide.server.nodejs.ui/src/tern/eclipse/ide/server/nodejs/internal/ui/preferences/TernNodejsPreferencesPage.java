@@ -15,6 +15,7 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -43,6 +44,10 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	@Override
 	protected void createFieldEditors() {
 
+		IntegerFieldEditor timeoutField = new IntegerFieldEditor(TernNodejsCoreConstants.NODEJS_TIMEOUT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTimeout, getFieldEditorParent());
+		addField(timeoutField);
+		
 		// Tern Server type combo
 		INodejsInstall[] installs = TernNodejsCorePlugin
 				.getNodejsInstallManager().getNodejsInstalls();

@@ -7,6 +7,7 @@ import tern.eclipse.ide.core.ITernServerFactory;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.internal.core.preferences.TernNodejsCorePreferencesSupport;
 import tern.server.ITernServer;
+import tern.server.nodejs.NodejsTernHelper;
 import tern.server.nodejs.NodejsTernServer;
 
 public class TernNodejsServerFactory implements ITernServerFactory {
@@ -14,6 +15,7 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 	@Override
 	public ITernServer create(TernProject project) throws Exception {
 		File installPath = getInstallPath();
+		NodejsTernHelper.setTimeout(project, getTimeout());
 		NodejsTernServer server = new NodejsTernServer(project, installPath);
 		return server;
 	}
@@ -25,6 +27,11 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 			return install.getPath();
 		}
 		return null;
+	}
+
+	private long getTimeout() {
+		return TernNodejsCorePreferencesSupport.getInstance()
+				.getNodejsTimeout();
 	}
 
 }

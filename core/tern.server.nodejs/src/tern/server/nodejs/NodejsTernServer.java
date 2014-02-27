@@ -39,8 +39,6 @@ import tern.server.protocol.type.ITernTypeCollector;
  */
 public class NodejsTernServer extends AbstractTernServer {
 
-	private static final long DEFAULT_TIMEOUT = 1000;
-
 	private String baseURL;
 
 	private List<IInterceptor> interceptors;
@@ -48,7 +46,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	private NodejsProcess process;
 	private List<INodejsProcessListener> listeners;
 
-	private long timeout = DEFAULT_TIMEOUT;
+	private long timeout = NodejsTernHelper.DEFAULT_TIMEOUT;
 
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
@@ -93,16 +91,8 @@ public class NodejsTernServer extends AbstractTernServer {
 	public NodejsTernServer(TernProject project, NodejsProcess process) {
 		super(project);
 		this.process = process;
+		this.timeout = NodejsTernHelper.getTimeout(project);
 		process.addProcessListener(listener);
-		this.timeout = getTimeout(project);
-	}
-
-	private long getTimeout(TernProject project) {
-		Long timeout = (Long) project.get("node_timeout");
-		if (timeout != null) {
-			return timeout;
-		}
-		return DEFAULT_TIMEOUT;
 	}
 
 	private String computeBaseURL(Integer port) {
@@ -158,7 +148,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private JSONObject makeRequest(TernDoc doc) throws IOException,
 			InterruptedException, TernException {
-		JSONObject json = TernProtocolHelper.makeRequest(getBaseURL(), doc,
+		JSONObject json = NodejsTernHelper.makeRequest(getBaseURL(), doc,
 				false, interceptors, this);
 		return json;
 	}
