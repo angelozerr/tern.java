@@ -149,7 +149,7 @@ public class NodejsTernHelper {
 	private static HttpPost createHttpPost(String baseURL, JSONObject doc)
 			throws UnsupportedEncodingException {
 		HttpPost httpPost = new HttpPost(baseURL);
-		httpPost.setEntity(new StringEntity(doc.toJSONString(), null));
+		httpPost.setEntity(new StringEntity(doc.toJSONString()));
 		return httpPost;
 	}
 
