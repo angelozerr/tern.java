@@ -222,20 +222,26 @@ public class NodejsProcess {
 	 * @return
 	 * @throws IOException
 	 */
-	protected List<String> createCommands() throws IOException {
+	protected List<String> createCommands() {
 		List<String> commands = new LinkedList<String>();
 		if (nodejsBaseDir == null) {
 			// for osx, path of node.js should be setted?
-			File binPath = new File("/usr/local/bin");
-			if (binPath.exists()) {
+			if (new File("/usr/local/bin/node").exists()) {
 				commands.add("/usr/local/bin/node");
+			}
+			if (new File("/opt/local/bin/node").exists()) {
+				commands.add("/opt/local/bin/node");
 			} else {
 				commands.add("node");
 			}
 		} else {
-			commands.add(new File(nodejsBaseDir.getPath(), "node").getPath());
+			commands.add(nodejsBaseDir.getPath());
 		}
-		commands.add(nodejsTernFile.getCanonicalPath());
+		try {
+			commands.add(nodejsTernFile.getCanonicalPath());
+		} catch (IOException e) {
+			commands.add(nodejsTernFile.getPath());
+		}
 		Integer port = getPort();
 		if (port != null) {
 			commands.add("--port");
@@ -257,24 +263,36 @@ public class NodejsProcess {
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public void start() throws IOException, InterruptedException {
+	public void start() throws NodejsProcessException {
 		if (isStarted()) {
-			throw new IOException("Nodejs tern Server is already started.");
+			notifyErrorProcess("Nodejs tern Server is already started.");
+			throw new NodejsProcessException(
+					"Nodejs tern Server is already started.");
 		}
-		List<String> commands = createCommands();
-		ProcessBuilder builder = new ProcessBuilder(commands);
-		// builder.redirectErrorStream(true);
-		builder.directory(getProjectDir());
-		notifyCreateProcess(commands, projectDir);
-		this.process = builder.start();
 
-		outThread = new Thread(new StdOut());
-		outThread.setDaemon(true);
-		outThread.start();
+		try {
+			List<String> commands = createCommands();
+			ProcessBuilder builder = new ProcessBuilder(commands);
+			// builder.redirectErrorStream(true);
+			builder.directory(getProjectDir());
+			notifyCreateProcess(commands, projectDir);
 
-		errThread = new Thread(new StdErr());
-		errThread.setDaemon(true);
-		errThread.start();
+			this.process = builder.start();
+
+			outThread = new Thread(new StdOut());
+			outThread.setDaemon(true);
+			outThread.start();
+
+			errThread = new Thread(new StdErr());
+			errThread.setDaemon(true);
+			errThread.start();
+
+		} catch (Throwable e) {			
+			notifyErrorProcess(e.getMessage());
+			notifyErrorProcess("");
+			throw new NodejsProcessException(e);
+		}
+
 	}
 
 	/**
@@ -288,8 +306,8 @@ public class NodejsProcess {
 	 * @throws IOException
 	 * @throws TernException
 	 */
-	public int start(long timeout) throws InterruptedException, IOException,
-			TernException {
+	public int start(long timeout) throws NodejsProcessException,
+			InterruptedException {
 		if (!isStarted()) {
 			start();
 		}
@@ -297,7 +315,7 @@ public class NodejsProcess {
 			lock.wait(timeout);
 		}
 		if (port == null) {
-			throw new TernException("Cannot start node process.");
+			throw new NodejsProcessException("Cannot start node process.");
 		}
 		return getPort();
 	}

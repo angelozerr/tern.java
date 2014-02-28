@@ -21,13 +21,11 @@ import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
-import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.ITernServerTypeManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
-import tern.server.ITernServer;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 

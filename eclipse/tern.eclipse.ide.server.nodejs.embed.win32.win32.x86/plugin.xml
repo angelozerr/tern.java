@@ -17,7 +17,7 @@
 	<extension point="tern.eclipse.ide.server.nodejs.core.nodeJSInstalls" >
 		<install id="node-v0.10.22-win32-x86"
 				 name="%nodeJSInstall_v0.10.22.name"
-				 path="/nodejs/node-v0.10.22-win32-x86" />
+				 path="/nodejs/node-v0.10.22-win32-x86/node.exe" />
 	 </extension>
 	  
 </plugin>        

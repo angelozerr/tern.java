@@ -13,6 +13,7 @@ package tern.eclipse.ide.server.nodejs.internal.core.preferences;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
+import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.core.NodejsInstall;
@@ -31,6 +32,8 @@ public class TernNodejsCorePreferenceConstants {
 		// By default native node.js install is used.
 		node.put(TernNodejsCoreConstants.NODEJS_INSTALL,
 				NodejsInstall.NODE_NATIVE);
+		node.put(TernNodejsCoreConstants.NODEJS_PATH,
+				IDENodejsProcessHelper.getNodejsPath());
 		// timeout to start node.js
 		node.putLong(TernNodejsCoreConstants.NODEJS_TIMEOUT, 1000L);
 	}
@@ -38,4 +41,5 @@ public class TernNodejsCorePreferenceConstants {
 	// Don't instantiate
 	private TernNodejsCorePreferenceConstants() {
 	}
+
 }

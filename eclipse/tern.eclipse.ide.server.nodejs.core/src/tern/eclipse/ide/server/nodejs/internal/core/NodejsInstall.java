@@ -55,6 +55,7 @@ public class NodejsInstall implements INodejsInstall {
 
 	}
 
+	@Override
 	public boolean isNative() {
 		return NODE_NATIVE.equals(getId());
 	}

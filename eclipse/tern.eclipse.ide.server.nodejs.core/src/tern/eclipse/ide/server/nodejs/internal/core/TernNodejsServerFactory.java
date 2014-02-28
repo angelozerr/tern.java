@@ -21,12 +21,7 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 	}
 
 	private File getInstallPath() {
-		INodejsInstall install = TernNodejsCorePreferencesSupport.getInstance()
-				.getNodejsInstall();
-		if (install != null) {
-			return install.getPath();
-		}
-		return null;
+		return TernNodejsCorePreferencesSupport.getInstance().getInstallPath();		
 	}
 
 	private long getTimeout() {

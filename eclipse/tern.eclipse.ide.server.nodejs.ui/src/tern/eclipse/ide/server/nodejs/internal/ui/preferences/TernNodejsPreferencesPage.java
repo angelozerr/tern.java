@@ -10,6 +10,8 @@
  *******************************************************************************/
 package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.ComboFieldEditor;
@@ -21,11 +23,13 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.ui.ImageResource;
+import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
+import tern.eclipse.ide.ui.ImageResource;
+import tern.utils.StringUtils;
 
 /**
  * Tern Node.js preferences page.
@@ -33,6 +37,8 @@ import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
  */
 public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
+
+	private FileComboFieldEditor nodeFileField;
 
 	public TernNodejsPreferencesPage() {
 		super(GRID);
@@ -44,10 +50,13 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	@Override
 	protected void createFieldEditors() {
 
-		IntegerFieldEditor timeoutField = new IntegerFieldEditor(TernNodejsCoreConstants.NODEJS_TIMEOUT,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTimeout, getFieldEditorParent());
+		// Start timeout field
+		IntegerFieldEditor timeoutField = new IntegerFieldEditor(
+				TernNodejsCoreConstants.NODEJS_TIMEOUT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTimeout,
+				getFieldEditorParent());
 		addField(timeoutField);
-		
+
 		// Tern Server type combo
 		INodejsInstall[] installs = TernNodejsCorePlugin
 				.getNodejsInstallManager().getNodejsInstalls();
@@ -60,11 +69,48 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			data[i + 1][1] = installs[i].getId();
 		}
 
-		ComboFieldEditor ternServerEditor = new ComboFieldEditor(
+		ComboFieldEditor nodeJSInstallField = new ComboFieldEditor(
 				TernNodejsCoreConstants.NODEJS_INSTALL,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall,
-				data, getFieldEditorParent());
-		addField(ternServerEditor);
+				data, getFieldEditorParent()) {
+			@Override
+			protected void fireValueChanged(String property, Object oldValue,
+					Object newValue) {
+				INodejsInstall install = TernNodejsCorePlugin
+						.getNodejsInstallManager().findNodejsInstall(
+								newValue.toString());
+				if (install.isNative()) {
+					nodeFileField.setEnabled(true, getFieldEditorParent());
+					nodeFileField.setStringValue(IDENodejsProcessHelper
+							.getNodejsPath());
+				} else {
+					nodeFileField.setEnabled(false, getFieldEditorParent());
+					nodeFileField.setStringValue(install.getPath()
+							.getAbsolutePath());
+				}
+				super.fireValueChanged(property, oldValue, newValue);
+			}
+		};
+		addField(nodeJSInstallField);
+
+		// Node.js path
+		String[] defaultPaths = IDENodejsProcessHelper.getDefaultNodejsPaths();
+		nodeFileField = new FileComboFieldEditor(
+				TernNodejsCoreConstants.NODEJS_PATH,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPath,
+				defaultPaths, getFieldEditorParent());
+		addField(nodeFileField);
+
+		// Update enable/disable of the nodejs path field.
+		INodejsInstall install = null;
+		String installId = super.getPreferenceStore().getString(
+				TernNodejsCoreConstants.NODEJS_INSTALL);
+		if (!StringUtils.isEmpty(installId)) {
+			install = TernNodejsCorePlugin.getNodejsInstallManager()
+					.findNodejsInstall(installId);
+		}
+		nodeFileField.setEnabled(install != null && install.isNative(),
+				getFieldEditorParent());
 	}
 
 	@Override
@@ -86,5 +132,4 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		}
 		return result;
 	}
-
 }

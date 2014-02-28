@@ -1,5 +1,7 @@
 package tern.eclipse.ide.server.nodejs.internal.core.preferences;
 
+import java.io.File;
+
 import org.eclipse.core.runtime.Preferences;
 
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
@@ -7,6 +9,8 @@ import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.server.nodejs.NodejsTernHelper;
+import tern.server.nodejs.process.NodejsProcessHelper;
+import tern.utils.StringUtils;
 
 public class TernNodejsCorePreferencesSupport {
 
@@ -44,6 +48,23 @@ public class TernNodejsCorePreferencesSupport {
 		} catch (Throwable e) {
 			return NodejsTernHelper.DEFAULT_TIMEOUT;
 		}
+	}
+
+	public File getInstallPath() {
+		INodejsInstall install = TernNodejsCorePreferencesSupport.getInstance()
+				.getNodejsInstall();
+		if (install != null) {
+			if (install.isNative()) {
+				String path = preferencesSupport
+						.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_PATH);
+				if (!StringUtils.isEmpty(path)) {
+					return new File(path);
+				}
+			} else {
+				return install.getPath();
+			}
+		}
+		return new File("node");
 	}
 
 }

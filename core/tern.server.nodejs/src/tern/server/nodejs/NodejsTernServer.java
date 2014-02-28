@@ -27,6 +27,7 @@ import tern.server.ITernPlugin;
 import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessAdapter;
+import tern.server.nodejs.process.NodejsProcessException;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
@@ -148,8 +149,17 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private JSONObject makeRequest(TernDoc doc) throws IOException,
 			InterruptedException, TernException {
-		JSONObject json = NodejsTernHelper.makeRequest(getBaseURL(), doc,
-				false, interceptors, this);
+		String baseURL = null;
+		try {
+			baseURL = getBaseURL();
+		} catch (NodejsProcessException e) {
+			// the nodejs process cannot start => not a valid node path, dispose the server.
+			dispose();
+			throw e;
+		}
+
+		JSONObject json = NodejsTernHelper.makeRequest(baseURL, doc, false,
+				interceptors, this);
 		return json;
 	}
 
@@ -166,8 +176,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 	}
 
-	public String getBaseURL() throws InterruptedException, IOException,
-			TernException {
+	public String getBaseURL() throws InterruptedException, TernException {
 		if (baseURL == null) {
 			int port = getProcess().start(timeout);
 			this.baseURL = computeBaseURL(port);

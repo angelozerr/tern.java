@@ -44,4 +44,11 @@ public interface INodejsInstall {
 	 */
 	File getPath();
 
+	/**
+	 * Returns true if the node install is native and false otherwise (embed).
+	 * 
+	 * @return
+	 */
+	boolean isNative();
+
 }
