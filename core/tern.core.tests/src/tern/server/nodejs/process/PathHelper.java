@@ -32,12 +32,12 @@ public class PathHelper {
 		//no "bin" subfolder for windows...
 		if("win32".equals(os)){
 			 file= new File(
-						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch);
+						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch + "/node");
 					
 		} else {
 			 //Linux, mac...
 			 file= new File(
-						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch+"/bin");
+						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/nodejs/node-v0.10.22-"+os+"-"+arch+"/bin/node");
 		}
 		
 		System.out.println("file path "+file.getAbsolutePath());
