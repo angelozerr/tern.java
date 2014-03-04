@@ -16,16 +16,17 @@ public class TernCompletionItem {
 	private boolean array;
 	private String jsType;
 	private List<Parameter> parameters;
+	private String[] allTypes;
 
 	public TernCompletionItem(String name, String type, String origin) {
 		this.name = name;
 		this.type = type;
 		this.origin = origin;
 		this.parameters = null;
-		StringBuilder currentParam = null;
+		StringBuilder currentParamName = null;
 		boolean currentParamRequired = true;
+		StringBuilder currentParamType = null;
 		StringBuilder signature = new StringBuilder(name);
-		boolean typeParsing = false;
 		this.jsType = type;
 		if (!StringUtils.isEmpty(type)) {
 			this.function = type.startsWith("fn(");
@@ -39,38 +40,51 @@ public class TernCompletionItem {
 					switch (c) {
 					case '(':
 						bracket++;
+						if (currentParamType != null)
+							currentParamType.append(c);
 						break;
 					case ')':
 						bracket--;
+						if (bracket >= 1 && currentParamType != null)
+							currentParamType.append(c);
 						break;
 					default:
-						if (bracket == 1) {
-							if (typeParsing) {
-								if (c == ',')
-									typeParsing = false;
+						if (bracket >= 1) {
+							if (currentParamType != null) {
+								if (c == ',') {
+									parameters
+											.add(new Parameter(
+													currentParamName.toString(),
+													currentParamRequired,
+													currentParamType != null ? currentParamType
+															.toString() : null));
+									currentParamName = null;
+									currentParamRequired = true;
+									currentParamType = null;
+								} else if (c != ' ') {
+									currentParamType.append(c);
+								}
 							} else {
-								if (currentParam == null) {
+								if (currentParamName == null) {
 									if (c != ' ' && c != '?') {
-										currentParam = new StringBuilder();
-										currentParam.append(c);
+										currentParamName = new StringBuilder();
+										currentParamName.append(c);
 									}
 								} else {
 									if (c == ':') {
-										typeParsing = true;
 										if (parameters == null) {
 											parameters = new ArrayList<Parameter>();
 										} else {
 											signature.append(", ");
 										}
-										signature.append(currentParam
+										signature.append(currentParamName
 												.toString());
-										parameters.add(new Parameter(
-												currentParam.toString(),
-												currentParamRequired));
-										currentParam = null;
+										currentParamType = new StringBuilder();
 									} else {
-										if (c != ' ' && c != '?') {
-											currentParam.append(c);
+										if (c == '?') {
+											currentParamRequired = false;
+										} else if (c != ' ') {
+											currentParamName.append(c);
 										}
 									}
 								}
@@ -100,7 +114,70 @@ public class TernCompletionItem {
 			this.function = false;
 			this.array = false;
 		}
+
+		if (currentParamName != null) {
+			parameters.add(new Parameter(currentParamName.toString(),
+					currentParamRequired,
+					currentParamType != null ? currentParamType.toString()
+							: null));
+			currentParamName = null;
+			currentParamRequired = true;
+			currentParamType = null;
+		}
+
 		this.signature = signature.toString();
+	}
+
+	public String[] getAllTypes() {
+		if (allTypes == null) {
+			if (parameters == null) {
+				allTypes = StringUtils.EMPTY_ARRAY;
+			} else {
+				List<Parameter> optionalParameters = null;
+				for (Parameter parameter : parameters) {
+					if (!parameter.isRequired()) {
+						if (optionalParameters == null) {
+							optionalParameters = new ArrayList<Parameter>();
+						}
+						optionalParameters.add(parameter);
+					}
+				}
+
+				if (optionalParameters == null) {
+					allTypes = StringUtils.EMPTY_ARRAY;
+				} else {
+					List<String> types = new ArrayList<String>();
+					StringBuilder newType = null;
+					for (Parameter optional : optionalParameters) {
+						newType = new StringBuilder("fn(");
+						for (Parameter parameter : parameters) {
+							if (parameter.isRequired()
+									|| optional.equals(parameter)) {
+								if (newType.length() > 3) {
+									newType.append(", ");
+								}
+								newType.append(parameter.getName());
+								if (!parameter.isRequired()) {
+									newType.append("?");
+								}
+								if (parameter.getType() != null) {
+									newType.append(": ");
+									newType.append(parameter.getType());
+								}
+							}
+						}
+						newType.append(")");
+						if (jsType != null) {
+							newType.append(" -> ");
+							newType.append(jsType);
+						}
+						types.add(newType.toString());
+					}
+					allTypes = types.toArray(StringUtils.EMPTY_ARRAY);
+				}
+			}
+		}
+		return allTypes;
 	}
 
 	public String getText() {
@@ -151,4 +228,5 @@ public class TernCompletionItem {
 	public String getJsType() {
 		return jsType;
 	}
+
 }

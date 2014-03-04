@@ -20,6 +20,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.wst.jsdt.internal.ui.wizards.NewJSWizard;
 import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
 import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
@@ -29,6 +30,7 @@ import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
  */
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.jsdt.internal.Trace;
+import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 import tern.server.ITernServer;
 import tern.server.protocol.completions.ITernCompletionCollector;
@@ -74,21 +76,10 @@ public class TernCompletionProposalComputer implements
 						query.setLineCharPositions(true);
 						query.setExpandWordForward(false);
 
-						final int startOffset = context.getInvocationOffset();
-						ITernCompletionCollector collector = new ITernCompletionCollector() {
-
-							@Override
-							public void addProposal(String name, String type,
-									String origin, Object doc, int pos,
-									Object completion, ITernServer ternServer) {
-								proposals.add(new JSTernCompletionProposal(
-										name, type, origin, doc, pos,
-										startOffset));
-
-							}
-						};
+						int startOffset = context.getInvocationOffset();
 						ternProject.request(query, scriptFile, document,
-								startOffset, collector);
+								startOffset, new JSTernCompletionCollector(
+										proposals, startOffset));
 						return proposals;
 
 					} catch (Exception e) {

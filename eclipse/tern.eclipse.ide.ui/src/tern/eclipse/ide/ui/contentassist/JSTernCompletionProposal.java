@@ -147,7 +147,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		int count = parameters.size();
 		fArgumentOffsets = new int[count];
 		fArgumentLengths = new int[count];
-		StringBuffer buffer = new StringBuffer(String.valueOf(super.getName()));
+		StringBuilder buffer = new StringBuilder(
+				String.valueOf(super.getName()));
 		buffer.append("(");
 		setCursorPosition(buffer.length());
 
@@ -175,8 +176,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		 * 
 		 * char[][] parameterNames = fProposal.findParameterNames(null); int
 		 * count = parameterNames.length; fArgumentOffsets = new int[count];
-		 * fArgumentLengths = new int[count]; StringBuffer buffer = new
-		 * StringBuffer(String.valueOf(fProposal .getName()));
+		 * fArgumentLengths = new int[count]; StringBuilder buffer = new
+		 * StringBuilder(String.valueOf(fProposal .getName()));
 		 * 
 		 * FormatterPrefs prefs = getFormatterPrefs(); if
 		 * (prefs.beforeOpeningParen) buffer.append(SPACE);
@@ -201,5 +202,25 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		 * return buffer.toString();
 		 */
 		return buffer.toString();
+	}
+
+	@Override
+	public String getAdditionalProposalInfo() {
+		String doc = super.getAdditionalProposalInfo();
+		StringBuilder info = new StringBuilder(doc != null ? doc : "");
+		List<Parameter> parameters = getParameters();
+		if (parameters != null) {
+			if (info.length() > 0) {
+				info.append("<br/>");
+			}
+			info.append("<b>Parameters</b>");
+			for (Parameter parameter : parameters) {
+				info.append("<br/>");
+				info.append(parameter.getName());
+				info.append(": ");
+				info.append(parameter.getType());
+			}
+		}
+		return info.toString();
 	}
 }

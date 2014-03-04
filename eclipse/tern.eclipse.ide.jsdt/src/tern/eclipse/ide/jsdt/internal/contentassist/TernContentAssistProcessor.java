@@ -27,6 +27,7 @@ import org.eclipse.wst.xml.ui.internal.contentassist.AbstractContentAssistProces
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.jsdt.internal.Trace;
 import tern.eclipse.ide.jsdt.internal.utils.DOMUtils;
+import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 import tern.server.ITernServer;
 import tern.server.protocol.completions.ITernCompletionCollector;
@@ -73,21 +74,10 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 						query.setLineCharPositions(true);
 						query.setExpandWordForward(false);
 
-						final int startOffset = context.getInvocationOffset();
-						ITernCompletionCollector collector = new ITernCompletionCollector() {
-
-							@Override
-							public void addProposal(String name, String type,
-									String origin, Object doc, int pos,
-									Object completion, ITernServer ternServer) {
-								proposals.add(new JSTernCompletionProposal(
-										name, type, origin, doc, pos,
-										startOffset));
-
-							}
-						};
+						int startOffset = context.getInvocationOffset();
 						ternProject.request(query, scriptFile, document,
-								startOffset, collector);
+								startOffset, new JSTernCompletionCollector(
+										proposals, startOffset));
 						return proposals;
 
 					} catch (Exception e) {
