@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
+import tern.server.protocol.completions.Parameter;
 
 public class JSTernCompletionProposal extends TernCompletionProposal {
 
@@ -34,7 +35,6 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		super(name, type, origin, doc, pos, startOffset);
 	}
 
-	
 	public void apply(ITextViewer viewer, char trigger, int stateMask,
 			int offset) {
 
@@ -44,20 +44,19 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 		// don't eat if not in preferences, XOR with modifier key 1 (Ctrl)
 		// but: if there is a selection, replace it!
-		Point selection= viewer.getSelectedRange();
-		fToggleEating= (stateMask & SWT.MOD1) != 0;
-		int newLength= selection.x + selection.y - getReplacementOffset();
+		Point selection = viewer.getSelectedRange();
+		fToggleEating = (stateMask & SWT.MOD1) != 0;
+		int newLength = selection.x + selection.y - getReplacementOffset();
 		if ((insertCompletion() ^ fToggleEating) && newLength >= 0)
 			setReplacementLength(newLength);
 
 		apply(document, trigger, offset);
-		fToggleEating= false;
+		fToggleEating = false;
 	}
 
 	private boolean insertCompletion() {
 		return true;
 	}
-
 
 	@Override
 	public void apply(IDocument document, char trigger, int offset) {
@@ -140,7 +139,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	protected String computeReplacementString() {
 
-		List<String> parameters = super.getParameters();
+		List<Parameter> parameters = super.getParameters();
 		if (parameters == null) {
 			return super.getReplacementString();
 		}
@@ -152,6 +151,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		buffer.append("(");
 		setCursorPosition(buffer.length());
 
+		String paramName = null;
 		for (int i = 0; i != count; i++) {
 			if (i != 0) {
 				// if (prefs.beforeComma)
@@ -161,13 +161,14 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				// buffer.append(SPACE);
 			}
 
+			paramName = parameters.get(i).getName();
 			fArgumentOffsets[i] = buffer.length();
-			buffer.append(parameters.get(i));
-			fArgumentLengths[i] = parameters.get(i).length();
+			buffer.append(paramName);
+			fArgumentLengths[i] = paramName.length();
 		}
 
 		buffer.append(")");
-		
+
 		/*
 		 * if (!hasParameters() || !hasArgumentList()) return
 		 * super.computeReplacementString();

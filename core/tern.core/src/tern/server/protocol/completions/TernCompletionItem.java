@@ -15,7 +15,7 @@ public class TernCompletionItem {
 	private final boolean function;
 	private boolean array;
 	private String jsType;
-	private List<String> parameters;
+	private List<Parameter> parameters;
 
 	public TernCompletionItem(String name, String type, String origin) {
 		this.name = name;
@@ -23,6 +23,7 @@ public class TernCompletionItem {
 		this.origin = origin;
 		this.parameters = null;
 		StringBuilder currentParam = null;
+		boolean currentParamRequired = true;
 		StringBuilder signature = new StringBuilder(name);
 		boolean typeParsing = false;
 		this.jsType = type;
@@ -57,13 +58,15 @@ public class TernCompletionItem {
 									if (c == ':') {
 										typeParsing = true;
 										if (parameters == null) {
-											parameters = new ArrayList<String>();
+											parameters = new ArrayList<Parameter>();
 										} else {
 											signature.append(", ");
 										}
 										signature.append(currentParam
 												.toString());
-										parameters.add(currentParam.toString());
+										parameters.add(new Parameter(
+												currentParam.toString(),
+												currentParamRequired));
 										currentParam = null;
 									} else {
 										if (c != ' ' && c != '?') {
@@ -117,7 +120,7 @@ public class TernCompletionItem {
 		return text.toString();
 	}
 
-	public List<String> getParameters() {
+	public List<Parameter> getParameters() {
 		return parameters;
 	}
 

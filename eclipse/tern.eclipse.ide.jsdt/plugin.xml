@@ -14,19 +14,48 @@
  -->
 <plugin>
 
+	<!-- Completion Proposal for Javascript (inside Javascript file) -->
+	
 	<extension point="org.eclipse.wst.jsdt.ui.javaCompletionProposalComputer"
 	   id="TernCompletionProposalCategory"
 	   name="%TernCompletionProposalCategory.name">
-	   <proposalCategory/>
+	   <proposalCategory icon="icons/full/obj16/logo.png" />
 	 </extension>
 
 	<extension point="org.eclipse.wst.jsdt.ui.javaCompletionProposalComputer"
 	   id="TernCompletionProposalComputer">
 	   <javaCompletionProposalComputer
-	      class="tern.eclipse.ide.jsdt.internal.TernCompletionProposalComputer"
+	      class="tern.eclipse.ide.jsdt.internal.contentassist.TernCompletionProposalComputer"
 	      categoryId="tern.eclipse.ide.jsdt.TernCompletionProposalCategory">
 	   </javaCompletionProposalComputer>
 	 </extension>
+
+	<!-- Completion Proposal for Javascript (inside HTML) -->
+	 
+	 <extension point="org.eclipse.wst.sse.ui.completionProposal">
+	  <proposalCategory
+	      id="tern.eclipse.ide.jsdt.internal.contentassist.TernContentAssistProcessor"
+	      name="%TernCompletionProposalCategory.name"
+	      icon="icons/full/obj16/logo.png">
+	  </proposalCategory>
+	  <proposalComputer
+	      activate="true"
+	      categoryId="tern.eclipse.ide.jsdt.internal.contentassist.TernContentAssistProcessor"
+	      class="tern.eclipse.ide.jsdt.internal.contentassist.TernContentAssistProcessor"
+	      id="tern.eclipse.ide.jsdt.internal.contentassist.TernContentAssistProcessor">
+	     <contentType
+	        id="org.eclipse.wst.html.core.htmlsource">
+	      <partitionType
+	            autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+	            id="org.eclipse.wst.html.SCRIPT">
+	      </partitionType>
+	            <partitionType
+	                  autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+	                  id="org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
+	      </partitionType>
+	    </contentType>
+	  </proposalComputer>
+	</extension>
 	 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension

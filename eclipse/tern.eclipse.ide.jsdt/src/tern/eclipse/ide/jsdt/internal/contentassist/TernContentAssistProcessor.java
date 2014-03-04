@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Angelo ZERR.
+ * Copyright (c) 2014 Angelo ZERR.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,10 +8,10 @@
  * Contributors:      
  *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *******************************************************************************/
-package tern.eclipse.ide.jsdt.internal;
+package tern.eclipse.ide.jsdt.internal.contentassist;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
@@ -20,38 +20,43 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
-import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
-import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
+import org.eclipse.wst.sse.ui.contentassist.CompletionProposalInvocationContext;
+import org.eclipse.wst.sse.ui.contentassist.ICompletionProposalComputer;
+import org.eclipse.wst.xml.ui.internal.contentassist.AbstractContentAssistProcessor;
 
-/**
- * JSDT completion extension with Tern.
- */
 import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.jsdt.internal.Trace;
+import tern.eclipse.ide.jsdt.internal.utils.DOMUtils;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 import tern.server.ITernServer;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
-public class TernCompletionProposalComputer implements
-		IJavaCompletionProposalComputer {
+/**
+ * Content assist processor to manage completion Proposal for Javascript (inside
+ * HTML)
+ * 
+ */
+public class TernContentAssistProcessor extends AbstractContentAssistProcessor
+		implements ICompletionProposalComputer {
 
+	@Override
 	public List computeCompletionProposals(
-			ContentAssistInvocationContext context, IProgressMonitor monitor) {
-		if (context instanceof JavaContentAssistInvocationContext) {
-			JavaContentAssistInvocationContext javaContext = (JavaContentAssistInvocationContext) context;
-			IProject project = javaContext.getProject().getProject();
+			CompletionProposalInvocationContext context,
+			IProgressMonitor monitor) {
+		final List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
+
+		IFile file = DOMUtils.getFile(context.getDocument());
+		if (file != null) {
+			IProject project = file.getProject();
 			if (IDETernProject.hasTernNature(project)) {
 
-				IDocument document = javaContext.getDocument();
-				IResource resource = javaContext.getCompilationUnit()
-						.getResource();
+				IDocument document = context.getDocument();
+				IResource resource = file;
 				if (resource.getType() == IResource.FILE) {
 					IFile scriptFile = (IFile) resource;
 
 					try {
-
-						final List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
 
 						IDETernProject ternProject = IDETernProject
 								.getTernProject(project);
@@ -75,8 +80,9 @@ public class TernCompletionProposalComputer implements
 							public void addProposal(String name, String type,
 									String origin, Object doc, int pos,
 									Object completion, ITernServer ternServer) {
-								proposals.add(new JSTernCompletionProposal(name,
-										type, origin, doc, pos, startOffset));
+								proposals.add(new JSTernCompletionProposal(
+										name, type, origin, doc, pos,
+										startOffset));
 
 							}
 						};
@@ -91,21 +97,25 @@ public class TernCompletionProposalComputer implements
 				}
 			}
 		}
-		return Collections.EMPTY_LIST;
+		return proposals;
 	}
 
+	@Override
 	public List computeContextInformation(
-			ContentAssistInvocationContext context, IProgressMonitor monitor) {
-		return Collections.EMPTY_LIST;
+			CompletionProposalInvocationContext context,
+			IProgressMonitor monitor) {
+		return Arrays.asList(computeContextInformation(context.getViewer(),
+				context.getInvocationOffset()));
 	}
 
-	public String getErrorMessage() {
-		return null;
-	}
-
-	public void sessionStarted() {
-	}
-
+	@Override
 	public void sessionEnded() {
+
 	}
+
+	@Override
+	public void sessionStarted() {
+
+	}
+
 }
