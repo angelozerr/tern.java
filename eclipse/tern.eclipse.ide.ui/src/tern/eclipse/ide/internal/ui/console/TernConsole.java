@@ -1,5 +1,9 @@
 package tern.eclipse.ide.internal.ui.console;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
@@ -9,6 +13,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
+import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.console.LineType;
@@ -93,7 +98,20 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 	}
 
 	@Override
-	public void doAppendLine(LineType lineType, String line) {
+	public void doAppendLine(final LineType lineType, final String line) {
+		Job appendJob = new Job (TernUIMessages.TernConsoleJob_name) {
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				internalDoAppendLine(lineType, line);
+				return Status.OK_STATUS;
+			}
+		};
+		appendJob.setPriority(Job.LONG);
+		appendJob.schedule();
+	}
+	
+	private void internalDoAppendLine(LineType lineType, String line) {
 		showConsole();
 		synchronized (document) {
 			if (visible) {
