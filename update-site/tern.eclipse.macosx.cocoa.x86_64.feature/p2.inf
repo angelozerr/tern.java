@@ -1,4 +1,0 @@
- instructions.install = \
-    chmod(targetDir:${artifact.location},targetFile:nodejs/node-v0.10.22-macosx-x86_64/bin/node,permissions:755);
- instructions.install.import= \
-    org.eclipse.equinox.p2.touchpoint.natives.chmod
