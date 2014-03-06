@@ -22,7 +22,6 @@
          id="tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86_64"
          os="linux"
          ws="gtk"
-         arch="x86,x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
