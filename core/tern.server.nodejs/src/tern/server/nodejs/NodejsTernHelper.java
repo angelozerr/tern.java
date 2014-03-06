@@ -48,6 +48,9 @@ public class NodejsTernHelper {
 	private static final String NODE_TIMEOUT = "node_timeout";
 	public static final long DEFAULT_TIMEOUT = 1000;
 
+	private static final String NODE_PERSISTENT = "node_persistent";
+	public static final boolean DEFAULT_PERSISTENT = false;
+
 	/**
 	 * Returns the timeout to use when node.js starts to retrieve the node.js
 	 * port in {@link NodejsProcess#start(long)} from the given project.
@@ -153,4 +156,15 @@ public class NodejsTernHelper {
 		return httpPost;
 	}
 
+	public static boolean isPersistent(TernProject project) {
+		Boolean persistent = (Boolean) project.get(NODE_PERSISTENT);
+		if (persistent != null) {
+			return persistent;
+		}
+		return DEFAULT_PERSISTENT;
+	}
+
+	public static void setPersistent(TernProject project, boolean persistent) {
+		project.put(NODE_PERSISTENT, persistent);
+	}
 }

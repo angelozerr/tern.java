@@ -93,6 +93,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		super(project);
 		this.process = process;
 		this.timeout = NodejsTernHelper.getTimeout(project);
+		process.setPersistent(NodejsTernHelper.isPersistent(project));
 		process.addProcessListener(listener);
 	}
 
@@ -153,7 +154,8 @@ public class NodejsTernServer extends AbstractTernServer {
 		try {
 			baseURL = getBaseURL();
 		} catch (NodejsProcessException e) {
-			// the nodejs process cannot start => not a valid node path, dispose the server.
+			// the nodejs process cannot start => not a valid node path, dispose
+			// the server.
 			dispose();
 			throw e;
 		}
@@ -191,6 +193,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		TernProject project = super.getProject();
 		process = NodejsProcessManager.getInstance().create(
 				project.getProjectDir());
+		process.setPersistent(NodejsTernHelper.isPersistent(project));
 		process.addProcessListener(listener);
 		return process;
 	}

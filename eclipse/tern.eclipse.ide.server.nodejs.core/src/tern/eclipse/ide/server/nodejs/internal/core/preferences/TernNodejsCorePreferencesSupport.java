@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2013-2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.eclipse.ide.server.nodejs.internal.core.preferences;
 
 import java.io.File;
@@ -9,9 +19,14 @@ import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.server.nodejs.NodejsTernHelper;
+import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessHelper;
 import tern.utils.StringUtils;
 
+/**
+ * Support for tern core node.js preferences.
+ * 
+ */
 public class TernNodejsCorePreferencesSupport {
 
 	private static final String NODES_QUALIFIER = TernNodejsCorePlugin.PLUGIN_ID;
@@ -33,6 +48,11 @@ public class TernNodejsCorePreferencesSupport {
 		return instance;
 	}
 
+	/**
+	 * Returns the node install from teh workspace preferences.
+	 * 
+	 * @return
+	 */
 	public INodejsInstall getNodejsInstall() {
 		String id = preferencesSupport
 				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_INSTALL);
@@ -40,19 +60,13 @@ public class TernNodejsCorePreferencesSupport {
 				.findNodejsInstall(id);
 	}
 
-	public long getNodejsTimeout() {
-		String timeout = preferencesSupport
-				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TIMEOUT);
-		try {
-			return Long.parseLong(timeout);
-		} catch (Throwable e) {
-			return NodejsTernHelper.DEFAULT_TIMEOUT;
-		}
-	}
-
+	/**
+	 * returns the node.js install path.
+	 * 
+	 * @return
+	 */
 	public File getInstallPath() {
-		INodejsInstall install = TernNodejsCorePreferencesSupport.getInstance()
-				.getNodejsInstall();
+		INodejsInstall install = getNodejsInstall();
 		if (install != null) {
 			if (install.isNative()) {
 				String path = preferencesSupport
@@ -65,6 +79,38 @@ public class TernNodejsCorePreferencesSupport {
 			}
 		}
 		return new File("node");
+	}
+
+	/**
+	 * Returns the timeout to use when node.js starts to retrieve the node.js
+	 * port in {@link NodejsProcess#start(long)}
+	 * 
+	 * @return
+	 */
+	public long getNodejsTimeout() {
+		String timeout = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TIMEOUT);
+		try {
+			return Long.parseLong(timeout);
+		} catch (Throwable e) {
+			return NodejsTernHelper.DEFAULT_TIMEOUT;
+		}
+	}
+
+	/**
+	 * return false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isNodejsPersistent() {
+		String persistent = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_PERSISTENT);
+		try {
+			return Boolean.parseBoolean(persistent);
+		} catch (Throwable e) {
+			return NodejsTernHelper.DEFAULT_PERSISTENT;
+		}
 	}
 
 }

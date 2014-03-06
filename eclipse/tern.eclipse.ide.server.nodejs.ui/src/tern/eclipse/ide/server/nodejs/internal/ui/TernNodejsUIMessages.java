@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Angelo ZERR.
+ * Copyright (c) 2013-2014 Angelo ZERR.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -28,7 +28,9 @@ public final class TernNodejsUIMessages extends NLS {
 	// Preferences
 	public static String TernNodejsPreferencesPage_desc;
 	public static String TernNodejsPreferencesPage_nodeJSTimeout;
+	public static String TernNodejsPreferencesPage_nodeJSPersistent;
 	public static String TernNodejsPreferencesPage_nodeJSInstall;
+	public static String TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
 	public static String TernNodejsPreferencesPage_nodeJSPath;
 
 	private TernNodejsUIMessages() {

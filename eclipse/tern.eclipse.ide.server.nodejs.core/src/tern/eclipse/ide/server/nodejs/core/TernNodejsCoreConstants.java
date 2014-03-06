@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 Angelo ZERR.
+ * Copyright (c) 2013-2014 Angelo ZERR.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,11 +10,17 @@
  *******************************************************************************/
 package tern.eclipse.ide.server.nodejs.core;
 
+/**
+ * tern preferences core constants.
+ * 
+ */
 public class TernNodejsCoreConstants {
 
 	public static final String NODEJS_INSTALL = "nodeJSInstall"; //$NON-NLS-1$
-	
+
 	public static final String NODEJS_TIMEOUT = "nodeJSTimeout"; //$NON-NLS-1$
-	
+
 	public static final String NODEJS_PATH = "nodeJSPath"; //$NON-NLS-1$
+
+	public static final String NODEJS_PERSISTENT = "nodeJSPersistent"; //$NON-NLS-1$
 }

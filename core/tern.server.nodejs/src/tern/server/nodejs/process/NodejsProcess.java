@@ -58,6 +58,12 @@ public class NodejsProcess {
 	private boolean noPortFile;
 
 	/**
+	 * false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 */
+	private boolean persistent;
+
+	/**
 	 * node.js process.
 	 */
 	private Process process;
@@ -254,6 +260,9 @@ public class NodejsProcess {
 		if (isNoPortFile()) {
 			commands.add("--no-port-file");
 		}
+		if (isPersistent()) {
+			commands.add("--persistent");
+		}
 		return commands;
 	}
 
@@ -287,7 +296,7 @@ public class NodejsProcess {
 			errThread.setDaemon(true);
 			errThread.start();
 
-		} catch (Throwable e) {			
+		} catch (Throwable e) {
 			notifyErrorProcess(e.getMessage());
 			notifyErrorProcess("");
 			throw new NodejsProcessException(e);
@@ -383,6 +392,12 @@ public class NodejsProcess {
 		return verbose;
 	}
 
+	/**
+	 * Set true if tern server server won’t write a .tern-port file and false
+	 * otherwise.
+	 * 
+	 * @param noPortFile
+	 */
 	public void setNoPortFile(boolean noPortFile) {
 		this.noPortFile = noPortFile;
 	}
@@ -395,6 +410,26 @@ public class NodejsProcess {
 	 */
 	public boolean isNoPortFile() {
 		return noPortFile;
+	}
+
+	/**
+	 * set false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 * 
+	 * @param persistent
+	 */
+	public void setPersistent(boolean persistent) {
+		this.persistent = persistent;
+	}
+
+	/**
+	 * return false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isPersistent() {
+		return persistent;
 	}
 
 	/**

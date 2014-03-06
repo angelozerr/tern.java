@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014 Angelo ZERR.
+ * Copyright (c) 2013-2014 Angelo ZERR.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,10 @@ import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.core.NodejsInstall;
 
+/**
+ * Initialize default tern core preferences.
+ * 
+ */
 public class TernNodejsCorePreferenceConstants {
 
 	/**
@@ -36,6 +40,8 @@ public class TernNodejsCorePreferenceConstants {
 				IDENodejsProcessHelper.getNodejsPath());
 		// timeout to start node.js
 		node.putLong(TernNodejsCoreConstants.NODEJS_TIMEOUT, 1000L);
+		// node.js persistent (not auto-shutdown ?)
+		node.putBoolean(TernNodejsCoreConstants.NODEJS_PERSISTENT, false);
 	}
 
 	// Don't instantiate

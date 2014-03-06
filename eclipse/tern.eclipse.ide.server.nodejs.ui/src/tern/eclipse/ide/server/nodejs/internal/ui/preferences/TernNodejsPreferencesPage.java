@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2013 Angelo ZERR.
+ * Copyright (c) 2013-2014 Angelo ZERR.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,10 +10,9 @@
  *******************************************************************************/
 package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 
-import java.io.File;
-
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -57,11 +56,18 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				getFieldEditorParent());
 		addField(timeoutField);
 
+		// Persistent (not auto-shutdown)
+		BooleanFieldEditor persistentField = new BooleanFieldEditor(
+				TernNodejsCoreConstants.NODEJS_PERSISTENT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPersistent,
+				getFieldEditorParent());
+		addField(persistentField);
+		
 		// Tern Server type combo
 		INodejsInstall[] installs = TernNodejsCorePlugin
 				.getNodejsInstallManager().getNodejsInstalls();
 		String[][] data = new String[installs.length + 1][2];
-		data[0][0] = " -- Choose your node.js install --";
+		data[0][0] = TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
 		data[0][1] = "";
 
 		for (int i = 0; i < installs.length; i++) {
