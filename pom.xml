@@ -9,6 +9,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.19.0</tycho-version>
 	</properties>
+	<licenses>
+		<license>
+			<name>The MIT License (MIT)</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 	<modules>
 		<module>core</module>
 		<module>eclipse</module>
@@ -33,6 +40,18 @@
 					<pomDependencies>consider</pomDependencies>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<basedir>${basedir}</basedir>
+					<header>license.txt</header>
+					<includes>
+						<include>src/**/*.java</include>
+					</includes>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -41,10 +60,8 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		<!-- Doesn't work because it's not OSGi bundle 
-		<dependency> <groupId>org.mozilla</groupId> 
-			<artifactId>rhino</artifactId> <version>1.7R4</version> </dependency> 
-			-->
+		<!-- Doesn't work because it's not OSGi bundle <dependency> <groupId>org.mozilla</groupId> 
+			<artifactId>rhino</artifactId> <version>1.7R4</version> </dependency> -->
 	</dependencies>
 
 	<repositories>
