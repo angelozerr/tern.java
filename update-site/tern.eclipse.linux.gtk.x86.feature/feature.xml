@@ -3,9 +3,6 @@
       id="tern.eclipse.linux.gtk.x86.feature"
       label="%featureName"
       version="1.0.0.qualifier"
-      os="linux"
-      ws="gtk"
-      arch="x86_64"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.0.qualifier">
 
@@ -23,6 +20,9 @@
 
    <plugin
          id="tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86_64"
+         os="linux"
+         ws="gtk"
+         arch="x86,x86_64"
          download-size="0"
          install-size="0"
          version="0.0.0"
