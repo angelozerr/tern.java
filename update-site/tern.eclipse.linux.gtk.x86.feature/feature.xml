@@ -3,9 +3,11 @@
       id="tern.eclipse.linux.gtk.x86.feature"
       label="%featureName"
       version="1.0.0.qualifier"
+      os="linux"
+      ws="gtk"
+      arch="x86_64"
       license-feature="org.eclipse.license"
-      license-feature-version="1.0.0.qualifier"> 
-      
+      license-feature-version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -18,8 +20,6 @@
    <license url="%licenseURL">
       %license
    </license>
-   
-   
 
    <plugin
          id="tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86_64"

@@ -3,9 +3,11 @@
       id="tern.eclipse.macosx.cocoa.x86_64.feature"
       label="%featureName"
       version="1.0.0.qualifier"
+      os="macosx"
+      ws="cocoa"
+      arch="x86_64"
       license-feature="org.eclipse.license"
-      license-feature-version="1.0.0.qualifier"> 
-      
+      license-feature-version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -15,7 +17,7 @@
       [Enter Copyright Description here.]
    </copyright>
 
-    <license url="%licenseURL">
+   <license url="%licenseURL">
       %license
    </license>
 

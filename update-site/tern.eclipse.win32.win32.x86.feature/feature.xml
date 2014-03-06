@@ -3,9 +3,11 @@
       id="tern.eclipse.win32.win32.x86.feature"
       label="%featureName"
       version="1.0.0.qualifier"
+      os="win32"
+      ws="win32"
+      arch="x86"
       license-feature="org.eclipse.license"
-      license-feature-version="1.0.0.qualifier"> 
-      
+      license-feature-version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -14,11 +16,10 @@
    <copyright url="http://www.example.com/copyright">
       [Enter Copyright Description here.]
    </copyright>
-   
-    <license url="%licenseURL">
+
+   <license url="%licenseURL">
       %license
    </license>
-
 
    <plugin
          id="tern.eclipse.ide.server.nodejs.embed.win32.win32.x86"
