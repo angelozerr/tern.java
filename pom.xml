@@ -9,10 +9,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<tycho-version>0.19.0</tycho-version>
 	</properties>
+	<organization>
+		<name>Angelo Zerr and Co.</name>
+	</organization>
+	<inceptionYear>2014</inceptionYear>
+	
 	<licenses>
 		<license>
-			<name>The MIT License (MIT)</name>
-			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<name>Eclipse Public License</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
