@@ -30,10 +30,8 @@ import org.json.simple.parser.ParseException;
 
 import tern.TernException;
 import tern.TernFileManager;
-import tern.TernProject;
 import tern.server.IInterceptor;
 import tern.server.ITernServer;
-import tern.server.nodejs.process.NodejsProcess;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
 import tern.utils.IOUtils;
@@ -45,39 +43,8 @@ import tern.utils.StringUtils;
  */
 public class NodejsTernHelper {
 
-	private static final String NODE_TIMEOUT = "node_timeout";
-	public static final long DEFAULT_TIMEOUT = 1000;
-
-	private static final String NODE_PERSISTENT = "node_persistent";
+	public static final long DEFAULT_TIMEOUT = 1000L;
 	public static final boolean DEFAULT_PERSISTENT = false;
-
-	/**
-	 * Returns the timeout to use when node.js starts to retrieve the node.js
-	 * port in {@link NodejsProcess#start(long)} from the given project.
-	 * 
-	 * @param project
-	 * @return
-	 */
-	public static long getTimeout(TernProject project) {
-		Long timeout = (Long) project.get(NODE_TIMEOUT);
-		if (timeout != null) {
-			return timeout;
-		}
-		return DEFAULT_TIMEOUT;
-	}
-
-	/**
-	 * Set the timeout to use when node.js starts to retrieve the node.js port
-	 * in {@link NodejsProcess#start(long)}
-	 * 
-	 * @param project
-	 *            tern project.
-	 * @param timeout
-	 *            to use when node.js starts.
-	 */
-	public static void setTimeout(TernProject project, long timeout) {
-		project.put(NODE_TIMEOUT, timeout);
-	}
 
 	public static JSONObject makeRequest(String baseURL, TernDoc doc,
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)
@@ -156,15 +123,4 @@ public class NodejsTernHelper {
 		return httpPost;
 	}
 
-	public static boolean isPersistent(TernProject project) {
-		Boolean persistent = (Boolean) project.get(NODE_PERSISTENT);
-		if (persistent != null) {
-			return persistent;
-		}
-		return DEFAULT_PERSISTENT;
-	}
-
-	public static void setPersistent(TernProject project, boolean persistent) {
-		project.put(NODE_PERSISTENT, persistent);
-	}
 }

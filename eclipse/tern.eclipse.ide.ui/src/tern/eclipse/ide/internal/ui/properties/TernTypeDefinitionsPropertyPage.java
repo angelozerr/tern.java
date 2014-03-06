@@ -36,6 +36,8 @@ import tern.server.ITernDef;
 public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		implements IWorkbenchPreferencePage {
 
+	private static final ITernDef[] EMPTY_DEF = new ITernDef[0];
+
 	private TernDefsBlock defsBlock;
 	private List<ITernDef> initialDefs;
 
@@ -97,10 +99,18 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 	 * Load defs from tern project.
 	 */
 	private void loadDefs() {
-		try {
-			TernProject ternProject = getTernProject();
-			List defs = ternProject.getLibs();
 
+		List<ITernDef> allDefs = new ArrayList<ITernDef>();
+		ITernDef[] defaultDefs = TernCorePlugin.getTernServerTypeManager()
+				.getTernDefs();
+		for (ITernDef defaultDef : defaultDefs) {
+			allDefs.add(defaultDef);
+		}
+		try {
+			IDETernProject ternProject = getTernProject();
+			//ternProject.getProject()
+			
+			List defs = ternProject.getLibs();
 			initialDefs = new ArrayList<ITernDef>();
 			for (Object name : defs) {
 				ITernDef def = TernCorePlugin.getTernServerTypeManager()
@@ -114,6 +124,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
 		}
+		defsBlock.setTernDefs(allDefs.toArray(EMPTY_DEF));
 	}
 
 }

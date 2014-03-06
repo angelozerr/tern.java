@@ -6,6 +6,7 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
@@ -28,7 +29,8 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 
 	private boolean visible = false;
 
-	private MessageConsoleStream streams;
+	private MessageConsoleStream[] streams = new MessageConsoleStream[LineType
+			.values().length];
 
 	private boolean initialized;
 
@@ -58,30 +60,39 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 	private void initializeStreams() {
 		synchronized (document) {
 			if (!initialized) {
-				// for (int i = 0; i < streams.length; i++) {
-				// streams[i] = newMessageStream();
-				// }
-				streams = newMessageStream();
-
+				for (int i = 0; i < streams.length; i++) {
+					streams[i] = newMessageStream();
+				}
 				// install colors
-				Color color;
-
-				/*
-				 * color = createColor(Display.getDefault(),
-				 * PREF_CONSOLE_DEBUG_COLOR);
-				 * streams[Message.MSG_DEBUG].setColor(color); color =
-				 * createColor(Display.getDefault(),
-				 * PREF_CONSOLE_VERBOSE_COLOR);
-				 * streams[Message.MSG_VERBOSE].setColor(color); color =
-				 * createColor(Display.getDefault(), PREF_CONSOLE_INFO_COLOR);
-				 * streams[Message.MSG_INFO].setColor(color); color =
-				 * createColor(Display.getDefault(), PREF_CONSOLE_WARN_COLOR);
-				 * streams[Message.MSG_WARN].setColor(color); color =
-				 * createColor(Display.getDefault(), PREF_CONSOLE_ERROR_COLOR);
-				 * streams[Message.MSG_ERR].setColor(color);
-				 */
+				for (int i = 0; i < LineType.values().length; i++) {
+					initializeStream(LineType.values()[i]);
+				}
 				initialized = true;
 			}
+		}
+	}
+
+	private void initializeStream(LineType lineType) {
+		Color color = createColor(Display.getDefault(), lineType);
+		streams[lineType.ordinal()].setColor(color);
+	}
+
+	/**
+	 * Returns a color instance based on data from a preference field.
+	 */
+	private Color createColor(Display display, LineType lineType) {
+		RGB rgb = getRGB(lineType);
+		return new Color(display, rgb);
+	}
+
+	public RGB getRGB(LineType lineType) {
+		switch (lineType) {
+		case PROCESS_INFO:
+			return new RGB(0, 108, 54);
+		case PROCESS_ERROR:
+			return new RGB(255, 0, 0);
+		default:
+			return new RGB(0, 64, 128);
 		}
 	}
 
@@ -99,7 +110,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 
 	@Override
 	public void doAppendLine(final LineType lineType, final String line) {
-		Job appendJob = new Job (TernUIMessages.TernConsoleJob_name) {
+		Job appendJob = new Job(TernUIMessages.TernConsoleJob_name) {
 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
@@ -110,12 +121,12 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 		appendJob.setPriority(Job.LONG);
 		appendJob.schedule();
 	}
-	
+
 	private void internalDoAppendLine(LineType lineType, String line) {
 		showConsole();
 		synchronized (document) {
 			if (visible) {
-				streams.println(line);
+				streams[lineType.ordinal()].println(line);
 			} else {
 				document.appendConsoleLine(lineType, line);
 			}
@@ -147,7 +158,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 	 *            ignore preferences if <code>true</code>
 	 */
 	public void show(boolean showNoMatterWhat) {
-		//showOnMessage = true;
+		// showOnMessage = true;
 		if (showNoMatterWhat || showOnMessage) {
 			if (!visible) {
 				TernConsoleFactory.showConsole();

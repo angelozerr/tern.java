@@ -63,6 +63,8 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	};
 
+	private boolean persistent;
+
 	public NodejsTernServer(File projectDir, int port) {
 		this(new TernProject(projectDir), port);
 	}
@@ -92,8 +94,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	public NodejsTernServer(TernProject project, NodejsProcess process) {
 		super(project);
 		this.process = process;
-		this.timeout = NodejsTernHelper.getTimeout(project);
-		process.setPersistent(NodejsTernHelper.isPersistent(project));
+		process.setPersistent(persistent);
 		process.addProcessListener(listener);
 	}
 
@@ -188,12 +189,13 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private NodejsProcess getProcess() throws TernException {
 		if (process != null) {
+			process.setPersistent(persistent);
 			return process;
 		}
 		TernProject project = super.getProject();
 		process = NodejsProcessManager.getInstance().create(
 				project.getProjectDir());
-		process.setPersistent(NodejsTernHelper.isPersistent(project));
+		process.setPersistent(persistent);
 		process.addProcessListener(listener);
 		return process;
 	}
@@ -304,6 +306,32 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 		this.baseURL = null;
 		this.process = null;
+	}
+
+	/**
+	 * Set the timeout to use when node.js starts to retrieve the node.js port
+	 * in {@link NodejsProcess#start(long)} from the given project.
+	 */
+	public void setTimeout(long timeout) {
+		this.timeout = timeout;
+	}
+
+	/**
+	 * Returns the timeout to use when node.js starts to retrieve the node.js
+	 * port in {@link NodejsProcess#start(long)} from the given project.
+	 * 
+	 * @return
+	 */
+	public long getTimeout() {
+		return timeout;
+	}
+
+	public void setPersistent(boolean persistent) {
+		this.persistent = persistent;
+	}
+
+	public boolean isPersistent() {
+		return persistent;
 	}
 
 }

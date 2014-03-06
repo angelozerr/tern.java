@@ -16,7 +16,6 @@ import tern.TernProject;
 import tern.eclipse.ide.core.ITernServerFactory;
 import tern.eclipse.ide.server.nodejs.internal.core.preferences.TernNodejsCorePreferencesSupport;
 import tern.server.ITernServer;
-import tern.server.nodejs.NodejsTernHelper;
 import tern.server.nodejs.NodejsTernServer;
 
 /**
@@ -27,9 +26,9 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 	@Override
 	public ITernServer create(TernProject project) throws Exception {
 		File installPath = getInstallPath();
-		NodejsTernHelper.setTimeout(project, getTimeout());
-		NodejsTernHelper.setPersistent(project, isPersistent());
 		NodejsTernServer server = new NodejsTernServer(project, installPath);
+		server.setTimeout(getTimeout());
+		server.setPersistent(isPersistent());
 		return server;
 	}
 

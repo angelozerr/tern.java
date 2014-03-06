@@ -29,14 +29,22 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 	protected void outPrintln(String line) {
 		ITernConsole console = getConsole();
 		if (console != null) {
-			console.doAppendLine(LineType.INFO, line);
+			console.doAppendLine(LineType.DATA, line);
 		}
 	}
 
+	protected void outProcessPrintln(String line) {
+		ITernConsole console = getConsole();
+		if (console != null) {
+			console.doAppendLine(LineType.PROCESS_INFO, line);
+		}
+	}
+
+	
 	protected void errPrintln(String line) {
 		ITernConsole console = getConsole();
 		if (console != null) {
-			console.doAppendLine(LineType.ERROR, line);
+			console.doAppendLine(LineType.PROCESS_ERROR, line);
 		}
 	}
 
@@ -47,7 +55,7 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 			StringWriter s = new StringWriter();
 			PrintWriter writer = new PrintWriter(s);
 			error.printStackTrace(writer);
-			console.doAppendLine(LineType.ERROR, s.toString());
+			console.doAppendLine(LineType.PROCESS_ERROR, s.toString());
 		}
 	}
 
@@ -71,13 +79,13 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 				}
 				i++;
 			}
-			outPrintln("Nodejs Commnand: " + commandsAsString.toString());
+			outProcessPrintln("Nodejs Commnand: " + commandsAsString.toString());
 			String path = projectDir.getPath();
 			try {
 				path = projectDir.getCanonicalPath();
 			} catch (IOException e) {
 			}
-			outPrintln("Project dir: " + path);
+			outProcessPrintln("Project dir: " + path);
 			String json = "";
 			try {
 				File ternProject = new File(projectDir,
@@ -87,23 +95,23 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 				errPrintln(e.getMessage());
 			}
 
-			outPrintln(TernProject.TERN_PROJECT + ": " + json);
+			outProcessPrintln(TernProject.TERN_PROJECT + ": " + json);
 		}
 	}
 
 	@Override
 	public void onStart(NodejsProcess process) {
-		outPrintln("Server started at " + process.getPort());
+		outProcessPrintln("Server started at " + process.getPort());
 	}
 
 	@Override
 	public void onData(NodejsProcess process, String line) {
-		outPrintln(line);
+		outProcessPrintln(line);
 	}
 
 	@Override
 	public void onStop(NodejsProcess process) {
-		outPrintln("Server stopped at " + process.getPort());
+		outProcessPrintln("Server stopped at " + process.getPort());
 	}
 
 	@Override

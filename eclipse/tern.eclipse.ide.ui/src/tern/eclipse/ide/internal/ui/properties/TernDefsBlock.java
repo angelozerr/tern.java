@@ -33,13 +33,12 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernDef;
 
 /**
- * Table of Tern plugins.
+ * Table of Tern defs.
  * 
  */
 public class TernDefsBlock extends AbstractTableBlock {
@@ -106,14 +105,9 @@ public class TernDefsBlock extends AbstractTableBlock {
 		tableViewer.setLabelProvider(new TernDefabelProvider());
 		tableViewer.setContentProvider(new ProcessorsContentProvider());
 
-		fillWithWorkspaceTernDefs();
+		
 
 		restoreColumnSettings();
-	}
-
-	protected void fillWithWorkspaceTernDefs() {
-		setTernDefs(TernCorePlugin.getTernServerTypeManager()
-				.getTernDefs());
 	}
 
 	/**
