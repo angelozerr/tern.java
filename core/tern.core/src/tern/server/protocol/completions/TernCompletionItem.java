@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Angelo ZERR.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors:      
+ *     Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *******************************************************************************/
 package tern.server.protocol.completions;
 
 import java.util.ArrayList;
@@ -5,6 +15,10 @@ import java.util.List;
 
 import tern.utils.StringUtils;
 
+/**
+ * Tern completion item.
+ * 
+ */
 public class TernCompletionItem {
 
 	private final String name;
@@ -133,47 +147,60 @@ public class TernCompletionItem {
 			if (parameters == null) {
 				allTypes = StringUtils.EMPTY_ARRAY;
 			} else {
-				List<Parameter> optionalParameters = null;
-				for (Parameter parameter : parameters) {
-					if (!parameter.isRequired()) {
-						if (optionalParameters == null) {
-							optionalParameters = new ArrayList<Parameter>();
-						}
-						optionalParameters.add(parameter);
+				if (parameters.size() == 1 && !parameters.get(0).isRequired()) {
+					// ex : fn(selector?: string) -> jQuery.fn
+					StringBuilder newType = new StringBuilder("fn()");
+					if (jsType != null) {
+						newType.append(" -> ");
+						newType.append(jsType);
 					}
-				}
-
-				if (optionalParameters == null) {
-					allTypes = StringUtils.EMPTY_ARRAY;
+					allTypes = new String[1];
+					allTypes[0] = newType.toString();
 				} else {
-					List<String> types = new ArrayList<String>();
-					StringBuilder newType = null;
-					for (Parameter optional : optionalParameters) {
-						newType = new StringBuilder("fn(");
-						for (Parameter parameter : parameters) {
-							if (parameter.isRequired()
-									|| optional.equals(parameter)) {
-								if (newType.length() > 3) {
-									newType.append(", ");
-								}
-								newType.append(parameter.getName());
-								if (!parameter.isRequired()) {
-									newType.append("?");
-								}
-								if (parameter.getType() != null) {
-									newType.append(": ");
-									newType.append(parameter.getType());
+					// ex: fn(events: string, selector?: string, data?: ?,
+					// handler: fn(+jQuery.Event)) -> jQuery.fn
+					List<Parameter> optionalParameters = null;
+					for (Parameter parameter : parameters) {
+						if (!parameter.isRequired()) {
+							if (optionalParameters == null) {
+								optionalParameters = new ArrayList<Parameter>();
+							}
+							optionalParameters.add(parameter);
+						}
+					}
+
+					if (optionalParameters == null) {
+						allTypes = StringUtils.EMPTY_ARRAY;
+					} else {
+						List<String> types = new ArrayList<String>();
+						StringBuilder newType = null;
+						for (Parameter optional : optionalParameters) {
+							newType = new StringBuilder("fn(");
+							for (Parameter parameter : parameters) {
+								if (parameter.isRequired()
+										|| optional.equals(parameter)) {
+									if (newType.length() > 3) {
+										newType.append(", ");
+									}
+									newType.append(parameter.getName());
+									if (!parameter.isRequired()) {
+										newType.append("?");
+									}
+									if (parameter.getType() != null) {
+										newType.append(": ");
+										newType.append(parameter.getType());
+									}
 								}
 							}
+							newType.append(")");
+							if (jsType != null) {
+								newType.append(" -> ");
+								newType.append(jsType);
+							}
+							types.add(newType.toString());
 						}
-						newType.append(")");
-						if (jsType != null) {
-							newType.append(" -> ");
-							newType.append(jsType);
-						}
-						types.add(newType.toString());
+						allTypes = types.toArray(StringUtils.EMPTY_ARRAY);
 					}
-					allTypes = types.toArray(StringUtils.EMPTY_ARRAY);
 				}
 			}
 		}
