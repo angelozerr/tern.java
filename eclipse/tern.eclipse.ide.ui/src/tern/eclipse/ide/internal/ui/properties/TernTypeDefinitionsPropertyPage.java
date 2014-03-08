@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import tern.TernProject;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
@@ -106,10 +105,9 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		for (ITernDef defaultDef : defaultDefs) {
 			allDefs.add(defaultDef);
 		}
+		defsBlock.setTernDefs(allDefs.toArray(EMPTY_DEF));
 		try {
 			IDETernProject ternProject = getTernProject();
-			//ternProject.getProject()
-			
 			List defs = ternProject.getLibs();
 			initialDefs = new ArrayList<ITernDef>();
 			for (Object name : defs) {
@@ -123,8 +121,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
-		}
-		defsBlock.setTernDefs(allDefs.toArray(EMPTY_DEF));
+		}		
 	}
 
 }
