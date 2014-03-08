@@ -27,6 +27,7 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.protocol.completions.Parameter;
+import tern.utils.StringUtils;
 
 public class JSTernCompletionProposal extends TernCompletionProposal {
 
@@ -219,18 +220,31 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		String doc = super.getAdditionalProposalInfo();
 		StringBuilder info = new StringBuilder(doc != null ? doc : "");
 		List<Parameter> parameters = getParameters();
+		info.append("<dl>");
 		if (parameters != null) {
-			if (info.length() > 0) {
-				info.append("<br/>");
-			}
-			info.append("<b>Parameters</b>");
+			info.append("<dt>Parameters:</dt>");
 			for (Parameter parameter : parameters) {
-				info.append("<br/>");
+				info.append("<dd><b>");
+				if (!parameter.isRequired()) {
+					info.append("[");
+				}
 				info.append(parameter.getName());
-				info.append(": ");
+				if (!parameter.isRequired()) {
+					info.append("]");
+				}
+				info.append("</b>: ");
 				info.append(parameter.getType());
+				info.append("</dd>");
 			}
 		}
+		String returnType = getJsType();
+		if (!StringUtils.isEmpty(returnType)) {
+			info.append("<dt>Returns:</dt>");
+			info.append("<dd>");
+			info.append(returnType);
+			info.append("</dd>");
+		}
+		info.append("</dl>");
 		return info.toString();
 	}
 }
