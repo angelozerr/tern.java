@@ -39,10 +39,14 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 				type, origin, doc, pos, startOffset);
 		proposals.add(proposal);
 
-		if (proposal.getAllTypes() != null) {
-			for (int i = 0; i < proposal.getAllTypes().length; i++) {
-				proposals.add(new JSTernCompletionProposal(name, proposal
-						.getAllTypes()[i], origin, doc, pos, startOffset));
+		// expand functions if the functiosn contains several "optionnal" parameters.
+		// ex : the expansion of "fn(selector: string, context?: frameElement)" returns an array of functions
+		// 
+		String[] functions = proposal.expand();
+		if (functions != null) {
+			for (int i = 0; i < functions.length; i++) {
+				proposals.add(new JSTernCompletionProposal(name, functions[i],
+						origin, doc, pos, startOffset));
 			}
 		}
 
