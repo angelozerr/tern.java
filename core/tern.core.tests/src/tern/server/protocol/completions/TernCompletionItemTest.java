@@ -198,5 +198,35 @@ public class TernCompletionItemTest {
 				"fn(properties: ?, easing?: string, complete?: fn()) -> jQuery.fn",
 				allTypes[6]);
 	}
+	
+	@Test
+	public void uppercase() throws Exception {
+		TernCompletionItem completion = new TernCompletionItem("uppercase",
+				"fn(string) -> string",
+				"angular");
+		Assert.assertEquals("uppercase", completion.getName());
+		Assert.assertTrue(completion.isFunction());
+		Assert.assertFalse(completion.isArray());
+		Assert.assertEquals("string", completion.getJsType());
+		Assert.assertEquals("angular", completion.getOrigin());
+		Assert.assertNotNull(completion.getParameters());
+		Assert.assertEquals(1, completion.getParameters().size());
+
+		Parameter parameter = null;
+		for (int i = 0; i < completion.getParameters().size(); i++) {
+			parameter = completion.getParameters().get(i);
+			switch (i) {
+			case 0:
+				Assert.assertEquals("string", parameter.getName());
+				Assert.assertTrue(parameter.isRequired());
+				Assert.assertNull(parameter.getType());
+				break;
+			}
+		}
+
+		String[] allTypes = completion.expand();
+		Assert.assertNotNull(allTypes);
+		Assert.assertEquals(0, allTypes.length);
+	}
 
 }

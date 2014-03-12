@@ -130,6 +130,9 @@ public class TernCompletionItem {
 		}
 
 		if (currentParamName != null) {
+			if (parameters == null) {
+				parameters = new ArrayList<Parameter>();
+			} 
 			parameters.add(new Parameter(currentParamName.toString(),
 					currentParamRequired,
 					currentParamType != null ? currentParamType.toString()
