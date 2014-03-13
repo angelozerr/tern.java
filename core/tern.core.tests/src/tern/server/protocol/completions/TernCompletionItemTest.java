@@ -198,12 +198,11 @@ public class TernCompletionItemTest {
 				"fn(properties: ?, easing?: string, complete?: fn()) -> jQuery.fn",
 				allTypes[6]);
 	}
-	
+
 	@Test
 	public void uppercase() throws Exception {
 		TernCompletionItem completion = new TernCompletionItem("uppercase",
-				"fn(string) -> string",
-				"angular");
+				"fn(string) -> string", "angular");
 		Assert.assertEquals("uppercase", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -229,4 +228,42 @@ public class TernCompletionItemTest {
 		Assert.assertEquals(0, allTypes.length);
 	}
 
+	@Test
+	public void map() throws Exception {
+		TernCompletionItem completion = new TernCompletionItem("map",
+				"fn(f: fn(elt: ?, i: number) -> ?, context?: ?) -> [!0.!ret]",
+				"ecma5");
+		Assert.assertEquals("map", completion.getName());
+		Assert.assertTrue(completion.isFunction());
+		Assert.assertFalse(completion.isArray());
+		Assert.assertEquals("[!0.!ret]", completion.getJsType());
+		Assert.assertEquals("ecma5", completion.getOrigin());
+		Assert.assertNotNull(completion.getParameters());
+		Assert.assertEquals(2, completion.getParameters().size());
+
+		Parameter parameter = null;
+		for (int i = 0; i < completion.getParameters().size(); i++) {
+			parameter = completion.getParameters().get(i);
+			switch (i) {
+			case 0:
+				Assert.assertEquals("f", parameter.getName());
+				Assert.assertTrue(parameter.isRequired());
+				Assert.assertEquals("fn(elt:?,i:number)->?",
+						parameter.getType());
+				break;
+			case 1:
+				Assert.assertEquals("context", parameter.getName());
+				Assert.assertFalse(parameter.isRequired());
+				Assert.assertEquals("?",
+						parameter.getType());
+				break;
+			}
+		}
+
+		String[] allTypes = completion.expand();
+		Assert.assertNotNull(allTypes);
+		Assert.assertEquals(1, allTypes.length);
+		Assert.assertEquals("fn(f: fn(elt:?,i:number)->?) -> [!0.!ret]", allTypes[0]);
+		
+	}
 }

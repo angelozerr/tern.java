@@ -66,15 +66,21 @@ public class TernCompletionItem {
 						if (bracket >= 1) {
 							if (currentParamType != null) {
 								if (c == ',') {
-									parameters
-											.add(new Parameter(
-													currentParamName.toString(),
-													currentParamRequired,
-													currentParamType != null ? currentParamType
-															.toString() : null));
-									currentParamName = null;
-									currentParamRequired = true;
-									currentParamType = null;
+									if (bracket < 2) {
+										parameters
+												.add(new Parameter(
+														currentParamName
+																.toString(),
+														currentParamRequired,
+														currentParamType != null ? currentParamType
+																.toString()
+																: null));
+										currentParamName = null;
+										currentParamRequired = true;
+										currentParamType = null;
+									} else {
+										currentParamType.append(c);
+									}
 								} else if (c != ' ') {
 									currentParamType.append(c);
 								}
@@ -132,7 +138,7 @@ public class TernCompletionItem {
 		if (currentParamName != null) {
 			if (parameters == null) {
 				parameters = new ArrayList<Parameter>();
-			} 
+			}
 			parameters.add(new Parameter(currentParamName.toString(),
 					currentParamRequired,
 					currentParamType != null ? currentParamType.toString()
