@@ -18,8 +18,25 @@
 		schema="schema/ternServerTypes.exsd" />	
 	<extension-point id="ternConsoleConnectors" name="%ternConsoleConnectors.name"
 		schema="schema/ternConsoleConnectors.exsd" />	
+	
+	<!-- =================================================================================== -->
+	<!-- Tern Builder                                                                        -->
+	<!-- =================================================================================== -->
+
+	<extension 
+		point="org.eclipse.core.resources.builders" 
+		id="ternBuilder"
+		name="%ternBuilder.name">
+		<builder hasNature="true" >
+			<run class="tern.eclipse.ide.internal.core.builder.TernBuilder">
+			</run>
+		</builder>
+	</extension>
 					
-	<!-- Tern Nature -->
+	<!-- =================================================================================== -->
+	<!-- Tern Nature                                                                         -->
+	<!-- =================================================================================== -->
+	
 	<extension
 		id="ternnature"
 		name="%ternNature.name"
@@ -29,6 +46,9 @@
 				class="tern.eclipse.ide.core.TernNature">
 			</run>
 		</runtime>
+	    <builder
+	          id="tern.eclipse.ide.core.ternBuilder">
+	    </builder>		
 	</extension>	
 	
 	<!-- Preferences initialization -->
@@ -37,5 +57,5 @@
 		<initializer
 			class="tern.eclipse.ide.internal.core.preferences.TernCorePreferenceInitializer" />
 	</extension>
-	
+		
 </plugin>        
