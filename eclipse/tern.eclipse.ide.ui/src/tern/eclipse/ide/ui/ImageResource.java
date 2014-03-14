@@ -35,10 +35,14 @@ public class ImageResource {
 	private static URL ICON_BASE_URL;
 
 	private static final String URL_OBJ = "full/obj16/";
+	private static final String URL_ELCL = "full/elcl16/";
+	private static final String URL_DLCL = "full/dlcl16/";
 
 	// General Object Images
 	public static final String IMG_SCRIPT = "script";
 	public static final String IMG_LOGO = "logo";
+	public static final String IMG_STOP_ENABLED = "stop_enabled";
+	public static final String IMG_STOP_DISABLED = "stop_disabled";
 
 	static {
 		try {
@@ -123,6 +127,8 @@ public class ImageResource {
 		// load general object images
 		registerImage(IMG_SCRIPT, URL_OBJ + IMG_SCRIPT + ".gif");
 		registerImage(IMG_LOGO, URL_OBJ + IMG_LOGO + ".png");
+		registerImage(IMG_STOP_ENABLED, URL_ELCL + "launch_stop.gif");
+		registerImage(IMG_STOP_DISABLED, URL_DLCL + "launch_stop.gif");
 	}
 
 	/**

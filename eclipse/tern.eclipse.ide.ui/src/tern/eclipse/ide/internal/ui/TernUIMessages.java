@@ -55,6 +55,8 @@ public final class TernUIMessages extends NLS {
 
 	// Tern Console Name
 	public static String TernConsoleJob_name;
+
+	public static String ConsoleTerminateAction_tooltipText;
 	
 	private TernUIMessages() {
 	}

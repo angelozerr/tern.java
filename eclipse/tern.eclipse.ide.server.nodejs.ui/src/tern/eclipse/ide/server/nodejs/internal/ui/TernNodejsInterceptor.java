@@ -18,6 +18,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import tern.TernProject;
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.console.LineType;
@@ -29,10 +30,10 @@ import tern.utils.IOUtils;
 public class TernNodejsInterceptor extends LoggingInterceptor implements
 		INodejsProcessListener {
 
-	private static final TernNodejsInterceptor INSTANCE = new TernNodejsInterceptor();
+	private final IDETernProject project;
 
-	public static TernNodejsInterceptor getInstance() {
-		return INSTANCE;
+	public TernNodejsInterceptor(IDETernProject project) {
+		this.project = project;
 	}
 
 	@Override
@@ -50,7 +51,6 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 		}
 	}
 
-	
 	protected void errPrintln(String line) {
 		ITernConsole console = getConsole();
 		if (console != null) {
@@ -131,7 +131,7 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 
 	private ITernConsole getConsole() {
 		if (TernUIPlugin.getDefault() != null) {
-			return TernUIPlugin.getDefault().getConsole();
+			return TernUIPlugin.getDefault().getConsole(project);
 		}
 		return null;
 	}

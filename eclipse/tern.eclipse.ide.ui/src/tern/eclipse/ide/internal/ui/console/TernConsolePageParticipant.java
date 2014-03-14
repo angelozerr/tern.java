@@ -10,40 +10,52 @@
  */
 package tern.eclipse.ide.internal.ui.console;
 
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleConstants;
 import org.eclipse.ui.console.IConsolePageParticipant;
 import org.eclipse.ui.part.IPageBookViewPage;
 
 public class TernConsolePageParticipant implements IConsolePageParticipant {
 
+	private TernConsole fConsole;
+	private ConsoleTerminateAction fTerminate;
+
 	@Override
-	public Object getAdapter(Class arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public void init(IPageBookViewPage page, IConsole console) {
+		this.fConsole = (TernConsole) console;
+		this.fTerminate = new ConsoleTerminateAction(fConsole.getProject());
+		IActionBars actionBars = page.getSite().getActionBars();
+		configureToolBar(actionBars.getToolBarManager());
+	}
+
+	protected void configureToolBar(IToolBarManager mgr) {
+		mgr.appendToGroup(IConsoleConstants.LAUNCH_GROUP, this.fTerminate);
 	}
 
 	@Override
 	public void activated() {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
 
 	@Override
 	public void deactivated() {
-		// TODO Auto-generated method stub
-
+		// do nothing
 	}
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-
+		if (this.fTerminate != null) {
+			this.fTerminate.dispose();
+			this.fTerminate = null;
+		}
+		this.fConsole = null;
 	}
 
 	@Override
-	public void init(IPageBookViewPage arg0, IConsole arg1) {
-		// TODO Auto-generated method stub
-
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class required) {
+		return null;
 	}
 
 }

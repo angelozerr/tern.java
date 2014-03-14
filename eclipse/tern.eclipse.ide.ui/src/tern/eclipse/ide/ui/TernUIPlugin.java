@@ -10,14 +10,18 @@
  */
 package tern.eclipse.ide.ui;
 
-import org.eclipse.swt.widgets.Display;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.internal.ui.console.TernConsole;
+import tern.eclipse.ide.internal.ui.console.TernConsoleHelper;
 import tern.eclipse.ide.ui.console.ITernConsole;
 
 /**
@@ -31,12 +35,13 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	// The shared instance
 	private static TernUIPlugin plugin;
 
-	private TernConsole console;
+	private final Map<IDETernProject, TernConsole> consoles;
 
 	/**
 	 * The constructor
 	 */
 	public TernUIPlugin() {
+		this.consoles = new HashMap<IDETernProject, TernConsole>();
 	}
 
 	/*
@@ -50,21 +55,18 @@ public class TernUIPlugin extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 
-		Display.getDefault().asyncExec(new Runnable() {
-
-			public void run() {
-				try {
-					console = new TernConsole();
-					/*
-					 * if (prefStoreHelper.isOpenIvyConsoleOnStartup()) {
-					 * IvyConsoleFactory.showConsole(); }
-					 */
-				} catch (RuntimeException e) {
-					// Don't let the console bring down the IvyDE UI
-					// logError("Errors occurred starting the Ivy console", e);
-				}
-			}
-		});
+		/*
+		 * Display.getDefault().asyncExec(new Runnable() {
+		 * 
+		 * public void run() { try { console = new TernConsole(); /* if
+		 * (prefStoreHelper.isOpenIvyConsoleOnStartup()) {
+		 * IvyConsoleFactory.showConsole(); }
+		 */
+		/*
+		 * } catch (RuntimeException e) { // Don't let the console bring down
+		 * the IvyDE UI // logError("Errors occurred starting the Ivy console",
+		 * e); } } });
+		 */
 	}
 
 	/*
@@ -107,7 +109,13 @@ public class TernUIPlugin extends AbstractUIPlugin {
 		return getActiveWorkbenchWindow().getActivePage();
 	}
 
-	public ITernConsole getConsole() {
+	public ITernConsole getConsole(IDETernProject project) {
+		TernConsole console = consoles.get(project);
+		if (console == null) {
+			console = new TernConsole(project);
+			consoles.put(project, console);
+		}
+		TernConsoleHelper.showConsole(console);
 		return console;
 	}
 

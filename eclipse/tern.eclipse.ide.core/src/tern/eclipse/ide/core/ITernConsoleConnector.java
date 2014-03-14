@@ -10,6 +10,8 @@
  */
 package tern.eclipse.ide.core;
 
+import org.eclipse.core.resources.IProject;
+
 import tern.server.ITernServer;
 
 /**
@@ -32,13 +34,13 @@ public interface ITernConsoleConnector {
 	 * 
 	 * @param ternServer
 	 */
-	void connectToConsole(ITernServer ternServer);
+	void connectToConsole(ITernServer ternServer, IDETernProject project);
 
 	/**
 	 * Disconnect the give tern server to the eclipse tern console.
 	 * 
 	 * @param ternServer
 	 */
-	void disconnectToConsole(ITernServer ternServer);
+	void disconnectToConsole(ITernServer ternServer, IDETernProject project);
 
 }

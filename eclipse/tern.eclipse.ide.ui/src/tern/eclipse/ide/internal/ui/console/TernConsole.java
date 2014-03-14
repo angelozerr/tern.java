@@ -10,11 +10,11 @@
  */
 package tern.eclipse.ide.internal.ui.console;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
@@ -24,6 +24,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.console.ITernConsole;
@@ -44,14 +45,19 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 
 	private boolean initialized;
 
-	public TernConsole() {
-		this("Tern", ImageResource.getImageDescriptor("icons/logo16x16.gif")); //$NON-NLS-1$
-	}
+	private final IDETernProject project;
 
-	public TernConsole(String name, ImageDescriptor imageDescriptor) {
-		super(name, imageDescriptor);
+	public TernConsole(IDETernProject project) {
+		super(getName(project), ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
+		this.project = project;
 		consoleManager = ConsolePlugin.getDefault().getConsoleManager();
 		document = new ConsoleDocument();
+	}
+
+	private static String getName(IDETernProject project) {
+		return new StringBuilder("Tern [")
+				.append(project.getProject().getName()).append("]").toString();
 	}
 
 	protected void init() {
@@ -171,7 +177,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 		// showOnMessage = true;
 		if (showNoMatterWhat || showOnMessage) {
 			if (!visible) {
-				TernConsoleFactory.showConsole();
+				TernConsoleHelper.showConsole(this);
 			} else {
 				consoleManager.showConsoleView(this);
 			}
@@ -205,4 +211,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 		}
 	}
 
+	public IDETernProject getProject() {
+		return project;
+	}
 }

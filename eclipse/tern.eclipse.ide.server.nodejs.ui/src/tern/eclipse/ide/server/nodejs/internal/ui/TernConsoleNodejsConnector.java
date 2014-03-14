@@ -10,12 +10,12 @@
  */
 package tern.eclipse.ide.server.nodejs.internal.ui;
 
+import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.server.ITernServer;
 import tern.server.nodejs.NodejsTernServer;
 
-public class TernConsoleNodejsConnector implements
-		ITernConsoleConnector {
+public class TernConsoleNodejsConnector implements ITernConsoleConnector {
 
 	@Override
 	public boolean isAdaptFor(ITernServer server) {
@@ -23,17 +23,28 @@ public class TernConsoleNodejsConnector implements
 	}
 
 	@Override
-	public void connectToConsole(ITernServer server) {
+	public void connectToConsole(ITernServer server, IDETernProject project) {
 		NodejsTernServer nodeServer = (NodejsTernServer) server;
-		nodeServer.addInterceptor(TernNodejsInterceptor.getInstance());
-		nodeServer.addProcessListener(TernNodejsInterceptor.getInstance());
+		TernNodejsInterceptor interceptor = getInterceptor(project);
+		nodeServer.addInterceptor(interceptor);
+		nodeServer.addProcessListener(interceptor);
 	}
 
 	@Override
-	public void disconnectToConsole(ITernServer server) {
+	public void disconnectToConsole(ITernServer server, IDETernProject project) {
 		NodejsTernServer nodeServer = (NodejsTernServer) server;
-		nodeServer.removeInterceptor(TernNodejsInterceptor.getInstance());
-		nodeServer.removeProcessListener(TernNodejsInterceptor.getInstance());
+		TernNodejsInterceptor interceptor = getInterceptor(project);
+		nodeServer.removeInterceptor(interceptor);
+		nodeServer.removeProcessListener(interceptor);
 	}
 
+	public TernNodejsInterceptor getInterceptor(IDETernProject project) {
+		String key = TernNodejsInterceptor.class.getName();
+		TernNodejsInterceptor interceptor = project.getData(key);
+		if (interceptor == null) {
+			interceptor = new TernNodejsInterceptor(project);
+			project.setData(key, interceptor);
+		}
+		return interceptor;
+	}
 }

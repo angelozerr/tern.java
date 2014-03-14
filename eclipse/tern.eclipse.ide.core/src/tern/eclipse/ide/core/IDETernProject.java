@@ -13,7 +13,9 @@ package tern.eclipse.ide.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -45,6 +47,7 @@ import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
+import tern.server.ITernServerListener;
 import tern.server.TernServerAdapter;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
@@ -82,12 +85,18 @@ public class IDETernProject extends TernProject<IFile> {
 
 	private final Object lock = new Object();
 
+	private final Map<String, Object> data;
+
+	private final List<ITernServerListener> listeners;
+
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
 		super.setFileManager(new IDETernFileManager());
 		project.setSessionProperty(TERN_PROJECT, this);
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
+		this.data = new HashMap<String, Object>();
+		this.listeners = new ArrayList<ITernServerListener>();
 	}
 
 	/**
@@ -135,7 +144,7 @@ public class IDETernProject extends TernProject<IFile> {
 	 * @return
 	 */
 	private ITernServer getTernServer() {
-		if (ternServer == null || ternServer.isDisposed()) {
+		if (isTernServerDisposed()) {
 			try {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
 						.getServerType();
@@ -147,6 +156,9 @@ public class IDETernProject extends TernProject<IFile> {
 								.cleanIndexedFiles();
 					}
 				});
+				for (ITernServerListener listener : listeners) {
+					this.ternServer.addServerListener(listener);
+				}
 				configureConsole();
 			} catch (Exception e) {
 				// should be improved?
@@ -155,6 +167,10 @@ public class IDETernProject extends TernProject<IFile> {
 
 		}
 		return ternServer;
+	}
+
+	public boolean isTernServerDisposed() {
+		return ternServer == null || ternServer.isDisposed();
 	}
 
 	/**
@@ -363,10 +379,10 @@ public class IDETernProject extends TernProject<IFile> {
 			if (connector != null) {
 				if (isTraceOnConsole()) {
 					// connect the tern server to the eclipse console.
-					connector.connectToConsole(ternServer);
+					connector.connectToConsole(ternServer, this);
 				} else {
 					// disconnect the tern server to the eclipse console.
-					connector.disconnectToConsole(ternServer);
+					connector.disconnectToConsole(ternServer, this);
 				}
 			}
 		}
@@ -638,6 +654,34 @@ public class IDETernProject extends TernProject<IFile> {
 			throws TernException {
 		ITernServer server = getTernServer();
 		server.request(doc, collector);
+	}
+
+	public void disposeServer() {
+		if (!isTernServerDisposed()) {
+			if (ternServer != null) {
+				ternServer.dispose();
+			}
+		}
+	}
+
+	public <T> T getData(String key) {
+		return (T) data.get(key);
+	}
+
+	public void setData(String key, Object value) {
+		data.put(key, value);
+	}
+
+	public void addServerListener(ITernServerListener listener) {
+		synchronized (listeners) {
+			listeners.add(listener);
+		}
+	}
+
+	public void removeServerListener(ITernServerListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
 	}
 
 }

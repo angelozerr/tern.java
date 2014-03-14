@@ -141,18 +141,11 @@
 	</extension>
      
     <!-- Tern Console -->
-	<extension point="org.eclipse.ui.console.consoleFactories">
-	  <consoleFactory 
-	     label="Tern Console"
-	     class="tern.eclipse.ide.internal.ui.console.TernConsoleFactory"
-	     icon="icons/full/obj16/logo.png">
-	  </consoleFactory>
-	</extension>
  	<extension
        point="org.eclipse.ui.console.consolePageParticipants">
 	    <consolePageParticipant
 	          class="tern.eclipse.ide.internal.ui.console.TernConsolePageParticipant"
-	          id="org.apache.Ternde.eclipse.TernConsolePageParticipant">
+	          id="tern.eclipse.ide.internal.ui.console.TernConsolePageParticipant">
 	       <enablement>
 	          <instanceof
 	                value="tern.eclipse.ide.internal.ui.console.TernConsole">
