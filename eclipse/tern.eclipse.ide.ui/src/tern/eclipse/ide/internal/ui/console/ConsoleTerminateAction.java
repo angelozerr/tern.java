@@ -1,7 +1,18 @@
+/**
+ *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
 package tern.eclipse.ide.internal.ui.console;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.ui.PlatformUI;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -9,6 +20,10 @@ import tern.eclipse.ide.ui.ImageResource;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 
+/**
+ * Stop tern Server action.
+ * 
+ */
 public class ConsoleTerminateAction extends Action implements
 		ITernServerListener {
 
@@ -26,16 +41,6 @@ public class ConsoleTerminateAction extends Action implements
 		setHoverImageDescriptor(ImageResource
 				.getImageDescriptor(ImageResource.IMG_STOP_ENABLED));
 		project.addServerListener(this);
-		update();
-	}
-
-	public void update() {
-		setEnabled(!isTernServerDisposed());
-	}
-
-	private boolean isTernServerDisposed() {
-		return project.isTernServerDisposed();
-
 	}
 
 	@Override
@@ -52,12 +57,24 @@ public class ConsoleTerminateAction extends Action implements
 
 	@Override
 	public void onStart(ITernServer server) {
-		update();
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				ConsoleTerminateAction.this.setEnabled(true);
+			}
+		});
 	}
 
 	@Override
 	public void onStop(ITernServer server) {
-		update();
+		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				ConsoleTerminateAction.this.setEnabled(false);
+			}
+		});
 	}
 
 }
