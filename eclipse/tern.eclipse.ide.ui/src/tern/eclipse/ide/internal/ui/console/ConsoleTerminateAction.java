@@ -47,6 +47,7 @@ public class ConsoleTerminateAction extends Action implements
 	public void run() {
 		try {
 			project.disposeServer();
+			super.setEnabled(!project.isTernServerDisposed());
 		} catch (Throwable e) {
 		}
 	}
