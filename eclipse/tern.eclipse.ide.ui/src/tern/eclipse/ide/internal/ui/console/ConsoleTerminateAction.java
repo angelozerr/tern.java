@@ -12,6 +12,7 @@ package tern.eclipse.ide.internal.ui.console;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 import tern.eclipse.ide.core.IDETernProject;
@@ -58,24 +59,25 @@ public class ConsoleTerminateAction extends Action implements
 
 	@Override
 	public void onStart(ITernServer server) {
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
-			@Override
-			public void run() {
-				ConsoleTerminateAction.this.setEnabled(true);
-			}
-		});
+		setEnabledWithSync(true);
 	}
 
 	@Override
 	public void onStop(ITernServer server) {
-		PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+		setEnabledWithSync(false);
+	}
 
-			@Override
-			public void run() {
-				ConsoleTerminateAction.this.setEnabled(false);
-			}
-		});
+	private void setEnabledWithSync(final boolean enabled) {
+		Display display = PlatformUI.getWorkbench().getDisplay();
+		if (!display.isDisposed()) {
+			display.syncExec(new Runnable() {
+
+				@Override
+				public void run() {
+					ConsoleTerminateAction.this.setEnabled(enabled);
+				}
+			});
+		}
 	}
 
 }
