@@ -32,6 +32,23 @@
     c(node, state);
   };
 
+  // An ancestor walk builds up an array of ancestor nodes (including
+  // the current node) and passes them to the callback as the state parameter.
+  exports.ancestor = function(node, visitors, base, state) {
+    if (!base) base = exports.base;
+    if (!state) state = [];
+    function c(node, st, override) {
+      var type = override || node.type, found = visitors[type];
+      if (node != st[st.length - 1]) {
+        st = st.slice();
+        st.push(node);
+      }
+      base[type](node, st, c);
+      if (found) found(node, st);
+    }
+    c(node, state);
+  };
+
   // A recursive walk is one where your functions override the default
   // walkers. They can modify and replace the state parameter that's
   // threaded through the walk, and can opt how and whether to walk
@@ -272,8 +289,12 @@
 
   // A custom walker that keeps track of the scope chain and the
   // variables defined in it.
-  function makeScope(prev) {
-    return {vars: Object.create(null), prev: prev};
+  function makeScope(prev, isCatch) {
+    return {vars: Object.create(null), prev: prev, isCatch: isCatch};
+  }
+  function normalScope(scope) {
+    while (scope.isCatch) scope = scope.prev;
+    return scope;
   }
   exports.scopeVisitor = exports.make({
     Function: function(node, scope, c) {
@@ -282,7 +303,7 @@
         inner.vars[node.params[i].name] = {type: "argument", node: node.params[i]};
       if (node.id) {
         var decl = node.type == "FunctionDeclaration";
-        (decl ? scope : inner).vars[node.id.name] =
+        (decl ? normalScope(scope) : inner).vars[node.id.name] =
           {type: decl ? "function" : "function name", node: node.id};
       }
       c(node.body, inner, "ScopeBody");
@@ -290,16 +311,17 @@
     TryStatement: function(node, scope, c) {
       c(node.block, scope, "Statement");
       if (node.handler) {
-        var inner = makeScope(scope);
+        var inner = makeScope(scope, true);
         inner.vars[node.handler.param.name] = {type: "catch clause", node: node.handler.param};
         c(node.handler.body, inner, "ScopeBody");
       }
       if (node.finalizer) c(node.finalizer, scope, "Statement");
     },
     VariableDeclaration: function(node, scope, c) {
+      var target = normalScope(scope);
       for (var i = 0; i < node.declarations.length; ++i) {
         var decl = node.declarations[i];
-        scope.vars[decl.id.name] = {type: "var", node: decl.id};
+        target.vars[decl.id.name] = {type: "var", node: decl.id};
         if (decl.init) c(decl.init, scope, "Expression");
       }
     }

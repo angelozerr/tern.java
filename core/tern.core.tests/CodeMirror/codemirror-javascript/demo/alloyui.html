@@ -72,6 +72,17 @@ AUI().use('', function(A) {
   //<-Ctrl+Space shows A
   A. //<-Ctrl+Space shows use and ready
 });
+
+YUI({ filter:'raw' }).use('aui-node', function(Y) {
+
+  var node = Y.one('#toggleColor');
+
+  node.on('click', function() {
+    var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+    node.setStyle('background', '#' + randomColor);
+  });
+
+});
 </textarea></p>
 
 <p>Demonstrates integration of <a href="http://ternjs.net/">Tern</a>
