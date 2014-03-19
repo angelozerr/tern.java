@@ -87,6 +87,79 @@ public abstract class AbstractAngularControllerCompletionTest extends
 	}
 
 	@Test
+	public void completionWithModuleControllerInsideDirective()
+			throws TernException {
+		TernDoc doc = createDocForCompletionModuleControllersInsideDirective("ui.bootstrap.buttons");
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() == 1);
+		TernAngularCompletionItem item = collector.get("btnRadio#controller");
+		Assert.assertNotNull(item);
+		Assert.assertEquals("ui.bootstrap.buttons", item.getModule());
+		Assert.assertEquals("btnRadio#controller", item.getName());
+		Assert.assertEquals("fn($scope: $scope)",
+				item.getType());
+		Assert.assertEquals("myfile.js", item.getOrigin());
+	}
+
+	private TernDoc createDocForCompletionModuleControllersInsideDirective(
+			String module) {
+		String name = "myfile.js";
+
+		String text = "angular.module('ui.bootstrap.buttons', [])";
+		text += "\n.directive('btnRadio', function () {";
+		text += "\nreturn {";
+		text += "\ncontroller: function($scope) {}";
+		text += "\n};})";
+
+		TernDoc doc = new TernDoc();
+		doc.addFile(name, text, null);
+
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.controller);
+		query.getScope().setModule(module);
+		query.addFile("myfile.js");
+		query.setExpression("btnRadio");
+
+		doc.setQuery(query);
+		return doc;
+	}
+
+	@Test
+	public void completionWithModuleControllerInsideDirectiveNoFunc()
+			throws TernException {
+		TernDoc doc = completionWithModuleControllerInsideDirectiveNoFunc("ui.bootstrap.buttons");
+		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() == 0);
+	}
+
+	private TernDoc completionWithModuleControllerInsideDirectiveNoFunc(
+			String module) {
+		String name = "myfile.js";
+
+		String text = "angular.module('ui.bootstrap.buttons', [])";
+		text += "\n.directive('btnRadio', function () {";
+		text += "\nreturn {";
+		text += "\ncontroller: 'ButtonsController'";
+		text += "\n};})";
+
+		TernDoc doc = new TernDoc();
+		doc.addFile(name, text, null);
+
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.controller);
+		query.getScope().setModule(module);
+		query.addFile("myfile.js");
+		query.setExpression("btnRadio");
+
+		doc.setQuery(query);
+		return doc;
+	}
+
+	@Test
 	public void completionWithGlobalControllers() throws TernException {
 		TernDoc doc = createDocForGlobalControllers();
 		MockTernAngularCompletionCollector collector = new MockTernAngularCompletionCollector();
