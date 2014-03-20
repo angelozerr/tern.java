@@ -14,10 +14,10 @@ import tern.TernException;
 import tern.TernProject;
 import tern.server.ITernServer;
 import tern.server.nodejs.NodejsTernServerFactory;
-import tern.server.protocol.angular.AbstractAngularFilterCompletionTest;
+import tern.server.protocol.angular.AbstractAngularDirectiveCompletionTest;
 
-public class NodejsAngularFilterCompletionTest extends
-		AbstractAngularFilterCompletionTest {
+public class NodejsAngularDirectiveCompletionTest extends
+		AbstractAngularDirectiveCompletionTest {
 
 	@Override
 	protected ITernServer createServer(TernProject project)
