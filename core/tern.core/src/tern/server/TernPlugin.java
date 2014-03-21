@@ -14,7 +14,7 @@ public enum TernPlugin implements ITernPlugin {
 
 	alloyui("tern/plugin/alloyui"), angular("tern/plugin/angular"), component(
 			"tern/plugin/component"), doc_comment("tern/plugin/doc_comment"), node(
-			"tern/plugin/node"), requirejs("tern/plugin/requirejs");
+			"tern/plugin/node"), requirejs("tern/plugin/requirejs"), cordovajs("tern/plugin/cordovajs");
 
 	private final String path;
 
