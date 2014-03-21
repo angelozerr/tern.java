@@ -158,9 +158,7 @@ public class IDETernProject extends TernProject<IFile> {
 								.cleanIndexedFiles();
 					}
 				});
-				for (ITernServerListener listener : listeners) {
-					this.ternServer.addServerListener(listener);
-				}
+				copyListeners();
 				configureConsole();
 			} catch (Exception e) {
 				// should be improved?
@@ -687,7 +685,18 @@ public class IDETernProject extends TernProject<IFile> {
 
 	public void addServerListener(ITernServerListener listener) {
 		synchronized (listeners) {
-			listeners.add(listener);
+			if (!listeners.contains(listener)) {
+				listeners.add(listener);
+			}
+		}
+		copyListeners();
+	}
+
+	public void copyListeners() {
+		if (ternServer != null) {
+			for (ITernServerListener listener : listeners) {
+				this.ternServer.addServerListener(listener);
+			}
 		}
 	}
 

@@ -32,11 +32,14 @@ public class TernScriptPathLabelProvider extends LabelProvider {
 			return super.getText(element);
 		}
 
-		IResource res = ((ITernScriptPath) element).getResource();
-		String str = res.getName();
-		str = str + " - "
-				+ res.getParent().getFullPath().makeRelative().toString();
-		return str;
+		IResource resource = ((ITernScriptPath) element).getResource();
+		if (resource.getType() == IResource.PROJECT) {
+			return resource.getName();
+		}
+		return new StringBuilder(resource.getName())
+				.append(" - ")
+				.append(resource.getParent().getFullPath().makeRelative()
+						.toString()).toString();
 	}
 
 	@Override

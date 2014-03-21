@@ -12,8 +12,6 @@ package tern.eclipse.ide.internal.ui.console;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.PlatformUI;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -47,37 +45,27 @@ public class ConsoleTerminateAction extends Action implements
 	@Override
 	public void run() {
 		try {
-			project.disposeServer();
-			super.setEnabled(!project.isTernServerDisposed());
+			if (project.isTernServerDisposed()) {
+				this.setEnabled(false);
+			} else {
+				project.disposeServer();
+			}
 		} catch (Throwable e) {
 		}
 	}
 
 	public void dispose() {
-
+		project.removeServerListener(this);
 	}
 
 	@Override
 	public void onStart(ITernServer server) {
-		setEnabledWithSync(true);
+		this.setEnabled(true);
 	}
 
 	@Override
 	public void onStop(ITernServer server) {
-		setEnabledWithSync(false);
-	}
-
-	private void setEnabledWithSync(final boolean enabled) {
-		Display display = PlatformUI.getWorkbench().getDisplay();
-		if (!display.isDisposed()) {
-			display.syncExec(new Runnable() {
-
-				@Override
-				public void run() {
-					ConsoleTerminateAction.this.setEnabled(enabled);
-				}
-			});
-		}
+		this.setEnabled(false);
 	}
 
 }
