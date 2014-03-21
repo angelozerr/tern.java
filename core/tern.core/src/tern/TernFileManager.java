@@ -40,6 +40,9 @@ public abstract class TernFileManager<T> {
 	private static final String HTTP_ATTR = "http";
 	private static final String SRC_ATTR = "src";
 
+	// protocol for filename hosted in an external tern project
+	private static final String PROJECT_PROTOCOL = "project://";
+
 	/**
 	 * List of JS files which was already parsed by the tern server.
 	 */
@@ -79,8 +82,8 @@ public abstract class TernFileManager<T> {
 
 		// Get the list of script element of the given DOM node
 		NodeList scripts = domNode.getNodeType() == Node.DOCUMENT_NODE ? ((Document) domNode)
-				.getElementsByTagName(SCRIPT_ELT)
-				: domNode.getOwnerDocument().getElementsByTagName(SCRIPT_ELT);
+				.getElementsByTagName(SCRIPT_ELT) : domNode.getOwnerDocument()
+				.getElementsByTagName(SCRIPT_ELT);
 
 		// Update the files of tern doc with scripts elements by using indexed
 		// file list.
@@ -222,6 +225,43 @@ public abstract class TernFileManager<T> {
 		}
 	}
 
+	/**
+	 * Returns the file from the given filename. If filename comes from an
+	 * external tern project, it uses the following syntax
+	 * project://{projectName}/{filepath}
+	 * 
+	 * @param filename
+	 * @return
+	 */
+	public T getFile(String filename) {
+		if (filename == null) {
+			return null;
+		}
+		if (filename.startsWith(PROJECT_PROTOCOL)) {
+			// filename comes from an external tern project.
+			int index = filename.indexOf('/', PROJECT_PROTOCOL.length());
+			return getFile(
+					filename.substring(PROJECT_PROTOCOL.length(), index),
+					filename.substring(index, filename.length()));
+		}
+		// filename comes from the local tern project.
+		return getFile(null, filename);
+	}
+
+	/**
+	 * Returns the filename from the given tern project and path.
+	 * 
+	 * @param projectName
+	 *            external tern project
+	 * @param path
+	 *            file path.
+	 * @return the filename from the given tern project and path.
+	 */
+	public String getFileName(String projectName, String path) {
+		return new StringBuilder(PROJECT_PROTOCOL).append(projectName)
+				.append("/").append(path).toString();
+	}
+
 	// ----------------- Internal methods
 
 	/**
@@ -269,6 +309,7 @@ public abstract class TernFileManager<T> {
 	 *            to parse it.
 	 * @param names
 	 *            list to update with the names of visited scripts.
+	 * @param project
 	 */
 	private void internalUpdateFile(T file, TernDoc doc, List names)
 			throws IOException {
@@ -329,6 +370,8 @@ public abstract class TernFileManager<T> {
 	 * 
 	 * @param file
 	 *            the generic file.
+	 * @param project
+	 *            referenced tern project or null otherwise.
 	 * @return the file name of the given file.
 	 */
 	public abstract String getFileName(T file);
@@ -343,7 +386,7 @@ public abstract class TernFileManager<T> {
 	public abstract String getFileContent(T file) throws IOException;
 
 	/**
-	 * Get the relative file to the given file and path.
+	 * Returns the relative file from the given file and path.
 	 * 
 	 * @param file
 	 *            the file root.
@@ -352,5 +395,16 @@ public abstract class TernFileManager<T> {
 	 * @return the relative file to the given file and path.
 	 */
 	public abstract T getRelativeFile(T file, String path);
+
+	/**
+	 * Returns the file from the given external tern project and file path.
+	 * 
+	 * @param projectName
+	 *            external tern project.
+	 * @param path
+	 *            file path.
+	 * @return
+	 */
+	protected abstract T getFile(String projectName, String path);
 
 }

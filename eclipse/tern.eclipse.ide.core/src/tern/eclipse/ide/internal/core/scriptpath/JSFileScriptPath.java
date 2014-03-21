@@ -23,7 +23,7 @@ import tern.server.protocol.TernDoc;
 
 /**
  * HTML/JSP page script path. This script path implementation gives the
- * capability to select an js file with "Add File" of the Tern "Script Path"
+ * capability to select an js file with "Add File" in the Tern "Script Path"
  * property page project.
  * 
  */

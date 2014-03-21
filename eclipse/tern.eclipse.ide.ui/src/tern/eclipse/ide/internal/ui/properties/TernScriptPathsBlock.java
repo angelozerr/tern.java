@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -66,9 +67,10 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	private Composite fControl;
 	private final List<ITernScriptPath> ternScriptPaths = new ArrayList<ITernScriptPath>();
 	private TreeViewer treeViewer;
-	private Button fAddFileButton;
-	private Button fAddFolderButton;
-	private Button fRemoveButton;
+	private Button addFileButton;
+	private Button addFolderButton;
+	private Button addProjectButton;
+	private Button removeButton;
 
 	private final IDETernProject ternProject;
 
@@ -118,7 +120,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				fRemoveButton.setEnabled(!((IStructuredSelection) event
+				removeButton.setEnabled(!((IStructuredSelection) event
 						.getSelection()).isEmpty());
 			}
 		});
@@ -142,34 +144,44 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		buttons.setFont(font);
 
 		// Add "File" button
-		fAddFileButton = createPushButton(buttons,
+		addFileButton = createPushButton(buttons,
 				TernUIMessages.TernScriptPathsBlock_addFileButton);
-		fAddFileButton.addListener(SWT.Selection, new Listener() {
+		addFileButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addScriptPath(ScriptPathsType.FILE);
 			}
 		});
-		fAddFileButton.setEnabled(true);
+		addFileButton.setEnabled(true);
 
 		// "Add Folder" button
-		fAddFolderButton = createPushButton(buttons,
+		addFolderButton = createPushButton(buttons,
 				TernUIMessages.TernScriptPathsBlock_addFolderButton);
-		fAddFolderButton.addListener(SWT.Selection, new Listener() {
+		addFolderButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addScriptPath(ScriptPathsType.FOLDER);
 			}
 		});
-		fAddFolderButton.setEnabled(true);
+		addFolderButton.setEnabled(true);
+
+		// "Add Project" button
+		addProjectButton = createPushButton(buttons,
+				TernUIMessages.TernScriptPathsBlock_addProjectButton);
+		addProjectButton.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event evt) {
+				addScriptPath(ScriptPathsType.PROJECT);
+			}
+		});
+		addProjectButton.setEnabled(true);
 
 		// Remove button
-		fRemoveButton = createPushButton(buttons,
+		removeButton = createPushButton(buttons,
 				TernUIMessages.TernScriptPathsBlock_removeButton);
-		fRemoveButton.addListener(SWT.Selection, new Listener() {
+		removeButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				removeScriptPaths();
 			}
 		});
-		fRemoveButton.setEnabled(false);
+		removeButton.setEnabled(false);
 
 		// copied from ListDialogField.CreateSeparator()
 		Label separator = new Label(buttons, SWT.NONE);
@@ -225,18 +237,43 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 	public SelectionDialog createDialog(ScriptPathsType type) {
 		final IProject project = ternProject.getProject();
-		if (type == ScriptPathsType.FOLDER) {
-			ILabelProvider lp = new WorkbenchLabelProvider();
-			ITreeContentProvider cp = new WorkbenchContentProvider();
-			MultipleFolderSelectionDialog dialog = new MultipleFolderSelectionDialog(
-					getShell(), lp, cp);
-			dialog.setInput(project.getParent());
-			dialog.setInitialFocus(project);
-			ViewerFilter filter = new ViewerFilter() {
+		switch (type) {
+		case FOLDER:
+			return createFolderDialog(project, false);
+		case FILE:
+			return new OpenResourceDialog(getShell(), true, project,
+					IResource.FILE);
+		case PROJECT:
+			return createFolderDialog(project, true);
+		default:
+			return null;
+		}
+	}
 
-				@Override
-				public boolean select(Viewer viewer, Object parentElement,
-						Object element) {
+	public SelectionDialog createFolderDialog(final IProject project,
+			final boolean showAllProjects) {
+		ILabelProvider lp = new WorkbenchLabelProvider();
+		ITreeContentProvider cp = new WorkbenchContentProvider();
+		MultipleFolderSelectionDialog dialog = new MultipleFolderSelectionDialog(
+				getShell(), lp, cp, !showAllProjects);
+		if (showAllProjects) {
+			dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
+		} else {
+			dialog.setInput(project.getParent());
+		}
+		dialog.setInitialFocus(project);
+		ViewerFilter filter = new ViewerFilter() {
+
+			@Override
+			public boolean select(Viewer viewer, Object parentElement,
+					Object element) {
+				if (showAllProjects) {
+					if (element instanceof IProject) {
+						IProject p = (IProject) element;
+						return (!p.equals(project) && IDETernProject
+								.hasTernNature(p));
+					}
+				} else {
 					if (element instanceof IContainer) {
 						IContainer container = (IContainer) element;
 						if (container.getType() == IResource.FOLDER) {
@@ -247,14 +284,12 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 						}
 						return false;
 					}
-					return false;
 				}
-			};
-			dialog.addFilter(filter);
-			return dialog;
-
-		}
-		return new OpenResourceDialog(getShell(), true, project, IResource.FILE);
+				return false;
+			}
+		};
+		dialog.addFilter(filter);
+		return dialog;
 	}
 
 	/**

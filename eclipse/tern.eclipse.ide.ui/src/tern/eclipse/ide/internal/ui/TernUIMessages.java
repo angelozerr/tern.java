@@ -42,6 +42,7 @@ public final class TernUIMessages extends NLS {
 	public static String TernScriptPathsBlock_desc;
 	public static String TernScriptPathsBlock_addFileButton;
 	public static String TernScriptPathsBlock_addFolderButton;
+	public static String TernScriptPathsBlock_addProjectButton;
 	public static String TernScriptPathsBlock_removeButton;
 	public static String TernConsolePropertyPage_desc;
 	public static String TernConsolePropertyPage_traceOnConsole_label;
@@ -55,7 +56,7 @@ public final class TernUIMessages extends NLS {
 
 	// Tern Console Name
 	public static String TernConsoleJob_name;
-
+	
 	public static String ConsoleTerminateAction_tooltipText;
 	
 	private TernUIMessages() {

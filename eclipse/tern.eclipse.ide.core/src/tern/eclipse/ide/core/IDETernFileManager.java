@@ -35,10 +35,19 @@ import tern.utils.IOUtils;
 public class IDETernFileManager extends TernFileManager<IFile> implements
 		IResourceChangeListener, IResourceDeltaVisitor {
 
-	public IDETernFileManager() {
+	private final IProject project;
+
+	/**
+	 * Constructor of file manager with the owner Eclipse project.
+	 */
+	public IDETernFileManager(IProject project) {
+		this.project = project;
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
 	}
 
+	/**
+	 * Dispose the file manager.
+	 */
 	public void dispose() {
 		super.cleanIndexedFiles();
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
@@ -46,7 +55,23 @@ public class IDETernFileManager extends TernFileManager<IFile> implements
 
 	@Override
 	public String getFileName(IFile file) {
-		return file.getProjectRelativePath().toString();
+		String fileName = file.getProjectRelativePath().toString();
+		if (!isBelongToLocalProject(file)) {
+			// the given file is hosted in an external tern project,
+			return getFileName(file.getProject().getName(), fileName);
+		}
+		return fileName;
+	}
+
+	/**
+	 * Returns true if the given file belong to the local tern project and false
+	 * otherwise.
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private boolean isBelongToLocalProject(IFile file) {
+		return file.getProject().getName().equals(this.project.getName());
 	}
 
 	@Override
@@ -64,6 +89,21 @@ public class IDETernFileManager extends TernFileManager<IFile> implements
 		IFile relativeFile = parent.getFile(new Path(path));
 		if (relativeFile != null && relativeFile.exists()) {
 			return relativeFile;
+		}
+		return null;
+	}
+
+	@Override
+	protected IFile getFile(String projectName, String path) {
+		if (projectName == null) {
+			// project name is null, return file from the local tern project.
+			return project.getFile(path);
+		}
+		// project name is defined, return file from the external tern project.
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(projectName);
+		if (project != null) {
+			return project.getFile(path);
 		}
 		return null;
 	}

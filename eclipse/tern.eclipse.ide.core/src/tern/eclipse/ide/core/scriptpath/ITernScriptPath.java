@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 
 import tern.TernFileManager;
@@ -33,7 +34,7 @@ public interface ITernScriptPath {
 	 * 
 	 */
 	public enum ScriptPathsType {
-		FILE, FOLDER;
+		FILE, FOLDER, PROJECT;
 
 		public static ScriptPathsType getType(String type) {
 			ScriptPathsType[] types = ScriptPathsType.values();
@@ -49,14 +50,21 @@ public interface ITernScriptPath {
 	}
 
 	/**
-	 * The root resource which contains the scripts to load.
+	 * Returns the root resource which contains the scripts to load.
 	 * 
 	 * @return
 	 */
 	IResource getResource();
 
 	/**
-	 * The path of the root resource.
+	 * Returns the project where script path belongs to.
+	 * 
+	 * @return
+	 */
+	IProject getOwnerProject();
+
+	/**
+	 * Returns the path of the root resource.
 	 * 
 	 * @return
 	 */

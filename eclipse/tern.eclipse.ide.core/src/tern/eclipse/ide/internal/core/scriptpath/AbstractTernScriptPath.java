@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.internal.core.scriptpath;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
@@ -31,6 +32,11 @@ public abstract class AbstractTernScriptPath implements ITernScriptPath {
 	@Override
 	public IResource getResource() {
 		return resource;
+	}
+
+	@Override
+	public IProject getOwnerProject() {
+		return getResource().getProject();
 	}
 
 	@Override

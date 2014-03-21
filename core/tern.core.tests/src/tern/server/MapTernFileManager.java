@@ -31,4 +31,9 @@ public class MapTernFileManager extends TernFileManager<MapTernFile> {
 		return null;
 	}
 
+	@Override
+	protected MapTernFile getFile(String projectName, String path) {
+		return null;
+	}
+
 }

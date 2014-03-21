@@ -29,7 +29,7 @@ import tern.utils.StringUtils;
 
 /**
  * HTML/JSP page script path. This script path implementation gives the
- * capability to select an HTML/JSP file with "Add File" of the Tern
+ * capability to select an HTML/JSP file with "Add File" in the Tern
  * "Script Path" property page project and retrieve list of JS files declared in
  * the DOM "script" elements.
  * 

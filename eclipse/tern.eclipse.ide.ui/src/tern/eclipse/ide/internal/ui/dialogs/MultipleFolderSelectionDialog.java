@@ -72,8 +72,11 @@ public class MultipleFolderSelectionDialog extends SelectionStatusDialog
 	private Set<Object> fExisting;
 	private Object fFocusElement;
 
+	private boolean hasNewFolderButton;
+
 	public MultipleFolderSelectionDialog(Shell parent,
-			ILabelProvider labelProvider, ITreeContentProvider contentProvider) {
+			ILabelProvider labelProvider, ITreeContentProvider contentProvider,
+			boolean hasNewFolderButton) {
 		super(parent);
 		fLabelProvider = labelProvider;
 		fContentProvider = contentProvider;
@@ -84,6 +87,7 @@ public class MultipleFolderSelectionDialog extends SelectionStatusDialog
 		fExisting = null;
 		fFocusElement = null;
 		fFilters = null;
+		this.hasNewFolderButton = hasNewFolderButton;
 	}
 
 	public void setExisting(Object[] existing) {
@@ -245,17 +249,19 @@ public class MultipleFolderSelectionDialog extends SelectionStatusDialog
 		treeWidget.setLayoutData(data);
 		treeWidget.setFont(composite.getFont());
 
-		Button button = new Button(composite, SWT.PUSH);
-		button.setText(TernUIMessages.MultipleFolderSelectionDialog_button);
-		button.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent event) {
-				newFolderButtonPressed();
-			}
-		});
-		button.setFont(composite.getFont());
+		if (hasNewFolderButton) {
+			Button button = new Button(composite, SWT.PUSH);
+			button.setText(TernUIMessages.MultipleFolderSelectionDialog_button);
+			button.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent event) {
+					newFolderButtonPressed();
+				}
+			});
+			button.setFont(composite.getFont());
 
-		fNewFolderButton = button;
+			fNewFolderButton = button;
+		}
 
 		treeViewer.addSelectionChangedListener(this);
 		if (fExisting != null) {
@@ -296,7 +302,9 @@ public class MultipleFolderSelectionDialog extends SelectionStatusDialog
 				fSelectedContainer = (IContainer) first;
 			}
 		}
-		fNewFolderButton.setEnabled(fSelectedContainer != null);
+		if (hasNewFolderButton) {
+			fNewFolderButton.setEnabled(fSelectedContainer != null);
+		}
 	}
 
 	protected void newFolderButtonPressed() {

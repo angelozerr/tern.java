@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.QualifiedName;
@@ -45,6 +46,7 @@ import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.DOMElementsScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
+import tern.eclipse.ide.internal.core.scriptpath.ProjectScriptPath;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
@@ -92,7 +94,7 @@ public class IDETernProject extends TernProject<IFile> {
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
-		super.setFileManager(new IDETernFileManager());
+		super.setFileManager(new IDETernFileManager(getProject()));
 		project.setSessionProperty(TERN_PROJECT, this);
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
 		this.data = new HashMap<String, Object>();
@@ -251,10 +253,17 @@ public class IDETernProject extends TernProject<IFile> {
 	 * @return
 	 */
 	private IResource getResource(String path, ScriptPathsType pathType) {
-		if (pathType.equals(ScriptPathsType.FOLDER)) {
+		switch (pathType) {
+		case FILE:
+			return getProject().getFile(path);
+		case FOLDER:
 			return getProject().getFolder(path);
+		case PROJECT:
+			return ResourcesPlugin.getWorkspace().getRoot().getProject(path);
 		}
-		return getProject().getFile(path);
+		throw new UnsupportedOperationException(
+				"Cannot retrieve resource from the type=" + pathType
+						+ " of the path=" + path);
 	}
 
 	@Override
@@ -312,13 +321,17 @@ public class IDETernProject extends TernProject<IFile> {
 		switch (type) {
 		case FOLDER:
 			return new FolderScriptPath((IFolder) resource);
-		default:
+		case FILE:
 			IFile file = (IFile) resource;
 			if (FileUtils.isJSFile(file)) {
 				return new JSFileScriptPath(file);
 			}
 			return new DOMElementsScriptPath(file);
+		case PROJECT:
+			return new ProjectScriptPath((IProject) resource, getProject());
 		}
+		throw new UnsupportedOperationException(
+				"Cannot create script path for the given type " + type);
 
 	}
 

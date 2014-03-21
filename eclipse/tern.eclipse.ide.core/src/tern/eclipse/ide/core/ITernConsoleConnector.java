@@ -10,8 +10,6 @@
  */
 package tern.eclipse.ide.core;
 
-import org.eclipse.core.resources.IProject;
-
 import tern.server.ITernServer;
 
 /**

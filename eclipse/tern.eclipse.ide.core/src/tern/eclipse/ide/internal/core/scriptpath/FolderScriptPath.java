@@ -25,11 +25,12 @@ import org.eclipse.core.runtime.CoreException;
 import tern.TernFileManager;
 import tern.eclipse.ide.core.scriptpath.IScriptResource;
 import tern.eclipse.ide.core.utils.FileUtils;
+import tern.eclipse.ide.internal.core.Trace;
 import tern.server.protocol.TernDoc;
 
 /**
  * Folder script path. This script path implementation gives the capability to
- * select a folder with "Add Folder" of the Tern "Script Path" property page
+ * select a folder with "Add Folder" in the Tern "Script Path" property page
  * project and retrieve list of JS files which are hosted in this folder and
  * their subfolders.
  * 
@@ -40,19 +41,21 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 
 	private IResourceVisitor scriptResourcesVisitor;
 
-	public FolderScriptPath(IFolder resource) {
-		super(resource, ScriptPathsType.FOLDER);
+	public FolderScriptPath(IFolder folder) {
+		super(folder, ScriptPathsType.FOLDER);
 		this.scripts = new ArrayList<IScriptResource>();
 	}
 
 	@Override
 	public Collection<IScriptResource> getScriptResources() {
 		this.scripts.clear();
-		IContainer container = (IContainer) getResource();
+		IFolder folder = (IFolder) getResource();
 		try {
-			container.accept(getScriptResourcesVisitor());
+			folder.accept(getScriptResourcesVisitor());
 		} catch (CoreException e) {
-			e.printStackTrace();
+			Trace.trace(Trace.SEVERE,
+					"Error while retrieving script resources from the folder script path "
+							+ folder.getName(), e);
 		}
 		return scripts;
 	}
