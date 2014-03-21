@@ -85,7 +85,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				INodejsInstall install = TernNodejsCorePlugin
 						.getNodejsInstallManager().findNodejsInstall(
 								newValue.toString());
-				if (install.isNative()) {
+				if (install == null || install.isNative()) {
 					nodeFileField.setEnabled(true, getFieldEditorParent());
 					nodeFileField.setStringValue(IDENodejsProcessHelper
 							.getNodejsPath());
