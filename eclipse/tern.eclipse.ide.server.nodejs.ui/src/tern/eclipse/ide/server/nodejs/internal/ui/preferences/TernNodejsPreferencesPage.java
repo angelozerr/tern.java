@@ -17,6 +17,9 @@ import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -37,7 +40,8 @@ import tern.utils.StringUtils;
 public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
-	private FileComboFieldEditor nodeFileField;
+	private FileComboFieldEditor nativeNodePath;
+	private Label nodePath;
 
 	public TernNodejsPreferencesPage() {
 		super(GRID);
@@ -62,7 +66,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPersistent,
 				getFieldEditorParent());
 		addField(persistentField);
-		
+
 		// Tern Server type combo
 		INodejsInstall[] installs = TernNodejsCorePlugin
 				.getNodejsInstallManager().getNodejsInstalls();
@@ -86,13 +90,14 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 						.getNodejsInstallManager().findNodejsInstall(
 								newValue.toString());
 				if (install == null || install.isNative()) {
-					nodeFileField.setEnabled(true, getFieldEditorParent());
-					nodeFileField.setStringValue(IDENodejsProcessHelper
-							.getNodejsPath());
+					nativeNodePath.setEnabled(true, getFieldEditorParent());
+					String defaultPath = IDENodejsProcessHelper.getNodejsPath();
+					nativeNodePath.setStringValue(defaultPath);
+					nodePath.setText(defaultPath);
+
 				} else {
-					nodeFileField.setEnabled(false, getFieldEditorParent());
-					nodeFileField.setStringValue(install.getPath()
-							.getAbsolutePath());
+					nativeNodePath.setEnabled(false, getFieldEditorParent());
+					nodePath.setText(install.getPath().getAbsolutePath());
 				}
 				super.fireValueChanged(property, oldValue, newValue);
 			}
@@ -101,22 +106,38 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 
 		// Node.js path
 		String[] defaultPaths = IDENodejsProcessHelper.getDefaultNodejsPaths();
-		nodeFileField = new FileComboFieldEditor(
+		nativeNodePath = new FileComboFieldEditor(
 				TernNodejsCoreConstants.NODEJS_PATH,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPath,
-				defaultPaths, getFieldEditorParent());
-		addField(nodeFileField);
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nativeNodeJSPath,
+				defaultPaths, getFieldEditorParent()) {
+			@Override
+			protected void fireValueChanged(String property, Object oldValue,
+					Object newValue) {
+				nodePath.setText(newValue.toString());
+				super.fireValueChanged(property, oldValue, newValue);
+			}
+		};
+		addField(nativeNodePath);
 
+		// Node path label
+		Label nodePathTitle = new Label(getFieldEditorParent(), SWT.NONE);
+		nodePathTitle
+				.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPath);
+		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
+		nodePathTitle.setLayoutData(gridData);
+
+		nodePath = new Label(getFieldEditorParent(), SWT.WRAP);
+		nodePath.setText("");
+		gridData = new GridData(GridData.FILL_BOTH);
+		gridData.horizontalSpan = 2;
+		nodePath.setLayoutData(gridData);
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
 		// Update enable/disable of the nodejs path field.
-		INodejsInstall install = null;
-		String installId = super.getPreferenceStore().getString(
-				TernNodejsCoreConstants.NODEJS_INSTALL);
-		if (!StringUtils.isEmpty(installId)) {
-			install = TernNodejsCorePlugin.getNodejsInstallManager()
-					.findNodejsInstall(installId);
-		}
-		nodeFileField.setEnabled(install != null && install.isNative(),
-				getFieldEditorParent());
+		updateNodePath(false);
 	}
 
 	@Override
@@ -137,5 +158,40 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			TernCorePlugin.getTernServerTypeManager().refresh();
 		}
 		return result;
+	}
+
+	@Override
+	protected void performDefaults() {
+		super.performDefaults();
+		updateNodePath(true);
+
+	}
+
+	public void updateNodePath(boolean defaultValue) {
+		INodejsInstall install = getNodejsInstall(defaultValue);
+		// update node path
+		if (install != null) {
+			if (install.isNative()) {
+				nodePath.setText(nativeNodePath.getStringValue());
+			} else {
+				nodePath.setText(install.getPath().getAbsolutePath());
+			}
+		}
+		// update enable native node path
+		nativeNodePath.setEnabled(install != null && install.isNative(),
+				getFieldEditorParent());
+	}
+
+	private INodejsInstall getNodejsInstall(boolean defaultValue) {
+		INodejsInstall install = null;
+		String installId = defaultValue ? super.getPreferenceStore()
+				.getDefaultString(TernNodejsCoreConstants.NODEJS_INSTALL)
+				: super.getPreferenceStore().getString(
+						TernNodejsCoreConstants.NODEJS_INSTALL);
+		if (!StringUtils.isEmpty(installId)) {
+			install = TernNodejsCorePlugin.getNodejsInstallManager()
+					.findNodejsInstall(installId);
+		}
+		return install;
 	}
 }

@@ -49,7 +49,7 @@ public class TernNodejsCorePreferencesSupport {
 	}
 
 	/**
-	 * Returns the node install from teh workspace preferences.
+	 * Returns the node install from the workspace preferences.
 	 * 
 	 * @return
 	 */
