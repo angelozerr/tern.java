@@ -34,6 +34,10 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 	}
 
 	@Test
+	public void empty() {
+		
+	}
+	//@Test
 	public void addBigFileWith2Threads() throws TernException, IOException {
 
 		final MapTernFileManager fileManager = (MapTernFileManager) server
