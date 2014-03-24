@@ -18,6 +18,12 @@ import org.json.simple.JSONObject;
 
 public class TernAngularScope extends JSONObject {
 
+	private static final Pattern NGREPEAT_PATTERN = Pattern
+			.compile("^\\s*(.+)\\s+in\\s+(.*?)\\s*(\\s+track\\s+by\\s+(.+)\\s*)?$");
+
+	private static final Pattern NGREPEAT_LHS_PATTERN = Pattern
+			.compile("^(?:([\\$\\w]+)|\\(([\\$\\w]+)\\s*,\\s*([\\$\\w]+)\\))$");
+
 	public void setModule(String module) {
 		super.put("module", module);
 	}
@@ -68,26 +74,26 @@ public class TernAngularScope extends JSONObject {
 	}
 
 	public void addRepeat(String expression) {
-		Pattern pattern = Pattern
-				.compile("^\\s*(.+)\\s+in\\s+(.*?)\\s*(\\s+track\\s+by\\s+(.+)\\s*)?$");
-		Matcher matcher = pattern.matcher(expression);
-		while (matcher.find()) {
+		Matcher matcher = NGREPEAT_PATTERN.matcher(expression);
+		if (matcher.find()) {
 			String lhs = matcher.group(1);
 			String rhs = matcher.group(2);
 
-			Pattern pattern2 = Pattern
-					.compile("^(?:([\\$\\w]+)|\\(([\\$\\w]+)\\s*,\\s*([\\$\\w]+)\\))$");
-			Matcher matcher2 = pattern2.matcher(lhs);
-			while (matcher2.find()) {
+			matcher = NGREPEAT_LHS_PATTERN.matcher(lhs);
+			if (matcher.find()) {
 				String valueIdentifier = matcher.group(3) != null ? matcher
 						.group(3) : matcher.group(1);
 				String keyIdentifier = matcher.group(2);
 
 				JSONObject repeat = new JSONObject();
-				repeat.put("repeat", keyIdentifier);
-				getProps().put(valueIdentifier, repeat);
+				repeat.put("repeat", rhs);
+				if (keyIdentifier != null) {
+					getProps().put(keyIdentifier, repeat);
+				}
+				if (valueIdentifier != null) {
+					getProps().put(valueIdentifier, repeat);
+				}
 			}
-
 		}
 	}
 
