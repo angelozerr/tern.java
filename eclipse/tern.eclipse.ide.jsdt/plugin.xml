@@ -49,14 +49,32 @@
 	            autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
 	            id="org.eclipse.wst.html.SCRIPT">
 	      </partitionType>
-	            <partitionType
-	                  autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
-	                  id="org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
+          <partitionType
+              autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+              id="org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
 	      </partitionType>
 	    </contentType>
 	  </proposalComputer>
 	</extension>
 	 
+	<extension
+			point="org.eclipse.wst.sse.ui.completionProposal">
+		<proposalComputerExtendedActivation
+				id="tern.eclipse.ide.jsdt.internal.contentassist.TernContentAssistProcessor">
+			<contentType
+					id="org.eclipse.jst.jsp.core.jspsource">
+				<partitionType
+						autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+						id="org.eclipse.wst.html.SCRIPT">
+				</partitionType>
+	            <partitionType
+						autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+						id="org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
+				</partitionType>
+			</contentType>
+		</proposalComputerExtendedActivation>
+	</extension>
+		 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension
 	       point="org.eclipse.ui.startup">	
