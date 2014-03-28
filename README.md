@@ -1,6 +1,8 @@
 tern.java
 =========
 
+[![Build Status](https://secure.travis-ci.org/angelozerr/tern.java.png)](http://travis-ci.org/angelozerr/tern.java)
+
 [tern.js](https://github.com/marijnh/tern) is a stand-alone code-analysis engine for JavaScript written in Javascript.
 
 [tern.java](https://github.com/angelozerr/tern.java) provides the capability to use 
