@@ -259,17 +259,6 @@ and executed twice.</p>
 		</description>
 	</directive>
 
-	<directive name="ngFocus"
-		url="http://docs.angularjs.org/api/ng.directive:ngFocus"
-		value="required"
-		tags="window, input, select, textarea, a" >
-		<description>
-		<![CDATA[
-			Specify custom behavior on focus event.
-			]]>
-		</description>
-	</directive>
-
 	<directive name="ngForm"
 		url="http://docs.angularjs.org/api/ng.directive:ngForm"
 		value="required" >
