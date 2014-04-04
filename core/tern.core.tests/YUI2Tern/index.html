@@ -1,0 +1,245 @@
+<html>
+<head>
+<script type="text/javascript" src="data.json.js"></script>
+
+<script>
+  function transform() {    
+    var defs = {
+        "!name": "YUI",
+        "!define": {
+          
+        }
+    };
+    var define = defs["!define"];    
+    var classitems = a.classitems;
+    for(var i=0; i<classitems.length; i++) {
+      parseClassItem(classitems[i], a, defs);
+    }
+    
+    /*var classes = a.classes;
+    for(var name in classes) {
+      parseClass(defs, classes, name);
+    }*/
+    
+    /*var modules = a.modules;    
+    for(var name in modules) {
+      parseModule(defs, modules, name);
+    }*/
+    
+    
+    document.getElementById('json').value = JSON.stringify(defs, null, ' ');
+  }
+  
+  function parseClassItem(classitem, yuiDoc, ternDef) {
+    var className = classitem["class"], moduleName = classitem.module, submoduleName = classitem.submodule, description = classitem.description, params = classitem.params, name = classitem.name, isStatic = classitem["static"] === 1,
+    access = classitem["access"];
+    if (access && access === 'protected') return;
+    var parent = ternDef; 
+    var classDef = getOrCreateClassDef(submoduleName,  className, yuiDoc, ternDef, isStatic);
+    var method = {};
+    var type = getType(classitem, yuiDoc);
+    if (type) method["!type"] = type;
+    if (classitem.description) method["!doc"] = classitem.description;
+    method["!url"] = 'http://yuilibrary.com/yui/docs/api/classes/' + className + '.html#' + classitem.itemtype + '_' + name;
+    classDef[name] = method;
+    var effects = getEffects(moduleName, submoduleName, className, name, classitem);
+    if (effects) {
+      method["!effects"] = [effects];
+    }
+  }
+  
+  function getEffects(moduleName, submoduleName, className, name, classitem) {
+	if (submoduleName === 'yui-base' && className === 'YUI') {
+	  if (name === 'add') return 'custom yui_add';
+	  if (name === 'use') return 'custom yui_use';
+	}
+  }
+  
+  function getClassName(className, yuiDoc) {
+    var cls = yuiDoc.classes[className];
+    if (cls && cls.submodule) {
+      var submoduleName = cls.submodule, isMain = (className === 'YUI') && yuiDoc.modules[submoduleName] && yuiDoc.modules[submoduleName].itemtype === 'main';
+      return isMain ? className : getSubmoduleName(cls.submodule) + '.' + className; 
+    }
+    return className;
+  }
+  
+  function getOrCreateClassDef(submoduleName,  className, yuiDoc, ternDef, isStatic) {
+    var submodule = getOrCreateSubModuleDef(submoduleName, className, yuiDoc, ternDef);
+    var cls = submodule[className];
+    if (!cls) {
+      cls = {};
+      submodule[className] = cls;
+      var yuiClass = yuiDoc.classes[className];
+      if (yuiClass) {
+        var type = getType(yuiClass, yuiDoc);
+        if (type) cls["!type"] = type;
+        if (yuiClass["extends"]) cls["!proto"] = getClassName(yuiClass["extends"], yuiDoc);
+        if (yuiClass.description) cls["!doc"] = yuiClass.description;
+      }
+      cls["!url"] = 'http://yuilibrary.com/yui/docs/api/classes/' + className + '.html';
+      //if (yuiDoc.project && yuiDoc.project.url) 
+    }
+    if (isStatic) {
+      return cls;
+    }
+    if (!cls.prototype) {
+      cls.prototype = {};
+    }
+    return cls.prototype;
+  }
+  
+  function getType(yuiClass, yuiDoc) {
+    var params = yuiClass.params, returnValue = yuiClass["return"], chainable = yuiClass["chainable"] === 1, isConstructor = yuiClass["is_constructor"] === 1, type = null;
+    //if(yuiClass["is_constructor"] === 1) {          
+      type = 'fn(';          
+      if (params) {
+        for(var i=0; i < params.length; i++) {
+          var param = params[i], name = toTernName(param.name);
+          if (i > 0) type+=', ';
+          type+= name;
+          if (param.optional) type+= '?';
+          if (param.type) {
+            type+= ': ';type+= toTernType(param.type, yuiDoc, false, param.props);
+          }
+        }
+      }
+      type += ')';
+      
+    //}
+    if(chainable) {
+      type += ' -> !this';
+    } else if(isConstructor) {
+      type += ' -> +';
+      type += getClassName(yuiClass.name, yuiDoc);
+    }else if (returnValue) {
+      type += ' -> ';
+      type += toTernType(returnValue.type, yuiDoc, true, returnValue.props);
+    }
+    return type;
+  }
+  
+  function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+	}
+  
+  function toTernName(yuiName) {
+    var name = yuiName;
+    name = name.replace(/-/g, '');
+    var index = name.indexOf('*');
+    if (index > 0) name = name.substring(0, index);
+    // ex : prepend=false
+    var index = name.indexOf('=');
+    if (index > 0) name = name.substring(0, index);
+	return name;
+  }
+  
+  function formatType(type, isArray, isInstance) {
+    var t = "";
+    if (isArray) {
+      t += '[';
+    }
+    if (isInstance) t += '+';
+    t += type;
+    if (isArray) {
+      t += ']';
+    }
+    return t;
+  }
+  
+  function toTernType(yuiType, yuiDoc, isReturn, props) {
+    if (!yuiType) {
+      return '?';
+    }
+    // ex : Node|String
+    var index = yuiType.indexOf('|');
+    if (index == -1) {
+      // ex : Function/Object
+      index = yuiType.indexOf('/');
+      if (index == -1) {
+        // ex : Object*
+        index = yuiType.indexOf('*');
+      }
+    }    
+    if (index > 0) yuiType = yuiType.substring(0, index);
+
+	// is array?
+	var isArray = false;
+    index = yuiType.indexOf('[');
+    if (index > 0) {
+      yuiType = yuiType.substring(0, index);
+      isArray = true;
+    }
+    yuiType = yuiType.trim();    
+    switch(yuiType) {
+    case 'Function':
+      var ternType = 'fn(';
+      if (props) {
+        
+      }
+      ternType+=')'
+      return ternType;
+    case 'String':
+      return formatType('string', isArray);      
+    case 'Number':
+      return formatType('number', isArray);
+    case 'Boolean':
+      return formatType('bool', isArray);
+    default:
+      return formatType(getClassName(yuiType, yuiDoc), isArray, isReturn);
+    }
+  }
+  
+  function getOrCreateSubModuleDef(submoduleName, className, yuiDoc, ternDef) {
+    var isMain = className === 'YUI' && yuiDoc.modules[submoduleName] && yuiDoc.modules[submoduleName].itemtype === 'main';
+    if (isMain) {
+      return ternDef;
+    }
+    var parent = ternDef["!define"];
+    submoduleName = getSubmoduleName(submoduleName);
+    var submodule = parent[submoduleName];
+    if (!submodule) {
+      submodule = {};
+      parent[submoduleName] = submodule;
+    }
+    return submodule;
+  }
+  
+  function getSubmoduleName(submoduleName) {
+    return submoduleName ? submoduleName.replace(/-/g, '_') : submoduleName;
+  }
+  
+  function parseClass(defs, classes, name) {
+    var cls = classes[name], module = cls.module, submodule = cls.submodule, description = cls.description;
+    var def = defs[submodule];
+    if (!def) {
+      def = {};
+      defs[submodule] = def;
+    }
+    var c = {};
+    def[name] = c;    
+    if (description) {
+      //c["!doc"] = description;
+    }
+  }
+  
+  function parseModule(defs, modules, name) {
+    var module = modules[name];
+    var classes = module.classes;
+    var m = {};
+    if (classes) {
+      for(var className in classes) {
+        m[className] = {};
+      }
+    }
+    defs[name] = m;
+    
+  }
+</script>
+
+
+</head>
+<body onload="transform()">
+	<textarea id="json" style="width: 100%; height: 100%"></textarea>
+</body>
+</html>

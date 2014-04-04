@@ -292,7 +292,7 @@ public class TernCompletionItem {
 			types.add(newType.toString());
 		}
 
-		if (newIndex != null) {
+		if (newIndex != null && newIndex < parameters.size() - 1) {
 			// next optional parameter must be treat, do it.
 			addType(types, nbMaxOptional, optional, newIndex);
 		}
