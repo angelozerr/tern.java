@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>fr.opensagres.js</groupId>
 		<artifactId>update-site</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>tern.eclipse.macosx.cocoa.x86_64.feature</artifactId>
 	<packaging>eclipse-feature</packaging>
