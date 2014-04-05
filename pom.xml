@@ -11,6 +11,7 @@
 	</properties>
 	<organization>
 		<name>Angelo Zerr and Co.</name>
+		<url>https://github.com/angelozerr/tern.java</url>
 	</organization>
 	<inceptionYear>2014</inceptionYear>
 	
@@ -81,4 +82,9 @@
 			<layout>p2</layout>
 		</repository>
 	</repositories>
+	<scm>
+		<url>https://github.com/angelozerr/tern.java</url>
+		<connection>scm:git:https://github.com/angelozerr/tern.java.git</connection>
+		<developerConnection>scm:git:https://github.com/angelozerr/tern.java.git</developerConnection>
+	</scm>
 </project>
