@@ -25,7 +25,7 @@
          arch="x86"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="0.1.0.qualifier"
          unpack="false"/>
 
 </feature>

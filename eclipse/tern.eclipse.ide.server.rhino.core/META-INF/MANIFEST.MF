@@ -4,10 +4,10 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.eclipse.ide.server.rhino.core;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
- tern.eclipse.ide.core;bundle-version="1.0.0",
- tern.core;bundle-version="1.0.0",
- tern.server.rhino;bundle-version="1.0.0"
+ tern.eclipse.ide.core;bundle-version="0.1.0",
+ tern.core;bundle-version="0.1.0",
+ tern.server.rhino;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy

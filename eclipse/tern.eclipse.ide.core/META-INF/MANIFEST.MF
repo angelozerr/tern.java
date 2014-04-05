@@ -4,13 +4,13 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.eclipse.ide.core;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- tern.core;bundle-version="1.0.0",
- tern.server.nodejs;bundle-version="1.0.0",
- tern.eclipse;bundle-version="1.0.0",
+ tern.core;bundle-version="0.1.0",
+ tern.server.nodejs;bundle-version="0.1.0",
+ tern.eclipse;bundle-version="0.1.0",
  org.eclipse.jface.text
 Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.dom,

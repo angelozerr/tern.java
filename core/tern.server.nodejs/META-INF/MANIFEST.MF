@@ -4,12 +4,12 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.server.nodejs;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Eclipse-BundleShape: dir
 Export-Package: tern.server.nodejs,
  tern.server.nodejs.process
-Require-Bundle: tern.core;bundle-version="1.0.0"
+Require-Bundle: tern.core;bundle-version="0.1.0"
 Bundle-ClassPath: .
 Import-Package: org.apache.commons.logging,
  org.apache.http,

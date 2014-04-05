@@ -25,6 +25,6 @@
          arch="x86_64"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"/>
+         version="0.1.0.qualifier"/>
 
 </feature>

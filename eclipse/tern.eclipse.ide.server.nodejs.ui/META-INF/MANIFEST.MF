@@ -4,16 +4,16 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.eclipse.ide.server.nodejs.ui;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- tern.eclipse.ide.server.nodejs.core;bundle-version="1.0.0",
- tern.eclipse.ide.core;bundle-version="1.0.0",
- tern.core;bundle-version="1.0.0",
- tern.eclipse.ide.ui;bundle-version="1.0.0",
- tern.server.nodejs;bundle-version="1.0.0",
+ tern.eclipse.ide.server.nodejs.core;bundle-version="0.1.0",
+ tern.eclipse.ide.core;bundle-version="0.1.0",
+ tern.core;bundle-version="0.1.0",
+ tern.eclipse.ide.ui;bundle-version="0.1.0",
+ tern.server.nodejs;bundle-version="0.1.0",
  org.eclipse.core.resources
 Bundle-Activator: tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin
 Import-Package: org.json.simple;version="1.1.1"
