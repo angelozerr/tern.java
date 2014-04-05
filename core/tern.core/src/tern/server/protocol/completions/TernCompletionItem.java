@@ -292,7 +292,7 @@ public class TernCompletionItem {
 			types.add(newType.toString());
 		}
 
-		if (newIndex != null && newIndex < parameters.size() - 1) {
+		if (newIndex != null) {
 			// next optional parameter must be treat, do it.
 			addType(types, nbMaxOptional, optional, newIndex);
 		}
@@ -312,7 +312,7 @@ public class TernCompletionItem {
 		for (int j = i + 1; j < parameters.size(); j++) {
 			parameter = parameters.get(j);
 			if (!parameter.isRequired() && index == null
-					|| (index != null && index != j)) {
+					|| (index != null && index < j)) {
 				return j;
 			}
 		}

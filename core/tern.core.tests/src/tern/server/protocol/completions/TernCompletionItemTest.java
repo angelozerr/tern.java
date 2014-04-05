@@ -266,4 +266,97 @@ public class TernCompletionItemTest {
 		Assert.assertEquals("fn(f: fn(elt:?,i:number)->?) -> [!0.!ret]", allTypes[0]);
 		
 	}
+	
+	@Test
+	public void mix() throws Exception {
+		TernCompletionItem completion = new TernCompletionItem(
+				"mix",
+				"fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string], mode?: number, merge?: bool) -> fn()",
+				"yui");
+		Assert.assertEquals("mix", completion.getName());
+		Assert.assertTrue(completion.isFunction());
+		Assert.assertFalse(completion.isArray());
+		Assert.assertEquals("fn()", completion.getJsType());
+		Assert.assertEquals("yui", completion.getOrigin());
+		Assert.assertNotNull(completion.getParameters());
+		Assert.assertEquals(6, completion.getParameters().size());
+
+		Parameter parameter = null;
+		for (int i = 0; i < completion.getParameters().size(); i++) {
+			parameter = completion.getParameters().get(i);
+			switch (i) {
+			case 0:
+				Assert.assertEquals("receiver", parameter.getName());
+				Assert.assertTrue(parameter.isRequired());
+				Assert.assertEquals("fn()", parameter.getType());
+				break;
+			case 1:
+				Assert.assertEquals("supplier", parameter.getName());
+				Assert.assertTrue(parameter.isRequired());
+				Assert.assertEquals("fn()", parameter.getType());
+				break;
+			case 2:
+				Assert.assertEquals("overwrite", parameter.getName());
+				Assert.assertFalse(parameter.isRequired());
+				Assert.assertEquals("bool", parameter.getType());
+				break;
+			case 3:
+				Assert.assertEquals("whitelist", parameter.getName());
+				Assert.assertFalse(parameter.isRequired());
+				Assert.assertEquals("[string]", parameter.getType());
+				break;
+			case 4:
+				Assert.assertEquals("mode", parameter.getName());
+				Assert.assertFalse(parameter.isRequired());
+				Assert.assertEquals("number", parameter.getType());
+				break;
+			case 5:
+				Assert.assertEquals("merge", parameter.getName());
+				Assert.assertFalse(parameter.isRequired());
+				Assert.assertEquals("bool", parameter.getType());
+				break;
+				
+			}
+		}
+
+		String[] allTypes = completion.expand();
+		Assert.assertNotNull(allTypes);
+		Assert.assertEquals(13, allTypes.length);
+		Assert.assertEquals("fn(receiver: fn(), supplier: fn()) -> fn()", allTypes[0]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), overwrite?: bool) -> fn()",
+				allTypes[1]);
+		Assert.assertEquals("fn(receiver: fn(), supplier: fn(), whitelist?: [string]) -> fn()",
+				allTypes[2]);
+		Assert.assertEquals("fn(receiver: fn(), supplier: fn(), mode?: number) -> fn()",
+				allTypes[3]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), merge?: bool) -> fn()",
+				allTypes[4]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string]) -> fn()",
+				allTypes[5]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), overwrite?: bool, mode?: number) -> fn()",
+				allTypes[6]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), overwrite?: bool, merge?: bool) -> fn()",
+				allTypes[7]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), whitelist?: [string], mode?: number) -> fn()",
+				allTypes[8]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), whitelist?: [string], merge?: bool) -> fn()",
+				allTypes[9]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), mode?: number, merge?: bool) -> fn()",
+				allTypes[10]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string], mode?: number) -> fn()",
+				allTypes[11]);
+		Assert.assertEquals(
+				"fn(receiver: fn(), supplier: fn(), whitelist?: [string], mode?: number, merge?: bool) -> fn()",
+				allTypes[12]);		
+	}
+
 }
