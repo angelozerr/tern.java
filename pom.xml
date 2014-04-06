@@ -19,7 +19,7 @@
 		<url>https://github.com/angelozerr/tern.java</url>
 	</organization>
 	<inceptionYear>2014</inceptionYear>
-	
+
 	<licenses>
 		<license>
 			<name>Eclipse Public License</name>
@@ -64,11 +64,11 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			<artifactId>maven-release-plugin</artifactId>
-			<version>2.5</version>
-			<configuration>
-				<autoVersionSubmodules>true</autoVersionSubmodules>
-			</configuration>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -97,4 +97,22 @@
 		<connection>scm:git:https://github.com/angelozerr/tern.java.git</connection>
 		<developerConnection>scm:git:https://github.com/angelozerr/tern.java.git</developerConnection>
 	</scm>
+	<profiles>
+		<profile>
+			<id>release-profile</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.eclipse.tycho</groupId>
+						<artifactId>tycho-packaging-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+						<strictVersions>false</strictVersions>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
 </project>
