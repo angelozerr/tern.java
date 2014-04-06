@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -7,7 +8,7 @@
 	</parent>
 	<groupId>fr.opensagres.js</groupId>
 	<artifactId>tern.java</artifactId>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -95,8 +96,7 @@
 		<url>https://github.com/angelozerr/tern.java</url>
 		<connection>scm:git:https://github.com/angelozerr/tern.java.git</connection>
 		<developerConnection>scm:git:https://github.com/angelozerr/tern.java.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+	</scm>
 	<profiles>
 		<profile>
 			<!-- release profile (see parent pom) -->
