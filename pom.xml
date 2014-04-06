@@ -99,7 +99,8 @@
 	</scm>
 	<profiles>
 		<profile>
-			<id>release-profile</id>
+			<!-- release profile (see parent pom) -->
+			<id>sonatype-oss-release</id>
 			<build>
 				<plugins>
 					<plugin>
