@@ -7,5 +7,5 @@ Bundle-SymbolicName: tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86;singleto
 Bundle-Version: 0.1.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Require-Bundle: tern.eclipse.ide.server.nodejs.core;bundle-version="0.1.0"
+Require-Bundle: tern.eclipse.ide.server.nodejs.core;bundle-version="0.1.1"
 Eclipse-BundleShape: dir
