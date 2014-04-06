@@ -7,7 +7,7 @@
 	</parent>
 	<groupId>fr.opensagres.js</groupId>
 	<artifactId>tern.java</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -95,7 +95,7 @@
 		<url>https://github.com/angelozerr/tern.java</url>
 		<connection>scm:git:https://github.com/angelozerr/tern.java.git</connection>
 		<developerConnection>scm:git:https://github.com/angelozerr/tern.java.git</developerConnection>
-	  <tag>tern.java-0.1.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 	<profiles>
 		<profile>
