@@ -2,7 +2,7 @@
 <feature
       id="tern.eclipse.macosx.cocoa.x86_64.feature"
       label="%featureName"
-      version="0.1.0.qualifier"
+      version="0.1.1.qualifier"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.0.qualifier">
 
@@ -25,6 +25,6 @@
          arch="x86_64"
          download-size="0"
          install-size="0"
-         version="0.1.0.qualifier"/>
+         version="0.1.1.qualifier"/>
 
 </feature>
