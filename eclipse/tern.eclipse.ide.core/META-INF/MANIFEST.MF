@@ -8,9 +8,9 @@ Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- tern.core;bundle-version="0.1.1",
- tern.server.nodejs;bundle-version="0.1.1",
- tern.eclipse;bundle-version="0.1.1",
+ tern.core;bundle-version="0.2.0",
+ tern.server.nodejs;bundle-version="0.2.0",
+ tern.eclipse;bundle-version="0.2.0",
  org.eclipse.jface.text
 Export-Package: tern.eclipse.ide.core,tern.eclipse.ide.core.dom,tern.e
  clipse.ide.core.preferences,tern.eclipse.ide.core.scriptpath,tern.ecl
