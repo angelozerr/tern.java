@@ -4,21 +4,12 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.core
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: tern,
- tern.angular,
- tern.angular.modules,
- tern.angular.protocol,
- tern.angular.protocol.completions,
- tern.angular.protocol.definition,
- tern.angular.protocol.type,
- tern.doc,
- tern.server,
- tern.server.protocol,
- tern.server.protocol.completions,
- tern.server.protocol.definition,
- tern.server.protocol.type,
- tern.utils
+Export-Package: tern,tern.angular,tern.angular.modules,tern.angular.pr
+ otocol,tern.angular.protocol.completions,tern.angular.protocol.defini
+ tion,tern.angular.protocol.type,tern.doc,tern.server,tern.server.prot
+ ocol,tern.server.protocol.completions,tern.server.protocol.definition
+ ,tern.server.protocol.type,tern.utils
 Import-Package: org.json.simple,
  org.json.simple.parser

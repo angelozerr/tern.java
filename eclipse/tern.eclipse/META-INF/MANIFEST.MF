@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.eclipse;singleton:=true
-Bundle-Version: 0.1.1.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
  org.eclipse.jface;bundle-version="3.7.0",
@@ -12,9 +12,7 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
  tern.core;bundle-version="0.1.1",
  tern.server.rhino;bundle-version="0.1.1";resolution:=optional,
  org.eclipse.jface.text;resolution:=optional
-Export-Package: tern.eclipse.jface,
- tern.eclipse.jface.contentassist,
- tern.eclipse.jface.fieldassist,
- tern.eclipse.swt
+Export-Package: tern.eclipse.jface,tern.eclipse.jface.contentassist,te
+ rn.eclipse.jface.fieldassist,tern.eclipse.swt
 Bundle-Activator: tern.eclipse.internal.Activator
 Bundle-ActivationPolicy: lazy
