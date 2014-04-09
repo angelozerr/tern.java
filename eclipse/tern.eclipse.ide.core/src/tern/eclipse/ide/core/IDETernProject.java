@@ -23,7 +23,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.text.BadLocationException;
@@ -79,6 +82,8 @@ public class IDETernProject extends TernProject<IFile> {
 	private static final QualifiedName TERN_PROJECT = new QualifiedName(
 			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernProject");
 
+	private static final String EXTENSION_TERN_PROJECT_DESCRIBERS = "ternNatureAdapters";
+
 	private final IProject project;
 
 	private ITernServer ternServer;
@@ -91,6 +96,8 @@ public class IDETernProject extends TernProject<IFile> {
 
 	private final List<ITernServerListener> listeners;
 
+	private static List<String> ternNatureAdapters;
+	
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
@@ -184,11 +191,18 @@ public class IDETernProject extends TernProject<IFile> {
 	 */
 	public static boolean hasTernNature(IProject project) {
 		try {
-			return project.hasNature(TernNature.ID);
+			if (project.hasNature(TernNature.ID))
+				return true;
+
+			loadTernProjectDescribers();
+			for (String adaptToNature : ternNatureAdapters) {
+				if (project.hasNature(adaptToNature))
+					return true;
+			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error tern nature", e);
-			return false;
 		}
+		return false;
 	}
 
 	@Override
@@ -240,7 +254,48 @@ public class IDETernProject extends TernProject<IFile> {
 
 		}
 	}
+	
+	private static void loadTernProjectDescribers() {
+		if (ternNatureAdapters != null)
+			return;
 
+		Trace.trace(Trace.EXTENSION_POINT,
+				"->- Loading .ternProjectDescribers extension point ->-");
+
+		IExtensionRegistry registry = Platform.getExtensionRegistry();
+		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
+				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_PROJECT_DESCRIBERS);
+		List<String> list = new ArrayList<String>(
+				cf.length);
+		addTernNatureAdapters(cf, list);
+		ternNatureAdapters = list;
+
+		Trace.trace(Trace.EXTENSION_POINT,
+				"-<- Done loading .ternProjectDescribers extension point -<-");
+	}
+
+	/**
+	 * Load the tern project describers.
+	 */
+	private static synchronized void addTernNatureAdapters(
+			IConfigurationElement[] cf, List<String> list) {
+		for (IConfigurationElement ce : cf) {
+			try {
+				list.add(ce.getAttribute("id"));
+				Trace.trace(
+						Trace.EXTENSION_POINT,
+						"  Loaded project describer: "
+								+ ce.getAttribute("id"));
+			} catch (Throwable t) {
+				Trace.trace(
+						Trace.SEVERE,
+						"  Could not load project describers: "
+								+ ce.getAttribute("id"), t);
+			}
+		}
+	}
+
+	
 	/**
 	 * Returns the resource of the given path and type.
 	 * 

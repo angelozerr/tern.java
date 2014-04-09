@@ -13,6 +13,22 @@
 ###############################################################################
  -->
 <plugin>
+	
+    <extension point="org.eclipse.ui.startup">
+        <startup
+            class="tern.eclipse.ide.ui.internal.TernIDEStartup">
+        </startup>
+    </extension> 
+    
+	<extension point="org.eclipse.core.expressions.propertyTesters">
+		<propertyTester
+			id="tern.eclipse.ide.ui.TernNatureTester"
+			type="org.eclipse.core.resources.IResource"
+			namespace="tern.eclipse.ide.ui"
+			properties="isTernProject"
+			class="tern.eclipse.ide.ui.internal.TernNatureTester">
+		</propertyTester>
+	</extension>
 	    
 	<!--Commands:-->
 	
@@ -40,8 +56,7 @@
 						<adapt type="org.eclipse.core.resources.IProject">
 							<and>
 								<not>
-									<test property="org.eclipse.core.resources.projectNature"
-										  value="tern.eclipse.ide.core.ternnature"/>
+									<test property="tern.eclipse.ide.ui.isTernProject" />
 								</not>
 							</and>
 						</adapt>
@@ -85,8 +100,7 @@
             id="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" 
-		          		value="tern.eclipse.ide.core.ternnature"/>
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
       </page>
@@ -97,8 +111,7 @@
             id="tern.eclipse.ide.internal.ui.properties.TernTypeDefinitionsPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" 
-		          		value="tern.eclipse.ide.core.ternnature"/>
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
       </page>      
@@ -109,8 +122,7 @@
             id="tern.eclipse.ide.internal.ui.properties.TernPluginsPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" 
-		          		value="tern.eclipse.ide.core.ternnature"/>
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
       </page>     
@@ -121,8 +133,7 @@
             id="tern.eclipse.ide.internal.ui.properties.TernScriptPathsPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" 
-		          		value="tern.eclipse.ide.core.ternnature"/>
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
       </page>
@@ -133,8 +144,7 @@
             id="tern.eclipse.ide.internal.ui.properties.TernConsolePropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
-		          <test property="org.eclipse.core.resources.projectNature" 
-		          		value="tern.eclipse.ide.core.ternnature"/>
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
       </page>                    		          		  	
