@@ -35,6 +35,11 @@ You can see [AngularJS Eclipse](https://github.com/angelozerr/angularjs-eclipse)
 
 To install Tern IDE, please read [Installation - Update site](https://github.com/angelozerr/tern.java/wiki/Installation-Update-Site) section.
 
+
+# Developing
+
+Warning: When checking out on Windows , you can run into #35 [check out on Windows - Filename too long](https://github.com/angelozerr/tern.java/issues/35)
+
 # Build
 
 See cloudbees job: https://opensagres.ci.cloudbees.com/job/tern.java/
