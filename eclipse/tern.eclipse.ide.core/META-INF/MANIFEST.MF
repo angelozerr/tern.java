@@ -14,7 +14,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface.text
 Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.dom,
- tern.eclipse.ide.core.generator,
  tern.eclipse.ide.core.preferences,
  tern.eclipse.ide.core.scriptpath,
  tern.eclipse.ide.core.utils

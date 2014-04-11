@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.eclipse.ide.tools.ui;singleton:=true
+Bundle-Version: 0.2.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.runtime;bundle-version="3.7.0",
+ tern.eclipse.ide.tools.core;bundle-version="0.2.0",
+ org.eclipse.ui,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ tern.eclipse.ide.core;bundle-version="0.2.0",
+ tern.core;bundle-version="0.2.0"
+Bundle-Activator: tern.eclipse.ide.tools.internal.ui.TernToolsUIPlugin
+Bundle-ActivationPolicy: lazy

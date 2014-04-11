@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.ui;
+package tern.eclipse.ide.tools.internal.ui;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -17,8 +17,6 @@ import java.util.Map;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
-
-import tern.eclipse.ide.internal.ui.Trace;
 
 /**
  * Utility class to handle image resources.
@@ -34,20 +32,16 @@ public class ImageResource {
 	// base urls for images
 	private static URL ICON_BASE_URL;
 
-	private static final String URL_DLCL = "full/dlcl16/";
-	private static final String URL_ELCL = "full/elcl16/";
-	private static final String URL_OBJ = "full/obj16/";
+	private static final String URL_WIZBAN = "full/wizban/";
 
-	// General Object Images
-	public static final String IMG_SCRIPT = "script";
-	public static final String IMG_LOGO = "logo";
-	public static final String IMG_STOP_ENABLED = "stop_enabled";
-	public static final String IMG_STOP_DISABLED = "stop_disabled";
+	// Wizban
+	public static final String IMG_NEWPLUGIN_WIZ = "newplugin_wiz";
+	public static final String IMG_NEWTYPEDEF_WIZ = "newtypedef_wiz";
 
 	static {
 		try {
 			String pathSuffix = "icons/";
-			ICON_BASE_URL = TernUIPlugin.getDefault().getBundle()
+			ICON_BASE_URL = TernToolsUIPlugin.getDefault().getBundle()
 					.getEntry(pathSuffix);
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Images error", e);
@@ -124,11 +118,10 @@ public class ImageResource {
 		imageRegistry = new ImageRegistry();
 		imageDescriptors = new HashMap<String, ImageDescriptor>();
 
-		// load general object images
-		registerImage(IMG_SCRIPT, URL_OBJ + IMG_SCRIPT + ".gif");
-		registerImage(IMG_LOGO, URL_OBJ + IMG_LOGO + ".png");
-		registerImage(IMG_STOP_ENABLED, URL_ELCL + "launch_stop.gif");
-		registerImage(IMG_STOP_DISABLED, URL_DLCL + "launch_stop.gif");
+		// Wizban
+		registerImage(IMG_NEWPLUGIN_WIZ, URL_WIZBAN + "newplugin_wiz.png");
+		registerImage(IMG_NEWTYPEDEF_WIZ, URL_WIZBAN + "newtypedef_wiz.png");
+
 	}
 
 	/**

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!--
+###############################################################################
+# Copyright (c) 2014 Angelo Zerr and others.
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
+###############################################################################
+ -->
+<plugin>
+	  	      
+    <!-- =================================================================================== -->
+	<!-- Tern Wizard                                                                         -->
+	<!-- =================================================================================== -->
+	
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%TernWizard.name"
+            id="tern.eclipse.ide.ui.wizard">
+      </category>
+      <wizard
+            name="%NewTernDefWizard.name"
+            icon="icons/full/etool16/typedef.gif"
+            category="tern.eclipse.ide.ui.wizard"
+            class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard">
+      </wizard>
+      <wizard
+            name="%NewTernPluginWizard.name"
+            icon="icons/full/etool16/plugin.gif"
+            category="tern.eclipse.ide.ui.wizard"
+            class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard">
+      </wizard>
+   </extension>
+   	  	      
+    <!-- =================================================================================== -->
+	<!-- Tern WebBrowser Wizard                                                                         -->
+	<!-- =================================================================================== -->
+	
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%WebBrowserWizard.name"
+            id="tern.eclipse.ide.webbrowser.ui"
+            parentCategory="tern.eclipse.ide.ui.wizard" >
+      </category>
+      <wizard
+            name="%NewCodeMirrorWizard.name"
+            icon="icons/full/etool16/codemirror.png"
+            category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
+            class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard">
+      </wizard>
+      <wizard
+            name="%NewACEWizard.name"
+            icon="icons/full/etool16/ace.png"
+            category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
+            class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard">
+      </wizard>
+   </extension>
+         	       	 
+</plugin>        

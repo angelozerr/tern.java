@@ -1,0 +1,21 @@
+<%@ jet package="tern.eclipse.ide.tools.core.generator" class="TernDefGenerator" skeleton="generator.skeleton" %>
+<% TernDefOptions options = (TernDefOptions)argument; %>
+{
+  "!name": "<%= options.getDefName() %>",
+  "!define": {
+    "point": {
+      "x": "number",
+      "y": "number"
+    }
+  },
+  "MyConstructor": {
+    "!type": "fn(arg: string)",
+    "staticFunction": "fn() -> bool",
+    "prototype": {
+      "property": "[number]",
+      "clone": "fn() -> +MyConstructor",
+      "getPoint": "fn(i: number) -> point"
+    }
+  },
+  "someOtherGlobal": "string"
+}

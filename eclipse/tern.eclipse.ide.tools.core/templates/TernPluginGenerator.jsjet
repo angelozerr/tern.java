@@ -1,0 +1,39 @@
+<%@ jet package="tern.eclipse.ide.tools.core.generator" class="TernPluginGenerator" skeleton="generator.skeleton" %>
+<% TernPluginOptions options = (TernPluginOptions)argument; %>
+(function(mod) {
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
+    return mod(require("../lib/infer"), require("../lib/tern"));
+  if (typeof define == "function" && define.amd) // AMD
+    return define([ "../lib/infer", "../lib/tern" ], mod);
+  mod(tern, tern);
+})(function(infer, tern) {
+  "use strict";
+
+  tern.registerPlugin("<%= options.getPluginName() %>", function(server, options) {
+
+    return {
+      defs : defs
+    };
+  });
+  
+  var defs = {
+	  "!name": "<%= options.getDefName() %>",
+	  "!define": {
+	    "point": {
+	      "x": "number",
+	      "y": "number"
+	    }
+	  },
+	  "MyConstructor": {
+	    "!type": "fn(arg: string)",
+	    "staticFunction": "fn() -> bool",
+	    "prototype": {
+	      "property": "[number]",
+	      "clone": "fn() -> +MyConstructor",
+	      "getPoint": "fn(i: number) -> point"
+	    }
+	  },
+	  "someOtherGlobal": "string"
+  }
+
+});
