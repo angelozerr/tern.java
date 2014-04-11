@@ -145,7 +145,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 		// Add "File" button
 		addFileButton = createPushButton(buttons,
-				TernUIMessages.TernScriptPathsBlock_addFileButton);
+				TernUIMessages.Button_addFile);
 		addFileButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addScriptPath(ScriptPathsType.FILE);
@@ -155,7 +155,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 		// "Add Folder" button
 		addFolderButton = createPushButton(buttons,
-				TernUIMessages.TernScriptPathsBlock_addFolderButton);
+				TernUIMessages.Button_addFolder);
 		addFolderButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addScriptPath(ScriptPathsType.FOLDER);
@@ -165,7 +165,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 		// "Add Project" button
 		addProjectButton = createPushButton(buttons,
-				TernUIMessages.TernScriptPathsBlock_addProjectButton);
+				TernUIMessages.Button_addProject);
 		addProjectButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addScriptPath(ScriptPathsType.PROJECT);
@@ -175,7 +175,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 		// Remove button
 		removeButton = createPushButton(buttons,
-				TernUIMessages.TernScriptPathsBlock_removeButton);
+				TernUIMessages.Button_remove);
 		removeButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				removeScriptPaths();

@@ -1,0 +1,10 @@
+public class CLASS implements IGenerator
+ {
+/* (non-javadoc)
+    * @see IGenerator#generate(Object)
+    */
+public String generate(Object argument)
+   {
+     return "";
+   }
+}

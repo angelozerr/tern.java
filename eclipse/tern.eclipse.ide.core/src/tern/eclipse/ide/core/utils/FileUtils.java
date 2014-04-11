@@ -10,7 +10,12 @@
  */
 package tern.eclipse.ide.core.utils;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ProjectScope;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 
 public class FileUtils {
 
@@ -22,6 +27,7 @@ public class FileUtils {
 	public static final String HTML_EXTENSION = "html";
 	public static final String JSP_EXTENSION = "jsp";
 	public static final String PHP_EXTENSION = "php";
+	public static final String JSON_EXTENSION = "json";
 
 	public static boolean isJSFile(IResource resource) {
 		return JS_EXTENSION.equals(resource.getFileExtension());
@@ -39,4 +45,36 @@ public class FileUtils {
 	public static boolean isPHPFile(IResource resource) {
 		return PHP_EXTENSION.equals(resource.getFileExtension());
 	}
+
+	/**
+	 * Returns the preferences of line seperator.
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public static String getLineSeparator(IProject project) {
+		if (Platform.isRunning()) {
+			String lineSeparator = null;
+			// line delimiter in project preference
+			IScopeContext[] scopeContext;
+			if (project != null) {
+				scopeContext = new IScopeContext[] { new ProjectScope(project) };
+				lineSeparator = Platform.getPreferencesService().getString(
+						Platform.PI_RUNTIME, Platform.PREF_LINE_SEPARATOR,
+						null, scopeContext);
+				if (lineSeparator != null)
+					return lineSeparator;
+			}
+
+			// line delimiter in workspace preference
+			scopeContext = new IScopeContext[] { InstanceScope.INSTANCE };
+			lineSeparator = Platform.getPreferencesService().getString(
+					Platform.PI_RUNTIME, Platform.PREF_LINE_SEPARATOR, null,
+					scopeContext);
+			if (lineSeparator != null)
+				return lineSeparator;
+		}
+		return System.getProperty("line.separator");
+	}
+
 }

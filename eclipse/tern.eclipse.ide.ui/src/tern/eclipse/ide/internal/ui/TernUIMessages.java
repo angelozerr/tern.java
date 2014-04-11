@@ -25,6 +25,13 @@ public final class TernUIMessages extends NLS {
 
 	private static ResourceBundle fResourceBundle;
 
+	// Buttons
+	public static String Button_addFile;
+	public static String Button_addFolder;
+	public static String Button_addProject;
+	public static String Button_remove;
+	public static String Button_browse;
+
 	// Commands
 	public static String ConvertProjectToTern_converting_project_job_title;
 
@@ -40,10 +47,6 @@ public final class TernUIMessages extends NLS {
 	public static String TernDefsBlock_defName;
 	public static String TernDefsBlock_defPath;
 	public static String TernScriptPathsBlock_desc;
-	public static String TernScriptPathsBlock_addFileButton;
-	public static String TernScriptPathsBlock_addFolderButton;
-	public static String TernScriptPathsBlock_addProjectButton;
-	public static String TernScriptPathsBlock_removeButton;
 	public static String TernConsolePropertyPage_desc;
 	public static String TernConsolePropertyPage_traceOnConsole_label;
 
@@ -56,9 +59,22 @@ public final class TernUIMessages extends NLS {
 
 	// Tern Console Name
 	public static String TernConsoleJob_name;
-	
+
 	public static String ConsoleTerminateAction_tooltipText;
-	
+
+	// Wizard
+	public static String NewFileWizardPage_name_text;
+	public static String NewFileWizardPage_container_text;
+	public static String NewFileWizardPage_fileName_text;
+
+	public static String NewTernDefWizard_windowTitle;
+	public static String NewTernDefWizardPage_title;
+	public static String NewTernDefWizardPage_description;
+
+	public static String NewTernPluginWizard_windowTitle;
+	public static String NewTernPluginWizardPage_title;
+	public static String NewTernPluginWizardPage_description;
+
 	private TernUIMessages() {
 	}
 

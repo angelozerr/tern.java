@@ -172,5 +172,31 @@
             targetId="org.eclipse.wst.jsdt.ui.javaCode">
       </hyperlinkDetector>
    </extension>
-      	       	 
+      	      
+    <!-- =================================================================================== -->
+	<!-- Tern Wizard                                                                         -->
+	<!-- =================================================================================== -->
+	
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="%TernWizard.name"
+            id="tern.eclipse.ide.ui.wizard">
+      </category>
+      <wizard
+            name="%NewTernDefWizard.name"
+            icon="icons/full/etool16/typedef.gif"
+            category="tern.eclipse.ide.ui.wizard"
+            class="tern.eclipse.ide.internal.ui.wizards.NewTernDefWizard"
+            id="tern.eclipse.ide.internal.ui.wizards.NewTernDefWizard">
+      </wizard>
+      <wizard
+            name="%NewTernPluginWizard.name"
+            icon="icons/full/etool16/plugin.gif"
+            category="tern.eclipse.ide.ui.wizard"
+            class="tern.eclipse.ide.internal.ui.wizards.NewTernPluginWizard"
+            id="tern.eclipse.ide.internal.ui.wizards.NewTernPluginWizard">
+      </wizard>
+   </extension>
+         	       	 
 </plugin>        
