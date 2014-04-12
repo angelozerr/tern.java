@@ -55,15 +55,15 @@
             name="%NewCodeMirrorWizard.name"
             icon="icons/full/etool16/codemirror.png"
             category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
-            class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard">
+            class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewCodeMirrorWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewCodeMirrorWizard">
       </wizard>
       <wizard
             name="%NewACEWizard.name"
             icon="icons/full/etool16/ace.png"
             category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
-            class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard">
+            class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewAceWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewAceWizard">
       </wizard>
    </extension>
          	       	 

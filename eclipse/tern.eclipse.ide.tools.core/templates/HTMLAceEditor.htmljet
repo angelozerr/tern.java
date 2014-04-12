@@ -1,0 +1,12 @@
+<%@ jet package="tern.eclipse.ide.tools.core.webbrowser.ace" class="HTMLAceEditor" skeleton="generator.skeleton" %>
+<% AceOptions options = (AceOptions)argument; %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>Tern - ACE Editor</title>
+</head>
+<body>
+	<textarea id="code" name="code"><%= options.getEditorContent() %></textarea>
+</body>
+</html>

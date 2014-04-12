@@ -41,6 +41,14 @@ public final class TernToolsUIMessages extends NLS {
 	public static String NewTernPluginWizardPage_title;
 	public static String NewTernPluginWizardPage_description;
 
+	public static String NewCodeMirrorWizard_windowTitle;
+	public static String NewCodeMirrorWizardPage_title;
+	public static String NewCodeMirrorWizardPage_description;
+
+	public static String NewAceWizard_windowTitle;
+	public static String NewAceWizardPage_title;
+	public static String NewAceWizardPage_description;
+	
 	private TernToolsUIMessages() {
 	}
 

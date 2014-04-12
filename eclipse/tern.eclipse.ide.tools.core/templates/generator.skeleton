@@ -1,4 +1,4 @@
-public class CLASS implements IGenerator
+public class CLASS implements tern.eclipse.ide.tools.core.generator.IGenerator
  {
 /* (non-javadoc)
     * @see IGenerator#generate(Object)

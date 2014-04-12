@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.tools.core;
+package tern.eclipse.ide.tools.internal.core;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

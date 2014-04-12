@@ -1,6 +1,6 @@
 package tern.eclipse.ide.tools.core.generator;
 
-public class TernPluginGenerator implements IGenerator
+public class TernPluginGenerator implements tern.eclipse.ide.tools.core.generator.IGenerator
  {
   protected static String nl;
   public static synchronized TernPluginGenerator create(String lineSeparator)
