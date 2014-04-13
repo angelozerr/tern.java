@@ -59,12 +59,19 @@
             id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewCodeMirrorWizard">
       </wizard>
       <wizard
-            name="%NewACEWizard.name"
+            name="%NewAceWizard.name"
             icon="icons/full/etool16/ace.png"
             category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
             class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewAceWizard"
             id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewAceWizard">
       </wizard>
+      <wizard
+            name="%NewOrionWizard.name"
+            icon="icons/full/etool16/orion.png"
+            category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
+            class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewOrionWizard"
+            id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewOrionWizard">
+      </wizard>      
    </extension>
          	       	 
 </plugin>        
