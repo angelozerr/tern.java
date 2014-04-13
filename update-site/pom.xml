@@ -15,6 +15,7 @@
 		<module>tern-jsdt-feature</module>
 		<module>tern-server-rhino-feature</module>
 		<module>tern-server-nodejs-feature</module>
+		<module>tern.eclipse.ide.tools.feature</module>
 		<module>tern.repository</module>
 	</modules>
 </project>
