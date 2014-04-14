@@ -36,7 +36,7 @@ public class NewOrionWizardPage extends NewFileWizardPage {
 
 	@Override
 	protected void synchModel() {
-		options.setBaseURL("http://ace.c9.io/");
+		options.setBaseURL("http://eclipse.org/orion/editor/releases/5.0/");
 		options.setTernBaseURL("http://ternjs.net/");
 		options.setEditorContent("var elt = document.getElementById('xxx');");
 	}

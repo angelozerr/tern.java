@@ -5,20 +5,22 @@
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Tern - Orion Editor</title>
-	<style type="text/css" media="screen">
-	    body {
-	        overflow: hidden;
-	    }
-	    
-	    #editor { 
-	        margin: 0;
-	        position: absolute;
-	        top: 0;
-	        bottom: 0;
-	        left: 0;
-	        right: 0;
-	    }
-  	</style>
+	<style type="text/css" media="screen">	    
+		#editor {
+			//border: 1px solid teal;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+			//margin: 20px;
+			margin: 0px;
+		}
+		
+		pre {
+			margin: 0px;
+		}
+	</style>  	
 	<!-- Tern JS -->
 	<script src="<%=options.resolveTern("node_modules/acorn/acorn.js") %>"></script>
 	<script src="	<%=options.resolveTern("node_modules/acorn/acorn_loose.js") %>"></script>
@@ -29,23 +31,19 @@
 	<script src="<%=options.resolveTern("lib/comment.js") %>"></script>
 	<script src="<%=options.resolveTern("lib/infer.js") %>"></script>		
 	<!-- Orion -->
-	<script src="<%=options.resolve("build/src-min/orion.js") %>"></script>
-	<script src="<%=options.resolve("build/src-min/ext-language_tools.js") %>"></script>
+	<link rel="stylesheet" type="text/css" href="<%=options.resolve("built-editor.css") %>"/>
+	<script src="<%=options.resolve("built-editor.min.js") %>"></script>
 	<!-- Orion & Tern -->
 	<!--<script src="<%=options.resolve("addon/tern/tern.js") %>"></script>-->
 </head>
 <body>
 	<pre id="editor"><%= options.getEditorContent() %></pre>
 	<script>
-	    var langTools = orion.require("orion/ext/language_tools");
-	    var editor = orion.edit("editor");    
-	    editor.session.setMode("orion/mode/javascript");
-	    // enable autocompletion and snippets
-	    editor.setOptions({
-	        enableBasicAutocompletion: true,
-	        enableSnippets: false
-	    });
-	        
+	    require(["orion/editor/edit"], function(edit) {
+		var editor = edit({
+			lang: "js"
+			});
+		});	        
 	</script>	
 </body>
 </html>
