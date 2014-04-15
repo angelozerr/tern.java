@@ -17,6 +17,8 @@ package tern.server;
  */
 public interface ITernPlugin {
 
+	public static ITernPlugin[] EMPTY_PLUGIN = new ITernPlugin[0];
+
 	/**
 	 * Return the plugin name.
 	 * 

@@ -29,7 +29,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -46,23 +45,20 @@ import tern.utils.IOUtils;
 /**
  * Abstract wizard to create a file.
  */
-public abstract class NewFileWizard<T extends Options> extends Wizard implements
-		INewWizard {
+public abstract class NewFileWizard<T extends Options> extends TernWizard<T>
+		implements INewWizard {
 
-	protected NewFileWizardPage page;
-	private ISelection selection;
-	private final T options;
+	protected NewFileWizardPage<T> page;
 
 	public NewFileWizard() {
 		super();
 		setNeedsProgressMonitor(true);
-		this.options = createOptions();
 	}
 
 	@Override
 	public void addPages() {
-		page = createNewFileWizardPage(options, selection);
-		addPage(page);
+		page = createNewFileWizardPage();
+		super.addPage(page);
 	}
 
 	/**
@@ -75,13 +71,15 @@ public abstract class NewFileWizard<T extends Options> extends Wizard implements
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor)
 					throws InvocationTargetException {
+
 				try {
-					doFinish(options, containerName, fileName, monitor);
+					doFinish(containerName, fileName, monitor);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				} finally {
 					monitor.done();
 				}
+
 			}
 		};
 		try {
@@ -104,7 +102,7 @@ public abstract class NewFileWizard<T extends Options> extends Wizard implements
 	 * 
 	 * @param fileName
 	 */
-	private void doFinish(T options, String containerName, String fileName,
+	private void doFinish(String containerName, String fileName,
 			IProgressMonitor monitor) throws CoreException {
 		// create a sample file
 		monitor.beginTask("Creating " + fileName, 2);
@@ -117,7 +115,8 @@ public abstract class NewFileWizard<T extends Options> extends Wizard implements
 		IContainer container = (IContainer) resource;
 		final IFile file = container.getFile(new Path(fileName));
 		try {
-			InputStream stream = openContentStream(options, file.getProject());
+			InputStream stream = openContentStream(getModel(),
+					file.getProject());
 			if (file.exists()) {
 				file.setContents(stream, true, true, monitor);
 			} else {
@@ -163,18 +162,5 @@ public abstract class NewFileWizard<T extends Options> extends Wizard implements
 		throw new CoreException(status);
 	}
 
-	/**
-	 * We will accept the selection in the workbench to see if we can initialize
-	 * from it.
-	 * 
-	 * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
-	 */
-	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		this.selection = selection;
-	}
-
-	protected abstract NewFileWizardPage createNewFileWizardPage(T options,
-			ISelection selection);
-
-	protected abstract T createOptions();
+	protected abstract NewFileWizardPage createNewFileWizardPage();
 }

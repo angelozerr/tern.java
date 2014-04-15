@@ -28,7 +28,7 @@ public abstract class AbstractTernPropertyPage extends PropertyPage {
 		return IDETernProject.getTernProject(getResource().getProject());
 	}
 
-	private IResource getResource() {
+	protected IResource getResource() {
 		IResource resource = null;
 		IAdaptable adaptable = getElement();
 		if (adaptable instanceof IResource) {

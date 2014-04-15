@@ -16,13 +16,11 @@ import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.core.webbrowser.ace.AceOptions;
 import tern.eclipse.ide.tools.core.webbrowser.ace.HTMLAceEditor;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizard;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizardPage;
 
 /**
  * Wizard to create HTML page with Tern and Ace editor.
  */
-public class NewAceWizard extends NewFileWizard<AceOptions> {
+public class NewAceWizard extends NewEditorWizard<AceOptions> {
 
 	public NewAceWizard() {
 		super.setWindowTitle(TernToolsUIMessages.NewAceWizard_windowTitle);
@@ -31,9 +29,8 @@ public class NewAceWizard extends NewFileWizard<AceOptions> {
 	}
 
 	@Override
-	protected NewFileWizardPage createNewFileWizardPage(AceOptions options,
-			ISelection selection) {
-		return new NewAceWizardPage(options, selection);
+	protected NewAceWizardPage createNewFileWizardPage() {
+		return new NewAceWizardPage();
 	}
 
 	@Override
@@ -42,7 +39,7 @@ public class NewAceWizard extends NewFileWizard<AceOptions> {
 	}
 
 	@Override
-	protected AceOptions createOptions() {
+	protected AceOptions createModel() {
 		return new AceOptions();
 	}
 

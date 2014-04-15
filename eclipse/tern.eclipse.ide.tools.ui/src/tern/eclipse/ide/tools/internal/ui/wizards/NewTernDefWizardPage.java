@@ -20,21 +20,18 @@ import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
  * Page to fill tern def information.
  * 
  */
-public class NewTernDefWizardPage extends NewFileWizardPage {
+public class NewTernDefWizardPage extends NewFileWizardPage<TernDefOptions> {
 
 	private static final String PAGE = "NewTernDefWizardPage";
 
-	private final TernDefOptions options;
-
-	public NewTernDefWizardPage(TernDefOptions options, ISelection selection) {
-		super(PAGE, FileUtils.JSON_EXTENSION, selection);
-		this.options = options;
+	public NewTernDefWizardPage() {
+		super(PAGE, FileUtils.JSON_EXTENSION);
 		setTitle(TernToolsUIMessages.NewTernDefWizardPage_title);
 		setDescription(TernToolsUIMessages.NewTernDefWizardPage_description);
 	}
 
 	@Override
-	protected void synchModel() {
+	protected void updateModel(TernDefOptions options) {
 		options.setDefName(getName());
 	}
 

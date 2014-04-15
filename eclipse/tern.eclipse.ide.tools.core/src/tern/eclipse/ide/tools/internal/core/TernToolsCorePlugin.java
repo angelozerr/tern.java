@@ -10,8 +10,14 @@
  */
 package tern.eclipse.ide.tools.internal.core;
 
+import java.io.IOException;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+
+import tern.eclipse.ide.tools.core.webbrowser.EditorType;
 
 public class TernToolsCorePlugin implements BundleActivator {
 
@@ -42,5 +48,25 @@ public class TernToolsCorePlugin implements BundleActivator {
 		TernToolsCorePlugin.context = null;
 	}
 
-	
+	public static String getEditorURL(EditorType type, String path)
+			throws IOException {
+		if (context == null) {
+			throw new IOException("Cannot resolve the path=" + path
+					+ ". This constructor must be used only on OSGi context");
+		}
+		return FileLocator.toFileURL(
+				context.getBundle().getEntry(
+						"resources/" + type.name() + "/" + path))
+				.toExternalForm();
+	}
+
+	public static String getTernURL(String path) throws IOException {
+		if (context == null) {
+			throw new IOException("Cannot resolve the path=" + path
+					+ ". This constructor must be used only on OSGi context");
+		}
+		return FileLocator.toFileURL(
+				Platform.getBundle("tern.server.nodejs").getEntry(
+						"node_modules/tern/" + path)).toExternalForm();
+	}
 }

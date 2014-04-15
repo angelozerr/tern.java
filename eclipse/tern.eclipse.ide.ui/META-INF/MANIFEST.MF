@@ -24,6 +24,7 @@ Import-Package: org.json.simple
 Export-Package: tern.eclipse.ide.ui,
  tern.eclipse.ide.ui.console,
  tern.eclipse.ide.ui.contentassist,
+ tern.eclipse.ide.ui.controls,
  tern.eclipse.ide.ui.hyperlink,
  tern.eclipse.ide.ui.utils,
  tern.eclipse.ide.ui.viewers

@@ -7,7 +7,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -29,11 +28,9 @@ import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
  * OR with the extension that matches the expected one (mpe).
  */
 
-public abstract class NewFileWizardPage extends WizardPage {
+public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 
 	private final String fileExtension;
-
-	private final ISelection selection;
 
 	private Text containerText;
 
@@ -46,17 +43,13 @@ public abstract class NewFileWizardPage extends WizardPage {
 	 * 
 	 * @param pageName
 	 */
-	public NewFileWizardPage(String pageName, String fileExtension,
-			ISelection selection) {
+	public NewFileWizardPage(String pageName, String fileExtension) {
 		super(pageName);
 		this.fileExtension = fileExtension;
-		this.selection = selection;
 	}
 
-	/**
-	 * @see IDialogPage#createControl(Composite)
-	 */
-	public void createControl(Composite parent) {
+	@Override
+	protected Composite createUI(Composite parent) {
 		Composite container = new Composite(parent, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		container.setLayout(layout);
@@ -111,30 +104,22 @@ public abstract class NewFileWizardPage extends WizardPage {
 				dialogChanged();
 			}
 		});
-		initialize();
-		dialogChanged();
-		setControl(container);
+		return container;
 	}
 
 	/**
 	 * Tests if the current workbench selection is a suitable container to use.
 	 */
-
-	private void initialize() {
-		if (selection != null && selection.isEmpty() == false
-				&& selection instanceof IStructuredSelection) {
-			IStructuredSelection ssel = (IStructuredSelection) selection;
-			if (ssel.size() > 1)
-				return;
-			Object obj = ssel.getFirstElement();
-			if (obj instanceof IResource) {
-				IContainer container;
-				if (obj instanceof IContainer)
-					container = (IContainer) obj;
-				else
-					container = ((IResource) obj).getParent();
-				containerText.setText(container.getFullPath().toString());
-			}
+	@Override
+	protected void initialize() {
+		IResource resource = getResource();
+		if (resource != null) {
+			IContainer container = null;
+			if (resource instanceof IContainer)
+				container = (IContainer) resource;
+			else
+				container = resource.getParent();
+			containerText.setText(container.getFullPath().toString());
 		}
 		nameText.setText("mylibrary");
 	}
@@ -159,48 +144,37 @@ public abstract class NewFileWizardPage extends WizardPage {
 	/**
 	 * Ensures that both text fields are set.
 	 */
+	@Override
+	protected String validate() {
 
-	private void dialogChanged() {
 		IResource container = ResourcesPlugin.getWorkspace().getRoot()
 				.findMember(new Path(getContainerName()));
 		String fileName = getFileName();
 
 		if (getContainerName().length() == 0) {
-			updateStatus("File container must be specified");
-			return;
+			return "File container must be specified";
 		}
 		if (container == null
 				|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
-			updateStatus("File container must exist");
-			return;
+			return "File container must exist";
 		}
 		if (!container.isAccessible()) {
-			updateStatus("Project must be writable");
-			return;
+			return "Project must be writable";
 		}
 		if (fileName.length() == 0) {
-			updateStatus("File name must be specified");
-			return;
+			return "File name must be specified";
 		}
 		if (fileName.replace('\\', '/').indexOf('/', 1) > 0) {
-			updateStatus("File name must be valid");
-			return;
+			return "File name must be valid";
 		}
 		int dotLoc = fileName.lastIndexOf('.');
 		if (dotLoc != -1) {
 			String ext = fileName.substring(dotLoc + 1);
 			if (ext.equalsIgnoreCase(fileExtension) == false) {
-				updateStatus("File extension must be \"" + fileExtension + "\"");
-				return;
+				return "File extension must be \"" + fileExtension + "\"";
 			}
 		}
-		synchModel();
-		updateStatus(null);
-	}
-
-	private void updateStatus(String message) {
-		setErrorMessage(message);
-		setPageComplete(message == null);
+		return null;
 	}
 
 	public String getContainerName() {
@@ -214,6 +188,4 @@ public abstract class NewFileWizardPage extends WizardPage {
 	public String getName() {
 		return nameText.getText();
 	}
-	
-	protected abstract void synchModel();
 }

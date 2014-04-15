@@ -10,22 +10,15 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import org.eclipse.jface.viewers.ISelection;
-
 import tern.eclipse.ide.tools.core.generator.IGenerator;
-import tern.eclipse.ide.tools.core.generator.TernDefGenerator;
-import tern.eclipse.ide.tools.core.generator.TernDefOptions;
 import tern.eclipse.ide.tools.core.webbrowser.codemirror.CodeMirrorOptions;
 import tern.eclipse.ide.tools.core.webbrowser.codemirror.HTMLCodeMirrorEditor;
-import tern.eclipse.ide.tools.internal.ui.ImageResource;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizard;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizardPage;
 
 /**
  * Wizard to create HTML page with Tern and CodeMirror editor.
  */
-public class NewCodeMirrorWizard extends NewFileWizard<CodeMirrorOptions> {
+public class NewCodeMirrorWizard extends NewEditorWizard<CodeMirrorOptions> {
 
 	public NewCodeMirrorWizard() {
 		super.setWindowTitle(TernToolsUIMessages.NewCodeMirrorWizard_windowTitle);
@@ -34,9 +27,8 @@ public class NewCodeMirrorWizard extends NewFileWizard<CodeMirrorOptions> {
 	}
 
 	@Override
-	protected NewFileWizardPage createNewFileWizardPage(
-			CodeMirrorOptions options, ISelection selection) {
-		return new NewCodeMirrorWizardPage(options, selection);
+	protected NewCodeMirrorWizardPage createNewFileWizardPage() {
+		return new NewCodeMirrorWizardPage();
 	}
 
 	@Override
@@ -45,7 +37,7 @@ public class NewCodeMirrorWizard extends NewFileWizard<CodeMirrorOptions> {
 	}
 
 	@Override
-	protected CodeMirrorOptions createOptions() {
+	protected CodeMirrorOptions createModel() {
 		return new CodeMirrorOptions();
 	}
 

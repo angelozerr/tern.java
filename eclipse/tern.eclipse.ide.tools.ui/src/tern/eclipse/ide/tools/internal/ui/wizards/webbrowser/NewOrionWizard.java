@@ -10,19 +10,15 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import org.eclipse.jface.viewers.ISelection;
-
 import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.core.webbrowser.orion.HTMLOrionEditor;
 import tern.eclipse.ide.tools.core.webbrowser.orion.OrionOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizard;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizardPage;
 
 /**
  * Wizard to create HTML page with Tern and Orion editor.
  */
-public class NewOrionWizard extends NewFileWizard<OrionOptions> {
+public class NewOrionWizard extends NewEditorWizard<OrionOptions> {
 
 	public NewOrionWizard() {
 		super.setWindowTitle(TernToolsUIMessages.NewOrionWizard_windowTitle);
@@ -31,9 +27,8 @@ public class NewOrionWizard extends NewFileWizard<OrionOptions> {
 	}
 
 	@Override
-	protected NewFileWizardPage createNewFileWizardPage(OrionOptions options,
-			ISelection selection) {
-		return new NewOrionWizardPage(options, selection);
+	protected NewOrionWizardPage createNewFileWizardPage() {
+		return new NewOrionWizardPage();
 	}
 
 	@Override
@@ -42,7 +37,7 @@ public class NewOrionWizard extends NewFileWizard<OrionOptions> {
 	}
 
 	@Override
-	protected OrionOptions createOptions() {
+	protected OrionOptions createModel() {
 		return new OrionOptions();
 	}
 

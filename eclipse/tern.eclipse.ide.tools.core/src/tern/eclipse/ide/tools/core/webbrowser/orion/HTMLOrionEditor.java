@@ -13,7 +13,7 @@ public class HTMLOrionEditor implements tern.eclipse.ide.tools.core.generator.IG
 
   public final String NL = nl == null ? (System.getProperties().getProperty("line.separator")) : nl;
   protected final String TEXT_1 = "<!DOCTYPE html>" + NL + "<html>" + NL + "<head>" + NL + "\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />" + NL + "\t<title>Tern - Orion Editor</title>" + NL + "\t<style type=\"text/css\" media=\"screen\">\t    " + NL + "\t\t#editor {" + NL + "\t\t\t//border: 1px solid teal;" + NL + "\t\t\tposition: absolute;" + NL + "\t\t\ttop: 0px;" + NL + "\t\t\tleft: 0px;" + NL + "\t\t\tbottom: 0px;" + NL + "\t\t\tright: 0px;" + NL + "\t\t\t//margin: 20px;" + NL + "\t\t\tmargin: 0px;" + NL + "\t\t}" + NL + "\t\t" + NL + "\t\tpre {" + NL + "\t\t\tmargin: 0px;" + NL + "\t\t}" + NL + "\t</style>  \t" + NL + "\t<!-- Tern JS -->" + NL + "\t<script src=\"";
-  protected final String TEXT_2 = "\"></script>" + NL + "\t<script src=\"\t";
+  protected final String TEXT_2 = "\"></script>" + NL + "\t<script src=\"";
   protected final String TEXT_3 = "\"></script>" + NL + "\t<script src=\"";
   protected final String TEXT_4 = "\"></script>" + NL + "\t<script src=\"";
   protected final String TEXT_5 = "\"></script>" + NL + "\t<script src=\"";
@@ -22,10 +22,9 @@ public class HTMLOrionEditor implements tern.eclipse.ide.tools.core.generator.IG
   protected final String TEXT_8 = "\"></script>" + NL + "\t<script src=\"";
   protected final String TEXT_9 = "\"></script>\t\t" + NL + "\t<!-- Orion -->" + NL + "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
   protected final String TEXT_10 = "\"/>" + NL + "\t<script src=\"";
-  protected final String TEXT_11 = "\"></script>" + NL + "\t<!-- Orion & Tern -->" + NL + "\t<!--<script src=\"";
-  protected final String TEXT_12 = "\"></script>-->" + NL + "</head>" + NL + "<body>" + NL + "\t<pre id=\"editor\">";
-  protected final String TEXT_13 = "</pre>" + NL + "\t<script>" + NL + "\t    require([\"orion/editor/edit\"], function(edit) {" + NL + "\t\tvar editor = edit({" + NL + "\t\t\tlang: \"js\"" + NL + "\t\t\t});" + NL + "\t\t});\t        " + NL + "\t</script>\t" + NL + "</body>" + NL + "</html>";
-  protected final String TEXT_14 = NL;
+  protected final String TEXT_11 = "\"></script>" + NL + "\t<!-- Orion & Tern -->" + NL + "" + NL + "</head>" + NL + "<body>" + NL + "\t<pre id=\"editor\">";
+  protected final String TEXT_12 = "</pre>" + NL + "\t<script>" + NL + "\t    require([\"orion/editor/edit\"], function(edit) {" + NL + "\t\tvar editor = edit({" + NL + "\t\t\tlang: \"js\"" + NL + "\t\t\t});" + NL + "\t\t});\t        " + NL + "\t</script>\t" + NL + "</body>" + NL + "</html>";
+  protected final String TEXT_13 = NL;
 
 /* (non-javadoc)
     * @see IGenerator#generate(Object)
@@ -55,11 +54,9 @@ public String generate(Object argument)
     stringBuffer.append(TEXT_10);
     stringBuffer.append(options.resolve("built-editor.min.js") );
     stringBuffer.append(TEXT_11);
-    stringBuffer.append(options.resolve("addon/tern/tern.js") );
-    stringBuffer.append(TEXT_12);
     stringBuffer.append( options.getEditorContent() );
+    stringBuffer.append(TEXT_12);
     stringBuffer.append(TEXT_13);
-    stringBuffer.append(TEXT_14);
     return stringBuffer.toString();
   }
 }

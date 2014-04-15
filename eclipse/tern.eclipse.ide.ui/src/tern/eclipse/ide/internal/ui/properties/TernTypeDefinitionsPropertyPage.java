@@ -26,6 +26,7 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.controls.TernDefsBlock;
 import tern.server.ITernDef;
 
 /**
@@ -35,10 +36,7 @@ import tern.server.ITernDef;
 public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		implements IWorkbenchPreferencePage {
 
-	private static final ITernDef[] EMPTY_DEF = new ITernDef[0];
-
 	private TernDefsBlock defsBlock;
-	private List<ITernDef> initialDefs;
 
 	public TernTypeDefinitionsPropertyPage() {
 		super();
@@ -69,7 +67,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		loadDefs();
+		defsBlock.loadDefs(getResource().getProject());
 
 		applyDialogFont(parent);
 		return parent;
@@ -92,36 +90,6 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
 		}
 		return super.performOk();
-	}
-
-	/**
-	 * Load defs from tern project.
-	 */
-	private void loadDefs() {
-
-		List<ITernDef> allDefs = new ArrayList<ITernDef>();
-		ITernDef[] defaultDefs = TernCorePlugin.getTernServerTypeManager()
-				.getTernDefs();
-		for (ITernDef defaultDef : defaultDefs) {
-			allDefs.add(defaultDef);
-		}
-		defsBlock.setTernDefs(allDefs.toArray(EMPTY_DEF));
-		try {
-			IDETernProject ternProject = getTernProject();
-			List defs = ternProject.getLibs();
-			initialDefs = new ArrayList<ITernDef>();
-			for (Object name : defs) {
-				ITernDef def = TernCorePlugin.getTernServerTypeManager()
-						.findTernDef(name.toString());
-				if (def != null) {
-					initialDefs.add(def);
-				}
-			}
-			defsBlock.setCheckedDefs(initialDefs.toArray());
-
-		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
-		}		
 	}
 
 }

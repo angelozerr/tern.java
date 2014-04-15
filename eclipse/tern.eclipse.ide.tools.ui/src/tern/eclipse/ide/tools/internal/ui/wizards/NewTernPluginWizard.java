@@ -33,9 +33,8 @@ public class NewTernPluginWizard extends NewFileWizard<TernPluginOptions> {
 	}
 
 	@Override
-	protected NewFileWizardPage createNewFileWizardPage(
-			TernPluginOptions options, ISelection selection) {
-		return new NewTernPluginWizardPage(options, selection);
+	protected NewTernPluginWizardPage createNewFileWizardPage() {
+		return new NewTernPluginWizardPage();
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class NewTernPluginWizard extends NewFileWizard<TernPluginOptions> {
 	}
 
 	@Override
-	protected TernPluginOptions createOptions() {
+	protected TernPluginOptions createModel() {
 		return new TernPluginOptions();
 	}
 

@@ -23,7 +23,7 @@
 	</style>  	
 	<!-- Tern JS -->
 	<script src="<%=options.resolveTern("node_modules/acorn/acorn.js") %>"></script>
-	<script src="	<%=options.resolveTern("node_modules/acorn/acorn_loose.js") %>"></script>
+	<script src="<%=options.resolveTern("node_modules/acorn/acorn_loose.js") %>"></script>
 	<script src="<%=options.resolveTern("node_modules/acorn/util/walk.js") %>"></script>
 	<script src="<%=options.resolveTern("lib/signal.js") %>"></script>
 	<script src="<%=options.resolveTern("lib/tern.js") %>"></script>
@@ -34,7 +34,7 @@
 	<link rel="stylesheet" type="text/css" href="<%=options.resolve("built-editor.css") %>"/>
 	<script src="<%=options.resolve("built-editor.min.js") %>"></script>
 	<!-- Orion & Tern -->
-	<!--<script src="<%=options.resolve("addon/tern/tern.js") %>"></script>-->
+
 </head>
 <body>
 	<pre id="editor"><%= options.getEditorContent() %></pre>

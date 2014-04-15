@@ -8,23 +8,22 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.properties;
+package tern.eclipse.ide.ui.controls;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -33,8 +32,14 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.viewers.TernDefContentProvider;
+import tern.eclipse.ide.ui.viewers.TernDefLabelProvider;
 import tern.server.ITernDef;
 
 /**
@@ -102,12 +107,19 @@ public class TernDefsBlock extends AbstractTableBlock {
 		});
 
 		tableViewer = new CheckboxTableViewer(fTable);
-		tableViewer.setLabelProvider(new TernDefabelProvider());
-		tableViewer.setContentProvider(new ProcessorsContentProvider());
-
-		
+		tableViewer.setLabelProvider(new TernDefLabelProvider());
+		tableViewer.setContentProvider(new TernDefContentProvider(ternDefs));
 
 		restoreColumnSettings();
+	}
+
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		tableViewer.addSelectionChangedListener(listener);
+	}
+
+	public void removeSelectionChangedListener(
+			ISelectionChangedListener listener) {
+		tableViewer.removeSelectionChangedListener(listener);
 	}
 
 	/**
@@ -175,7 +187,41 @@ public class TernDefsBlock extends AbstractTableBlock {
 		return fControl;
 	}
 
-	protected void setTernDefs(ITernDef[] vms) {
+	/**
+	 * Load defs from tern project.
+	 */
+	public void loadDefs(IProject project) {
+		// Load list of tern defs
+		List<ITernDef> allDefs = new ArrayList<ITernDef>();
+		ITernDef[] defaultDefs = TernCorePlugin.getTernServerTypeManager()
+				.getTernDefs();
+		for (ITernDef defaultDef : defaultDefs) {
+			allDefs.add(defaultDef);
+		}
+		this.setTernDefs(allDefs.toArray(ITernDef.EMPTY_DEF));
+		// Select tern def
+		if (project != null) {
+			try {
+				IDETernProject ternProject = IDETernProject
+						.getTernProject(project);
+				List defs = ternProject.getLibs();
+				List<ITernDef> initialDefs = new ArrayList<ITernDef>();
+				for (Object name : defs) {
+					ITernDef def = TernCorePlugin.getTernServerTypeManager()
+							.findTernDef(name.toString());
+					if (def != null) {
+						initialDefs.add(def);
+					}
+				}
+				this.setCheckedDefs(initialDefs.toArray());
+
+			} catch (CoreException e) {
+				Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
+			}
+		}
+	}
+
+	public void setTernDefs(ITernDef[] vms) {
 		ternDefs.clear();
 		for (ITernDef element : vms) {
 			ternDefs.add(element);
@@ -192,9 +238,8 @@ public class TernDefsBlock extends AbstractTableBlock {
 		tableViewer.setCheckedElements(selectedDefs);
 
 		/*
-		 * if (selectedDefs == null) { setSelection(new
-		 * StructuredSelection()); } else { setSelection(new
-		 * StructuredSelection(selectedDefs)); }
+		 * if (selectedDefs == null) { setSelection(new StructuredSelection());
+		 * } else { setSelection(new StructuredSelection(selectedDefs)); }
 		 */
 	}
 
@@ -219,40 +264,6 @@ public class TernDefsBlock extends AbstractTableBlock {
 	@Override
 	protected IDialogSettings getDialogSettings() {
 		return TernUIPlugin.getDefault().getDialogSettings();
-	}
-
-	private class ProcessorsContentProvider implements
-			IStructuredContentProvider {
-		public Object[] getElements(Object input) {
-			return ternDefs.toArray();
-		}
-
-		public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		}
-
-		public void dispose() {
-		}
-	}
-
-	private static class TernDefabelProvider extends LabelProvider implements
-			ITableLabelProvider {
-		public String getColumnText(Object element, int columnIndex) {
-			if (element instanceof ITernDef) {
-				ITernDef install = (ITernDef) element;
-				switch (columnIndex) {
-				case 0:
-					return install.getName();
-				case 1:
-					return install.getPath();
-				}
-			}
-			return element.toString();
-		}
-
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
-
 	}
 
 	@Override

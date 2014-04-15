@@ -33,9 +33,8 @@ public class NewTernDefWizard extends NewFileWizard<TernDefOptions> {
 	}
 
 	@Override
-	protected NewFileWizardPage createNewFileWizardPage(TernDefOptions options,
-			ISelection selection) {
-		return new NewTernDefWizardPage(options, selection);
+	protected NewTernDefWizardPage createNewFileWizardPage() {
+		return new NewTernDefWizardPage();
 	}
 
 	@Override
@@ -44,7 +43,7 @@ public class NewTernDefWizard extends NewFileWizard<TernDefOptions> {
 	}
 
 	@Override
-	protected TernDefOptions createOptions() {
+	protected TernDefOptions createModel() {
 		return new TernDefOptions();
 	}
 

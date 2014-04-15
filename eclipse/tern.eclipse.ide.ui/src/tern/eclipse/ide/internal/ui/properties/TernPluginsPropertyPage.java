@@ -10,24 +10,18 @@
  */
 package tern.eclipse.ide.internal.ui.properties;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
-import org.json.simple.JSONObject;
 
-import tern.TernProject;
 import tern.eclipse.ide.core.IDETernProject;
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.controls.TernPluginsBlock;
 import tern.server.ITernPlugin;
 
 /**
@@ -38,7 +32,6 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		IWorkbenchPreferencePage {
 
 	private TernPluginsBlock pluginsBlock;
-	private List<ITernPlugin> initialPlugins;
 
 	public TernPluginsPropertyPage() {
 		super();
@@ -69,7 +62,7 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		loadPlugins();
+		pluginsBlock.loadPlugins(getResource().getProject());
 
 		applyDialogFont(parent);
 		return parent;
@@ -92,29 +85,6 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
 		}
 		return super.performOk();
-	}
-
-	/**
-	 * Load plugins from tern project.
-	 */
-	private void loadPlugins() {
-		try {
-			TernProject ternProject = getTernProject();
-			JSONObject plugins = ternProject.getPlugins();
-
-			initialPlugins = new ArrayList<ITernPlugin>();
-			for (Object name : plugins.keySet()) {
-				ITernPlugin plugin = TernCorePlugin.getTernServerTypeManager()
-						.findTernPlugin(name.toString());
-				if (plugin != null) {
-					initialPlugins.add(plugin);
-				}
-			}
-			pluginsBlock.setCheckedPlugins(initialPlugins.toArray());
-
-		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
-		}
 	}
 
 }

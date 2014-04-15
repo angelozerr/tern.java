@@ -18,6 +18,8 @@ package tern.server;
  */
 public interface ITernDef {
 
+	public static final ITernDef[] EMPTY_DEF = new ITernDef[0];
+	
 	/**
 	 * Return the def name.
 	 * 
