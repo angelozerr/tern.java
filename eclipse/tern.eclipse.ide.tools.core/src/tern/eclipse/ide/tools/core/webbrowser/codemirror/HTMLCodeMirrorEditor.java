@@ -33,10 +33,11 @@ public class HTMLCodeMirrorEditor implements tern.eclipse.ide.tools.core.generat
   protected final String TEXT_19 = "\">" + NL + "\t<script src=\"";
   protected final String TEXT_20 = "\"></script>" + NL + "\t<!-- CodeMirror & Tern -->" + NL + "\t <script src=\"";
   protected final String TEXT_21 = "\"></script>" + NL + "</head>" + NL + "<body>" + NL + "\t<p>" + NL + "\t\t<textarea id=\"code\" name=\"code\">";
-  protected final String TEXT_22 = "</textarea>" + NL + "\t</p>" + NL + "\t<dl>" + NL + "\t  <dt>Ctrl-Space</dt><dd>Autocomplete</dd>" + NL + "\t  <dt>Ctrl-I</dt><dd>Find type at cursor</dd>" + NL + "\t  <dt>Alt-.</dt><dd>Jump to definition (Alt-, to jump back)</dd>" + NL + "\t  <dt>Ctrl-Q</dt><dd>Rename variable</dd>" + NL + "\t</dl>\t" + NL + "\t<script>" + NL + "\t\tvar editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" + NL + "    \t\tlineNumbers: true," + NL + "    \t\tmode: \"javascript\"" + NL + "  \t\t});" + NL + "  \t\tvar defs = ";
-  protected final String TEXT_23 = ";" + NL + "  \t\tvar plugins = ";
-  protected final String TEXT_24 = ";" + NL + "\t\tvar server = new CodeMirror.TernServer({defs: defs, plugins: plugins});" + NL + "\t    editor.setOption(\"extraKeys\", {" + NL + "\t      \"Ctrl-Space\": function(cm) { server.complete(cm); }," + NL + "\t      \"Ctrl-I\": function(cm) { server.showType(cm); }," + NL + "\t      \"Alt-.\": function(cm) { server.jumpToDef(cm); }," + NL + "\t      \"Alt-,\": function(cm) { server.jumpBack(cm); }," + NL + "\t      \"Ctrl-Q\": function(cm) { server.rename(cm); }," + NL + "\t    })" + NL + "\t    editor.on(\"cursorActivity\", function(cm) { server.updateArgHints(cm); });  \t\t" + NL + "\t</script>" + NL + "</body>" + NL + "</html>";
-  protected final String TEXT_25 = NL;
+  protected final String TEXT_22 = "</textarea>" + NL + "\t</p>" + NL + "\t<dl>" + NL + "\t  <dt>Ctrl-Space</dt><dd>Autocomplete</dd>" + NL + "\t  <dt>Ctrl-I</dt><dd>Find type at cursor</dd>" + NL + "\t  <dt>Alt-.</dt><dd>Jump to definition (Alt-, to jump back)</dd>" + NL + "\t  <dt>Ctrl-Q</dt><dd>Rename variable</dd>" + NL + "\t</dl>\t" + NL + "\t";
+  protected final String TEXT_23 = "\t" + NL + "\t<script>" + NL + "\t\tvar editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" + NL + "    \t\tlineNumbers: true," + NL + "    \t\tmode: \"javascript\"" + NL + "  \t\t});" + NL + "  \t\tvar defs = ";
+  protected final String TEXT_24 = ";" + NL + "  \t\tvar plugins = ";
+  protected final String TEXT_25 = ";" + NL + "\t\tvar server = new CodeMirror.TernServer({defs: defs, plugins: plugins});" + NL + "\t    editor.setOption(\"extraKeys\", {" + NL + "\t      \"Ctrl-Space\": function(cm) { server.complete(cm); }," + NL + "\t      \"Ctrl-I\": function(cm) { server.showType(cm); }," + NL + "\t      \"Alt-.\": function(cm) { server.jumpToDef(cm); }," + NL + "\t      \"Alt-,\": function(cm) { server.jumpBack(cm); }," + NL + "\t      \"Ctrl-Q\": function(cm) { server.rename(cm); }," + NL + "\t    })" + NL + "\t    editor.on(\"cursorActivity\", function(cm) { server.updateArgHints(cm); });  \t\t" + NL + "\t</script>" + NL + "</body>" + NL + "</html>";
+  protected final String TEXT_26 = NL;
 
 /* (non-javadoc)
     * @see IGenerator#generate(Object)
@@ -70,7 +71,7 @@ public String generate(Object argument)
 			def = ternDefs[i];
 	
     stringBuffer.append(TEXT_10);
-    stringBuffer.append(options.resolveTernDef("defs/" + def.getName() + ".json") );
+    stringBuffer.append(options.resolveTernDef(def.getName() + ".json") );
     stringBuffer.append(TEXT_11);
     			
 		}		
@@ -105,11 +106,13 @@ public String generate(Object argument)
     stringBuffer.append(TEXT_21);
     stringBuffer.append( options.getEditorContent() );
     stringBuffer.append(TEXT_22);
-    stringBuffer.append(options.toJSONDefs() );
+    stringBuffer.append(options.getEmbedJSONDefs() );
     stringBuffer.append(TEXT_23);
-    stringBuffer.append(options.toJSONPlugins() );
+    stringBuffer.append(options.toJSONDefs() );
     stringBuffer.append(TEXT_24);
+    stringBuffer.append(options.toJSONPlugins() );
     stringBuffer.append(TEXT_25);
+    stringBuffer.append(TEXT_26);
     return stringBuffer.toString();
   }
 }

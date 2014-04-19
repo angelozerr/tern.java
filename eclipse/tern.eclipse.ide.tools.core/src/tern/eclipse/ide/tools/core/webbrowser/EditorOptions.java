@@ -1,17 +1,20 @@
 package tern.eclipse.ide.tools.core.webbrowser;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import tern.eclipse.ide.tools.core.generator.Options;
 import tern.eclipse.ide.tools.internal.core.TernToolsCorePlugin;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
+import tern.utils.IOUtils;
 
 public class EditorOptions extends Options {
 
 	private boolean useLocalScripts;
 	private boolean exportScripts;
-	
+
 	private ITernDef[] ternDefs;
 	private boolean loadDefWithAjax;
 
@@ -30,11 +33,11 @@ public class EditorOptions extends Options {
 	public EditorType getType() {
 		return type;
 	}
-	
+
 	public void setExportScripts(boolean exportScripts) {
 		this.exportScripts = exportScripts;
 	}
-	
+
 	public boolean isExportScripts() {
 		return exportScripts;
 	}
@@ -95,7 +98,7 @@ public class EditorOptions extends Options {
 	}
 
 	public String resolveTernDef(String uri) {
-		return resolve(ternBaseURL, uri);
+		return resolve(ternBaseURL, "defs/" + uri);
 	}
 
 	public String resolveTernPlugin(String uri) {
@@ -134,9 +137,9 @@ public class EditorOptions extends Options {
 				if (i > 0) {
 					json.append(",");
 				}
-				json.append("\"");
+				//json.append("\"");
 				json.append(def.getName());
-				json.append("\"");
+				//json.append("\"");
 			}
 		}
 		json.append("]");
@@ -168,4 +171,31 @@ public class EditorOptions extends Options {
 		this.ternPlugins = ternPlugins;
 	}
 
+	public String getEmbedJSONDefs() {
+		if (ternDefs != null) {
+			StringBuilder js = new StringBuilder();
+			js.append("<script>");
+			ITernDef def = null;
+			for (int i = 0; i < ternDefs.length; i++) {
+				def = ternDefs[i];
+				String url = resolveTernDef(def.getName() + ".json");
+				if (url.startsWith("file:/")) {
+					File f = new File(url.substring("file:/".length(),
+							url.length()));
+					try {
+						String json = IOUtils.toString(new FileReader(f));
+						js.append("\nvar ");
+						js.append(def.getName());
+						js.append("=");
+						js.append(json);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			js.append("</script>");
+			return js.toString();
+		}
+		return null;
+	}
 }

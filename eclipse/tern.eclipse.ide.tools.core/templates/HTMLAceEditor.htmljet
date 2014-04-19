@@ -28,16 +28,7 @@
 	<script src="<%=options.resolveTern("lib/def.js") %>"></script>
 	<script src="<%=options.resolveTern("lib/comment.js") %>"></script>
 	<script src="<%=options.resolveTern("lib/infer.js") %>"></script>	
-	<%
-	tern.server.ITernDef[] ternDefs = options.getTernDefs();
-	if (ternDefs != null) { 
-		tern.server.ITernDef def = null;
-		for (int i = 0; i < ternDefs.length; i++) {
-			def = ternDefs[i];
-	%><script src="<%=options.resolveTernDef("defs/" + def.getName() + ".json") %>"></script>
-	<%			
-		}		
-	} 	
+	<% 	
 	tern.server.ITernPlugin[] ternPlugins = options.getTernPlugins();
 	if (ternPlugins != null) { 
 		tern.server.ITernPlugin plugin = null;
@@ -56,6 +47,7 @@
 </head>
 <body>
 	<pre id="editor"><%= options.getEditorContent() %></pre>
+	<%=options.getEmbedJSONDefs() %>
 	<script>
 	    var langTools = ace.require("ace/ext/language_tools");
 	    var editor = ace.edit("editor");    

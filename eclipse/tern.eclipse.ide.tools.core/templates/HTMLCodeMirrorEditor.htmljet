@@ -20,7 +20,7 @@
 		tern.server.ITernDef def = null;
 		for (int i = 0; i < ternDefs.length; i++) {
 			def = ternDefs[i];
-	%><script src="<%=options.resolveTernDef("defs/" + def.getName() + ".json") %>"></script>
+	%><script src="<%=options.resolveTernDef(def.getName() + ".json") %>"></script>
 	<%			
 		}		
 	} 	
@@ -54,6 +54,7 @@
 	  <dt>Alt-.</dt><dd>Jump to definition (Alt-, to jump back)</dd>
 	  <dt>Ctrl-Q</dt><dd>Rename variable</dd>
 	</dl>	
+	<%=options.getEmbedJSONDefs() %>	
 	<script>
 		var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     		lineNumbers: true,

@@ -23,16 +23,15 @@ public class HTMLOrionEditor implements tern.eclipse.ide.tools.core.generator.IG
   protected final String TEXT_9 = "\"></script>\t\t" + NL + "\t";
   protected final String TEXT_10 = "<script src=\"";
   protected final String TEXT_11 = "\"></script>" + NL + "\t";
-  protected final String TEXT_12 = "<script src=\"";
-  protected final String TEXT_13 = "\"></script>" + NL + "\t";
-  protected final String TEXT_14 = "\t" + NL + "\t<!-- Orion -->" + NL + "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
-  protected final String TEXT_15 = "\"/>" + NL + "\t<script src=\"";
-  protected final String TEXT_16 = "\"></script>" + NL + "\t<!-- Orion & Tern -->" + NL + "\t<script src=\"";
-  protected final String TEXT_17 = "\"></script>" + NL + "</head>" + NL + "<body>" + NL + "\t<pre id=\"editor\">";
-  protected final String TEXT_18 = "</pre>" + NL + "\t<script>" + NL + "\t\trequire([\"orion/editor/edit\", \"orion/tern/ternServer\"], function(edit, mTernServer) {" + NL + "\t\t\tvar editor = edit({" + NL + "\t\t\t\tlang: \"js\"" + NL + "\t\t\t});" + NL + "\t\t\t" + NL + "\t\t\t// tern server\t\t\t" + NL + "\t\t\tvar defs = ";
-  protected final String TEXT_19 = ";" + NL + "  \t\t\tvar plugins = ";
-  protected final String TEXT_20 = ";" + NL + "\t\t\tvar ternServer = new mTernServer.TernServer({defs: defs, plugins: plugins});" + NL + "\t\t\t" + NL + "\t\t\t// tern completion" + NL + "\t\t\tternServer.addContentAssistProvider(editor);" + NL + "\t\t});\t       " + NL + "\t</script>\t" + NL + "</body>" + NL + "</html>";
-  protected final String TEXT_21 = NL;
+  protected final String TEXT_12 = "\t" + NL + "\t<!-- Orion -->" + NL + "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"";
+  protected final String TEXT_13 = "\"/>" + NL + "\t<script src=\"";
+  protected final String TEXT_14 = "\"></script>" + NL + "\t<!-- Orion & Tern -->" + NL + "\t<script src=\"";
+  protected final String TEXT_15 = "\"></script>" + NL + "</head>" + NL + "<body>" + NL + "\t<pre id=\"editor\">";
+  protected final String TEXT_16 = "</pre>\t" + NL + "\t<script>" + NL + "\t\trequire([\"orion/editor/edit\", \"orion/tern/ternServer\"], function(edit, mTernServer) {" + NL + "\t\t\tvar editor = edit({" + NL + "\t\t\t\tlang: \"js\"" + NL + "\t\t\t});" + NL + "\t\t\t" + NL + "\t\t\t// tern server\t\t\t" + NL + "\t\t\tvar defs = ";
+  protected final String TEXT_17 = ";" + NL + "  \t\t\tvar plugins = ";
+  protected final String TEXT_18 = ";" + NL + "\t\t\tvar ternServer = new mTernServer.TernServer({defs: defs, plugins: plugins});" + NL + "\t\t\t" + NL + "\t\t\t// tern completion" + NL + "\t\t\tternServer.addContentAssistProvider(editor);" + NL + "\t\t});\t       " + NL + "\t</script>\t" + NL + "\t";
+  protected final String TEXT_19 = NL + "</body>" + NL + "</html>";
+  protected final String TEXT_20 = NL;
 
 /* (non-javadoc)
     * @see IGenerator#generate(Object)
@@ -58,46 +57,36 @@ public String generate(Object argument)
     stringBuffer.append(TEXT_8);
     stringBuffer.append(options.resolveTern("lib/infer.js") );
     stringBuffer.append(TEXT_9);
-    
-	tern.server.ITernDef[] ternDefs = options.getTernDefs();
-	if (ternDefs != null) { 
-		tern.server.ITernDef def = null;
-		for (int i = 0; i < ternDefs.length; i++) {
-			def = ternDefs[i];
-	
-    stringBuffer.append(TEXT_10);
-    stringBuffer.append(options.resolveTernDef("defs/" + def.getName() + ".json") );
-    stringBuffer.append(TEXT_11);
-    			
-		}		
-	} 	
+     	
 	tern.server.ITernPlugin[] ternPlugins = options.getTernPlugins();
 	if (ternPlugins != null) { 
 		tern.server.ITernPlugin plugin = null;
 		for (int i = 0; i < ternPlugins.length; i++) {
 			plugin = ternPlugins[i];
 	
-    stringBuffer.append(TEXT_12);
+    stringBuffer.append(TEXT_10);
     stringBuffer.append(options.resolveTernPlugin("plugin/" + plugin.getName() + ".js") );
-    stringBuffer.append(TEXT_13);
+    stringBuffer.append(TEXT_11);
     			
 		}		
 	} 
 	
-    stringBuffer.append(TEXT_14);
+    stringBuffer.append(TEXT_12);
     stringBuffer.append(options.resolve("built-editor.css") );
-    stringBuffer.append(TEXT_15);
+    stringBuffer.append(TEXT_13);
     stringBuffer.append(options.resolve("built-editor.min.js") );
-    stringBuffer.append(TEXT_16);
+    stringBuffer.append(TEXT_14);
     stringBuffer.append(options.resolveTernOrion("lib/tern-orion.js") );
-    stringBuffer.append(TEXT_17);
+    stringBuffer.append(TEXT_15);
     stringBuffer.append( options.getEditorContent() );
-    stringBuffer.append(TEXT_18);
+    stringBuffer.append(TEXT_16);
     stringBuffer.append(options.toJSONDefs() );
-    stringBuffer.append(TEXT_19);
+    stringBuffer.append(TEXT_17);
     stringBuffer.append(options.toJSONPlugins() );
+    stringBuffer.append(TEXT_18);
+    stringBuffer.append(options.getEmbedJSONDefs() );
+    stringBuffer.append(TEXT_19);
     stringBuffer.append(TEXT_20);
-    stringBuffer.append(TEXT_21);
     return stringBuffer.toString();
   }
 }
