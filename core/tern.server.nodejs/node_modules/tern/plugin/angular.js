@@ -407,12 +407,6 @@
         preventDefault: "fn()",
         defaultPrevented: "bool"
       },
-      DirectiveFactory: {
-        restrict: "string"
-      },
-      FnDirectiveFactory: {
-        "!type": "fn() -> DirectiveFactory"
-      },
       Module: {
         "!url": "http://docs.angularjs.org/api/angular.Module",
         "!doc": "Interface for configuring angular modules.",
@@ -436,7 +430,7 @@
             "!doc": "Register a controller."
           },
           directive: {
-            "!type": "fn(name: string, directiveFactory: FnDirectiveFactory) -> !this",
+            "!type": "fn(name: string, directiveFactory: fn()) -> !this",
             "!effects": ["custom angular_regFieldCallDirective"],
             "!url": "http://docs.angularjs.org/api/ng.$compileProvider#directive",
             "!doc": "Register a new directive with the compiler."
