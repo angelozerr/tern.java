@@ -9,7 +9,12 @@ import tern.server.ITernPlugin;
 
 public class EditorOptions extends Options {
 
+	private boolean useLocalScripts;
+	private boolean exportScripts;
+	
 	private ITernDef[] ternDefs;
+	private boolean loadDefWithAjax;
+
 	private ITernPlugin[] ternPlugins;
 
 	private String ternBaseURL;
@@ -24,6 +29,22 @@ public class EditorOptions extends Options {
 
 	public EditorType getType() {
 		return type;
+	}
+	
+	public void setExportScripts(boolean exportScripts) {
+		this.exportScripts = exportScripts;
+	}
+	
+	public boolean isExportScripts() {
+		return exportScripts;
+	}
+
+	public boolean isUseLocalScripts() {
+		return useLocalScripts;
+	}
+
+	public void setUseLocalScripts(boolean useLocalScripts) {
+		this.useLocalScripts = useLocalScripts;
 	}
 
 	public String getEditorContent() {
@@ -48,6 +69,14 @@ public class EditorOptions extends Options {
 
 	public void setBaseURL(String baseURL) {
 		this.baseURL = baseURL;
+	}
+
+	public boolean isLoadDefWithAjax() {
+		return loadDefWithAjax;
+	}
+
+	public void setLoadDefWithAjax(boolean loadDefWithAjax) {
+		this.loadDefWithAjax = loadDefWithAjax;
 	}
 
 	public String resolve(String uri) {
