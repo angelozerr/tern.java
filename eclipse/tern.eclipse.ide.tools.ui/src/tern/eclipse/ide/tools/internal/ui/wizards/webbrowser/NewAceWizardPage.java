@@ -30,11 +30,17 @@ public class NewAceWizardPage extends NewFileWizardPage<AceOptions> {
 	}
 
 	@Override
+	protected void initialize() {
+		super.initialize();
+		getFileText().setText("index.html");
+	}
+
+	@Override
 	protected void updateModel(AceOptions options) {
-		//options.setBaseURL("http://ace.c9.io/");
-		//options.setTernBaseURL("http://ternjs.net/");
+		// options.setBaseURL("http://ace.c9.io/");
+		// options.setTernBaseURL("http://ternjs.net/");
 		// options.setTernAceBaseURL("https://raw.githubusercontent.com/angelozerr/tern.ace/master/lib/");
-		//options.setTernAceBaseURL("file://C:/Documents and Settings/azerr/git/tern.ace/lib/");
+		// options.setTernAceBaseURL("file://C:/Documents and Settings/azerr/git/tern.ace/lib/");
 		options.setEditorContent("var elt = document.getElementById('xxx');");
 	}
 

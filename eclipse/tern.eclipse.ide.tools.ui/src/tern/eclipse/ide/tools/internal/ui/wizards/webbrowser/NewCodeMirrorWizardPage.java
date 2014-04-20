@@ -29,6 +29,12 @@ public class NewCodeMirrorWizardPage extends
 		setTitle(TernToolsUIMessages.NewCodeMirrorWizardPage_title);
 		setDescription(TernToolsUIMessages.NewCodeMirrorWizardPage_description);
 	}
+	
+	@Override
+	protected void initialize() {
+		super.initialize();
+		getFileText().setText("index.html");
+	}
 
 	@Override
 	protected void updateModel(CodeMirrorOptions options) {

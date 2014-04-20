@@ -28,6 +28,12 @@ public class NewOrionWizardPage extends NewFileWizardPage<OrionOptions> {
 		setTitle(TernToolsUIMessages.NewOrionWizardPage_title);
 		setDescription(TernToolsUIMessages.NewOrionWizardPage_description);
 	}
+	
+	@Override
+	protected void initialize() {
+		super.initialize();
+		getFileText().setText("index.html");
+	}
 
 	@Override
 	protected void updateModel(OrionOptions options) {

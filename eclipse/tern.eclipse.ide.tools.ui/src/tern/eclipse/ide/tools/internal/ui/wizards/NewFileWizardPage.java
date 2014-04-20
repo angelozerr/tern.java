@@ -4,9 +4,6 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.IDialogPage;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -36,8 +33,6 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 
 	private Text fileText;
 
-	private Text nameText;
-
 	/**
 	 * Constructor for SampleNewWizardPage.
 	 * 
@@ -56,26 +51,17 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 		layout.numColumns = 3;
 		layout.verticalSpacing = 9;
 
-		// Name (plugin or def)
-		Label label = new Label(container, SWT.NULL);
-		label.setText(TernToolsUIMessages.NewFileWizardPage_name_text);
+		createBody(container);
+		return container;
+	}
 
-		nameText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
-		gd.horizontalSpan = 2;
-		nameText.setLayoutData(gd);
-		nameText.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent e) {
-				fileText.setText(nameText.getText() + "." + fileExtension);
-			}
-		});
-
+	protected void createBody(Composite container) {
 		// Container
-		label = new Label(container, SWT.NULL);
+		Label label = new Label(container, SWT.NULL);
 		label.setText(TernToolsUIMessages.NewFileWizardPage_container_text);
 
 		containerText = new Text(container, SWT.BORDER | SWT.SINGLE);
-		gd = new GridData(GridData.FILL_HORIZONTAL);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		containerText.setLayoutData(gd);
 		containerText.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent e) {
@@ -104,7 +90,6 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 				dialogChanged();
 			}
 		});
-		return container;
 	}
 
 	/**
@@ -120,8 +105,7 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 			else
 				container = resource.getParent();
 			containerText.setText(container.getFullPath().toString());
-		}
-		nameText.setText("mylibrary");
+		}		
 	}
 
 	/**
@@ -185,7 +169,11 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 		return fileText.getText();
 	}
 
-	public String getName() {
-		return nameText.getText();
+	protected Text getFileText() {
+		return fileText;
+	}
+
+	public String getFileExtension() {
+		return fileExtension;
 	}
 }
