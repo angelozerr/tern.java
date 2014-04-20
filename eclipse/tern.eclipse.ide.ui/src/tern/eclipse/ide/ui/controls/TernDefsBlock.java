@@ -48,9 +48,15 @@ import tern.server.ITernDef;
  */
 public class TernDefsBlock extends AbstractTableBlock {
 
+	private final String tableLabel;
+
 	private Composite fControl;
 	private final List<ITernDef> ternDefs = new ArrayList<ITernDef>();
 	private CheckboxTableViewer tableViewer;
+
+	public TernDefsBlock(String tableLabel) {
+		this.tableLabel = tableLabel;
+	}
 
 	public void createControl(Composite ancestor) {
 
@@ -66,12 +72,14 @@ public class TernDefsBlock extends AbstractTableBlock {
 
 		GridData data;
 
-		Label tableLabel = new Label(parent, SWT.NONE);
-		tableLabel.setText(TernUIMessages.TernDefsBlock_desc);
-		data = new GridData();
-		data.horizontalSpan = 2;
-		tableLabel.setLayoutData(data);
-		tableLabel.setFont(font);
+		if (tableLabel != null) {
+			Label tableLabel = new Label(parent, SWT.NONE);
+			tableLabel.setText(this.tableLabel);
+			data = new GridData();
+			data.horizontalSpan = 2;
+			tableLabel.setLayoutData(data);
+			tableLabel.setFont(font);
+		}
 
 		Table fTable = new Table(parent, SWT.CHECK | SWT.BORDER
 				| SWT.FULL_SELECTION | SWT.V_SCROLL);

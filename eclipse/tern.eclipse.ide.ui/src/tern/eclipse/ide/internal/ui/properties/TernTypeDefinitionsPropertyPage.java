@@ -23,6 +23,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
@@ -60,7 +61,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		defsBlock = new TernDefsBlock();
+		defsBlock = new TernDefsBlock(TernUIMessages.TernDefsBlock_desc);
 		defsBlock.createControl(parent);
 		Control control = defsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);

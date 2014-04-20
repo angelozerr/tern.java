@@ -23,6 +23,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
+import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
 import tern.eclipse.ide.ui.controls.TernPluginsBlock;
 import tern.server.ITernPlugin;
@@ -39,6 +40,9 @@ public class TernPluginsSelectionWizardPage extends
 
 	protected TernPluginsSelectionWizardPage() {
 		super(PAGE);
+		setTitle(TernToolsUIMessages.TernPluginsSelectionWizardPage_title);
+		setDescription(TernToolsUIMessages.TernPluginsSelectionWizardPage_description);
+
 	}
 
 	@Override
