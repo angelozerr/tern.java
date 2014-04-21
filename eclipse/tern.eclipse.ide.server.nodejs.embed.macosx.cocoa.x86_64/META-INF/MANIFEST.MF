@@ -9,3 +9,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: tern.eclipse.ide.server.nodejs.core;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
+Eclipse-PlatformFilter: (& (osgi.ws=cocoa)(osgi.os=macosx)(osgi.arch=x86_64))
