@@ -69,6 +69,13 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="zip" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

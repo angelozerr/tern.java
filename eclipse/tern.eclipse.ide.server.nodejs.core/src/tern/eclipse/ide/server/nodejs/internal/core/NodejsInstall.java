@@ -13,6 +13,10 @@ package tern.eclipse.ide.server.nodejs.internal.core;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.tools.ant.taskdefs.Expand;
+import org.apache.tools.ant.taskdefs.GUnzip;
+import org.apache.tools.ant.taskdefs.Unpack;
+import org.apache.tools.ant.taskdefs.Untar;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -43,6 +47,26 @@ public class NodejsInstall implements INodejsInstall {
 			File baseDir = FileLocator.getBundleFile(Platform
 					.getBundle(pluginId));
 			this.path = new File(baseDir, path);
+			
+			// check if path exists, if it doesn't look for zip
+			if (!this.path.exists()) {
+				String zip = element.getAttribute("zip");
+				
+				File zipFile = new File(baseDir, zip);
+				
+				if (zipFile.exists()) {
+					if (zipFile.getName().toLowerCase().endsWith(".zip")) {
+						Expand unzip = new Expand();
+						unzip.setDest(baseDir);
+						unzip.setSrc(zipFile);
+						unzip.execute();
+					}
+					
+					if(this.path.exists()) {
+						this.path.setExecutable(true);
+					}
+				}
+			}
 		}
 	}
 
