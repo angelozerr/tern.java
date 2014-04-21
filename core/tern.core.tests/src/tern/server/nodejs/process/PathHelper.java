@@ -11,6 +11,7 @@
 package tern.server.nodejs.process;
 
 import java.io.File;
+import java.io.IOException;
 
 public class PathHelper {
 
@@ -20,39 +21,59 @@ public class PathHelper {
 	 * @return
 	 */
 	public static File getNodejsBasedir() {
+		
 		/*
 		 * String s = "name: " + System.getProperty ("os.name"); s +=
 		 * ", version: " + System.getProperty ("os.version"); s += ", arch: " +
 		 * System.getProperty ("os.arch"); System.out.println ("OS=" + s);
 		 */
-		String os =System.getProperty ("osgi.os");
-		System.out.println("os "+os);
-		String arch=System.getProperty ("osgi.arch");
-		System.out.println("arch "+arch);
-		String ws =System.getProperty ("osgi.ws");
-		System.out.println("ws "+ws);
-		//System.out.println(System.getProperties());
+		String os = System.getProperty("osgi.os");
+		System.out.println("os " + os);
+		String arch = System.getProperty("osgi.arch");
+		System.out.println("arch " + arch);
+		String ws = System.getProperty("osgi.ws");
+		System.out.println("ws " + ws);
 
-		/*os = "win32";
-		ws = "win32";
-		arch = "x86";*/
-
+		unZipIfNecessary(os,ws,arch);
+		
 		File file;
 		// TODO : manage the patch switch OS.
-		//no "bin" subfolder for windows...
-		if("win32".equals(os)){
-			 file= new File(
-						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/node-v0.10.22-"+os+"-"+arch + "/node");
+		// no "bin" subfolder for windows...
+		if ("win32".equals(os)) {
+			file = new File(
+					"../../eclipse/tern.eclipse.ide.server.nodejs.embed." + os
+							+ "." + ws + "." + arch + "/node-v0.10.22-" + os
+							+ "-" + arch + "/node");
 
 		} else {
-			 //Linux, mac...
-			 file= new File(
-						"../../eclipse/tern.eclipse.ide.server.nodejs.embed."+os+"."+ws+"."+arch+"/node-v0.10.22-"+os+"-"+arch+"/bin/node");
+			// Linux, mac...
+			file = new File(
+					"../../eclipse/tern.eclipse.ide.server.nodejs.embed." + os
+							+ "." + ws + "." + arch + "/node-v0.10.22-" + os
+							+ "-" + arch + "/bin/node");
 		}
 
-		System.out.println("file path "+file.getAbsolutePath());
-		System.out.println("file path exists ? "+file.exists());
+		System.out.println("file path " + file.getAbsolutePath());
+		System.out.println("file path exists ? " + file.exists());
 		return file;
+	}
+
+	private static void unZipIfNecessary(String os, String ws, String arch) {
+		String folderName = "../../eclipse/tern.eclipse.ide.server.nodejs.embed."
+				+ os + "." + ws + "." + arch + "/node-v0.10.22-" + os
+				+ "-" + arch;
+		File file = new File(folderName);
+		if (!file.exists()) {
+			
+			File zipFile = new File(folderName+".zip");
+			try {
+				UnZip.extract(zipFile,zipFile.getParentFile());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
 
 	/**
