@@ -5,7 +5,7 @@
     <artifactId>update-site</artifactId>
     <version>0.2.0-SNAPSHOT</version>
   </parent>
-  <artifactId>tern.eclipse.linux.gtk.x86.feature</artifactId>
+  <artifactId>tern.eclipse.linux.gtk.x86_64.feature</artifactId>
 <packaging>eclipse-feature</packaging>
   <build>
 		<plugins>

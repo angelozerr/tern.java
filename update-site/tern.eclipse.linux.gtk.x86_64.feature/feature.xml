@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="tern.eclipse.linux.gtk.x86.feature"
+      id="tern.eclipse.linux.gtk.x86_64.feature"
       label="%featureName"
       version="0.2.0.qualifier"
       license-feature="org.eclipse.license"
