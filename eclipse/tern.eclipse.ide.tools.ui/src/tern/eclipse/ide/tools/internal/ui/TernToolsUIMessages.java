@@ -50,11 +50,15 @@ public final class TernToolsUIMessages extends NLS {
 	public static String NewCodeMirrorWizardPage_description;
 	public static String NewAceWizard_windowTitle;
 	public static String NewAceWizardPage_title;
-	public static String NewAceWizardPage_description;	
+	public static String NewAceWizardPage_description;
 	public static String NewOrionWizard_windowTitle;
 	public static String NewOrionWizardPage_title;
 	public static String NewOrionWizardPage_description;
-	
+	public static String TernDefsSelectionWizardPage_defLoader_text;
+	public static String TernDefsSelectionWizardPage_defLoader_withAjax;
+	public static String TernDefsSelectionWizardPage_defLoader_embedInHTML;
+	public static String TernDefsSelectionWizardPage_defLoader_embedInJS;
+
 	private TernToolsUIMessages() {
 	}
 

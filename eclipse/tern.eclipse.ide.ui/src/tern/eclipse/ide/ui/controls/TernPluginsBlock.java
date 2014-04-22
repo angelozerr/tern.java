@@ -51,9 +51,14 @@ import tern.server.ITernPlugin;
  */
 public class TernPluginsBlock extends AbstractTableBlock {
 
+	private final String tableLabel;
 	private Composite fControl;
 	private final List<ITernPlugin> ternPlugins = new ArrayList<ITernPlugin>();
 	private CheckboxTableViewer tableViewer;
+
+	public TernPluginsBlock(String tableLabel) {
+		this.tableLabel = tableLabel;
+	}
 
 	public void createControl(Composite ancestor) {
 
@@ -68,26 +73,27 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		fControl = parent;
 
 		GridData data;
+		if (tableLabel != null) {
+			Label tableLabel = new Label(parent, SWT.NONE);
+			tableLabel.setText(this.tableLabel);
+			data = new GridData();
+			data.horizontalSpan = 2;
+			tableLabel.setLayoutData(data);
+			tableLabel.setFont(font);
+		}
 
-		Label tableLabel = new Label(parent, SWT.NONE);
-		tableLabel.setText(TernUIMessages.TernPluginsBlock_desc);
-		data = new GridData();
-		data.horizontalSpan = 2;
-		tableLabel.setLayoutData(data);
-		tableLabel.setFont(font);
-
-		Table fTable = new Table(parent, SWT.CHECK | SWT.BORDER
+		Table table = new Table(parent, SWT.CHECK | SWT.BORDER
 				| SWT.FULL_SELECTION | SWT.V_SCROLL);
 
 		data = new GridData(GridData.FILL_BOTH);
 		data.widthHint = 450;
-		fTable.setLayoutData(data);
-		fTable.setFont(font);
+		table.setLayoutData(data);
+		table.setFont(font);
 
-		fTable.setHeaderVisible(true);
-		fTable.setLinesVisible(true);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
 
-		TableColumn column1 = new TableColumn(fTable, SWT.NONE);
+		TableColumn column1 = new TableColumn(table, SWT.NONE);
 		column1.setWidth(180);
 		column1.setResizable(true);
 		column1.setText(TernUIMessages.TernPluginsBlock_pluginName);
@@ -98,7 +104,7 @@ public class TernPluginsBlock extends AbstractTableBlock {
 			}
 		});
 
-		TableColumn column2 = new TableColumn(fTable, SWT.NONE);
+		TableColumn column2 = new TableColumn(table, SWT.NONE);
 		column2.setWidth(180);
 		column2.setResizable(true);
 		column2.setText(TernUIMessages.TernPluginsBlock_pluginPath);
@@ -109,7 +115,7 @@ public class TernPluginsBlock extends AbstractTableBlock {
 			}
 		});
 
-		tableViewer = new CheckboxTableViewer(fTable);
+		tableViewer = new CheckboxTableViewer(table);
 		tableViewer.setLabelProvider(new TernPluginabelProvider());
 		tableViewer.setContentProvider(new ProcessorsContentProvider());
 

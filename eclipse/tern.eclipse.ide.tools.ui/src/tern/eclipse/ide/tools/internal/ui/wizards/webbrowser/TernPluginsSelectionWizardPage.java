@@ -55,7 +55,7 @@ public class TernPluginsSelectionWizardPage extends
 		layout.marginWidth = 0;
 		container.setLayout(layout);
 
-		pluginsBlock = new TernPluginsBlock();
+		pluginsBlock = new TernPluginsBlock(null);
 		pluginsBlock.createControl(container);
 		pluginsBlock
 				.addSelectionChangedListener(new ISelectionChangedListener() {

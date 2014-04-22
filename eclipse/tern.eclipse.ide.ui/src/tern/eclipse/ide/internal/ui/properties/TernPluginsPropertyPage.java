@@ -18,6 +18,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
@@ -55,7 +56,7 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		pluginsBlock = new TernPluginsBlock();
+		pluginsBlock = new TernPluginsBlock(TernUIMessages.TernPluginsBlock_desc);
 		pluginsBlock.createControl(parent);
 		Control control = pluginsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);

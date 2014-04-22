@@ -36,6 +36,10 @@ public class EditorOptions extends Options {
 		return ternDefLoaderType;
 	}
 
+	public void setTernDefLoaderType(TernDefLoaderType ternDefLoaderType) {
+		this.ternDefLoaderType = ternDefLoaderType;
+	}
+
 	public String getEditorContent() {
 		return editorContent;
 	}
@@ -109,20 +113,24 @@ public class EditorOptions extends Options {
 	public String toJSONDefs() {
 		StringBuilder json = new StringBuilder("[");
 		if (ternDefs != null) {
+			boolean hasQuote = isLoadDefWithAjax();
 			ITernDef def = null;
 			for (int i = 0; i < ternDefs.length; i++) {
 				def = ternDefs[i];
 				if (i > 0) {
 					json.append(",");
 				}
-				// json.append("\"");
+				if (hasQuote) {
+					json.append("\"");
+				}
 				json.append(def.getName());
-				// json.append("\"");
+				if (hasQuote) {
+					json.append("\"");
+				}
 			}
 		}
 		json.append("]");
 		return json.toString();
-
 	}
 
 	public String toJSONPlugins() {
@@ -150,7 +158,7 @@ public class EditorOptions extends Options {
 	}
 
 	public String getEmbedJSONDefs() {
-		if (ternDefs != null) {
+		if (ternDefs != null && isEmbedDefInHTML()) {
 			StringBuilder js = new StringBuilder();
 			js.append("<script>");
 			ITernDef def = null;
@@ -175,5 +183,24 @@ public class EditorOptions extends Options {
 			return js.toString();
 		}
 		return null;
+	}
+	
+	public String getTernDefsScriptsToInclude() {
+		if (ternDefs != null && isEmbedDefInJS()) {
+			
+		}
+		return null;
+	}
+
+	public boolean isLoadDefWithAjax() {
+		return TernDefLoaderType.LoadDefWithAjax.equals(ternDefLoaderType);
+	}
+
+	public boolean isEmbedDefInHTML() {
+		return TernDefLoaderType.EmbedDefInHTML.equals(ternDefLoaderType);
+	}
+
+	public boolean isEmbedDefInJS() {
+		return TernDefLoaderType.EmbedDefInJS.equals(ternDefLoaderType);
 	}
 }
