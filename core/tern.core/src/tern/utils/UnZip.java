@@ -1,4 +1,4 @@
-package tern.server.nodejs.process;
+package tern.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,7 +12,7 @@ public class UnZip {
 
 	/**
 	 * Extract zip file to destination folder.
-	 * 
+	 *
 	 * @param file
 	 *            zip file to extract
 	 * @param destination

@@ -13,6 +13,8 @@ package tern.server.nodejs.process;
 import java.io.File;
 import java.io.IOException;
 
+import tern.utils.UnZip;
+
 public class PathHelper {
 
 	/**
