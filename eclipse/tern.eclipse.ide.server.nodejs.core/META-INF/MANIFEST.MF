@@ -10,8 +10,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.swt,
  tern.eclipse.ide.core;bundle-version="0.2.0",
  tern.core;bundle-version="0.2.0",
- tern.server.nodejs;bundle-version="0.2.0",
- org.apache.ant
+ tern.server.nodejs;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: tern.eclipse.ide.server.nodejs.core
 Bundle-Activator: tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin
