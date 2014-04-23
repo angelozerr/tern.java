@@ -65,7 +65,7 @@
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="icon" type="string" use="required">
+         <attribute name="icon" type="string">
             <annotation>
                <documentation>
                   

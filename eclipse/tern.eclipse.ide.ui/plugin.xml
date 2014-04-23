@@ -187,8 +187,7 @@
       </ternDescriptor>
       <ternDescriptor
             id="chai"
-            description="%ternDescriptor.chai.description"
-            icon="/icons/full/obj16/chai.png" >
+            description="%ternDescriptor.chai.description" >
       </ternDescriptor>
       <ternDescriptor
             id="ecma5"
