@@ -18,6 +18,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
@@ -40,6 +42,7 @@ import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernDefContentProvider;
 import tern.eclipse.ide.ui.viewers.TernDefLabelProvider;
+import tern.server.ITernDef;
 import tern.server.ITernDef;
 
 /**
@@ -118,6 +121,26 @@ public class TernDefsBlock extends AbstractTableBlock {
 		tableViewer.setLabelProvider(new TernDefLabelProvider());
 		tableViewer.setContentProvider(new TernDefContentProvider(ternDefs));
 
+		final Label descriptionLabel = new Label(parent, SWT.NONE);
+		descriptionLabel.setText("");
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		data.horizontalSpan = 2;
+		descriptionLabel.setLayoutData(data);
+		descriptionLabel.setFont(font);
+		addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent e) {
+				descriptionLabel.setText("");
+				ITernDef def = (ITernDef) ((IStructuredSelection) e
+						.getSelection()).getFirstElement();
+				String description = TernUIPlugin.getTernDescriptorManager()
+						.getDescription(def.getName());
+				if (description != null) {
+					descriptionLabel.setText(description);
+				}
+			}
+		});
 		restoreColumnSettings();
 	}
 

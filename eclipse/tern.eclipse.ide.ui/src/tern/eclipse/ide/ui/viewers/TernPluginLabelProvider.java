@@ -16,24 +16,24 @@ import org.eclipse.swt.graphics.Image;
 
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.server.ITernDef;
+import tern.server.ITernPlugin;
 
 /**
- * Label provider for {@link ITernDef}.
+ * Label provider for {@link ITernPlugin}.
  * 
  */
-public class TernDefLabelProvider extends LabelProvider implements
+public class TernPluginLabelProvider extends LabelProvider implements
 		ITableLabelProvider {
 
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
-		if (element instanceof ITernDef) {
-			ITernDef ternDef = (ITernDef) element;
+		if (element instanceof ITernPlugin) {
+			ITernPlugin plugin = (ITernPlugin) element;
 			switch (columnIndex) {
 			case 0:
-				return ternDef.getName();
+				return plugin.getName();
 			case 1:
-				return ternDef.getPath();
+				return plugin.getPath();
 			}
 		}
 		return element.toString();
@@ -43,14 +43,14 @@ public class TernDefLabelProvider extends LabelProvider implements
 	public Image getColumnImage(Object element, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			if (element instanceof ITernDef) {
-				ITernDef ternDef = (ITernDef) element;
+			if (element instanceof ITernPlugin) {
+				ITernPlugin plugin = (ITernPlugin) element;
 				Image image = TernUIPlugin.getTernDescriptorManager().getImage(
-						ternDef.getName());
+						plugin.getName());
 				if (image != null) {
 					return image;
 				}
-				return ImageResource.getImage(ImageResource.IMG_TYPE_DEF);
+				return ImageResource.getImage(ImageResource.IMG_PLUGIN);
 			}
 		}
 		return null;

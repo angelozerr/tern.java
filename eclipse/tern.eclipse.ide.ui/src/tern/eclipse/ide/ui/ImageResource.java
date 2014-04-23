@@ -41,6 +41,10 @@ public class ImageResource {
 	// General Object Images
 	public static final String IMG_SCRIPT = "script";
 	public static final String IMG_LOGO = "logo";
+	public static final String IMG_PLUGIN = "plugin";
+	public static final String IMG_TYPE_DEF = "typedef";
+
+	// Enabled/Disbaled
 	public static final String IMG_STOP_ENABLED = "stop_enabled";
 	public static final String IMG_STOP_DISABLED = "stop_disabled";
 
@@ -127,6 +131,9 @@ public class ImageResource {
 		// load general object images
 		registerImage(IMG_SCRIPT, URL_OBJ + IMG_SCRIPT + ".gif");
 		registerImage(IMG_LOGO, URL_OBJ + IMG_LOGO + ".png");
+		registerImage(IMG_PLUGIN, URL_OBJ + IMG_PLUGIN + ".gif");
+		registerImage(IMG_TYPE_DEF, URL_OBJ + IMG_TYPE_DEF + ".gif");
+
 		registerImage(IMG_STOP_ENABLED, URL_ELCL + "launch_stop.gif");
 		registerImage(IMG_STOP_DISABLED, URL_DLCL + "launch_stop.gif");
 	}
@@ -139,16 +146,20 @@ public class ImageResource {
 	 * @param partialURL
 	 *            java.lang.String
 	 */
-	private static void registerImage(String key, String partialURL) {
+	public static void registerImage(String key, String partialURL) {
 		try {
 			ImageDescriptor id = ImageDescriptor.createFromURL(new URL(
 					ICON_BASE_URL, partialURL));
-			imageRegistry.put(key, id);
-			imageDescriptors.put(key, id);
+			registerImageDescriptor(key, id);
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error registering image " + key
 					+ " from " + partialURL, e);
 		}
+	}
+
+	public static void registerImageDescriptor(String key, ImageDescriptor id) {
+		imageRegistry.put(key, id);
+		imageDescriptors.put(key, id);
 	}
 
 }
