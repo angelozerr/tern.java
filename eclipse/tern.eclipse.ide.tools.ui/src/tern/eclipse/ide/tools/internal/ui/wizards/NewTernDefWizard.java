@@ -10,10 +10,6 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards;
 
-import org.eclipse.jface.viewers.ISelection;
-
-import tern.eclipse.ide.tools.core.generator.IGenerator;
-import tern.eclipse.ide.tools.core.generator.TernDefGenerator;
 import tern.eclipse.ide.tools.core.generator.TernDefOptions;
 import tern.eclipse.ide.tools.internal.ui.ImageResource;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
@@ -38,13 +34,13 @@ public class NewTernDefWizard extends NewFileWizard<TernDefOptions> {
 	}
 
 	@Override
-	protected IGenerator getGenerator(String lineSeparator) {
-		return TernDefGenerator.create(lineSeparator);
+	protected TernDefOptions createModel() {
+		return new TernDefOptions();
 	}
 
 	@Override
-	protected TernDefOptions createModel() {
-		return new TernDefOptions();
+	protected String getTaskLabel() {
+		return TernToolsUIMessages.NewTernDefWizard_taskLabel;
 	}
 
 }

@@ -34,13 +34,13 @@ public class NewAceWizard extends NewEditorWizard<AceOptions> {
 	}
 
 	@Override
-	protected IGenerator getGenerator(String lineSeparator) {
-		return HTMLAceEditor.create(lineSeparator);
+	protected AceOptions createModel() {
+		return new AceOptions();
 	}
 
 	@Override
-	protected AceOptions createModel() {
-		return new AceOptions();
+	protected String getTaskLabel() {
+		return TernToolsUIMessages.NewAceWizard_taskLabel;
 	}
 
 }

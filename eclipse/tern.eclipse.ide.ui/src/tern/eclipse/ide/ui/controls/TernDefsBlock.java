@@ -132,12 +132,15 @@ public class TernDefsBlock extends AbstractTableBlock {
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
 				descriptionLabel.setText("");
-				ITernDef def = (ITernDef) ((IStructuredSelection) e
-						.getSelection()).getFirstElement();
-				String description = TernUIPlugin.getTernDescriptorManager()
-						.getDescription(def.getName());
-				if (description != null) {
-					descriptionLabel.setText(description);
+				if (!e.getSelection().isEmpty()) {
+					ITernDef def = (ITernDef) ((IStructuredSelection) e
+							.getSelection()).getFirstElement();
+					String description = TernUIPlugin
+							.getTernDescriptorManager().getDescription(
+									def.getName());
+					if (description != null) {
+						descriptionLabel.setText(description);
+					}
 				}
 			}
 		});

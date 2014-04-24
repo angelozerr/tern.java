@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
+import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 
 /**
@@ -176,4 +177,6 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 	public String getFileExtension() {
 		return fileExtension;
 	}
+	
+	public abstract IGenerator getGenerator(String lineSeparator);
 }

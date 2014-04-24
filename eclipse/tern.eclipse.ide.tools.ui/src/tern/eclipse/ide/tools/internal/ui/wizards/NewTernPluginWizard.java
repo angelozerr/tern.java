@@ -38,13 +38,13 @@ public class NewTernPluginWizard extends NewFileWizard<TernPluginOptions> {
 	}
 
 	@Override
-	protected IGenerator getGenerator(String lineSeparator) {
-		return TernPluginGenerator.create(lineSeparator);
+	protected TernPluginOptions createModel() {
+		return new TernPluginOptions();
 	}
 
 	@Override
-	protected TernPluginOptions createModel() {
-		return new TernPluginOptions();
+	protected String getTaskLabel() {
+		return TernToolsUIMessages.NewTernPluginWizard_taskLabel;
 	}
 
 }

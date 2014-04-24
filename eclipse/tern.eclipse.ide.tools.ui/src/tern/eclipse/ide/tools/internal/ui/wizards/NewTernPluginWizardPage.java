@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.core.utils.FileUtils;
+import tern.eclipse.ide.tools.core.generator.IGenerator;
+import tern.eclipse.ide.tools.core.generator.TernPluginGenerator;
 import tern.eclipse.ide.tools.core.generator.TernPluginOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 
@@ -74,4 +76,8 @@ public class NewTernPluginWizardPage extends
 		options.setDefName(getName());
 	}
 
+	@Override
+	public IGenerator getGenerator(String lineSeparator) {
+		return TernPluginGenerator.create(lineSeparator);
+	}
 }

@@ -131,12 +131,15 @@ public class TernPluginsBlock extends AbstractTableBlock {
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
 				descriptionLabel.setText("");
-				ITernPlugin plugin = (ITernPlugin) ((IStructuredSelection) e
-						.getSelection()).getFirstElement();
-				String description = TernUIPlugin.getTernDescriptorManager()
-						.getDescription(plugin.getName());
-				if (description != null) {
-					descriptionLabel.setText(description);
+				if (!e.getSelection().isEmpty()) {
+					ITernPlugin plugin = (ITernPlugin) ((IStructuredSelection) e
+							.getSelection()).getFirstElement();
+					String description = TernUIPlugin
+							.getTernDescriptorManager().getDescription(
+									plugin.getName());
+					if (description != null) {
+						descriptionLabel.setText(description);
+					}
 				}
 			}
 		});
