@@ -10,36 +10,29 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import tern.eclipse.ide.core.utils.FileUtils;
+import tern.eclipse.ide.tools.core.generator.IGenerator;
+import tern.eclipse.ide.tools.core.webbrowser.orion.HTMLOrionEditor;
 import tern.eclipse.ide.tools.core.webbrowser.orion.OrionOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
-import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizardPage;
 
 /**
  * Page to fill Orion information.
  * 
  */
-public class NewOrionWizardPage extends NewFileWizardPage<OrionOptions> {
+public class NewOrionWizardPage extends NewEditorWizardPage<OrionOptions> {
 
 	private static final String PAGE = "NewOrionWizardPage";
 
 	public NewOrionWizardPage() {
-		super(PAGE, FileUtils.HTML_EXTENSION);
+		super(PAGE);
 		setTitle(TernToolsUIMessages.NewOrionWizardPage_title);
 		setDescription(TernToolsUIMessages.NewOrionWizardPage_description);
 	}
-	
-	@Override
-	protected void initialize() {
-		super.initialize();
-		getFileText().setText("index.html");
-	}
+
+	// options.setBaseURL("http://eclipse.org/orion/editor/releases/5.0/");
 
 	@Override
-	protected void updateModel(OrionOptions options) {
-		//options.setBaseURL("http://eclipse.org/orion/editor/releases/5.0/");
-		//options.setTernBaseURL("http://ternjs.net/");
-		options.setEditorContent("var elt = document.getElementById('xxx');");
+	public IGenerator getGenerator(String lineSeparator) {
+		return HTMLOrionEditor.create(lineSeparator);
 	}
-
 }

@@ -36,22 +36,27 @@ public final class TernToolsUIMessages extends NLS {
 	public static String NewTernDefWizard_windowTitle;
 	public static String NewTernDefWizardPage_title;
 	public static String NewTernDefWizardPage_description;
+	public static String NewTernDefWizard_taskLabel;
 
 	public static String NewTernPluginWizard_windowTitle;
 	public static String NewTernPluginWizardPage_title;
 	public static String NewTernPluginWizardPage_description;
-
+	public static String NewTernPluginWizard_taskLabel;
+	
 	public static String TernDefsSelectionWizardPage_title;
 	public static String TernDefsSelectionWizardPage_description;
 	public static String TernPluginsSelectionWizardPage_title;
 	public static String TernPluginsSelectionWizardPage_description;
 	public static String NewCodeMirrorWizard_windowTitle;
+	public static String NewCodeMirrorWizard_taskLabel;
 	public static String NewCodeMirrorWizardPage_title;
 	public static String NewCodeMirrorWizardPage_description;
 	public static String NewAceWizard_windowTitle;
+	public static String NewAceWizard_taskLabel;
 	public static String NewAceWizardPage_title;
 	public static String NewAceWizardPage_description;
 	public static String NewOrionWizard_windowTitle;
+	public static String NewOrionWizard_taskLabel;
 	public static String NewOrionWizardPage_title;
 	public static String NewOrionWizardPage_description;
 	public static String TernDefsSelectionWizardPage_defLoader_text;

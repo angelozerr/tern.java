@@ -14,6 +14,9 @@
  -->
 <plugin>
 	
+	<extension-point id="ternDescriptors" name="%ternDescriptors.name"
+		schema="schema/ternDescriptors.exsd" />
+			
     <extension point="org.eclipse.ui.startup">
         <startup
             class="tern.eclipse.ide.ui.internal.TernIDEStartup">
@@ -172,5 +175,76 @@
             targetId="org.eclipse.wst.jsdt.ui.javaCode">
       </hyperlinkDetector>
    </extension>
+   
+   <!-- Tern Defs + Plugins descriptor -->
+   <extension
+         point="tern.eclipse.ide.ui.ternDescriptors">
+      <!-- Tern def descriptors -->
+      <ternDescriptor
+            id="browser"
+            description="%ternDescriptor.browser.description"
+            icon="/icons/full/obj16/browser.gif" >
+      </ternDescriptor>
+      <ternDescriptor
+            id="chai"
+            description="%ternDescriptor.chai.description" >
+      </ternDescriptor>
+      <ternDescriptor
+            id="ecma5"
+            description="%ternDescriptor.ecma5.description"
+            icon="/icons/full/obj16/ecma5.png" >
+      </ternDescriptor>       
+      <ternDescriptor
+            id="jquery"
+            description="%ternDescriptor.jquery.description"
+            icon="/icons/full/obj16/jquery.png" >
+      </ternDescriptor>      
+      <ternDescriptor
+            id="underscore"
+            description="%ternDescriptor.underscore.description"
+            icon="/icons/full/obj16/underscore.png" >
+      </ternDescriptor>  
+      <!-- Tern plugin descriptors -->
+      <ternDescriptor
+            id="angular"
+            description="%ternDescriptor.angular.description"
+            icon="/icons/full/obj16/angular.png" >
+      </ternDescriptor>
+      <ternDescriptor
+            id="aui"
+            description="%ternDescriptor.aui.description"
+            icon="/icons/full/obj16/aui.png" >
+      </ternDescriptor>       
+      <ternDescriptor
+            id="cordovajs"
+            description="%ternDescriptor.cordovajs.description"
+            icon="/icons/full/obj16/cordovajs.png" >
+      </ternDescriptor>       
+  	  <ternDescriptor
+            id="grunt"
+            description="%ternDescriptor.grunt.description"
+            icon="/icons/full/obj16/grunt.png" >
+      </ternDescriptor>
+      <ternDescriptor
+            id="liferay"
+            description="%ternDescriptor.liferay.description"
+            icon="/icons/full/obj16/liferay.png" >
+      </ternDescriptor>          
+  	  <ternDescriptor
+            id="node"
+            description="%ternDescriptor.node.description"
+            icon="/icons/full/obj16/node.png" >
+      </ternDescriptor>
+  	  <ternDescriptor
+            id="requirejs"
+            description="%ternDescriptor.requirejs.description"
+            icon="/icons/full/obj16/requirejs.png" >
+      </ternDescriptor>                 
+      <ternDescriptor
+            id="yui"
+            description="%ternDescriptor.yui.description"
+            icon="/icons/full/obj16/yui.png" >
+      </ternDescriptor>      
+   </extension>   
          	       	 
 </plugin>        

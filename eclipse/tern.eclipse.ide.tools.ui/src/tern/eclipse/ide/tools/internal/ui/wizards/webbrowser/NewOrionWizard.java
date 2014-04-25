@@ -10,8 +10,6 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import tern.eclipse.ide.tools.core.generator.IGenerator;
-import tern.eclipse.ide.tools.core.webbrowser.orion.HTMLOrionEditor;
 import tern.eclipse.ide.tools.core.webbrowser.orion.OrionOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 
@@ -32,13 +30,13 @@ public class NewOrionWizard extends NewEditorWizard<OrionOptions> {
 	}
 
 	@Override
-	protected IGenerator getGenerator(String lineSeparator) {
-		return HTMLOrionEditor.create(lineSeparator);
+	protected OrionOptions createModel() {
+		return new OrionOptions();
 	}
 
 	@Override
-	protected OrionOptions createModel() {
-		return new OrionOptions();
+	protected String getTaskLabel() {
+		return TernToolsUIMessages.NewOrionWizard_taskLabel;
 	}
 
 }

@@ -61,6 +61,24 @@ public class TernDefsSelectionWizardPage extends TernWizardPage<EditorOptions> {
 		layout.marginWidth = 0;
 		container.setLayout(layout);
 
+		// Loader Type for JSON type def.
+		Label label = new Label(container, SWT.NULL);
+		label.setText(TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_text);
+
+		Composite loaderComposite = new Composite(container, SWT.NULL);
+		loaderComposite.setLayout(new GridLayout(3, false));
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		loaderComposite.setLayoutData(data);
+		withAjax = createRadio(
+				loaderComposite,
+				TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_withAjax);
+		embedInHTML = createRadio(
+				loaderComposite,
+				TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_embedInHTML);
+		embedInJS = createRadio(
+				loaderComposite,
+				TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_embedInJS);
+
 		// Table to select JSON type def.
 		defsBlock = new TernDefsBlock(null);
 		defsBlock.createControl(container);
@@ -72,27 +90,9 @@ public class TernDefsSelectionWizardPage extends TernWizardPage<EditorOptions> {
 			}
 		});
 		Control control = defsBlock.getControl();
-		GridData data = new GridData(GridData.FILL_BOTH);
+		data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 2;
 		control.setLayoutData(data);
-
-		// Loader Type for JSON type def.
-		Label label = new Label(container, SWT.NULL);
-		label.setText(TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_text);
-
-		Composite loaderComposite = new Composite(container, SWT.NULL);
-		loaderComposite.setLayout(new GridLayout(3, false));
-		data = new GridData(GridData.FILL_HORIZONTAL);
-		loaderComposite.setLayoutData(data);
-		withAjax = createRadio(
-				loaderComposite,
-				TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_withAjax);
-		embedInHTML = createRadio(
-				loaderComposite,
-				TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_embedInHTML);
-		embedInJS = createRadio(
-				loaderComposite,
-				TernToolsUIMessages.TernDefsSelectionWizardPage_defLoader_embedInJS);
 		return container;
 	}
 

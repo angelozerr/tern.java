@@ -19,15 +19,14 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -43,6 +42,7 @@ import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.viewers.TernPluginLabelProvider;
 import tern.server.ITernPlugin;
 
 /**
@@ -116,9 +116,33 @@ public class TernPluginsBlock extends AbstractTableBlock {
 		});
 
 		tableViewer = new CheckboxTableViewer(table);
-		tableViewer.setLabelProvider(new TernPluginabelProvider());
+		tableViewer.setLabelProvider(new TernPluginLabelProvider());
 		tableViewer.setContentProvider(new ProcessorsContentProvider());
 
+		final Label descriptionLabel = new Label(parent, SWT.NONE);
+		descriptionLabel.setText("");
+		data = new GridData(GridData.FILL_HORIZONTAL);
+		data.horizontalSpan = 2;
+		descriptionLabel.setLayoutData(data);
+		descriptionLabel.setFont(font);
+
+		addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent e) {
+				descriptionLabel.setText("");
+				if (!e.getSelection().isEmpty()) {
+					ITernPlugin plugin = (ITernPlugin) ((IStructuredSelection) e
+							.getSelection()).getFirstElement();
+					String description = TernUIPlugin
+							.getTernDescriptorManager().getDescription(
+									plugin.getName());
+					if (description != null) {
+						descriptionLabel.setText(description);
+					}
+				}
+			}
+		});
 		restoreColumnSettings();
 	}
 
@@ -253,27 +277,6 @@ public class TernPluginsBlock extends AbstractTableBlock {
 
 		public void dispose() {
 		}
-	}
-
-	private static class TernPluginabelProvider extends LabelProvider implements
-			ITableLabelProvider {
-		public String getColumnText(Object element, int columnIndex) {
-			if (element instanceof ITernPlugin) {
-				ITernPlugin install = (ITernPlugin) element;
-				switch (columnIndex) {
-				case 0:
-					return install.getName();
-				case 1:
-					return install.getPath();
-				}
-			}
-			return element.toString();
-		}
-
-		public Image getColumnImage(Object element, int columnIndex) {
-			return null;
-		}
-
 	}
 
 	@Override

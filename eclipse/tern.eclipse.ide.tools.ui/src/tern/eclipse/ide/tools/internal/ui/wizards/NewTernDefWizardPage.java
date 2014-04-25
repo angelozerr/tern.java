@@ -19,6 +19,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.core.utils.FileUtils;
+import tern.eclipse.ide.tools.core.generator.IGenerator;
+import tern.eclipse.ide.tools.core.generator.TernDefGenerator;
 import tern.eclipse.ide.tools.core.generator.TernDefOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 
@@ -56,9 +58,9 @@ public class NewTernDefWizardPage extends NewFileWizardPage<TernDefOptions> {
 		});
 		super.createBody(container);
 	}
-	
+
 	@Override
-	protected void initialize() {		
+	protected void initialize() {
 		super.initialize();
 		nameText.setText("mylibrary");
 	}
@@ -66,9 +68,14 @@ public class NewTernDefWizardPage extends NewFileWizardPage<TernDefOptions> {
 	public String getName() {
 		return nameText.getText();
 	}
-	
+
 	@Override
 	protected void updateModel(TernDefOptions options) {
 		options.setDefName(getName());
+	}
+
+	@Override
+	public IGenerator getGenerator(String lineSeparator) {
+		return TernDefGenerator.create(lineSeparator);
 	}
 }

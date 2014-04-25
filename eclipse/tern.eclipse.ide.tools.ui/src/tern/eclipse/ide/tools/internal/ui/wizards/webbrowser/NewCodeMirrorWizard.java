@@ -10,9 +10,7 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.core.webbrowser.codemirror.CodeMirrorOptions;
-import tern.eclipse.ide.tools.core.webbrowser.codemirror.HTMLCodeMirrorEditor;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 
 /**
@@ -32,13 +30,13 @@ public class NewCodeMirrorWizard extends NewEditorWizard<CodeMirrorOptions> {
 	}
 
 	@Override
-	protected IGenerator getGenerator(String lineSeparator) {
-		return HTMLCodeMirrorEditor.create(lineSeparator);
+	protected CodeMirrorOptions createModel() {
+		return new CodeMirrorOptions();
 	}
 
 	@Override
-	protected CodeMirrorOptions createModel() {
-		return new CodeMirrorOptions();
+	protected String getTaskLabel() {
+		return TernToolsUIMessages.NewCodeMirrorWizard_taskLabel;
 	}
 
 }
