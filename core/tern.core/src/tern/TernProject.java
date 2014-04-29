@@ -15,16 +15,13 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import tern.server.ITernPlugin;
 import tern.utils.IOUtils;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.ParseException;
 
 /**
  * Tern project configuration.
@@ -51,7 +48,7 @@ import tern.utils.IOUtils;
  * 
  * @see http://ternjs.net/doc/manual.html#configuration
  */
-public class TernProject<T> extends JSONObject {
+public class TernProject<T> extends JsonObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -61,7 +58,7 @@ public class TernProject<T> extends JSONObject {
 	private static final String LIBS_FIELD_NAME = "libs";
 
 	private final File projectDir;
-	private List<String> patterns;
+	private JsonArray patterns;
 
 	/**
 	 * tern file managaer.
@@ -102,11 +99,11 @@ public class TernProject<T> extends JSONObject {
 	 * 
 	 * @return the JSON Type Defintnions of the tern project.
 	 */
-	public List getLibs() {
-		List libs = (List) super.get(LIBS_FIELD_NAME);
+	public JsonArray getLibs() {
+		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
 		if (libs == null) {
-			libs = new JSONArray();
-			super.put(LIBS_FIELD_NAME, libs);
+			libs = new JsonArray();
+			super.add(LIBS_FIELD_NAME, libs);
 		}
 		return libs;
 	}
@@ -118,7 +115,7 @@ public class TernProject<T> extends JSONObject {
 	 *            the tern plugin to add.
 	 */
 	public void addPlugin(ITernPlugin plugin) {
-		getPlugins().put(plugin.getName(), "../");
+		getPlugins().add(plugin.getName(), "../");
 	}
 
 	/**
@@ -126,19 +123,19 @@ public class TernProject<T> extends JSONObject {
 	 * 
 	 * @return the JSON plugins of the tern project.
 	 */
-	public JSONObject getPlugins() {
-		JSONObject plugins = (JSONObject) super.get(PLUGINS_FIELD_NAME);
+	public JsonObject getPlugins() {
+		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
 		if (plugins == null) {
-			plugins = new JSONObject();
-			super.put(PLUGINS_FIELD_NAME, plugins);
+			plugins = new JsonObject();
+			super.add(PLUGINS_FIELD_NAME, plugins);
 		}
 		return plugins;
 	}
 
 	public void addLoadEagerlyPattern(String pattern) {
 		if (patterns == null) {
-			patterns = new ArrayList<String>();
-			super.put("loadEagerly", patterns);
+			patterns = new JsonArray();
+			super.add("loadEagerly", patterns);
 		}
 		patterns.add(pattern);
 	}
@@ -153,7 +150,7 @@ public class TernProject<T> extends JSONObject {
 		Writer writer = null;
 		try {
 			writer = new FileWriter(new File(projectDir, TERN_PROJECT));
-			super.writeJSONString(writer);
+			super.writeTo(writer);
 		} finally {
 			if (writer != null) {
 				IOUtils.closeQuietly(writer);
@@ -169,11 +166,8 @@ public class TernProject<T> extends JSONObject {
 	public void load() throws IOException {
 		File file = new File(projectDir, TERN_PROJECT);
 		if (file.exists()) {
-			JSONParser parser = new JSONParser();
 			try {
-				JSONObject result = (JSONObject) parser.parse(new FileReader(
-						file));
-				super.putAll(result);
+				super.readFrom(new FileReader(file));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -196,5 +190,13 @@ public class TernProject<T> extends JSONObject {
 	 */
 	public TernFileManager<T> getFileManager() {
 		return fileManager;
+	}
+
+	public void clearLibs() {
+		super.remove(LIBS_FIELD_NAME);
+	}
+
+	public void clearPlugins() {
+		super.remove(PLUGINS_FIELD_NAME);
 	}
 }

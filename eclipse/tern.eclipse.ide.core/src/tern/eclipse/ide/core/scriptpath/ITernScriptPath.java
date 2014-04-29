@@ -17,6 +17,8 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 
+import com.eclipsesource.json.JsonArray;
+
 import tern.TernFileManager;
 import tern.server.protocol.TernDoc;
 
@@ -93,7 +95,7 @@ public interface ITernScriptPath {
 	 *            list of file names which must be used for the tern query.
 	 * @throws IOException
 	 */
-	void updateFiles(TernFileManager ternFileManager, TernDoc doc, List names)
+	void updateFiles(TernFileManager ternFileManager, TernDoc doc, JsonArray names)
 			throws IOException;
 
 }

@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -24,6 +23,8 @@ import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
 import tern.utils.DOMUtils;
 import tern.utils.StringUtils;
+
+import com.eclipsesource.json.JsonArray;
 
 /**
  * Tern file manager is used to maintains a cache with indexed files which was
@@ -70,7 +71,7 @@ public abstract class TernFileManager<T> {
 	 *            list to update with the names of visited scripts.
 	 * @throws IOException
 	 */
-	public void updateFiles(Node domNode, T domFile, TernDoc doc, List names)
+	public void updateFiles(Node domNode, T domFile, TernDoc doc, JsonArray names)
 			throws IOException {
 
 		if (domNode == null) {
@@ -129,7 +130,7 @@ public abstract class TernFileManager<T> {
 	 *            list to update with the names of visited scripts.
 	 */
 	public void updateFile(T domFile, Element scriptElt, int scriptIndex,
-			TernDoc doc, List names) {
+			TernDoc doc, JsonArray names) {
 		synchronized (indexedFiles) {// get the file name
 			internalUpdateFile(domFile, scriptElt, scriptIndex, doc, names);
 		}
@@ -146,7 +147,7 @@ public abstract class TernFileManager<T> {
 	 * @param names
 	 *            list to update with the names of visited scripts.
 	 */
-	public void updateFile(T file, TernDoc doc, List names) throws IOException {
+	public void updateFile(T file, TernDoc doc, JsonArray names) throws IOException {
 		synchronized (indexedFiles) {
 			internalUpdateFile(file, doc, names);
 		}
@@ -213,7 +214,7 @@ public abstract class TernFileManager<T> {
 	public void updateIndexedFiles(TernDoc doc) {
 		if (doc.hasFiles()) {
 			synchronized (indexedFiles) {
-				JSONArray files = doc.getFiles();
+				JsonArray files = doc.getFiles();
 				TernFile file = null;
 				for (Object object : files) {
 					file = (TernFile) object;
@@ -282,7 +283,7 @@ public abstract class TernFileManager<T> {
 	 *            list to update with the names of visited scripts.
 	 */
 	private void internalUpdateFile(T domFile, Element scriptElt,
-			int scriptIndex, TernDoc doc, List names) {
+			int scriptIndex, TernDoc doc, JsonArray names) {
 		String name = getFileName(domFile) + "#" + (scriptIndex);
 		// check if file name was already indexed.
 		if (!internalIsIndexedFile(name)) {
@@ -311,7 +312,7 @@ public abstract class TernFileManager<T> {
 	 *            list to update with the names of visited scripts.
 	 * @param project
 	 */
-	private void internalUpdateFile(T file, TernDoc doc, List names)
+	private void internalUpdateFile(T file, TernDoc doc, JsonArray names)
 			throws IOException {
 		// get the file name
 		String name = getFileName(file);

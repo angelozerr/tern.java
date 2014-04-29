@@ -28,8 +28,7 @@ public class NodejsTernServerFactory {
 				PathHelper.getNodejsTernBaseDir());
 
 		File nodejsBaseDir = PathHelper.getNodejsBasedir();
-
-		project.put("node_timeout", 5000L);
+		project.add("node_timeout", 5000L);
 		NodejsTernServer server = new NodejsTernServer(project, nodejsBaseDir);
 		// trace process
 		server.addProcessListener(PrintNodejsProcessListener.getInstance());

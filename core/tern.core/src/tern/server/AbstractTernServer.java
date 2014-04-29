@@ -103,12 +103,7 @@ public abstract class AbstractTernServer implements ITernServer {
 		collector.addProposal(name, type, origin, doc, pos, completion, this);
 	}
 
-	public String getText(Object value) {
-		if (value == null) {
-			return null;
-		}
-		return value.toString();
-	}
+	public abstract String getText(Object value);
 
 	public String getText(Object value, String name) {
 		return getText(getValue(value, name));

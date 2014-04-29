@@ -77,7 +77,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 		Object[] checkedDefs = defsBlock.getCheckedDefs();
 		try {
 			IDETernProject ternProject = getTernProject();
-			ternProject.getLibs().clear();
+			ternProject.clearLibs();
 			for (Object def : checkedDefs) {
 				ternProject.addLib(((ITernDef) def).getName());
 			}

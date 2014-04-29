@@ -13,10 +13,15 @@ package tern.angular.protocol;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import tern.server.protocol.JsonHelper;
+import tern.utils.StringUtils;
 
-public class TernAngularScope extends JSONObject {
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+
+public class TernAngularScope extends JsonObject {
+
+	private static final String MODULE_FIELD_NAME = "module";
 
 	private static final Pattern NGREPEAT_PATTERN = Pattern
 			.compile("^\\s*(.+)\\s+in\\s+(.*?)\\s*(\\s+track\\s+by\\s+(.+)\\s*)?$");
@@ -25,32 +30,32 @@ public class TernAngularScope extends JSONObject {
 			.compile("^(?:([\\$\\w]+)|\\(([\\$\\w]+)\\s*,\\s*([\\$\\w]+)\\))$");
 
 	public void setModule(String module) {
-		super.put("module", module);
+		super.add(MODULE_FIELD_NAME, module);
 	}
 
 	public String getModule() {
-		return (String) super.get("module");
+		return JsonHelper.getString(this, MODULE_FIELD_NAME);
 	}
 
 	public boolean hasModule() {
-		return super.containsKey("module");
+		return !StringUtils.isEmpty(getModule());
 	}
 
 	public void addController(String controller) {
 		getControllers().add(controller);
 	}
 
-	public JSONArray getControllers() {
-		JSONArray controllers = (JSONArray) super.get("controllers");
+	public JsonArray getControllers() {
+		JsonArray controllers = (JsonArray) super.get("controllers");
 		if (controllers == null) {
-			controllers = new JSONArray();
-			super.put("controllers", controllers);
+			controllers = new JsonArray();
+			super.add("controllers", controllers);
 		}
 		return controllers;
 	}
 
 	public boolean hasControllers() {
-		JSONArray controllers = (JSONArray) super.get("controllers");
+		JsonArray controllers = (JsonArray) super.get("controllers");
 		if (controllers == null) {
 			return false;
 		}
@@ -58,17 +63,17 @@ public class TernAngularScope extends JSONObject {
 	}
 
 	public void addModel(String model) {
-		// JSONObject json = new JSONObject();
+		// JsonObject json = new JsonObject();
 		if (model.indexOf('.') == -1) {
-			getProps().put(model, model);
+			getProps().add(model, model);
 		}
 	}
 
-	public JSONObject getProps() {
-		JSONObject props = (JSONObject) super.get("props");
+	public JsonObject getProps() {
+		JsonObject props = (JsonObject) super.get("props");
 		if (props == null) {
-			props = new JSONObject();
-			super.put("props", props);
+			props = new JsonObject();
+			super.add("props", props);
 		}
 		return props;
 	}
@@ -85,13 +90,13 @@ public class TernAngularScope extends JSONObject {
 						.group(3) : matcher.group(1);
 				String keyIdentifier = matcher.group(2);
 
-				JSONObject repeat = new JSONObject();
-				repeat.put("repeat", rhs);
+				JsonObject repeat = new JsonObject();
+				repeat.add("repeat", rhs);
 				if (keyIdentifier != null) {
-					getProps().put(keyIdentifier, repeat);
+					getProps().add(keyIdentifier, repeat);
 				}
 				if (valueIdentifier != null) {
-					getProps().put(valueIdentifier, repeat);
+					getProps().add(valueIdentifier, repeat);
 				}
 			}
 		}

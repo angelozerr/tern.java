@@ -28,6 +28,8 @@ import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.server.protocol.TernDoc;
 
+import com.eclipsesource.json.JsonArray;
+
 /**
  * Folder script path. This script path implementation gives the capability to
  * select a folder with "Add Folder" in the Tern "Script Path" property page
@@ -62,7 +64,7 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 
 	@Override
 	public void updateFiles(TernFileManager ternFileManager, TernDoc doc,
-			List names) throws IOException {
+			JsonArray names) throws IOException {
 		IContainer container = (IContainer) getResource();
 		try {
 			container
@@ -101,7 +103,7 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 
 	public IResourceVisitor newUpdateFilesVisitor(
 			final TernFileManager ternFileManager, final TernDoc doc,
-			final List names) {
+			final JsonArray names) {
 		return new IResourceVisitor() {
 			@Override
 			public boolean visit(IResource resource) throws CoreException {

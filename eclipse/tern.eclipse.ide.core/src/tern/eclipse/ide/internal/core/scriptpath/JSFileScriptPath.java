@@ -21,6 +21,8 @@ import tern.TernFileManager;
 import tern.eclipse.ide.core.scriptpath.IScriptResource;
 import tern.server.protocol.TernDoc;
 
+import com.eclipsesource.json.JsonArray;
+
 /**
  * HTML/JSP page script path. This script path implementation gives the
  * capability to select an js file with "Add File" in the Tern "Script Path"
@@ -44,7 +46,7 @@ public class JSFileScriptPath extends AbstractTernScriptPath {
 
 	@Override
 	public void updateFiles(TernFileManager ternFileManager, TernDoc doc,
-			List names) throws IOException {
+			JsonArray names) throws IOException {
 		ternFileManager.updateFile(getResource(), doc, names);
 	}
 

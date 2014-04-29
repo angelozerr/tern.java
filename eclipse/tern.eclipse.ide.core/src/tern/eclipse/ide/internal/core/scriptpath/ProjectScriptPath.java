@@ -13,7 +13,6 @@ package tern.eclipse.ide.internal.core.scriptpath;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -24,6 +23,8 @@ import tern.eclipse.ide.core.scriptpath.IScriptResource;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.server.protocol.TernDoc;
+
+import com.eclipsesource.json.JsonArray;
 
 /**
  * Project script path. This script path implementation gives the capability to
@@ -74,7 +75,7 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 
 	@Override
 	public void updateFiles(TernFileManager ternFileManager, TernDoc doc,
-			List names) throws IOException {
+			JsonArray names) throws IOException {
 
 		IProject project = (IProject) getResource();
 		try {

@@ -10,7 +10,8 @@ Eclipse-BundleShape: dir
 Export-Package: tern.server.nodejs,tern.server.nodejs.process
 Require-Bundle: tern.core;bundle-version="0.2.0"
 Bundle-ClassPath: .
-Import-Package: org.apache.commons.logging,
+Import-Package: com.eclipsesource.json,
+ org.apache.commons.logging,
  org.apache.http,
  org.apache.http.client,
  org.apache.http.client.methods,
@@ -18,8 +19,6 @@ Import-Package: org.apache.commons.logging,
  org.apache.http.entity,
  org.apache.http.impl.client,
  org.apache.http.util,
- org.json.simple,
- org.json.simple.parser,
  org.osgi.framework
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.server.nodejs.Activator

@@ -11,5 +11,4 @@ Export-Package: tern,tern.angular,tern.angular.modules,tern.angular.pr
  tion,tern.angular.protocol.type,tern.doc,tern.server,tern.server.prot
  ocol,tern.server.protocol.completions,tern.server.protocol.definition
  ,tern.server.protocol.type,tern.utils
-Import-Package: org.json.simple,
- org.json.simple.parser
+Import-Package: com.eclipsesource.json

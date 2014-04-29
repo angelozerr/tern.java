@@ -10,14 +10,14 @@
  */
 package tern.server.protocol;
 
-import org.json.simple.JSONObject;
+import com.eclipsesource.json.JsonObject;
 
 /**
  * Tern file.
  * 
  * @see http://ternjs.net/doc/manual.html#protocol
  */
-public class TernFile extends JSONObject {
+public class TernFile extends JsonObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -27,29 +27,29 @@ public class TernFile extends JSONObject {
 	private static final String TYPE_FIELD_NAME = "type";
 
 	public TernFile(String name, String text, Integer offset) {
-		super.put(NAME_FIELD_NAME, name);
-		super.put(TEXT_FIELD_NAME, text);
+		super.add(NAME_FIELD_NAME, name);
+		super.add(TEXT_FIELD_NAME, text);
 		if (offset != null) {
-			super.put(TYPE_FIELD_NAME, "part");
-			super.put("offsetLines", offset);
+			super.add(TYPE_FIELD_NAME, "part");
+			super.add("offsetLines", offset);
 		} else {
-			super.put(TYPE_FIELD_NAME, "full");
+			super.add(TYPE_FIELD_NAME, "full");
 		}
 	}
 
 	public String getName() {
-		return (String) super.get(NAME_FIELD_NAME);
+		return JsonHelper.getString(this, NAME_FIELD_NAME);
 	}
 
 	public String getText() {
-		return (String) super.get(TEXT_FIELD_NAME);
+		return JsonHelper.getString(this, TEXT_FIELD_NAME);
 	}
 
 	public Integer getOffset() {
-		return (Integer) super.get(OFFSET_FIELD_NAME);
+		return JsonHelper.getInteger(this, OFFSET_FIELD_NAME);
 	}
 
 	public String getType() {
-		return (String) super.get(TYPE_FIELD_NAME);
+		return JsonHelper.getString(this, TYPE_FIELD_NAME);
 	}
 }

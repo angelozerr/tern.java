@@ -77,7 +77,7 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		Object[] checkedPlugins = pluginsBlock.getCheckedPlugins();
 		try {
 			IDETernProject ternProject = getTernProject();
-			ternProject.getPlugins().clear();
+			ternProject.clearPlugins();
 			for (Object plugin : checkedPlugins) {
 				ternProject.addPlugin((ITernPlugin) plugin);
 			}

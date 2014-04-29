@@ -10,6 +10,7 @@
  */
 package tern.server.protocol.type;
 
+import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernQuery;
 
 /**
@@ -46,7 +47,7 @@ public class TernTypeQuery extends TernQuery {
 	 * @param types
 	 */
 	public void setTypes(boolean types) {
-		super.put(TYPES_FIELD_NAME, types);
+		super.add(TYPES_FIELD_NAME, types);
 	}
 
 	/**
@@ -55,31 +56,31 @@ public class TernTypeQuery extends TernQuery {
 	 * @return
 	 */
 	public boolean isTypes() {
-		return super.getBoolean(TYPES_FIELD_NAME, false);
+		return JsonHelper.getBoolean(this, TYPES_FIELD_NAME, false);
 	}
 
 	public void setDocs(boolean docs) {
-		super.put(DOCS_FIELD_NAME, docs);
+		super.add(DOCS_FIELD_NAME, docs);
 	}
 
 	public boolean isDocs() {
-		return super.getBoolean(DOCS_FIELD_NAME, false);
+		return JsonHelper.getBoolean(this, DOCS_FIELD_NAME, false);
 	}
 
 	public void setUrls(boolean urls) {
-		super.put(URLS_FIELD_NAME, urls);
+		super.add(URLS_FIELD_NAME, urls);
 	}
 
 	public boolean isUrls() {
-		return super.getBoolean(URLS_FIELD_NAME, false);
+		return JsonHelper.getBoolean(this, URLS_FIELD_NAME, false);
 	}
 
 	public void setOrigins(boolean origins) {
-		super.put(ORIGINS_FIELD_NAME, origins);
+		super.add(ORIGINS_FIELD_NAME, origins);
 	}
 
 	public boolean isOrigins() {
-		return super.getBoolean(ORIGINS_FIELD_NAME, false);
+		return JsonHelper.getBoolean(this, ORIGINS_FIELD_NAME, false);
 	}
 
 }

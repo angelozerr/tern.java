@@ -10,20 +10,21 @@
  */
 package tern.angular.protocol;
 
-import org.json.simple.JSONArray;
+import com.eclipsesource.json.JsonArray;
 
 import tern.angular.AngularType;
+import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernQuery;
 
 public class TernAngularQuery extends TernQuery {
 
-	private final JSONArray angularTypes;
+	private final JsonArray angularTypes;
 
 	public TernAngularQuery(String subtype, AngularType angularType) {
 		super("angular");
-		super.put("subtype", subtype);
-		angularTypes = new JSONArray();
-		super.put("angularTypes", angularTypes);
+		super.add("subtype", subtype);
+		angularTypes = new JsonArray();
+		super.add("angularTypes", angularTypes);
 		addType(angularType);
 	}
 
@@ -32,14 +33,14 @@ public class TernAngularQuery extends TernQuery {
 	}
 
 	public void setExpression(String expression) {
-		super.put("expression", expression);
+		super.add("expression", expression);
 	}
 
 	public TernAngularScope getScope() {
 		TernAngularScope scope = (TernAngularScope) super.get("scope");
 		if (scope == null) {
 			scope = new TernAngularScope();
-			super.put("scope", scope);
+			super.add("scope", scope);
 		}
 		return scope;
 	}
@@ -72,17 +73,17 @@ public class TernAngularQuery extends TernQuery {
 		getFiles().add(file);
 	}
 
-	public JSONArray getFiles() {
-		JSONArray files = (JSONArray) super.get("files");
+	public JsonArray getFiles() {
+		JsonArray files = (JsonArray) super.get("files");
 		if (files == null) {
-			files = new JSONArray();
-			super.put("files", files);
+			files = new JsonArray();
+			super.add("files", files);
 		}
 		return files;
 	}
 
 	public boolean hasFiles() {
-		JSONArray files = (JSONArray) super.get("files");
+		JsonArray files = (JsonArray) super.get("files");
 		if (files == null) {
 			return false;
 		}
@@ -90,8 +91,8 @@ public class TernAngularQuery extends TernQuery {
 	}
 
 	public AngularType getFirstAngularType() {
-		return AngularType.get((String) ((JSONArray) super.get("angularTypes"))
-				.get(0));
+		return AngularType.get(((JsonArray) super.get("angularTypes")).get(0)
+				.asString());
 	}
 
 	public String getLabel() {
@@ -100,6 +101,6 @@ public class TernAngularQuery extends TernQuery {
 	}
 
 	private String getSubType() {
-		return (String) super.get("subtype");
+		return JsonHelper.getString(this, "subtype");
 	}
 }

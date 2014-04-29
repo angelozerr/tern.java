@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.expressions
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.ui.TernUIPlugin
-Import-Package: org.json.simple
+Import-Package: com.eclipsesource.json
 Export-Package: tern.eclipse.ide.ui,
  tern.eclipse.ide.ui.console,
  tern.eclipse.ide.ui.contentassist,

@@ -200,7 +200,7 @@ public class RhinoTernServer extends AbstractTernServer {
 
 			// Object jsObject = NativeJSON.parse(cx, ternScope,
 			// doc.toJSONString(), null);
-			Object jsObject = Context.javaToJS(doc.toJSONString(), ternScope);
+			Object jsObject = Context.javaToJS(doc.toString(), ternScope);
 			Object functionArgs[] = { jsObject, handler,
 					handler.isDataAsJsonString() };
 			Object fObj = ternScope.get("request2", ternScope);
@@ -240,6 +240,14 @@ public class RhinoTernServer extends AbstractTernServer {
 		}
 	}
 
+	@Override
+	public String getText(Object value) {
+		if (value == null) {
+			return null;
+		}
+		return value.toString();
+	}
+	
 	@Override
 	public Object getValue(Object value, String name) {
 		NativeObject rhinoObject = (NativeObject) value;

@@ -33,9 +33,10 @@ import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.FindReplaceDocumentAdapter;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.w3c.dom.Node;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
 
 import tern.TernException;
 import tern.TernProject;
@@ -54,6 +55,7 @@ import tern.server.IResponseHandler;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 import tern.server.TernServerAdapter;
+import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
 import tern.server.protocol.TernQuery;
@@ -97,7 +99,7 @@ public class IDETernProject extends TernProject<IFile> {
 	private final List<ITernServerListener> listeners;
 
 	private static List<String> ternNatureAdapters;
-	
+
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
@@ -218,21 +220,21 @@ public class IDETernProject extends TernProject<IFile> {
 	private void loadIDEInfos() {
 		// Load script paths
 		this.scriptPaths.clear();
-		JSONObject ide = (JSONObject) super.get(IDE_JSON_FIELD);
+		JsonObject ide = (JsonObject) super.get(IDE_JSON_FIELD);
 		if (ide != null) {
 			// There is ide information.
-			JSONArray jsonScripts = (JSONArray) ide
+			JsonArray jsonScripts = (JsonArray) ide
 					.get(SCRIPT_PATHS_JSON_FIELD);
 			if (jsonScripts != null) {
 				// There is scriptPaths defined.
-				JSONObject jsonScript = null;
+				JsonObject jsonScript = null;
 				String type = null;
 				String path = null;
 				// Loop for each script path.
 				for (Object object : jsonScripts) {
-					jsonScript = (JSONObject) object;
-					type = (String) jsonScript.get(TYPE_JSON_FIELD);
-					path = (String) jsonScript.get(PATH_JSON_FIELD);
+					jsonScript = (JsonObject) object;
+					type = JsonHelper.getString(jsonScript, TYPE_JSON_FIELD);
+					path = JsonHelper.getString(jsonScript, PATH_JSON_FIELD);
 					if (type != null && path != null) {
 						ScriptPathsType pathType = ScriptPathsType
 								.getType(type);
@@ -254,7 +256,7 @@ public class IDETernProject extends TernProject<IFile> {
 
 		}
 	}
-	
+
 	private static void loadTernProjectDescribers() {
 		if (ternNatureAdapters != null)
 			return;
@@ -265,8 +267,7 @@ public class IDETernProject extends TernProject<IFile> {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
 				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_PROJECT_DESCRIBERS);
-		List<String> list = new ArrayList<String>(
-				cf.length);
+		List<String> list = new ArrayList<String>(cf.length);
 		addTernNatureAdapters(cf, list);
 		ternNatureAdapters = list;
 
@@ -282,10 +283,8 @@ public class IDETernProject extends TernProject<IFile> {
 		for (IConfigurationElement ce : cf) {
 			try {
 				list.add(ce.getAttribute("id"));
-				Trace.trace(
-						Trace.EXTENSION_POINT,
-						"  Loaded project describer: "
-								+ ce.getAttribute("id"));
+				Trace.trace(Trace.EXTENSION_POINT,
+						"  Loaded project describer: " + ce.getAttribute("id"));
 			} catch (Throwable t) {
 				Trace.trace(
 						Trace.SEVERE,
@@ -295,7 +294,6 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
-	
 	/**
 	 * Returns the resource of the given path and type.
 	 * 
@@ -334,21 +332,21 @@ public class IDETernProject extends TernProject<IFile> {
 	 * Save IDE informations in the JSON file .tern-project.
 	 */
 	private void saveIDEInfos() {
-		JSONObject ide = new JSONObject();
+		JsonObject ide = new JsonObject();
 		// script path
 		if (scriptPaths.size() > 0) {
-			JSONArray jsonScripts = new JSONArray();
+			JsonArray jsonScripts = new JsonArray();
 			// Loop for each script path and save it in the JSON file
 			// .tern-project.
 			for (ITernScriptPath scriptPath : scriptPaths) {
-				JSONObject jsonScript = new JSONObject();
-				jsonScript.put(TYPE_JSON_FIELD, scriptPath.getType().name());
-				jsonScript.put(PATH_JSON_FIELD, scriptPath.getPath());
+				JsonObject jsonScript = new JsonObject();
+				jsonScript.add(TYPE_JSON_FIELD, scriptPath.getType().name());
+				jsonScript.add(PATH_JSON_FIELD, scriptPath.getPath());
 				jsonScripts.add(jsonScript);
 			}
-			ide.put(SCRIPT_PATHS_JSON_FIELD, jsonScripts);
+			ide.add(SCRIPT_PATHS_JSON_FIELD, jsonScripts);
 		}
-		super.put(IDE_JSON_FIELD, ide);
+		super.add(IDE_JSON_FIELD, ide);
 	}
 
 	/**
@@ -456,7 +454,7 @@ public class IDETernProject extends TernProject<IFile> {
 
 	// ---------------- Completions
 
-	public void request(TernAngularCompletionsQuery query, List names,
+	public void request(TernAngularCompletionsQuery query, JsonArray names,
 			ITernCompletionCollector collector) throws IOException,
 			TernException {
 		syncFiles(new TernDoc(), names,
@@ -474,7 +472,7 @@ public class IDETernProject extends TernProject<IFile> {
 	 * @throws IOException
 	 * @throws TernException
 	 */
-	public void request(TernQuery query, List names,
+	public void request(TernQuery query, JsonArray names,
 			ITernScriptPath scriptPath, ITernCompletionCollector collector)
 			throws IOException, TernException {
 		// update files
@@ -483,7 +481,7 @@ public class IDETernProject extends TernProject<IFile> {
 		request(doc, collector);
 	}
 
-	public void request(TernQuery query, List names, Node domNode,
+	public void request(TernQuery query, JsonArray names, Node domNode,
 			IFile domFile, ITernCompletionCollector collector)
 			throws IOException, TernException {
 		synchFiles(names, domNode, domFile, new TernDoc());
@@ -521,7 +519,7 @@ public class IDETernProject extends TernProject<IFile> {
 	 * @throws IOException
 	 * @throws TernException
 	 */
-	public void request(TernQuery query, List names,
+	public void request(TernQuery query, JsonArray names,
 			ITernScriptPath scriptPath, ITernDefinitionCollector collector)
 			throws IOException, TernException {
 		// update files
@@ -530,7 +528,7 @@ public class IDETernProject extends TernProject<IFile> {
 		request(doc, collector);
 	}
 
-	public void request(TernQuery query, List names, Node domNode,
+	public void request(TernQuery query, JsonArray names, Node domNode,
 			IFile domFile, ITernDefinitionCollector collector)
 			throws IOException, TernException {
 		synchFiles(names, domNode, domFile, new TernDoc());
@@ -561,7 +559,7 @@ public class IDETernProject extends TernProject<IFile> {
 	 * @param scriptPaths
 	 * @throws IOException
 	 */
-	private void syncFiles(TernDoc doc, List names,
+	private void syncFiles(TernDoc doc, JsonArray names,
 			ITernScriptPath... scriptPaths) throws IOException {
 		synchronized (lock) {
 			for (int i = 0; i < scriptPaths.length; i++) {
@@ -609,7 +607,7 @@ public class IDETernProject extends TernProject<IFile> {
 				System.err.println(n);
 				doc.addFile(name, text, n);
 				doc.getQuery().setEnd(
-						(Integer) doc.getQuery().get("end")
+						JsonHelper.getInteger(doc.getQuery(), "end")
 								- region.getOffset());
 			} else {
 				String text = document.get();
@@ -643,7 +641,7 @@ public class IDETernProject extends TernProject<IFile> {
 
 	private void synchFiles(TernDoc doc) {
 		if (doc.hasFiles()) {
-			JSONArray files = doc.getFiles();
+			JsonArray files = doc.getFiles();
 			if (files.size() > MAX_FILES) {
 				// max files size reached => send files grouped by MAX_FILES
 				TernDoc newDoc = new TernDoc();
@@ -685,7 +683,7 @@ public class IDETernProject extends TernProject<IFile> {
 		});
 	}
 
-	private void synchFiles(List names, Node domNode, IFile domFile, TernDoc doc)
+	private void synchFiles(JsonArray names, Node domNode, IFile domFile, TernDoc doc)
 			throws IOException {
 		synchronized (lock) {
 			getFileManager().updateFiles(domNode, domFile, doc, names);
@@ -699,7 +697,7 @@ public class IDETernProject extends TernProject<IFile> {
 
 	// ------------- Type
 
-	public void request(TernQuery query, List names,
+	public void request(TernQuery query, JsonArray names,
 			ITernScriptPath scriptPath, ITernTypeCollector collector)
 			throws IOException, TernException {
 		// update files
@@ -708,7 +706,7 @@ public class IDETernProject extends TernProject<IFile> {
 		request(doc, collector);
 	}
 
-	public void request(TernQuery query, List names, Node domNode,
+	public void request(TernQuery query, JsonArray names, Node domNode,
 			IFile domFile, ITernTypeCollector collector) throws IOException,
 			TernException {
 		TernDoc doc = new TernDoc(query);

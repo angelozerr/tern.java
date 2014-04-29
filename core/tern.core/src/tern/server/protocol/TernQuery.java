@@ -10,7 +10,8 @@
  */
 package tern.server.protocol;
 
-import org.json.simple.JSONObject;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Tern query.
@@ -22,37 +23,33 @@ import org.json.simple.JSONObject;
  * @see http://ternjs.net/doc/manual.html#protocol
  * 
  */
-public class TernQuery extends JSONObject {
+public class TernQuery extends JsonObject {
 
 	private static final String FILE_FIELD_NAME = "file";
 	private static final String TYPE_QUERY = "type";
 
 	public TernQuery(String type) {
-		super.put(TYPE_QUERY, type);
+		super.add(TYPE_QUERY, type);
 	}
 
 	public void setFile(String file) {
-		super.put(FILE_FIELD_NAME, file);
+		super.add(FILE_FIELD_NAME, file);
 	}
 
 	public void setEnd(Integer pos) {
-		super.put("end", pos);
+		if (pos == null) {
+			super.remove("end");
+		} else {
+			super.add("end", pos);
+		}
 	}
 
 	public void setLineCharPositions(boolean lineCharPositions) {
-		super.put("lineCharPositions", lineCharPositions);
+		super.add("lineCharPositions", lineCharPositions);
 	}
 
 	public String getType() {
-		return (String) super.get(TYPE_QUERY);
-	}
-
-	protected boolean getBoolean(String name, boolean defaultValue) {
-		Boolean result = (Boolean) super.get(name);
-		if (result == null) {
-			return defaultValue;
-		}
-		return result;
+		return JsonHelper.getString(this, TYPE_QUERY);
 	}
 
 	public String getLabel() {

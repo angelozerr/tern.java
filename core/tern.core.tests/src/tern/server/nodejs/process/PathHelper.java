@@ -36,6 +36,13 @@ public class PathHelper {
 		String ws = System.getProperty("osgi.ws");
 		System.out.println("ws " + ws);
 
+		if (os == null && arch == null && ws == null) {
+			// JUnit are not executed with OSGi, set it for windows.
+			os = "win32";
+			ws = "win32";
+			arch = "x86";
+		}
+		
 		unZipIfNecessary(os,ws,arch);
 		
 		File file;

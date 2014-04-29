@@ -34,7 +34,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.json.simple.JSONObject;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
@@ -44,6 +43,8 @@ import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernPluginLabelProvider;
 import tern.server.ITernPlugin;
+
+import com.eclipsesource.json.JsonObject;
 
 /**
  * Table of Tern plugins.
@@ -301,9 +302,9 @@ public class TernPluginsBlock extends AbstractTableBlock {
 			if (project != null) {
 				IDETernProject ternProject = IDETernProject
 						.getTernProject(project);
-				JSONObject plugins = ternProject.getPlugins();
+				JsonObject plugins = ternProject.getPlugins();
 				List<ITernPlugin> initialPlugins = new ArrayList<ITernPlugin>();
-				for (Object name : plugins.keySet()) {
+				for (String name : plugins.names()) {
 					ITernPlugin plugin = TernCorePlugin
 							.getTernServerTypeManager().findTernPlugin(
 									name.toString());

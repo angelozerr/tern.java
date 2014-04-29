@@ -10,15 +10,15 @@
  */
 package tern.server.protocol;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
 
 /**
  * Tern JSON document.
  * 
  * @see http://ternjs.net/doc/manual.html#protocol
  */
-public class TernDoc extends JSONObject {
+public class TernDoc extends JsonObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class TernDoc extends JSONObject {
 	 */
 	public void setQuery(TernQuery query) {
 		if (query != null) {
-			super.put(QUERY_FIELD_NAME, query);
+			super.add(QUERY_FIELD_NAME, query);
 		} else {
 			super.remove(QUERY_FIELD_NAME);
 		}
@@ -93,11 +93,11 @@ public class TernDoc extends JSONObject {
 	 * 
 	 * @return the array of file specifications.
 	 */
-	public JSONArray getFiles() {
-		JSONArray files = (JSONArray) super.get(FILES_FIELD_NAME);
+	public JsonArray getFiles() {
+		JsonArray files = (JsonArray) super.get(FILES_FIELD_NAME);
 		if (files == null) {
-			files = new JSONArray();
-			super.put(FILES_FIELD_NAME, files);
+			files = new JsonArray();
+			super.add(FILES_FIELD_NAME, files);
 		}
 		return files;
 	}
@@ -108,7 +108,7 @@ public class TernDoc extends JSONObject {
 	 * @return true if tern doc has files and false otherwise.
 	 */
 	public boolean hasFiles() {
-		JSONArray files = (JSONArray) super.get(FILES_FIELD_NAME);
+		JsonArray files = (JsonArray) super.get(FILES_FIELD_NAME);
 		return files != null && files.size() > 0;
 	}
 

@@ -27,6 +27,8 @@ import tern.eclipse.ide.core.scriptpath.IScriptResource;
 import tern.server.protocol.TernDoc;
 import tern.utils.StringUtils;
 
+import com.eclipsesource.json.JsonArray;
+
 /**
  * HTML/JSP page script path. This script path implementation gives the
  * capability to select an HTML/JSP file with "Add File" in the Tern
@@ -84,7 +86,7 @@ public class DOMElementsScriptPath extends AbstractTernScriptPath {
 
 	@Override
 	public void updateFiles(TernFileManager ternFileManager, TernDoc doc,
-			List names) throws IOException {
+			JsonArray names) throws IOException {
 		Node element = getDocument();
 		// Update TernDoc#addFile
 		ternFileManager.updateFiles(element, getResource(), doc, names);

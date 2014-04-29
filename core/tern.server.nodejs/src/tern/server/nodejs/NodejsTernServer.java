@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-
 import tern.TernException;
 import tern.TernProject;
 import tern.server.AbstractTernServer;
@@ -29,10 +27,15 @@ import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessException;
 import tern.server.nodejs.process.NodejsProcessManager;
+import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.type.ITernTypeCollector;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Tern server implemented with node.js
@@ -130,7 +133,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		TernDoc t = new TernDoc();
 		t.addFile(name, text, null);
 		try {
-			JSONObject json = makeRequest(t);
+			JsonObject json = makeRequest(t);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,15 +144,15 @@ public class NodejsTernServer extends AbstractTernServer {
 	@Override
 	public void request(TernDoc doc, IResponseHandler handler) {
 		try {
-			JSONObject json = makeRequest(doc);
+			JsonObject json = makeRequest(doc);
 			handler.onSuccess(json,
-					handler.isDataAsJsonString() ? json.toJSONString() : null);
+					handler.isDataAsJsonString() ? json.toString() : null);
 		} catch (Exception e) {
 			handler.onError(e.getMessage());
 		}
 	}
 
-	private JSONObject makeRequest(TernDoc doc) throws IOException,
+	private JsonObject makeRequest(TernDoc doc) throws IOException,
 			InterruptedException, TernException {
 		String baseURL = null;
 		try {
@@ -161,7 +164,7 @@ public class NodejsTernServer extends AbstractTernServer {
 			throw e;
 		}
 
-		JSONObject json = NodejsTernHelper.makeRequest(baseURL, doc, false,
+		JsonObject json = NodejsTernHelper.makeRequest(baseURL, doc, false,
 				interceptors, this);
 		return json;
 	}
@@ -223,7 +226,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	public void request(TernDoc doc, ITernCompletionCollector collector)
 			throws TernException {
 		try {
-			JSONObject jsonObject = makeRequest(doc);
+			JsonObject jsonObject = makeRequest(doc);
 			if (jsonObject != null) {
 				Long startCh = getCh(jsonObject, "start");
 				Long endCh = getCh(jsonObject, "end");
@@ -231,18 +234,15 @@ public class NodejsTernServer extends AbstractTernServer {
 				if (startCh != null && endCh != null) {
 					pos = endCh.intValue() - startCh.intValue();
 				}
-				List completions = (List) jsonObject.get("completions");
+				JsonArray completions = (JsonArray) jsonObject
+						.get("completions");
 				if (completions != null) {
-					Boolean isString = null;
-					for (Object object : completions) {
-						if (isString == null) {
-							isString = (object instanceof String);
-						}
-						if (isString) {
-							collector.addProposal((String) object, null, null,
-									null, pos, object, this);
+					for (JsonValue value : completions) {
+						if (value.isString()) {
+							collector.addProposal(value.asString(), null, null,
+									null, pos, value, this);
 						} else {
-							addProposal(object, pos, collector);
+							super.addProposal(value, pos, collector);
 						}
 					}
 				}
@@ -255,23 +255,31 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public Object getValue(Object value, String name) {
-		return ((JSONObject) value).get(name);
+	public String getText(Object value) {
+		return JsonHelper.getString((JsonValue) value);
 	}
 
-	private Long getCh(JSONObject data, String pos) {
-		Object loc = data.get(pos);
-		if (loc instanceof Long) {
-			return (Long) loc;
+	@Override
+	public Object getValue(Object value, String name) {
+		return ((JsonObject) value).get(name);
+	}
+
+	private Long getCh(JsonObject data, String name) {
+		JsonValue loc = data.get(name);
+		if (loc == null) {
+			return null;
 		}
-		return loc != null ? (Long) ((JSONObject) loc).get("ch") : null;
+		if (loc.isNumber()) {
+			return loc.asLong();
+		}
+		return loc != null ? JsonHelper.getLong((JsonObject) loc, "ch") : null;
 	}
 
 	@Override
 	public void request(TernDoc doc, ITernDefinitionCollector collector)
 			throws TernException {
 		try {
-			JSONObject jsonObject = makeRequest(doc);
+			JsonObject jsonObject = makeRequest(doc);
 			if (jsonObject != null) {
 				Long startCh = getCh(jsonObject, "start");
 				Long endCh = getCh(jsonObject, "end");
@@ -287,7 +295,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	public void request(TernDoc doc, ITernTypeCollector collector)
 			throws TernException {
 		try {
-			JSONObject jsonObject = makeRequest(doc);
+			JsonObject jsonObject = makeRequest(doc);
 			if (jsonObject != null) {
 				String name = getText(jsonObject.get("name"));
 				String type = getText(jsonObject.get("type"));

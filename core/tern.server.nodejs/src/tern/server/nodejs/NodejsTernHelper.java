@@ -24,9 +24,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import tern.TernException;
 import tern.TernFileManager;
@@ -37,6 +34,9 @@ import tern.server.protocol.TernQuery;
 import tern.utils.IOUtils;
 import tern.utils.StringUtils;
 
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.ParseException;
+
 /**
  * Nodejs Tern helper.
  * 
@@ -46,7 +46,7 @@ public class NodejsTernHelper {
 	public static final long DEFAULT_TIMEOUT = 1000L;
 	public static final boolean DEFAULT_PERSISTENT = false;
 
-	public static JSONObject makeRequest(String baseURL, TernDoc doc,
+	public static JsonObject makeRequest(String baseURL, TernDoc doc,
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)
 			throws IOException, TernException {
 		TernQuery query = doc.getQuery();
@@ -77,10 +77,9 @@ public class NodejsTernHelper {
 				throw new TernException(message);
 			}
 
-			JSONParser parser = new JSONParser();
 			try {
-				JSONObject response = (JSONObject) parser
-						.parse(new InputStreamReader(in));
+				JsonObject response = JsonObject
+						.readFrom(new InputStreamReader(in));
 				if (interceptors != null) {
 					for (IInterceptor interceptor : interceptors) {
 						interceptor.handleResponse(response, server,
@@ -116,10 +115,10 @@ public class NodejsTernHelper {
 		}
 	}
 
-	private static HttpPost createHttpPost(String baseURL, JSONObject doc)
+	private static HttpPost createHttpPost(String baseURL, JsonObject doc)
 			throws UnsupportedEncodingException {
 		HttpPost httpPost = new HttpPost(baseURL);
-		httpPost.setEntity(new StringEntity(doc.toJSONString()));
+		httpPost.setEntity(new StringEntity(doc.toString()));
 		return httpPost;
 	}
 

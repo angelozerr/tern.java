@@ -10,7 +10,7 @@
  */
 package tern.server;
 
-import org.json.simple.JSONObject;
+import com.eclipsesource.json.JsonObject;
 
 import tern.server.protocol.TernDoc;
 
@@ -27,16 +27,16 @@ public class LoggingInterceptor implements IInterceptor {
 			String methodName) {
 		outPrintln("-----------------------------------");
 		outPrintln("Tern request#" + methodName + ": ");
-		outPrintln(request.toJSONString());
+		outPrintln(request.toString());
 	}
 
 	@Override
-	public void handleResponse(JSONObject response, ITernServer server,
+	public void handleResponse(JsonObject response, ITernServer server,
 			String methodName, long ellapsedTime) {
 		outPrintln("");
 		outPrintln("Tern response#" + methodName + " with " + ellapsedTime
 				+ "ms: ");
-		outPrintln(response.toJSONString());
+		outPrintln(response.toString());
 		outPrintln("-----------------------------------");
 	}
 
