@@ -44,7 +44,7 @@ public class TernDoc extends JsonObject {
 	 */
 	public void setQuery(TernQuery query) {
 		if (query != null) {
-			super.add(QUERY_FIELD_NAME, query);
+			super.set(QUERY_FIELD_NAME, query);
 		} else {
 			super.remove(QUERY_FIELD_NAME);
 		}

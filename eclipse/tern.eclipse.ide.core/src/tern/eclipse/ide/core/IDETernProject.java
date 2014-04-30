@@ -346,7 +346,7 @@ public class IDETernProject extends TernProject<IFile> {
 			}
 			ide.add(SCRIPT_PATHS_JSON_FIELD, jsonScripts);
 		}
-		super.add(IDE_JSON_FIELD, ide);
+		super.set(IDE_JSON_FIELD, ide);
 	}
 
 	/**

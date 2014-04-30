@@ -21,6 +21,7 @@ import tern.utils.IOUtils;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 import com.eclipsesource.json.ParseException;
 
 /**
@@ -89,15 +90,37 @@ public class TernProject<T> extends JsonObject {
 	 * 
 	 * @param lib
 	 *            the JSON Type Definition.
+	 * @return true if lib to add, replace an existing lib and false otherwise.
 	 */
-	public void addLib(String lib) {
-		getLibs().add(lib);
+	public boolean addLib(String lib) {
+		boolean exists = hasLib(lib);
+		if (!exists) {
+			getLibs().add(lib);
+		}
+		return exists;
 	}
 
 	/**
-	 * Return the JSON Type Defintnions of the tern project.
+	 * Returns true if the given lib exists and false otherwise.
 	 * 
-	 * @return the JSON Type Defintnions of the tern project.
+	 * @param lib
+	 * @return true if the given lib exists and false otherwise.
+	 */
+	public boolean hasLib(String lib) {
+		JsonArray libs = getLibs();
+		if (libs != null) {
+			for (JsonValue l : libs) {
+				if (l.isString() && l.asString().equals(lib))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Return the JSON Type Definitions of the tern project.
+	 * 
+	 * @return the JSON Type Definitions of the tern project.
 	 */
 	public JsonArray getLibs() {
 		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
@@ -113,9 +136,24 @@ public class TernProject<T> extends JsonObject {
 	 * 
 	 * @param plugin
 	 *            the tern plugin to add.
+	 * @return true if plugin to add, replace an existing plugin and false
+	 *         otherwise.
 	 */
-	public void addPlugin(ITernPlugin plugin) {
+	public boolean addPlugin(ITernPlugin plugin) {
+		boolean exists = hasPlugin(plugin);
 		getPlugins().add(plugin.getName(), "../");
+		return exists;
+	}
+
+	/**
+	 * Returns true if the given plugin exists and false otherwise.
+	 * 
+	 * @param plugin
+	 * @return true if the given plugin exists and false otherwise.
+	 */
+	public boolean hasPlugin(ITernPlugin plugin) {
+		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
+		return plugins == null ? false : plugins.get(plugin.getName()) != null;
 	}
 
 	/**
