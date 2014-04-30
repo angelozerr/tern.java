@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonValue;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
@@ -242,9 +243,9 @@ public class TernDefsBlock extends AbstractTableBlock {
 						.getTernProject(project);
 				JsonArray defs = ternProject.getLibs();
 				List<ITernDef> initialDefs = new ArrayList<ITernDef>();
-				for (Object name : defs) {
+				for (JsonValue name : defs) {
 					ITernDef def = TernCorePlugin.getTernServerTypeManager()
-							.findTernDef(name.toString());
+							.findTernDef(name.asString());
 					if (def != null) {
 						initialDefs.add(def);
 					}
