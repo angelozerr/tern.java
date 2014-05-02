@@ -16,7 +16,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 
+import tern.server.ITernDef;
 import tern.server.ITernPlugin;
+import tern.server.protocol.JsonHelper;
 import tern.utils.IOUtils;
 
 import com.eclipsesource.json.JsonArray;
@@ -83,6 +85,17 @@ public class TernProject<T> extends JsonObject {
 	 */
 	public File getProjectDir() {
 		return projectDir;
+	}
+
+	/**
+	 * Add JSON Type Definition.
+	 * 
+	 * @param lib
+	 *            the JSON Type Definition.
+	 * @return true if lib to add, replace an existing lib and false otherwise.
+	 */
+	public boolean addLib(ITernDef lib) {
+		return addLib(lib.getName());
 	}
 
 	/**
@@ -205,7 +218,7 @@ public class TernProject<T> extends JsonObject {
 		File file = new File(projectDir, TERN_PROJECT);
 		if (file.exists()) {
 			try {
-				super.readFrom(new FileReader(file));
+				JsonHelper.readFrom(new FileReader(file), this);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}

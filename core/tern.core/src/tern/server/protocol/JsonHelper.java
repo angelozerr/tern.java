@@ -1,8 +1,26 @@
+/**
+ *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
 package tern.server.protocol;
 
+import java.io.IOException;
+import java.io.Reader;
+
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonObject.Member;
 import com.eclipsesource.json.JsonValue;
 
+/**
+ * Helper for minimal-json.
+ *
+ */
 public class JsonHelper {
 
 	public static String getString(JsonObject json, String name) {
@@ -58,5 +76,32 @@ public class JsonHelper {
 			return null;
 		}
 		return value;
+	}
+
+	/**
+	 * Read JSON stream from the given reader and set the result in the given
+	 * {@link JsonObject} to.
+	 * 
+	 * @param reader
+	 * @param to
+	 * @throws IOException
+	 */
+	public static void readFrom(Reader reader, JsonObject to)
+			throws IOException {
+		copy(JsonObject.readFrom(reader), to);
+	}
+
+	/**
+	 * Copy content of from JSON to to JSON.
+	 * 
+	 * @param from
+	 * @param to
+	 */
+	public static void copy(JsonObject from, JsonObject to) {
+		if (from != null) {
+			for (Member member : from) {
+				to.set(member.getName(), member.getValue());
+			}
+		}
 	}
 }
