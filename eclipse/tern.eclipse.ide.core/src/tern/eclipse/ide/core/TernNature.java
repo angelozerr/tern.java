@@ -28,16 +28,27 @@ public class TernNature implements IProjectNature {
 
 	private IProject project;
 
-	@Override
-	public void configure() throws CoreException {
+	public boolean isConfigured() throws CoreException {
+		if (project == null) return false;
+		
 		IProjectDescription desc = project.getDescription();
 		ICommand[] commands = desc.getBuildSpec();
 
 		for (int i = 0; i < commands.length; ++i) {
 			if (commands[i].getBuilderName().equals(TernBuilder.BUILDER_ID)) {
-				return;
+				return true;
 			}
 		}
+		
+		return false;
+	}
+	
+	@Override
+	public void configure() throws CoreException {
+		if (isConfigured()) return;
+		
+		IProjectDescription desc = project.getDescription();
+		ICommand[] commands = desc.getBuildSpec();
 
 		ICommand[] newCommands = new ICommand[commands.length + 1];
 		System.arraycopy(commands, 0, newCommands, 0, commands.length);

@@ -35,9 +35,6 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.w3c.dom.Node;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-
 import tern.TernException;
 import tern.TernProject;
 import tern.angular.protocol.completions.TernAngularCompletionsQuery;
@@ -63,6 +60,9 @@ import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
 
 /**
  * Eclipse IDE Tern project.
@@ -109,6 +109,7 @@ public class IDETernProject extends TernProject<IFile> {
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
 		this.data = new HashMap<String, Object>();
 		this.listeners = new ArrayList<ITernServerListener>();
+		ensureNatureIsConfigured();
 	}
 
 	/**
@@ -199,8 +200,9 @@ public class IDETernProject extends TernProject<IFile> {
 
 			loadTernProjectDescribers();
 			for (String adaptToNature : ternNatureAdapters) {
-				if (project.hasNature(adaptToNature))
+				if (project.hasNature(adaptToNature)) {
 					return true;
+				}
 			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error tern nature", e);
@@ -782,4 +784,12 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
+	private void ensureNatureIsConfigured() throws CoreException {
+		// Check if .tern-project is correctly configured for adapted nature
+		final TernNature tempTernNature = new TernNature();
+		tempTernNature.setProject(project);
+		if (!tempTernNature.isConfigured()) {
+			tempTernNature.configure();
+		}
+	}
 }
