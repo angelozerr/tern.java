@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributor:
+ *     Red Hat, Inc. - initial API and implementation
+ *     Angelo Zerr <angelo.zerr@gmail.com> - adapt https://github.com/jbosstools/jbosstools-base/blob/master/common/plugins/org.jboss.tools.common.validation/src/org/jboss/tools/common/validation/java/JavaEditorTracker.java for Tern.
+ ******************************************************************************/
 package tern.eclipse.ide.internal.ui.validation;
 
 import java.util.HashMap;
@@ -26,6 +37,9 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 
+/**
+ * Javascript editor tracker.
+ */
 public class JavaEditorTracker implements IWindowListener, IPageListener,
 		IPartListener {
 	static JavaEditorTracker INSTANCE;

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2012 Red Hat, Inc.
+ * Distributed under license by Red Hat, Inc. All rights reserved.
+ * This program is made available under the terms of the
+ * Eclipse Public License v1.0 which accompanies this distribution,
+ * and is available at http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributor:
+ *     Red Hat, Inc. - initial API and implementation
+ *     Angelo Zerr <angelo.zerr@gmail.com> - adapt https://github.com/jbosstools/jbosstools-base/blob/master/common/plugins/org.jboss.tools.common.validation/src/org/jboss/tools/common/validation/java/JavaDirtyRegionProcessor.java for Tern.
+ ******************************************************************************/
 package tern.eclipse.ide.internal.ui.validation;
 
 import java.util.ArrayList;
@@ -52,7 +63,8 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				List<TernAnnotation> annotationsToRemove = null;
 				final IAnnotationModel newModel = editor.getDocumentProvider()
 						.getAnnotationModel(editor.getEditorInput());
-				for (Iterator iterator = newModel.getAnnotationIterator(); iterator
+				for (@SuppressWarnings("rawtypes")
+				Iterator iterator = newModel.getAnnotationIterator(); iterator
 						.hasNext();) {
 					Annotation annotation = (Annotation) iterator.next();
 					if (annotation instanceof TernAnnotation) {
