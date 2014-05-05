@@ -79,7 +79,7 @@ public class TernTypeDefinitionsPropertyPage extends AbstractTernPropertyPage
 			IDETernProject ternProject = getTernProject();
 			ternProject.clearLibs();
 			for (Object def : checkedDefs) {
-				ternProject.addLib(((ITernDef) def).getName());
+				ternProject.addLib((ITernDef) def);
 			}
 			ternProject.save();
 		} catch (Exception e) {

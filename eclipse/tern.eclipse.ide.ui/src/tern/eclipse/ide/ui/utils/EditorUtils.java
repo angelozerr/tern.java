@@ -16,6 +16,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.ITextOperationTarget;
+import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -62,7 +64,7 @@ public class EditorUtils {
 		return editor;
 	}
 
-	public static IResource getResource(ITextEditor editor) {
+	public static IResource getResource(IEditorPart editor) {
 		return (IResource) editor.getEditorInput().getAdapter(IResource.class);
 	}
 
@@ -77,6 +79,17 @@ public class EditorUtils {
 	public static IDocument getDocument(ITextEditor editor) {
 		return (editor).getDocumentProvider().getDocument(
 				editor.getEditorInput());
+	}
+
+	public static ISourceViewer getSourceViewer(IEditorPart editor) {
+		if (editor == null) {
+			return null;
+		}
+
+		ISourceViewer viewer = (ISourceViewer) editor
+				.getAdapter(ITextOperationTarget.class);
+
+		return viewer;
 	}
 
 }

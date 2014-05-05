@@ -12,8 +12,30 @@ package tern.server.protocol.completions;
 
 import tern.server.ITernServer;
 
+/**
+ * Collector to collect result of completion.
+ *
+ */
 public interface ITernCompletionCollector {
 
+	/**
+	 * Collect an item completion.
+	 * 
+	 * @param name
+	 *            of the completion item.
+	 * @param type
+	 *            of the completion item.
+	 * @param origin
+	 *            of the completion item.
+	 * @param doc
+	 *            of the completion item.
+	 * @param pos
+	 *            of the cursor.
+	 * @param completion
+	 *            object of completion item (ex : JsonObject)
+	 * @param ternServer
+	 *            the tern server.
+	 */
 	void addProposal(String name, String type, String origin, Object doc,
 			int pos, Object completion, ITernServer ternServer);
 }

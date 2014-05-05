@@ -16,7 +16,8 @@ CodeMirror.ternLint = function(cm, updateLinting, options) {
   var server = options.server;
   var query = {
     type : "lint",
-    file : "#0"
+    file : "#0",
+    lineCharPositions : true
   };
 
   var files = [];
@@ -34,8 +35,8 @@ CodeMirror.ternLint = function(cm, updateLinting, options) {
     if (error) {
       updateLinting(cm, []);
     } else {
-      var found = [];
-      updateLinting(cm, response);
+      var messages = response.messages;
+      updateLinting(cm, messages);
     }
   });
 

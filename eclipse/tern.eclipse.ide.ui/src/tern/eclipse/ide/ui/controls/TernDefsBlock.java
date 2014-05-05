@@ -34,9 +34,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonValue;
-
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -46,7 +43,9 @@ import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernDefContentProvider;
 import tern.eclipse.ide.ui.viewers.TernDefLabelProvider;
 import tern.server.ITernDef;
-import tern.server.ITernDef;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Table of Tern defs.

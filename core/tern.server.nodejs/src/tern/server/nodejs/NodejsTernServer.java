@@ -31,6 +31,7 @@ import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
 import com.eclipsesource.json.JsonArray;
@@ -109,7 +110,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	@Override
 	public void addDef(ITernDef def) throws TernException {
 		TernProject project = getProject();
-		project.addLib(def.getName());
+		project.addLib(def);
 		try {
 			project.save();
 		} catch (IOException e) {
@@ -305,6 +306,33 @@ public class NodejsTernServer extends AbstractTernServer {
 		} catch (Throwable e) {
 			throw new TernException(e);
 		}
+	}
+
+	@Override
+	public void request(TernDoc doc, ITernLintCollector collector)
+			throws TernException {
+		try {
+			JsonObject jsonObject = makeRequest(doc);
+			if (jsonObject != null) {
+				JsonArray messages = (JsonArray) jsonObject.get("messages");
+				if (messages != null) {
+					String message = null;
+					String severity = null;
+					JsonObject messageObject = null;
+					for (JsonValue value : messages) {
+						messageObject = (JsonObject) value;
+						message = getText(messageObject.get("message"));
+						severity = getText(messageObject.get("severity"));
+						Long startCh = getCh(messageObject, "from");
+						Long endCh = getCh(messageObject, "to");
+						collector.addMessage(message, startCh, endCh, severity);
+					}
+				}
+			}
+		} catch (Throwable e) {
+			throw new TernException(e);
+		}
+
 	}
 
 	@Override

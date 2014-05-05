@@ -61,6 +61,7 @@ import tern.server.protocol.TernFile;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
 /**
@@ -550,6 +551,28 @@ public class IDETernProject extends TernProject<IFile> {
 		server.request(doc, collector);
 	}
 
+	// ----------------------- lint
+
+	public void request(TernQuery query, IFile file, IDocument document,
+			ITernLintCollector collector) throws IOException, TernException {
+		synchFiles(file, document, new TernDoc());
+		TernDoc doc = new TernDoc(query);
+		String name = getFileManager().getFileName(file);
+		query.setFile(name);
+		/*
+		 * String name = getFileManager().getFileName(file);
+		 * updateFragmentAround(doc, name, document, startOffset, startOffset);
+		 * query.setFile("#0");
+		 */
+		request(doc, collector);
+	}
+
+	private void request(TernDoc doc, ITernLintCollector collector)
+			throws TernException {
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
+	}
+
 	// ----------------------- synch
 
 	/**
@@ -683,8 +706,8 @@ public class IDETernProject extends TernProject<IFile> {
 		});
 	}
 
-	private void synchFiles(JsonArray names, Node domNode, IFile domFile, TernDoc doc)
-			throws IOException {
+	private void synchFiles(JsonArray names, Node domNode, IFile domFile,
+			TernDoc doc) throws IOException {
 		synchronized (lock) {
 			getFileManager().updateFiles(domNode, domFile, doc, names);
 			if (!doc.hasFiles()) {

@@ -17,6 +17,7 @@ import tern.TernFileManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
 /**
@@ -65,6 +66,9 @@ public interface ITernServer {
 	void request(TernDoc doc, ITernTypeCollector collector)
 			throws TernException;
 
+	void request(TernDoc doc, ITernLintCollector collector)
+			throws TernException;
+
 	void addServerListener(ITernServerListener listener);
 
 	void removeServerListener(ITernServerListener listener);
@@ -85,4 +89,5 @@ public interface ITernServer {
 	boolean isDisposed();
 
 	void dispose();
+
 }

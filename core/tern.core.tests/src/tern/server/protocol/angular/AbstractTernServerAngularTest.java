@@ -22,7 +22,7 @@ public abstract class AbstractTernServerAngularTest extends
 	protected TernProject createProject() {
 		TernProject project = super.createProject();
 		project.addPlugin(TernPlugin.angular);
-		project.addLib(TernDef.ecma5.name());
+		project.addLib(TernDef.ecma5);
 		return project;
 	}
 }
