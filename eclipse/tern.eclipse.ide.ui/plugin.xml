@@ -229,7 +229,12 @@
             id="liferay"
             description="%ternDescriptor.liferay.description"
             icon="/icons/full/obj16/liferay.png" >
-      </ternDescriptor>          
+      </ternDescriptor>
+  	  <ternDescriptor
+            id="meteor"
+            description="%ternDescriptor.meteor.description"
+            icon="/icons/full/obj16/meteor.png" >        
+      </ternDescriptor>                    
   	  <ternDescriptor
             id="node"
             description="%ternDescriptor.node.description"
