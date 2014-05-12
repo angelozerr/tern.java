@@ -60,23 +60,16 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				TernLintQuery query = new TernLintQuery();
 
 				// Clean old TernAnnotation
-				List<TernAnnotation> annotationsToRemove = null;
+				final List<TernAnnotation> annotationsToRemove = new ArrayList<TernAnnotation>();
 				final IAnnotationModel newModel = editor.getDocumentProvider()
 						.getAnnotationModel(editor.getEditorInput());
 				for (@SuppressWarnings("rawtypes")
+				// collect all tern annotation of the model.
 				Iterator iterator = newModel.getAnnotationIterator(); iterator
 						.hasNext();) {
 					Annotation annotation = (Annotation) iterator.next();
 					if (annotation instanceof TernAnnotation) {
-						if (annotationsToRemove == null) {
-							annotationsToRemove = new ArrayList<TernAnnotation>();
-						}
 						annotationsToRemove.add((TernAnnotation) annotation);
-					}
-				}
-				if (annotationsToRemove != null) {
-					for (TernAnnotation ternAnnotation : annotationsToRemove) {
-						newModel.removeAnnotation(ternAnnotation);
 					}
 				}
 
@@ -86,11 +79,34 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 					@Override
 					public void addMessage(String message, Long start,
 							Long end, String severity) {
-						Annotation annotation = new TernAnnotation(severity,
-								message);
-						Position position = new Position(start.intValue(),
-								end.intValue() - start.intValue());
-						newModel.addAnnotation(annotation, position);
+						TernAnnotation existingAnnotation = getExistingAnnotation(
+								message, start.intValue(), end.intValue(),
+								severity, annotationsToRemove);
+						if (existingAnnotation != null) {
+							// tern annotation already exists, use it.
+							annotationsToRemove.remove(existingAnnotation);
+						} else {
+							// create new tern annotation.
+							TernAnnotation annotation = new TernAnnotation(
+									severity, message, start.intValue(),
+									end.intValue());
+							newModel.addAnnotation(annotation, new Position(
+									annotation.getStart(), annotation.getEnd()
+											- annotation.getStart()));
+						}
+					}
+
+					private TernAnnotation getExistingAnnotation(
+							String message, int start, int end,
+							String severity,
+							List<TernAnnotation> annotationsToRemove) {
+						for (TernAnnotation annotation : annotationsToRemove) {
+							if (annotation.isEquals(severity, message, start,
+									end)) {
+								return annotation;
+							}
+						}
+						return null;
 					}
 				};
 
@@ -98,6 +114,11 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 					ternProject.request(query, file, document, collector);
 				} catch (Exception e) {
 					Trace.trace(Trace.SEVERE, "Error while tern validation.", e);
+				}
+
+				// remove old tern annotations.
+				for (TernAnnotation ternAnnotation : annotationsToRemove) {
+					newModel.removeAnnotation(ternAnnotation);
 				}
 			}
 		}
