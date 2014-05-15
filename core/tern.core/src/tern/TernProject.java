@@ -18,6 +18,7 @@ import java.io.Writer;
 
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
+import tern.server.TernDef;
 import tern.server.protocol.JsonHelper;
 import tern.utils.IOUtils;
 
@@ -128,6 +129,16 @@ public class TernProject<T> extends JsonObject {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Returns true if the given lib exists and false otherwise.
+	 * 
+	 * @param lib
+	 * @return true if the given lib exists and false otherwise.
+	 */
+	public boolean hasLib(TernDef lib) {
+		return hasLib(lib.getName());
 	}
 
 	/**
@@ -250,4 +261,5 @@ public class TernProject<T> extends JsonObject {
 	public void clearPlugins() {
 		super.remove(PLUGINS_FIELD_NAME);
 	}
+
 }
