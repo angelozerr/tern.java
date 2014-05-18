@@ -14,7 +14,8 @@ public enum TernPlugin implements ITernPlugin {
 
 	aui("tern/plugin/aui"), angular("tern/plugin/angular"), component(
 			"tern/plugin/component"), cordovajs("tern/plugin/cordovajs"), doc_comment(
-			"tern/plugin/doc_comment"), grunt("tern/plugin/grunt"), liferay(
+			"tern/plugin/doc_comment"), dojotoolkit_1_6(
+			"tern/plugin/dojotoolkit"), grunt("tern/plugin/grunt"), liferay(
 			"tern/plugin/liferay"), lint("tern/plugin/lint"), node(
 			"tern/plugin/node"), meteor("tern/plugin/meteor"), requirejs(
 			"tern/plugin/requirejs"), yui("tern/plugin/yui");
