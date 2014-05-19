@@ -92,11 +92,17 @@
         var fn = args[index];
         if (fn.argNames  && fn.argNames.length > 0) {              
           var Y = fn.args[0];
+          Y.getType = function(guess) {
+              if (this.types.length == 0 && guess !== false) return this.makeupType();
+              if (this.types.length == 1) return this.types[0];
+              return this;
+          }
           yui.propagate(Y);        
           
-          var cx = infer.cx(), defs = cx.definitions["yui"]
-          defs['event'].getType().propagate(Y);
-          defs['node'].getType().propagate(Y);  
+          var cx = infer.cx(), defs = cx.definitions["yui"];
+          for ( var name in defs) {
+              defs[name].getType().propagate(Y);
+          }
           
           for ( var i = 0; i < argNodes.length - 1; i++) {
             var node = argNodes[i];

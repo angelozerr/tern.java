@@ -139,7 +139,7 @@
       var props = Object.create(null), foundProp = null;
       for (var i = 0; i < this.forward.length; ++i) {
         var prop = this.forward[i].propHint();
-        if (prop && prop != "length" && prop != "<i>" && prop != "✖") {
+        if (prop && prop != "length" && prop != "<i>" && prop != "✖" && prop != cx.completingProperty) {
           props[prop] = true;
           foundProp = prop;
         }
@@ -173,8 +173,8 @@
         var prop = this.forward[i].propHint();
         if (prop) f(prop, null, 0);
       }
-      var computed = this.computedPropType();
-      if (computed) computed.gatherProperties(f);
+      var guessed = this.makeupType();
+      if (guessed) guessed.gatherProperties(f);
     }
   });
 
@@ -446,6 +446,7 @@
     defProp: function(prop, originNode) {
       var found = this.hasProp(prop, false);
       if (found) {
+        if (found.maybePurge) found.maybePurge = false;
         if (originNode && !found.originNode) found.originNode = originNode;
         return found;
       }
@@ -739,8 +740,9 @@
         var oldOrigin = cx.curOrigin;
         cx.curOrigin = fn.origin;
         var scopeCopy = new Scope(scope.prev);
+        scopeCopy.originNode = scope.originNode;
         for (var v in scope.props) {
-          var local = scopeCopy.defProp(v);
+          var local = scopeCopy.defProp(v, scope.props[v].originNode);
           for (var i = 0; i < args.length; ++i) if (fn.argNames[i] == v && i < args.length)
             args[i].propagate(local);
         }
@@ -802,15 +804,13 @@
   // SCOPE GATHERING PASS
 
   function addVar(scope, nameNode) {
-    var val = scope.defProp(nameNode.name, nameNode);
-    if (val.maybePurge) val.maybePurge = false;
-    return val;
+    return scope.defProp(nameNode.name, nameNode);
   }
 
   var scopeGatherer = walk.make({
     Function: function(node, scope, c) {
       var inner = node.body.scope = new Scope(scope);
-      inner.node = node;
+      inner.originNode = node;
       var argVals = [], argNames = [];
       for (var i = 0; i < node.params.length; ++i) {
         var param = node.params[i];
