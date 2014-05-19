@@ -49,7 +49,8 @@ public class TernImagesRegistry {
 		return imageRegistry.get(key);
 	}
 
-	public static Image getImage(TernCompletionItem item) {
+	public static Image getImage(TernCompletionItem item,
+			boolean returnNullIfUnknown) {
 		if (item.isFunction()) {
 			return TernImagesRegistry.getImage(TernImagesRegistry.IMG_FN);
 		}
@@ -70,6 +71,9 @@ public class TernImagesRegistry {
 				return TernImagesRegistry
 						.getImage(TernImagesRegistry.IMG_BOOLEAN);
 			}
+		}
+		if (returnNullIfUnknown) {
+			return null;
 		}
 		return TernImagesRegistry.getImage(TernImagesRegistry.IMG_UNKNOWN);
 	}

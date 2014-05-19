@@ -53,11 +53,15 @@ public class TernCompletionProposal extends TernCompletionItem implements
 		this.fReplacementLength = pos;
 		this.fCursorPosition = text.length();
 
-		this.fImage = TernImagesRegistry.getImage(this);
+		this.fImage = getDefaultImage();
 		this.fDisplayString = super.getText();
 		this.fContextInformation = null;
 		this.fAdditionalProposalInfo = doc != null ? doc.toString() : null;
 
+	}
+
+	protected Image getDefaultImage() {
+		return TernImagesRegistry.getImage(this, false);
 	}
 
 	// public void apply(IDocument document) {

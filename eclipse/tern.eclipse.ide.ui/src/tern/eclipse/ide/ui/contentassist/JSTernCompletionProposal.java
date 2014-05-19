@@ -22,9 +22,13 @@ import org.eclipse.jface.text.link.LinkedModeUI;
 import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
+import tern.eclipse.ide.ui.ImageResource;
+import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.jface.TernImagesRegistry;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.protocol.completions.Parameter;
 import tern.utils.StringUtils;
@@ -44,6 +48,20 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	public JSTernCompletionProposal(String name, String type, String origin,
 			Object doc, int pos, int startOffset) {
 		super(name, type, origin, doc, pos, startOffset);
+	}
+
+	@Override
+	protected Image getDefaultImage() {
+		Image image = TernImagesRegistry.getImage(this, true);
+		if (image != null) {
+			return image;
+		}
+		String origin = super.getOrigin();
+		if (!StringUtils.isEmpty(origin)) {
+			image = TernUIPlugin.getTernDescriptorManager().getImage(origin);
+		}
+		return image != null ? image : TernImagesRegistry
+				.getImage(TernImagesRegistry.IMG_UNKNOWN);
 	}
 
 	public void apply(ITextViewer viewer, char trigger, int stateMask,

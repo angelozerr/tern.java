@@ -41,8 +41,8 @@ public class TernLabelProvider extends LabelProvider {
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof TernCompletionItem) {
-			TernCompletionItem item = ((TernCompletionItem)element);
-			return TernImagesRegistry.getImage(item);
+			TernCompletionItem item = ((TernCompletionItem) element);
+			return TernImagesRegistry.getImage(item, false);
 		}
 		return super.getImage(element);
 	}
