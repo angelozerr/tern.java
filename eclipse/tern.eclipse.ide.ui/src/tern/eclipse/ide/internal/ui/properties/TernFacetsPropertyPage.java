@@ -22,19 +22,21 @@ import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.controls.TernPluginsBlock;
+import tern.eclipse.ide.ui.controls.TernFacetsBlock;
+import tern.server.ITernDef;
+import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
 
 /**
- * Tern plugins property page.
+ * Tern Facets (Plugins + JSON Type Definitions) property page.
  * 
  */
-public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
+public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 		IWorkbenchPreferencePage {
 
-	private TernPluginsBlock pluginsBlock;
+	private TernFacetsBlock pluginsBlock;
 
-	public TernPluginsPropertyPage() {
+	public TernFacetsPropertyPage() {
 		super();
 		setImageDescriptor(ImageResource
 				.getImageDescriptor(ImageResource.IMG_LOGO));
@@ -56,14 +58,14 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		pluginsBlock = new TernPluginsBlock(TernUIMessages.TernPluginsBlock_desc);
+		pluginsBlock = new TernFacetsBlock(TernUIMessages.TernFacetsBlock_desc);
 		pluginsBlock.createControl(parent);
 		Control control = pluginsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		pluginsBlock.loadPlugins(getResource().getProject());
+		pluginsBlock.loadFacets(getResource().getProject());
 
 		applyDialogFont(parent);
 		return parent;
@@ -74,12 +76,19 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		// save column settings
 		pluginsBlock.saveColumnSettings();
 		// save the checked plugins in the tern project
-		Object[] checkedPlugins = pluginsBlock.getCheckedPlugins();
+		Object[] checkedFacets = pluginsBlock.getCheckedFacets();
 		try {
 			IDETernProject ternProject = getTernProject();
+			// clear Plugin + JSON Type Definition
 			ternProject.clearPlugins();
-			for (Object plugin : checkedPlugins) {
-				ternProject.addPlugin((ITernPlugin) plugin);
+			ternProject.clearLibs();
+			// Add Plugin + JSON Type Definition
+			for (Object facet : checkedFacets) {
+				if (((ITernFacet) facet).isPlugin()) {
+					ternProject.addPlugin((ITernPlugin) facet);
+				} else {
+					ternProject.addLib((ITernDef) facet);
+				}
 			}
 			ternProject.save();
 		} catch (Exception e) {
@@ -87,5 +96,4 @@ public class TernPluginsPropertyPage extends AbstractTernPropertyPage implements
 		}
 		return super.performOk();
 	}
-
 }

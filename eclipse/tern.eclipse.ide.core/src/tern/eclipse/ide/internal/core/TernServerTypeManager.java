@@ -11,6 +11,7 @@
 package tern.eclipse.ide.internal.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.ITernServerTypeManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.server.ITernDef;
+import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
@@ -41,12 +43,18 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	private boolean registryListenerIntialized;
 
+	private final ITernFacet[] facets;
+
 	public static TernServerTypeManager getManager() {
 		return INSTANCE;
 	}
 
 	public TernServerTypeManager() {
 		this.registryListenerIntialized = false;
+		List<ITernFacet> facets = new ArrayList<ITernFacet>();
+		Collections.addAll(facets, getTernDefs());
+		Collections.addAll(facets, getTernPlugins());
+		this.facets = facets.toArray(ITernFacet.EMPTY_FACET);
 	}
 
 	@Override
@@ -188,6 +196,11 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 		for (ITernServerType type : ternServerTypes) {
 			type.dispose();
 		}
+	}
+
+	@Override
+	public ITernFacet[] getTernFacets() {
+		return facets;
 	}
 
 	@Override

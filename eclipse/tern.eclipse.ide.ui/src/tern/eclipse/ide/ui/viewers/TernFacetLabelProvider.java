@@ -16,24 +16,25 @@ import org.eclipse.swt.graphics.Image;
 
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
 
 /**
- * Label provider for {@link ITernPlugin}.
+ * Label provider for {@link ITernPlugin} and {@link ITernFacet}.
  * 
  */
-public class TernPluginLabelProvider extends LabelProvider implements
+public class TernFacetLabelProvider extends LabelProvider implements
 		ITableLabelProvider {
 
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
-		if (element instanceof ITernPlugin) {
-			ITernPlugin plugin = (ITernPlugin) element;
+		if (element instanceof ITernFacet) {
+			ITernFacet facet = (ITernFacet) element;
 			switch (columnIndex) {
 			case 0:
-				return plugin.getName();
+				return facet.getName();
 			case 1:
-				return plugin.getPath();
+				return facet.getPath();
 			}
 		}
 		return element.toString();
@@ -43,14 +44,16 @@ public class TernPluginLabelProvider extends LabelProvider implements
 	public Image getColumnImage(Object element, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
-			if (element instanceof ITernPlugin) {
-				ITernPlugin plugin = (ITernPlugin) element;
+			if (element instanceof ITernFacet) {
+				ITernFacet facet = (ITernFacet) element;
 				Image image = TernUIPlugin.getTernDescriptorManager().getImage(
-						plugin.getName());
+						facet.getName());
 				if (image != null) {
 					return image;
 				}
-				return ImageResource.getImage(ImageResource.IMG_PLUGIN);
+				return facet.isPlugin() ? ImageResource
+						.getImage(ImageResource.IMG_PLUGIN) : ImageResource
+						.getImage(ImageResource.IMG_TYPE_DEF);
 			}
 		}
 		return null;

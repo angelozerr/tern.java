@@ -8,7 +8,6 @@ public abstract class NewEditorWizard<T extends EditorOptions> extends
 
 	@Override
 	public void addPages() {
-		super.addPage(new TernDefsSelectionWizardPage());
 		super.addPage(new TernPluginsSelectionWizardPage());
 		super.addPages();
 	}

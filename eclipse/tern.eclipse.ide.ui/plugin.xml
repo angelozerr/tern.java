@@ -106,23 +106,12 @@
                   <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
-      </page>
+      </page>    
 	  <page
-            name="%TernTypeDefinitionsPropertyPage.name"
+            name="%TernFacetsPropertyPage.name"
             category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.properties.TernTypeDefinitionsPropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernTypeDefinitionsPropertyPage">
-         <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
-                  <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
-         </enabledWhen>
-      </page>      
-	  <page
-            name="%TernPluginsPropertyPage.name"
-            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.properties.TernPluginsPropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernPluginsPropertyPage">
+            class="tern.eclipse.ide.internal.ui.properties.TernFacetsPropertyPage"
+            id="tern.eclipse.ide.internal.ui.properties.TernFacetsPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />

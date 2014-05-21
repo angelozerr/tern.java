@@ -40,26 +40,28 @@ import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.viewers.TernDefContentProvider;
-import tern.eclipse.ide.ui.viewers.TernDefLabelProvider;
+import tern.eclipse.ide.ui.viewers.TernFacetContentProvider;
+import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
 import tern.server.ITernDef;
+import tern.server.ITernFacet;
+import tern.server.ITernPlugin;
 
 import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 /**
- * Table of Tern defs.
+ * Block to select Tern plugins + JSON Type Definitions.
  * 
  */
-public class TernDefsBlock extends AbstractTableBlock {
+public class TernFacetsBlock extends AbstractTableBlock {
 
 	private final String tableLabel;
-
 	private Composite fControl;
-	private final List<ITernDef> ternDefs = new ArrayList<ITernDef>();
+	private final List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
 	private CheckboxTableViewer tableViewer;
 
-	public TernDefsBlock(String tableLabel) {
+	public TernFacetsBlock(String tableLabel) {
 		this.tableLabel = tableLabel;
 	}
 
@@ -76,7 +78,6 @@ public class TernDefsBlock extends AbstractTableBlock {
 		fControl = parent;
 
 		GridData data;
-
 		if (tableLabel != null) {
 			Label tableLabel = new Label(parent, SWT.NONE);
 			tableLabel.setText(this.tableLabel);
@@ -86,21 +87,21 @@ public class TernDefsBlock extends AbstractTableBlock {
 			tableLabel.setFont(font);
 		}
 
-		Table fTable = new Table(parent, SWT.CHECK | SWT.BORDER
+		Table table = new Table(parent, SWT.CHECK | SWT.BORDER
 				| SWT.FULL_SELECTION | SWT.V_SCROLL);
 
 		data = new GridData(GridData.FILL_BOTH);
 		data.widthHint = 450;
-		fTable.setLayoutData(data);
-		fTable.setFont(font);
+		table.setLayoutData(data);
+		table.setFont(font);
 
-		fTable.setHeaderVisible(true);
-		fTable.setLinesVisible(true);
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
 
-		TableColumn column1 = new TableColumn(fTable, SWT.NONE);
+		TableColumn column1 = new TableColumn(table, SWT.NONE);
 		column1.setWidth(180);
 		column1.setResizable(true);
-		column1.setText(TernUIMessages.TernDefsBlock_defName);
+		column1.setText(TernUIMessages.TernFacetsBlock_facetName);
 		column1.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -108,10 +109,10 @@ public class TernDefsBlock extends AbstractTableBlock {
 			}
 		});
 
-		TableColumn column2 = new TableColumn(fTable, SWT.NONE);
+		TableColumn column2 = new TableColumn(table, SWT.NONE);
 		column2.setWidth(180);
 		column2.setResizable(true);
-		column2.setText(TernUIMessages.TernDefsBlock_defPath);
+		column2.setText(TernUIMessages.TernFacetsBlock_facetPath);
 		column2.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -119,9 +120,10 @@ public class TernDefsBlock extends AbstractTableBlock {
 			}
 		});
 
-		tableViewer = new CheckboxTableViewer(fTable);
-		tableViewer.setLabelProvider(new TernDefLabelProvider());
-		tableViewer.setContentProvider(new TernDefContentProvider(ternDefs));
+		tableViewer = new CheckboxTableViewer(table);
+		tableViewer.setLabelProvider(new TernFacetLabelProvider());
+		tableViewer
+				.setContentProvider(new TernFacetContentProvider(ternFacets));
 
 		final Label descriptionLabel = new Label(parent, SWT.NONE);
 		descriptionLabel.setText("");
@@ -129,17 +131,18 @@ public class TernDefsBlock extends AbstractTableBlock {
 		data.horizontalSpan = 2;
 		descriptionLabel.setLayoutData(data);
 		descriptionLabel.setFont(font);
+
 		addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
 				descriptionLabel.setText("");
 				if (!e.getSelection().isEmpty()) {
-					ITernDef def = (ITernDef) ((IStructuredSelection) e
+					ITernFacet facet = (ITernFacet) ((IStructuredSelection) e
 							.getSelection()).getFirstElement();
 					String description = TernUIPlugin
 							.getTernDescriptorManager().getDescription(
-									def.getName());
+									facet.getName());
 					if (description != null) {
 						descriptionLabel.setText(description);
 					}
@@ -165,8 +168,8 @@ public class TernDefsBlock extends AbstractTableBlock {
 	// tableViewer.setSorter(new ViewerSorter() {
 	// @Override
 	// public int compare(Viewer viewer, Object e1, Object e2) {
-	// ITernDef left = (ITernDef) e1;
-	// ITernDef right = (ITernDef) e2;
+	// ITernPlugin left = (ITernPlugin) e1;
+	// ITernPlugin right = (ITernPlugin) e2;
 	// return left
 	// .getProcessorType()
 	// .getLabel()
@@ -185,8 +188,8 @@ public class TernDefsBlock extends AbstractTableBlock {
 		tableViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				ITernDef left = (ITernDef) e1;
-				ITernDef right = (ITernDef) e2;
+				ITernFacet left = (ITernFacet) e1;
+				ITernFacet right = (ITernFacet) e2;
 				return left.getPath().compareToIgnoreCase(right.getPath());
 			}
 
@@ -204,9 +207,9 @@ public class TernDefsBlock extends AbstractTableBlock {
 		tableViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				if ((e1 instanceof ITernDef) && (e2 instanceof ITernDef)) {
-					ITernDef left = (ITernDef) e1;
-					ITernDef right = (ITernDef) e2;
+				if ((e1 instanceof ITernFacet) && (e2 instanceof ITernFacet)) {
+					ITernFacet left = (ITernFacet) e1;
+					ITernFacet right = (ITernFacet) e2;
 					return left.getName().compareToIgnoreCase(right.getName());
 				}
 				return super.compare(viewer, e1, e2);
@@ -223,59 +226,26 @@ public class TernDefsBlock extends AbstractTableBlock {
 		return fControl;
 	}
 
-	/**
-	 * Load defs from tern project.
-	 */
-	public void loadDefs(IProject project) {
-		// Load list of tern defs
-		List<ITernDef> allDefs = new ArrayList<ITernDef>();
-		ITernDef[] defaultDefs = TernCorePlugin.getTernServerTypeManager()
-				.getTernDefs();
-		for (ITernDef defaultDef : defaultDefs) {
-			allDefs.add(defaultDef);
+	protected void setTernFacets(ITernFacet[] vms) {
+		ternFacets.clear();
+		for (ITernFacet element : vms) {
+			ternFacets.add(element);
 		}
-		this.setTernDefs(allDefs.toArray(ITernDef.EMPTY_DEF));
-		// Select tern def
-		if (project != null) {
-			try {
-				IDETernProject ternProject = IDETernProject
-						.getTernProject(project);
-				JsonArray defs = ternProject.getLibs();
-				List<ITernDef> initialDefs = new ArrayList<ITernDef>();
-				for (JsonValue name : defs) {
-					ITernDef def = TernCorePlugin.getTernServerTypeManager()
-							.findTernDef(name.asString());
-					if (def != null) {
-						initialDefs.add(def);
-					}
-				}
-				this.setCheckedDefs(initialDefs.toArray());
-
-			} catch (CoreException e) {
-				Trace.trace(Trace.SEVERE, "Error while loading defs.", e);
-			}
-		}
-	}
-
-	public void setTernDefs(ITernDef[] vms) {
-		ternDefs.clear();
-		for (ITernDef element : vms) {
-			ternDefs.add(element);
-		}
-		tableViewer.setInput(ternDefs);
+		tableViewer.setInput(ternFacets);
 		// tableViewer.refresh();
 	}
 
-	public Object[] getCheckedDefs() {
+	public Object[] getCheckedFacets() {
 		return tableViewer.getCheckedElements();
 	}
 
-	public void setCheckedDefs(Object[] selectedDefs) {
-		tableViewer.setCheckedElements(selectedDefs);
+	public void setCheckedFacets(Object[] selectedFacets) {
+		tableViewer.setCheckedElements(selectedFacets);
 
 		/*
-		 * if (selectedDefs == null) { setSelection(new StructuredSelection());
-		 * } else { setSelection(new StructuredSelection(selectedDefs)); }
+		 * if (selectedFacets == null) { setSelection(new
+		 * StructuredSelection()); } else { setSelection(new
+		 * StructuredSelection(selectedFacets)); }
 		 */
 	}
 
@@ -305,5 +275,52 @@ public class TernDefsBlock extends AbstractTableBlock {
 	@Override
 	protected String getQualifier() {
 		return "";
+	}
+
+	/**
+	 * Load plugins from tern project.
+	 */
+	public void loadFacets(IProject project) {
+		try {
+			// Load list of Tern Plugins + JSON Type Definitions.
+			List<ITernFacet> allFacets = new ArrayList<ITernFacet>();
+			ITernFacet[] defaultFacets = TernCorePlugin
+					.getTernServerTypeManager().getTernFacets();
+			for (ITernFacet defaultFacet : defaultFacets) {
+				allFacets.add(defaultFacet);
+			}
+			this.setTernFacets(allFacets.toArray(ITernFacet.EMPTY_FACET));
+			if (project != null) {
+				// Select Tern Plugins + JSON Type Definitions according
+				// settings of
+				// the project.
+				IDETernProject ternProject = IDETernProject
+						.getTernProject(project);
+				List<ITernFacet> initialFacets = new ArrayList<ITernFacet>();
+				// Tern Plugins
+				JsonObject plugins = ternProject.getPlugins();
+				for (String name : plugins.names()) {
+					ITernPlugin plugin = TernCorePlugin
+							.getTernServerTypeManager().findTernPlugin(
+									name.toString());
+					if (plugin != null) {
+						initialFacets.add(plugin);
+					}
+				}
+				// JSON Type Definitions
+				JsonArray defs = ternProject.getLibs();
+				for (JsonValue name : defs) {
+					ITernDef def = TernCorePlugin.getTernServerTypeManager()
+							.findTernDef(name.asString());
+					if (def != null) {
+						initialFacets.add(def);
+					}
+				}
+				this.setCheckedFacets(initialFacets.toArray());
+			}
+
+		} catch (CoreException e) {
+			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
+		}
 	}
 }

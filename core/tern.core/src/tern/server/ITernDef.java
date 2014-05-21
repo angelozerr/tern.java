@@ -16,21 +16,7 @@ package tern.server;
  * @see http://ternjs.net/doc/manual.html#typedef
  * 
  */
-public interface ITernDef {
+public interface ITernDef extends ITernFacet {
 
 	public static final ITernDef[] EMPTY_DEF = new ITernDef[0];
-	
-	/**
-	 * Return the def name.
-	 * 
-	 * @return
-	 */
-	String getName();
-
-	/**
-	 * Return the def path.
-	 * 
-	 * @return
-	 */
-	String getPath();
 }

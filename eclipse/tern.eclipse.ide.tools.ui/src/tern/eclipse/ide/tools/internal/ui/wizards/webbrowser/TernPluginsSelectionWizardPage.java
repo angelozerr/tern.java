@@ -10,7 +10,8 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -25,7 +26,9 @@ import org.eclipse.swt.widgets.Control;
 import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
-import tern.eclipse.ide.ui.controls.TernPluginsBlock;
+import tern.eclipse.ide.ui.controls.TernFacetsBlock;
+import tern.server.ITernDef;
+import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
 
 /**
@@ -36,7 +39,7 @@ public class TernPluginsSelectionWizardPage extends
 		TernWizardPage<EditorOptions> {
 
 	private static final String PAGE = "TernPluginsSelectionWizardPage";
-	private TernPluginsBlock pluginsBlock;
+	private TernFacetsBlock facetsBlock;
 
 	protected TernPluginsSelectionWizardPage() {
 		super(PAGE);
@@ -55,9 +58,9 @@ public class TernPluginsSelectionWizardPage extends
 		layout.marginWidth = 0;
 		container.setLayout(layout);
 
-		pluginsBlock = new TernPluginsBlock(null);
-		pluginsBlock.createControl(container);
-		pluginsBlock
+		facetsBlock = new TernFacetsBlock(null);
+		facetsBlock.createControl(container);
+		facetsBlock
 				.addSelectionChangedListener(new ISelectionChangedListener() {
 
 					@Override
@@ -65,7 +68,7 @@ public class TernPluginsSelectionWizardPage extends
 						TernPluginsSelectionWizardPage.this.dialogChanged();
 					}
 				});
-		Control control = pluginsBlock.getControl();
+		Control control = facetsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
@@ -77,7 +80,7 @@ public class TernPluginsSelectionWizardPage extends
 	protected void initialize() {
 		IResource resource = super.getResource();
 		IProject project = resource != null ? resource.getProject() : null;
-		pluginsBlock.loadPlugins(project);
+		facetsBlock.loadFacets(project);
 	}
 
 	@Override
@@ -87,9 +90,19 @@ public class TernPluginsSelectionWizardPage extends
 
 	@Override
 	protected void updateModel(EditorOptions model) {
-		Object[] plugins = pluginsBlock.getCheckedPlugins();
-		ITernPlugin[] ternPlugins = Arrays.copyOf(plugins, plugins.length,
-				ITernPlugin[].class);
-		model.setTernPlugins(ternPlugins);
+		Object[] facets = facetsBlock.getCheckedFacets();
+		List<ITernDef> defs = new ArrayList<ITernDef>();
+		List<ITernPlugin> plugins = new ArrayList<ITernPlugin>();
+		ITernFacet facet = null;
+		for (int i = 0; i < facets.length; i++) {
+			facet = (ITernFacet) facets[i];
+			if (facet.isPlugin()) {
+				plugins.add((ITernPlugin) facet);
+			} else {
+				defs.add((ITernDef) facet);
+			}
+		}
+		model.setTernDefs(defs.toArray(ITernDef.EMPTY_DEF));
+		model.setTernPlugins(plugins.toArray(ITernPlugin.EMPTY_PLUGIN));
 	}
 }

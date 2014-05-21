@@ -11,11 +11,34 @@
 package tern.server;
 
 /**
- * Tern plugin API.
+ * BAse API for JSON Type Definition API & Tern plugins.
  * 
+ * @see http://ternjs.net/doc/manual.html#typedef
  * @see http://ternjs.net/doc/manual.html#plugins
+ * 
  */
-public interface ITernPlugin extends ITernFacet {
+public interface ITernFacet {
 
-	public static ITernPlugin[] EMPTY_PLUGIN = new ITernPlugin[0];
+	public static final ITernFacet[] EMPTY_FACET = new ITernFacet[0];
+
+	/**
+	 * Return the def or plugin name.
+	 * 
+	 * @return
+	 */
+	String getName();
+
+	/**
+	 * Return the def or plugin path.
+	 * 
+	 * @return
+	 */
+	String getPath();
+
+	/**
+	 * Returns true if facet is a plugin and false otherwise.
+	 * 
+	 * @return
+	 */
+	boolean isPlugin();
 }

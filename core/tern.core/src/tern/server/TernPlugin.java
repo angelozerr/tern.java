@@ -34,6 +34,11 @@ public enum TernPlugin implements ITernPlugin {
 		return name();
 	}
 
+	@Override
+	public boolean isPlugin() {
+		return true;
+	}
+
 	public static ITernPlugin getTernPlugin(String name) {
 		TernPlugin[] plugins = values();
 		TernPlugin plugin = null;

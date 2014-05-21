@@ -15,24 +15,23 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import tern.server.ITernDef;
+import tern.server.ITernFacet;
+import tern.server.ITernPlugin;
 
 /**
- * Content provider for {@link ITernDef}.
- * 
- * @author azerr
+ * Content provider for {@link ITernPlugin} and {@link ITernFacet}.
  * 
  */
-public class TernDefContentProvider implements IStructuredContentProvider {
+public class TernFacetContentProvider implements IStructuredContentProvider {
 
-	private final List<ITernDef> ternDefs;
+	private final List<ITernFacet> ternFacets;
 
-	public TernDefContentProvider(List<ITernDef> ternDefs) {
-		this.ternDefs = ternDefs;
+	public TernFacetContentProvider(List<ITernFacet> ternFacets) {
+		this.ternFacets = ternFacets;
 	}
 
 	public Object[] getElements(Object input) {
-		return ternDefs.toArray();
+		return ternFacets.toArray();
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {

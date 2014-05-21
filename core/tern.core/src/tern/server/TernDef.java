@@ -32,6 +32,11 @@ public enum TernDef implements ITernDef {
 		return name();
 	}
 
+	@Override
+	public boolean isPlugin() {
+		return false;
+	}
+
 	public static ITernDef getTernDef(String name) {
 		TernDef[] defs = values();
 		TernDef def = null;
@@ -43,4 +48,5 @@ public enum TernDef implements ITernDef {
 		}
 		return null;
 	}
+
 }
