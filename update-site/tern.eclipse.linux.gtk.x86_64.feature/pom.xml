@@ -3,7 +3,7 @@
   <parent>
     <groupId>fr.opensagres.js</groupId>
     <artifactId>update-site</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
   </parent>
   <artifactId>tern.eclipse.linux.gtk.x86_64.feature</artifactId>
 <packaging>eclipse-feature</packaging>
