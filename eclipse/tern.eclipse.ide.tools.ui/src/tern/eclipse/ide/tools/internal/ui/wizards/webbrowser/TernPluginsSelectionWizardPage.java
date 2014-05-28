@@ -30,6 +30,7 @@ import tern.eclipse.ide.ui.controls.TernFacetsBlock;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
+import tern.utils.TernFacetHelper;
 
 /**
  * Wizard page to select Server plugins.
@@ -96,13 +97,10 @@ public class TernPluginsSelectionWizardPage extends
 		ITernFacet facet = null;
 		for (int i = 0; i < facets.length; i++) {
 			facet = (ITernFacet) facets[i];
-			if (facet.isPlugin()) {
-				plugins.add((ITernPlugin) facet);
-			} else {
-				defs.add((ITernDef) facet);
-			}
+			TernFacetHelper.update(defs, plugins, facet);
 		}
 		model.setTernDefs(defs.toArray(ITernDef.EMPTY_DEF));
 		model.setTernPlugins(plugins.toArray(ITernPlugin.EMPTY_PLUGIN));
 	}
+
 }

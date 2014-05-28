@@ -17,6 +17,7 @@ import org.eclipse.swt.graphics.Image;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernFacet;
+import tern.server.ITernFacetWrapper;
 import tern.server.ITernPlugin;
 
 /**
@@ -34,7 +35,8 @@ public class TernFacetLabelProvider extends LabelProvider implements
 			case 0:
 				return facet.getName();
 			case 1:
-				return facet.getPath();
+				String version = facet.getVersion();
+				return version != null ? version : "";
 			}
 		}
 		return element.toString();
@@ -51,10 +53,21 @@ public class TernFacetLabelProvider extends LabelProvider implements
 				if (image != null) {
 					return image;
 				}
-				return facet.isPlugin() ? ImageResource
-						.getImage(ImageResource.IMG_PLUGIN) : ImageResource
-						.getImage(ImageResource.IMG_TYPE_DEF);
+				return getDefaultImage(facet);
 			}
+		}
+		return null;
+	}
+
+	private Image getDefaultImage(ITernFacet facet) {
+		switch (facet.getFacetType()) {
+		case Def:
+			return ImageResource.getImage(ImageResource.IMG_TYPE_DEF);
+		case Plugin:
+			return ImageResource.getImage(ImageResource.IMG_PLUGIN);
+		case Wrapper:
+			return getDefaultImage(((ITernFacetWrapper) facet)
+					.getWrappedFacet());
 		}
 		return null;
 	}

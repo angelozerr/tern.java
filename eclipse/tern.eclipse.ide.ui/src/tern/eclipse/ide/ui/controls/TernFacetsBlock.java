@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
@@ -32,8 +33,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 
+import tern.TernException;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -42,9 +43,12 @@ import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernFacetContentProvider;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
+import tern.eclipse.ide.ui.viewers.TernFacetVersionEditingSupport;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
+import tern.utils.StringUtils;
+import tern.utils.TernFacetHelper;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -98,29 +102,32 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
-		TableColumn column1 = new TableColumn(table, SWT.NONE);
-		column1.setWidth(180);
-		column1.setResizable(true);
-		column1.setText(TernUIMessages.TernFacetsBlock_facetName);
-		column1.addSelectionListener(new SelectionAdapter() {
+		tableViewer = new CheckboxTableViewer(table);
+
+		// create name column
+		TableViewerColumn nameColumn = new TableViewerColumn(tableViewer,
+				SWT.NONE);
+		nameColumn.getColumn().setWidth(180);
+		nameColumn.getColumn().setResizable(true);
+		nameColumn.getColumn()
+				.setText(TernUIMessages.TernFacetsBlock_facetName);
+		nameColumn.getColumn().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				sortByName();
 			}
 		});
 
-		TableColumn column2 = new TableColumn(table, SWT.NONE);
-		column2.setWidth(180);
-		column2.setResizable(true);
-		column2.setText(TernUIMessages.TernFacetsBlock_facetPath);
-		column2.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				sortByPath();
-			}
-		});
+		// create version column
+		TableViewerColumn versionColumn = new TableViewerColumn(tableViewer,
+				SWT.NONE);
+		versionColumn.getColumn().setWidth(180);
+		versionColumn.getColumn().setResizable(true);
+		versionColumn.getColumn().setText(
+				TernUIMessages.TernFacetsBlock_facetVersion);
+		versionColumn.setEditingSupport(new TernFacetVersionEditingSupport(
+				tableViewer));
 
-		tableViewer = new CheckboxTableViewer(table);
 		tableViewer.setLabelProvider(new TernFacetLabelProvider());
 		tableViewer
 				.setContentProvider(new TernFacetContentProvider(ternFacets));
@@ -159,45 +166,6 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	public void removeSelectionChangedListener(
 			ISelectionChangedListener listener) {
 		tableViewer.removeSelectionChangedListener(listener);
-	}
-
-	/**
-	 * Sorts by type, and name within type.
-	 */
-	// private void sortByType() {
-	// tableViewer.setSorter(new ViewerSorter() {
-	// @Override
-	// public int compare(Viewer viewer, Object e1, Object e2) {
-	// ITernPlugin left = (ITernPlugin) e1;
-	// ITernPlugin right = (ITernPlugin) e2;
-	// return left
-	// .getProcessorType()
-	// .getLabel()
-	// .compareToIgnoreCase(
-	// right.getProcessorType().getLabel());
-	// }
-	//
-	// @Override
-	// public boolean isSorterProperty(Object element, String property) {
-	// return true;
-	// }
-	// });
-	// }
-
-	private void sortByPath() {
-		tableViewer.setSorter(new ViewerSorter() {
-			@Override
-			public int compare(Viewer viewer, Object e1, Object e2) {
-				ITernFacet left = (ITernFacet) e1;
-				ITernFacet right = (ITernFacet) e2;
-				return left.getPath().compareToIgnoreCase(right.getPath());
-			}
-
-			@Override
-			public boolean isSorterProperty(Object element, String property) {
-				return true;
-			}
-		});
 	}
 
 	/**
@@ -255,9 +223,6 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		case 1:
 			sortByName();
 			break;
-		// case 2:
-		// sortByType();
-		// break;
 		}
 		super.setSortColumn(column);
 	}
@@ -285,18 +250,18 @@ public class TernFacetsBlock extends AbstractTableBlock {
 			// Load list of Tern Plugins + JSON Type Definitions.
 			List<ITernFacet> allFacets = new ArrayList<ITernFacet>();
 			ITernFacet[] defaultFacets = TernCorePlugin
-					.getTernServerTypeManager().getTernFacets();
+					.getTernServerTypeManager().getTernFacetsGroupByType();
 			for (ITernFacet defaultFacet : defaultFacets) {
 				allFacets.add(defaultFacet);
 			}
-			this.setTernFacets(allFacets.toArray(ITernFacet.EMPTY_FACET));
+			List<ITernFacet> initialFacets = null;
 			if (project != null) {
 				// Select Tern Plugins + JSON Type Definitions according
 				// settings of
 				// the project.
 				IDETernProject ternProject = IDETernProject
 						.getTernProject(project);
-				List<ITernFacet> initialFacets = new ArrayList<ITernFacet>();
+				initialFacets = new ArrayList<ITernFacet>();
 				// Tern Plugins
 				JsonObject plugins = ternProject.getPlugins();
 				for (String name : plugins.names()) {
@@ -304,7 +269,17 @@ public class TernFacetsBlock extends AbstractTableBlock {
 							.getTernServerTypeManager().findTernPlugin(
 									name.toString());
 					if (plugin != null) {
-						initialFacets.add(plugin);
+						if (StringUtils.isEmpty(plugin.getVersion())) {
+							initialFacets.add(plugin);
+						} else {
+							try {
+								initialFacets.add(TernFacetHelper.findWrapper(
+										plugin, allFacets));
+							} catch (TernException e) {
+								Trace.trace(Trace.SEVERE,
+										"Error while finding wrapper.", e);
+							}
+						}
 					}
 				}
 				// JSON Type Definitions
@@ -312,10 +287,21 @@ public class TernFacetsBlock extends AbstractTableBlock {
 				for (JsonValue name : defs) {
 					ITernDef def = TernCorePlugin.getTernServerTypeManager()
 							.findTernDef(name.asString());
-					if (def != null) {
+					if (StringUtils.isEmpty(def.getVersion())) {
 						initialFacets.add(def);
+					} else {
+						try {
+							initialFacets.add(TernFacetHelper.findWrapper(def,
+									allFacets));
+						} catch (TernException e) {
+							Trace.trace(Trace.SEVERE,
+									"Error while finding wrapper.", e);
+						}
 					}
 				}
+			}
+			this.setTernFacets(allFacets.toArray(ITernFacet.EMPTY_FACET));
+			if (initialFacets != null) {
 				this.setCheckedFacets(initialFacets.toArray());
 			}
 

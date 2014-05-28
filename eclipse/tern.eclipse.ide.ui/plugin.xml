@@ -210,8 +210,8 @@
             icon="/icons/full/obj16/cordovajs.png" >
       </ternDescriptor> 
       <ternDescriptor
-            id="dojotoolkit_1_6"
-            description="%ternDescriptor.dojotoolkit_1_6.description"
+            id="dojotoolkit"
+            description="%ternDescriptor.dojotoolkit.description"
             icon="/icons/full/obj16/dojotoolkit.png" >
       </ternDescriptor>            
   	  <ternDescriptor

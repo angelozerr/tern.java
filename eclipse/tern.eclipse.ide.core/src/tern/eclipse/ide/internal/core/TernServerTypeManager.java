@@ -30,6 +30,7 @@ import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
+import tern.utils.TernFacetHelper;
 
 public class TernServerTypeManager implements ITernServerTypeManager,
 		IRegistryChangeListener {
@@ -201,6 +202,13 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	@Override
 	public ITernFacet[] getTernFacets() {
 		return facets;
+	}
+
+	@Override
+	public ITernFacet[] getTernFacetsGroupByType() {
+		List<ITernFacet> groupedFacets = new ArrayList<ITernFacet>();
+		TernFacetHelper.groupByType(facets, groupedFacets);
+		return groupedFacets.toArray(ITernFacet.EMPTY_FACET);
 	}
 
 	@Override

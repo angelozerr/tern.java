@@ -16,10 +16,35 @@ public enum TernDef implements ITernDef {
 			"tern/defs/ecma5.json"), jquery("tern/defs/jquery.json"), underscore(
 			"tern/defs/underscore.json"), ;
 
+	private final String name;
+	private final String type;
+	private final String version;
 	private final String path;
 
 	private TernDef(String path) {
+		this(null, null, null, path);
+	}
+
+	private TernDef(String name, String type, String version, String path) {
+		this.name = name;
+		this.type = type;
+		this.version = version;
 		this.path = path;
+	}
+
+	@Override
+	public String getName() {
+		return name != null ? name : name();
+	}
+
+	@Override
+	public String getType() {
+		return type;
+	}
+
+	@Override
+	public String getVersion() {
+		return version;
 	}
 
 	@Override
@@ -28,13 +53,8 @@ public enum TernDef implements ITernDef {
 	}
 
 	@Override
-	public String getName() {
-		return name();
-	}
-
-	@Override
-	public boolean isPlugin() {
-		return false;
+	public FacetType getFacetType() {
+		return FacetType.Def;
 	}
 
 	public static ITernDef getTernDef(String name) {

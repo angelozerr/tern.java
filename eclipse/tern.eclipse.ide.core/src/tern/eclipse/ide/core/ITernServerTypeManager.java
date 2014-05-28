@@ -46,6 +46,8 @@ public interface ITernServerTypeManager {
 
 	void refresh();
 
+	ITernFacet[] getTernFacetsGroupByType();
+	
 	ITernFacet[] getTernFacets();
 	
 	ITernPlugin[] getTernPlugins();

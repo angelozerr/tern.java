@@ -23,9 +23,8 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.controls.TernFacetsBlock;
-import tern.server.ITernDef;
 import tern.server.ITernFacet;
-import tern.server.ITernPlugin;
+import tern.utils.TernFacetHelper;
 
 /**
  * Tern Facets (Plugins + JSON Type Definitions) property page.
@@ -84,11 +83,7 @@ public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 			ternProject.clearLibs();
 			// Add Plugin + JSON Type Definition
 			for (Object facet : checkedFacets) {
-				if (((ITernFacet) facet).isPlugin()) {
-					ternProject.addPlugin((ITernPlugin) facet);
-				} else {
-					ternProject.addLib((ITernDef) facet);
-				}
+				TernFacetHelper.update((ITernFacet) facet, ternProject);
 			}
 			ternProject.save();
 		} catch (Exception e) {

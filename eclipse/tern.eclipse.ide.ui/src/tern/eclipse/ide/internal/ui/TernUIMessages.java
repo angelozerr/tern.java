@@ -41,7 +41,7 @@ public final class TernUIMessages extends NLS {
 	// Properties page
 	public static String TernFacetsBlock_desc;
 	public static String TernFacetsBlock_facetName;
-	public static String TernFacetsBlock_facetPath;
+	public static String TernFacetsBlock_facetVersion;
 	public static String TernScriptPathsBlock_desc;
 	public static String TernConsolePropertyPage_desc;
 	public static String TernConsolePropertyPage_traceOnConsole_label;
