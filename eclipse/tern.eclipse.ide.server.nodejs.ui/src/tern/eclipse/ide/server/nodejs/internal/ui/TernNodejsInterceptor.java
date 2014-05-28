@@ -111,7 +111,8 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 
 	@Override
 	public void onStart(NodejsProcess process) {
-		outProcessPrintln("Server started at " + process.getPort());
+		outProcessPrintln("Server started at " + process.getPort() + " in "
+				+ process.getElapsedStartTime() + "ms");
 	}
 
 	@Override

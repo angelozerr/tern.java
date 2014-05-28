@@ -53,6 +53,8 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private long timeout = NodejsTernHelper.DEFAULT_TIMEOUT;
 
+	private int testNumber = NodejsTernHelper.DEFAULT_TEST_NUMBER;
+
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
@@ -185,7 +187,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	public String getBaseURL() throws InterruptedException, TernException {
 		if (baseURL == null) {
-			int port = getProcess().start(timeout);
+			int port = getProcess().start(timeout, testNumber);
 			this.baseURL = computeBaseURL(port);
 		}
 		return baseURL;
@@ -346,7 +348,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	/**
 	 * Set the timeout to use when node.js starts to retrieve the node.js port
-	 * in {@link NodejsProcess#start(long)} from the given project.
+	 * in {@link NodejsProcess#start(long, int)} from the given project.
 	 */
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
@@ -354,7 +356,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	/**
 	 * Returns the timeout to use when node.js starts to retrieve the node.js
-	 * port in {@link NodejsProcess#start(long)} from the given project.
+	 * port in {@link NodejsProcess#start(long, int)} from the given project.
 	 * 
 	 * @return
 	 */
@@ -362,10 +364,30 @@ public class NodejsTernServer extends AbstractTernServer {
 		return timeout;
 	}
 
+	public void setTestNumber(int testNumber) {
+		this.testNumber = testNumber;
+	}
+
+	public int getTestNumber() {
+		return testNumber;
+	}
+
+	/**
+	 * Set false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 * 
+	 * @param persistent
+	 */
 	public void setPersistent(boolean persistent) {
 		this.persistent = persistent;
 	}
 
+	/**
+	 * Returns false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 * 
+	 * @return
+	 */
 	public boolean isPersistent() {
 		return persistent;
 	}

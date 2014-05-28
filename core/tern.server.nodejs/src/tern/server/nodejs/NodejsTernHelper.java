@@ -44,6 +44,8 @@ import com.eclipsesource.json.ParseException;
 public class NodejsTernHelper {
 
 	public static final long DEFAULT_TIMEOUT = 1000L;
+	public static final int DEFAULT_TEST_NUMBER = 1;
+
 	public static final boolean DEFAULT_PERSISTENT = false;
 
 	public static JsonObject makeRequest(String baseURL, TernDoc doc,
@@ -51,9 +53,9 @@ public class NodejsTernHelper {
 			throws IOException, TernException {
 		TernQuery query = doc.getQuery();
 		String methodName = query != null ? query.getLabel() : "";
-		long starTime = 0;
+		long startTime = 0;
 		if (interceptors != null) {
-			starTime = System.nanoTime();
+			startTime = System.nanoTime();
 			for (IInterceptor interceptor : interceptors) {
 				interceptor.handleRequest(doc, server, methodName);
 			}
@@ -83,8 +85,7 @@ public class NodejsTernHelper {
 				if (interceptors != null) {
 					for (IInterceptor interceptor : interceptors) {
 						interceptor.handleResponse(response, server,
-								methodName,
-								((System.nanoTime() - starTime) / 1000000L));
+								methodName, getElapsedTimeInMs(startTime));
 					}
 				}
 				// Update file manager if needed.
@@ -100,7 +101,7 @@ public class NodejsTernHelper {
 			if (interceptors != null) {
 				for (IInterceptor interceptor : interceptors) {
 					interceptor.handleError(e, server, methodName,
-							((System.nanoTime() - starTime) / 1000000L));
+							getElapsedTimeInMs(startTime));
 				}
 			}
 			if (e instanceof IOException) {
@@ -120,6 +121,10 @@ public class NodejsTernHelper {
 		HttpPost httpPost = new HttpPost(baseURL);
 		httpPost.setEntity(new StringEntity(doc.toString()));
 		return httpPost;
+	}
+
+	public static long getElapsedTimeInMs(long startTime) {
+		return ((System.nanoTime() - startTime) / 1000000L);
 	}
 
 }

@@ -83,7 +83,7 @@ public class TernNodejsCorePreferencesSupport {
 
 	/**
 	 * Returns the timeout to use when node.js starts to retrieve the node.js
-	 * port in {@link NodejsProcess#start(long)}
+	 * port in {@link NodejsProcess#start(long, int)}
 	 * 
 	 * @return
 	 */
@@ -94,6 +94,22 @@ public class TernNodejsCorePreferencesSupport {
 			return Long.parseLong(timeout);
 		} catch (Throwable e) {
 			return NodejsTernHelper.DEFAULT_TIMEOUT;
+		}
+	}
+
+	/**
+	 * Returns the test number to use when node.js starts to retrieve the
+	 * node.js port in {@link NodejsProcess#start(long, int)}
+	 * 
+	 * @return
+	 */
+	public int getNodejsTestNumber() {
+		String timeout = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TEST_NUMBER);
+		try {
+			return Integer.parseInt(timeout);
+		} catch (Throwable e) {
+			return NodejsTernHelper.DEFAULT_TEST_NUMBER;
 		}
 	}
 

@@ -26,6 +26,7 @@ import tern.TernException;
 public class NodejsProcessTest {
 
 	private static final int TIMEOUT = 1000;
+	private static final int TEST_NUMBER = 1;
 
 	@After
 	public void shutdown() {
@@ -57,7 +58,7 @@ public class NodejsProcessTest {
 			}
 		});
 		try {
-			process.start(TIMEOUT);
+			process.start(TIMEOUT, TEST_NUMBER);
 			Assert.assertTrue(false);
 		} catch (Exception e) {
 			Assert.assertTrue(e.getMessage(), true);
@@ -101,7 +102,7 @@ public class NodejsProcessTest {
 		});
 
 		try {
-			process.start(TIMEOUT);
+			process.start(TIMEOUT, TEST_NUMBER);
 		} catch (Exception e) {
 
 		}

@@ -20,7 +20,10 @@ public class TernNodejsCoreConstants {
 
 	public static final String NODEJS_TIMEOUT = "nodeJSTimeout"; //$NON-NLS-1$
 
+	public static final String NODEJS_TEST_NUMBER = "nodeJSTestNumber"; //$NON-NLS-1$
+
 	public static final String NODEJS_PATH = "nodeJSPath"; //$NON-NLS-1$
 
 	public static final String NODEJS_PERSISTENT = "nodeJSPersistent"; //$NON-NLS-1$
+
 }

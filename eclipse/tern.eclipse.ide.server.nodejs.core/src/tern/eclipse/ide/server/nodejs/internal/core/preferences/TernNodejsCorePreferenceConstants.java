@@ -40,6 +40,8 @@ public class TernNodejsCorePreferenceConstants {
 				IDENodejsProcessHelper.getNodejsPath());
 		// timeout to start node.js
 		node.putLong(TernNodejsCoreConstants.NODEJS_TIMEOUT, 1000L);
+		// test number to start node.js
+		node.putInt(TernNodejsCoreConstants.NODEJS_TEST_NUMBER, 10);
 		// node.js persistent (not auto-shutdown ?)
 		node.putBoolean(TernNodejsCoreConstants.NODEJS_PERSISTENT, false);
 	}

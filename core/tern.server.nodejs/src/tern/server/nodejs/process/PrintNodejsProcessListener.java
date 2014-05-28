@@ -54,18 +54,19 @@ public class PrintNodejsProcessListener extends NodejsProcessAdapter {
 	}
 
 	@Override
-	public void onStart(NodejsProcess server) {
-		System.out.println("Server started at " + server.getPort());
+	public void onStart(NodejsProcess process) {
+		System.out.println("Server started at " + process.getPort() + " on "
+				+ process.getElapsedStartTime());
 	}
 
 	@Override
-	public void onData(NodejsProcess server, String line) {
+	public void onData(NodejsProcess process, String line) {
 		System.out.println(line);
 	}
 
 	@Override
-	public void onStop(NodejsProcess server) {
-		System.out.println("Server stopped");
+	public void onStop(NodejsProcess process) {
+		System.out.println("Server stopped at " + process.getPort());
 	}
 
 	@Override

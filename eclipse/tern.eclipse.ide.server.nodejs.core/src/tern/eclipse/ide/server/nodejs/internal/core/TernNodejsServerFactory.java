@@ -28,6 +28,7 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 		File installPath = getInstallPath();
 		NodejsTernServer server = new NodejsTernServer(project, installPath);
 		server.setTimeout(getTimeout());
+		server.setTestNumber(getTestNumber());
 		server.setPersistent(isPersistent());
 		return server;
 	}
@@ -41,6 +42,10 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 				.getNodejsTimeout();
 	}
 
+	private int getTestNumber() {
+		return TernNodejsCorePreferencesSupport.getInstance()
+				.getNodejsTestNumber();
+	}
 	private boolean isPersistent() {
 		return TernNodejsCorePreferencesSupport.getInstance()
 				.isNodejsPersistent();

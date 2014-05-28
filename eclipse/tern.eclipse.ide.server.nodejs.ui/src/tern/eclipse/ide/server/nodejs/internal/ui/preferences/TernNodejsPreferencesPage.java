@@ -60,6 +60,13 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				getFieldEditorParent());
 		addField(timeoutField);
 
+		// Start timeout field
+		IntegerFieldEditor testNumberField = new IntegerFieldEditor(
+				TernNodejsCoreConstants.NODEJS_TEST_NUMBER,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTestNumber,
+				getFieldEditorParent());
+		addField(testNumberField);
+
 		// Persistent (not auto-shutdown)
 		BooleanFieldEditor persistentField = new BooleanFieldEditor(
 				TernNodejsCoreConstants.NODEJS_PERSISTENT,

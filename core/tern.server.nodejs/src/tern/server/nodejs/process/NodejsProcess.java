@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import tern.TernException;
+import tern.server.nodejs.NodejsTernHelper;
 
 /**
  * node.js process which starts tern server with node.js
@@ -47,12 +48,17 @@ public class NodejsProcess {
 	private Integer port;
 
 	/**
+	 * Elapsed time to start node.js process.
+	 */
+	private long elapsedSartTime = 0;
+
+	/**
 	 * true if tern server must be verbose and false otherwise.
 	 */
 	private boolean verbose;
 
 	/**
-	 * true if tern server server won’t write a .tern-port file and false
+	 * true if tern server server wonï¿½t write a .tern-port file and false
 	 * otherwise.
 	 */
 	private boolean noPortFile;
@@ -89,6 +95,8 @@ public class NodejsProcess {
 	 */
 	private final Object lock = new Object();
 
+	private boolean hasError;
+
 	/**
 	 * StdOut of the node.js process.
 	 */
@@ -98,6 +106,7 @@ public class NodejsProcess {
 		public void run() {
 			try {
 
+				long startTime = System.nanoTime();
 				// start the node.js process with tern.
 				Integer port = null;
 				String line = null;
@@ -120,7 +129,7 @@ public class NodejsProcess {
 								synchronized (lock) {
 									lock.notifyAll();
 								}
-								notifyStartProcess();
+								notifyStartProcess(startTime);
 							}
 						} else {
 							// notify data
@@ -192,6 +201,7 @@ public class NodejsProcess {
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
 		this.listeners = new ArrayList<INodejsProcessListener>();
+		this.hasError = false;
 		setNoPortFile(true);
 	}
 
@@ -315,18 +325,50 @@ public class NodejsProcess {
 	 * @throws IOException
 	 * @throws TernException
 	 */
-	public int start(long timeout) throws NodejsProcessException,
-			InterruptedException {
+	public int start(long timeout, int testNumber)
+			throws NodejsProcessException, InterruptedException {
 		if (!isStarted()) {
 			start();
 		}
-		synchronized (lock) {
-			lock.wait(timeout);
-		}
-		if (port == null) {
-			throw new NodejsProcessException("Cannot start node process.");
-		}
+		waitOnStartNodejs(timeout, testNumber);
 		return getPort();
+	}
+
+	/**
+	 * Wait until node.js process is started.
+	 * 
+	 * @param timeout
+	 *            to wait until the process start to retrieve the port to
+	 *            return.
+	 * @param testNumber
+	 *            number of test to do to wait until timeout ms.
+	 * @throws InterruptedException
+	 *             throw this exception if node.js process cannot be started.
+	 * @throws NodejsProcessException
+	 *             throw this exception if node.js process cannot be started.
+	 */
+	private void waitOnStartNodejs(long timeout, int testNumber)
+			throws InterruptedException, NodejsProcessException {
+		if (port == null) {
+			// node.js process is not started, loop for test number and wait on
+			// timeout.
+			if (!hasError) {
+				for (int i = 0; i < testNumber; i++) {
+					synchronized (lock) {
+						// wait untim timeout.
+						lock.wait(timeout);
+						if (port != null || hasError) {
+							// here node.js is started, stop teh wait.
+							break;
+						}
+					}
+				}
+			}
+			if (port == null) {
+				// here node.js cannot be started.
+				throw new NodejsProcessException("Cannot start node process.");
+			}
+		}
 	}
 
 	/**
@@ -393,7 +435,7 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * Set true if tern server server won’t write a .tern-port file and false
+	 * Set true if tern server server won't write a .tern-port file and false
 	 * otherwise.
 	 * 
 	 * @param noPortFile
@@ -403,7 +445,7 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * return true if tern server server won’t write a .tern-port file and false
+	 * return true if tern server server won't write a .tern-port file and false
 	 * otherwise.
 	 * 
 	 * @return
@@ -413,7 +455,7 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * set false if the server will shut itself down after five minutes of
+	 * Set false if the server will shut itself down after five minutes of
 	 * inactivity and true otherwise.
 	 * 
 	 * @param persistent
@@ -423,7 +465,7 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * return false if the server will shut itself down after five minutes of
+	 * Returns false if the server will shut itself down after five minutes of
 	 * inactivity and true otherwise.
 	 * 
 	 * @return
@@ -439,6 +481,15 @@ public class NodejsProcess {
 	 */
 	public File getProjectDir() {
 		return projectDir;
+	}
+
+	/**
+	 * Returns the elapsed time to start node.js process.
+	 * 
+	 * @return
+	 */
+	public long getElapsedStartTime() {
+		return elapsedSartTime;
 	}
 
 	/**
@@ -487,8 +538,12 @@ public class NodejsProcess {
 
 	/**
 	 * Notify start process.
+	 * 
+	 * @param startTime
+	 *            time when node.js process is started.
 	 */
-	private void notifyStartProcess() {
+	private void notifyStartProcess(long startTime) {
+		this.elapsedSartTime = NodejsTernHelper.getElapsedTimeInMs(startTime);
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
 				listener.onStart(this);
@@ -524,10 +579,12 @@ public class NodejsProcess {
 	 * Notify error process.
 	 */
 	private void notifyErrorProcess(String line) {
+		this.hasError = true;
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
 				listener.onError(NodejsProcess.this, line);
 			}
 		}
 	}
+
 }
