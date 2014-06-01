@@ -43,8 +43,11 @@ import com.eclipsesource.json.ParseException;
  */
 public class NodejsTernHelper {
 
-	public static final long DEFAULT_TIMEOUT = 1000L;
-	public static final int DEFAULT_TEST_NUMBER = 1;
+	public static final long DEFAULT_TIMEOUT = 200L; // 200ms
+	public static final int DEFAULT_TEST_NUMBER = 50; // try to retrieve the
+														// node.js port 50
+														// eachtime on timeout
+														// (max=50*200ms=10000ms).
 
 	public static final boolean DEFAULT_PERSISTENT = false;
 

@@ -17,6 +17,7 @@ import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.core.NodejsInstall;
+import tern.server.nodejs.NodejsTernHelper;
 
 /**
  * Initialize default tern core preferences.
@@ -39,9 +40,11 @@ public class TernNodejsCorePreferenceConstants {
 		node.put(TernNodejsCoreConstants.NODEJS_PATH,
 				IDENodejsProcessHelper.getNodejsPath());
 		// timeout to start node.js
-		node.putLong(TernNodejsCoreConstants.NODEJS_TIMEOUT, 1000L);
+		node.putLong(TernNodejsCoreConstants.NODEJS_TIMEOUT,
+				NodejsTernHelper.DEFAULT_TIMEOUT);
 		// test number to start node.js
-		node.putInt(TernNodejsCoreConstants.NODEJS_TEST_NUMBER, 10);
+		node.putInt(TernNodejsCoreConstants.NODEJS_TEST_NUMBER,
+				NodejsTernHelper.DEFAULT_TEST_NUMBER);
 		// node.js persistent (not auto-shutdown ?)
 		node.putBoolean(TernNodejsCoreConstants.NODEJS_PERSISTENT, false);
 	}
