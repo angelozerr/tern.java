@@ -46,7 +46,7 @@ public class TernCorePlugin extends Plugin {
 		// Initialize the NodeJs tern base dir usefull if (if tern.eclipse is
 		// not started).
 		File nodejsTernBaseDir = FileLocator.getBundleFile(Platform
-				.getBundle(tern.server.nodejs.Activator.PLUGIN_ID));
+				.getBundle(tern.Activator.PLUGIN_ID));
 		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 	}
 

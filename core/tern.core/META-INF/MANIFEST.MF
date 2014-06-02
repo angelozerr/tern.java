@@ -6,6 +6,7 @@ Bundle-Localization: plugin
 Bundle-SymbolicName: tern.core
 Bundle-Version: 0.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Eclipse-BundleShape: dir
 Export-Package: tern,
  tern.angular,
  tern.angular.modules,
@@ -21,4 +22,7 @@ Export-Package: tern,
  tern.server.protocol.lint,
  tern.server.protocol.type,
  tern.utils
-Import-Package: com.eclipsesource.json
+Import-Package: com.eclipsesource.json,
+ org.osgi.framework
+Bundle-Activator: tern.Activator
+Bundle-ActivationPolicy: lazy
