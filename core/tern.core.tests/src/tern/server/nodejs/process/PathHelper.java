@@ -92,6 +92,6 @@ public class PathHelper {
 	 */
 	public static File getNodejsTernBaseDir() {
 
-		return new File("../tern.server.nodejs");
+		return new File("../tern.core");
 	}
 }
