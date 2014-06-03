@@ -1,0 +1,17 @@
+{
+ "name": "angular",
+ "homepage": "https://angularjs.org/",
+ "author": "Marijn Haverbeke <marijnh@gmail.com> forked by Angelo ZERR",
+ "description": "Adds AngularJS support.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.java.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/angularjs-eclipse/issues"
+ }
+}

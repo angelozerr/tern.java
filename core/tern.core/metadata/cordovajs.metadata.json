@@ -1,0 +1,17 @@
+{
+ "name": "cordovajs",
+ "homepage": "http://cordova.apache.org/",
+ "author": "Victor V. Rubezhny <vrubezhny@exadel.com>",
+ "description": "Adds Cordova Javascript support. Apache Cordova is a platform for building native mobile applications using HTML, CSS and JavaScript",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.java.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.java/issues"
+ }
+}

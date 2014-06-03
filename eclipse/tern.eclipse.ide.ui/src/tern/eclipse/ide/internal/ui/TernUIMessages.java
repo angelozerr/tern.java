@@ -42,7 +42,16 @@ public final class TernUIMessages extends NLS {
 	public static String TernFacetsBlock_desc;
 	public static String TernFacetsBlock_facetName;
 	public static String TernFacetsBlock_facetVersion;
+	public static String TernFacetsBlock_detailsTabLabel;
+	public static String TernFacetsBlock_optionsTabLabel;
+	public static String TernFacetDetailsPanel_homepage;
+	public static String TernFacetDetailsPanel_author;
+	public static String TernFacetDetailsPanel_repositoryURL;
+	public static String TernFacetDetailsPanel_bugsURL;
+	public static String DetailsPanel_noSelectionLabel;
+
 	public static String TernScriptPathsBlock_desc;
+
 	public static String TernConsolePropertyPage_desc;
 	public static String TernConsolePropertyPage_traceOnConsole_label;
 

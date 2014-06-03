@@ -47,19 +47,22 @@ public class TernFacetLabelProvider extends LabelProvider implements
 		switch (columnIndex) {
 		case 0:
 			if (element instanceof ITernFacet) {
-				ITernFacet facet = (ITernFacet) element;
-				Image image = TernUIPlugin.getTernDescriptorManager().getImage(
-						facet.getName());
-				if (image != null) {
-					return image;
-				}
-				return getDefaultImage(facet);
+				return getImageFacet((ITernFacet) element);
 			}
 		}
 		return null;
 	}
 
-	private Image getDefaultImage(ITernFacet facet) {
+	public static Image getImageFacet(ITernFacet facet) {
+		Image image = TernUIPlugin.getTernDescriptorManager().getImage(
+				facet.getName());
+		if (image != null) {
+			return image;
+		}
+		return getDefaultImage(facet);
+	}
+
+	private static Image getDefaultImage(ITernFacet facet) {
 		switch (facet.getFacetType()) {
 		case Def:
 			return ImageResource.getImage(ImageResource.IMG_TYPE_DEF);

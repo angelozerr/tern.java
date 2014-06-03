@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -24,6 +25,7 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -32,6 +34,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 
 import tern.TernException;
@@ -60,10 +64,15 @@ import com.eclipsesource.json.JsonValue;
  */
 public class TernFacetsBlock extends AbstractTableBlock {
 
+	private static final String SASH2W1 = "sash.2.weight.1";
+	private static final String SASH2W2 = "sash.2.weight.2";
+
 	private final String tableLabel;
 	private Composite fControl;
 	private final List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
 	private CheckboxTableViewer tableViewer;
+	private DetailsPanel detailsPanel;
+	private OptionsPanel optionsPanel;
 
 	public TernFacetsBlock(String tableLabel) {
 		this.tableLabel = tableLabel;
@@ -73,7 +82,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 
 		Composite parent = new Composite(ancestor, SWT.NULL);
 		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
+		layout.numColumns = 1;
 		layout.marginHeight = 0;
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
@@ -91,13 +100,33 @@ public class TernFacetsBlock extends AbstractTableBlock {
 			tableLabel.setFont(font);
 		}
 
+		SashForm sform2 = new SashForm(parent, SWT.HORIZONTAL | SWT.SMOOTH);
+		data = new GridData(SWT.FILL, SWT.FILL, true, true);
+		sform2.setLayoutData(data);
+
+		createFacetsMaster(sform2);
+		createFacetsDetails(sform2);
+
+		Dialog.applyDialogFont(parent);
+	}
+
+	private void createFacetsMaster(Composite ancestor) {
+		Composite parent = new Composite(ancestor, SWT.NULL);
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 2;
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		parent.setLayout(layout);
+		Font font = ancestor.getFont();
+		parent.setFont(font);
+
 		Table table = new Table(parent, SWT.CHECK | SWT.BORDER
 				| SWT.FULL_SELECTION | SWT.V_SCROLL);
 
-		data = new GridData(GridData.FILL_BOTH);
-		data.widthHint = 450;
+		GridData data = new GridData(GridData.FILL_BOTH);
+		data.widthHint = 350;
 		table.setLayoutData(data);
-		table.setFont(font);
+		table.setFont(parent.getFont());
 
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
@@ -121,7 +150,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		// create version column
 		TableViewerColumn versionColumn = new TableViewerColumn(tableViewer,
 				SWT.NONE);
-		versionColumn.getColumn().setWidth(180);
+		versionColumn.getColumn().setWidth(100);
 		versionColumn.getColumn().setResizable(true);
 		versionColumn.getColumn().setText(
 				TernUIMessages.TernFacetsBlock_facetVersion);
@@ -132,31 +161,46 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		tableViewer
 				.setContentProvider(new TernFacetContentProvider(ternFacets));
 
-		final Label descriptionLabel = new Label(parent, SWT.NONE);
-		descriptionLabel.setText("");
-		data = new GridData(GridData.FILL_HORIZONTAL);
-		data.horizontalSpan = 2;
-		descriptionLabel.setLayoutData(data);
-		descriptionLabel.setFont(font);
-
 		addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
-				descriptionLabel.setText("");
 				if (!e.getSelection().isEmpty()) {
 					ITernFacet facet = (ITernFacet) ((IStructuredSelection) e
 							.getSelection()).getFirstElement();
-					String description = TernUIPlugin
-							.getTernDescriptorManager().getDescription(
-									facet.getName());
-					if (description != null) {
-						descriptionLabel.setText(description);
-					}
+					refreshFacet(facet);
+				} else {
+					refreshFacet(null);
 				}
 			}
 		});
 		restoreColumnSettings();
+	}
+
+	private void createFacetsDetails(Composite parent) {
+
+		// Create tab folder.
+		TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		data.heightHint = 80;
+		tabFolder.setLayoutData(data);
+
+		// create details tab
+		this.detailsPanel = new DetailsPanel(tabFolder, this);
+		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NULL);
+		detailsTabItem.setControl(this.detailsPanel);
+		detailsTabItem.setText(TernUIMessages.TernFacetsBlock_detailsTabLabel);
+
+		// create options tab
+		this.optionsPanel = new OptionsPanel(tabFolder, this);
+		TabItem optionsTabItem = new TabItem(tabFolder, SWT.NULL);
+		optionsTabItem.setControl(this.optionsPanel);
+		optionsTabItem.setText(TernUIMessages.TernFacetsBlock_optionsTabLabel);
+	}
+
+	private void refreshFacet(ITernFacet facet) {
+		detailsPanel.refresh(facet);
+		optionsPanel.refresh(facet);
 	}
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {

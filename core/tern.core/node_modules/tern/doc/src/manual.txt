@@ -67,6 +67,9 @@ The following command-line flags are supported:
 `--port <number>`:: Specify a port to listen on, instead of the
 default behavior of letting the OS pick a random unused port.
 
+`--host <host>`:: Specify a host to listen on. Defaults to 127.0.0.1.
+Pass `null` or `any` to listen on all available hosts.
+
 `--persistent`:: By default, the server will shut itself down after
 five minutes of inactivity. Pass it a this option to disable
 auto-shutdown.
@@ -1113,3 +1116,13 @@ ctags files from JavaScript code by using Tern's inference engine.
 
 The http://codemirror.net[CodeMirror] browser-based editor has an
 http://codemirror.net/demo/tern.html[addon] for integrating with Tern.
+
+=== tern.ace ===
+
+https://github.com/angelozerr/tern.ace[tern.ace] integrates Tern in
+the http://ace.c9.io/[ACE] editor.
+
+=== tern.orion ===
+
+https://github.com/angelozerr/tern.orion[tern.orion] integrates Tern in
+the http://www.eclipse.org/orion/[Orion] editor.

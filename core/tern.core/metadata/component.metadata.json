@@ -1,0 +1,13 @@
+{
+ "name": "component",
+ "homepage": "",
+ "author": "Marijn Haverbeke <marijnh@gmail.com>",
+ "description": "",
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/marijnh/tern.git"
+ },
+ "bugs": {
+  "url": "https://github.com/marijnh/tern/issues"
+ }
+}

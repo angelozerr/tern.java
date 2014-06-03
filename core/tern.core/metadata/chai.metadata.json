@@ -1,0 +1,17 @@
+{
+ "name": "chai",
+ "homepage": "http://chaijs.com/",
+ "author": "Marijn Haverbeke <marijnh@gmail.com>",
+ "description": "Adds Chai support. Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/marijnh/tern.git"
+ },
+ "bugs": {
+  "url": "https://github.com/marijnh/tern/issues"
+ }
+}

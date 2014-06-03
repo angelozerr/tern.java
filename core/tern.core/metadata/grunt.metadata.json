@@ -1,0 +1,17 @@
+{
+ "name": "grunt",
+ "homepage": "http://dojotoolkit.org/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Grunt support. Grunt is the JavaScript Task Runner",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.java.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.java/issues"
+ }
+}

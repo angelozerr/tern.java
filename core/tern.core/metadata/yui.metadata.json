@@ -1,0 +1,17 @@
+{
+ "name": "yui",
+ "homepage": "http://yuilibrary.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Adds YUI Library support. YUI is a free, open source JavaScript and CSS library for building richly interactive web applications.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.yuidoc.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.yuidoc/issues"
+ }
+}

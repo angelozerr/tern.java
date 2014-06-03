@@ -1,0 +1,16 @@
+{
+ "name": "browser",
+ "homepage": "https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM",
+ "author": "Marijn Haverbeke <marijnh@gmail.com>",
+ "description": "Adds Browser support.",
+ "dependencies": [
+  "ecma5"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/marijnh/tern.git"
+ },
+ "bugs": {
+  "url": "https://github.com/marijnh/tern/issues"
+ }
+}

@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
+import tern.metadata.TernFacetMetadataManager;
 import tern.server.nodejs.process.NodejsProcessManager;
 
 /**
@@ -45,9 +46,10 @@ public class TernCorePlugin extends Plugin {
 
 		// Initialize the NodeJs tern base dir usefull if (if tern.eclipse is
 		// not started).
-		File nodejsTernBaseDir = FileLocator.getBundleFile(Platform
+		File ternCoreBaseDir = FileLocator.getBundleFile(Platform
 				.getBundle(tern.Activator.PLUGIN_ID));
-		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
+		NodejsProcessManager.getInstance().init(ternCoreBaseDir);
+		TernFacetMetadataManager.getInstance().init(ternCoreBaseDir);
 	}
 
 	@Override
