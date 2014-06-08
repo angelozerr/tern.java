@@ -57,15 +57,6 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	}
 
 	@Override
-	public String getDescription(String id) {
-		ITernDescriptor descriptor = getTernDescriptor(id);
-		if (descriptor != null) {
-			return descriptor.getDescription();
-		}
-		return null;
-	}
-
-	@Override
 	public Image getImage(String id) {
 		ITernDescriptor descriptor = getTernDescriptor(id);
 		if (descriptor != null) {

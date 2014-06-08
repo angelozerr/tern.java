@@ -6,8 +6,6 @@ public interface ITernDescriptor {
 
 	String getId();
 
-	String getDescription();
-
 	Image getImage();
 
 }

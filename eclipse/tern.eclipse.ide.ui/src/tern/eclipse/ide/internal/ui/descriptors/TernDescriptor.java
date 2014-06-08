@@ -12,12 +12,10 @@ import tern.utils.StringUtils;
 public class TernDescriptor implements ITernDescriptor {
 
 	private final String id;
-	private final String description;
 	private final String imageKey;
 
 	public TernDescriptor(IConfigurationElement ce) {
 		this.id = ce.getAttribute("id");
-		this.description = ce.getAttribute("description");
 		this.imageKey = getImageKey(ce, id);
 	}
 
@@ -41,11 +39,6 @@ public class TernDescriptor implements ITernDescriptor {
 
 	public String getId() {
 		return id;
-	}
-
-	@Override
-	public String getDescription() {
-		return description;
 	}
 
 	@Override
