@@ -203,9 +203,13 @@
             icon="/icons/full/obj16/aui.png" >
       </ternDescriptor>       
       <ternDescriptor
+            id="ckeditor"
+            icon="/icons/full/obj16/ckeditor.png" >
+      </ternDescriptor>
+      <ternDescriptor
             id="cordovajs"
             icon="/icons/full/obj16/cordovajs.png" >
-      </ternDescriptor> 
+      </ternDescriptor>
       <ternDescriptor
             id="dojotoolkit"
             icon="/icons/full/obj16/dojotoolkit.png" >
