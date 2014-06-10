@@ -10,8 +10,10 @@
  */
 package tern.eclipse.ide.ui.controls;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -95,25 +97,26 @@ public class TernFacetDetailsPanel extends Composite {
 
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_homepage, null,
-				metadata != null ? metadata.getHomePage() : "");
+				metadata != null ? metadata.getHomePage() : "", null);
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_author, null,
-				metadata != null ? metadata.getAuthor() : "");
+				metadata != null ? metadata.getAuthor() : "", null);
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_repositoryURL, null,
-				metadata != null ? metadata.getRepositoryURL() : "");
+				metadata != null ? metadata.getRepositoryURL() : "", null);
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_bugsURL, null,
-				metadata != null ? metadata.getBugsURL() : "");
+				metadata != null ? metadata.getBugsURL() : "", null);
 	}
 
 	public void createHeader(final Composite parent, ITernFacet facet) {
 		addInfo(parent, null, TernFacetLabelProvider.getImageFacet(facet),
-				facet.getName());
+				facet.getName(),
+				JFaceResources.getFontRegistry().get(DetailsPanel.HEADER_FONT));
 	}
 
 	public void addInfo(final Composite parent, String valueLabel, Image image,
-			String valueInfo) {
+			String valueInfo, Font font) {
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
@@ -125,6 +128,9 @@ public class TernFacetDetailsPanel extends Composite {
 		Text textField = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
 		textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		textField.setText(valueInfo != null ? valueInfo : "");
+		if (textField != null) {
+			textField.setFont(font);
+		}
 	}
 
 }

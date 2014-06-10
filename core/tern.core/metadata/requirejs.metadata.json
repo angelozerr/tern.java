@@ -12,5 +12,17 @@
  },
  "bugs": {
   "url": "https://github.com/marijnh/tern/issues"
- }
+ },
+ "options": [
+  {
+   "name": "baseURL",
+   "description": "The base path to prefix to dependency filenames.",
+   "type": "path"
+  },
+  {
+   "name": "paths",
+   "description": "An object mapping filename prefixes to specific paths.\nFor example {'acorn': 'lib/acorn/'}.",
+   "type": "path[]"
+  }
+ ]
 }

@@ -10,8 +10,14 @@
  */
 package tern.metadata;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import tern.server.protocol.JsonHelper;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
@@ -28,6 +34,7 @@ public class TernFacetMetadata {
 	private static final String REPOSITORY_FIELD = "repository";
 	private static final String BUGS_FIELD = "bugs";
 	private static final String URL_FIELD = "url";
+	private static final String OPTIONS_FIELD = "options";
 
 	private final String name;
 	private final String description;
@@ -35,6 +42,7 @@ public class TernFacetMetadata {
 	private final String author;
 	private final String repositoryURL;
 	private final String bugsURL;
+	private final Collection<TernFacetMetadataOption> options;
 
 	/**
 	 * Create facet metadata from JSON object.
@@ -59,6 +67,21 @@ public class TernFacetMetadata {
 		} else {
 			this.bugsURL = null;
 		}
+		JsonValue options = json.get(OPTIONS_FIELD);
+		if (options != null && options instanceof JsonArray) {
+			this.options = parseOptions((JsonArray) options);
+		} else {
+			this.options = Collections.emptyList();
+		}
+	}
+
+	private Collection<TernFacetMetadataOption> parseOptions(
+			JsonArray jsonOptions) {
+		List<TernFacetMetadataOption> options = new ArrayList<TernFacetMetadataOption>();
+		for (JsonValue jsonOption : jsonOptions) {
+			options.add(new TernFacetMetadataOption((JsonObject) jsonOption));
+		}
+		return options;
 	}
 
 	/**
@@ -113,5 +136,14 @@ public class TernFacetMetadata {
 	 */
 	public String getBugsURL() {
 		return bugsURL;
+	}
+
+	/**
+	 * Returns list of options.
+	 * 
+	 * @return list of options.
+	 */
+	public Collection<TernFacetMetadataOption> getOptions() {
+		return options;
 	}
 }

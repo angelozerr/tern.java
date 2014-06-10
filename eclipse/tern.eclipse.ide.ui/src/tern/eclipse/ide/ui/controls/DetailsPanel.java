@@ -10,7 +10,9 @@
  */
 package tern.eclipse.ide.ui.controls;
 
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -24,6 +26,18 @@ import tern.server.ITernFacet;
  *
  */
 public class DetailsPanel extends Composite {
+
+	public static final String HEADER_FONT = DetailsPanel.class.getName()
+			+ ".HEADER_FONT"; //$NON-NLS-1$
+
+	static {
+		// Initialize font for header title detail (bold font).
+		final String defaultFontName = JFaceResources.getDefaultFont()
+				.getFontData()[0].getName();
+		final FontData[] fontData = JFaceResources.getFontRegistry()
+				.getBold(defaultFontName).getFontData();
+		JFaceResources.getFontRegistry().put(HEADER_FONT, fontData);
+	}
 
 	private Composite content;
 
@@ -57,6 +71,7 @@ public class DetailsPanel extends Composite {
 			noSelectionTextField
 					.setText(TernUIMessages.DetailsPanel_noSelectionLabel);
 		} else {
+			// facet is selected, display details of this facet
 			this.content = new TernFacetDetailsPanel(this, facet);
 		}
 		this.content

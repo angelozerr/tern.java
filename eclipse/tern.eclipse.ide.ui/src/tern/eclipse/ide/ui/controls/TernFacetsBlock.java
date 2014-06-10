@@ -64,8 +64,8 @@ import com.eclipsesource.json.JsonValue;
  */
 public class TernFacetsBlock extends AbstractTableBlock {
 
-	private static final String SASH2W1 = "sash.2.weight.1";
-	private static final String SASH2W2 = "sash.2.weight.2";
+	//private static final String SASH2W1 = "sash.2.weight.1";
+	//private static final String SASH2W2 = "sash.2.weight.2";
 
 	private final String tableLabel;
 	private Composite fControl;

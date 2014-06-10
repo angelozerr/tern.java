@@ -17,6 +17,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.internal.ui.descriptors.TernDescriptorManager;
 import tern.server.ITernFacet;
 
 /**
@@ -31,7 +32,6 @@ public class OptionsPanel extends Composite {
 		super(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
 		super.setLayout(layout);
-		// setLayout( glmargins( gl( 1 ), 5, 8 ) );
 	}
 
 	/**
@@ -41,10 +41,12 @@ public class OptionsPanel extends Composite {
 	 */
 	public void refresh(ITernFacet facet) {
 		if (this.content != null) {
+			// dispose old content of the last selected facet.
 			this.content.dispose();
 		}
 
 		if (facet == null) {
+			// none facet are selected, create a text field.
 			this.content = new Composite(this, SWT.NONE);
 			GridLayout layout = new GridLayout();
 			this.content.setLayout(layout);
@@ -56,7 +58,9 @@ public class OptionsPanel extends Composite {
 			noSelectionTextField
 					.setText(TernUIMessages.DetailsPanel_noSelectionLabel);
 		} else {
-			this.content = new TernFacetOptionsPanel(this, facet);
+			// facet is selected, display options of this facet
+			this.content = TernDescriptorManager.getManager()
+					.createOptionsPanel(this, facet);
 		}
 		this.content
 				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

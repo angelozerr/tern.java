@@ -33,7 +33,7 @@ import tern.utils.TernFacetHelper;
 public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 		IWorkbenchPreferencePage {
 
-	private TernFacetsBlock pluginsBlock;
+	private TernFacetsBlock facetsBlock;
 
 	public TernFacetsPropertyPage() {
 		super();
@@ -57,14 +57,14 @@ public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		pluginsBlock = new TernFacetsBlock(TernUIMessages.TernFacetsBlock_desc);
-		pluginsBlock.createControl(parent);
-		Control control = pluginsBlock.getControl();
+		facetsBlock = new TernFacetsBlock(TernUIMessages.TernFacetsBlock_desc);
+		facetsBlock.createControl(parent);
+		Control control = facetsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		pluginsBlock.loadFacets(getResource().getProject());
+		facetsBlock.loadFacets(getResource().getProject());
 
 		applyDialogFont(parent);
 		return parent;
@@ -73,9 +73,9 @@ public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 	@Override
 	public boolean performOk() {
 		// save column settings
-		pluginsBlock.saveColumnSettings();
+		facetsBlock.saveColumnSettings();
 		// save the checked plugins in the tern project
-		Object[] checkedFacets = pluginsBlock.getCheckedFacets();
+		Object[] checkedFacets = facetsBlock.getCheckedFacets();
 		try {
 			IDETernProject ternProject = getTernProject();
 			// clear Plugin + JSON Type Definition
