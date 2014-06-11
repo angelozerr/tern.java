@@ -50,7 +50,7 @@ public class TernFacetMetadataManager {
 	}
 
 	private void initializeIfNeeded() {
-		if (metadatas.size() == 0) {
+		if (metadatas.size() == 0 && metadataTernBaseDir != null) {
 			synchronized (metadatas) {
 				if (metadatas.size() == 0) {
 					File metadataFile = new File(metadataTernBaseDir,

@@ -10,6 +10,9 @@
  */
 package tern.server;
 
+import tern.metadata.TernFacetMetadata;
+import tern.metadata.TernFacetMetadataManager;
+
 /**
  * BAse API for JSON Type Definition API & Tern plugins.
  * 
@@ -55,4 +58,12 @@ public interface ITernFacet {
 	 * @return
 	 */
 	FacetType getFacetType();
+
+	/**
+	 * Returns the tern metadata and null otherwise.
+	 * 
+	 * @return the tern metadata and null otherwise.
+	 */
+	TernFacetMetadata getMetadata();
+
 }

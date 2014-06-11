@@ -10,6 +10,9 @@
  */
 package tern.server;
 
+import tern.metadata.TernFacetMetadata;
+import tern.metadata.TernFacetMetadataManager;
+
 public enum TernDef implements ITernDef {
 
 	browser("tern/defs/browser.json"), chai("tern/defs/chai.json"), ecma5(
@@ -20,16 +23,18 @@ public enum TernDef implements ITernDef {
 	private final String type;
 	private final String version;
 	private final String path;
+	private TernFacetMetadata metadata;
 
 	private TernDef(String path) {
 		this(null, null, null, path);
 	}
 
 	private TernDef(String name, String type, String version, String path) {
-		this.name = name;
-		this.type = type;
+		this.name = name != null ? name : name();
+		this.type = type != null ? type : name();
 		this.version = version;
 		this.path = path;
+		this.metadata = null;
 	}
 
 	@Override
@@ -67,6 +72,19 @@ public enum TernDef implements ITernDef {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Returns the tern metadata and null otherwise.
+	 * 
+	 * @return the tern metadata and null otherwise.
+	 */
+	public TernFacetMetadata getMetadata() {
+		if (metadata == null) {
+			metadata = TernFacetMetadataManager.getInstance().getMetadata(
+					getType());
+		}
+		return metadata;
 	}
 
 }

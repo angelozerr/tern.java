@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import tern.TernException;
 import tern.server.ITernDef;
-import tern.server.ITernFacetWrapper;
+import tern.server.ITernFacetConfigurable;
 import tern.server.ITernPlugin;
 
 /**
@@ -38,18 +38,18 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 		cellEditor = new ComboBoxViewerCellEditor((Composite) getViewer()
 				.getControl(), SWT.READ_ONLY);
 		cellEditor.setLabelProvider(new LabelProvider());
-		cellEditor.setContenProvider(new ArrayContentProvider());
+		cellEditor.setContenProvider(ArrayContentProvider.getInstance());
 	}
 
 	@Override
 	protected boolean canEdit(Object element) {
-		return element instanceof ITernFacetWrapper;
+		return element instanceof ITernFacetConfigurable;
 	}
 
 	@Override
 	protected CellEditor getCellEditor(Object element) {
-		if (element instanceof ITernFacetWrapper) {
-			cellEditor.setInput(((ITernFacetWrapper) element)
+		if (element instanceof ITernFacetConfigurable) {
+			cellEditor.setInput(((ITernFacetConfigurable) element)
 					.getAvailableVersions());
 			return cellEditor;
 		}
@@ -58,17 +58,17 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		if (element instanceof ITernFacetWrapper) {
-			return ((ITernFacetWrapper) element).getVersion();
+		if (element instanceof ITernFacetConfigurable) {
+			return ((ITernFacetConfigurable) element).getVersion();
 		}
 		return null;
 	}
 
 	@Override
 	protected void setValue(Object element, Object value) {
-		if (element instanceof ITernFacetWrapper) {
+		if (element instanceof ITernFacetConfigurable) {
 			try {
-				((ITernFacetWrapper) element).setVersion(value.toString());
+				((ITernFacetConfigurable) element).setVersion(value.toString());
 			} catch (TernException e) {
 				e.printStackTrace();
 			}

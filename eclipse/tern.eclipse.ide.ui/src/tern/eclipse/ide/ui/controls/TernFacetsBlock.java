@@ -323,41 +323,22 @@ public class TernFacetsBlock extends AbstractTableBlock {
 						.getTernProject(project);
 				initialFacets = new ArrayList<ITernFacet>();
 				// Tern Plugins
+				JsonValue options = null;
 				JsonObject plugins = ternProject.getPlugins();
 				for (String name : plugins.names()) {
+					options = plugins.get(name);
 					ITernPlugin plugin = TernCorePlugin
 							.getTernServerTypeManager().findTernPlugin(
 									name.toString());
-					if (plugin != null) {
-						if (StringUtils.isEmpty(plugin.getVersion())) {
-							initialFacets.add(plugin);
-						} else {
-							try {
-								initialFacets.add(TernFacetHelper.findWrapper(
-										plugin, allFacets));
-							} catch (TernException e) {
-								Trace.trace(Trace.SEVERE,
-										"Error while finding wrapper.", e);
-							}
-						}
-					}
+					updateInitialFacet(plugin, options, allFacets,
+							initialFacets);
 				}
 				// JSON Type Definitions
 				JsonArray defs = ternProject.getLibs();
 				for (JsonValue name : defs) {
 					ITernDef def = TernCorePlugin.getTernServerTypeManager()
 							.findTernDef(name.asString());
-					if (StringUtils.isEmpty(def.getVersion())) {
-						initialFacets.add(def);
-					} else {
-						try {
-							initialFacets.add(TernFacetHelper.findWrapper(def,
-									allFacets));
-						} catch (TernException e) {
-							Trace.trace(Trace.SEVERE,
-									"Error while finding wrapper.", e);
-						}
-					}
+					updateInitialFacet(def, null, allFacets, initialFacets);
 				}
 			}
 			this.setTernFacets(allFacets.toArray(ITernFacet.EMPTY_FACET));
@@ -367,6 +348,31 @@ public class TernFacetsBlock extends AbstractTableBlock {
 
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
+		}
+	}
+
+	/**
+	 * Initialize the initial facet with the given facet.
+	 * 
+	 * @param facet
+	 * @param options
+	 * @param allFacets
+	 * @param initialFacets
+	 */
+	private void updateInitialFacet(ITernFacet facet, JsonValue options,
+			List<ITernFacet> allFacets, List<ITernFacet> initialFacets) {
+		if (facet != null) {
+			if (!TernFacetHelper.isConfigurableFacet(facet)) {
+				initialFacets.add(facet);
+			} else {
+				try {
+					initialFacets.add(TernFacetHelper.findConfigurable(facet,
+							options, allFacets));
+				} catch (TernException e) {
+					Trace.trace(Trace.SEVERE,
+							"Error while finding configurable facet.", e);
+				}
+			}
 		}
 	}
 }

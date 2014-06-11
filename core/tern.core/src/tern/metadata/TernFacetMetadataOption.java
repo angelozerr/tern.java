@@ -15,7 +15,7 @@ import tern.server.protocol.JsonHelper;
 import com.eclipsesource.json.JsonObject;
 
 /**
- * Tern facet metadata options.
+ * Tern facet metadata option.
  *
  */
 public class TernFacetMetadataOption {

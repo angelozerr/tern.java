@@ -13,8 +13,6 @@ package tern.eclipse.ide.internal.ui.controls;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import tern.metadata.TernFacetMetadata;
-import tern.metadata.TernFacetMetadataManager;
 import tern.server.ITernFacet;
 
 /**
@@ -25,11 +23,9 @@ public abstract class AbstractTernFacetPanel extends Composite {
 
 	public AbstractTernFacetPanel(Composite parent, ITernFacet facet) {
 		super(parent, SWT.NONE);
-		createUI(this, facet, facet == null ? null : TernFacetMetadataManager
-				.getInstance().getMetadata(facet.getName()));
+		createUI(this, facet);
 	}
 
-	protected abstract void createUI(Composite parent, ITernFacet facet,
-			TernFacetMetadata metadata);
+	protected abstract void createUI(Composite parent, ITernFacet facet);
 
 }

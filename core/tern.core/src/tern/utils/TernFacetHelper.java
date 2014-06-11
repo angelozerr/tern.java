@@ -14,14 +14,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+
 import tern.TernException;
 import tern.TernProject;
+import tern.metadata.TernFacetMetadata;
 import tern.server.FacetType;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
-import tern.server.ITernFacetWrapper;
+import tern.server.ITernFacetConfigurable;
 import tern.server.ITernPlugin;
-import tern.server.TernFacetWrapper;
+import tern.server.TernFacetConfigurable;
 
 /**
  * Helper for {@link ITernFacet}.
@@ -37,17 +41,20 @@ public class TernFacetHelper {
 	 */
 	public static void groupByType(ITernFacet[] facets,
 			List<ITernFacet> groupedFacets) {
-		Map<String, TernFacetWrapper> wrappers = null;
+		Map<String, TernFacetConfigurable> wrappers = null;
 		for (ITernFacet facet : facets) {
-			if (StringUtils.isEmpty(facet.getVersion())) {
+			if (!isConfigurableFacet(facet)) {
+				// facet is not configurable, add it
 				groupedFacets.add(facet);
 			} else {
+				// facet is configurable (version can be customized, or
+				// options), wrap it with TernFacetConfigurable
 				if (wrappers == null) {
-					wrappers = new HashMap<String, TernFacetWrapper>();
+					wrappers = new HashMap<String, TernFacetConfigurable>();
 				}
-				TernFacetWrapper wrapper = wrappers.get(facet.getType());
+				TernFacetConfigurable wrapper = wrappers.get(facet.getType());
 				if (wrapper == null) {
-					wrapper = new TernFacetWrapper(facet);
+					wrapper = new TernFacetConfigurable(facet);
 					wrappers.put(facet.getType(), wrapper);
 					groupedFacets.add(wrapper);
 				} else {
@@ -55,6 +62,18 @@ public class TernFacetHelper {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Returns true if the given facet can be configured and false otherwise.
+	 * 
+	 * @param facet
+	 * @return true if the given facet can be configured and false otherwise.
+	 */
+	public static boolean isConfigurableFacet(ITernFacet facet) {
+		TernFacetMetadata metadata = facet.getMetadata();
+		return !StringUtils.isEmpty(facet.getVersion())
+				|| (metadata != null && metadata.getOptions().size() > 0);
 	}
 
 	/**
@@ -69,6 +88,21 @@ public class TernFacetHelper {
 	 */
 	public static void update(List<ITernDef> defs, List<ITernPlugin> plugins,
 			ITernFacet facet) {
+		update(defs, plugins, null, facet);
+	}
+
+	/**
+	 * Update the given list of {@link ITernDef} or {@link ITernPlugin} by using
+	 * the given facet.
+	 * 
+	 * @param facet
+	 * @param defs
+	 *            to update.
+	 * @param plugins
+	 *            to update.
+	 */
+	private static void update(List<ITernDef> defs, List<ITernPlugin> plugins,
+			JsonObject options, ITernFacet facet) {
 		switch (facet.getFacetType()) {
 		case Def:
 			defs.add((ITernDef) facet);
@@ -76,10 +110,12 @@ public class TernFacetHelper {
 		case Plugin:
 			plugins.add((ITernPlugin) facet);
 			break;
-		case Wrapper:
-			ITernFacet wrappedFacet = ((ITernFacetWrapper) facet)
+		case Configurable:
+			ITernFacet wrappedFacet = ((ITernFacetConfigurable) facet)
 					.getWrappedFacet();
-			update(defs, plugins, wrappedFacet);
+			JsonObject wrappedOptions = ((ITernFacetConfigurable) facet)
+					.getOptions();
+			update(defs, plugins, wrappedOptions, wrappedFacet);
 			break;
 		}
 	}
@@ -91,36 +127,58 @@ public class TernFacetHelper {
 	 * @param ternProject
 	 */
 	public static void update(ITernFacet facet, TernProject<?> ternProject) {
+		update(facet, null, ternProject);
+	}
+
+	/**
+	 * Update the given tern project by using the given facet.
+	 * 
+	 * @param facet
+	 * @param ternProject
+	 */
+	private static void update(ITernFacet facet, JsonObject options,
+			TernProject<?> ternProject) {
 		switch (facet.getFacetType()) {
 		case Def:
 			ternProject.addLib((ITernDef) facet);
 			break;
 		case Plugin:
-			ternProject.addPlugin((ITernPlugin) facet);
+			ternProject.addPlugin((ITernPlugin) facet, options);
 			break;
-		case Wrapper:
-			ITernFacet wrappedFacet = ((ITernFacetWrapper) facet)
+		case Configurable:
+			ITernFacet wrappedFacet = ((ITernFacetConfigurable) facet)
 					.getWrappedFacet();
-			update(wrappedFacet, ternProject);
+			JsonObject wrappedOptions = ((ITernFacetConfigurable) facet)
+					.getOptions();
+			update(wrappedFacet, wrappedOptions, ternProject);
 			break;
 		}
 	}
 
 	/**
-	 * Retrieve ITernFacetWrapper for the given facet inside the list of facets.
+	 * Retrieve {@link ITernFacetConfigurable} for the given facet inside the
+	 * list of facets.
 	 * 
 	 * @param facet
+	 * @param options
 	 * @param allFacets
 	 * @return
 	 * @throws TernException
 	 */
-	public static ITernFacetWrapper findWrapper(ITernFacet facet,
-			List<ITernFacet> allFacets) throws TernException {
+	public static ITernFacetConfigurable findConfigurable(ITernFacet facet,
+			JsonValue options, List<ITernFacet> allFacets) throws TernException {
+		String version = facet.getVersion();
 		for (ITernFacet f : allFacets) {
-			if (f.getFacetType() == FacetType.Wrapper
+			if (f.getFacetType() == FacetType.Configurable
 					&& f.getType() == facet.getType()) {
-				((ITernFacetWrapper) f).setVersion(facet.getVersion());
-				return (ITernFacetWrapper) f;
+				if (!StringUtils.isEmpty(version)) {
+					((ITernFacetConfigurable) f).setVersion(version);
+				}
+				if (options instanceof JsonObject) {
+					((ITernFacetConfigurable) f)
+							.setOptions((JsonObject) options);
+				}
+				return (ITernFacetConfigurable) f;
 			}
 		}
 		return null;

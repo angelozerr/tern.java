@@ -14,18 +14,28 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.eclipsesource.json.JsonObject;
+
 import tern.TernException;
+import tern.metadata.TernFacetMetadata;
+import tern.utils.StringUtils;
 
 /**
- * Wrapper for {@link ITernFacet} used to manage version of {@link ITernFacet}.
+ * Wrapper for {@link ITernFacet} used to configure {@link ITernFacet} :
+ * 
+ * <ul>
+ * <li>version of the facet</li>
+ * <li>options of the facet if it's a plugin</li>
+ * </ul>
  *
  */
-public class TernFacetWrapper implements ITernFacetWrapper {
+public class TernFacetConfigurable implements ITernFacetConfigurable {
 
 	private ITernFacet wrappedFacet;
 	private final Map<String, ITernFacet> facets;
+	private JsonObject options;
 
-	public TernFacetWrapper(ITernFacet facet) {
+	public TernFacetConfigurable(ITernFacet facet) {
 		this.facets = new LinkedHashMap<String, ITernFacet>();
 		this.wrappedFacet = facet;
 		addFacet(facet);
@@ -53,11 +63,13 @@ public class TernFacetWrapper implements ITernFacetWrapper {
 
 	@Override
 	public FacetType getFacetType() {
-		return FacetType.Wrapper;
+		return FacetType.Configurable;
 	}
 
 	public void addFacet(ITernFacet facet) {
-		this.facets.put(facet.getVersion(), facet);
+		if (!StringUtils.isEmpty(facet.getVersion())) {
+			this.facets.put(facet.getVersion(), facet);
+		}
 	}
 
 	@Override
@@ -79,5 +91,20 @@ public class TernFacetWrapper implements ITernFacetWrapper {
 	@Override
 	public Set<String> getAvailableVersions() {
 		return facets.keySet();
+	}
+
+	@Override
+	public TernFacetMetadata getMetadata() {
+		return wrappedFacet.getMetadata();
+	}
+
+	@Override
+	public JsonObject getOptions() {
+		return options;
+	}
+
+	@Override
+	public void setOptions(JsonObject options) {
+		this.options = options;
 	}
 }

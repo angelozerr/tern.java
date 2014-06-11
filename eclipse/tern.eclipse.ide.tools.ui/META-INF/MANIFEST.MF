@@ -16,3 +16,4 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.eclipse.ide.ui;bundle-version="0.2.0"
 Bundle-Activator: tern.eclipse.ide.tools.internal.ui.TernToolsUIPlugin
 Bundle-ActivationPolicy: lazy
+Import-Package: com.eclipsesource.json

@@ -16,5 +16,5 @@ package tern.server;
  */
 public enum FacetType {
 
-	Plugin, Def, Wrapper;
+	Plugin, Def, Configurable;
 }

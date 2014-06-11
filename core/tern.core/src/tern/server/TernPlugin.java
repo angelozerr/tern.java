@@ -10,6 +10,9 @@
  */
 package tern.server;
 
+import tern.metadata.TernFacetMetadata;
+import tern.metadata.TernFacetMetadataManager;
+
 public enum TernPlugin implements ITernPlugin {
 
 	aui("tern/plugin/aui"), angular("tern/plugin/angular"), component(
@@ -32,21 +35,23 @@ public enum TernPlugin implements ITernPlugin {
 	private final String type;
 	private final String version;
 	private final String path;
+	private TernFacetMetadata metadata;
 
 	private TernPlugin(String path) {
 		this(null, null, null, path);
 	}
 
 	private TernPlugin(String name, String type, String version, String path) {
-		this.name = name;
-		this.type = type;
+		this.name = name != null ? name : name();
+		this.type = type != null ? type : name();
 		this.path = path;
 		this.version = version;
+		this.metadata = null;
 	}
 
 	@Override
 	public String getName() {
-		return name != null ? name : name();
+		return name;
 	}
 
 	@Override
@@ -79,5 +84,14 @@ public enum TernPlugin implements ITernPlugin {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public TernFacetMetadata getMetadata() {
+		if (metadata == null) {
+			metadata = TernFacetMetadataManager.getInstance().getMetadata(
+					getType());
+		}
+		return metadata;
 	}
 }

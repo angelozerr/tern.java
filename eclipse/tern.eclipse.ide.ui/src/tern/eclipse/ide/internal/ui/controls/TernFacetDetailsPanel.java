@@ -38,8 +38,7 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet,
-			TernFacetMetadata metadata) {
+	protected void createUI(Composite parent, ITernFacet facet) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
@@ -51,7 +50,7 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 		createSeparator();
 
 		// Create body of the facet.
-		createBody(facet, metadata);
+		createBody(facet);
 
 	}
 
@@ -60,7 +59,7 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
-	public void createBody(ITernFacet facet, TernFacetMetadata metadata) {
+	public void createBody(ITernFacet facet) {
 
 		GridLayout layout;
 		final ScrolledComposite details = new ScrolledComposite(this,
@@ -79,6 +78,7 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 		nestedDetailsComposite.setLayout(layout);
 		details.setContent(nestedDetailsComposite);
 
+		TernFacetMetadata metadata = facet.getMetadata();
 		if (metadata != null && !StringUtils.isEmpty(metadata.getDescription())) {
 			final Text descTextField = new Text(nestedDetailsComposite,
 					SWT.WRAP | SWT.READ_ONLY);

@@ -40,8 +40,7 @@ public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet,
-			TernFacetMetadata metadata) {
+	protected void createUI(Composite parent, ITernFacet facet) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
@@ -67,6 +66,7 @@ public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 				.setText(TernUIMessages.TernFacetsBlock_facetName);
 
 		List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
+		TernFacetMetadata metadata = facet.getMetadata();
 		if (metadata != null) {
 			ITernFacet dependencyFacet = null;
 			Collection<String> dependencies = metadata.getDependencies();
@@ -90,5 +90,4 @@ public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 		tableViewer.setInput(ternFacets);
 
 	}
-
 }

@@ -17,7 +17,7 @@ import org.eclipse.swt.graphics.Image;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernFacet;
-import tern.server.ITernFacetWrapper;
+import tern.server.ITernFacetConfigurable;
 import tern.server.ITernPlugin;
 
 /**
@@ -53,6 +53,12 @@ public class TernFacetLabelProvider extends LabelProvider implements
 		return null;
 	}
 
+	/**
+	 * Returns the image of the given facet.
+	 * 
+	 * @param facet
+	 * @return the image of the given facet.
+	 */
 	public static Image getImageFacet(ITernFacet facet) {
 		Image image = TernUIPlugin.getTernDescriptorManager().getImage(
 				facet.getName());
@@ -68,8 +74,8 @@ public class TernFacetLabelProvider extends LabelProvider implements
 			return ImageResource.getImage(ImageResource.IMG_TYPE_DEF);
 		case Plugin:
 			return ImageResource.getImage(ImageResource.IMG_PLUGIN);
-		case Wrapper:
-			return getDefaultImage(((ITernFacetWrapper) facet)
+		case Configurable:
+			return getDefaultImage(((ITernFacetConfigurable) facet)
 					.getWrappedFacet());
 		}
 		return null;
