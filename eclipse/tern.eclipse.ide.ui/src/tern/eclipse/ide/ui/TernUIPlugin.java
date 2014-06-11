@@ -113,7 +113,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	}
 
 	public ITernConsole getConsole(IDETernProject project) {
-		TernConsole console = consoles.get(project);
+		TernConsole console = consoles.get(project.getProject());
 		if (console == null) {
 			console = new TernConsole(project);
 			consoles.put(project.getProject(), console);
