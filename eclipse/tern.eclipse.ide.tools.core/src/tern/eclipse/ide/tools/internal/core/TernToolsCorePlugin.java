@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+import tern.Activator;
 import tern.eclipse.ide.tools.core.webbrowser.EditorType;
 
 public class TernToolsCorePlugin implements BundleActivator {
@@ -66,7 +67,7 @@ public class TernToolsCorePlugin implements BundleActivator {
 					+ ". This constructor must be used only on OSGi context");
 		}
 		return FileLocator.toFileURL(
-				Platform.getBundle("tern.server.nodejs").getEntry(
+				Platform.getBundle(Activator.PLUGIN_ID).getEntry(
 						"node_modules/tern/" + path)).toExternalForm();
 	}
 }
