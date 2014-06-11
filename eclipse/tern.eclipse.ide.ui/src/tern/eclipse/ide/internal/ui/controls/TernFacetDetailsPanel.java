@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.ui.controls;
+package tern.eclipse.ide.internal.ui.controls;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -24,29 +24,25 @@ import org.eclipse.swt.widgets.Text;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
 import tern.metadata.TernFacetMetadata;
-import tern.metadata.TernFacetMetadataManager;
 import tern.server.ITernFacet;
 import tern.utils.StringUtils;
 
 /**
- * Display information of tern facet.
+ * Display information of the tern facet.
  *
  */
-public class TernFacetDetailsPanel extends Composite {
+public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 
 	public TernFacetDetailsPanel(Composite parent, ITernFacet facet) {
-		super(parent, SWT.NONE);
-		createUI(facet);
+		super(parent, facet);
 	}
 
-	private void createUI(ITernFacet facet) {
+	@Override
+	protected void createUI(Composite parent, ITernFacet facet,
+			TernFacetMetadata metadata) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
-
-		final Composite parent = new Composite(this, SWT.NONE);
-		layout = new GridLayout(2, false);
-		parent.setLayout(layout);
 
 		// Create title header of the facet with icon.
 		createHeader(parent, facet);
@@ -55,7 +51,7 @@ public class TernFacetDetailsPanel extends Composite {
 		createSeparator();
 
 		// Create body of the facet.
-		createBody(facet);
+		createBody(facet, metadata);
 
 	}
 
@@ -64,10 +60,7 @@ public class TernFacetDetailsPanel extends Composite {
 		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
-	public void createBody(ITernFacet facet) {
-		TernFacetMetadata metadata = facet == null ? null
-				: TernFacetMetadataManager.getInstance().getMetadata(
-						facet.getName());
+	public void createBody(ITernFacet facet, TernFacetMetadata metadata) {
 
 		GridLayout layout;
 		final ScrolledComposite details = new ScrolledComposite(this,
@@ -110,7 +103,11 @@ public class TernFacetDetailsPanel extends Composite {
 	}
 
 	public void createHeader(final Composite parent, ITernFacet facet) {
-		addInfo(parent, null, TernFacetLabelProvider.getImageFacet(facet),
+		Composite header = new Composite(this, SWT.NONE);
+		GridLayout layout = new GridLayout(2, false);
+		header.setLayout(layout);
+
+		addInfo(header, null, TernFacetLabelProvider.getImageFacet(facet),
 				facet.getName(),
 				JFaceResources.getFontRegistry().get(DetailsPanel.HEADER_FONT));
 	}

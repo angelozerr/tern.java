@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import tern.server.ITernFacet;
 import tern.server.protocol.JsonHelper;
 
 import com.eclipsesource.json.JsonArray;
@@ -34,6 +35,7 @@ public class TernFacetMetadata {
 	private static final String REPOSITORY_FIELD = "repository";
 	private static final String BUGS_FIELD = "bugs";
 	private static final String URL_FIELD = "url";
+	private static final String DEPENDENCIES_FIELD = "dependencies";
 	private static final String OPTIONS_FIELD = "options";
 
 	private final String name;
@@ -42,6 +44,7 @@ public class TernFacetMetadata {
 	private final String author;
 	private final String repositoryURL;
 	private final String bugsURL;
+	private final Collection<String> dependencies;
 	private final Collection<TernFacetMetadataOption> options;
 
 	/**
@@ -67,12 +70,28 @@ public class TernFacetMetadata {
 		} else {
 			this.bugsURL = null;
 		}
+		// dependencies
+		JsonValue dependencies = json.get(DEPENDENCIES_FIELD);
+		if (dependencies != null && dependencies instanceof JsonArray) {
+			this.dependencies = parseDependencies((JsonArray) dependencies);
+		} else {
+			this.dependencies = Collections.emptyList();
+		}
+		// options
 		JsonValue options = json.get(OPTIONS_FIELD);
 		if (options != null && options instanceof JsonArray) {
 			this.options = parseOptions((JsonArray) options);
 		} else {
 			this.options = Collections.emptyList();
 		}
+	}
+
+	private Collection<String> parseDependencies(JsonArray jsonDependencies) {
+		List<String> dependencies = new ArrayList<String>();
+		for (JsonValue jsonDependency : jsonDependencies) {
+			dependencies.add(JsonHelper.getString(jsonDependency));
+		}
+		return dependencies;
 	}
 
 	private Collection<TernFacetMetadataOption> parseOptions(
@@ -145,5 +164,14 @@ public class TernFacetMetadata {
 	 */
 	public Collection<TernFacetMetadataOption> getOptions() {
 		return options;
+	}
+
+	/**
+	 * Returns list of {@link ITernFacet} name dependencies.
+	 * 
+	 * @return list of {@link ITernFacet} name dependencies.
+	 */
+	public Collection<String> getDependencies() {
+		return dependencies;
 	}
 }

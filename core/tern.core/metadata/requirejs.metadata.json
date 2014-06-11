@@ -17,12 +17,12 @@
   {
    "name": "baseURL",
    "description": "The base path to prefix to dependency filenames.",
-   "type": "path"
+   "type": "string"
   },
   {
    "name": "paths",
    "description": "An object mapping filename prefixes to specific paths.\nFor example {'acorn': 'lib/acorn/'}.",
-   "type": "path[]"
+   "type": "object"
   }
  ]
 }

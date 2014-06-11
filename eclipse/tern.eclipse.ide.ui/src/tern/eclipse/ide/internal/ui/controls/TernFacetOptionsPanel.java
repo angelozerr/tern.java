@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.ui.controls;
+package tern.eclipse.ide.internal.ui.controls;
 
 import java.util.Collection;
 
@@ -20,7 +20,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import tern.metadata.TernFacetMetadata;
-import tern.metadata.TernFacetMetadataManager;
 import tern.metadata.TernFacetMetadataOption;
 import tern.server.ITernFacet;
 
@@ -28,17 +27,15 @@ import tern.server.ITernFacet;
  * Display options of the given tern plugin.
  *
  */
-public class TernFacetOptionsPanel extends Composite {
+public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 
 	public TernFacetOptionsPanel(Composite parent, ITernFacet facet) {
-		super(parent, SWT.NONE);
-		createUI(facet);
+		super(parent, facet);
 	}
 
-	private void createUI(ITernFacet facet) {
-		TernFacetMetadata metadata = facet == null ? null
-				: TernFacetMetadataManager.getInstance().getMetadata(
-						facet.getName());
+	@Override
+	protected void createUI(Composite parent, ITernFacet facet,
+			TernFacetMetadata metadata) {
 
 		GridLayout layout = new GridLayout(2, false);
 		super.setLayout(layout);
@@ -48,7 +45,7 @@ public class TernFacetOptionsPanel extends Composite {
 			// each option.
 			Collection<TernFacetMetadataOption> options = metadata.getOptions();
 			for (TernFacetMetadataOption option : options) {
-				createUI(this, option);
+				createUI(parent, option);
 			}
 		}
 

@@ -8,40 +8,24 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.ui.controls;
+package tern.eclipse.ide.internal.ui.controls;
 
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 
-import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.server.ITernFacet;
 
 /**
- * Content of the "Details" Tab of tern facet selection.
+ * Abstract class for panel.
  *
  */
-public class DetailsPanel extends Composite {
-
-	public static final String HEADER_FONT = DetailsPanel.class.getName()
-			+ ".HEADER_FONT"; //$NON-NLS-1$
-
-	static {
-		// Initialize font for header title detail (bold font).
-		final String defaultFontName = JFaceResources.getDefaultFont()
-				.getFontData()[0].getName();
-		final FontData[] fontData = JFaceResources.getFontRegistry()
-				.getBold(defaultFontName).getFontData();
-		JFaceResources.getFontRegistry().put(HEADER_FONT, fontData);
-	}
+public abstract class AbstractPanel extends Composite {
 
 	private Composite content;
 
-	public DetailsPanel(Composite parent, TernFacetsBlock block) {
+	public AbstractPanel(Composite parent) {
 		super(parent, SWT.NONE);
 		GridLayout layout = new GridLayout();
 		super.setLayout(layout);
@@ -59,24 +43,24 @@ public class DetailsPanel extends Composite {
 		}
 
 		if (facet == null) {
-			// none facet are selected, create a text field.
+			// none facet are selected, create empty body content
 			this.content = new Composite(this, SWT.NONE);
 			GridLayout layout = new GridLayout();
 			this.content.setLayout(layout);
 
-			final Text noSelectionTextField = new Text(this.content, SWT.WRAP
-					| SWT.READ_ONLY);
-			noSelectionTextField.setLayoutData(new GridData(
-					GridData.FILL_HORIZONTAL));
-			noSelectionTextField
-					.setText(TernUIMessages.DetailsPanel_noSelectionLabel);
+			createEmptyBodyContent(content);
+
 		} else {
-			// facet is selected, display details of this facet
-			this.content = new TernFacetDetailsPanel(this, facet);
+			// facet is selected, display content of this facet
+			this.content = createContent(this, facet);
 		}
 		this.content
 				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		super.layout();
 	}
 
+	protected abstract void createEmptyBodyContent(Composite parent);
+
+	protected abstract Composite createContent(Composite parent,
+			ITernFacet facet);
 }

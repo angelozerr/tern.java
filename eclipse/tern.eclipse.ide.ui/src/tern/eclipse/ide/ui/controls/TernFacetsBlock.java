@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -43,9 +44,11 @@ import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.internal.ui.controls.DependenciesPanel;
+import tern.eclipse.ide.internal.ui.controls.DetailsPanel;
+import tern.eclipse.ide.internal.ui.controls.OptionsPanel;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.viewers.TernFacetContentProvider;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
 import tern.eclipse.ide.ui.viewers.TernFacetVersionEditingSupport;
 import tern.server.ITernDef;
@@ -64,14 +67,15 @@ import com.eclipsesource.json.JsonValue;
  */
 public class TernFacetsBlock extends AbstractTableBlock {
 
-	//private static final String SASH2W1 = "sash.2.weight.1";
-	//private static final String SASH2W2 = "sash.2.weight.2";
+	// private static final String SASH2W1 = "sash.2.weight.1";
+	// private static final String SASH2W2 = "sash.2.weight.2";
 
 	private final String tableLabel;
 	private Composite fControl;
 	private final List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
 	private CheckboxTableViewer tableViewer;
 	private DetailsPanel detailsPanel;
+	private DependenciesPanel dependenciesPanel;
 	private OptionsPanel optionsPanel;
 
 	public TernFacetsBlock(String tableLabel) {
@@ -110,6 +114,11 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		Dialog.applyDialogFont(parent);
 	}
 
+	/**
+	 * Create table of tern facets.
+	 * 
+	 * @param ancestor
+	 */
 	private void createFacetsMaster(Composite ancestor) {
 		Composite parent = new Composite(ancestor, SWT.NULL);
 		GridLayout layout = new GridLayout();
@@ -158,8 +167,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 				tableViewer));
 
 		tableViewer.setLabelProvider(new TernFacetLabelProvider());
-		tableViewer
-				.setContentProvider(new TernFacetContentProvider(ternFacets));
+		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 
 		addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -186,13 +194,20 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		tabFolder.setLayoutData(data);
 
 		// create details tab
-		this.detailsPanel = new DetailsPanel(tabFolder, this);
+		this.detailsPanel = new DetailsPanel(tabFolder);
 		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NULL);
 		detailsTabItem.setControl(this.detailsPanel);
 		detailsTabItem.setText(TernUIMessages.TernFacetsBlock_detailsTabLabel);
 
+		// create dependencies tab
+		this.dependenciesPanel = new DependenciesPanel(tabFolder);
+		TabItem dependenciesTabItem = new TabItem(tabFolder, SWT.NULL);
+		dependenciesTabItem.setControl(this.dependenciesPanel);
+		dependenciesTabItem
+				.setText(TernUIMessages.TernFacetsBlock_dependenciesTabLabel);
+
 		// create options tab
-		this.optionsPanel = new OptionsPanel(tabFolder, this);
+		this.optionsPanel = new OptionsPanel(tabFolder);
 		TabItem optionsTabItem = new TabItem(tabFolder, SWT.NULL);
 		optionsTabItem.setControl(this.optionsPanel);
 		optionsTabItem.setText(TernUIMessages.TernFacetsBlock_optionsTabLabel);
@@ -200,6 +215,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 
 	private void refreshFacet(ITernFacet facet) {
 		detailsPanel.refresh(facet);
+		dependenciesPanel.refresh(facet);
 		optionsPanel.refresh(facet);
 	}
 

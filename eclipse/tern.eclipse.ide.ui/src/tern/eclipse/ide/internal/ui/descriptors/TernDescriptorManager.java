@@ -23,8 +23,8 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.internal.ui.controls.TernFacetOptionsPanel;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.controls.TernFacetOptionsPanel;
 import tern.eclipse.ide.ui.descriptors.ITernDescriptor;
 import tern.eclipse.ide.ui.descriptors.ITernDescriptorManager;
 import tern.server.ITernFacet;
