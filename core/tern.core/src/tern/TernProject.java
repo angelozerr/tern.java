@@ -61,8 +61,6 @@ public class TernProject<T> extends JsonObject {
 	private static final String PLUGINS_FIELD_NAME = "plugins";
 	private static final String LIBS_FIELD_NAME = "libs";
 
-	private static final JsonObject EMPTY_OPTIONS = new JsonObject();
-
 	private final File projectDir;
 	private JsonArray patterns;
 
@@ -182,7 +180,7 @@ public class TernProject<T> extends JsonObject {
 	public boolean addPlugin(ITernPlugin plugin, JsonObject options) {
 		boolean exists = hasPlugin(plugin);
 		getPlugins().add(plugin.getName(),
-				options != null ? options : EMPTY_OPTIONS);
+				options != null ? options : new JsonObject());
 		return exists;
 	}
 
