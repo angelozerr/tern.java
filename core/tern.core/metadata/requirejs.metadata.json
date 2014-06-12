@@ -17,7 +17,7 @@
   {
    "name": "baseURL",
    "description": "The base path to prefix to dependency filenames.",
-   "type": "string"
+   "type": "path"
   },
   {
    "name": "paths",

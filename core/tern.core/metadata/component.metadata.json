@@ -9,5 +9,22 @@
  },
  "bugs": {
   "url": "https://github.com/marijnh/tern/issues"
- }
+ },
+ "options": [
+  {
+   "name": "dontLoad",
+   "description": "Can be set to true to disable dynamic loading of required modules entirely,\nor to a regular expression to disable loading of files that match the expression.",
+   "type": "boolean"
+  },
+  {
+   "name": "load",
+   "description": "If dontLoad isn't given, this setting is checked.\nIf it is a regular expression, the plugin will only load files that match the expression.",
+   "type": "string"
+  },
+  {
+   "name": "modules",
+   "description": "Can be used to assign JSON type definitions to certain modules, so that those are loaded instead of the source code itself.\nIf given, should be an object mapping module names to either JSON objects defining the types in the module, or a string referring to a file name (relative to the project directory) that contains the JSON data.",
+   "type": "object"
+  }
+ ]
 }

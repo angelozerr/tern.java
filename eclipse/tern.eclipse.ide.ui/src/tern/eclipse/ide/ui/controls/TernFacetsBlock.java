@@ -51,6 +51,7 @@ import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
 import tern.eclipse.ide.ui.viewers.TernFacetVersionEditingSupport;
+import tern.server.FacetType;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
@@ -77,6 +78,9 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	private DetailsPanel detailsPanel;
 	private DependenciesPanel dependenciesPanel;
 	private OptionsPanel optionsPanel;
+	private TabItem optionsTabItem;
+	private TabFolder tabFolder;
+	private TabItem detailsTabItem;
 
 	public TernFacetsBlock(String tableLabel) {
 		this.tableLabel = tableLabel;
@@ -188,14 +192,14 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	private void createFacetsDetails(Composite parent) {
 
 		// Create tab folder.
-		TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
+		tabFolder = new TabFolder(parent, SWT.NONE);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		data.heightHint = 80;
 		tabFolder.setLayoutData(data);
 
 		// create details tab
 		this.detailsPanel = new DetailsPanel(tabFolder);
-		TabItem detailsTabItem = new TabItem(tabFolder, SWT.NULL);
+		detailsTabItem = new TabItem(tabFolder, SWT.NULL);
 		detailsTabItem.setControl(this.detailsPanel);
 		detailsTabItem.setText(TernUIMessages.TernFacetsBlock_detailsTabLabel);
 
@@ -208,15 +212,25 @@ public class TernFacetsBlock extends AbstractTableBlock {
 
 		// create options tab
 		this.optionsPanel = new OptionsPanel(tabFolder);
-		TabItem optionsTabItem = new TabItem(tabFolder, SWT.NULL);
+		this.optionsTabItem = new TabItem(tabFolder, SWT.NULL);
 		optionsTabItem.setControl(this.optionsPanel);
 		optionsTabItem.setText(TernUIMessages.TernFacetsBlock_optionsTabLabel);
 	}
 
 	private void refreshFacet(ITernFacet facet) {
+		// refresh the tab item.
 		detailsPanel.refresh(facet);
 		dependenciesPanel.refresh(facet);
 		optionsPanel.refresh(facet);
+		// select the well tab item
+		if (TernFacetHelper.hasOptions(facet)) {
+			// tern plugin has filled options, select the options tab.
+			tabFolder.setSelection(optionsTabItem);
+		} else {
+			// otherwise, select the details tab.
+			tabFolder.setSelection(detailsTabItem);
+
+		}
 	}
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {

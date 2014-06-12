@@ -17,8 +17,12 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -90,16 +94,16 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_homepage, null,
-				metadata != null ? metadata.getHomePage() : "", null);
+				metadata != null ? metadata.getHomePage() : "", null, true);
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_author, null,
-				metadata != null ? metadata.getAuthor() : "", null);
+				metadata != null ? metadata.getAuthor() : "", null, false);
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_repositoryURL, null,
-				metadata != null ? metadata.getRepositoryURL() : "", null);
+				metadata != null ? metadata.getRepositoryURL() : "", null, true);
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_bugsURL, null,
-				metadata != null ? metadata.getBugsURL() : "", null);
+				metadata != null ? metadata.getBugsURL() : "", null, true);
 	}
 
 	public void createHeader(final Composite parent, ITernFacet facet) {
@@ -109,11 +113,12 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 
 		addInfo(header, null, TernFacetLabelProvider.getImageFacet(facet),
 				facet.getName(),
-				JFaceResources.getFontRegistry().get(DetailsPanel.HEADER_FONT));
+				JFaceResources.getFontRegistry().get(DetailsPanel.HEADER_FONT),
+				false);
 	}
 
 	public void addInfo(final Composite parent, String valueLabel, Image image,
-			String valueInfo, Font font) {
+			String valueInfo, Font font, boolean hyperlink) {
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
@@ -122,12 +127,32 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 			label.setImage(image);
 		}
 
-		Text textField = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
-		textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		textField.setText(valueInfo != null ? valueInfo : "");
-		if (textField != null) {
-			textField.setFont(font);
+		if (hyperlink) {
+			Link link = new Link(parent, SWT.WRAP);
+			link.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			if (link != null) {
+				link.setFont(font);
+			}
+			if (!StringUtils.isEmpty(valueInfo)) {
+				setLinkTarget(link, valueInfo);
+			}
+		} else {
+			Text textField = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
+			textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+			textField.setText(valueInfo != null ? valueInfo : "");
+			if (textField != null) {
+				textField.setFont(font);
+			}
 		}
 	}
 
+	private static void setLinkTarget(Link link, final String target) {
+		link.setText(new StringBuilder("<a>").append(target).append("</a>")
+				.toString());
+		link.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				Program.launch(target);
+			}
+		});
+	}
 }

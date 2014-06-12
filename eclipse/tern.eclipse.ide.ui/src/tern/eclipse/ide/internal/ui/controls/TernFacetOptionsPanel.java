@@ -15,13 +15,14 @@ import java.util.Collection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import com.eclipsesource.json.JsonObject;
 
 import tern.metadata.TernFacetMetadata;
 import tern.metadata.TernFacetMetadataOption;
@@ -30,6 +31,8 @@ import tern.server.ITernFacet;
 import tern.server.ITernFacetConfigurable;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
+
+import com.eclipsesource.json.JsonObject;
 
 /**
  * Display options of the given tern plugin.
@@ -73,11 +76,42 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		label.setText(new StringBuilder(name).append(":").toString());
 		label.setToolTipText(description);
 
+		if ("boolean".equals(type)) {
+			createBooleanOption(parent, name, options);
+		} else if ("string".equals(type)) {
+			createStringOption(parent, name, options);
+		} else {
+			createJsonOption(parent, name, options);
+		}
+	}
+
+	protected void createBooleanOption(Composite parent, final String name,
+			final JsonObject options) {
+		// create UI
+		final Button checkbox = new Button(parent, SWT.CHECK);
+		checkbox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		// init UI value
+		boolean value = JsonHelper.getBoolean(options, name, false);
+		checkbox.setSelection(value);
+		// Synchronize UI & JSON
+		checkbox.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				options.set(name, checkbox.getSelection());
+			}
+		});
+	}
+
+	protected void createStringOption(Composite parent, final String name,
+			final JsonObject options) {
+		// create UI
 		final Text textField = new Text(parent, SWT.BORDER);
 		textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		// init UI value
 		String initialValue = JsonHelper.getString(options.get(name));
 		textField.setText(initialValue != null ? initialValue : "");
-
+		// Synchronize UI & JSON
 		textField.addModifyListener(new ModifyListener() {
 
 			@Override
@@ -87,6 +121,36 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 					options.remove(name);
 				} else {
 					options.set(name, value);
+				}
+			}
+		});
+	}
+
+	protected void createJsonOption(Composite parent, final String name,
+			final JsonObject options) {
+		// create UI
+		final Text textField = new Text(parent, SWT.MULTI | SWT.BORDER
+				| SWT.WRAP | SWT.V_SCROLL);
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		data.heightHint = 100;
+		textField.setLayoutData(data);
+		// init UI value
+		String initialValue = JsonHelper.getString(options.get(name));
+		textField.setText(initialValue != null ? initialValue : "");
+		// Synchronize UI & JSON
+		textField.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				String value = textField.getText();
+				if (StringUtils.isEmpty(value)) {
+					options.remove(name);
+				} else {
+					try {
+						options.set(name, JsonObject.readFrom(value));
+					} catch (Throwable t) {
+						t.printStackTrace();
+					}
 				}
 			}
 		});

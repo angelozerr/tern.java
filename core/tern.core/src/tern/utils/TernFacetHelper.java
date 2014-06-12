@@ -183,4 +183,18 @@ public class TernFacetHelper {
 		}
 		return null;
 	}
+
+	/**
+	 * Returns true if the given facet has filled options and false otherwise.
+	 * 
+	 * @param facet
+	 * @return true if the given facet has filled options and false otherwise.
+	 */
+	public static boolean hasOptions(ITernFacet facet) {
+		if (facet == null || facet.getFacetType() != FacetType.Configurable) {
+			return false;
+		}
+		ITernFacetConfigurable f = (ITernFacetConfigurable) facet;
+		return (f.getOptions() != null && f.getOptions().size() > 0);
+	}
 }
