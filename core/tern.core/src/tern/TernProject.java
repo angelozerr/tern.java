@@ -166,7 +166,7 @@ public class TernProject<T> extends JsonObject {
 	 *         otherwise.
 	 */
 	public boolean addPlugin(ITernPlugin plugin) {
-		return addPlugin(plugin, EMPTY_OPTIONS);
+		return addPlugin(plugin, null);
 	}
 
 	/**
@@ -181,7 +181,8 @@ public class TernProject<T> extends JsonObject {
 	 */
 	public boolean addPlugin(ITernPlugin plugin, JsonObject options) {
 		boolean exists = hasPlugin(plugin);
-		getPlugins().add(plugin.getName(), options);
+		getPlugins().add(plugin.getName(),
+				options != null ? options : EMPTY_OPTIONS);
 		return exists;
 	}
 
