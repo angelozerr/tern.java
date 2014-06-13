@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -35,12 +36,13 @@ import tern.server.ITernFacet;
  */
 public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 
-	public TernFacetDependenciesPanel(Composite parent, ITernFacet facet) {
-		super(parent, facet);
+	public TernFacetDependenciesPanel(Composite parent, ITernFacet facet,
+			IProject project) {
+		super(parent, facet, project);
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet) {
+	protected void createUI(Composite parent, ITernFacet facet, IProject project) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);

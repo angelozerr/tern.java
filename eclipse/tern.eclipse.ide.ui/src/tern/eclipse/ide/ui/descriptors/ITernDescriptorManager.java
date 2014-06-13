@@ -1,5 +1,6 @@
 package tern.eclipse.ide.ui.descriptors;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
@@ -32,8 +33,11 @@ public interface ITernDescriptorManager {
 	 *            composite
 	 * @param facet
 	 *            tern facet.
+	 * @param project
+	 *            the current project or null otherwise.
 	 * @return options panel for the given facet.
 	 */
-	Composite createOptionsPanel(Composite parent, ITernFacet facet);
+	Composite createOptionsPanel(Composite parent, ITernFacet facet,
+			IProject project);
 
 }

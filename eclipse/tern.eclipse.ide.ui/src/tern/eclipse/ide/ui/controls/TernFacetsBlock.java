@@ -51,11 +51,9 @@ import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
 import tern.eclipse.ide.ui.viewers.TernFacetVersionEditingSupport;
-import tern.server.FacetType;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
-import tern.utils.StringUtils;
 import tern.utils.TernFacetHelper;
 
 import com.eclipsesource.json.JsonArray;
@@ -72,6 +70,8 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	// private static final String SASH2W2 = "sash.2.weight.2";
 
 	private final String tableLabel;
+	private final IProject project;
+
 	private Composite fControl;
 	private final List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
 	private CheckboxTableViewer tableViewer;
@@ -82,7 +82,8 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	private TabFolder tabFolder;
 	private TabItem detailsTabItem;
 
-	public TernFacetsBlock(String tableLabel) {
+	public TernFacetsBlock(IProject project, String tableLabel) {
+		this.project = project;
 		this.tableLabel = tableLabel;
 	}
 
@@ -198,20 +199,20 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		tabFolder.setLayoutData(data);
 
 		// create details tab
-		this.detailsPanel = new DetailsPanel(tabFolder);
+		this.detailsPanel = new DetailsPanel(tabFolder, project);
 		detailsTabItem = new TabItem(tabFolder, SWT.NULL);
 		detailsTabItem.setControl(this.detailsPanel);
 		detailsTabItem.setText(TernUIMessages.TernFacetsBlock_detailsTabLabel);
 
 		// create dependencies tab
-		this.dependenciesPanel = new DependenciesPanel(tabFolder);
+		this.dependenciesPanel = new DependenciesPanel(tabFolder, project);
 		TabItem dependenciesTabItem = new TabItem(tabFolder, SWT.NULL);
 		dependenciesTabItem.setControl(this.dependenciesPanel);
 		dependenciesTabItem
 				.setText(TernUIMessages.TernFacetsBlock_dependenciesTabLabel);
 
 		// create options tab
-		this.optionsPanel = new OptionsPanel(tabFolder);
+		this.optionsPanel = new OptionsPanel(tabFolder, project);
 		this.optionsTabItem = new TabItem(tabFolder, SWT.NULL);
 		optionsTabItem.setControl(this.optionsPanel);
 		optionsTabItem.setText(TernUIMessages.TernFacetsBlock_optionsTabLabel);
@@ -319,7 +320,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	/**
 	 * Load plugins from tern project.
 	 */
-	public void loadFacets(IProject project) {
+	public void loadFacets() {
 		try {
 			// Load list of Tern Plugins + JSON Type Definitions.
 			List<ITernFacet> allFacets = new ArrayList<ITernFacet>();

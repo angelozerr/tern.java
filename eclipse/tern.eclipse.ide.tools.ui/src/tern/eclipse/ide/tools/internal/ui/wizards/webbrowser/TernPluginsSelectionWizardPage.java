@@ -59,7 +59,9 @@ public class TernPluginsSelectionWizardPage extends
 		layout.marginWidth = 0;
 		container.setLayout(layout);
 
-		facetsBlock = new TernFacetsBlock(null);
+		IResource resource = super.getResource();
+		IProject project = resource != null ? resource.getProject() : null;
+		facetsBlock = new TernFacetsBlock(project, null);
 		facetsBlock.createControl(container);
 		facetsBlock
 				.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -78,10 +80,8 @@ public class TernPluginsSelectionWizardPage extends
 	}
 
 	@Override
-	protected void initialize() {
-		IResource resource = super.getResource();
-		IProject project = resource != null ? resource.getProject() : null;
-		facetsBlock.loadFacets(project);
+	protected void initialize() {		
+		facetsBlock.loadFacets();
 	}
 
 	@Override

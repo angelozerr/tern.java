@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.internal.ui.controls;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -23,10 +24,12 @@ import tern.server.ITernFacet;
  */
 public abstract class AbstractPanel extends Composite {
 
+	private final IProject project;
 	private Composite content;
 
-	public AbstractPanel(Composite parent) {
+	public AbstractPanel(Composite parent, IProject project) {
 		super(parent, SWT.NONE);
+		this.project = project;
 		GridLayout layout = new GridLayout();
 		super.setLayout(layout);
 	}
@@ -52,7 +55,7 @@ public abstract class AbstractPanel extends Composite {
 
 		} else {
 			// facet is selected, display content of this facet
-			this.content = createContent(this, facet);
+			this.content = createContent(this, facet, project);
 		}
 		this.content
 				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -62,5 +65,5 @@ public abstract class AbstractPanel extends Composite {
 	protected abstract void createEmptyBodyContent(Composite parent);
 
 	protected abstract Composite createContent(Composite parent,
-			ITernFacet facet);
+			ITernFacet facet, IProject project);
 }

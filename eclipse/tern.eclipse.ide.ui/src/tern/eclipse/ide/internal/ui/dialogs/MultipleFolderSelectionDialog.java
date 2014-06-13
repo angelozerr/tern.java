@@ -251,7 +251,7 @@ public class MultipleFolderSelectionDialog extends SelectionStatusDialog
 
 		if (hasNewFolderButton) {
 			Button button = new Button(composite, SWT.PUSH);
-			button.setText(TernUIMessages.MultipleFolderSelectionDialog_button);
+			button.setText(TernUIMessages.Button_newFolder);
 			button.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent event) {

@@ -30,7 +30,9 @@ public final class TernUIMessages extends NLS {
 	public static String Button_addFolder;
 	public static String Button_addProject;
 	public static String Button_remove;
-
+	public static String Button_newFolder;
+	public static String Button_selectPath;
+	
 	// Commands
 	public static String ConvertProjectToTern_converting_project_job_title;
 
@@ -50,14 +52,12 @@ public final class TernUIMessages extends NLS {
 	public static String TernFacetDetailsPanel_repositoryURL;
 	public static String TernFacetDetailsPanel_bugsURL;
 	public static String DetailsPanel_noSelectionLabel;
-
+	public static String TernFacetOptionsPanel_selectPathDialogTitle;
+	
 	public static String TernScriptPathsBlock_desc;
 
 	public static String TernConsolePropertyPage_desc;
 	public static String TernConsolePropertyPage_traceOnConsole_label;
-
-	// Dialogs
-	public static String MultipleFolderSelectionDialog_button;
 
 	// Hyperlink
 	public static String TernHyperlink_typeLabel;

@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.internal.ui.controls;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -37,12 +38,13 @@ import tern.utils.StringUtils;
  */
 public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 
-	public TernFacetDetailsPanel(Composite parent, ITernFacet facet) {
-		super(parent, facet);
+	public TernFacetDetailsPanel(Composite parent, ITernFacet facet,
+			IProject project) {
+		super(parent, facet, project);
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet) {
+	protected void createUI(Composite parent, ITernFacet facet, IProject project) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);

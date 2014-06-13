@@ -13,6 +13,7 @@ package tern.eclipse.ide.internal.ui.descriptors;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -73,8 +74,9 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	}
 
 	@Override
-	public Composite createOptionsPanel(Composite parent, ITernFacet facet) {
-		return new TernFacetOptionsPanel(parent, facet);
+	public Composite createOptionsPanel(Composite parent, ITernFacet facet,
+			IProject project) {
+		return new TernFacetOptionsPanel(parent, facet, project);
 	}
 
 	@Override

@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.internal.ui.controls;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontData;
@@ -38,8 +39,8 @@ public class DetailsPanel extends AbstractPanel {
 		JFaceResources.getFontRegistry().put(HEADER_FONT, fontData);
 	}
 
-	public DetailsPanel(Composite parent) {
-		super(parent);
+	public DetailsPanel(Composite parent, IProject project) {
+		super(parent, project);
 	}
 
 	@Override
@@ -54,7 +55,8 @@ public class DetailsPanel extends AbstractPanel {
 	}
 
 	@Override
-	protected Composite createContent(Composite parent, ITernFacet facet) {
-		return new TernFacetDetailsPanel(parent, facet);
+	protected Composite createContent(Composite parent, ITernFacet facet,
+			IProject project) {
+		return new TernFacetDetailsPanel(parent, facet, project);
 	}
 }

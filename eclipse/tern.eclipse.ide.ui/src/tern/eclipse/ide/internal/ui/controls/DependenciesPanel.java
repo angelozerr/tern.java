@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.internal.ui.controls;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.widgets.Composite;
 
 import tern.server.ITernFacet;
@@ -20,8 +21,8 @@ import tern.server.ITernFacet;
  */
 public class DependenciesPanel extends AbstractPanel {
 
-	public DependenciesPanel(Composite parent) {
-		super(parent);
+	public DependenciesPanel(Composite parent, IProject project) {
+		super(parent, project);
 	}
 
 	@Override
@@ -30,7 +31,8 @@ public class DependenciesPanel extends AbstractPanel {
 	}
 
 	@Override
-	protected Composite createContent(Composite parent, ITernFacet facet) {
-		return new TernFacetDependenciesPanel(parent, facet);
+	protected Composite createContent(Composite parent, ITernFacet facet,
+			IProject project) {
+		return new TernFacetDependenciesPanel(parent, facet, project);
 	}
 }
