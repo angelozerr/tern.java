@@ -175,8 +175,9 @@ public class TernFacetHelper {
 					((ITernFacetConfigurable) f).setVersion(version);
 				}
 				if (options instanceof JsonObject) {
-					((ITernFacetConfigurable) f)
-							.setOptions((JsonObject) options);
+					// set a copy of the options.
+					((ITernFacetConfigurable) f).setOptions(new JsonObject(
+							(JsonObject) options));
 				}
 				return (ITernFacetConfigurable) f;
 			}

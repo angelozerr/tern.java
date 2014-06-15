@@ -22,7 +22,7 @@
   {
    "name": "paths",
    "description": "An object mapping filename prefixes to specific paths.\nFor example {'acorn': 'lib/acorn/'}.",
-   "type": "object"
+   "type": "path[]"   
   }
  ]
 }

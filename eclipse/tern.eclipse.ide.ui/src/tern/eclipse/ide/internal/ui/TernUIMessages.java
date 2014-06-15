@@ -53,6 +53,9 @@ public final class TernUIMessages extends NLS {
 	public static String TernFacetDetailsPanel_bugsURL;
 	public static String DetailsPanel_noSelectionLabel;
 	public static String TernFacetOptionsPanel_selectPathDialogTitle;
+	public static String TernFacetOptionsPanel_validatePath;
+	public static String TernFacetOptionsPanel_paths_filenameColumn;
+	public static String TernFacetOptionsPanel_paths_pathColumn;
 	
 	public static String TernScriptPathsBlock_desc;
 

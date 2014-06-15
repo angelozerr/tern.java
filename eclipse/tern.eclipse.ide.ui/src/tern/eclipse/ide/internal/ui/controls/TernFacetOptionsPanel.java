@@ -11,13 +11,21 @@
 package tern.eclipse.ide.internal.ui.controls;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
@@ -26,11 +34,13 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eclipse.ui.model.WorkbenchContentProvider;
@@ -38,6 +48,10 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.dialogs.FolderSelectionDialog;
+import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
+import tern.eclipse.ide.ui.viewers.JsonContentProvider;
+import tern.eclipse.ide.ui.viewers.JsonLabelProvider;
+import tern.eclipse.ide.ui.viewers.MemberWrapper;
 import tern.metadata.TernFacetMetadata;
 import tern.metadata.TernFacetMetadataOption;
 import tern.server.FacetType;
@@ -47,6 +61,7 @@ import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Display options of the given tern plugin.
@@ -69,24 +84,23 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		if (metadata != null && facet.getFacetType() == FacetType.Configurable) {
 			// get the options of the given facet and display UI field for
 			// each option.
+
+			JsonObject jsonOptions = getOptions((ITernFacetConfigurable) facet);
+
 			Collection<TernFacetMetadataOption> options = metadata.getOptions();
 			for (TernFacetMetadataOption option : options) {
-				createUI(parent, (ITernFacetConfigurable) facet, project,
-						option);
+				createUI(parent, jsonOptions, project, option);
 			}
 		}
 
 	}
 
-	protected void createUI(Composite parent,
-			final ITernFacetConfigurable facet, IProject project,
-			TernFacetMetadataOption option) {
+	protected void createUI(Composite parent, final JsonObject options,
+			IProject project, TernFacetMetadataOption option) {
 
 		final String name = option.getName();
 		String description = option.getDescription();
 		String type = option.getType();
-
-		final JsonObject options = getOptions(facet);
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
@@ -103,6 +117,8 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 			} else {
 				createStringOption(parent, name, options);
 			}
+		} else if ("path[]".equals(type)) {
+			createPathArrayOption(parent, project, name, options);
 		} else {
 			createJsonOption(parent, name, options);
 		}
@@ -159,9 +175,19 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		// create UI
 		final Text textField = new Text(parent, SWT.BORDER);
 		textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		// init UI value
-		String initialValue = JsonHelper.getString(options.get(name));
-		textField.setText(initialValue != null ? initialValue : "");
+
+		// create the decoration for the text component
+		final ControlDecoration deco = new ControlDecoration(textField, SWT.TOP
+				| SWT.LEFT);
+		Image image = FieldDecorationRegistry.getDefault()
+				.getFieldDecoration(FieldDecorationRegistry.DEC_WARNING)
+				.getImage();
+
+		// set description and image
+		deco.setDescriptionText(TernUIMessages.TernFacetOptionsPanel_validatePath);
+		deco.setImage(image);
+		deco.hide();
+
 		// Synchronize UI & JSON
 		textField.addModifyListener(new ModifyListener() {
 
@@ -171,10 +197,21 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 				if (StringUtils.isEmpty(value)) {
 					options.remove(name);
 				} else {
+					IFolder folder = project.getFolder(value);
+					if ((folder != null && folder.exists())) {
+						deco.hide();
+					} else {
+						deco.show();
+					}
 					options.set(name, value);
 				}
+
 			}
 		});
+
+		// init UI value
+		String initialValue = JsonHelper.getString(options.get(name));
+		textField.setText(initialValue != null ? initialValue : "");
 
 		Button pathButton = new Button(parent, SWT.PUSH);
 		pathButton.setText(TernUIMessages.Button_selectPath);
@@ -209,7 +246,8 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		FolderSelectionDialog dialog = new FolderSelectionDialog(getShell(),
 				lp, cp);
 		dialog.setTitle(TernUIMessages.TernFacetOptionsPanel_selectPathDialogTitle);
-		IFolder folder = project.getFolder(textField.getText());
+		IFolder folder = StringUtils.isEmpty(textField.getText()) ? null
+				: project.getFolder(textField.getText());
 		if (folder != null && folder.exists()) {
 			dialog.setInitialSelection(folder);
 		}
@@ -234,6 +272,125 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		};
 		dialog.addFilter(filter);
 		return dialog;
+	}
+
+	protected void createPathArrayOption(Composite ancestor,
+			final IProject project, final String name, final JsonObject options) {
+
+		final JsonObject pathsOption = getPathsOption(name, options);
+
+		final Composite parent = new Composite(ancestor, SWT.NONE);
+		parent.setLayout(new GridLayout());
+		parent.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+		Composite toolbarComposite = new Composite(parent, SWT.NONE);
+		toolbarComposite.setLayout(new GridLayout(2, false));
+		toolbarComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		Button addButton = new Button(toolbarComposite, SWT.PUSH);
+		addButton.setText("Add..");
+		Button removeButton = new Button(toolbarComposite, SWT.PUSH);
+		removeButton.setText("Remove..");
+
+		// create UI
+		final TableViewer viewer = new TableViewer(parent, SWT.BORDER
+				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);
+
+		// create filename column
+		TableViewerColumn filenameColumn = new TableViewerColumn(viewer,
+				SWT.NONE);
+		filenameColumn.getColumn().setWidth(100);
+		filenameColumn.getColumn().setResizable(true);
+		filenameColumn.getColumn().setText(
+				TernUIMessages.TernFacetOptionsPanel_paths_filenameColumn);
+		filenameColumn.setEditingSupport(new FilenameEditingSupport(viewer));
+
+		// create path column
+		TableViewerColumn pathColumn = new TableViewerColumn(viewer, SWT.NONE);
+		pathColumn.getColumn().setWidth(180);
+		pathColumn.getColumn().setResizable(true);
+		pathColumn.getColumn().setText(
+				TernUIMessages.TernFacetOptionsPanel_paths_pathColumn);
+		pathColumn.setEditingSupport(new PathEditingSupport(viewer));
+
+		viewer.setLabelProvider(JsonLabelProvider.getInstance());
+		viewer.setContentProvider(JsonContentProvider.getInstance());
+
+		Table table = viewer.getTable();
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+
+		GridData data = new GridData(GridData.FILL_BOTH);
+		data.heightHint = 100;
+		table.setLayoutData(data);
+
+		viewer.setInput(pathsOption);
+
+		addButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				OpenResourceDialog dialog = new OpenResourceDialog(getShell(),
+						true, project, IResource.FILE);
+				if (dialog.open() != Window.OK) {
+					return;
+				}
+				Object[] results = dialog.getResult();
+				if (results != null && results.length > 0) {
+					IFile file = (IFile) results[0];
+					String fileName = getPath(file.getName());
+					String path = file.getProjectRelativePath().toString();
+
+					String base = null;
+					JsonValue baseURL = options.get("baseURL");
+					if (baseURL != null && baseURL.isString()) {
+						base = JsonHelper.getString(baseURL);
+					}
+
+					if (base != null) {
+						path = file.getProjectRelativePath()
+								.makeRelativeTo(new Path(base)).toString();
+					}
+					path = getPath(path);
+					pathsOption.set(fileName, path);
+					viewer.refresh();
+				}
+			}
+
+			private String getPath(String name) {
+				int index = name.lastIndexOf(".");
+				if (index != -1) {
+					return name.substring(0, index);
+				}
+				return name;
+			}
+		});
+		removeButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection = (IStructuredSelection) viewer
+						.getSelection();
+				if (!selection.isEmpty()) {
+					Iterator it = selection.iterator();
+					while (it.hasNext()) {
+						Object element = it.next();
+						pathsOption.remove(((MemberWrapper) element).getName());
+					}
+					viewer.refresh();
+				}
+			}
+		});
+
+	}
+
+	public JsonObject getPathsOption(final String name, final JsonObject options) {
+		JsonValue pathsOption = options.get(name);
+		if (pathsOption == null || !(pathsOption instanceof JsonObject)) {
+			pathsOption = new JsonObject();
+			options.set(name, pathsOption);
+		}
+		return (JsonObject) pathsOption;
 	}
 
 	protected void createJsonOption(Composite parent, final String name,

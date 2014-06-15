@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.ui.viewers;
+package tern.eclipse.ide.internal.ui.controls;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -43,7 +43,11 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 
 	@Override
 	protected boolean canEdit(Object element) {
-		return element instanceof ITernFacetConfigurable;
+		if (element instanceof ITernFacetConfigurable) {
+			return ((ITernFacetConfigurable) element).getAvailableVersions()
+					.size() > 0;
+		}
+		return false;
 	}
 
 	@Override

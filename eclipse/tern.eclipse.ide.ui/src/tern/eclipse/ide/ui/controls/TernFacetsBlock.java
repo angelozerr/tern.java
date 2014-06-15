@@ -47,10 +47,10 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.controls.DependenciesPanel;
 import tern.eclipse.ide.internal.ui.controls.DetailsPanel;
 import tern.eclipse.ide.internal.ui.controls.OptionsPanel;
+import tern.eclipse.ide.internal.ui.controls.TernFacetVersionEditingSupport;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
-import tern.eclipse.ide.ui.viewers.TernFacetVersionEditingSupport;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
@@ -220,8 +220,6 @@ public class TernFacetsBlock extends AbstractTableBlock {
 
 	private void refreshFacet(ITernFacet facet) {
 		// refresh the tab item.
-		detailsPanel.refresh(facet);
-		dependenciesPanel.refresh(facet);
 		optionsPanel.refresh(facet);
 		// select the well tab item
 		if (TernFacetHelper.hasOptions(facet)) {
@@ -230,8 +228,9 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		} else {
 			// otherwise, select the details tab.
 			tabFolder.setSelection(detailsTabItem);
-
 		}
+		detailsPanel.refresh(facet);
+		dependenciesPanel.refresh(facet);
 	}
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
