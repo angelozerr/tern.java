@@ -158,6 +158,8 @@ public class ImageResource {
 	}
 
 	public static void registerImageDescriptor(String key, ImageDescriptor id) {
+		if (imageRegistry == null)
+			initializeImageRegistry();
 		imageRegistry.put(key, id);
 		imageDescriptors.put(key, id);
 	}
