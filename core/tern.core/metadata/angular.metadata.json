@@ -14,7 +14,7 @@
  "bugs": {
   "url": "https://github.com/angelozerr/angularjs-eclipse/issues"
  },
- "src": {
-  "url": "https://github.com/angelozerr/tern.java/blob/master/core/tern.core/node_modules/tern/plugin/angular.js"
+ "help": {
+  "url": "https://github.com/angelozerr/angularjs-eclipse"
  }
 }

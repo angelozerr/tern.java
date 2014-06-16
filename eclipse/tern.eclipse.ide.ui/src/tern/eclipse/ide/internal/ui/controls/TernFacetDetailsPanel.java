@@ -94,18 +94,27 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 			descTextField.setText(metadata.getDescription());
 		}
 
+		// Home page
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_homepage, null,
 				metadata != null ? metadata.getHomePage() : "", null, true);
+		// Author
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_author, null,
 				metadata != null ? metadata.getAuthor() : "", null, false);
+		// Repository URL
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_repositoryURL, null,
 				metadata != null ? metadata.getRepositoryURL() : "", null, true);
+		// Bugs URL
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernFacetDetailsPanel_bugsURL, null,
 				metadata != null ? metadata.getBugsURL() : "", null, true);
+		// Help URL
+		addInfo(nestedDetailsComposite,
+				TernUIMessages.TernFacetDetailsPanel_helpURL, null,
+				metadata != null ? metadata.getHelpURL() : "", null, true);
+		
 	}
 
 	public void createHeader(final Composite parent, ITernFacet facet) {

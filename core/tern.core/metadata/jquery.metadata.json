@@ -13,5 +13,8 @@
  },
  "bugs": {
   "url": "https://github.com/marijnh/tern/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-jQuery-support"
  }
 }

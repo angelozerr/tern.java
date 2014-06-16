@@ -34,6 +34,7 @@ public class TernFacetMetadata {
 	private static final String AUTHOR_FIELD = "author";
 	private static final String REPOSITORY_FIELD = "repository";
 	private static final String BUGS_FIELD = "bugs";
+	private static final String HELP_FIELD = "help";
 	private static final String URL_FIELD = "url";
 	private static final String DEPENDENCIES_FIELD = "dependencies";
 	private static final String OPTIONS_FIELD = "options";
@@ -44,6 +45,7 @@ public class TernFacetMetadata {
 	private final String author;
 	private final String repositoryURL;
 	private final String bugsURL;
+	private final String helpURL;
 	private final Collection<String> dependencies;
 	private final Collection<TernFacetMetadataOption> options;
 
@@ -57,19 +59,9 @@ public class TernFacetMetadata {
 		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
 		this.homepage = JsonHelper.getString(json, HOMEPAGE_FIELD);
 		this.author = JsonHelper.getString(json, AUTHOR_FIELD);
-		JsonValue repository = json.get(REPOSITORY_FIELD);
-		if (repository != null) {
-			this.repositoryURL = JsonHelper.getString((JsonObject) repository,
-					URL_FIELD);
-		} else {
-			this.repositoryURL = null;
-		}
-		JsonValue bugs = json.get(BUGS_FIELD);
-		if (bugs != null) {
-			this.bugsURL = JsonHelper.getString((JsonObject) bugs, URL_FIELD);
-		} else {
-			this.bugsURL = null;
-		}
+		this.repositoryURL = getURL(json, REPOSITORY_FIELD);
+		this.bugsURL = getURL(json, BUGS_FIELD);
+		this.helpURL = getURL(json, HELP_FIELD);
 		// dependencies
 		JsonValue dependencies = json.get(DEPENDENCIES_FIELD);
 		if (dependencies != null && dependencies instanceof JsonArray) {
@@ -84,6 +76,14 @@ public class TernFacetMetadata {
 		} else {
 			this.options = Collections.emptyList();
 		}
+	}
+
+	public String getURL(JsonObject json, String name) {
+		JsonValue value = json.get(name);
+		if (value != null) {
+			return JsonHelper.getString((JsonObject) value, URL_FIELD);
+		}
+		return null;
 	}
 
 	private Collection<String> parseDependencies(JsonArray jsonDependencies) {
@@ -155,6 +155,15 @@ public class TernFacetMetadata {
 	 */
 	public String getBugsURL() {
 		return bugsURL;
+	}
+
+	/**
+	 * Returns the help URL of the facet.
+	 * 
+	 * @return the help URL of the facet.
+	 */
+	public String getHelpURL() {
+		return helpURL;
 	}
 
 	/**

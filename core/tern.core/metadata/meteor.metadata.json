@@ -13,5 +13,8 @@
  },
  "bugs": {
   "url": "https://github.com/Slava/tern-meteor/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Meteor-support"
  }
 }
