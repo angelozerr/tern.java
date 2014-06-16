@@ -460,8 +460,7 @@ public class IDETernProject extends TernProject<IFile> {
 	public void request(TernAngularCompletionsQuery query, JsonArray names,
 			ITernCompletionCollector collector) throws IOException,
 			TernException {
-		syncFiles(new TernDoc(), names,
-				scriptPaths.toArray(ITernScriptPath.EMPTY_SCRIPT_PATHS));
+		syncFiles(new TernDoc(), names, null);
 		TernDoc doc = new TernDoc(query);
 		request(doc, collector);
 	}
@@ -585,20 +584,31 @@ public class IDETernProject extends TernProject<IFile> {
 	 * @throws IOException
 	 */
 	private void syncFiles(TernDoc doc, JsonArray names,
-			ITernScriptPath... scriptPaths) throws IOException {
+			ITernScriptPath scriptPath) throws IOException {
 		synchronized (lock) {
-			for (int i = 0; i < scriptPaths.length; i++) {
-				scriptPaths[i].updateFiles(getFileManager(), doc, names);
+			for (ITernScriptPath currentScriptPath : scriptPaths) {
+				currentScriptPath.updateFiles(getFileManager(), doc,
+						getNames(names, currentScriptPath, scriptPath));
 			}
 			synchFiles(doc);
 		}
 	}
 
+	private JsonArray getNames(JsonArray names,
+			ITernScriptPath currentScriptPath, ITernScriptPath scriptPath) {
+		if (names != null) {
+			if (scriptPath == null || currentScriptPath.equals(scriptPath)) {
+				return names;
+			}
+			return null;
+		}
+		return names;
+	}
+
 	private void synchFiles(IFile file, IDocument document, TernDoc doc)
 			throws IOException {
 		synchronized (lock) {
-			syncFiles(doc, null,
-					scriptPaths.toArray(ITernScriptPath.EMPTY_SCRIPT_PATHS));
+			syncFiles(doc, null, null);
 			if (file != null && file.exists()) {
 				String name = getFileManager().getFileName(file);
 				String text = document.get();
@@ -713,8 +723,7 @@ public class IDETernProject extends TernProject<IFile> {
 		synchronized (lock) {
 			getFileManager().updateFiles(domNode, domFile, doc, names);
 			if (!doc.hasFiles()) {
-				syncFiles(doc, names,
-						scriptPaths.toArray(ITernScriptPath.EMPTY_SCRIPT_PATHS));
+				syncFiles(doc, names, null);
 			}
 			synchFiles(doc);
 		}
