@@ -233,4 +233,15 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 		return TernDef.getTernDef(name);
 	}
 
+	@Override
+	public ITernFacet findTernFacet(String name) {
+		// search from tern plugin
+		ITernPlugin plugin = findTernPlugin(name);
+		if (plugin != null) {
+			return plugin;
+		}
+		// search from tern def
+		return findTernDef(name);
+	}
+
 }

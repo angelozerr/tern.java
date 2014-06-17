@@ -18,7 +18,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -32,6 +34,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -51,6 +54,7 @@ import tern.eclipse.ide.internal.ui.controls.TernFacetVersionEditingSupport;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
+import tern.metadata.TernFacetMetadata;
 import tern.server.ITernDef;
 import tern.server.ITernFacet;
 import tern.server.ITernPlugin;
@@ -81,6 +85,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	private TabItem optionsTabItem;
 	private TabFolder tabFolder;
 	private TabItem detailsTabItem;
+	private Button selectDependenciesCheckbox;
 
 	public TernFacetsBlock(IProject project, String tableLabel) {
 		this.project = project;
@@ -101,20 +106,28 @@ public class TernFacetsBlock extends AbstractTableBlock {
 
 		GridData data;
 		if (tableLabel != null) {
-			Label tableLabel = new Label(parent, SWT.NONE);
-			tableLabel.setText(this.tableLabel);
+			Composite header = new Composite(parent, SWT.NONE);
 			data = new GridData();
 			data.horizontalSpan = 2;
-			tableLabel.setLayoutData(data);
+			header.setLayoutData(data);
+			header.setLayout(new GridLayout(2, false));
+
+			// Create description
+			Label tableLabel = new Label(header, SWT.NONE);
+			tableLabel.setText(this.tableLabel);
+			tableLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			tableLabel.setFont(font);
+			// Create dependencies checkbox
+			selectDependenciesCheckbox = new Button(header, SWT.CHECK);
+			selectDependenciesCheckbox.setSelection(true);
 		}
 
-		SashForm sform2 = new SashForm(parent, SWT.HORIZONTAL | SWT.SMOOTH);
+		SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL | SWT.SMOOTH);
 		data = new GridData(SWT.FILL, SWT.FILL, true, true);
-		sform2.setLayoutData(data);
+		sashForm.setLayoutData(data);
 
-		createFacetsMaster(sform2);
-		createFacetsDetails(sform2);
+		createFacetsMaster(sashForm);
+		createFacetsDetails(sashForm);
 
 		Dialog.applyDialogFont(parent);
 	}
@@ -174,6 +187,47 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		tableViewer.setLabelProvider(new TernFacetLabelProvider());
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 
+		// when a facet is checked and dependencies checkbox is checked, tern
+		// facet dependencies must be selected too
+		tableViewer.addCheckStateListener(new ICheckStateListener() {
+
+			private boolean checkUpdating;
+
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent e) {
+				if (checkUpdating) {
+					return;
+				}
+				try {
+					checkUpdating = true;
+					if (e.getChecked() && isSelectDependencies()) {
+						ITernFacet facet = ((ITernFacet) e.getElement());
+						TernFacetMetadata metadata = facet.getMetadata();
+						if (metadata != null) {
+							ITernFacet dependencyFacet = null;
+							// loop for each dependencies and check it if needed
+							for (String facetName : metadata.getDependencies()) {
+								dependencyFacet = TernCorePlugin
+										.getTernServerTypeManager()
+										.findTernFacet(facetName);
+								if (dependencyFacet != null) {
+									if (!tableViewer
+											.getChecked(dependencyFacet)) {
+										tableViewer.setChecked(dependencyFacet,
+												true);
+									}
+								}
+							}
+						}
+					}
+				} finally {
+					checkUpdating = false;
+				}
+			}
+		});
+
+		// when a facet is selected, details, dependencies, options tabs must be
+		// refreshed.
 		addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -388,5 +442,17 @@ public class TernFacetsBlock extends AbstractTableBlock {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Returns true if tern facets dependencies must be select when a tern facet
+	 * is selected and false otherwise.
+	 * 
+	 * @return true if tern facets dependencies must be select when a tern facet
+	 *         is selected and false otherwise.
+	 */
+	private boolean isSelectDependencies() {
+		return selectDependenciesCheckbox != null
+				&& selectDependenciesCheckbox.getSelection();
 	}
 }

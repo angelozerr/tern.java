@@ -57,14 +57,16 @@ public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
+		// create UI facets
 		facetsBlock = new TernFacetsBlock(getResource().getProject(),
-				TernUIMessages.TernFacetsBlock_desc);
+				TernUIMessages.TernFacetsPropertyPage_desc);
 		facetsBlock.createControl(parent);
 		Control control = facetsBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
+		// load facets
 		facetsBlock.loadFacets();
 
 		applyDialogFont(parent);

@@ -41,7 +41,7 @@ public final class TernUIMessages extends NLS {
 	public static String TernGlobalPreferencesPage_serverType;
 
 	// Properties page
-	public static String TernFacetsBlock_desc;
+	public static String TernFacetsPropertyPage_desc;
 	public static String TernFacetsBlock_facetName;
 	public static String TernFacetsBlock_facetVersion;
 	public static String TernFacetsBlock_detailsTabLabel;

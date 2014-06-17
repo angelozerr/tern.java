@@ -16,7 +16,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -47,8 +47,8 @@ public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
 
-		Table table = new Table(parent, SWT.CHECK | SWT.BORDER
-				| SWT.FULL_SELECTION | SWT.V_SCROLL);
+		Table table = new Table(parent, SWT.BORDER | SWT.FULL_SELECTION
+				| SWT.V_SCROLL);
 
 		GridData data = new GridData(GridData.FILL_BOTH);
 		table.setLayoutData(data);
@@ -57,7 +57,7 @@ public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
-		CheckboxTableViewer tableViewer = new CheckboxTableViewer(table);
+		TableViewer tableViewer = new TableViewer(table);
 
 		// create name column
 		TableViewerColumn nameColumn = new TableViewerColumn(tableViewer,

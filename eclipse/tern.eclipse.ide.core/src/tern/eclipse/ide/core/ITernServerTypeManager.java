@@ -47,9 +47,9 @@ public interface ITernServerTypeManager {
 	void refresh();
 
 	ITernFacet[] getTernFacetsGroupByType();
-	
+
 	ITernFacet[] getTernFacets();
-	
+
 	ITernPlugin[] getTernPlugins();
 
 	ITernPlugin findTernPlugin(String name);
@@ -57,5 +57,14 @@ public interface ITernServerTypeManager {
 	ITernDef[] getTernDefs();
 
 	ITernDef findTernDef(String string);
+
+	/**
+	 * Returns the tern facet (plugin or def) with the given name.
+	 * 
+	 * @param name
+	 *            of the facet.
+	 * @return the tern facet with the given name.
+	 */
+	ITernFacet findTernFacet(String name);
 
 }
