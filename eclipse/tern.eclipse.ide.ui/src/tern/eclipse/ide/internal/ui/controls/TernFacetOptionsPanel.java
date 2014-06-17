@@ -22,8 +22,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
@@ -277,20 +279,17 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 	protected void createPathArrayOption(Composite ancestor,
 			final IProject project, final String name, final JsonObject options) {
 
+		Label title = new Label(ancestor, SWT.NONE);
+		title.setText("fill mappings of filename/path.");
+		title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
 		final JsonObject pathsOption = getPathsOption(name, options);
 
 		final Composite parent = new Composite(ancestor, SWT.NONE);
-		parent.setLayout(new GridLayout());
-		parent.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-		Composite toolbarComposite = new Composite(parent, SWT.NONE);
-		toolbarComposite.setLayout(new GridLayout(2, false));
-		toolbarComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-		Button addButton = new Button(toolbarComposite, SWT.PUSH);
-		addButton.setText("Add..");
-		Button removeButton = new Button(toolbarComposite, SWT.PUSH);
-		removeButton.setText("Remove..");
+		parent.setLayout(new GridLayout(2, false));
+		GridData data = new GridData(GridData.FILL_BOTH);
+		data.horizontalSpan = 2;
+		parent.setLayoutData(data);
 
 		// create UI
 		final TableViewer viewer = new TableViewer(parent, SWT.BORDER
@@ -320,12 +319,19 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		table.setHeaderVisible(true);
 		table.setLinesVisible(true);
 
-		GridData data = new GridData(GridData.FILL_BOTH);
+		data = new GridData(GridData.FILL_BOTH);
 		data.heightHint = 100;
 		table.setLayoutData(data);
 
 		viewer.setInput(pathsOption);
 
+		Composite toolbarComposite = new Composite(parent, SWT.NONE);
+		toolbarComposite.setLayout(new GridLayout());
+		toolbarComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+		Button addButton = new Button(toolbarComposite, SWT.PUSH);
+		addButton.setText("Add..");
+		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		addButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -365,6 +371,11 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 				return name;
 			}
 		});
+
+		final Button removeButton = new Button(toolbarComposite, SWT.PUSH);
+		removeButton.setText("Remove..");
+		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		removeButton.setEnabled(false);
 		removeButton.addSelectionListener(new SelectionAdapter() {
 
 			@Override
@@ -378,10 +389,17 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 						pathsOption.remove(((MemberWrapper) element).getName());
 					}
 					viewer.refresh();
+					removeButton.setEnabled(false);
 				}
 			}
 		});
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
+			@Override
+			public void selectionChanged(SelectionChangedEvent e) {
+				removeButton.setEnabled(true);
+			}
+		});
 	}
 
 	public JsonObject getPathsOption(final String name, final JsonObject options) {
