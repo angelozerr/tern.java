@@ -171,26 +171,21 @@
       <!-- Tern def descriptors -->
       <ternDescriptor
             id="browser"
-            description="%ternDescriptor.browser.description"
             icon="/icons/full/obj16/browser.gif" >
       </ternDescriptor>
       <ternDescriptor
-            id="chai"
-            description="%ternDescriptor.chai.description" >
+            id="chai" >
       </ternDescriptor>
       <ternDescriptor
             id="ecma5"
-            description="%ternDescriptor.ecma5.description"
             icon="/icons/full/obj16/ecma5.png" >
       </ternDescriptor>       
       <ternDescriptor
             id="jquery"
-            description="%ternDescriptor.jquery.description"
             icon="/icons/full/obj16/jquery.png" >
       </ternDescriptor>      
       <ternDescriptor
             id="underscore"
-            description="%ternDescriptor.underscore.description"
             icon="/icons/full/obj16/underscore.png" >
       </ternDescriptor>  
       <!-- Tern plugin descriptors -->
@@ -217,7 +212,11 @@
       <ternDescriptor
             id="extjs"
             icon="/icons/full/obj16/extjs.png" >
-      </ternDescriptor> 
+      </ternDescriptor>
+  	  <ternDescriptor
+            id="gmaps"
+            icon="/icons/full/obj16/gmaps.png" >
+      </ternDescriptor>       
   	  <ternDescriptor
             id="grunt"
             icon="/icons/full/obj16/grunt.png" >

@@ -1,0 +1,20 @@
+{
+ "name": "gmaps",
+ "homepage": "https://developers.google.com/maps/documentation/javascript/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Google Maps Javascript API support.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.googleapi.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.googleapi/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-GMaps-support"
+ }
+}

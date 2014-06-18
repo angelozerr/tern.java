@@ -12,6 +12,7 @@ package tern.eclipse.ide.ui.utils;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -64,6 +65,12 @@ public class EditorUtils {
 		return editor;
 	}
 
+	/**
+	 * Returns the resource of the given editor and null otherwise.
+	 * 
+	 * @param editor
+	 * @return the resource of the given editor and null otherwise.
+	 */
 	public static IResource getResource(IEditorPart editor) {
 		return (IResource) editor.getEditorInput().getAdapter(IResource.class);
 	}
