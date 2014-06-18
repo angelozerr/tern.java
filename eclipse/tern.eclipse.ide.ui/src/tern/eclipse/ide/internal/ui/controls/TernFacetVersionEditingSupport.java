@@ -73,6 +73,7 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 		if (element instanceof ITernFacetConfigurable) {
 			try {
 				((ITernFacetConfigurable) element).setVersion(value.toString());
+				getViewer().update(element, null);
 			} catch (TernException e) {
 				e.printStackTrace();
 			}
