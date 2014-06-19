@@ -25,11 +25,13 @@ public enum TernPlugin implements ITernPlugin {
 			"dojotoolkit_1.9", "dojotoolkit", "1.9",
 			"tern/plugin/dojotoolkit_1.9"), extjs_4_2_1("extjs_4.2.1", "extjs",
 			"4.2.1", "tern/plugin/extjs_4.2.1"), extjs_5_0_0("extjs_5.0.0",
-			"extjs", "5.0.0", "tern/plugin/extjs_5.0.0"), gmaps_3("gmaps_3",
-			"gmaps", "3", "tern/plugin/gmaps_3"), grunt("tern/plugin/grunt"), liferay(
-			"tern/plugin/liferay"), lint("tern/plugin/lint"), node(
-			"tern/plugin/node"), meteor("tern/plugin/meteor"), requirejs(
-			"tern/plugin/requirejs"), yui("tern/plugin/yui");
+			"extjs", "5.0.0", "tern/plugin/extjs_5.0.0"), gmaps_3_16(
+			"gmaps_3.16", "gmaps", "3.16", "tern/plugin/gmaps_3.16"), gmaps_3_17(
+			"gmaps_3.17", "gmaps", "3.17", "tern/plugin/gmaps_3.17"), grunt(
+			"tern/plugin/grunt"), liferay("tern/plugin/liferay"), lint(
+			"tern/plugin/lint"), node("tern/plugin/node"), meteor(
+			"tern/plugin/meteor"), requirejs("tern/plugin/requirejs"), yui(
+			"tern/plugin/yui");
 
 	private final String name;
 	private final String type;
