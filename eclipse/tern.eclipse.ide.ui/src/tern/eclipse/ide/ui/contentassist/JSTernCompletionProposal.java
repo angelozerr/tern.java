@@ -26,7 +26,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
-import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.jface.TernImagesRegistry;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;

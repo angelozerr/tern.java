@@ -12,7 +12,6 @@ package tern.eclipse.ide.ui.utils;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -63,6 +62,18 @@ public class EditorUtils {
 			e.printStackTrace();
 		}
 		return editor;
+	}
+
+	/**
+	 * Returns the file of the given editor and null otherwise.
+	 * 
+	 * @param editor
+	 * @return the file of the given editor and null otherwise.
+	 */
+	public static IFile getFile(IEditorPart editor) {
+		IResource resource = getResource(editor);
+		return (resource != null && resource.getType() == IResource.FILE ? (IFile) resource
+				: null);
 	}
 
 	/**

@@ -11,7 +11,6 @@
 package tern.server.protocol;
 
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
 /**
  * Tern query.
@@ -27,6 +26,8 @@ public class TernQuery extends JsonObject {
 
 	private static final String FILE_FIELD_NAME = "file";
 	private static final String TYPE_QUERY = "type";
+	private static final String LINE_CHAR_POSITIONS_FIELD_NAME = "lineCharPositions";
+	private static final String END_FIELD_NAME = "end";
 
 	public TernQuery(String type) {
 		super.add(TYPE_QUERY, type);
@@ -38,20 +39,38 @@ public class TernQuery extends JsonObject {
 
 	public void setEnd(Integer pos) {
 		if (pos == null) {
-			super.remove("end");
+			super.remove(END_FIELD_NAME);
 		} else {
-			super.add("end", pos);
+			super.add(END_FIELD_NAME, pos);
 		}
 	}
 
+	/**
+	 * Offsets into a file can be either (zero-based) integers, or {line, ch}
+	 * objects, where both line and ch are zero-based integers. Offsets returned
+	 * by the server will be integers, unless the lineCharPositions field in the
+	 * request was set to true, in which case they will be {line, ch} objects.
+	 * 
+	 * @param lineCharPositions
+	 */
 	public void setLineCharPositions(boolean lineCharPositions) {
-		super.add("lineCharPositions", lineCharPositions);
+		super.add(LINE_CHAR_POSITIONS_FIELD_NAME, lineCharPositions);
 	}
 
+	/**
+	 * Returns the tern query type.
+	 * 
+	 * @return the tern query type.
+	 */
 	public String getType() {
 		return JsonHelper.getString(this, TYPE_QUERY);
 	}
 
+	/**
+	 * Returns the label of the tern query.
+	 * 
+	 * @return the label of the tern query.
+	 */
 	public String getLabel() {
 		return getType();
 	}

@@ -748,6 +748,19 @@ public class IDETernProject extends TernProject<IFile> {
 		request(doc, collector);
 	}
 
+	public void request(TernQuery query, IFile file, IDocument document,
+			int startOffset, ITernTypeCollector collector) throws IOException,
+			TernException {
+		synchFiles(file, document, new TernDoc());
+		TernDoc doc = new TernDoc(query);
+		/*
+		 * String name = getFileManager().getFileName(file);
+		 * updateFragmentAround(doc, name, document, startOffset, startOffset);
+		 * query.setFile("#0");
+		 */
+		request(doc, collector);
+	}
+
 	private void request(TernDoc doc, ITernTypeCollector collector)
 			throws TernException {
 		ITernServer server = getTernServer();

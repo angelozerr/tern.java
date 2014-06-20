@@ -300,10 +300,16 @@ public class NodejsTernServer extends AbstractTernServer {
 		try {
 			JsonObject jsonObject = makeRequest(doc);
 			if (jsonObject != null) {
-				String name = getText(jsonObject.get("name"));
 				String type = getText(jsonObject.get("type"));
+				boolean guess = JsonHelper.getBoolean(jsonObject, "guess",
+						false);
+				String name = getText(jsonObject.get("name"));
+				String exprName = getText(jsonObject.get("exprName"));
+				String documentation = getText(jsonObject.get("doc"));
+				String url = getText(jsonObject.get("url"));
 				String origin = getText(jsonObject.get("origin"));
-				collector.setType(name, type, origin);
+				collector.setType(type, guess, name, exprName, documentation,
+						url, origin);
 			}
 		} catch (Throwable e) {
 			throw new TernException(e);

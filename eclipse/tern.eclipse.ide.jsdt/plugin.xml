@@ -75,6 +75,16 @@
 		</proposalComputerExtendedActivation>
 	</extension>
 		 
+	<extension
+         point="org.eclipse.wst.jsdt.ui.javaEditorTextHovers">
+      <hover
+            label="%sequentialHover"
+            description="%sequentialHoverDescription"
+            class="tern.eclipse.ide.jsdt.internal.hover.TernHover"
+            id="tern.eclipse.ide.jsdt.internal.hover.TernHover">
+      </hover>
+	</extension>
+	      		 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension
 	       point="org.eclipse.ui.startup">	
