@@ -21,7 +21,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import tern.TernException;
 import tern.server.ITernDef;
-import tern.server.ITernFacetConfigurable;
+import tern.server.ITernModuleConfigurable;
 import tern.server.ITernPlugin;
 
 /**
@@ -29,11 +29,11 @@ import tern.server.ITernPlugin;
  * {@link ITernPlugin} or {@link ITernDef}.
  *
  */
-public class TernFacetVersionEditingSupport extends EditingSupport {
+public class TernModuleVersionEditingSupport extends EditingSupport {
 
 	private final ComboBoxViewerCellEditor cellEditor;
 
-	public TernFacetVersionEditingSupport(ColumnViewer viewer) {
+	public TernModuleVersionEditingSupport(ColumnViewer viewer) {
 		super(viewer);
 		cellEditor = new ComboBoxViewerCellEditor((Composite) getViewer()
 				.getControl(), SWT.READ_ONLY);
@@ -43,8 +43,8 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 
 	@Override
 	protected boolean canEdit(Object element) {
-		if (element instanceof ITernFacetConfigurable) {
-			return ((ITernFacetConfigurable) element).getAvailableVersions()
+		if (element instanceof ITernModuleConfigurable) {
+			return ((ITernModuleConfigurable) element).getAvailableVersions()
 					.size() > 0;
 		}
 		return false;
@@ -52,8 +52,8 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 
 	@Override
 	protected CellEditor getCellEditor(Object element) {
-		if (element instanceof ITernFacetConfigurable) {
-			cellEditor.setInput(((ITernFacetConfigurable) element)
+		if (element instanceof ITernModuleConfigurable) {
+			cellEditor.setInput(((ITernModuleConfigurable) element)
 					.getAvailableVersions());
 			return cellEditor;
 		}
@@ -62,17 +62,17 @@ public class TernFacetVersionEditingSupport extends EditingSupport {
 
 	@Override
 	protected Object getValue(Object element) {
-		if (element instanceof ITernFacetConfigurable) {
-			return ((ITernFacetConfigurable) element).getVersion();
+		if (element instanceof ITernModuleConfigurable) {
+			return ((ITernModuleConfigurable) element).getVersion();
 		}
 		return null;
 	}
 
 	@Override
 	protected void setValue(Object element, Object value) {
-		if (element instanceof ITernFacetConfigurable) {
+		if (element instanceof ITernModuleConfigurable) {
 			try {
-				((ITernFacetConfigurable) element).setVersion(value.toString());
+				((ITernModuleConfigurable) element).setVersion(value.toString());
 				getViewer().update(element, null);
 			} catch (TernException e) {
 				e.printStackTrace();

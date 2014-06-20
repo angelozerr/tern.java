@@ -11,7 +11,7 @@
 package tern.eclipse.ide.core;
 
 import tern.server.ITernDef;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 import tern.server.ITernPlugin;
 
 /**
@@ -46,9 +46,9 @@ public interface ITernServerTypeManager {
 
 	void refresh();
 
-	ITernFacet[] getTernFacetsGroupByType();
+	ITernModule[] getTernModulesGroupByType();
 
-	ITernFacet[] getTernFacets();
+	ITernModule[] getTernModules();
 
 	ITernPlugin[] getTernPlugins();
 
@@ -59,12 +59,12 @@ public interface ITernServerTypeManager {
 	ITernDef findTernDef(String string);
 
 	/**
-	 * Returns the tern facet (plugin or def) with the given name.
+	 * Returns the tern module (plugin or def) with the given name.
 	 * 
 	 * @param name
-	 *            of the facet.
-	 * @return the tern facet with the given name.
+	 *            of the module.
+	 * @return the tern module with the given name.
 	 */
-	ITernFacet findTernFacet(String name);
+	ITernModule findTernModule(String name);
 
 }

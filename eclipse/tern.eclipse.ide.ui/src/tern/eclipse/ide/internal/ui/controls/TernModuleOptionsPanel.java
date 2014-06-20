@@ -54,11 +54,11 @@ import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
 import tern.eclipse.ide.ui.viewers.JsonContentProvider;
 import tern.eclipse.ide.ui.viewers.JsonLabelProvider;
 import tern.eclipse.ide.ui.viewers.MemberWrapper;
-import tern.metadata.TernFacetMetadata;
-import tern.metadata.TernFacetMetadataOption;
-import tern.server.FacetType;
-import tern.server.ITernFacet;
-import tern.server.ITernFacetConfigurable;
+import tern.metadata.TernModuleMetadata;
+import tern.metadata.TernModuleMetadataOption;
+import tern.server.ModuleType;
+import tern.server.ITernModule;
+import tern.server.ITernModuleConfigurable;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
@@ -69,28 +69,28 @@ import com.eclipsesource.json.JsonValue;
  * Display options of the given tern plugin.
  *
  */
-public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
+public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 
-	public TernFacetOptionsPanel(Composite parent, ITernFacet facet,
+	public TernModuleOptionsPanel(Composite parent, ITernModule module,
 			IProject project) {
-		super(parent, facet, project);
+		super(parent, module, project);
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet, IProject project) {
+	protected void createUI(Composite parent, ITernModule module, IProject project) {
 
 		GridLayout layout = new GridLayout(2, false);
 		super.setLayout(layout);
 
-		TernFacetMetadata metadata = facet.getMetadata();
-		if (metadata != null && facet.getFacetType() == FacetType.Configurable) {
-			// get the options of the given facet and display UI field for
+		TernModuleMetadata metadata = module.getMetadata();
+		if (metadata != null && module.getModuleType() == ModuleType.Configurable) {
+			// get the options of the given module and display UI field for
 			// each option.
 
-			JsonObject jsonOptions = getOptions((ITernFacetConfigurable) facet);
+			JsonObject jsonOptions = getOptions((ITernModuleConfigurable) module);
 
-			Collection<TernFacetMetadataOption> options = metadata.getOptions();
-			for (TernFacetMetadataOption option : options) {
+			Collection<TernModuleMetadataOption> options = metadata.getOptions();
+			for (TernModuleMetadataOption option : options) {
 				createUI(parent, jsonOptions, project, option);
 			}
 		}
@@ -98,7 +98,7 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 	}
 
 	protected void createUI(Composite parent, final JsonObject options,
-			IProject project, TernFacetMetadataOption option) {
+			IProject project, TernModuleMetadataOption option) {
 
 		final String name = option.getName();
 		String description = option.getDescription();
@@ -186,7 +186,7 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 				.getImage();
 
 		// set description and image
-		deco.setDescriptionText(TernUIMessages.TernFacetOptionsPanel_validatePath);
+		deco.setDescriptionText(TernUIMessages.TernModuleOptionsPanel_validatePath);
 		deco.setImage(image);
 		deco.hide();
 
@@ -247,7 +247,7 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		ITreeContentProvider cp = new WorkbenchContentProvider();
 		FolderSelectionDialog dialog = new FolderSelectionDialog(getShell(),
 				lp, cp);
-		dialog.setTitle(TernUIMessages.TernFacetOptionsPanel_selectPathDialogTitle);
+		dialog.setTitle(TernUIMessages.TernModuleOptionsPanel_selectPathDialogTitle);
 		IFolder folder = StringUtils.isEmpty(textField.getText()) ? null
 				: project.getFolder(textField.getText());
 		if (folder != null && folder.exists()) {
@@ -301,7 +301,7 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		filenameColumn.getColumn().setWidth(100);
 		filenameColumn.getColumn().setResizable(true);
 		filenameColumn.getColumn().setText(
-				TernUIMessages.TernFacetOptionsPanel_paths_filenameColumn);
+				TernUIMessages.TernModuleOptionsPanel_paths_filenameColumn);
 		filenameColumn.setEditingSupport(new FilenameEditingSupport(viewer));
 
 		// create path column
@@ -309,7 +309,7 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		pathColumn.getColumn().setWidth(180);
 		pathColumn.getColumn().setResizable(true);
 		pathColumn.getColumn().setText(
-				TernUIMessages.TernFacetOptionsPanel_paths_pathColumn);
+				TernUIMessages.TernModuleOptionsPanel_paths_pathColumn);
 		pathColumn.setEditingSupport(new PathEditingSupport(viewer));
 
 		viewer.setLabelProvider(JsonLabelProvider.getInstance());
@@ -441,11 +441,11 @@ public class TernFacetOptionsPanel extends AbstractTernFacetPanel {
 		});
 	}
 
-	public JsonObject getOptions(ITernFacetConfigurable facet) {
-		JsonObject options = facet.getOptions();
+	public JsonObject getOptions(ITernModuleConfigurable module) {
+		JsonObject options = module.getOptions();
 		if (options == null) {
 			options = new JsonObject();
-			facet.setOptions(options);
+			module.setOptions(options);
 		}
 		return options;
 	}

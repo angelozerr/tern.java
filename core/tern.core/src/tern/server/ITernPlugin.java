@@ -15,7 +15,7 @@ package tern.server;
  * 
  * @see http://ternjs.net/doc/manual.html#plugins
  */
-public interface ITernPlugin extends ITernFacet {
+public interface ITernPlugin extends ITernModule {
 
 	public static ITernPlugin[] EMPTY_PLUGIN = new ITernPlugin[0];
 }

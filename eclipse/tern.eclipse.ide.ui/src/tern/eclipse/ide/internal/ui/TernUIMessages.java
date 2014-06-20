@@ -41,22 +41,22 @@ public final class TernUIMessages extends NLS {
 	public static String TernGlobalPreferencesPage_serverType;
 
 	// Properties page
-	public static String TernFacetsPropertyPage_desc;
-	public static String TernFacetsBlock_facetName;
-	public static String TernFacetsBlock_facetVersion;
-	public static String TernFacetsBlock_detailsTabLabel;
-	public static String TernFacetsBlock_dependenciesTabLabel;
-	public static String TernFacetsBlock_optionsTabLabel;
-	public static String TernFacetDetailsPanel_homepage;
-	public static String TernFacetDetailsPanel_author;
-	public static String TernFacetDetailsPanel_repositoryURL;
-	public static String TernFacetDetailsPanel_bugsURL;
-	public static String TernFacetDetailsPanel_helpURL;
+	public static String TernModulesPropertyPage_desc;
+	public static String TernModulesBlock_moduleName;
+	public static String TernModulesBlock_moduleVersion;
+	public static String TernModulesBlock_detailsTabLabel;
+	public static String TernModulesBlock_dependenciesTabLabel;
+	public static String TernModulesBlock_optionsTabLabel;
+	public static String TernModuleDetailsPanel_homepage;
+	public static String TernModuleDetailsPanel_author;
+	public static String TernModuleDetailsPanel_repositoryURL;
+	public static String TernModuleDetailsPanel_bugsURL;
+	public static String TernModuleDetailsPanel_helpURL;
 	public static String DetailsPanel_noSelectionLabel;
-	public static String TernFacetOptionsPanel_selectPathDialogTitle;
-	public static String TernFacetOptionsPanel_validatePath;
-	public static String TernFacetOptionsPanel_paths_filenameColumn;
-	public static String TernFacetOptionsPanel_paths_pathColumn;
+	public static String TernModuleOptionsPanel_selectPathDialogTitle;
+	public static String TernModuleOptionsPanel_validatePath;
+	public static String TernModuleOptionsPanel_paths_filenameColumn;
+	public static String TernModuleOptionsPanel_paths_pathColumn;
 
 	public static String TernScriptPathsBlock_desc;
 

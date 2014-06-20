@@ -108,10 +108,10 @@
          </enabledWhen>
       </page>    
 	  <page
-            name="%TernFacetsPropertyPage.name"
+            name="%TernModulesPropertyPage.name"
             category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.properties.TernFacetsPropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernFacetsPropertyPage">
+            class="tern.eclipse.ide.internal.ui.properties.TernModulesPropertyPage"
+            id="tern.eclipse.ide.internal.ui.properties.TernModulesPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />

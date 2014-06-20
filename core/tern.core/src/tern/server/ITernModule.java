@@ -10,19 +10,18 @@
  */
 package tern.server;
 
-import tern.metadata.TernFacetMetadata;
-import tern.metadata.TernFacetMetadataManager;
+import tern.metadata.TernModuleMetadata;
 
 /**
- * BAse API for JSON Type Definition API & Tern plugins.
+ * Base API for JSON Type Definition API & Tern plugins.
  * 
  * @see http://ternjs.net/doc/manual.html#typedef
  * @see http://ternjs.net/doc/manual.html#plugins
  * 
  */
-public interface ITernFacet {
+public interface ITernModule {
 
-	public static final ITernFacet[] EMPTY_FACET = new ITernFacet[0];
+	public static final ITernModule[] EMPTY_MODULE = new ITernModule[0];
 
 	/**
 	 * Return the def or plugin name.
@@ -53,17 +52,17 @@ public interface ITernFacet {
 	String getPath();
 
 	/**
-	 * Returns the facet type.
+	 * Returns the module type.
 	 * 
 	 * @return
 	 */
-	FacetType getFacetType();
+	ModuleType getModuleType();
 
 	/**
 	 * Returns the tern metadata and null otherwise.
 	 * 
 	 * @return the tern metadata and null otherwise.
 	 */
-	TernFacetMetadata getMetadata();
+	TernModuleMetadata getMetadata();
 
 }

@@ -11,10 +11,10 @@
 package tern.server;
 
 /**
- * Facet type.
+ * Module type.
  *
  */
-public enum FacetType {
+public enum ModuleType {
 
 	Plugin, Def, Configurable;
 }

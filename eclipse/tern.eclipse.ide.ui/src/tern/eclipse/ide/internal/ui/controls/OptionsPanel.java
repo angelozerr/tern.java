@@ -14,10 +14,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.widgets.Composite;
 
 import tern.eclipse.ide.internal.ui.descriptors.TernDescriptorManager;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 
 /**
- * Content of the "Options" Tab of tern facet selection.
+ * Content of the "Options" Tab of tern module selection.
  *
  */
 public class OptionsPanel extends AbstractPanel {
@@ -32,9 +32,9 @@ public class OptionsPanel extends AbstractPanel {
 	}
 
 	@Override
-	protected Composite createContent(Composite parent, ITernFacet facet,
+	protected Composite createContent(Composite parent, ITernModule module,
 			IProject project) {
 		return TernDescriptorManager.getManager().createOptionsPanel(parent,
-				facet, project);
+				module, project);
 	}
 }

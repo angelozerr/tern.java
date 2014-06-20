@@ -26,11 +26,11 @@ import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.ITernServerTypeManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.server.ITernDef;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 import tern.server.ITernPlugin;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
-import tern.utils.TernFacetHelper;
+import tern.utils.TernModuleHelper;
 
 public class TernServerTypeManager implements ITernServerTypeManager,
 		IRegistryChangeListener {
@@ -44,7 +44,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	private boolean registryListenerIntialized;
 
-	private final ITernFacet[] facets;
+	private final ITernModule[] modules;
 
 	public static TernServerTypeManager getManager() {
 		return INSTANCE;
@@ -52,10 +52,10 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	public TernServerTypeManager() {
 		this.registryListenerIntialized = false;
-		List<ITernFacet> facets = new ArrayList<ITernFacet>();
-		Collections.addAll(facets, getTernDefs());
-		Collections.addAll(facets, getTernPlugins());
-		this.facets = facets.toArray(ITernFacet.EMPTY_FACET);
+		List<ITernModule> modules = new ArrayList<ITernModule>();
+		Collections.addAll(modules, getTernDefs());
+		Collections.addAll(modules, getTernPlugins());
+		this.modules = modules.toArray(ITernModule.EMPTY_MODULE);
 	}
 
 	@Override
@@ -200,15 +200,15 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	}
 
 	@Override
-	public ITernFacet[] getTernFacets() {
-		return facets;
+	public ITernModule[] getTernModules() {
+		return modules;
 	}
 
 	@Override
-	public ITernFacet[] getTernFacetsGroupByType() {
-		List<ITernFacet> groupedFacets = new ArrayList<ITernFacet>();
-		TernFacetHelper.groupByType(facets, groupedFacets);
-		return groupedFacets.toArray(ITernFacet.EMPTY_FACET);
+	public ITernModule[] getTernModulesGroupByType() {
+		List<ITernModule> groupedModules = new ArrayList<ITernModule>();
+		TernModuleHelper.groupByType(modules, groupedModules);
+		return groupedModules.toArray(ITernModule.EMPTY_MODULE);
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	}
 
 	@Override
-	public ITernFacet findTernFacet(String name) {
+	public ITernModule findTernModule(String name) {
 		// search from tern plugin
 		ITernPlugin plugin = findTernPlugin(name);
 		if (plugin != null) {

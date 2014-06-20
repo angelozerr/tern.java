@@ -50,15 +50,15 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.controls.DependenciesPanel;
 import tern.eclipse.ide.internal.ui.controls.DetailsPanel;
 import tern.eclipse.ide.internal.ui.controls.OptionsPanel;
-import tern.eclipse.ide.internal.ui.controls.TernFacetVersionEditingSupport;
+import tern.eclipse.ide.internal.ui.controls.TernModuleVersionEditingSupport;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
-import tern.metadata.TernFacetMetadata;
+import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
+import tern.metadata.TernModuleMetadata;
 import tern.server.ITernDef;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 import tern.server.ITernPlugin;
-import tern.utils.TernFacetHelper;
+import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -68,7 +68,7 @@ import com.eclipsesource.json.JsonValue;
  * Block to select Tern plugins + JSON Type Definitions.
  * 
  */
-public class TernFacetsBlock extends AbstractTableBlock {
+public class TernModulesBlock extends AbstractTableBlock {
 
 	// private static final String SASH2W1 = "sash.2.weight.1";
 	// private static final String SASH2W2 = "sash.2.weight.2";
@@ -77,7 +77,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	private final IProject project;
 
 	private Composite fControl;
-	private final List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
+	private final List<ITernModule> ternModules = new ArrayList<ITernModule>();
 	private CheckboxTableViewer tableViewer;
 	private DetailsPanel detailsPanel;
 	private DependenciesPanel dependenciesPanel;
@@ -87,7 +87,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	private TabItem detailsTabItem;
 	private Button selectDependenciesCheckbox;
 
-	public TernFacetsBlock(IProject project, String tableLabel) {
+	public TernModulesBlock(IProject project, String tableLabel) {
 		this.project = project;
 		this.tableLabel = tableLabel;
 	}
@@ -126,18 +126,18 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		data = new GridData(SWT.FILL, SWT.FILL, true, true);
 		sashForm.setLayoutData(data);
 
-		createFacetsMaster(sashForm);
-		createFacetsDetails(sashForm);
+		createModulesMaster(sashForm);
+		createModulesDetails(sashForm);
 
 		Dialog.applyDialogFont(parent);
 	}
 
 	/**
-	 * Create table of tern facets.
+	 * Create table of tern modules.
 	 * 
 	 * @param ancestor
 	 */
-	private void createFacetsMaster(Composite ancestor) {
+	private void createModulesMaster(Composite ancestor) {
 		Composite parent = new Composite(ancestor, SWT.NULL);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
@@ -166,7 +166,7 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		nameColumn.getColumn().setWidth(180);
 		nameColumn.getColumn().setResizable(true);
 		nameColumn.getColumn()
-				.setText(TernUIMessages.TernFacetsBlock_facetName);
+				.setText(TernUIMessages.TernModulesBlock_moduleName);
 		nameColumn.getColumn().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -180,15 +180,15 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		versionColumn.getColumn().setWidth(100);
 		versionColumn.getColumn().setResizable(true);
 		versionColumn.getColumn().setText(
-				TernUIMessages.TernFacetsBlock_facetVersion);
-		versionColumn.setEditingSupport(new TernFacetVersionEditingSupport(
+				TernUIMessages.TernModulesBlock_moduleVersion);
+		versionColumn.setEditingSupport(new TernModuleVersionEditingSupport(
 				tableViewer));
 
-		tableViewer.setLabelProvider(new TernFacetLabelProvider());
+		tableViewer.setLabelProvider(new TernModuleLabelProvider());
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 
-		// when a facet is checked and dependencies checkbox is checked, tern
-		// facet dependencies must be selected too
+		// when a module is checked and dependencies checkbox is checked, tern
+		// module dependencies must be selected too
 		tableViewer.addCheckStateListener(new ICheckStateListener() {
 
 			private boolean checkUpdating;
@@ -201,19 +201,19 @@ public class TernFacetsBlock extends AbstractTableBlock {
 				try {
 					checkUpdating = true;
 					if (e.getChecked() && isSelectDependencies()) {
-						ITernFacet facet = ((ITernFacet) e.getElement());
-						TernFacetMetadata metadata = facet.getMetadata();
+						ITernModule module = ((ITernModule) e.getElement());
+						TernModuleMetadata metadata = module.getMetadata();
 						if (metadata != null) {
-							ITernFacet dependencyFacet = null;
+							ITernModule dependencyModule = null;
 							// loop for each dependencies and check it if needed
-							for (String facetName : metadata.getDependencies()) {
-								dependencyFacet = TernCorePlugin
+							for (String moduleName : metadata.getDependencies()) {
+								dependencyModule = TernCorePlugin
 										.getTernServerTypeManager()
-										.findTernFacet(facetName);
-								if (dependencyFacet != null) {
+										.findTernModule(moduleName);
+								if (dependencyModule != null) {
 									if (!tableViewer
-											.getChecked(dependencyFacet)) {
-										tableViewer.setChecked(dependencyFacet,
+											.getChecked(dependencyModule)) {
+										tableViewer.setChecked(dependencyModule,
 												true);
 									}
 								}
@@ -226,25 +226,25 @@ public class TernFacetsBlock extends AbstractTableBlock {
 			}
 		});
 
-		// when a facet is selected, details, dependencies, options tabs must be
+		// when a module is selected, details, dependencies, options tabs must be
 		// refreshed.
 		addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent e) {
 				if (!e.getSelection().isEmpty()) {
-					ITernFacet facet = (ITernFacet) ((IStructuredSelection) e
+					ITernModule module = (ITernModule) ((IStructuredSelection) e
 							.getSelection()).getFirstElement();
-					refreshFacet(facet);
+					refreshModule(module);
 				} else {
-					refreshFacet(null);
+					refreshModule(null);
 				}
 			}
 		});
 		restoreColumnSettings();
 	}
 
-	private void createFacetsDetails(Composite parent) {
+	private void createModulesDetails(Composite parent) {
 
 		// Create tab folder.
 		tabFolder = new TabFolder(parent, SWT.NONE);
@@ -256,35 +256,35 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		this.detailsPanel = new DetailsPanel(tabFolder, project);
 		detailsTabItem = new TabItem(tabFolder, SWT.NULL);
 		detailsTabItem.setControl(this.detailsPanel);
-		detailsTabItem.setText(TernUIMessages.TernFacetsBlock_detailsTabLabel);
+		detailsTabItem.setText(TernUIMessages.TernModulesBlock_detailsTabLabel);
 
 		// create dependencies tab
 		this.dependenciesPanel = new DependenciesPanel(tabFolder, project);
 		TabItem dependenciesTabItem = new TabItem(tabFolder, SWT.NULL);
 		dependenciesTabItem.setControl(this.dependenciesPanel);
 		dependenciesTabItem
-				.setText(TernUIMessages.TernFacetsBlock_dependenciesTabLabel);
+				.setText(TernUIMessages.TernModulesBlock_dependenciesTabLabel);
 
 		// create options tab
 		this.optionsPanel = new OptionsPanel(tabFolder, project);
 		this.optionsTabItem = new TabItem(tabFolder, SWT.NULL);
 		optionsTabItem.setControl(this.optionsPanel);
-		optionsTabItem.setText(TernUIMessages.TernFacetsBlock_optionsTabLabel);
+		optionsTabItem.setText(TernUIMessages.TernModulesBlock_optionsTabLabel);
 	}
 
-	private void refreshFacet(ITernFacet facet) {
+	private void refreshModule(ITernModule module) {
 		// refresh the tab item.
-		optionsPanel.refresh(facet);
+		optionsPanel.refresh(module);
 		// select the well tab item
-		if (TernFacetHelper.hasOptions(facet)) {
+		if (TernModuleHelper.hasOptions(module)) {
 			// tern plugin has filled options, select the options tab.
 			tabFolder.setSelection(optionsTabItem);
 		} else {
 			// otherwise, select the details tab.
 			tabFolder.setSelection(detailsTabItem);
 		}
-		detailsPanel.refresh(facet);
-		dependenciesPanel.refresh(facet);
+		detailsPanel.refresh(module);
+		dependenciesPanel.refresh(module);
 	}
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
@@ -303,9 +303,9 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		tableViewer.setSorter(new ViewerSorter() {
 			@Override
 			public int compare(Viewer viewer, Object e1, Object e2) {
-				if ((e1 instanceof ITernFacet) && (e2 instanceof ITernFacet)) {
-					ITernFacet left = (ITernFacet) e1;
-					ITernFacet right = (ITernFacet) e2;
+				if ((e1 instanceof ITernModule) && (e2 instanceof ITernModule)) {
+					ITernModule left = (ITernModule) e1;
+					ITernModule right = (ITernModule) e2;
 					return left.getName().compareToIgnoreCase(right.getName());
 				}
 				return super.compare(viewer, e1, e2);
@@ -322,26 +322,26 @@ public class TernFacetsBlock extends AbstractTableBlock {
 		return fControl;
 	}
 
-	protected void setTernFacets(ITernFacet[] vms) {
-		ternFacets.clear();
-		for (ITernFacet element : vms) {
-			ternFacets.add(element);
+	protected void setTernModules(ITernModule[] vms) {
+		ternModules.clear();
+		for (ITernModule element : vms) {
+			ternModules.add(element);
 		}
-		tableViewer.setInput(ternFacets);
+		tableViewer.setInput(ternModules);
 		// tableViewer.refresh();
 	}
 
-	public Object[] getCheckedFacets() {
+	public Object[] getCheckedModules() {
 		return tableViewer.getCheckedElements();
 	}
 
-	public void setCheckedFacets(Object[] selectedFacets) {
-		tableViewer.setCheckedElements(selectedFacets);
+	public void setCheckedModules(Object[] selectedModules) {
+		tableViewer.setCheckedElements(selectedModules);
 
 		/*
-		 * if (selectedFacets == null) { setSelection(new
+		 * if (selectedModules == null) { setSelection(new
 		 * StructuredSelection()); } else { setSelection(new
-		 * StructuredSelection(selectedFacets)); }
+		 * StructuredSelection(selectedModules)); }
 		 */
 	}
 
@@ -373,23 +373,23 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	/**
 	 * Load plugins from tern project.
 	 */
-	public void loadFacets() {
+	public void loadModules() {
 		try {
 			// Load list of Tern Plugins + JSON Type Definitions.
-			List<ITernFacet> allFacets = new ArrayList<ITernFacet>();
-			ITernFacet[] defaultFacets = TernCorePlugin
-					.getTernServerTypeManager().getTernFacetsGroupByType();
-			for (ITernFacet defaultFacet : defaultFacets) {
-				allFacets.add(defaultFacet);
+			List<ITernModule> allModules = new ArrayList<ITernModule>();
+			ITernModule[] defaultModules = TernCorePlugin
+					.getTernServerTypeManager().getTernModulesGroupByType();
+			for (ITernModule defaultModule : defaultModules) {
+				allModules.add(defaultModule);
 			}
-			List<ITernFacet> initialFacets = null;
+			List<ITernModule> initialModules = null;
 			if (project != null) {
 				// Select Tern Plugins + JSON Type Definitions according
 				// settings of
 				// the project.
 				IDETernProject ternProject = IDETernProject
 						.getTernProject(project);
-				initialFacets = new ArrayList<ITernFacet>();
+				initialModules = new ArrayList<ITernModule>();
 				// Tern Plugins
 				JsonValue options = null;
 				JsonObject plugins = ternProject.getPlugins();
@@ -398,20 +398,20 @@ public class TernFacetsBlock extends AbstractTableBlock {
 					ITernPlugin plugin = TernCorePlugin
 							.getTernServerTypeManager().findTernPlugin(
 									name.toString());
-					updateInitialFacet(plugin, options, allFacets,
-							initialFacets);
+					updateInitialModule(plugin, options, allModules,
+							initialModules);
 				}
 				// JSON Type Definitions
 				JsonArray defs = ternProject.getLibs();
 				for (JsonValue name : defs) {
 					ITernDef def = TernCorePlugin.getTernServerTypeManager()
 							.findTernDef(name.asString());
-					updateInitialFacet(def, null, allFacets, initialFacets);
+					updateInitialModule(def, null, allModules, initialModules);
 				}
 			}
-			this.setTernFacets(allFacets.toArray(ITernFacet.EMPTY_FACET));
-			if (initialFacets != null) {
-				this.setCheckedFacets(initialFacets.toArray());
+			this.setTernModules(allModules.toArray(ITernModule.EMPTY_MODULE));
+			if (initialModules != null) {
+				this.setCheckedModules(initialModules.toArray());
 			}
 
 		} catch (CoreException e) {
@@ -420,35 +420,35 @@ public class TernFacetsBlock extends AbstractTableBlock {
 	}
 
 	/**
-	 * Initialize the initial facet with the given facet.
+	 * Initialize the initial module with the given module.
 	 * 
-	 * @param facet
+	 * @param module
 	 * @param options
-	 * @param allFacets
-	 * @param initialFacets
+	 * @param allModules
+	 * @param initialModules
 	 */
-	private void updateInitialFacet(ITernFacet facet, JsonValue options,
-			List<ITernFacet> allFacets, List<ITernFacet> initialFacets) {
-		if (facet != null) {
-			if (!TernFacetHelper.isConfigurableFacet(facet)) {
-				initialFacets.add(facet);
+	private void updateInitialModule(ITernModule module, JsonValue options,
+			List<ITernModule> allModules, List<ITernModule> initialModules) {
+		if (module != null) {
+			if (!TernModuleHelper.isConfigurableModule(module)) {
+				initialModules.add(module);
 			} else {
 				try {
-					initialFacets.add(TernFacetHelper.findConfigurable(facet,
-							options, allFacets));
+					initialModules.add(TernModuleHelper.findConfigurable(module,
+							options, allModules));
 				} catch (TernException e) {
 					Trace.trace(Trace.SEVERE,
-							"Error while finding configurable facet.", e);
+							"Error while finding configurable module.", e);
 				}
 			}
 		}
 	}
 
 	/**
-	 * Returns true if tern facets dependencies must be select when a tern facet
+	 * Returns true if tern modules dependencies must be select when a tern module
 	 * is selected and false otherwise.
 	 * 
-	 * @return true if tern facets dependencies must be select when a tern facet
+	 * @return true if tern modules dependencies must be select when a tern module
 	 *         is selected and false otherwise.
 	 */
 	private boolean isSelectDependencies() {

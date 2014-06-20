@@ -18,35 +18,35 @@ import java.util.Map;
 import com.eclipsesource.json.JsonObject;
 
 /**
- * Tern facet metadata manager.
+ * Tern module metadata manager.
  *
  */
-public class TernFacetMetadataManager {
+public class TernModuleMetadataManager {
 
-	private final Map<String, TernFacetMetadata> metadatas;
+	private final Map<String, TernModuleMetadata> metadatas;
 
 	private File metadataTernBaseDir;
 
-	private static final TernFacetMetadataManager INSTANCE = new TernFacetMetadataManager();
+	private static final TernModuleMetadataManager INSTANCE = new TernModuleMetadataManager();
 
-	public static TernFacetMetadataManager getInstance() {
+	public static TernModuleMetadataManager getInstance() {
 		return INSTANCE;
 	}
 
-	public TernFacetMetadataManager() {
-		this.metadatas = new HashMap<String, TernFacetMetadata>();
+	public TernModuleMetadataManager() {
+		this.metadatas = new HashMap<String, TernModuleMetadata>();
 	}
 
 	/**
-	 * Return the facet metadata of the given facet name and null otherwise.
+	 * Return the module metadata of the given module name and null otherwise.
 	 * 
-	 * @param facetName
-	 *            the facet name.
-	 * @return the facet metadata of the given facet name and null otherwise.
+	 * @param moduleName
+	 *            the module name.
+	 * @return the module metadata of the given module name and null otherwise.
 	 */
-	public TernFacetMetadata getMetadata(String facetName) {
+	public TernModuleMetadata getMetadata(String moduleName) {
 		initializeIfNeeded();
-		return metadatas.get(facetName);
+		return metadatas.get(moduleName);
 	}
 
 	private void initializeIfNeeded() {
@@ -65,7 +65,7 @@ public class TernFacetMetadataManager {
 								try {
 									json = JsonObject.readFrom(new FileReader(
 											file));
-									TernFacetMetadata metadata = new TernFacetMetadata(
+									TernModuleMetadata metadata = new TernModuleMetadata(
 											json);
 									metadatas.put(metadata.getName(), metadata);
 								} catch (Exception e) {

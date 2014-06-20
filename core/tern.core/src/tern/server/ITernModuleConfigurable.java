@@ -15,28 +15,28 @@ import java.util.Set;
 import com.eclipsesource.json.JsonObject;
 
 import tern.TernException;
-import tern.metadata.TernFacetMetadata;
+import tern.metadata.TernModuleMetadata;
 
 /**
- * Wrapper for {@link ITernFacet} used to configure {@link ITernFacet} :
+ * Wrapper for {@link ITernModule} used to configure {@link ITernModule} :
  * 
  * <ul>
- * <li>version of the facet</li>
- * <li>options of the facet if it's a plugin</li>
+ * <li>version of the module</li>
+ * <li>options of the module if it's a plugin</li>
  * </ul>
  *
  */
-public interface ITernFacetConfigurable extends ITernFacet {
+public interface ITernModuleConfigurable extends ITernModule {
 
 	/**
-	 * Set version of the tern facet
+	 * Set version of the tern module
 	 */
-	ITernFacet setVersion(String version) throws TernException;
+	ITernModule setVersion(String version) throws TernException;
 
 	/**
-	 * Returns the current wrapped facet.
+	 * Returns the current wrapped module.
 	 */
-	ITernFacet getWrappedFacet();
+	ITernModule getWrappedModule();
 
 	/**
 	 * returns list of available versions.
@@ -44,11 +44,11 @@ public interface ITernFacetConfigurable extends ITernFacet {
 	Set<String> getAvailableVersions();
 
 	/**
-	 * Returns the tern facet metadata.
+	 * Returns the tern module metadata.
 	 * 
-	 * @return the tern facet metadata.
+	 * @return the tern module metadata.
 	 */
-	TernFacetMetadata getMetadata();
+	TernModuleMetadata getMetadata();
 
 	void setOptions(JsonObject options);
 

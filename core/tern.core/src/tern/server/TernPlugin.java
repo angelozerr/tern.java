@@ -10,8 +10,8 @@
  */
 package tern.server;
 
-import tern.metadata.TernFacetMetadata;
-import tern.metadata.TernFacetMetadataManager;
+import tern.metadata.TernModuleMetadata;
+import tern.metadata.TernModuleMetadataManager;
 
 public enum TernPlugin implements ITernPlugin {
 
@@ -37,7 +37,7 @@ public enum TernPlugin implements ITernPlugin {
 	private final String type;
 	private final String version;
 	private final String path;
-	private TernFacetMetadata metadata;
+	private TernModuleMetadata metadata;
 
 	private TernPlugin(String path) {
 		this(null, null, null, path);
@@ -72,8 +72,8 @@ public enum TernPlugin implements ITernPlugin {
 	}
 
 	@Override
-	public FacetType getFacetType() {
-		return FacetType.Plugin;
+	public ModuleType getModuleType() {
+		return ModuleType.Plugin;
 	}
 
 	public static ITernPlugin getTernPlugin(String name) {
@@ -89,9 +89,9 @@ public enum TernPlugin implements ITernPlugin {
 	}
 
 	@Override
-	public TernFacetMetadata getMetadata() {
+	public TernModuleMetadata getMetadata() {
 		if (metadata == null) {
-			metadata = TernFacetMetadataManager.getInstance().getMetadata(
+			metadata = TernModuleMetadataManager.getInstance().getMetadata(
 					getType());
 		}
 		return metadata;

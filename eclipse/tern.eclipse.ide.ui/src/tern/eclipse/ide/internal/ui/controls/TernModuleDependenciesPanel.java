@@ -26,23 +26,23 @@ import org.eclipse.swt.widgets.Table;
 
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
-import tern.metadata.TernFacetMetadata;
-import tern.server.ITernFacet;
+import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
+import tern.metadata.TernModuleMetadata;
+import tern.server.ITernModule;
 
 /**
- * Display dependencies of the tern facet.
+ * Display dependencies of the tern module.
  *
  */
-public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
+public class TernModuleDependenciesPanel extends AbstractTernModulePanel {
 
-	public TernFacetDependenciesPanel(Composite parent, ITernFacet facet,
+	public TernModuleDependenciesPanel(Composite parent, ITernModule module,
 			IProject project) {
-		super(parent, facet, project);
+		super(parent, module, project);
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet, IProject project) {
+	protected void createUI(Composite parent, ITernModule module, IProject project) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
@@ -65,31 +65,31 @@ public class TernFacetDependenciesPanel extends AbstractTernFacetPanel {
 		nameColumn.getColumn().setWidth(180);
 		nameColumn.getColumn().setResizable(true);
 		nameColumn.getColumn()
-				.setText(TernUIMessages.TernFacetsBlock_facetName);
+				.setText(TernUIMessages.TernModulesBlock_moduleName);
 
-		List<ITernFacet> ternFacets = new ArrayList<ITernFacet>();
-		TernFacetMetadata metadata = facet.getMetadata();
+		List<ITernModule> ternModules = new ArrayList<ITernModule>();
+		TernModuleMetadata metadata = module.getMetadata();
 		if (metadata != null) {
-			ITernFacet dependencyFacet = null;
+			ITernModule dependencyModule = null;
 			Collection<String> dependencies = metadata.getDependencies();
 			for (String dependency : dependencies) {
 				// try plugin
-				dependencyFacet = TernCorePlugin.getTernServerTypeManager()
+				dependencyModule = TernCorePlugin.getTernServerTypeManager()
 						.findTernPlugin(dependency);
-				if (dependencyFacet == null) {
+				if (dependencyModule == null) {
 					// try def
-					dependencyFacet = TernCorePlugin.getTernServerTypeManager()
+					dependencyModule = TernCorePlugin.getTernServerTypeManager()
 							.findTernDef(dependency);
 				}
-				if (dependencyFacet != null) {
-					ternFacets.add(dependencyFacet);
+				if (dependencyModule != null) {
+					ternModules.add(dependencyModule);
 				}
 			}
 		}
 
-		tableViewer.setLabelProvider(new TernFacetLabelProvider());
+		tableViewer.setLabelProvider(new TernModuleLabelProvider());
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
-		tableViewer.setInput(ternFacets);
+		tableViewer.setInput(ternModules);
 
 	}
 }

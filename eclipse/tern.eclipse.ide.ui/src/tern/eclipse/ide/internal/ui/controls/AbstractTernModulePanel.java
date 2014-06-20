@@ -14,21 +14,21 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 
 /**
- * Display information of tern facet.
+ * Display information of tern module.
  *
  */
-public abstract class AbstractTernFacetPanel extends Composite {
+public abstract class AbstractTernModulePanel extends Composite {
 
-	public AbstractTernFacetPanel(Composite parent, ITernFacet facet,
+	public AbstractTernModulePanel(Composite parent, ITernModule module,
 			IProject project) {
 		super(parent, SWT.NONE);
-		createUI(this, facet, project);
+		createUI(this, module, project);
 	}
 
-	protected abstract void createUI(Composite parent, ITernFacet facet,
+	protected abstract void createUI(Composite parent, ITernModule module,
 			IProject project);
 
 }

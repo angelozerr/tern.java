@@ -15,10 +15,10 @@ import tern.server.protocol.JsonHelper;
 import com.eclipsesource.json.JsonObject;
 
 /**
- * Tern facet metadata option.
+ * Tern module metadata option.
  *
  */
-public class TernFacetMetadataOption {
+public class TernModuleMetadataOption {
 
 	private static final String NAME_FIELD = "name";
 	private static final String DESCRIPTION_FIELD = "description";
@@ -28,7 +28,7 @@ public class TernFacetMetadataOption {
 	private final String description;
 	private final String type;
 
-	public TernFacetMetadataOption(JsonObject json) {
+	public TernModuleMetadataOption(JsonObject json) {
 		this.name = JsonHelper.getString(json, NAME_FIELD);
 		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
 		this.type = JsonHelper.getString(json, TYPE_FIELD);

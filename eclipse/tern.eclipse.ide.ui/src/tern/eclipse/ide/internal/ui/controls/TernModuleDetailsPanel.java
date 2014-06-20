@@ -27,36 +27,36 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.ui.viewers.TernFacetLabelProvider;
-import tern.metadata.TernFacetMetadata;
-import tern.server.ITernFacet;
+import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
+import tern.metadata.TernModuleMetadata;
+import tern.server.ITernModule;
 import tern.utils.StringUtils;
 
 /**
- * Display information of the tern facet.
+ * Display information of the tern module.
  *
  */
-public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
+public class TernModuleDetailsPanel extends AbstractTernModulePanel {
 
-	public TernFacetDetailsPanel(Composite parent, ITernFacet facet,
+	public TernModuleDetailsPanel(Composite parent, ITernModule module,
 			IProject project) {
-		super(parent, facet, project);
+		super(parent, module, project);
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernFacet facet, IProject project) {
+	protected void createUI(Composite parent, ITernModule module, IProject project) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
 
-		// Create title header of the facet with icon.
-		createHeader(parent, facet);
+		// Create title header of the module with icon.
+		createHeader(parent, module);
 
 		// Create separator
 		createSeparator();
 
-		// Create body of the facet.
-		createBody(facet);
+		// Create body of the module.
+		createBody(module);
 
 	}
 
@@ -65,7 +65,7 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 		separator.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 	}
 
-	public void createBody(ITernFacet facet) {
+	public void createBody(ITernModule module) {
 
 		GridLayout layout;
 		final ScrolledComposite details = new ScrolledComposite(this,
@@ -84,7 +84,7 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 		nestedDetailsComposite.setLayout(layout);
 		details.setContent(nestedDetailsComposite);
 
-		TernFacetMetadata metadata = facet.getMetadata();
+		TernModuleMetadata metadata = module.getMetadata();
 		if (metadata != null && !StringUtils.isEmpty(metadata.getDescription())) {
 			final Text descTextField = new Text(nestedDetailsComposite,
 					SWT.WRAP | SWT.READ_ONLY);
@@ -96,34 +96,34 @@ public class TernFacetDetailsPanel extends AbstractTernFacetPanel {
 
 		// Home page
 		addInfo(nestedDetailsComposite,
-				TernUIMessages.TernFacetDetailsPanel_homepage, null,
+				TernUIMessages.TernModuleDetailsPanel_homepage, null,
 				metadata != null ? metadata.getHomePage() : "", null, true);
 		// Author
 		addInfo(nestedDetailsComposite,
-				TernUIMessages.TernFacetDetailsPanel_author, null,
+				TernUIMessages.TernModuleDetailsPanel_author, null,
 				metadata != null ? metadata.getAuthor() : "", null, false);
 		// Repository URL
 		addInfo(nestedDetailsComposite,
-				TernUIMessages.TernFacetDetailsPanel_repositoryURL, null,
+				TernUIMessages.TernModuleDetailsPanel_repositoryURL, null,
 				metadata != null ? metadata.getRepositoryURL() : "", null, true);
 		// Bugs URL
 		addInfo(nestedDetailsComposite,
-				TernUIMessages.TernFacetDetailsPanel_bugsURL, null,
+				TernUIMessages.TernModuleDetailsPanel_bugsURL, null,
 				metadata != null ? metadata.getBugsURL() : "", null, true);
 		// Help URL
 		addInfo(nestedDetailsComposite,
-				TernUIMessages.TernFacetDetailsPanel_helpURL, null,
+				TernUIMessages.TernModuleDetailsPanel_helpURL, null,
 				metadata != null ? metadata.getHelpURL() : "", null, true);
 		
 	}
 
-	public void createHeader(final Composite parent, ITernFacet facet) {
+	public void createHeader(final Composite parent, ITernModule module) {
 		Composite header = new Composite(this, SWT.NONE);
 		GridLayout layout = new GridLayout(2, false);
 		header.setLayout(layout);
 
-		addInfo(header, null, TernFacetLabelProvider.getImageFacet(facet),
-				facet.getName(),
+		addInfo(header, null, TernModuleLabelProvider.getImageModule(module),
+				module.getName(),
 				JFaceResources.getFontRegistry().get(DetailsPanel.HEADER_FONT),
 				false);
 	}

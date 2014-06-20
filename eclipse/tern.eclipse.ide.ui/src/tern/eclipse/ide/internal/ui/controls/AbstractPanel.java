@@ -16,7 +16,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 
 /**
  * Abstract class for panel.
@@ -35,18 +35,18 @@ public abstract class AbstractPanel extends Composite {
 	}
 
 	/**
-	 * Refresh content of the details panel with the given tern facet.
+	 * Refresh content of the details panel with the given tern module.
 	 * 
-	 * @param facet
+	 * @param module
 	 */
-	public void refresh(ITernFacet facet) {
+	public void refresh(ITernModule module) {
 		if (this.content != null) {
-			// dispose old content of the last selected facet.
+			// dispose old content of the last selected module.
 			this.content.dispose();
 		}
 
-		if (facet == null) {
-			// none facet are selected, create empty body content
+		if (module == null) {
+			// none module are selected, create empty body content
 			this.content = new Composite(this, SWT.NONE);
 			GridLayout layout = new GridLayout();
 			this.content.setLayout(layout);
@@ -54,8 +54,8 @@ public abstract class AbstractPanel extends Composite {
 			createEmptyBodyContent(content);
 
 		} else {
-			// facet is selected, display content of this facet
-			this.content = createContent(this, facet, project);
+			// module is selected, display content of this module
+			this.content = createContent(this, module, project);
 		}
 		this.content
 				.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -65,5 +65,5 @@ public abstract class AbstractPanel extends Composite {
 	protected abstract void createEmptyBodyContent(Composite parent);
 
 	protected abstract Composite createContent(Composite parent,
-			ITernFacet facet, IProject project);
+			ITernModule module, IProject project);
 }

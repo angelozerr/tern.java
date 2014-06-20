@@ -19,10 +19,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 
 /**
- * Content of the "Details" Tab of tern facet selection.
+ * Content of the "Details" Tab of tern module selection.
  *
  */
 public class DetailsPanel extends AbstractPanel {
@@ -55,8 +55,8 @@ public class DetailsPanel extends AbstractPanel {
 	}
 
 	@Override
-	protected Composite createContent(Composite parent, ITernFacet facet,
+	protected Composite createContent(Composite parent, ITernModule module,
 			IProject project) {
-		return new TernFacetDetailsPanel(parent, facet, project);
+		return new TernModuleDetailsPanel(parent, module, project);
 	}
 }

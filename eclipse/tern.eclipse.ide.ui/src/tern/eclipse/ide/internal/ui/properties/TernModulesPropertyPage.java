@@ -22,20 +22,20 @@ import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.controls.TernFacetsBlock;
-import tern.server.ITernFacet;
-import tern.utils.TernFacetHelper;
+import tern.eclipse.ide.ui.controls.TernModulesBlock;
+import tern.server.ITernModule;
+import tern.utils.TernModuleHelper;
 
 /**
- * Tern Facets (Plugins + JSON Type Definitions) property page.
+ * Tern Modules (Plugins + JSON Type Definitions) property page.
  * 
  */
-public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
+public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		IWorkbenchPreferencePage {
 
-	private TernFacetsBlock facetsBlock;
+	private TernModulesBlock modulesBlock;
 
-	public TernFacetsPropertyPage() {
+	public TernModulesPropertyPage() {
 		super();
 		setImageDescriptor(ImageResource
 				.getImageDescriptor(ImageResource.IMG_LOGO));
@@ -57,17 +57,17 @@ public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		// create UI facets
-		facetsBlock = new TernFacetsBlock(getResource().getProject(),
-				TernUIMessages.TernFacetsPropertyPage_desc);
-		facetsBlock.createControl(parent);
-		Control control = facetsBlock.getControl();
+		// create UI modules
+		modulesBlock = new TernModulesBlock(getResource().getProject(),
+				TernUIMessages.TernModulesPropertyPage_desc);
+		modulesBlock.createControl(parent);
+		Control control = modulesBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
 
-		// load facets
-		facetsBlock.loadFacets();
+		// load modules
+		modulesBlock.loadModules();
 
 		applyDialogFont(parent);
 		return parent;
@@ -76,17 +76,17 @@ public class TernFacetsPropertyPage extends AbstractTernPropertyPage implements
 	@Override
 	public boolean performOk() {
 		// save column settings
-		facetsBlock.saveColumnSettings();
+		modulesBlock.saveColumnSettings();
 		// save the checked plugins in the tern project
-		Object[] checkedFacets = facetsBlock.getCheckedFacets();
+		Object[] checkedModules = modulesBlock.getCheckedModules();
 		try {
 			IDETernProject ternProject = getTernProject();
 			// clear Plugin + JSON Type Definition
 			ternProject.clearPlugins();
 			ternProject.clearLibs();
 			// Add Plugin + JSON Type Definition
-			for (Object facet : checkedFacets) {
-				TernFacetHelper.update((ITernFacet) facet, ternProject);
+			for (Object module : checkedModules) {
+				TernModuleHelper.update((ITernModule) module, ternProject);
 			}
 			ternProject.save();
 		} catch (Exception e) {

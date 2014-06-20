@@ -17,28 +17,28 @@ import java.util.Set;
 import com.eclipsesource.json.JsonObject;
 
 import tern.TernException;
-import tern.metadata.TernFacetMetadata;
+import tern.metadata.TernModuleMetadata;
 import tern.utils.StringUtils;
 
 /**
- * Wrapper for {@link ITernFacet} used to configure {@link ITernFacet} :
+ * Wrapper for {@link ITernModule} used to configure {@link ITernModule} :
  * 
  * <ul>
- * <li>version of the facet</li>
- * <li>options of the facet if it's a plugin</li>
+ * <li>version of the module</li>
+ * <li>options of the module if it's a plugin</li>
  * </ul>
  *
  */
-public class TernFacetConfigurable implements ITernFacetConfigurable {
+public class TernModuleConfigurable implements ITernModuleConfigurable {
 
-	private ITernFacet wrappedFacet;
-	private final Map<String, ITernFacet> facets;
+	private ITernModule wrappedModule;
+	private final Map<String, ITernModule> modules;
 	private JsonObject options;
 
-	public TernFacetConfigurable(ITernFacet facet) {
-		this.facets = new LinkedHashMap<String, ITernFacet>();
-		this.wrappedFacet = facet;
-		addFacet(facet);
+	public TernModuleConfigurable(ITernModule module) {
+		this.modules = new LinkedHashMap<String, ITernModule>();
+		this.wrappedModule = module;
+		addModule(module);
 	}
 
 	@Override
@@ -48,54 +48,54 @@ public class TernFacetConfigurable implements ITernFacetConfigurable {
 
 	@Override
 	public String getType() {
-		return wrappedFacet.getType();
+		return wrappedModule.getType();
 	}
 
 	@Override
 	public String getVersion() {
-		return wrappedFacet.getVersion();
+		return wrappedModule.getVersion();
 	}
 
 	@Override
 	public String getPath() {
-		return wrappedFacet.getPath();
+		return wrappedModule.getPath();
 	}
 
 	@Override
-	public FacetType getFacetType() {
-		return FacetType.Configurable;
+	public ModuleType getModuleType() {
+		return ModuleType.Configurable;
 	}
 
-	public void addFacet(ITernFacet facet) {
-		if (!StringUtils.isEmpty(facet.getVersion())) {
-			this.facets.put(facet.getVersion(), facet);
+	public void addModule(ITernModule module) {
+		if (!StringUtils.isEmpty(module.getVersion())) {
+			this.modules.put(module.getVersion(), module);
 		}
 	}
 
 	@Override
-	public ITernFacet getWrappedFacet() {
-		return wrappedFacet;
+	public ITernModule getWrappedModule() {
+		return wrappedModule;
 	}
 
 	@Override
-	public ITernFacet setVersion(String version) throws TernException {
-		ITernFacet facet = facets.get(version);
-		if (facet == null) {
+	public ITernModule setVersion(String version) throws TernException {
+		ITernModule module = modules.get(version);
+		if (module == null) {
 			throw new TernException("Unsupported version " + version
 					+ " for type " + getType());
 		}
-		wrappedFacet = facet;
-		return facet;
+		wrappedModule = module;
+		return module;
 	}
 
 	@Override
 	public Set<String> getAvailableVersions() {
-		return facets.keySet();
+		return modules.keySet();
 	}
 
 	@Override
-	public TernFacetMetadata getMetadata() {
-		return wrappedFacet.getMetadata();
+	public TernModuleMetadata getMetadata() {
+		return wrappedModule.getMetadata();
 	}
 
 	@Override

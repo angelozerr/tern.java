@@ -26,11 +26,11 @@ import org.eclipse.swt.widgets.Control;
 import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
-import tern.eclipse.ide.ui.controls.TernFacetsBlock;
+import tern.eclipse.ide.ui.controls.TernModulesBlock;
 import tern.server.ITernDef;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 import tern.server.ITernPlugin;
-import tern.utils.TernFacetHelper;
+import tern.utils.TernModuleHelper;
 
 /**
  * Wizard page to select Server plugins.
@@ -40,7 +40,7 @@ public class TernPluginsSelectionWizardPage extends
 		TernWizardPage<EditorOptions> {
 
 	private static final String PAGE = "TernPluginsSelectionWizardPage";
-	private TernFacetsBlock facetsBlock;
+	private TernModulesBlock modulesBlock;
 
 	protected TernPluginsSelectionWizardPage() {
 		super(PAGE);
@@ -61,9 +61,9 @@ public class TernPluginsSelectionWizardPage extends
 
 		IResource resource = super.getResource();
 		IProject project = resource != null ? resource.getProject() : null;
-		facetsBlock = new TernFacetsBlock(project, null);
-		facetsBlock.createControl(container);
-		facetsBlock
+		modulesBlock = new TernModulesBlock(project, null);
+		modulesBlock.createControl(container);
+		modulesBlock
 				.addSelectionChangedListener(new ISelectionChangedListener() {
 
 					@Override
@@ -71,7 +71,7 @@ public class TernPluginsSelectionWizardPage extends
 						TernPluginsSelectionWizardPage.this.dialogChanged();
 					}
 				});
-		Control control = facetsBlock.getControl();
+		Control control = modulesBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
@@ -81,7 +81,7 @@ public class TernPluginsSelectionWizardPage extends
 
 	@Override
 	protected void initialize() {		
-		facetsBlock.loadFacets();
+		modulesBlock.loadModules();
 	}
 
 	@Override
@@ -91,13 +91,13 @@ public class TernPluginsSelectionWizardPage extends
 
 	@Override
 	protected void updateModel(EditorOptions model) {
-		Object[] facets = facetsBlock.getCheckedFacets();
+		Object[] modules = modulesBlock.getCheckedModules();
 		List<ITernDef> defs = new ArrayList<ITernDef>();
 		List<ITernPlugin> plugins = new ArrayList<ITernPlugin>();
-		ITernFacet facet = null;
-		for (int i = 0; i < facets.length; i++) {
-			facet = (ITernFacet) facets[i];
-			TernFacetHelper.update(defs, plugins, facet);
+		ITernModule module = null;
+		for (int i = 0; i < modules.length; i++) {
+			module = (ITernModule) modules[i];
+			TernModuleHelper.update(defs, plugins, module);
 		}
 		model.setTernDefs(defs.toArray(ITernDef.EMPTY_DEF));
 		model.setTernPlugins(plugins.toArray(ITernPlugin.EMPTY_PLUGIN));

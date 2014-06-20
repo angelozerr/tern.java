@@ -24,11 +24,11 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
 import tern.eclipse.ide.internal.ui.Trace;
-import tern.eclipse.ide.internal.ui.controls.TernFacetOptionsPanel;
+import tern.eclipse.ide.internal.ui.controls.TernModuleOptionsPanel;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.descriptors.ITernDescriptor;
 import tern.eclipse.ide.ui.descriptors.ITernDescriptorManager;
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 
 /**
  * Tern descriptor manager.
@@ -74,9 +74,9 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	}
 
 	@Override
-	public Composite createOptionsPanel(Composite parent, ITernFacet facet,
+	public Composite createOptionsPanel(Composite parent, ITernModule module,
 			IProject project) {
-		return new TernFacetOptionsPanel(parent, facet, project);
+		return new TernModuleOptionsPanel(parent, module, project);
 	}
 
 	@Override

@@ -6,16 +6,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TernFacetMetadataManagerTest {
+public class TernModuleMetadataManagerTest {
 
 	@Before
 	public void init() {
-		TernFacetMetadataManager.getInstance().init(new File("../tern.core"));
+		TernModuleMetadataManager.getInstance().init(new File("../tern.core"));
 	}
 
 	@Test
 	public void metadataExists() {
-		TernFacetMetadata metadata = TernFacetMetadataManager.getInstance()
+		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance()
 				.getMetadata("jquery");
 		Assert.assertNotNull(metadata);
 	}

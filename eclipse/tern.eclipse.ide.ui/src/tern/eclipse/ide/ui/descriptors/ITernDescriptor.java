@@ -18,16 +18,16 @@ import org.eclipse.swt.graphics.Image;
 public interface ITernDescriptor {
 
 	/**
-	 * Returns the facet name.
+	 * Returns the module name.
 	 * 
 	 * @return
 	 */
 	String getId();
 
 	/**
-	 * Returns the image of the facet.
+	 * Returns the image of the module.
 	 * 
-	 * @return the image of the facet.
+	 * @return the image of the module.
 	 */
 	Image getImage();
 

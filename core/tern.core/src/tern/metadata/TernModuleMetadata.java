@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 import tern.server.protocol.JsonHelper;
 
 import com.eclipsesource.json.JsonArray;
@@ -23,10 +23,10 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
 /**
- * Tern facet metadata loded from *.metadata.json file.
+ * Tern module metadata loded from *.metadata.json file.
  *
  */
-public class TernFacetMetadata {
+public class TernModuleMetadata {
 
 	private static final String NAME_FIELD = "name";
 	private static final String DESCRIPTION_FIELD = "description";
@@ -47,14 +47,14 @@ public class TernFacetMetadata {
 	private final String bugsURL;
 	private final String helpURL;
 	private final Collection<String> dependencies;
-	private final Collection<TernFacetMetadataOption> options;
+	private final Collection<TernModuleMetadataOption> options;
 
 	/**
-	 * Create facet metadata from JSON object.
+	 * Create module metadata from JSON object.
 	 * 
 	 * @param json
 	 */
-	public TernFacetMetadata(JsonObject json) {
+	public TernModuleMetadata(JsonObject json) {
 		this.name = JsonHelper.getString(json, NAME_FIELD);
 		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
 		this.homepage = JsonHelper.getString(json, HOMEPAGE_FIELD);
@@ -94,73 +94,73 @@ public class TernFacetMetadata {
 		return dependencies;
 	}
 
-	private Collection<TernFacetMetadataOption> parseOptions(
+	private Collection<TernModuleMetadataOption> parseOptions(
 			JsonArray jsonOptions) {
-		List<TernFacetMetadataOption> options = new ArrayList<TernFacetMetadataOption>();
+		List<TernModuleMetadataOption> options = new ArrayList<TernModuleMetadataOption>();
 		for (JsonValue jsonOption : jsonOptions) {
-			options.add(new TernFacetMetadataOption((JsonObject) jsonOption));
+			options.add(new TernModuleMetadataOption((JsonObject) jsonOption));
 		}
 		return options;
 	}
 
 	/**
-	 * Returns the name of the facet.
+	 * Returns the name of the module.
 	 * 
-	 * @return the name of the facet.
+	 * @return the name of the module.
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Returns the description of the facet.
+	 * Returns the description of the module.
 	 * 
-	 * @return the description of the facet.
+	 * @return the description of the module.
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Returns the home page of the facet.
+	 * Returns the home page of the module.
 	 * 
-	 * @return the home page of the facet.
+	 * @return the home page of the module.
 	 */
 	public String getHomePage() {
 		return homepage;
 	}
 
 	/**
-	 * Returns the author of the facet.
+	 * Returns the author of the module.
 	 * 
-	 * @return the author of the facet.
+	 * @return the author of the module.
 	 */
 	public String getAuthor() {
 		return author;
 	}
 
 	/**
-	 * Returns the repository URL of the facet.
+	 * Returns the repository URL of the module.
 	 * 
-	 * @return the repository URL of the facet.
+	 * @return the repository URL of the module.
 	 */
 	public String getRepositoryURL() {
 		return repositoryURL;
 	}
 
 	/**
-	 * Returns the bugs URL of the facet.
+	 * Returns the bugs URL of the module.
 	 * 
-	 * @return the bugs URL of the facet.
+	 * @return the bugs URL of the module.
 	 */
 	public String getBugsURL() {
 		return bugsURL;
 	}
 
 	/**
-	 * Returns the help URL of the facet.
+	 * Returns the help URL of the module.
 	 * 
-	 * @return the help URL of the facet.
+	 * @return the help URL of the module.
 	 */
 	public String getHelpURL() {
 		return helpURL;
@@ -171,14 +171,14 @@ public class TernFacetMetadata {
 	 * 
 	 * @return list of options.
 	 */
-	public Collection<TernFacetMetadataOption> getOptions() {
+	public Collection<TernModuleMetadataOption> getOptions() {
 		return options;
 	}
 
 	/**
-	 * Returns list of {@link ITernFacet} name dependencies.
+	 * Returns list of {@link ITernModule} name dependencies.
 	 * 
-	 * @return list of {@link ITernFacet} name dependencies.
+	 * @return list of {@link ITernModule} name dependencies.
 	 */
 	public Collection<String> getDependencies() {
 		return dependencies;

@@ -4,40 +4,40 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
-import tern.server.ITernFacet;
+import tern.server.ITernModule;
 
 public interface ITernDescriptorManager {
 
 	/**
-	 * Returns the image for the given facet name.
+	 * Returns the image for the given module name.
 	 * 
 	 * @param id
-	 *            facet name.
-	 * @return the image for the given facet name.
+	 *            module name.
+	 * @return the image for the given module name.
 	 */
 	Image getImage(String id);
 
 	/**
-	 * Returns the descriptor for the given facet name.
+	 * Returns the descriptor for the given module name.
 	 * 
 	 * @param id
-	 *            facet name.
-	 * @return the descriptor for the given facet name.
+	 *            module name.
+	 * @return the descriptor for the given module name.
 	 */
 	ITernDescriptor getTernDescriptor(String id);
 
 	/**
-	 * Create options panel for the given facet.
+	 * Create options panel for the given module.
 	 * 
 	 * @param parent
 	 *            composite
-	 * @param facet
-	 *            tern facet.
+	 * @param module
+	 *            tern module.
 	 * @param project
 	 *            the current project or null otherwise.
-	 * @return options panel for the given facet.
+	 * @return options panel for the given module.
 	 */
-	Composite createOptionsPanel(Composite parent, ITernFacet facet,
+	Composite createOptionsPanel(Composite parent, ITernModule module,
 			IProject project);
 
 }
