@@ -14,6 +14,8 @@ import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
+import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
+import tern.eclipse.ide.server.nodejs.core.INodejsInstallManager;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.core.NodejsInstall;
@@ -34,11 +36,15 @@ public class TernNodejsCorePreferenceConstants {
 	public static void initializeDefaultValues() {
 		IEclipsePreferences node = new DefaultScope()
 				.getNode(TernNodejsCorePlugin.PLUGIN_ID);
-		// By default native node.js install is used.
-		node.put(TernNodejsCoreConstants.NODEJS_INSTALL,
-				NodejsInstall.NODE_NATIVE);
-		node.put(TernNodejsCoreConstants.NODEJS_PATH,
-				IDENodejsProcessHelper.getNodejsPath());
+		
+		// By default use the embedded Node.js install (if exists)
+		if (!useBundledNodeJsInstall(node)) {
+			// Use native node.js install in case there is no embedded install.
+			node.put(TernNodejsCoreConstants.NODEJS_INSTALL,
+					NodejsInstall.NODE_NATIVE);
+			node.put(TernNodejsCoreConstants.NODEJS_PATH,
+					IDENodejsProcessHelper.getNodejsPath());
+		}
 		// timeout to start node.js
 		node.putLong(TernNodejsCoreConstants.NODEJS_TIMEOUT,
 				NodejsTernHelper.DEFAULT_TIMEOUT);
@@ -49,6 +55,20 @@ public class TernNodejsCorePreferenceConstants {
 		node.putBoolean(TernNodejsCoreConstants.NODEJS_PERSISTENT, false);
 	}
 
+	private static boolean useBundledNodeJsInstall(IEclipsePreferences node) {
+		INodejsInstallManager installManager = TernNodejsCorePlugin
+				.getNodejsInstallManager();
+		INodejsInstall[] installs = installManager.getNodejsInstalls();
+		for (INodejsInstall install : installs) {
+			if (!install.isNative()) {
+				node.put(TernNodejsCoreConstants.NODEJS_INSTALL,
+						install.getId());
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	// Don't instantiate
 	private TernNodejsCorePreferenceConstants() {
 	}
