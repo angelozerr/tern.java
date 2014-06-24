@@ -2,7 +2,7 @@
 <feature
       id="tern.eclipse.win32.win32.x86.feature"
       label="%featureName"
-      version="0.3.0.qualifier"
+      version="0.4.0.qualifier"
       license-feature="org.eclipse.license"
       license-feature-version="1.0.0.qualifier">
 
@@ -25,7 +25,7 @@
          arch="x86"
          download-size="0"
          install-size="0"
-         version="0.3.0.qualifier"
+         version="0.4.0.qualifier"
          unpack="false"/>
 
 </feature>
