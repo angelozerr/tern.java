@@ -16,22 +16,15 @@ import tern.metadata.TernModuleMetadataManager;
 public enum TernPlugin implements ITernPlugin {
 
 	aui("tern/plugin/aui"), angular("tern/plugin/angular"), component(
-			"tern/plugin/component"), ckeditor_4_4_1("ckeditor_4.4.1",
-			"ckeditor", "4.4.1", "tern/plugin/ckeditor_4.4.1"), cordovajs(
+			"tern/plugin/component"), ckeditor_4_4_1("ckeditor", "4.4.1"), cordovajs(
 			"tern/plugin/cordovajs"), doc_comment("tern/plugin/doc_comment"), dojotoolkit_1_6(
-			"dojotoolkit_1.6", "dojotoolkit", "1.6",
-			"tern/plugin/dojotoolkit_1.6"), dojotoolkit_1_8("dojotoolkit_1.8",
-			"dojotoolkit", "1.8", "tern/plugin/dojotoolkit_1.8"), dojotoolkit_1_9(
-			"dojotoolkit_1.9", "dojotoolkit", "1.9",
-			"tern/plugin/dojotoolkit_1.9"), extjs_4_2_1("extjs_4.2.1", "extjs",
-			"4.2.1", "tern/plugin/extjs_4.2.1"), extjs_5_0_0("extjs_5.0.0",
-			"extjs", "5.0.0", "tern/plugin/extjs_5.0.0"), gmaps_3_16(
-			"gmaps_3.16", "gmaps", "3.16", "tern/plugin/gmaps_3.16"), gmaps_3_17(
-			"gmaps_3.17", "gmaps", "3.17", "tern/plugin/gmaps_3.17"), grunt(
-			"tern/plugin/grunt"), liferay("tern/plugin/liferay"), lint(
+			"dojotoolkit", "1.6"), dojotoolkit_1_8("dojotoolkit", "1.8"), dojotoolkit_1_9(
+			"dojotoolkit", "1.9"), extjs_4_2_1("extjs", "4.2.1"), extjs_5_0_0(
+			"extjs", "5.0.0"), gmaps_3_16("gmaps", "3.16"), gmaps_3_17("gmaps",
+			"3.17"), grunt("tern/plugin/grunt"), liferay("tern/plugin/liferay"), lint(
 			"tern/plugin/lint"), node("tern/plugin/node"), meteor(
-			"tern/plugin/meteor"), requirejs("tern/plugin/requirejs"), yui(
-			"tern/plugin/yui");
+			"tern/plugin/meteor"), qooxdoo_4_1("qooxdoo", "4.1"), requirejs(
+			"tern/plugin/requirejs"), yui("tern/plugin/yui");
 
 	private final String name;
 	private final String type;
@@ -41,6 +34,12 @@ public enum TernPlugin implements ITernPlugin {
 
 	private TernPlugin(String path) {
 		this(null, null, null, path);
+	}
+
+	private TernPlugin(String type, String version) {
+		this(new StringBuilder(type).append("_").append(version).toString(),
+				type, version, new StringBuilder("tern/plugin/").append(type)
+						.append("_").append(version).toString());
 	}
 
 	private TernPlugin(String name, String type, String version, String path) {

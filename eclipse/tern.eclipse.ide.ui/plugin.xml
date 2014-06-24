@@ -234,6 +234,10 @@
             icon="/icons/full/obj16/node.png" >
       </ternDescriptor>
   	  <ternDescriptor
+            id="qooxdoo"
+            icon="/icons/full/obj16/qooxdoo.png" >
+      </ternDescriptor>      
+  	  <ternDescriptor
             id="requirejs"
             icon="/icons/full/obj16/requirejs.png" >
       </ternDescriptor>                 

@@ -1,0 +1,20 @@
+{
+ "name": "qooxdoo",
+ "homepage": "http://qooxdoo.org/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Qooxdoo support. qooxdoo is a universal JavaScript framework with a coherent set of individual components and a powerful toolchain. It is open source under liberal licenses, and supported by one of the world's leading web hosts, 1&1.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-qooxdoo.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-qooxdoo/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Qooxdoo-support"
+ }
+}
