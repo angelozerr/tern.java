@@ -7,7 +7,7 @@
       license-feature-version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      %featureDescription
    </description>
 
    <copyright url="http://www.example.com/copyright">
