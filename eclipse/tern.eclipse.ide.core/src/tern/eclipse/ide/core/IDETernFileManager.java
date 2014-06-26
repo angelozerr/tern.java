@@ -86,11 +86,26 @@ public class IDETernFileManager extends TernFileManager<IFile> implements
 	@Override
 	public IFile getRelativeFile(IFile file, String path) {
 		IContainer parent = file.getParent();
-		IFile relativeFile = parent.getFile(new Path(path));
+		IFile relativeFile = getRelativeFile(path, parent);
 		if (relativeFile != null && relativeFile.exists()) {
 			return relativeFile;
 		}
 		return null;
+	}
+
+	/**
+	 * Returns the relative file and null if the given path is not valid.
+	 * 
+	 * @param path
+	 * @param parent
+	 * @return
+	 */
+	private IFile getRelativeFile(String path, IContainer parent) {
+		try {
+			return parent.getFile(new Path(path));
+		} catch (Throwable e) {
+			return null;
+		}
 	}
 
 	@Override
