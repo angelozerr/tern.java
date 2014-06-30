@@ -8,10 +8,7 @@
 	<artifactId>update-site</artifactId>
 	<packaging>pom</packaging>
 	<modules>
-		<module>tern.eclipse.win32.win32.x86.feature</module>
-		<module>tern.eclipse.linux.gtk.x86_64.feature</module>
-		<module>tern.eclipse.macosx.cocoa.x86_64.feature</module>
-		<module>tern.eclipse.win32.x86_64.feature</module>
+		<module>tern.eclipse.ide.server.nodejs.embed</module>
 		<module>tern-feature</module>
 		<module>tern-jsdt-feature</module>
 		<module>tern-server-rhino-feature</module>
