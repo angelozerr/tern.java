@@ -24,9 +24,11 @@ import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 
+/**
+ * Tern Hyperlink detector.
+ *
+ */
 public class TernHyperLinkDetector extends AbstractHyperlinkDetector {
-
-	public static final IHyperlink[] EMPTY_HYPERLINK = new IHyperlink[0];
 
 	@Override
 	public IHyperlink[] detectHyperlinks(ITextViewer textViewer,
