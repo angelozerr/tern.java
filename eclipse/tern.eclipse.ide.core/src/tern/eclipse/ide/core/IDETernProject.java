@@ -194,18 +194,20 @@ public class IDETernProject extends TernProject<IFile> {
 	 *         "tern.eclipse.ide.core.ternnature" and false otherwise.
 	 */
 	public static boolean hasTernNature(IProject project) {
-		try {
-			if (project.hasNature(TernNature.ID))
-				return true;
-
-			loadTernProjectDescribers();
-			for (String adaptToNature : ternNatureAdapters) {
-				if (project.hasNature(adaptToNature)) {
+		if (project.isAccessible()) {
+			try {
+				if (project.hasNature(TernNature.ID))
 					return true;
+
+				loadTernProjectDescribers();
+				for (String adaptToNature : ternNatureAdapters) {
+					if (project.hasNature(adaptToNature)) {
+						return true;
+					}
 				}
+			} catch (CoreException e) {
+				Trace.trace(Trace.SEVERE, "Error tern nature", e);
 			}
-		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE, "Error tern nature", e);
 		}
 		return false;
 	}
