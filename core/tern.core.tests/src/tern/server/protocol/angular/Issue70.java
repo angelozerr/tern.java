@@ -36,13 +36,7 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 	}
 
 	private TernDoc createDocForNoCompletionWithTodosAndControllerAs() {
-		String name = "myfile.js";
-		String text = "function TodoCtrl($scope) {" + "$scope.todos = ["
-				+ "{text:'learn angular', done:true},"
-				+ "{text:'build an angular app', done:false}];" + "}";
-
-		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		TernDoc doc = createFile();
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
@@ -66,13 +60,7 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 	}
 
 	private TernDoc createDocForCompletionWithTodosAndControllerAs() {
-		String name = "myfile.js";
-		String text = "function TodoCtrl($scope) {" + "$scope.todos = ["
-				+ "{text:'learn angular', done:true},"
-				+ "{text:'build an angular app', done:false}];" + "}";
-
-		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		TernDoc doc = createFile();
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
@@ -96,13 +84,7 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 	}
 
 	private TernDoc createDocForCompletionWithAs() {
-		String name = "myfile.js";
-		String text = "function TodoCtrl($scope) {" + "$scope.todos = ["
-				+ "{text:'learn angular', done:true},"
-				+ "{text:'build an angular app', done:false}];" + "}";
-
-		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		TernDoc doc = createFile();
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
@@ -113,4 +95,122 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 		doc.setQuery(query);
 		return doc;
 	}
+
+	@Test
+	public void completionWithNgRepeatAndAs() throws TernException {
+		TernDoc doc = createDocForCompletionWithNgRepeatAndAs();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() == 2);
+		TernCompletionItem t = collector.get("t");
+		Assert.assertNotNull(t);
+		TernCompletionItem todo = collector.get("todo");
+		Assert.assertNotNull(todo);
+		Assert.assertEquals("{done, text}", todo.getType());
+	}
+
+	private TernDoc createDocForCompletionWithNgRepeatAndAs() {
+		TernDoc doc = createFile();
+
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.model);
+		query.getScope().getControllers().add("TodoCtrl as t");
+		query.getScope().addRepeat("todo in t.todos");
+		query.addFile("myfile.js");
+		query.setExpression("");
+
+		doc.setQuery(query);
+		return doc;
+	}
+
+	@Test
+	public void completionWithNgRepeatAndAsOnTodo() throws TernException {
+		TernDoc doc = createDocForCompletionWithNgRepeatAndAsOnTodo();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() > 0);
+		Assert.assertNotNull(collector.get("toLocaleString"));
+		Assert.assertNotNull(collector.get("text"));
+		Assert.assertNotNull(collector.get("done"));
+	}
+
+	private TernDoc createDocForCompletionWithNgRepeatAndAsOnTodo() {
+		TernDoc doc = createFile();
+
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.model);
+		query.getScope().getControllers().add("TodoCtrl as t");
+		query.getScope().addRepeat("todo in t.todos");
+		query.addFile("myfile.js");
+		query.setExpression("todo.");
+
+		doc.setQuery(query);
+		return doc;
+	}
+
+	@Test
+	public void completionWithNgRepeatAndAsOnTodoBadAs() throws TernException {
+		TernDoc doc = createDocForCompletionWithNgRepeatAndAsOnTodoBadAs();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() == 0);
+	}
+
+	private TernDoc createDocForCompletionWithNgRepeatAndAsOnTodoBadAs() {
+		TernDoc doc = createFile();
+
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.model);
+		query.getScope().getControllers().add("TodoCtrl as t");
+		query.getScope().addRepeat("todo in todos"); // bad 'as' it should be
+														// t.todos
+		query.addFile("myfile.js");
+		query.setExpression("todo.");
+
+		doc.setQuery(query);
+		return doc;
+	}
+
+	@Test
+	public void completionWithNgRepeatAndAsOnTodoTodoSimple()
+			throws TernException {
+		TernDoc doc = createDocForCompletionWithNgRepeatAndAsOnTodoSimple();
+		MockTernCompletionCollector collector = new MockTernCompletionCollector();
+		server.request(doc, collector);
+
+		Assert.assertTrue(collector.getCompletions().size() == 1);
+		TernCompletionItem todo = collector.get("todo");
+		Assert.assertNotNull(todo);
+		Assert.assertEquals("{done, text}", todo.getType());
+	}
+
+	private TernDoc createDocForCompletionWithNgRepeatAndAsOnTodoSimple() {
+		TernDoc doc = createFile();
+
+		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
+				AngularType.model);
+		query.getScope().getControllers().add("TodoCtrl as t");
+		query.getScope().addRepeat("todo in t.todos"); // bad 'as' it should be
+														// t.todos
+		query.addFile("myfile.js");
+		query.setExpression("tod");
+
+		doc.setQuery(query);
+		return doc;
+	}
+
+	public TernDoc createFile() {
+		String name = "myfile.js";
+		String text = "function TodoCtrl($scope) {" + "$scope.todos = ["
+				+ "{text:'learn angular', done:true},"
+				+ "{text:'build an angular app', done:false}];" + "}";
+
+		TernDoc doc = new TernDoc();
+		doc.addFile(name, text, null);
+		return doc;
+	}
+
 }
