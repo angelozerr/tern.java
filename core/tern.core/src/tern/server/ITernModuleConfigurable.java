@@ -12,10 +12,9 @@ package tern.server;
 
 import java.util.Set;
 
-import com.eclipsesource.json.JsonObject;
-
 import tern.TernException;
-import tern.metadata.TernModuleMetadata;
+
+import com.eclipsesource.json.JsonObject;
 
 /**
  * Wrapper for {@link ITernModule} used to configure {@link ITernModule} :
@@ -44,14 +43,17 @@ public interface ITernModuleConfigurable extends ITernModule {
 	Set<String> getAvailableVersions();
 
 	/**
-	 * Returns the tern module metadata.
+	 * Set tern plugin options.
 	 * 
-	 * @return the tern module metadata.
+	 * @param options
 	 */
-	TernModuleMetadata getMetadata();
-
 	void setOptions(JsonObject options);
 
+	/**
+	 * Returns the tern plugin options.
+	 * 
+	 * @return the tern plugin options.
+	 */
 	JsonObject getOptions();
 
 }
