@@ -201,8 +201,8 @@ public class IDETernProject extends TernProject<IFile> {
 			try {
 				if (project.hasNature(TernNature.ID))
 					return true;
-
-				loadTernProjectDescribers();
+				
+				Map<String, List<String>> ternNatureAdapters = getTernNatureAdapters();
 				for (String adaptToNature : ternNatureAdapters.keySet()) {
 					if (project.hasNature(adaptToNature)) {
 						return true;
@@ -274,6 +274,7 @@ public class IDETernProject extends TernProject<IFile> {
 		boolean modified = false;
 		
 		try {
+			Map<String, List<String>> ternNatureAdapters = getTernNatureAdapters();
 			for (String natureId : ternNatureAdapters.keySet()) {
 				if (project.hasNature(natureId)) {
 					List<String> defaultModules = ternNatureAdapters.get(natureId);
@@ -881,5 +882,10 @@ public class IDETernProject extends TernProject<IFile> {
 		if (!tempTernNature.isConfigured()) {
 			tempTernNature.configure();
 		}
+	}
+	
+	private static Map<String, List<String>> getTernNatureAdapters() {
+		loadTernProjectDescribers();
+		return ternNatureAdapters;
 	}
 }
