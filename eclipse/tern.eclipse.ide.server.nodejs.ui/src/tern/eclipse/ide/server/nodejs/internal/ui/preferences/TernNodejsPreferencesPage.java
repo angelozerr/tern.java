@@ -20,6 +20,7 @@ import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -41,7 +42,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
 	private FileComboFieldEditor nativeNodePath;
-	private Label nodePath;
+	private Text nodePath;
 
 	public TernNodejsPreferencesPage() {
 		super(GRID);
@@ -133,10 +134,11 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		nodePathTitle.setLayoutData(gridData);
 
-		nodePath = new Label(getFieldEditorParent(), SWT.WRAP);
+		nodePath = new Text(getFieldEditorParent(), SWT.WRAP | SWT.READ_ONLY);
 		nodePath.setText("");
 		gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 2;
+		gridData.widthHint = 200;
 		nodePath.setLayoutData(gridData);
 	}
 
