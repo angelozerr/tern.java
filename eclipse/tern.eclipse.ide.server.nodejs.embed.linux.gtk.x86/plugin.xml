@@ -10,9 +10,12 @@
 #
 # Contributors:
 #     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
+#     Nick Boldt <nickboldt@gmail.com> Bug fix
 ###############################################################################
  -->
 <plugin>
+   id="tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86"
+>
 
 	<extension point="tern.eclipse.ide.server.nodejs.core.nodeJSInstalls" >
 		<install

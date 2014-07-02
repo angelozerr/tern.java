@@ -6,7 +6,8 @@ Bundle-Localization: plugin
 Bundle-SymbolicName: tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86;singleton:=true
 Bundle-Version: 0.4.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
 Require-Bundle: tern.eclipse.ide.server.nodejs.core;bundle-version="0.2.0"
+Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
 Eclipse-PlatformFilter: (& (osgi.ws=gtk)(osgi.os=linux)(osgi.arch=x86))
+
