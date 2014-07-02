@@ -201,7 +201,7 @@ public class IDETernProject extends TernProject<IFile> {
 			try {
 				if (project.hasNature(TernNature.ID))
 					return true;
-				
+
 				Map<String, List<String>> ternNatureAdapters = getTernNatureAdapters();
 				for (String adaptToNature : ternNatureAdapters.keySet()) {
 					if (project.hasNature(adaptToNature)) {
@@ -222,7 +222,7 @@ public class IDETernProject extends TernProject<IFile> {
 		loadIDEInfos();
 		initAdaptedNaturesInfos();
 	}
-	
+
 	/**
 	 * Load IDE informatiosn from the JSON .tern-project file.
 	 */
@@ -266,18 +266,19 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
-	/* 
-	 * Configures Tern Modules (Libraries and Plugins) that are default for Tern Nature
-	 * Adapters active on a project
+	/*
+	 * Configures Tern Modules (Libraries and Plugins) that are default for Tern
+	 * Nature Adapters active on a project
 	 */
 	private void initAdaptedNaturesInfos() {
 		boolean modified = false;
-		
+
 		try {
 			Map<String, List<String>> ternNatureAdapters = getTernNatureAdapters();
 			for (String natureId : ternNatureAdapters.keySet()) {
 				if (project.hasNature(natureId)) {
-					List<String> defaultModules = ternNatureAdapters.get(natureId);
+					List<String> defaultModules = ternNatureAdapters
+							.get(natureId);
 					for (String defaultModule : defaultModules) {
 						ITernModule module = TernCorePlugin
 								.getTernServerTypeManager().findTernModule(
@@ -285,14 +286,14 @@ public class IDETernProject extends TernProject<IFile> {
 						if (module != null) {
 							switch (module.getModuleType()) {
 							case Def:
-								if (!hasLib((ITernDef)module)) {
-									addLib((ITernDef)module);
+								if (!hasLib((ITernDef) module)) {
+									addLib((ITernDef) module);
 									modified = true;
 								}
 								break;
 							case Plugin:
-								if (!hasPlugin((ITernPlugin)module)) {
-									addPlugin((ITernPlugin)module);
+								if (!hasPlugin((ITernPlugin) module)) {
+									addPlugin((ITernPlugin) module);
 									modified = true;
 								}
 							default:
@@ -303,10 +304,11 @@ public class IDETernProject extends TernProject<IFile> {
 				}
 			}
 		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE, "Error while configuring default tern project modules", e);
+			Trace.trace(Trace.SEVERE,
+					"Error while configuring default tern project modules", e);
 			return;
 		}
-		
+
 		if (modified) {
 			try {
 				save();
@@ -316,7 +318,7 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
-	private static void loadTernProjectDescribers() {
+	private synchronized static void loadTernProjectDescribers() {
 		if (ternNatureAdapters != null)
 			return;
 
@@ -326,7 +328,8 @@ public class IDETernProject extends TernProject<IFile> {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
 				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_PROJECT_DESCRIBERS);
-		Map<String, List<String>> map = new HashMap<String, List<String>>(cf.length);
+		Map<String, List<String>> map = new HashMap<String, List<String>>(
+				cf.length);
 		addTernNatureAdapters(cf, map);
 		ternNatureAdapters = map;
 
@@ -352,7 +355,14 @@ public class IDETernProject extends TernProject<IFile> {
 			}
 		}
 	}
-	
+
+	private static Map<String, List<String>> getTernNatureAdapters() {
+		if (ternNatureAdapters == null) {
+			loadTernProjectDescribers();
+		}
+		return ternNatureAdapters;
+	}
+
 	private static List<String> getDefaultModules(IConfigurationElement ce) {
 		List<String> defaultModules = new ArrayList<String>();
 		for (IConfigurationElement dmce : ce.getChildren("defaultModules")) {
@@ -883,9 +893,5 @@ public class IDETernProject extends TernProject<IFile> {
 			tempTernNature.configure();
 		}
 	}
-	
-	private static Map<String, List<String>> getTernNatureAdapters() {
-		loadTernProjectDescribers();
-		return ternNatureAdapters;
-	}
+
 }
