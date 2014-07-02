@@ -27,10 +27,13 @@ public class HTMLTernTypeCollector implements ITernTypeCollector {
 	@Override
 	public void setType(String type, boolean guess, String name,
 			String exprName, String doc, String url, String origin) {
-		if (name != null) {
-			info.append("<b>");
-			info.append(name);
-			info.append("</b>");
+		if (type != null || name != null || exprName != null) {
+			String label = name != null ? name : exprName;
+			if (!StringUtils.isEmpty(label)) {
+				info.append("<b>");
+				info.append(label);
+				info.append("</b>");
+			}
 			if (!StringUtils.isEmpty(doc)) {
 				info.append("<br/><br/>");
 				info.append(doc);
