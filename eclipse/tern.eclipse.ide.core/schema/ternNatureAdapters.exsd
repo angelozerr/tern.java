@@ -46,6 +46,9 @@
 
    <element name="ternAdaptToNature">
       <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="defaultModules" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
@@ -61,6 +64,59 @@
             </annotation>
          </attribute>
       </complexType>
+   </element>
+
+   <element name="defaultModules">
+      <annotation>
+         <documentation>
+            Default Tern Modules that are to be loaded for the adapter by default
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="1" maxOccurs="unbounded">
+            <element ref="module" minOccurs="1" maxOccurs="unbounded"/>
+         </sequence>
+      </complexType>
+   </element>
+
+   <element name="module">
+      <annotation>
+         <documentation>
+            Tern Module
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="options" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="withDependencies" type="boolean">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":tern.eclipse.ide.core.ITernModuleConfigurator"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="options" type="string">
    </element>
 
    <annotation>
