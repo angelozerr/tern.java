@@ -14,18 +14,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
-
 import tern.TernException;
 import tern.TernProject;
 import tern.metadata.TernModuleMetadata;
-import tern.server.ModuleType;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.server.ITernPlugin;
+import tern.server.ModuleType;
 import tern.server.TernModuleConfigurable;
+
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Helper for {@link ITernModule}.
@@ -166,7 +166,8 @@ public class TernModuleHelper {
 	 * @throws TernException
 	 */
 	public static ITernModuleConfigurable findConfigurable(ITernModule module,
-			JsonValue options, List<ITernModule> allModules) throws TernException {
+			JsonValue options, List<ITernModule> allModules)
+			throws TernException {
 		String version = module.getVersion();
 		for (ITernModule f : allModules) {
 			if (f.getModuleType() == ModuleType.Configurable
@@ -198,4 +199,5 @@ public class TernModuleHelper {
 		ITernModuleConfigurable f = (ITernModuleConfigurable) module;
 		return (f.getOptions() != null && f.getOptions().size() > 0);
 	}
+
 }

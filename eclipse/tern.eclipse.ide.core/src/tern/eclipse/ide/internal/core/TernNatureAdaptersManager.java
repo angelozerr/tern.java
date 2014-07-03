@@ -11,6 +11,7 @@
 package tern.eclipse.ide.internal.core;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,9 @@ import org.eclipse.core.runtime.Platform;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernNature;
+import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
+import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonObject;
@@ -44,9 +47,35 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	private static final TernNatureAdaptersManager INSTANCE = new TernNatureAdaptersManager();
 
 	// cached copy of all tern nature adapaters
-	private Map<String, List<String>> ternNatureAdapters;
+	private Map<String, List<DefaultModule>> ternNatureAdapters;
 
 	private boolean registryListenerIntialized;
+
+	private static class DefaultModule {
+
+		private final String name;
+		private final boolean withDependencies;
+		private final JsonObject options;
+
+		public DefaultModule(String name, boolean withDependencies,
+				JsonObject options) {
+			this.name = name;
+			this.withDependencies = withDependencies;
+			this.options = options;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public boolean isWithDependencies() {
+			return withDependencies;
+		}
+
+		public JsonObject getOptions() {
+			return options;
+		}
+	}
 
 	public static TernNatureAdaptersManager getManager() {
 		return INSTANCE;
@@ -79,7 +108,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
 				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_NATURE_ADAPTERS);
-		Map<String, List<String>> map = new HashMap<String, List<String>>(
+		Map<String, List<DefaultModule>> map = new HashMap<String, List<DefaultModule>>(
 				cf.length);
 		addTernNatureAdapters(cf, map);
 		addRegistryListenerIfNeeded();
@@ -93,7 +122,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	 * Load the tern project describers.
 	 */
 	private synchronized void addTernNatureAdapters(IConfigurationElement[] cf,
-			Map<String, List<String>> map) {
+			Map<String, List<DefaultModule>> map) {
 		for (IConfigurationElement ce : cf) {
 			try {
 				map.put(ce.getAttribute("id"), getDefaultModules(ce));
@@ -108,17 +137,33 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		}
 	}
 
-	private List<String> getDefaultModules(IConfigurationElement ce) {
-		List<String> defaultModules = new ArrayList<String>();
+	private List<DefaultModule> getDefaultModules(IConfigurationElement ce) {
+		List<DefaultModule> defaultModules = new ArrayList<DefaultModule>();
 		for (IConfigurationElement dmce : ce.getChildren("defaultModules")) {
 			for (IConfigurationElement mce : dmce.getChildren("module")) {
 				String module = mce.getAttribute("name");
 				if (module != null && !module.trim().isEmpty()) {
-					defaultModules.add(module.trim());
+					String name = module.trim();
+					boolean withDependencies = StringUtils.asBoolean(
+							mce.getAttribute("withDependencies"), false);
+					JsonObject options = getOptions(mce.getAttribute("options"));
+					defaultModules.add(new DefaultModule(name,
+							withDependencies, options));
 				}
 			}
 		}
 		return defaultModules;
+	}
+
+	private JsonObject getOptions(String options) {
+		if (!StringUtils.isEmpty(options)) {
+			try {
+				return JsonObject.readFrom(options);
+			} catch (Throwable e) {
+
+			}
+		}
+		return null;
 	}
 
 	protected void handleTernNatureAdapterDelta(IExtensionDelta delta) {
@@ -128,7 +173,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		IConfigurationElement[] cf = delta.getExtension()
 				.getConfigurationElements();
 
-		Map<String, List<String>> map = new HashMap<String, List<String>>(
+		Map<String, List<DefaultModule>> map = new HashMap<String, List<DefaultModule>>(
 				ternNatureAdapters);
 		if (delta.getKind() == IExtensionDelta.ADDED) {
 			addTernNatureAdapters(cf, map);
@@ -170,7 +215,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 					return true;
 
 				// use tern nature adapaters
-				Map<String, List<String>> ternNatureAdapters = getTernNatureAdapters();
+				Map<String, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
 				for (String adaptToNature : ternNatureAdapters.keySet()) {
 					if (project.hasNature(adaptToNature)) {
 						return true;
@@ -183,7 +228,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		return false;
 	}
 
-	private Map<String, List<String>> getTernNatureAdapters() {
+	private Map<String, List<DefaultModule>> getTernNatureAdapters() {
 		if (ternNatureAdapters == null) {
 			loadTernNatureAdapters();
 		}
@@ -193,21 +238,42 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	/**
 	 * Add default modules for the given tern project.
 	 * 
-	 * @param project tern project
+	 * @param project
+	 *            tern project
 	 * @throws CoreException
 	 */
 	public void addDefaultModules(IDETernProject project) throws CoreException {
-		Map<String, List<String>> ternNatureAdapters = getTernNatureAdapters();
+		Map<String, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
 		for (String natureId : ternNatureAdapters.keySet()) {
 			if (project.getProject().hasNature(natureId)) {
-				List<String> defaultModules = ternNatureAdapters.get(natureId);
-				for (String defaultModule : defaultModules) {
+				List<DefaultModule> defaultModules = ternNatureAdapters
+						.get(natureId);
+				for (DefaultModule defaultModule : defaultModules) {
 					ITernModule module = TernCorePlugin
 							.getTernServerTypeManager().findTernModule(
-									defaultModule);
+									defaultModule.getName());
 					if (module != null) {
-						JsonObject options = null;
+						// add the module with the options
+						JsonObject options = defaultModule.getOptions();
 						TernModuleHelper.update(module, options, project);
+						if (defaultModule.isWithDependencies()) {
+							// add modules dependencies
+							TernModuleMetadata metadata = module.getMetadata();
+							if (metadata != null) {
+								Collection<String> dependencies = metadata
+										.getDependencies();
+								for (String dependency : dependencies) {
+									ITernModule dependencyModule = TernCorePlugin
+											.getTernServerTypeManager()
+											.findTernModule(dependency);
+									if (dependencyModule != null) {
+										TernModuleHelper.update(
+												dependencyModule, null,
+												project);
+									}
+								}
+							}
+						}
 					}
 				}
 			}
