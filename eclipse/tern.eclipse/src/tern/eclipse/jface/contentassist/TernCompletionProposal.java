@@ -10,12 +10,15 @@
  */
 package tern.eclipse.jface.contentassist;
 
+import java.util.List;
+
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
+import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposalExtension;
 import org.eclipse.jface.text.contentassist.ICompletionProposalExtension2;
@@ -24,6 +27,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 
 import tern.eclipse.jface.TernImagesRegistry;
+import tern.server.protocol.completions.Parameter;
 import tern.server.protocol.completions.TernCompletionItem;
 
 public class TernCompletionProposal extends TernCompletionItem implements
@@ -55,9 +59,35 @@ public class TernCompletionProposal extends TernCompletionItem implements
 
 		this.fImage = getDefaultImage();
 		this.fDisplayString = super.getText();
-		this.fContextInformation = null;
+		this.fContextInformation = createContextInformation();
 		this.fAdditionalProposalInfo = doc != null ? doc.toString() : null;
 
+	}
+
+	/**
+	 * Create context information for function parameters.
+	 * 
+	 * @return
+	 */
+	private IContextInformation createContextInformation() {
+		List<Parameter> parameters = getParameters();
+		if (parameters != null) {
+			StringBuilder info = new StringBuilder();
+			for (int i = 0; i < parameters.size(); i++) {
+				Parameter parameter = parameters.get(i);
+				if (i > 0) {
+					info.append(", ");
+				}
+				info.append(parameter.getName());
+				if (!parameter.isRequired()) {
+					info.append("?");
+				}
+				info.append(": ");
+				info.append(parameter.getType());
+			}
+			return new ContextInformation("", info.toString());
+		}
+		return null;
 	}
 
 	protected Image getDefaultImage() {

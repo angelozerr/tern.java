@@ -20,6 +20,8 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.contentassist.IContextInformationValidator;
+import org.eclipse.wst.jsdt.internal.ui.text.java.JavaParameterListValidator;
 import org.eclipse.wst.sse.ui.contentassist.CompletionProposalInvocationContext;
 import org.eclipse.wst.sse.ui.contentassist.ICompletionProposalComputer;
 import org.eclipse.wst.xml.ui.internal.contentassist.AbstractContentAssistProcessor;
@@ -28,9 +30,6 @@ import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.jsdt.internal.Trace;
 import tern.eclipse.ide.jsdt.internal.utils.DOMUtils;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
-import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
-import tern.server.ITernServer;
-import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
 /**
@@ -40,6 +39,8 @@ import tern.server.protocol.completions.TernCompletionsQuery;
  */
 public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 		implements ICompletionProposalComputer {
+
+	private IContextInformationValidator fValidator;
 
 	@Override
 	public List computeCompletionProposals(
@@ -106,6 +107,15 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 	@Override
 	public void sessionStarted() {
 
+	}
+
+	@SuppressWarnings("restriction")
+	@Override
+	public IContextInformationValidator getContextInformationValidator() {
+		if (fValidator == null) {
+			fValidator = new JavaParameterListValidator();
+		}
+		return fValidator;
 	}
 
 }

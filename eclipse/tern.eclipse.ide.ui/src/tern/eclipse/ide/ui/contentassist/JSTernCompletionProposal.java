@@ -17,11 +17,15 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;
+import org.eclipse.jface.text.link.ILinkedModeListener;
 import org.eclipse.jface.text.link.LinkedModeModel;
 import org.eclipse.jface.text.link.LinkedModeUI;
+import org.eclipse.jface.text.link.LinkedModeUI.ExitFlags;
+import org.eclipse.jface.text.link.LinkedModeUI.IExitPolicy;
 import org.eclipse.jface.text.link.LinkedPosition;
 import org.eclipse.jface.text.link.LinkedPositionGroup;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
@@ -113,7 +117,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				LinkedModeUI ui = new EditorLinkedModeUI(model, getTextViewer());
 				ui.setExitPosition(getTextViewer(),
 						baseOffset + replacement.length(), 0, Integer.MAX_VALUE);
-				// ui.setExitPolicy(new ExitPolicy(')', document));
+				ui.setExitPolicy(new ExitPolicy(')', document));
 				ui.setDoContextInfo(true);
 				ui.setCyclingMode(LinkedModeUI.CYCLE_WHEN_NO_PARENT);
 				ui.enter();
@@ -264,4 +268,49 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		info.append("</dl>");
 		return info.toString();
 	}
+	
+	protected static final class ExitPolicy implements IExitPolicy {
+
+		final char fExitCharacter;
+		private final IDocument fDocument;
+
+		public ExitPolicy(char exitCharacter, IDocument document) {
+			fExitCharacter = exitCharacter;
+			fDocument = document;
+		}
+
+		public ExitFlags doExit(LinkedModeModel environment, VerifyEvent event,
+				int offset, int length) {
+
+			if (event.character == fExitCharacter) {
+				if (environment.anyPositionContains(offset))
+					return new ExitFlags(ILinkedModeListener.UPDATE_CARET,
+							false);
+				else
+					return new ExitFlags(ILinkedModeListener.UPDATE_CARET, true);
+			}
+
+			switch (event.character) {
+			case ';':
+				return new ExitFlags(ILinkedModeListener.NONE, true);
+			case SWT.CR:
+				// when entering an anonymous class as a parameter, we don't
+				// want
+				// to jump after the parenthesis when return is pressed
+				if (offset > 0) {
+					try {
+						if (fDocument.getChar(offset - 1) == '{')
+							return new ExitFlags(ILinkedModeListener.EXIT_ALL,
+									true);
+					} catch (BadLocationException e) {
+					}
+				}
+				return null;
+			default:
+				return null;
+			}
+		}
+
+	}
+
 }
