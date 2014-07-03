@@ -17,6 +17,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
+import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
 import tern.metadata.TernModuleMetadataManager;
 import tern.server.nodejs.process.NodejsProcessManager;
@@ -58,6 +59,7 @@ public class TernCorePlugin extends Plugin {
 		super.stop(context);
 		NodejsProcessManager.getInstance().dispose();
 		TernServerTypeManager.getManager().destroy();
+		TernNatureAdaptersManager.getManager().destroy();
 	}
 
 	/**

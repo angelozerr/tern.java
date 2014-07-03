@@ -51,7 +51,7 @@ import com.eclipsesource.json.ParseException;
  * 
  * @see http://ternjs.net/doc/manual.html#configuration
  */
-public class TernProject<T> extends JsonObject {
+public class TernProject<T> extends DirtyableJsonObject {
 
 	private static final long serialVersionUID = 1L;
 
@@ -61,10 +61,12 @@ public class TernProject<T> extends JsonObject {
 	private static final String LIBS_FIELD_NAME = "libs";
 
 	private final File projectDir;
-	private JsonArray patterns;
+	private DirtyableJsonArray patterns;
+
+	private boolean dirty;
 
 	/**
-	 * tern file managaer.
+	 * tern file manager.
 	 */
 	private TernFileManager<T> fileManager;
 
@@ -75,6 +77,7 @@ public class TernProject<T> extends JsonObject {
 	 *            the project base dir.
 	 */
 	public TernProject(File projectDir) {
+		super(null);
 		this.projectDir = projectDir;
 	}
 
@@ -92,10 +95,9 @@ public class TernProject<T> extends JsonObject {
 	 * 
 	 * @param lib
 	 *            the JSON Type Definition.
-	 * @return true if lib to add, replace an existing lib and false otherwise.
 	 */
-	public boolean addLib(ITernDef lib) {
-		return addLib(lib.getName());
+	public void addLib(ITernDef lib) {
+		addLib(lib.getName());
 	}
 
 	/**
@@ -103,14 +105,11 @@ public class TernProject<T> extends JsonObject {
 	 * 
 	 * @param lib
 	 *            the JSON Type Definition.
-	 * @return true if lib to add, replace an existing lib and false otherwise.
 	 */
-	public boolean addLib(String lib) {
-		boolean exists = hasLib(lib);
-		if (!exists) {
+	public void addLib(String lib) {
+		if (!hasLib(lib)) {
 			getLibs().add(lib);
 		}
-		return exists;
 	}
 
 	/**
@@ -148,8 +147,8 @@ public class TernProject<T> extends JsonObject {
 	public JsonArray getLibs() {
 		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
 		if (libs == null) {
-			libs = new JsonArray();
-			super.add(LIBS_FIELD_NAME, libs);
+			libs = new DirtyableJsonArray(this);
+			add(LIBS_FIELD_NAME, libs);
 		}
 		return libs;
 	}
@@ -162,8 +161,8 @@ public class TernProject<T> extends JsonObject {
 	 * @return true if plugin to add, replace an existing plugin and false
 	 *         otherwise.
 	 */
-	public boolean addPlugin(ITernPlugin plugin) {
-		return addPlugin(plugin, null);
+	public void addPlugin(ITernPlugin plugin) {
+		addPlugin(plugin, null);
 	}
 
 	/**
@@ -173,14 +172,18 @@ public class TernProject<T> extends JsonObject {
 	 *            the tern plugin to add.
 	 * @param options
 	 *            plugin options.
-	 * @return true if plugin to add, replace an existing plugin and false
-	 *         otherwise.
 	 */
-	public boolean addPlugin(ITernPlugin plugin, JsonObject options) {
-		boolean exists = hasPlugin(plugin);
-		getPlugins().add(plugin.getName(),
-				options != null ? options : new JsonObject());
-		return exists;
+	public void addPlugin(ITernPlugin plugin, JsonObject options) {
+		JsonObject plugins = getPlugins();
+		if (options == null)
+			options = new JsonObject();
+		if (!hasPlugin(plugin)) {
+			plugins.add(plugin.getName(), options);
+		} else {
+			if (!JsonHelper.isSameJson(plugins.get(plugin.getName()), options)) {
+				plugins.set(plugin.getName(), options);
+			}
+		}
 	}
 
 	/**
@@ -202,16 +205,16 @@ public class TernProject<T> extends JsonObject {
 	public JsonObject getPlugins() {
 		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
 		if (plugins == null) {
-			plugins = new JsonObject();
-			super.add(PLUGINS_FIELD_NAME, plugins);
+			plugins = new DirtyableJsonObject(this);
+			add(PLUGINS_FIELD_NAME, plugins);
 		}
 		return plugins;
 	}
 
 	public void addLoadEagerlyPattern(String pattern) {
 		if (patterns == null) {
-			patterns = new JsonArray();
-			super.add("loadEagerly", patterns);
+			patterns = new DirtyableJsonArray(this);
+			add("loadEagerly", patterns);
 		}
 		patterns.add(pattern);
 	}
@@ -232,6 +235,19 @@ public class TernProject<T> extends JsonObject {
 				IOUtils.closeQuietly(writer);
 			}
 		}
+		this.dirty = false;
+	}
+
+	/**
+	 * Save the tern project in the file .tern-project of the project base dir
+	 * if the project is dirty.
+	 * 
+	 * @throws IOException
+	 */
+	public void saveIfNeeded() throws IOException {
+		if (isDirty()) {
+			save();
+		}
 	}
 
 	/**
@@ -245,9 +261,10 @@ public class TernProject<T> extends JsonObject {
 			try {
 				JsonHelper.readFrom(new FileReader(file), this);
 			} catch (ParseException e) {
-				e.printStackTrace();
+				throw new IOException(e);
 			}
 		}
+		this.dirty = false;
 	}
 
 	/**
@@ -269,11 +286,24 @@ public class TernProject<T> extends JsonObject {
 	}
 
 	public void clearLibs() {
-		super.remove(LIBS_FIELD_NAME);
+		remove(LIBS_FIELD_NAME);
 	}
 
 	public void clearPlugins() {
-		super.remove(PLUGINS_FIELD_NAME);
+		remove(PLUGINS_FIELD_NAME);
 	}
 
+	/**
+	 * Returns true if the project is dirty and false otherwise.
+	 * 
+	 * @return true if the project is dirty and false otherwise
+	 */
+	public boolean isDirty() {
+		return dirty;
+	}
+
+	@Override
+	public void setDirty(boolean dirty) {
+		this.dirty = dirty;
+	}
 }

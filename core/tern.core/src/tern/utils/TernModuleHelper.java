@@ -136,7 +136,7 @@ public class TernModuleHelper {
 	 * @param module
 	 * @param ternProject
 	 */
-	private static void update(ITernModule module, JsonObject options,
+	public static void update(ITernModule module, JsonObject options,
 			TernProject<?> ternProject) {
 		switch (module.getModuleType()) {
 		case Def:

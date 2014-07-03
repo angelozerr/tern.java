@@ -32,6 +32,10 @@ import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.utils.TernModuleHelper;
 
+/**
+ * Manager of tern server type loaded by the extension point "ternServerTypes"
+ *
+ */
 public class TernServerTypeManager implements ITernServerTypeManager,
 		IRegistryChangeListener {
 
