@@ -2,6 +2,7 @@ tern.java
 =========
 
 [![Build Status](https://secure.travis-ci.org/angelozerr/tern.java.png)](http://travis-ci.org/angelozerr/tern.java)
+[![Eclipse install](https://marketplace.eclipse.org/sites/all/modules/custom/marketplace/images/installbutton.png)](http://marketplace.eclipse.org/marketplace-client-intro?mpc_install=1784264)
 
 [tern.js](https://github.com/marijnh/tern) is a stand-alone code-analysis engine for JavaScript written in Javascript.
 
