@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Liferay, Inc.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Gregory Amerson <gregory.amerson@liferay.com> - issue-99 add ITernNatureCapability
  */
 package tern.eclipse.ide.internal.core;
 
@@ -26,6 +27,7 @@ import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
 import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.ITernNatureCapability;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernNature;
 import tern.metadata.TernModuleMetadata;
@@ -34,7 +36,6 @@ import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonObject;
-
 /**
  * Manager of tern nature adapters loaded by the extension point
  * "ternNatureAdapters"
@@ -47,7 +48,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	private static final TernNatureAdaptersManager INSTANCE = new TernNatureAdaptersManager();
 
 	// cached copy of all tern nature adapaters
-	private Map<String, List<DefaultModule>> ternNatureAdapters;
+	private Map<ITernNatureCapability, List<DefaultModule>> ternNatureAdapters;
 
 	private boolean registryListenerIntialized;
 
@@ -108,7 +109,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
 				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_NATURE_ADAPTERS);
-		Map<String, List<DefaultModule>> map = new HashMap<String, List<DefaultModule>>(
+		Map<ITernNatureCapability, List<DefaultModule>> map = new HashMap<ITernNatureCapability, List<DefaultModule>>(
 				cf.length);
 		addTernNatureAdapters(cf, map);
 		addRegistryListenerIfNeeded();
@@ -122,17 +123,24 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	 * Load the tern project describers.
 	 */
 	private synchronized void addTernNatureAdapters(IConfigurationElement[] cf,
-			Map<String, List<DefaultModule>> map) {
+			Map<ITernNatureCapability, List<DefaultModule>> map) {
 		for (IConfigurationElement ce : cf) {
+			String id = ce.getAttribute("id");
+			String className = ce.getAttribute("class");
 			try {
-				map.put(ce.getAttribute("id"), getDefaultModules(ce));
+				if (className != null) {
+					map.put((ITernNatureCapability)ce.createExecutableExtension("class"), getDefaultModules(ce));
+				}
+				else if (id != null) {
+					map.put(new DefaultTernNatureAdapter(id), getDefaultModules(ce));
+				}
 				Trace.trace(Trace.EXTENSION_POINT,
-						"  Loaded project describer: " + ce.getAttribute("id"));
+						"  Loaded project describer: " + id != null ? id : className != null ? className : "");
 			} catch (Throwable t) {
 				Trace.trace(
 						Trace.SEVERE,
 						"  Could not load project describers: "
-								+ ce.getAttribute("id"), t);
+								+ id != null ? id : className != null ? className : "", t);
 			}
 		}
 	}
@@ -173,7 +181,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		IConfigurationElement[] cf = delta.getExtension()
 				.getConfigurationElements();
 
-		Map<String, List<DefaultModule>> map = new HashMap<String, List<DefaultModule>>(
+		Map<ITernNatureCapability, List<DefaultModule>> map = new HashMap<ITernNatureCapability, List<DefaultModule>>(
 				ternNatureAdapters);
 		if (delta.getKind() == IExtensionDelta.ADDED) {
 			addTernNatureAdapters(cf, map);
@@ -215,9 +223,9 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 					return true;
 
 				// use tern nature adapaters
-				Map<String, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
-				for (String adaptToNature : ternNatureAdapters.keySet()) {
-					if (project.hasNature(adaptToNature)) {
+				Map<ITernNatureCapability, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
+				for (ITernNatureCapability natureAdapter : ternNatureAdapters.keySet()) {
+					if (natureAdapter.hasTernNature(project)) {
 						return true;
 					}
 				}
@@ -228,7 +236,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		return false;
 	}
 
-	private Map<String, List<DefaultModule>> getTernNatureAdapters() {
+	private Map<ITernNatureCapability, List<DefaultModule>> getTernNatureAdapters() {
 		if (ternNatureAdapters == null) {
 			loadTernNatureAdapters();
 		}
@@ -237,17 +245,16 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 
 	/**
 	 * Add default modules for the given tern project.
-	 * 
+	 *
 	 * @param project
 	 *            tern project
 	 * @throws CoreException
 	 */
 	public void addDefaultModules(IDETernProject project) throws CoreException {
-		Map<String, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
-		for (String natureId : ternNatureAdapters.keySet()) {
-			if (project.getProject().hasNature(natureId)) {
-				List<DefaultModule> defaultModules = ternNatureAdapters
-						.get(natureId);
+		Map<ITernNatureCapability, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
+		for (ITernNatureCapability natureAdapter : ternNatureAdapters.keySet()) {
+			if (natureAdapter.hasTernNature(project.getProject())) {
+				List<DefaultModule> defaultModules = ternNatureAdapters.get(natureAdapter);
 				for (DefaultModule defaultModule : defaultModules) {
 					ITernModule module = TernCorePlugin
 							.getTernServerTypeManager().findTernModule(

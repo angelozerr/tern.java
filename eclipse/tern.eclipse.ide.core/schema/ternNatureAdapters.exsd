@@ -63,6 +63,16 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  An optional interface to allow extenders to customize the nature mapping mechanism
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":tern.eclipse.ide.core.ITernNatureCapability"/>
+               </appInfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 
@@ -92,21 +102,21 @@
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="withDependencies" type="boolean">
             <annotation>
                <documentation>
-                  
+
                </documentation>
             </annotation>
          </attribute>
          <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  
+
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn=":tern.eclipse.ide.core.ITernModuleConfigurator"/>
