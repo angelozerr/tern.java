@@ -18,10 +18,10 @@
 
   function makeVisitors(query, file, messages) {
 	
-	function addMessage(node, msg, severity) {
+    function addMessage(node, msg, severity) {
       var error = makeError(node, msg, severity);
       messages.push(error);		
-	}
+    }
 	
     function makeError(node, msg, severity) {
       var pos = getPosition(node);
@@ -61,17 +61,57 @@
       return node;
     }
     
-    function compareType(expectedType, actualType) {
-      if (!expectedType) return true;
-      if (!actualType) return true;
-      return expectedType.proto.name === actualType.proto.name; 
-    }
-    
     function getTypeName(type) {
       if (!type) return "Unknown type";
       return type.proto.name;
     }
 
+    function compareType(expectedType, actualType) {
+      if (!expectedType) return true;
+      if (!actualType) return true;
+      var currentProto = actualType.proto;
+      while(currentProto) {
+        if (expectedType.proto.name === currentProto.name) return true;
+        currentProto = currentProto.proto;
+      }
+      return false;
+    }
+    
+    function validateCallExpression(node, state, c) {
+      var notAFunctionRule = getRule("NotAFunction"), invalidArgument = getRule("InvalidArgument");
+      if (!notAFunctionRule && !invalidArgument) return;        
+      var type = infer.expressionType({node: node.callee, state: state});
+      if(!type.isEmpty()) {
+        // If type.isEmpty(), it is handled by MemberExpression/Identifier already.
+
+        // An expression can have multiple possible (guessed) types.
+        // If one of them is a function, type.getFunctionType() will return it.
+        var fnType = type.getFunctionType();
+        if(fnType == null) {
+          if (notAFunctionRule) addMessage(node, "'" + getNodeName(node) + "' is not a function", notAFunctionRule.severity);                           
+        } else if (fnType.lint) {
+           // custom lint for function
+          fnType.lint(node, addMessage);
+        } else if (fnType.args) {
+          // validate parameters of the function 
+          if (!invalidArgument) return;
+          var actualArgs = node.arguments;
+          if (!actualArgs) return;//addMessage(c, "'" + getNodeName(c) + "' no args", invalidArgument.severity);
+          var expectedArgs = fnType.args;
+          for (var i = 0; i < expectedArgs.length; i++) {
+            var expectedArg = expectedArgs[i];
+            if (actualArgs.length > i) {
+              var actualNode = actualArgs[i];
+              var actualArg = infer.expressionType({node: actualNode, state: state});
+              if (!compareType(expectedArg.getType(), actualArg.getType())) {
+                addMessage(actualNode, "Invalid argument at " + (i+1) + ": cannot convert from " + getTypeName(actualArg.getType()) + " to " + getTypeName(expectedArg.getType()), invalidArgument.severity);
+              }
+            }              
+          }
+        }
+      }
+    }
+    
     var visitors = {
       // Detects expressions of the form `object.property`
       MemberExpression: function(node, state, c) {
@@ -138,45 +178,13 @@
       // Detects function calls.
       // `node.callee` is the expression (Identifier or MemberExpression)
       // the is called as a function.
-      CallExpression: function(node, state, c) {
-        var notAFunctionRule = getRule("NotAFunction"), invalidArgument = getRule("InvalidArgument");
-        if (!notAFunctionRule && !invalidArgument) return;    	  
-        var type = infer.expressionType({node: node.callee, state: state});
-        if(!type.isEmpty()) {
-          // If type.isEmpty(), it is handled by MemberExpression/Identifier already.
-
-          // An expression can have multiple possible (guessed) types.
-          // If one of them is a function, type.getFunctionType() will return it.
-          var fnType = type.getFunctionType();
-          if(fnType == null) {
-            if (notAFunctionRule) addMessage(node, "'" + getNodeName(node) + "' is not a function", notAFunctionRule.severity);        	        	  
-          } else if (fnType.lint) {
-             // custom lint for function
-            fnType.lint(node, addMessage);
-          } else if (fnType.args) {
-            // validate parameters of the function 
-            if (!invalidArgument) return;
-            var actualArgs = node.arguments;
-            if (!actualArgs) return;//addMessage(c, "'" + getNodeName(c) + "' no args", invalidArgument.severity);
-            var expectedArgs = fnType.args;
-            for (var i = 0; i < expectedArgs.length; i++) {
-              var expectedArg = expectedArgs[i];
-              if (actualArgs.length > i) {
-                var actualNode = actualArgs[i];
-                var actualArg = infer.expressionType({node: actualNode, state: state});
-                if (!compareType(expectedArg.getType(), actualArg.getType())) {
-                  addMessage(actualNode, "Invalid argument at " + (i+1) + ": cannot convert from " + getTypeName(actualArg.getType()) + " to " + getTypeName(expectedArg.getType()), invalidArgument.severity);
-                }
-              }              
-            }
-          }
-        }
-      }
+      NewExpression: validateCallExpression,
+      CallExpression: validateCallExpression
     };
 
     return visitors;
   }
-
+  
   // Adapted from infer.searchVisitor.
   // Record the scope and pass it through in the state.
   // VariableDeclaration in infer.searchVisitor breaks things for us.
