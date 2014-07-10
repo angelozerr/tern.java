@@ -128,10 +128,10 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 			String id = ce.getAttribute("id");
 			String className = ce.getAttribute("class");
 			try {
-				if (className != null) {
+				if (!StringUtils.isEmpty(className)) {
 					map.put((ITernNatureCapability)ce.createExecutableExtension("class"), getDefaultModules(ce));
 				}
-				else if (id != null) {
+				else if (!StringUtils.isEmpty(id)) {
 					map.put(new DefaultTernNatureAdapter(id), getDefaultModules(ce));
 				}
 				Trace.trace(Trace.EXTENSION_POINT,
