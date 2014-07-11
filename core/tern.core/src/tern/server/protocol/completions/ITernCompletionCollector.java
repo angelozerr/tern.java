@@ -25,9 +25,11 @@ public interface ITernCompletionCollector {
 	 *            of the completion item.
 	 * @param type
 	 *            of the completion item.
-	 * @param origin
-	 *            of the completion item.
 	 * @param doc
+	 *            of the completion item.
+	 * @param url
+	 *            of the completion item.
+	 * @param origin
 	 *            of the completion item.
 	 * @param pos
 	 *            of the cursor.
@@ -36,6 +38,6 @@ public interface ITernCompletionCollector {
 	 * @param ternServer
 	 *            the tern server.
 	 */
-	void addProposal(String name, String type, String origin, Object doc,
-			int pos, Object completion, ITernServer ternServer);
+	void addProposal(String name, String type, String doc, String url,
+			String origin, int pos, Object completion, ITernServer ternServer);
 }

@@ -98,9 +98,11 @@ public abstract class AbstractTernServer implements ITernServer {
 			ITernCompletionCollector collector) {
 		String name = getText(completion, "name");
 		String type = getText(completion, "type");
+		String doc = getText(completion, "doc");
+		String url = getText(completion, "url");
 		String origin = getText(completion, "origin");
-		Object doc = getText(completion, "doc");
-		collector.addProposal(name, type, origin, doc, pos, completion, this);
+		collector.addProposal(name, type, doc, url, origin, pos, completion,
+				this);
 	}
 
 	public abstract String getText(Object value);

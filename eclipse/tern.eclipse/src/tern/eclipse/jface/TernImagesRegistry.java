@@ -44,37 +44,65 @@ public class TernImagesRegistry {
 
 	}
 
+	/**
+	 * Returns the image from the image registry with the given key.
+	 * 
+	 * @param key
+	 *            of the image
+	 * @return the image from the image registry with the given key.
+	 */
 	public static Image getImage(String key) {
 		ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
 		return imageRegistry.get(key);
 	}
 
-	public static Image getImage(TernCompletionItem item,
+	/**
+	 * Returns the image descriptor from the image registry with the given key.
+	 * 
+	 * @param key
+	 *            of the image
+	 * @return the image descriptor from the image registry with the given key.
+	 */
+	public static ImageDescriptor getImageDescriptor(String key) {
+		ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
+		return imageRegistry.getDescriptor(key);
+	}
+
+	private static String getImageKey(TernCompletionItem item,
 			boolean returnNullIfUnknown) {
 		if (item.isFunction()) {
-			return TernImagesRegistry.getImage(TernImagesRegistry.IMG_FN);
+			return TernImagesRegistry.IMG_FN;
 		}
 		if (item.isArray()) {
-			return TernImagesRegistry.getImage(TernImagesRegistry.IMG_ARRAY);
+			return TernImagesRegistry.IMG_ARRAY;
 		}
 		String jsType = item.getJsType();
 		if (jsType != null) {
 			if ("string".equals(jsType)) {
-				return TernImagesRegistry
-						.getImage(TernImagesRegistry.IMG_STRING);
+				return TernImagesRegistry.IMG_STRING;
 			}
 			if ("number".equals(jsType)) {
-				return TernImagesRegistry
-						.getImage(TernImagesRegistry.IMG_NUMBER);
+				return TernImagesRegistry.IMG_NUMBER;
 			}
 			if ("bool".equals(jsType)) {
-				return TernImagesRegistry
-						.getImage(TernImagesRegistry.IMG_BOOLEAN);
+				return TernImagesRegistry.IMG_BOOLEAN;
 			}
 		}
 		if (returnNullIfUnknown) {
 			return null;
 		}
-		return TernImagesRegistry.getImage(TernImagesRegistry.IMG_UNKNOWN);
+		return TernImagesRegistry.IMG_UNKNOWN;
+	}
+
+	public static Image getImage(TernCompletionItem item,
+			boolean returnNullIfUnknown) {
+		String key = getImageKey(item, returnNullIfUnknown);
+		return key != null ? getImage(key) : null;
+	}
+
+	public static ImageDescriptor getImageDescriptor(TernCompletionItem item,
+			boolean returnNullIfUnknown) {
+		String key = getImageKey(item, returnNullIfUnknown);
+		return key != null ? getImageDescriptor(key) : null;
 	}
 }

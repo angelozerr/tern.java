@@ -12,9 +12,11 @@ package tern.eclipse.jface.contentassist;
 
 import java.util.List;
 
+import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.ITextViewerExtension5;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
@@ -22,17 +24,21 @@ import org.eclipse.jface.text.contentassist.ContextInformation;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposalExtension;
 import org.eclipse.jface.text.contentassist.ICompletionProposalExtension2;
+import org.eclipse.jface.text.contentassist.ICompletionProposalExtension3;
 import org.eclipse.jface.text.contentassist.IContextInformation;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Shell;
 
 import tern.eclipse.jface.TernImagesRegistry;
+import tern.eclipse.jface.text.HoverControlCreator;
+import tern.eclipse.jface.text.PresenterControlCreator;
 import tern.server.protocol.completions.Parameter;
 import tern.server.protocol.completions.TernCompletionItem;
 
 public class TernCompletionProposal extends TernCompletionItem implements
 		ICompletionProposal, ICompletionProposalExtension,
-		ICompletionProposalExtension2
+		ICompletionProposalExtension2, ICompletionProposalExtension3
 /* , IRelevanceCompletionProposal */{
 
 	private String fDisplayString;
@@ -46,10 +52,11 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	private boolean fUpdateLengthOnValidate;
 	private String fAlternateMatch;
 	private char[] fTriggers;
+	private IInformationControlCreator ternControlCreator;
 
-	public TernCompletionProposal(String name, String type, String origin,
-			Object doc, int pos, int startOffset) {
-		super(name, type, origin);
+	public TernCompletionProposal(String name, String type, String doc,
+			String url, String origin, int pos, int startOffset) {
+		super(name, type, doc, url, origin);
 
 		String text = super.getSignature();
 		this.fReplacementString = text;
@@ -390,6 +397,35 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	 */
 	public void setReplacementString(String replacementString) {
 		fReplacementString = replacementString;
+	}
+
+	@Override
+	public IInformationControlCreator getInformationControlCreator() {
+		Shell shell = getActiveWorkbenchShell();
+		if (shell == null || !BrowserInformationControl.isAvailable(shell))
+			return null;
+
+		if (ternControlCreator == null) {
+			PresenterControlCreator presenterControlCreator = new PresenterControlCreator();
+			ternControlCreator = new HoverControlCreator(
+					presenterControlCreator, true);
+		}
+		return ternControlCreator;
+	}
+
+	protected Shell getActiveWorkbenchShell() {
+		return null;
+	}
+
+	@Override
+	public int getPrefixCompletionStart(IDocument document, int completionOffset) {
+		return fReplacementOffset;
+	}
+
+	@Override
+	public CharSequence getPrefixCompletionText(IDocument document,
+			int completionOffset) {
+		return null;
 	}
 
 }

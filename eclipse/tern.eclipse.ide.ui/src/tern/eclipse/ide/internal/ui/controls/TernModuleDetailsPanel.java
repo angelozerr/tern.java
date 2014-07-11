@@ -10,6 +10,9 @@
  */
 package tern.eclipse.ide.internal.ui.controls;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -18,7 +21,6 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -27,6 +29,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.ui.utils.OpenBrowserUtil;
 import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
 import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
@@ -44,7 +48,8 @@ public class TernModuleDetailsPanel extends AbstractTernModulePanel {
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernModule module, IProject project) {
+	protected void createUI(Composite parent, ITernModule module,
+			IProject project) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
@@ -114,7 +119,7 @@ public class TernModuleDetailsPanel extends AbstractTernModulePanel {
 		addInfo(nestedDetailsComposite,
 				TernUIMessages.TernModuleDetailsPanel_helpURL, null,
 				metadata != null ? metadata.getHelpURL() : "", null, true);
-		
+
 	}
 
 	public void createHeader(final Composite parent, ITernModule module) {
@@ -162,7 +167,11 @@ public class TernModuleDetailsPanel extends AbstractTernModulePanel {
 				.toString());
 		link.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				Program.launch(target);
+				try {
+					OpenBrowserUtil.open(new URL(target), event.display);
+				} catch (MalformedURLException e) {
+					Trace.trace(Trace.SEVERE, "Error while opening browser", e);
+				}
 			}
 		});
 	}

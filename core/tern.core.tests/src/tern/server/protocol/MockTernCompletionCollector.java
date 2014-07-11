@@ -21,9 +21,9 @@ public class MockTernCompletionCollector extends
 		HashMap<String, TernCompletionItem> implements ITernCompletionCollector {
 
 	@Override
-	public void addProposal(String name, String type, String origin,
-			Object doc, int pos, Object completion, ITernServer ternServer) {
-		super.put(name, new TernCompletionItem(name, type, origin));
+	public void addProposal(String name, String type, String doc, String url,
+			String origin, int pos, Object completion, ITernServer ternServer) {
+		super.put(name, new TernCompletionItem(name, type, doc, url, origin));
 	}
 
 	public Collection<TernCompletionItem> getCompletions() {

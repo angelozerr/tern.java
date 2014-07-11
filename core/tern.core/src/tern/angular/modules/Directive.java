@@ -20,6 +20,9 @@ import java.util.Map;
 import tern.angular.AngularType;
 import tern.utils.StringUtils;
 
+/**
+ * Angular directive.
+ */
 public class Directive {
 
 	private final String name;
@@ -84,49 +87,8 @@ public class Directive {
 		return description;
 	}
 
-	public String getUrl() {
+	public String getURL() {
 		return url;
-	}
-
-	public String getHTMLDescription() {
-		StringBuilder info = new StringBuilder("");
-		info.append("<b>");
-		info.append(getName());
-		info.append("</b>");
-		info.append(" directive in module ");
-		info.append("<b>");
-		info.append(getModule().getName());
-		info.append("</b>");
-		if (!StringUtils.isEmpty(description)) {
-			info.append("<br/>");
-			info.append("<br/>");
-			info.append(description);
-		}
-		if (!StringUtils.isEmpty(restrict)) {
-			info.append("<br/>");
-			info.append("<br/>");
-			info.append("<b>restrict</b> ");
-			info.append(restrict);
-		}
-		if (tagNames != null && tagNames.size() > 0) {
-			info.append("<br/>");
-			info.append("<br/>");
-			info.append("<b>tags:</b> ");
-			info.append(Arrays.toString(tagNames.toArray()));
-		}
-		if (parameters != null && !parameters.isEmpty()) {
-			info.append("<br/>");
-			info.append("<br/>");
-			info.append("<b>parameters:</b> ");
-			info.append(Arrays.toString(parameters.keySet().toArray()));
-		}
-		if (!StringUtils.isEmpty(url)) {
-			info.append("<br/>");
-			info.append("<br/>");
-			info.append("<b>@see</b> ");
-			info.append(url);
-		}
-		return info.toString();
 	}
 
 	public DirectiveValue getDirectiveValue() {
@@ -136,6 +98,13 @@ public class Directive {
 	public Collection<DirectiveParameter> getParameters() {
 		if (parameters != null) {
 			return parameters.values();
+		}
+		return Collections.emptyList();
+	}
+
+	public Collection<String> getParameterNames() {
+		if (parameters != null) {
+			return parameters.keySet();
 		}
 		return Collections.emptyList();
 	}
@@ -170,5 +139,9 @@ public class Directive {
 			return true;
 		}
 		return restriction.isMatch(restrict);
+	}
+
+	public String getRestrict() {
+		return restrict;
 	}
 }

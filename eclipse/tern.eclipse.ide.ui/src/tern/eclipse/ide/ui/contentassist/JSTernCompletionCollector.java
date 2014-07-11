@@ -33,20 +33,22 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	}
 
 	@Override
-	public void addProposal(String name, String type, String origin,
-			Object doc, int pos, Object completion, ITernServer ternServer) {
+	public void addProposal(String name, String type, String doc, String url,
+			String origin, int pos, Object completion, ITernServer ternServer) {
 		JSTernCompletionProposal proposal = new JSTernCompletionProposal(name,
-				type, origin, doc, pos, startOffset);
+				type, doc, url, origin, pos, startOffset);
 		proposals.add(proposal);
 
-		// expand functions if the functiosn contains several "optionnal" parameters.
-		// ex : the expansion of "fn(selector: string, context?: frameElement)" returns an array of functions
-		// 
+		// expand functions if the functiosn contains several "optionnal"
+		// parameters.
+		// ex : the expansion of "fn(selector: string, context?: frameElement)"
+		// returns an array of functions
+		//
 		String[] functions = proposal.expand();
 		if (functions != null) {
 			for (int i = 0; i < functions.length; i++) {
 				proposals.add(new JSTernCompletionProposal(name, functions[i],
-						origin, doc, pos, startOffset));
+						doc, url, origin, pos, startOffset));
 			}
 		}
 

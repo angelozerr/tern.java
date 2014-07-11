@@ -63,6 +63,14 @@ public class TernDescriptor implements ITernDescriptor {
 		return ImageResource.getImage(imageKey);
 	}
 
+	@Override
+	public ImageDescriptor getImageDescriptor() {
+		if (imageKey == null) {
+			return null;
+		}
+		return ImageResource.getImageDescriptor(imageKey);
+	}
+
 	public void dispose() {
 
 	}

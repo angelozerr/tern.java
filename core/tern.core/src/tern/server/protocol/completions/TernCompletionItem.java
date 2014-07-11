@@ -23,6 +23,8 @@ public class TernCompletionItem {
 
 	private final String name;
 	private final String type;
+	private final String doc;
+	private final String url;
 	private final String origin;
 
 	private final String signature;
@@ -32,9 +34,12 @@ public class TernCompletionItem {
 	private List<Parameter> parameters;
 	private String[] allTypes;
 
-	public TernCompletionItem(String name, String type, String origin) {
+	public TernCompletionItem(String name, String type, String doc, String url,
+			String origin) {
 		this.name = name;
 		this.type = type;
+		this.doc = doc;
+		this.url = url;
 		this.origin = origin;
 		this.parameters = null;
 		StringBuilder currentParamName = null;
@@ -364,6 +369,14 @@ public class TernCompletionItem {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getDoc() {
+		return doc;
+	}
+
+	public String getURL() {
+		return url;
 	}
 
 	public String getOrigin() {

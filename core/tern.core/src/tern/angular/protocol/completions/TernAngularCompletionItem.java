@@ -19,7 +19,7 @@ public class TernAngularCompletionItem extends TernCompletionItem {
 
 	public TernAngularCompletionItem(String name, String type, String origin,
 			String module, String controller) {
-		super(name, type, origin);
+		super(name, type, null, null, origin);
 		this.module = module;
 		this.controller = controller;
 	}

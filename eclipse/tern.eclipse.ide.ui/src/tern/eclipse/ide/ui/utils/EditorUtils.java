@@ -27,6 +27,10 @@ import org.eclipse.ui.texteditor.ITextEditor;
 
 import tern.eclipse.ide.ui.TernUIPlugin;
 
+/**
+ * Editor utilities.
+ *
+ */
 public class EditorUtils {
 
 	public static IEditorPart openInEditor(IFile file, int start, int length,

@@ -10,10 +10,12 @@
  */
 package tern.server.protocol.type;
 
+import tern.server.ITernServer;
 import tern.server.protocol.type.ITernTypeCollector;
 
 /**
- * {@link ITernTypeCollector} implementation used to validate the existing of type.
+ * {@link ITernTypeCollector} implementation used to validate the existing of
+ * type.
  *
  */
 public class ValidationTernTypeCollector implements ITernTypeCollector {
@@ -22,7 +24,8 @@ public class ValidationTernTypeCollector implements ITernTypeCollector {
 
 	@Override
 	public void setType(String type, boolean guess, String name,
-			String exprName, String doc, String url, String origin) {
+			String exprName, String doc, String url, String origin,
+			Object item, ITernServer ternServer) {
 		exists = name != null;
 	}
 

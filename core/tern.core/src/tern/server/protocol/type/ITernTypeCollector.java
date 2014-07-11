@@ -10,6 +10,8 @@
  */
 package tern.server.protocol.type;
 
+import tern.server.ITernServer;
+
 /**
  * API to collect tern type.
  *
@@ -39,7 +41,12 @@ public interface ITernTypeCollector {
 	 * @param origin
 	 *            If the type had documentation and origin information
 	 *            associated with it, these will also be returned.
+	 * @param item
+	 *            object of type (ex : JsonObject)
+	 * @param ternServer
+	 *            the tern server.
 	 */
 	void setType(String type, boolean guess, String name, String exprName,
-			String doc, String url, String origin);
+			String doc, String url, String origin, Object item,
+			ITernServer ternServer);
 }

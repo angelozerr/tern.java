@@ -243,7 +243,7 @@ public class NodejsTernServer extends AbstractTernServer {
 					for (JsonValue value : completions) {
 						if (value.isString()) {
 							collector.addProposal(value.asString(), null, null,
-									null, pos, value, this);
+									null, null, pos, value, this);
 						} else {
 							super.addProposal(value, pos, collector);
 						}
@@ -309,7 +309,7 @@ public class NodejsTernServer extends AbstractTernServer {
 				String url = getText(jsonObject.get("url"));
 				String origin = getText(jsonObject.get("origin"));
 				collector.setType(type, guess, name, exprName, documentation,
-						url, origin);
+						url, origin, jsonObject, this);
 			}
 		} catch (Throwable e) {
 			throw new TernException(e);

@@ -12,6 +12,7 @@ package tern.eclipse.ide.ui.contentassist;
 
 import java.util.List;
 
+import org.eclipse.jface.internal.text.html.HTMLPrinter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -28,10 +29,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.jface.TernImagesRegistry;
+import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.protocol.completions.Parameter;
 import tern.utils.StringUtils;
@@ -48,23 +50,14 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	private boolean fToggleEating;
 
-	public JSTernCompletionProposal(String name, String type, String origin,
-			Object doc, int pos, int startOffset) {
-		super(name, type, origin, doc, pos, startOffset);
+	public JSTernCompletionProposal(String name, String type, String doc,
+			String url, String origin, int pos, int startOffset) {
+		super(name, type, doc, url, origin, pos, startOffset);
 	}
 
 	@Override
 	protected Image getDefaultImage() {
-		Image image = TernImagesRegistry.getImage(this, true);
-		if (image != null) {
-			return image;
-		}
-		String origin = super.getOrigin();
-		if (!StringUtils.isEmpty(origin)) {
-			image = TernUIPlugin.getTernDescriptorManager().getImage(origin);
-		}
-		return image != null ? image : TernImagesRegistry
-				.getImage(TernImagesRegistry.IMG_UNKNOWN);
+		return TernUIPlugin.getTernDescriptorManager().getImage(this);
 	}
 
 	public void apply(ITextViewer viewer, char trigger, int stateMask,
@@ -238,37 +231,9 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	@Override
 	public String getAdditionalProposalInfo() {
-		String doc = super.getAdditionalProposalInfo();
-		StringBuilder info = new StringBuilder(doc != null ? doc : "");
-		List<Parameter> parameters = getParameters();
-		info.append("<dl>");
-		if (parameters != null) {
-			info.append("<dt>Parameters:</dt>");
-			for (Parameter parameter : parameters) {
-				info.append("<dd><b>");
-				if (!parameter.isRequired()) {
-					info.append("[");
-				}
-				info.append(parameter.getName());
-				if (!parameter.isRequired()) {
-					info.append("]");
-				}
-				info.append("</b>: ");
-				info.append(parameter.getType());
-				info.append("</dd>");
-			}
-		}
-		String returnType = getJsType();
-		if (!StringUtils.isEmpty(returnType)) {
-			info.append("<dt>Returns:</dt>");
-			info.append("<dd>");
-			info.append(returnType);
-			info.append("</dd>");
-		}
-		info.append("</dl>");
-		return info.toString();
+		return HTMLTernPrinter.getAdditionalProposalInfo(this, null);
 	}
-	
+
 	protected static final class ExitPolicy implements IExitPolicy {
 
 		final char fExitCharacter;
@@ -313,4 +278,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	}
 
+	@Override
+	protected Shell getActiveWorkbenchShell() {
+		return TernUIPlugin.getActiveWorkbenchShell();
+	}
 }
