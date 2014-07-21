@@ -83,7 +83,13 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 			Collection<ITernScriptPath> scriptPaths = ternProject
 					.getScriptPaths();
 			for (ITernScriptPath scriptPath : scriptPaths) {
-				scriptPath.updateFiles(ternFileManager, doc, names);
+				if (!(scriptPath.getType() == ScriptPathsType.PROJECT && scriptPath
+						.getOwnerProject().equals(project))) {
+					// the current script path is project type and it's the same
+					// current project, ignore it to avoid StackOverFlow
+					// see https://github.com/angelozerr/tern.java/issues/104
+					scriptPath.updateFiles(ternFileManager, doc, names);
+				}
 			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE,
