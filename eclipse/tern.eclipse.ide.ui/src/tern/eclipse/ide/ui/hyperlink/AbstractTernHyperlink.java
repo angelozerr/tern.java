@@ -49,6 +49,6 @@ public abstract class AbstractTernHyperlink implements IHyperlink,
 		if (StringUtils.isEmpty(filename)) {
 			return null;
 		}
-		return ternProject.getProject().getFile(filename);
+		return ternProject.getFileManager().getFile(filename);
 	}
 }
