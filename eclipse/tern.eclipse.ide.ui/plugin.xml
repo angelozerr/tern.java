@@ -202,6 +202,10 @@
             icon="/icons/full/obj16/ckeditor.png" >
       </ternDescriptor>
       <ternDescriptor
+            id="closure"
+            icon="/icons/full/obj16/closure.png" >
+      </ternDescriptor>      
+      <ternDescriptor
             id="cordovajs"
             icon="/icons/full/obj16/cordovajs.png" >
       </ternDescriptor>

@@ -187,17 +187,16 @@ public class TernModuleHelper {
 	}
 
 	/**
-	 * Returns true if the given module has filled options and false otherwise.
+	 * Returns true if the given module has options and false otherwise.
 	 * 
 	 * @param module
-	 * @return true if the given module has filled options and false otherwise.
+	 * @return true if the given module has options and false otherwise.
 	 */
 	public static boolean hasOptions(ITernModule module) {
-		if (module == null || module.getModuleType() != ModuleType.Configurable) {
+		if (module == null || module.getMetadata() == null) {
 			return false;
 		}
-		ITernModuleConfigurable f = (ITernModuleConfigurable) module;
-		return (f.getOptions() != null && f.getOptions().size() > 0);
+		return module.getMetadata().getOptions().size() > 0;
 	}
 
 }

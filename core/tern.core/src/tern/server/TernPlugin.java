@@ -16,12 +16,13 @@ import tern.metadata.TernModuleMetadataManager;
 public enum TernPlugin implements ITernPlugin {
 
 	aui("tern/plugin/aui"), angular("tern/plugin/angular"), component(
-			"tern/plugin/component"), ckeditor_4_4_1("ckeditor", "4.4.1"), cordovajs(
-			"tern/plugin/cordovajs"), doc_comment("tern/plugin/doc_comment"), dojotoolkit_1_6(
-			"dojotoolkit", "1.6"), dojotoolkit_1_8("dojotoolkit", "1.8"), dojotoolkit_1_9(
-			"dojotoolkit", "1.9"), extjs_4_2_1("extjs", "4.2.1"), extjs_5_0_0(
-			"extjs", "5.0.0"), gmaps_3_16("gmaps", "3.16"), gmaps_3_17("gmaps",
-			"3.17"), grunt("tern/plugin/grunt"), liferay("tern/plugin/liferay"), lint(
+			"tern/plugin/component"), ckeditor_4_4_1("ckeditor", "4.4.1"), closure(
+			""), cordovajs("tern/plugin/cordovajs"), doc_comment(
+			"tern/plugin/doc_comment"), dojotoolkit_1_6("dojotoolkit", "1.6"), dojotoolkit_1_8(
+			"dojotoolkit", "1.8"), dojotoolkit_1_9("dojotoolkit", "1.9"), extjs_4_2_1(
+			"extjs", "4.2.1"), extjs_5_0_0("extjs", "5.0.0"), gmaps_3_16(
+			"gmaps", "3.16"), gmaps_3_17("gmaps", "3.17"), grunt(
+			"tern/plugin/grunt"), liferay("tern/plugin/liferay"), lint(
 			"tern/plugin/lint"), node("tern/plugin/node"), meteor(
 			"tern/plugin/meteor"), qooxdoo_4_1("qooxdoo", "4.1"), requirejs(
 			"tern/plugin/requirejs"), yui("tern/plugin/yui");

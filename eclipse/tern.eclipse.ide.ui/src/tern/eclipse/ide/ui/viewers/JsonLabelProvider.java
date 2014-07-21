@@ -7,6 +7,7 @@ import org.eclipse.swt.graphics.Image;
 import tern.server.protocol.JsonHelper;
 
 import com.eclipsesource.json.JsonObject.Member;
+import com.eclipsesource.json.JsonValue;
 
 public class JsonLabelProvider extends LabelProvider implements
 		ITableLabelProvider {
@@ -27,6 +28,8 @@ public class JsonLabelProvider extends LabelProvider implements
 			case 1:
 				return JsonHelper.getString(member.getValue());
 			}
+		} else if (element instanceof JsonValue) {
+			return JsonHelper.getString((JsonValue)element);
 		}
 		return null;
 	}

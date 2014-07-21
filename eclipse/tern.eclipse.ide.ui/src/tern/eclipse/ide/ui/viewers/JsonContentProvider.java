@@ -7,6 +7,7 @@ import java.util.List;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
 
@@ -38,6 +39,8 @@ public class JsonContentProvider implements IStructuredContentProvider {
 				members.add(new MemberWrapper((JsonObject) element, name));
 			}			
 			return members.toArray(new MemberWrapper[0]);
+		} else if (element instanceof JsonArray) {
+			return ((JsonArray)element).values().toArray();
 		}
 		return null;
 	}

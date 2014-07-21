@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
@@ -62,6 +63,7 @@ import tern.server.ITernModuleConfigurable;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
+import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 
@@ -77,19 +79,22 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernModule module, IProject project) {
+	protected void createUI(Composite parent, ITernModule module,
+			IProject project) {
 
 		GridLayout layout = new GridLayout(2, false);
 		super.setLayout(layout);
 
 		TernModuleMetadata metadata = module.getMetadata();
-		if (metadata != null && module.getModuleType() == ModuleType.Configurable) {
+		if (metadata != null
+				&& module.getModuleType() == ModuleType.Configurable) {
 			// get the options of the given module and display UI field for
 			// each option.
 
 			JsonObject jsonOptions = getOptions((ITernModuleConfigurable) module);
 
-			Collection<TernModuleMetadataOption> options = metadata.getOptions();
+			Collection<TernModuleMetadataOption> options = metadata
+					.getOptions();
 			for (TernModuleMetadataOption option : options) {
 				createUI(parent, jsonOptions, project, option);
 			}
@@ -121,6 +126,12 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 			}
 		} else if ("path[]".equals(type)) {
 			createPathArrayOption(parent, project, name, options);
+		} else if ("finder".equals(type)) {
+			if (project != null) {
+				createFinderOption(parent, project, name, options);
+			} else {
+				createStringOption(parent, name, options);
+			}
 		} else {
 			createJsonOption(parent, name, options);
 		}
@@ -221,45 +232,53 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				openFolderDialog(textField, project);
+				IResource resource = openFolderDialog(textField.getText(),
+						project, false);
+				if (resource != null) {
+					String path = resource.getProjectRelativePath().toString();
+					textField.setText(path);
+				}
 			}
 
 		});
 	}
 
-	private void openFolderDialog(Text textField, IProject project) {
-		SelectionDialog dialog = createFolderDialog(textField, project);
+	private IResource openFolderDialog(String initialFolder, IProject project,
+			boolean showAllProjects) {
+		SelectionDialog dialog = createFolderDialog(initialFolder, project,
+				showAllProjects);
 		if (dialog.open() != Window.OK) {
-			return;
+			return null;
 		}
 		Object[] results = dialog.getResult();
 		if (results != null && results.length > 0) {
-			IResource resource = (IResource) results[0];
-			String path = resource.getProjectRelativePath().toString();
-			textField.setText(path);
+			return (IResource) results[0];
 		}
+		return null;
 	}
 
-	private SelectionDialog createFolderDialog(Text textField,
-			final IProject project) {
+	private SelectionDialog createFolderDialog(String initialFolder,
+			final IProject project, final boolean showAllProjects) {
 
 		ILabelProvider lp = new WorkbenchLabelProvider();
 		ITreeContentProvider cp = new WorkbenchContentProvider();
 		FolderSelectionDialog dialog = new FolderSelectionDialog(getShell(),
 				lp, cp);
 		dialog.setTitle(TernUIMessages.TernModuleOptionsPanel_selectPathDialogTitle);
-		IFolder folder = StringUtils.isEmpty(textField.getText()) ? null
-				: project.getFolder(textField.getText());
+		IFolder folder = StringUtils.isEmpty(initialFolder) ? null : project
+				.getFolder(initialFolder);
 		if (folder != null && folder.exists()) {
 			dialog.setInitialSelection(folder);
 		}
-		dialog.setInput(project);
+		dialog.setInput(ResourcesPlugin.getWorkspace().getRoot());
 		ViewerFilter filter = new ViewerFilter() {
 
 			@Override
 			public boolean select(Viewer viewer, Object parentElement,
 					Object element) {
 				if (element instanceof IProject) {
+					if (showAllProjects)
+						return true;
 					IProject p = (IProject) element;
 					return (p.equals(project));
 				} else if (element instanceof IContainer) {
@@ -409,6 +428,146 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 			options.set(name, pathsOption);
 		}
 		return (JsonObject) pathsOption;
+	}
+
+	protected void createFinderOption(Composite ancestor,
+			final IProject project, final String name, final JsonObject options) {
+
+		Label title = new Label(ancestor, SWT.NONE);
+		title.setText("fill mappings of filename/path.");
+		title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		final JsonArray finderDirs = getFinderDirsOption(options);
+
+		final Composite parent = new Composite(ancestor, SWT.NONE);
+		parent.setLayout(new GridLayout(2, false));
+		GridData data = new GridData(GridData.FILL_BOTH);
+		data.horizontalSpan = 2;
+		parent.setLayoutData(data);
+
+		// create UI
+		final TableViewer viewer = new TableViewer(parent, SWT.BORDER
+				| SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.MULTI);
+
+		// create filename column
+		TableViewerColumn filenameColumn = new TableViewerColumn(viewer,
+				SWT.NONE);
+		filenameColumn.getColumn().setWidth(100);
+		filenameColumn.getColumn().setResizable(true);
+		filenameColumn.getColumn().setText(
+				TernUIMessages.TernModuleOptionsPanel_paths_filenameColumn);
+
+		viewer.setLabelProvider(JsonLabelProvider.getInstance());
+		viewer.setContentProvider(JsonContentProvider.getInstance());
+
+		Table table = viewer.getTable();
+		table.setHeaderVisible(true);
+		table.setLinesVisible(true);
+
+		data = new GridData(GridData.FILL_BOTH);
+		data.heightHint = 100;
+		table.setLayoutData(data);
+
+		viewer.setInput(finderDirs);
+
+		Composite toolbarComposite = new Composite(parent, SWT.NONE);
+		toolbarComposite.setLayout(new GridLayout());
+		toolbarComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+
+		Button addButton = new Button(toolbarComposite, SWT.PUSH);
+		addButton.setText("Add..");
+		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		addButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				String initialFolder = "";
+				IResource folder = openFolderDialog(initialFolder, project,
+						true);
+				if (folder != null) {
+					String path = null;
+					if (project.equals(folder.getProject())) {
+						// same project
+						path = folder.getProjectRelativePath().toString();
+					} else if (project
+							.getLocation()
+							.removeLastSegments(1)
+							.equals(folder.getProject().getLocation()
+									.removeLastSegments(1))) {
+						// same base folder
+						path = "../" + folder.getFullPath().toString();
+					} else {
+						path = folder.getProject().getLocation().toString();
+
+					}					
+					finderDirs.add(path);
+					viewer.refresh();
+				}
+			}
+
+			private String getPath(String name) {
+				int index = name.lastIndexOf(".");
+				if (index != -1) {
+					return name.substring(0, index);
+				}
+				return name;
+			}
+		});
+
+		final Button removeButton = new Button(toolbarComposite, SWT.PUSH);
+		removeButton.setText("Remove..");
+		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		removeButton.setEnabled(false);
+		removeButton.addSelectionListener(new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				IStructuredSelection selection = (IStructuredSelection) viewer
+						.getSelection();
+				if (!selection.isEmpty()) {
+					Iterator it = selection.iterator();
+					while (it.hasNext()) {
+						Object element = it.next();
+						for (int i = 0; i < finderDirs.size(); i++) {
+							if (finderDirs.get(i).equals(element)) {
+								finderDirs.remove(i);
+								break;
+							}
+						}
+					}
+					viewer.refresh();
+					removeButton.setEnabled(false);
+				}
+			}
+		});
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent e) {
+				removeButton.setEnabled(true);
+			}
+		});
+	}
+
+	public JsonArray getFinderDirsOption(final JsonObject options) {
+		JsonValue finderOption = options.get("finder");
+		if (finderOption == null || !(finderOption instanceof JsonObject)) {
+			finderOption = new JsonObject();
+			options.set("finder", finderOption);
+		}
+		((JsonObject) finderOption).set("name", "grep");
+		JsonObject grepFinderOptions = (JsonObject) ((JsonObject) finderOption)
+				.get("options");
+		if (grepFinderOptions == null) {
+			grepFinderOptions = new JsonObject();
+			((JsonObject) finderOption).set("options", grepFinderOptions);
+		}
+		JsonArray dirs = (JsonArray) grepFinderOptions.get("dirs");
+		if (dirs == null) {
+			dirs = new JsonArray();
+			grepFinderOptions.set("dirs", dirs);
+		}
+		return dirs;
 	}
 
 	protected void createJsonOption(Composite parent, final String name,

@@ -165,8 +165,8 @@ public class TernModulesBlock extends AbstractTableBlock {
 				SWT.NONE);
 		nameColumn.getColumn().setWidth(180);
 		nameColumn.getColumn().setResizable(true);
-		nameColumn.getColumn()
-				.setText(TernUIMessages.TernModulesBlock_moduleName);
+		nameColumn.getColumn().setText(
+				TernUIMessages.TernModulesBlock_moduleName);
 		nameColumn.getColumn().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
@@ -213,8 +213,8 @@ public class TernModulesBlock extends AbstractTableBlock {
 								if (dependencyModule != null) {
 									if (!tableViewer
 											.getChecked(dependencyModule)) {
-										tableViewer.setChecked(dependencyModule,
-												true);
+										tableViewer.setChecked(
+												dependencyModule, true);
 									}
 								}
 							}
@@ -226,7 +226,8 @@ public class TernModulesBlock extends AbstractTableBlock {
 			}
 		});
 
-		// when a module is selected, details, dependencies, options tabs must be
+		// when a module is selected, details, dependencies, options tabs must
+		// be
 		// refreshed.
 		addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -265,26 +266,38 @@ public class TernModulesBlock extends AbstractTableBlock {
 		dependenciesTabItem
 				.setText(TernUIMessages.TernModulesBlock_dependenciesTabLabel);
 
-		// create options tab
+		// create options panel.
 		this.optionsPanel = new OptionsPanel(tabFolder, project);
-		this.optionsTabItem = new TabItem(tabFolder, SWT.NULL);
-		optionsTabItem.setControl(this.optionsPanel);
-		optionsTabItem.setText(TernUIMessages.TernModulesBlock_optionsTabLabel);
 	}
 
+	/**
+	 * Refresh tab items with the given module information
+	 * 
+	 * @param module
+	 */
 	private void refreshModule(ITernModule module) {
-		// refresh the tab item.
-		optionsPanel.refresh(module);
-		// select the well tab item
 		if (TernModuleHelper.hasOptions(module)) {
-			// tern plugin has filled options, select the options tab.
-			tabFolder.setSelection(optionsTabItem);
+			// module has options, create options tab if needed
+			if (optionsTabItem == null) {
+				this.optionsTabItem = new TabItem(tabFolder, SWT.NULL);
+				optionsTabItem.setControl(this.optionsPanel);
+				optionsTabItem
+						.setText(TernUIMessages.TernModulesBlock_optionsTabLabel);
+			}
+			optionsPanel.refresh(module);
+
 		} else {
-			// otherwise, select the details tab.
-			tabFolder.setSelection(detailsTabItem);
+			// module has no options, don't display options tab
+			if (optionsTabItem != null) {
+				optionsTabItem.dispose();
+			}
+			optionsTabItem = null;
 		}
+
 		detailsPanel.refresh(module);
 		dependenciesPanel.refresh(module);
+		// select the details tab.
+		tabFolder.setSelection(detailsTabItem);
 	}
 
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
@@ -434,8 +447,8 @@ public class TernModulesBlock extends AbstractTableBlock {
 				initialModules.add(module);
 			} else {
 				try {
-					initialModules.add(TernModuleHelper.findConfigurable(module,
-							options, allModules));
+					initialModules.add(TernModuleHelper.findConfigurable(
+							module, options, allModules));
 				} catch (TernException e) {
 					Trace.trace(Trace.SEVERE,
 							"Error while finding configurable module.", e);
@@ -445,11 +458,11 @@ public class TernModulesBlock extends AbstractTableBlock {
 	}
 
 	/**
-	 * Returns true if tern modules dependencies must be select when a tern module
-	 * is selected and false otherwise.
+	 * Returns true if tern modules dependencies must be select when a tern
+	 * module is selected and false otherwise.
 	 * 
-	 * @return true if tern modules dependencies must be select when a tern module
-	 *         is selected and false otherwise.
+	 * @return true if tern modules dependencies must be select when a tern
+	 *         module is selected and false otherwise.
 	 */
 	private boolean isSelectDependencies() {
 		return selectDependenciesCheckbox != null
