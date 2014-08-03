@@ -18,14 +18,15 @@
 // plugin=closure
 // plugin=doc_comment null
 
-/** @type {?MyClass} */
+// Nullability #17
+/** @type {?string} */
 var nullable;
-nullable;//: MyClass
-
+nullable;//: string
 /** @type {!MyClass} */
 var nonNullable;
 nonNullable;//: MyClass
 
+// Unions #18
 /** @type {(MyClass|YourClass)} */
 var union;
 union;//: YourClass
@@ -34,22 +35,22 @@ union;//: YourClass
 var nested;
 nested; //: YourClass
 
-/**
- * @param {ParamType=} opt_param
- */
+// Optional parameters #19.
+/** @param {ParamType=} opt_param */
 var fnOptParam = function(opt_param) {
   opt_param; //: ParamType
 };
 fnOptParam; //: fn(opt_param: ParamType)
 
-/**
- * @param {...ParamType} var_args
- */
+// Varargs #20.
+/** @param {...ParamType} var_args */
 var fnVarArgs = function(var_args) {
+  arguments; //: [?]
   var_args; //: ParamType
 };
 fnVarArgs; //: fn(var_args: ParamType)
 
+// Function type expressions #16
 /** @type {function(ParamType): ReturnType} */
 var fnTypeExpr;
 fnTypeExpr; //: ?
@@ -59,6 +60,21 @@ fnTypeExpr; //: ?
 var voidFnTypeExpr;
 voidFnTypeExpr; //: ?
 
+// Record types #15
 /** @type {{prop1: Prop1Type, prop2: Prop2Type}} */
 var recordTypeExpr;
 recordTypeExpr; //: ?
+
+// Casting #12
+/** @type {Object} */
+var genericObject;
+var castObject = /** @type {CastClass} */ (genericObject);
+castObject; //: {}
+
+// Typedef #14
+/** @typedef {{numProp: number}} */
+var TypeDefType;
+/** @type {TypeDefType} */
+var typeDefVar;
+typeDefVar; //: {}
+typeDefVar.numProp; //: ?

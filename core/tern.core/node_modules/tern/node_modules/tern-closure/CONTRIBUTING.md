@@ -11,14 +11,20 @@ read.
 ## Tests
 
 Currently, all of tern-closure's tests use Tern's nifty [test
-framework][tern-tests]. Test cases are in the `testcases` directory, and consist
-of sample code to parse interspersed with comments which serve as assertions on
-inference results.
+framework][tern-tests]. Test cases are in the `test/cases` directory, and
+consist of sample code to parse interspersed with comments which serve as
+assertions on inference results.
 
 To run all of the tests, run:
 
 ```
-node test.js
+node test/runcases.js
+```
+
+or
+
+```
+npm test
 ```
 
 You can restrict the tests to a particular case file by passing the filename as

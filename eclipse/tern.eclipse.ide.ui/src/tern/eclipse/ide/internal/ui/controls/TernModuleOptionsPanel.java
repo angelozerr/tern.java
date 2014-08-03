@@ -499,18 +499,10 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 					} else {
 						path = folder.getProject().getLocation().toString();
 
-					}					
+					}
 					finderDirs.add(path);
 					viewer.refresh();
 				}
-			}
-
-			private String getPath(String name) {
-				int index = name.lastIndexOf(".");
-				if (index != -1) {
-					return name.substring(0, index);
-				}
-				return name;
 			}
 		});
 
@@ -556,12 +548,7 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 			options.set("finder", finderOption);
 		}
 		((JsonObject) finderOption).set("name", "grep");
-		JsonObject grepFinderOptions = (JsonObject) ((JsonObject) finderOption)
-				.get("options");
-		if (grepFinderOptions == null) {
-			grepFinderOptions = new JsonObject();
-			((JsonObject) finderOption).set("options", grepFinderOptions);
-		}
+		JsonObject grepFinderOptions = ((JsonObject) finderOption);
 		JsonArray dirs = (JsonArray) grepFinderOptions.get("dirs");
 		if (dirs == null) {
 			dirs = new JsonArray();
