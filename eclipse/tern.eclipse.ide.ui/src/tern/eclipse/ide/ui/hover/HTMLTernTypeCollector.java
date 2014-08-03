@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.jsdt.internal.hover;
+package tern.eclipse.ide.ui.hover;
 
 import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.server.ITernServer;

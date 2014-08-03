@@ -37,6 +37,7 @@ public class HTMLTernAngularHelper {
 			// find controller
 			populateScope(scope, element, provider, project, false);
 			break;
+		case unknown:
 		case model:
 		case directive:
 		case repeat_expression:

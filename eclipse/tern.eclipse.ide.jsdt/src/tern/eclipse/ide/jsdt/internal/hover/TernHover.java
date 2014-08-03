@@ -13,10 +13,11 @@ import org.eclipse.wst.jsdt.ui.text.java.hover.IJavaEditorTextHover;
 
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.jsdt.internal.Trace;
+import tern.eclipse.ide.ui.hover.HTMLTernTypeCollector;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.eclipse.jface.text.HoverControlCreator;
-import tern.eclipse.jface.text.TernBrowserInformationControlInput;
 import tern.eclipse.jface.text.PresenterControlCreator;
+import tern.eclipse.jface.text.TernBrowserInformationControlInput;
 import tern.server.protocol.type.TernTypeQuery;
 
 /**
