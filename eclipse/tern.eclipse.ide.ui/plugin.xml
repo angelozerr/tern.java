@@ -161,6 +161,7 @@
             class="tern.eclipse.ide.internal.ui.hyperlink.TernHyperLinkDetector"
             id="tern.eclipse.ide.internal.ui.hyperlink.TernHyperLinkDetector"
             name="%TernHyperLinkDetector"
+            activate="true"
             targetId="org.eclipse.wst.jsdt.ui.javaCode">
       </hyperlinkDetector>
    </extension>
