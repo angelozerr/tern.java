@@ -43,10 +43,15 @@ import com.eclipsesource.json.ParseException;
  */
 public class NodejsTernHelper {
 
+	// properties for remote access
+	public static final boolean DEFAULT_REMOTE_ACCESS = false;
+	public static final int DEFAULT_REMOTE_PORT = 1234;
+
+	// properties for direct access
 	public static final long DEFAULT_TIMEOUT = 200L; // 200ms
 	public static final int DEFAULT_TEST_NUMBER = 50; // try to retrieve the
 														// node.js port 50
-														// eachtime on timeout
+														// each time on timeout
 														// (max=50*200ms=10000ms).
 
 	public static final boolean DEFAULT_PERSISTENT = false;
