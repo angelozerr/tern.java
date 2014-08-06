@@ -80,11 +80,18 @@
       <hover
             label="%ternHover"
             description="%ternHoverDescription"
-            class="tern.eclipse.ide.jsdt.internal.hover.TernHover"
+            class="tern.eclipse.ide.jsdt.internal.hover.JSDTTernHover"
             id="tern.eclipse.ide.jsdt.internal.hover.TernHover">
       </hover>
 	</extension>
 	      		 
+	<extension point="org.eclipse.wst.sse.ui.editorConfiguration">
+  		<documentationTextHover
+        	class="tern.eclipse.ide.jsdt.internal.hover.JSDTTernHover"
+        	target="org.eclipse.wst.html.SCRIPT,org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
+  		</documentationTextHover>
+    </extension>			     
+     		 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension
 	       point="org.eclipse.ui.startup">	

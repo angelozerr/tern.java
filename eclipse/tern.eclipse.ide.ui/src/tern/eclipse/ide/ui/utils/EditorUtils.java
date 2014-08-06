@@ -10,11 +10,15 @@
  */
 package tern.eclipse.ide.ui.utils;
 
+import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -112,6 +116,14 @@ public class EditorUtils {
 				.getAdapter(ITextOperationTarget.class);
 
 		return viewer;
+	}
+
+	public static IFile getFile(IDocument document) {
+		ITextFileBufferManager bufferManager = FileBuffers
+				.getTextFileBufferManager(); // get the buffer manager
+		IPath location = bufferManager.getTextFileBuffer(document)
+				.getLocation();
+		return ResourcesPlugin.getWorkspace().getRoot().getFile(location);
 	}
 
 }

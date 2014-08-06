@@ -1,19 +1,28 @@
-package tern.eclipse.ide.jsdt.internal.hover;
+/**
+ *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
+package tern.eclipse.ide.ui.hover;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextHoverExtension;
 import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.wst.jsdt.internal.ui.text.JavaWordFinder;
-import org.eclipse.wst.jsdt.ui.text.java.hover.IJavaEditorTextHover;
 
 import tern.eclipse.ide.core.IDETernProject;
-import tern.eclipse.ide.jsdt.internal.Trace;
-import tern.eclipse.ide.ui.hover.HTMLTernTypeCollector;
+import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.ui.JavaWordFinder;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.eclipse.jface.text.HoverControlCreator;
 import tern.eclipse.jface.text.PresenterControlCreator;
@@ -21,10 +30,10 @@ import tern.eclipse.jface.text.TernBrowserInformationControlInput;
 import tern.server.protocol.type.TernTypeQuery;
 
 /**
- * Implementation of JSDT Text Hover with Tern.
+ * Tern Hover.
  *
  */
-public class TernHover implements IJavaEditorTextHover, ITextHoverExtension,
+public class TernHover implements ITextHover, ITextHoverExtension,
 		ITextHoverExtension2 {
 
 	private IEditorPart editor;
@@ -32,7 +41,6 @@ public class TernHover implements IJavaEditorTextHover, ITextHoverExtension,
 	private IInformationControlCreator fPresenterControlCreator;
 
 	@Override
-	@Deprecated
 	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
 		TernBrowserInformationControlInput info = (TernBrowserInformationControlInput) getHoverInfo2(
 				textViewer, hoverRegion);
@@ -41,7 +49,7 @@ public class TernHover implements IJavaEditorTextHover, ITextHoverExtension,
 
 	@Override
 	public Object getHoverInfo2(ITextViewer textViewer, IRegion hoverRegion) {
-		IFile scriptFile = EditorUtils.getFile(editor);
+		IFile scriptFile = getFile(textViewer);
 		if (scriptFile == null) {
 			return null;
 		}
@@ -70,6 +78,14 @@ public class TernHover implements IJavaEditorTextHover, ITextHoverExtension,
 		return null;
 	}
 
+	protected IFile getFile(ITextViewer textViewer) {
+		if (editor != null) {
+			return EditorUtils.getFile(editor);
+		}
+
+		return EditorUtils.getFile(textViewer.getDocument());
+	}
+
 	@Override
 	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
 		return JavaWordFinder.findWord(textViewer.getDocument(), offset);
@@ -90,7 +106,6 @@ public class TernHover implements IJavaEditorTextHover, ITextHoverExtension,
 		return fPresenterControlCreator;
 	}
 
-	@Override
 	public void setEditor(IEditorPart editor) {
 		this.editor = editor;
 	}
