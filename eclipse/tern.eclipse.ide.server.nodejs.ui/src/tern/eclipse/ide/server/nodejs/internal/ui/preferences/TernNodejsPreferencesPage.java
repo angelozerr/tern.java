@@ -231,7 +231,9 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	protected void initialize() {
 		super.initialize();
 		// Update enable/disable of the nodejs path field.
-		updateNodePath(false);
+		boolean isRemote = getPreferenceStore().getBoolean(
+				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		updateNodePath(false, isRemote);
 	}
 
 	@Override
@@ -260,15 +262,15 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	@Override
 	protected void performDefaults() {
 		super.performDefaults();
-		updateNodePath(true);
 		boolean isRemote = getPreferenceStore().getDefaultBoolean(
 				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		updateNodePath(true, isRemote);
 		remoteAccessButton.setSelection(isRemote);
 		directAccessButton.setSelection(!isRemote);
 		updateEnabled(isRemote);
 	}
 
-	public void updateNodePath(boolean defaultValue) {
+	public void updateNodePath(boolean defaultValue, boolean isRemote) {
 		INodejsInstall install = getNodejsInstall(defaultValue);
 		// update node path
 		if (install != null) {
@@ -279,7 +281,8 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			}
 		}
 		// update enable native node path
-		nativeNodePath.setEnabled(install != null && install.isNative(),
+		nativeNodePath.setEnabled(
+				!isRemote && install != null && install.isNative(),
 				getFieldEditorParent());
 	}
 
