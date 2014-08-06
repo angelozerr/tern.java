@@ -25,16 +25,28 @@ public class TernFile extends JsonObject {
 	private static final String TEXT_FIELD_NAME = "text";
 	private static final String OFFSET_FIELD_NAME = "offset";
 	private static final String TYPE_FIELD_NAME = "type";
+	private static final String OFFSET_LINES_FIELD_TYPE = "offsetLines";
 
-	public TernFile(String name, String text, Integer offset) {
+	private enum FileType {
+		part, full
+	}
+
+	public TernFile(String name, String text, boolean isHTML, Integer offset) {
 		super.add(NAME_FIELD_NAME, name);
-		super.add(TEXT_FIELD_NAME, text);
+		super.add(TEXT_FIELD_NAME, getText(text, isHTML));
 		if (offset != null) {
-			super.add(TYPE_FIELD_NAME, "part");
-			super.add("offsetLines", offset);
+			super.add(TYPE_FIELD_NAME, FileType.part.name());
+			super.add(OFFSET_LINES_FIELD_TYPE, offset);
 		} else {
-			super.add(TYPE_FIELD_NAME, "full");
+			super.add(TYPE_FIELD_NAME, FileType.full.name());
 		}
+	}
+
+	private String getText(String text, boolean isHTML) {
+		if (text == null || !isHTML) {
+			return text;
+		}
+		return HtmlHelper.extractJS(text);
 	}
 
 	public String getName() {

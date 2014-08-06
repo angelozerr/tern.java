@@ -21,7 +21,6 @@ import org.w3c.dom.NodeList;
 
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
-import tern.utils.DOMUtils;
 import tern.utils.StringUtils;
 
 import com.eclipsesource.json.JsonArray;
@@ -71,13 +70,12 @@ public abstract class TernFileManager<T> {
 	 *            list to update with the names of visited scripts.
 	 * @throws IOException
 	 */
-	public void updateFiles(Node domNode, T domFile, TernDoc doc, JsonArray names)
-			throws IOException {
+	public boolean updateFiles(Node domNode, T domFile, TernDoc doc,
+			JsonArray names) throws IOException {
 
 		if (domNode == null) {
-			return;
+			return false;
 		}
-		int scriptIndex = 0;
 		Element scriptElt = null;
 		String src = null;
 
@@ -86,6 +84,7 @@ public abstract class TernFileManager<T> {
 				.getElementsByTagName(SCRIPT_ELT) : domNode.getOwnerDocument()
 				.getElementsByTagName(SCRIPT_ELT);
 
+		boolean hasJS = false;
 		// Update the files of tern doc with scripts elements by using indexed
 		// file list.
 		synchronized (indexedFiles) {
@@ -94,12 +93,14 @@ public abstract class TernFileManager<T> {
 				src = scriptElt.getAttribute(SRC_ATTR);
 				if (StringUtils.isEmpty(src)) {
 					// JS script declared in the HTML document.
-					internalUpdateFile(domFile, scriptElt, scriptIndex++, doc,
-							names);
-
+					// internalUpdateFile(domFile, scriptElt, scriptIndex++,
+					// doc,
+					// names);
+					hasJS = true;
 				} else {
 					if (src.startsWith(HTTP_ATTR)) {
 						// JS script declared in http://
+						// FIXME : load the content from the URL
 					} else {
 						// JS script declared in an external file.
 						T relativeFile = getRelativeFile(domFile, src);
@@ -110,30 +111,12 @@ public abstract class TernFileManager<T> {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Update tern doc files with the content of the script element (here JS
-	 * content is declared in the HTML document.)
-	 * 
-	 * @param domFile
-	 *            the file of the HTML document.
-	 * @param scriptElt
-	 *            the script element which contains the Javascript.
-	 * @param scriptIndex
-	 *            the index of the script elements which contains the
-	 *            Javascript.
-	 * @param doc
-	 *            the tern doc to update with files to send to the tern server
-	 *            to parse it.
-	 * @param names
-	 *            list to update with the names of visited scripts.
-	 */
-	public void updateFile(T domFile, Element scriptElt, int scriptIndex,
-			TernDoc doc, JsonArray names) {
-		synchronized (indexedFiles) {// get the file name
-			internalUpdateFile(domFile, scriptElt, scriptIndex, doc, names);
+		// add the file name in the visited list.
+		if (hasJS && names != null) {
+			String name = getFileName(domFile);
+			names.add(name);
 		}
+		return hasJS;
 	}
 
 	/**
@@ -147,7 +130,8 @@ public abstract class TernFileManager<T> {
 	 * @param names
 	 *            list to update with the names of visited scripts.
 	 */
-	public void updateFile(T file, TernDoc doc, JsonArray names) throws IOException {
+	public void updateFile(T file, TernDoc doc, JsonArray names)
+			throws IOException {
 		synchronized (indexedFiles) {
 			internalUpdateFile(file, doc, names);
 		}
@@ -163,9 +147,8 @@ public abstract class TernFileManager<T> {
 	 * @param doc
 	 *            tern doc.
 	 */
-	protected void addFile(String name, String text, TernDoc doc) {
-		doc.addFile(name, text, null);
-		// internalAddIndexedFile(name);
+	protected void addFile(String name, String text, boolean isHTML, TernDoc doc) {
+		doc.addFile(name, text, isHTML, null);
 	}
 
 	/**
@@ -282,23 +265,17 @@ public abstract class TernFileManager<T> {
 	 * @param names
 	 *            list to update with the names of visited scripts.
 	 */
-	private void internalUpdateFile(T domFile, Element scriptElt,
-			int scriptIndex, TernDoc doc, JsonArray names) {
-		String name = getFileName(domFile) + "#" + (scriptIndex);
-		// check if file name was already indexed.
-		if (!internalIsIndexedFile(name)) {
-			// file was not parsed by tern server, add the content of the
-			// script
-			// element to parse
-			// in the tern doc files.
-			String text = DOMUtils.getTextNodeAsString(scriptElt);
-			addFile(name, text, doc);
-		}
-		// add the file name in the visited list.
-		if (names != null) {
-			names.add(name);
-		}
-	}
+	/*
+	 * private void internalUpdateFile(T domFile, Element scriptElt, int
+	 * scriptIndex, TernDoc doc, JsonArray names) { String name =
+	 * getFileName(domFile) + "#" + (scriptIndex); // check if file name was
+	 * already indexed. if (!internalIsIndexedFile(name)) { // file was not
+	 * parsed by tern server, add the content of the // script // element to
+	 * parse // in the tern doc files. String text =
+	 * DOMUtils.getTextNodeAsString(scriptElt); addFile(name, text, doc); } //
+	 * add the file name in the visited list. if (names != null) {
+	 * names.add(name); } }
+	 */
 
 	/**
 	 * Update tern doc files with the content of given file.
@@ -322,7 +299,8 @@ public abstract class TernFileManager<T> {
 			// parse
 			// in the tern doc files.
 			String text = getFileContent(file);
-			addFile(name, text, doc);
+			boolean isHTML = isHTML(file);
+			addFile(name, text, isHTML, doc);
 		}
 		// add the file name in the visited list.
 		if (names != null) {
@@ -408,4 +386,12 @@ public abstract class TernFileManager<T> {
 	 */
 	protected abstract T getFile(String projectName, String path);
 
+	/**
+	 * Returns true if the given file is HTML and false otherwise.
+	 * 
+	 * @param file
+	 *            the generic file.
+	 * @return true if the given file is HTML and false otherwise.
+	 */
+	protected abstract boolean isHTML(T file);
 }

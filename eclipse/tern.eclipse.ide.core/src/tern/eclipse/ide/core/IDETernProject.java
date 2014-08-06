@@ -66,7 +66,8 @@ import com.eclipsesource.json.JsonObject;
  * Eclipse IDE Tern project.
  * 
  */
-public class IDETernProject extends TernProject<IFile> {
+public class IDETernProject extends TernProject<IFile> implements
+		ITernServerPreferencesListener {
 
 	private static final int MAX_FILES = 20;
 
@@ -103,6 +104,8 @@ public class IDETernProject extends TernProject<IFile> {
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
 		this.data = new HashMap<String, Object>();
 		this.listeners = new ArrayList<ITernServerListener>();
+		TernCorePlugin.getTernServerTypeManager().addServerPreferencesListener(
+				this);
 		ensureNatureIsConfigured();
 	}
 
@@ -290,10 +293,7 @@ public class IDETernProject extends TernProject<IFile> {
 		// Store IDE tern project info.
 		saveIDEInfos();
 		super.save();
-		if (ternServer != null) {
-			ternServer.dispose();
-			ternServer = null;
-		}
+		disposeServer();
 	}
 
 	/**
@@ -449,9 +449,10 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	public void request(TernQuery query, JsonArray names, Node domNode,
-			IFile domFile, ITernCompletionCollector collector)
-			throws IOException, TernException {
-		synchFiles(names, domNode, domFile, new TernDoc());
+			IFile domFile, IDocument document,
+			ITernCompletionCollector collector) throws IOException,
+			TernException {
+		synchFiles(names, domNode, domFile, document, new TernDoc());
 		TernDoc doc = new TernDoc(query);
 		request(doc, collector);
 	}
@@ -496,9 +497,10 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	public void request(TernQuery query, JsonArray names, Node domNode,
-			IFile domFile, ITernDefinitionCollector collector)
-			throws IOException, TernException {
-		synchFiles(names, domNode, domFile, new TernDoc());
+			IFile domFile, IDocument document,
+			ITernDefinitionCollector collector) throws IOException,
+			TernException {
+		synchFiles(names, domNode, domFile, document, new TernDoc());
 		TernDoc doc = new TernDoc(query);
 		request(doc, collector);
 	}
@@ -577,7 +579,8 @@ public class IDETernProject extends TernProject<IFile> {
 			if (file != null && file.exists()) {
 				String name = getFileManager().getFileName(file);
 				String text = document.get();
-				doc.addFile(name, text, null);
+				boolean isHTML = FileUtils.isHTMLFile(file);
+				doc.addFile(name, text, isHTML, null);
 				TernQuery query = doc.getQuery();
 				if (query != null) {
 					query.setFile(name);
@@ -587,39 +590,29 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
-	private void updateFragmentAround(TernDoc doc, String name,
-			IDocument document, int start, int end) {
-
-		FindReplaceDocumentAdapter adapter = new FindReplaceDocumentAdapter(
-				document);
-		try {
-			long s = System.currentTimeMillis();
-
-			IRegion region = adapter.find(end, "\\bfunction\\b", false, false,
-					false, true);
-			System.err.println(region);
-			System.err.println(System.currentTimeMillis() - s);
-
-			if (region != null) {
-				String text = document.get(region.getOffset(),
-						end - region.getOffset());
-				int n = document.getLineOfOffset(region.getOffset());
-				System.err.println(n);
-				doc.addFile(name, text, n);
-				doc.getQuery().setEnd(
-						JsonHelper.getInteger(doc.getQuery(), "end")
-								- region.getOffset());
-			} else {
-				String text = document.get();
-				doc.addFile(name, text, null);
-			}
-
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
+	/*
+	 * private void updateFragmentAround(TernDoc doc, String name, IDocument
+	 * document, int start, int end) {
+	 * 
+	 * FindReplaceDocumentAdapter adapter = new FindReplaceDocumentAdapter(
+	 * document); try { long s = System.currentTimeMillis();
+	 * 
+	 * IRegion region = adapter.find(end, "\\bfunction\\b", false, false, false,
+	 * true); System.err.println(region);
+	 * System.err.println(System.currentTimeMillis() - s);
+	 * 
+	 * if (region != null) { String text = document.get(region.getOffset(), end
+	 * - region.getOffset()); int n =
+	 * document.getLineOfOffset(region.getOffset()); System.err.println(n);
+	 * doc.addFile(name, text, n); doc.getQuery().setEnd(
+	 * JsonHelper.getInteger(doc.getQuery(), "end") - region.getOffset()); }
+	 * else { String text = document.get(); doc.addFile(name, text, null); }
+	 * 
+	 * } catch (BadLocationException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * }
+	 */
 
 	/*
 	 * function getFragmentAround(data, start, end) { var doc = data.doc; var
@@ -684,11 +677,15 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	private void synchFiles(JsonArray names, Node domNode, IFile domFile,
-			TernDoc doc) throws IOException {
+			IDocument document, TernDoc doc) throws IOException {
 		synchronized (lock) {
-			getFileManager().updateFiles(domNode, domFile, doc, names);
+			boolean hasJS = getFileManager().updateFiles(domNode, domFile, doc,
+					names);
 			if (!doc.hasFiles()) {
 				syncFiles(doc, names, null);
+			}
+			if (hasJS) {
+				synchFiles(domFile, document, doc);
 			}
 			synchFiles(doc);
 		}
@@ -706,10 +703,10 @@ public class IDETernProject extends TernProject<IFile> {
 	}
 
 	public void request(TernQuery query, JsonArray names, Node domNode,
-			IFile domFile, ITernTypeCollector collector) throws IOException,
-			TernException {
+			IFile domFile, IDocument document, ITernTypeCollector collector)
+			throws IOException, TernException {
+		synchFiles(names, domNode, domFile, document, new TernDoc());
 		TernDoc doc = new TernDoc(query);
-		synchFiles(names, domNode, domFile, doc);
 		request(doc, collector);
 	}
 
@@ -736,6 +733,7 @@ public class IDETernProject extends TernProject<IFile> {
 		if (!isTernServerDisposed()) {
 			if (ternServer != null) {
 				ternServer.dispose();
+				ternServer = null;
 			}
 		}
 	}
@@ -780,4 +778,10 @@ public class IDETernProject extends TernProject<IFile> {
 		}
 	}
 
+	@Override
+	public void serverPreferencesChanged(IProject project) {
+		if (project == null || getProject().equals(project)) {
+			disposeServer();
+		}
+	}
 }

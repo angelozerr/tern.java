@@ -54,6 +54,17 @@ public interface ITernServer {
 	 *            the content file.
 	 */
 	void addFile(String name, String text);
+	
+	/**
+	 * Register a file with the server. Note that files can also be included in
+	 * requests.
+	 * 
+	 * @param name
+	 *            the file name.
+	 * @param text
+	 *            the content file.
+	 */
+	void addFile(String name, String text, boolean isHTML);
 
 	void request(TernDoc doc, IResponseHandler handler);
 

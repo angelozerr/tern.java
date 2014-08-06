@@ -124,4 +124,9 @@ public abstract class AbstractTernServer implements ITernServer {
 	public TernProject<?> getProject() {
 		return project;
 	}
+
+	@Override
+	public void addFile(String name, String text) {
+		addFile(name, text, false);
+	}
 }

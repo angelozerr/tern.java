@@ -35,9 +35,10 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 
 	@Test
 	public void empty() {
-		
+
 	}
-	//@Test
+
+	// @Test
 	public void addBigFileWith2Threads() throws TernException, IOException {
 
 		final MapTernFileManager fileManager = (MapTernFileManager) server
@@ -118,7 +119,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 		String text = "var arr = [];";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 		return doc;
 	}
 }

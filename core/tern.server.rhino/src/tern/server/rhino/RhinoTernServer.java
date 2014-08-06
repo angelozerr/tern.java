@@ -133,7 +133,7 @@ public class RhinoTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void addFile(String name, String text) {
+	public void addFile(String name, String text, boolean isHTML) {
 		Context cx = Context.enter();
 		try {
 			// tern.js checks if file.text is typeof string

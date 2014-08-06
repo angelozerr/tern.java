@@ -10,6 +10,9 @@
  */
 package tern.eclipse.ide.core.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ProjectScope;
@@ -27,23 +30,19 @@ public class FileUtils {
 	public static final String HTML_EXTENSION = "html";
 	public static final String JSP_EXTENSION = "jsp";
 	public static final String PHP_EXTENSION = "php";
+	public static final String JSF_EXTENSION = "jsf";
 	public static final String JSON_EXTENSION = "json";
+
+	private static final List<String> HTML_EXTENSIONS = Arrays
+			.asList(new String[] { HTM_EXTENSION, HTML_EXTENSION,
+					JSP_EXTENSION, PHP_EXTENSION, JSF_EXTENSION });
 
 	public static boolean isJSFile(IResource resource) {
 		return JS_EXTENSION.equals(resource.getFileExtension());
 	}
 
 	public static boolean isHTMLFile(IResource resource) {
-		return HTM_EXTENSION.equals(resource.getFileExtension())
-				|| HTML_EXTENSION.equals(resource.getFileExtension());
-	}
-
-	public static boolean isJSPFile(IResource resource) {
-		return JSP_EXTENSION.equals(resource.getFileExtension());
-	}
-
-	public static boolean isPHPFile(IResource resource) {
-		return PHP_EXTENSION.equals(resource.getFileExtension());
+		return HTML_EXTENSIONS.contains(resource.getFileExtension());
 	}
 
 	/**

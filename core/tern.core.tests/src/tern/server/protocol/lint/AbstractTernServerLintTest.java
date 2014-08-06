@@ -33,12 +33,12 @@ public abstract class AbstractTernServerLintTest extends AbstractTernServerTest 
 		String text = "document.getElem";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 
 		TernLintQuery query = new TernLintQuery();
-		query.setFile(name);		
+		query.setFile(name);
 		doc.setQuery(query);
-		
+
 		return doc;
 	}
 }

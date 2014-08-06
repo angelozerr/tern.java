@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -22,6 +23,7 @@ import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
+import tern.eclipse.ide.core.ITernServerPreferencesListener;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.ITernServerTypeManager;
 import tern.eclipse.ide.core.TernCorePlugin;
@@ -50,6 +52,8 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	private final ITernModule[] modules;
 
+	private final List<ITernServerPreferencesListener> listeners;
+
 	public static TernServerTypeManager getManager() {
 		return INSTANCE;
 	}
@@ -60,6 +64,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 		Collections.addAll(modules, getTernDefs());
 		Collections.addAll(modules, getTernPlugins());
 		this.modules = modules.toArray(ITernModule.EMPTY_MODULE);
+		this.listeners = new ArrayList<ITernServerPreferencesListener>();
 	}
 
 	@Override
@@ -248,4 +253,28 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 		return findTernDef(name);
 	}
 
+	@Override
+	public void addServerPreferencesListener(
+			ITernServerPreferencesListener listener) {
+		synchronized (listener) {
+			listeners.add(listener);
+		}
+	}
+
+	@Override
+	public void removeServerPreferencesListener(
+			ITernServerPreferencesListener listener) {
+		synchronized (listeners) {
+			listeners.remove(listener);
+		}
+	}
+
+	@Override
+	public void fireServerPreferencesChanged(IProject project) {
+		synchronized (listeners) {
+			for (ITernServerPreferencesListener listener : listeners) {
+				listener.serverPreferencesChanged(project);
+			}
+		}
+	}
 }

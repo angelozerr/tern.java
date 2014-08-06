@@ -10,6 +10,8 @@
  */
 package tern.eclipse.ide.core;
 
+import org.eclipse.core.resources.IProject;
+
 import tern.server.ITernDef;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;
@@ -66,5 +68,30 @@ public interface ITernServerTypeManager {
 	 * @return the tern module with the given name.
 	 */
 	ITernModule findTernModule(String name);
+
+	/**
+	 * Add server preferences listener.
+	 * 
+	 * @param listener
+	 *            the listener to add.
+	 */
+	void addServerPreferencesListener(ITernServerPreferencesListener listener);
+
+	/**
+	 * Remove the server preferences listener
+	 * 
+	 * @param listener
+	 *            the listener to remove.
+	 */
+	void removeServerPreferencesListener(ITernServerPreferencesListener listener);
+
+	/**
+	 * Notify that server preferences has changed.
+	 * 
+	 * @param project
+	 *            not null if preferences comes from a project and null when
+	 *            it's a global preferences.
+	 */
+	void fireServerPreferencesChanged(IProject project);
 
 }

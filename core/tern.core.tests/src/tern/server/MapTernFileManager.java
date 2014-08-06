@@ -36,4 +36,9 @@ public class MapTernFileManager extends TernFileManager<MapTernFile> {
 		return null;
 	}
 
+	@Override
+	protected boolean isHTML(MapTernFile file) {
+		return false;
+	}
+
 }

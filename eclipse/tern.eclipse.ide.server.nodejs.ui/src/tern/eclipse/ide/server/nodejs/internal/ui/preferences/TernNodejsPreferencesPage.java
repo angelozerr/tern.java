@@ -250,12 +250,11 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	@Override
 	public boolean performOk() {
 		boolean result = super.performOk();
-		if (result) {
-			IPreferenceStore store = getPreferenceStore();
-			store.setValue(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS,
-					remoteAccessButton.getSelection());
-			TernCorePlugin.getTernServerTypeManager().refresh();
-		}
+		IPreferenceStore store = getPreferenceStore();
+		store.setValue(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS,
+				remoteAccessButton.getSelection());
+		TernCorePlugin.getTernServerTypeManager()
+				.fireServerPreferencesChanged(null);
 		return result;
 	}
 

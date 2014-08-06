@@ -52,7 +52,7 @@ public abstract class Issue39 extends AbstractTernServerAngularTest {
 		text += "\nvar diagapp	= angular.module('DiagApp', ['DiagModule']);";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false,  null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);

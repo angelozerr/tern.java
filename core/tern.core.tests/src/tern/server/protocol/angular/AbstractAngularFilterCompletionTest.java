@@ -62,7 +62,7 @@ public abstract class AbstractAngularFilterCompletionTest extends
 		text += "\n});";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false,  null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.filter);

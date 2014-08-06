@@ -154,7 +154,8 @@ public class NodejsTernEditorWithFiles {
 				if (baseDir.getName().endsWith(".uncompressed.js")) {
 					long start = System.currentTimeMillis();
 					server.addFile(baseDir.getPath(),
-							IOUtils.toString(new FileInputStream(baseDir)));
+							IOUtils.toString(new FileInputStream(baseDir)),
+							false);
 					// server.addFile(baseDir.getPath(), null);
 					System.err.println(baseDir.getPath() + " =>"
 							+ (System.currentTimeMillis() - start) + "ms");

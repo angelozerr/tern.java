@@ -23,8 +23,10 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.text.IDocument;
 
 import tern.TernFileManager;
+import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.utils.IOUtils;
 
@@ -166,6 +168,11 @@ public class IDETernFileManager extends TernFileManager<IFile> implements
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	protected boolean isHTML(IFile file) {
+		return FileUtils.isHTMLFile(file);
 	}
 
 }

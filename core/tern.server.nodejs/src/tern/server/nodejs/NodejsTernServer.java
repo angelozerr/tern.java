@@ -132,9 +132,9 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void addFile(String name, String text) {
+	public void addFile(String name, String text, boolean isHTML) {
 		TernDoc t = new TernDoc();
-		t.addFile(name, text, null);
+		t.addFile(name, text, isHTML, null);
 		try {
 			JsonObject json = makeRequest(t);
 		} catch (Exception e) {

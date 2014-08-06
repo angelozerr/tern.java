@@ -74,7 +74,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\n}]);";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -98,8 +98,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		Assert.assertNotNull(item);
 		Assert.assertEquals("ui.bootstrap.buttons", item.getModule());
 		Assert.assertEquals("btnRadio#controller", item.getName());
-		Assert.assertEquals("fn($scope: $scope)",
-				item.getType());
+		Assert.assertEquals("fn($scope: $scope)", item.getType());
 		Assert.assertEquals("myfile.js", item.getOrigin());
 	}
 
@@ -114,7 +113,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\n};})";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -147,7 +146,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\n};})";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -180,7 +179,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\nfunction SomeCtrl($scope) {};";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -212,7 +211,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\nfunction SomeCtrl($scope) {};";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);

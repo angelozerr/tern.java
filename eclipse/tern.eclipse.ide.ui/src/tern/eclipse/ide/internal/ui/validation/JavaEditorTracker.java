@@ -156,8 +156,10 @@ public class JavaEditorTracker implements IWindowListener, IPageListener,
 	private void editorOpened(IEditorPart part) {
 		if (part instanceof ITextEditor) {
 			IResource resource = EditorUtils.getResource(part);
-			if (resource != null && resource.getType() == IResource.FILE
-					&& FileUtils.isJSFile(resource)
+			if (resource != null
+					&& resource.getType() == IResource.FILE
+					&& (FileUtils.isJSFile(resource) || FileUtils
+							.isHTMLFile(resource))
 					&& IDETernProject.hasTernNature(resource.getProject())) {
 				ISourceViewer viewer = EditorUtils.getSourceViewer(part);
 				if (viewer != null) {

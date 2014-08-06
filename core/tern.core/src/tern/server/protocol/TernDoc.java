@@ -69,11 +69,13 @@ public class TernDoc extends JsonObject {
 	 *            the file name.
 	 * @param text
 	 *            the file text content.
+	 * @param isHTML
+	 *            true if file is HTML and false otherwise.
 	 * @param offset
 	 *            null if "full" file type and "part" otherwise.
 	 */
-	public void addFile(String name, String text, Integer offset) {
-		addFile(new TernFile(name, text, offset));
+	public void addFile(String name, String text, boolean isHTML, Integer offset) {
+		addFile(new TernFile(name, text, isHTML, offset));
 	}
 
 	/**

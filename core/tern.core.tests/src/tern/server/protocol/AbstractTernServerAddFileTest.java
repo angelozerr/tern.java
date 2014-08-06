@@ -40,7 +40,7 @@ public abstract class AbstractTernServerAddFileTest extends
 		String text = "var arr = [];";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, null);
+		doc.addFile(name, text, false, null);
 		return doc;
 	}
 }
