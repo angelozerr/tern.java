@@ -18,7 +18,11 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
@@ -41,6 +45,15 @@ import tern.utils.StringUtils;
 public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		implements IWorkbenchPreferencePage {
 
+	private Button remoteAccessButton;
+	private IntegerFieldEditor remotePortField;
+
+	private Button directAccessButton;
+	private IntegerFieldEditor timeoutField;
+	private IntegerFieldEditor testNumberField;
+	private BooleanFieldEditor persistentField;
+	private ComboFieldEditor nodeJSInstallField;
+	private Label nodePathTitle;
 	private FileComboFieldEditor nativeNodePath;
 	private Text nodePath;
 
@@ -53,26 +66,64 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 
 	@Override
 	protected void createFieldEditors() {
+		boolean isRemote = getPreferenceStore().getBoolean(
+				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		createRemoteAccessContent(getFieldEditorParent(), isRemote);
+		createSeparator(getFieldEditorParent());
+		createDirectAccessContent(getFieldEditorParent(), !isRemote);
+		updateEnabled(isRemote);
+	}
 
+	private void createRemoteAccessContent(Composite parent, boolean isRemote) {
+		remoteAccessButton = addRadioButton(
+				parent,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSRemoteAccess,
+				isRemote);
+		remoteAccessButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateEnabled(true);
+			}
+		});
+		// Remote port field
+		remotePortField = new IntegerFieldEditor(
+				TernNodejsCoreConstants.NODEJS_REMOTE_PORT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSRemotePort,
+				parent);
+		addField(remotePortField);
+	}
+
+	private void createDirectAccessContent(final Composite parent,
+			boolean isDirect) {
+		directAccessButton = addRadioButton(
+				parent,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSDirectAccess,
+				isDirect);
+		directAccessButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updateEnabled(false);
+			}
+		});
 		// Start timeout field
-		IntegerFieldEditor timeoutField = new IntegerFieldEditor(
+		timeoutField = new IntegerFieldEditor(
 				TernNodejsCoreConstants.NODEJS_TIMEOUT,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTimeout,
-				getFieldEditorParent());
+				parent);
 		addField(timeoutField);
 
 		// Start timeout field
-		IntegerFieldEditor testNumberField = new IntegerFieldEditor(
+		testNumberField = new IntegerFieldEditor(
 				TernNodejsCoreConstants.NODEJS_TEST_NUMBER,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTestNumber,
-				getFieldEditorParent());
+				parent);
 		addField(testNumberField);
 
 		// Persistent (not auto-shutdown)
-		BooleanFieldEditor persistentField = new BooleanFieldEditor(
+		persistentField = new BooleanFieldEditor(
 				TernNodejsCoreConstants.NODEJS_PERSISTENT,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPersistent,
-				getFieldEditorParent());
+				parent);
 		addField(persistentField);
 
 		// Tern Server type combo
@@ -87,10 +138,10 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			data[i + 1][1] = installs[i].getId();
 		}
 
-		ComboFieldEditor nodeJSInstallField = new ComboFieldEditor(
+		nodeJSInstallField = new ComboFieldEditor(
 				TernNodejsCoreConstants.NODEJS_INSTALL,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall,
-				data, getFieldEditorParent()) {
+				data, parent) {
 			@Override
 			protected void fireValueChanged(String property, Object oldValue,
 					Object newValue) {
@@ -98,13 +149,13 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 						.getNodejsInstallManager().findNodejsInstall(
 								newValue.toString());
 				if (install == null || install.isNative()) {
-					nativeNodePath.setEnabled(true, getFieldEditorParent());
+					nativeNodePath.setEnabled(true, parent);
 					String defaultPath = IDENodejsProcessHelper.getNodejsPath();
 					nativeNodePath.setStringValue(defaultPath);
 					nodePath.setText(defaultPath);
 
 				} else {
-					nativeNodePath.setEnabled(false, getFieldEditorParent());
+					nativeNodePath.setEnabled(false, parent);
 					nodePath.setText(install.getPath().getAbsolutePath());
 				}
 				super.fireValueChanged(property, oldValue, newValue);
@@ -117,7 +168,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		nativeNodePath = new FileComboFieldEditor(
 				TernNodejsCoreConstants.NODEJS_PATH,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nativeNodeJSPath,
-				defaultPaths, getFieldEditorParent()) {
+				defaultPaths, parent) {
 			@Override
 			protected void fireValueChanged(String property, Object oldValue,
 					Object newValue) {
@@ -128,18 +179,52 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		addField(nativeNodePath);
 
 		// Node path label
-		Label nodePathTitle = new Label(getFieldEditorParent(), SWT.NONE);
+		nodePathTitle = new Label(parent, SWT.NONE);
 		nodePathTitle
 				.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPath);
 		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		nodePathTitle.setLayoutData(gridData);
 
-		nodePath = new Text(getFieldEditorParent(), SWT.WRAP | SWT.READ_ONLY);
+		nodePath = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
 		nodePath.setText("");
 		gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 2;
 		gridData.widthHint = 200;
 		nodePath.setLayoutData(gridData);
+	}
+
+	public void createSeparator(Composite parent) {
+		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
+		gd.horizontalSpan = 4;
+		separator.setLayoutData(gd);
+	}
+
+	private Button addRadioButton(Composite parent, String label,
+			boolean selected) {
+		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+		gd.horizontalSpan = 4;
+
+		Button button = new Button(parent, SWT.RADIO);
+		button.setText(label);
+
+		button.setLayoutData(gd);
+		button.setSelection(selected);
+		// button.setSelection(value.equals(getPreferenceStore().getString(key)));
+
+		return button;
+	}
+
+	private void updateEnabled(boolean isRemote) {
+		Composite parent = getFieldEditorParent();
+		remotePortField.setEnabled(isRemote, parent);
+		timeoutField.setEnabled(!isRemote, parent);
+		testNumberField.setEnabled(!isRemote, parent);
+		persistentField.setEnabled(!isRemote, parent);
+		nodeJSInstallField.setEnabled(!isRemote, parent);
+		nodePathTitle.setEnabled(!isRemote);
+		nativeNodePath.setEnabled(!isRemote, parent);
+		nodePath.setEnabled(!isRemote);
 	}
 
 	@Override
@@ -164,6 +249,9 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	public boolean performOk() {
 		boolean result = super.performOk();
 		if (result) {
+			IPreferenceStore store = getPreferenceStore();
+			store.setValue(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS,
+					remoteAccessButton.getSelection());
 			TernCorePlugin.getTernServerTypeManager().refresh();
 		}
 		return result;
@@ -173,7 +261,11 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	protected void performDefaults() {
 		super.performDefaults();
 		updateNodePath(true);
-
+		boolean isRemote = getPreferenceStore().getDefaultBoolean(
+				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		remoteAccessButton.setSelection(isRemote);
+		directAccessButton.setSelection(!isRemote);
+		updateEnabled(isRemote);
 	}
 
 	public void updateNodePath(boolean defaultValue) {

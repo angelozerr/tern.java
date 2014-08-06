@@ -114,10 +114,11 @@ public class TernNodejsCorePreferencesSupport {
 	}
 
 	/**
-	 * return false if the server will shut itself down after five minutes of
+	 * Return false if the server will shut itself down after five minutes of
 	 * inactivity and true otherwise.
 	 * 
-	 * @return
+	 * @return false if the server will shut itself down after five minutes of
+	 *         inactivity and true otherwise.
 	 */
 	public boolean isNodejsPersistent() {
 		String persistent = preferencesSupport
@@ -126,6 +127,38 @@ public class TernNodejsCorePreferencesSupport {
 			return Boolean.parseBoolean(persistent);
 		} catch (Throwable e) {
 			return NodejsTernHelper.DEFAULT_PERSISTENT;
+		}
+	}
+
+	/**
+	 * Returns true if node.js server is a remote node.js server (don't start an
+	 * internal node.js process) and false otherwise.
+	 * 
+	 * @return true if node.js server is a remote node.js server (don't start an
+	 *         internal node.js process) and false otherwise.
+	 */
+	public boolean isNodejsRemoteAccess() {
+		String persistent = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		try {
+			return Boolean.parseBoolean(persistent);
+		} catch (Throwable e) {
+			return NodejsTernHelper.DEFAULT_REMOTE_ACCESS;
+		}
+	}
+
+	/**
+	 * Returns the node.js port of the remote node.js server.
+	 * 
+	 * @return the node.js port of the remote node.js server.
+	 */
+	public int getNodejsRemotePort() {
+		String timeout = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_REMOTE_PORT);
+		try {
+			return Integer.parseInt(timeout);
+		} catch (Throwable e) {
+			return NodejsTernHelper.DEFAULT_REMOTE_PORT;
 		}
 	}
 

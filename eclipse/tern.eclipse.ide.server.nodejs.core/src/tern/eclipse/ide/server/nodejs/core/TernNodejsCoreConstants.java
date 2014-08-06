@@ -11,7 +11,7 @@
 package tern.eclipse.ide.server.nodejs.core;
 
 /**
- * tern preferences core constants.
+ * Node.js tern preferences core constants.
  * 
  */
 public class TernNodejsCoreConstants {
@@ -25,5 +25,9 @@ public class TernNodejsCoreConstants {
 	public static final String NODEJS_PATH = "nodeJSPath"; //$NON-NLS-1$
 
 	public static final String NODEJS_PERSISTENT = "nodeJSPersistent"; //$NON-NLS-1$
+
+	public static final String NODEJS_REMOTE_ACCESS = "nodejsRemoteAccess"; //$NON-NLS-1$
+
+	public static final String NODEJS_REMOTE_PORT = "nodejsRemotePort"; //$NON-NLS-1$
 
 }

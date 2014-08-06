@@ -26,12 +26,28 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 	@Override
 	public ITernServer create(TernProject project) throws Exception {
 		File installPath = getInstallPath();
-		NodejsTernServer server = new NodejsTernServer(project, installPath);
+		NodejsTernServer server = isRemoteAccess() ? new NodejsTernServer(
+				project, getRemotePort()) : new NodejsTernServer(project,
+				installPath);
 		server.setTimeout(getTimeout());
 		server.setTestNumber(getTestNumber());
 		server.setPersistent(isPersistent());
 		return server;
 	}
+
+	// -------------------- Properties for remote access
+
+	private boolean isRemoteAccess() {
+		return TernNodejsCorePreferencesSupport.getInstance()
+				.isNodejsRemoteAccess();
+	}
+
+	private int getRemotePort() {
+		return TernNodejsCorePreferencesSupport.getInstance()
+				.getNodejsRemotePort();
+	}
+
+	// -------------------- Properties for direct access
 
 	private File getInstallPath() {
 		return TernNodejsCorePreferencesSupport.getInstance().getInstallPath();
@@ -46,6 +62,7 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 		return TernNodejsCorePreferencesSupport.getInstance()
 				.getNodejsTestNumber();
 	}
+
 	private boolean isPersistent() {
 		return TernNodejsCorePreferencesSupport.getInstance()
 				.isNodejsPersistent();
