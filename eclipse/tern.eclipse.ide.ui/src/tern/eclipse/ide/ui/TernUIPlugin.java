@@ -49,7 +49,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
@@ -60,7 +60,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 		/*
 		 * Display.getDefault().asyncExec(new Runnable() {
-		 * 
+		 *
 		 * public void run() { try { console = new TernConsole(); /* if
 		 * (prefStoreHelper.isOpenIvyConsoleOnStartup()) {
 		 * IvyConsoleFactory.showConsole(); }
@@ -74,20 +74,20 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
+		getTernDescriptorManager().destroy();
 		plugin = null;
 		super.stop(context);
-		getTernDescriptorManager().destroy();
 	}
 
 	/**
 	 * Returns the shared instance
-	 * 
+	 *
 	 * @return the shared instance
 	 */
 	public static TernUIPlugin getDefault() {
