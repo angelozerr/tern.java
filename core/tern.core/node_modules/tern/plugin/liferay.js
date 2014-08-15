@@ -13,436 +13,717 @@
       defs: defs
     };
   });
-  
-  var defs = {
-      "!name": "liferay",
-      "!define": {
-    	 Notices: {
-    	  content: "string",
-          node: "string",
-          toggleText: "bool"
-        }
-      },
-      Liferay: {
-    	  "!doc": "TODO",
-    	  "!url": "TODO",
-    	  Browser: {
-        	  "!doc": "TODO",
-        	  "!url": "TODO",
-    		  acceptsGzip: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getMajorVersion: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getRevision: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getVersion: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isAir: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isChrome: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isFirefox: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isGecko: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isIe: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isIphone: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isLinux: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isMac: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isMobile: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isMozilla: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isOpera: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isRtf: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isSafari: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isSun: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isWap: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isWapXhtml: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isWebKit: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isWindows: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isWml: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    	  },
-    	  Data: {
-    		  "!doc": "TODO",
-        	  "!url": "TODO",
-    		  NAV_SELECTOR: "string",
-    		  isCustomizationView: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  notices: {
-    			  "!type": "[+Notices]",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  }    		  
-    	  },
-    	  ThemeDisplay: {
-    		  "!doc": "TODO",
-        	  "!url": "TODO",
-        	  getLayoutId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getLayoutURL: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getParentLayoutId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isPrivateLayout: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isVirtualLayout: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getBCP47LanguageId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getCDNBaseURL: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getCDNDynamicResourcesHost: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getCDNHost: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getCompanyId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getCompanyGroupId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getDefaultLanguageId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getDoAsUserIdEncoded: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getLanguageId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getParentGroupId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPathContext: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPathImage: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPathJavaScript: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPathMain: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPathThemeImages: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPathThemeRoot: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPlid: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPortalURL: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getPortletSetupShowBordersDefault: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getScopeGroupId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getScopeGroupIdOrLiveGroupId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getSessionId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getSiteGroupId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getURLControlPanel: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getURLHome: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getUserId: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getUserName: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isAddSessionIdToURL: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isFreeformLayout: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isImpersonated: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isSignedIn: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isStateExclusive: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isStateMaximized: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  isStatePopUp: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  PropsValues: {
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO",
-		    	  NTLM_AUTH_ENABLED: {
-	    			  "!type": "bool",
-			    	  "!doc": "TODO",
-			    	  "!url": "TODO"
-		    	  }
-    		  }
-    	  },
-    	  AUI: {
-    		  "!doc": "TODO",
-	    	  "!url": "TODO",
-	    	  getAvailableLangPath: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getCombine: {
-    			  "!type": "fn() -> bool",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getComboPath: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getFilter: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getJavaScriptRootPath: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    		  getLangPath: {
-    			  "!type": "fn() -> string",
-		    	  "!doc": "TODO",
-		    	  "!url": "TODO"
-    		  },
-    	  },
-          authToken: {
-    		  "!type": "string",
-        	  "!doc": "TODO",
-        	  "!url": "TODO"
-    	  },
-    	  currentURL: {
-    		  "!type": "string",
-        	  "!doc": "TODO",
-        	  "!url": "TODO"
-    	  },
-    	  currentURLEncoded: {
-    		  "!type": "string",
-        	  "!doc": "TODO",
-        	  "!url": "TODO"
-    	  },
-    	  Portlet: {
-    		  "!doc": "TODO",
-        	  "!url": "TODO",
-        	  list: {
-        	    "!type": "[string]",
-        	    "!doc": "TODO",
-            	    "!url": "TODO"
-        	  },
-        	  isStatic: {
-                    "!type": "fn() -> bool",
-                    "!doc": "TODO",
-                    "!url": "TODO"
-                  },
-                  refreshLayout: {
-                    "!type": "fn(portletBoundary: ?)",
-                    "!doc": "TODO",
-                    "!url": "TODO"
-                  },
-    	  },
-    	  _editControlsState: {
-    	      "!type": "string",
-    	      "!doc": "TODO",
-              "!url": "TODO",
-        }
-      },
-	  themeDisplay : "Liferay.ThemeDisplay"
-  }
 
+  var defs = {
+    "!name": "liferay",
+    "!define": {
+      Notices: {
+        content: "string",
+        node: "string",
+        toggleText: "bool"
+      }
+    },
+    Liferay: {
+      "!doc": "TODO",
+      "!url": "TODO",
+      AUI: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        getAvailableLangPath: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getCombine: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getComboPath: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getFilter: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getJavaScriptRootPath: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getLangPath: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+      },
+      Address: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        getCountries: {
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getRegions: {
+          "!doc": "TODO",
+          "!url": "TODO"
+        }
+      },
+      BREAKPOINTS: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        PHONE: {
+          "!type": "fn() -> number",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        TABLET: {
+          "!type": "fn() -> number",
+          "!doc": "TODO",
+          "!url": "TODO"
+        }
+      },
+      Browser: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        acceptsGzip: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getMajorVersion: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getRevision: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getVersion: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isAir: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isChrome: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isFirefox: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isGecko: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isIe: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isIphone: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isLinux: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isMac: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isMobile: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isMozilla: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isOpera: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isRtf: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isSafari: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isSun: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isWap: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isWapXhtml: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isWebKit: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isWindows: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isWml: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+      },
+      Data: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        NAV_SELECTOR: "string",
+        isCustomizationView: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        notices: {
+          "!type": "[+Notices]",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        NAV_LIST_SELECTOR: "string",
+        layoutConfig: "object"
+      },
+      Dockbar: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        init: "fn()",
+        getPanelNode: "fn()",
+        togglePreviewPanel: "fn()",
+        toggleAddPanel: "fn()",
+        toggleEditLayoutPanel: "fn()",
+        ADD_PANEL: "string",
+        PREVIEW_PANEL: "string"
+      },
+      Events: {
+        on: "fn()",
+        trigger: "fn()",
+        unbind: "fn()"
+      },
+      Language: {
+        get: "fn()",
+        available: "object",
+        direction: "object"
+      },
+      Layout: {
+        EMPTY_COLUMNS: "object",
+        INITIALIZED: "boolean",
+        OVER_NESTED_PORTLET: "boolean",
+        PROXY_NODE: "object",
+        PROXY_NODE_ITEM: "object",
+        PORTLET_TOPPER: "object",
+        options: "object",
+        bindDragDropListeners: "fn()",
+        closeNestedPortlets: "fn()",
+        getActiveDropContainer: "fn()",
+        getActiveDropNodes: "fn()",
+        findIndex: "fn()",
+        findReferencePortlet: "fn()",
+        fire: "fn()",
+        getLayoutHandler: "fn()",
+        getPortlets: "fn()",
+        hasMoved: "fn()",
+        hasPortlets: "fn()",
+        on: "fn()",
+        refresh: "fn()",
+        saveIndex: "fn()",
+        syncDraggableClassUI: "fn()",
+        syncEmptyColumnClassUI: "fn()",
+        updateCurrentPortletInfo: "fn()",
+        updateEmptyColumnsInfo: "fn()",
+        updatePortletDropZones: "fn()",
+        init: "fn()",
+        saveLayout: "fn()",
+        updateOverNestedPortletInfo: "fn()"
+      },
+      LayoutExporter: {
+        icons: "object",
+        all: "fn()",
+        details: "fn()",
+        proposeLayout: "fn()",
+        publishToLive: "fn()",
+        selected: "fn()"
+      },
+      Menu: "fn()",
+      Navigation: "fn()",
+      NavigationInteraction: "fn()",
+      Notice: "fn()",
+      Notifications: "object",
+      viewNotification: {
+        _openWindow: "fn()",
+        _redirect: "fn()",
+      },
+      Poller: {
+        init: "fn()",
+        url: "string",
+        addListener: "fn()",
+        cancelCustomDelay: "fn()",
+        getDelay: "fn()",
+        getReceiveUrl: "fn()",
+        getSendUrl: "fn()",
+        isSupportsComet: "fn() -> bool",
+        processResponse: "fn()",
+        removeListener: "fn()",
+        resume: "fn()",
+        setCustomDelay: "fn()",
+        setDelay: "fn()",
+        setEncryptedUserId: "fn()",
+        setSupportsComet: "fn()",
+        setUrl: "fn()",
+        submitRequest: "fn()",
+        suspend: "fn()"
+      },
+      Popup: "fn()",
+      Portal: {
+        Tabs: "object",
+        ToolTip: "object",
+      },
+      Portlet: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        list: {
+          "!type": "[string]",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isStatic: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        refreshLayout: {
+          "!type": "fn(portletBoundary: ?)",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        add: "fn()",
+        addHTML: "fn()",
+        close: "fn()",
+        minimize: "fn()",
+        onLoad: "fn()",
+        refresh: "fn()",
+        registerStatic: "fn()",
+        openWindow: "fn()",
+        loadCSSEditor: "fn()",
+        ready: "fn()"
+      },
+      PortletURL: "fn()",
+      PropsValues: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        NTLM_AUTH_ENABLED: {
+          "!type": "bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        }
+      },
+      Service: "fn()",
+      Session: {
+        name: "string",
+        display: "object",
+        constructor: "fn()",
+        initializer: "fn()",
+        registerInterval: "fn()",
+        unregisterInterval: "fn()",
+        expire: "fn()",
+        extend: "fn()",
+        warn: "fn()",
+        init: "fn()",
+        destroy: "fn()",
+        addAttr: "fn()",
+        attrAdded: "fn()",
+        get: "fn()",
+        set: "fn()",
+        setAttrs: "fn()",
+        getAttrs: "fn()",
+        addAttrs: "fn()",
+        modifyAttr: "fn()",
+        removeAttr: "fn()",
+        reset: "fn()",
+        once: "fn()",
+        onceAfter: "fn()",
+        parseType: "fn()",
+        on: "fn()",
+        subscribe: "fn()",
+        detach: "fn()",
+        unsubscribe: "fn()",
+        detachAll: "fn()",
+        unsubscribeAll: "fn()",
+        publish: "fn()",
+        fire: "fn()",
+        getSibling: "fn()",
+        getEvent: "fn()",
+        after: "fn()",
+        before: "fn()",
+        addTarget: "fn()",
+        getTargets: "fn()",
+        removeTarget: "fn()",
+        bubble: "fn()",
+        plug: "fn()",
+        unplug: "fn()",
+        hasPlugin: "fn() -> bool"
+      },
+      ThemeDisplay: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        getLayoutId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getLayoutURL: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getParentLayoutId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isPrivateLayout: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isVirtualLayout: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getBCP47LanguageId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getCDNBaseURL: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getCDNDynamicResourcesHost: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getCDNHost: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getCompanyId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getCompanyGroupId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getDefaultLanguageId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getDoAsUserIdEncoded: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getLanguageId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getParentGroupId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPathContext: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPathImage: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPathJavaScript: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPathMain: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPathThemeImages: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPathThemeRoot: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPlid: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPortalURL: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getPortletSetupShowBordersDefault: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getScopeGroupId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getScopeGroupIdOrLiveGroupId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getSessionId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getSiteGroupId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getURLControlPanel: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getURLHome: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getUserId: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        getUserName: {
+          "!type": "fn() -> string",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isAddSessionIdToURL: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isFreeformLayout: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isImpersonated: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isSignedIn: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isStateExclusive: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isStateMaximized: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        },
+        isStatePopUp: {
+          "!type": "fn() -> bool",
+          "!doc": "TODO",
+          "!url": "TODO"
+        }
+      },
+      Util: {
+        "!doc": "TODO",
+        "!url": "TODO",
+        submitCountdown: "number",
+        actsAsAspect: "fn()",
+        addInputCancel: "fn()",
+        addInputFocus: "fn()",
+        addInputType: "fn()",
+        addParams: "fn()",
+        camelize: "fn()",
+        checkTab: "fn()",
+        clamp: "fn()",
+        disableEsc: "fn()",
+        disableFormButtons: "fn()",
+        enableFormButtons: "fn()",
+        endsWith: "fn()",
+        escapeCDATA: "fn()",
+        escapeHTML: "fn()",
+        getAttributes: "fn()",
+        getColumnId: "fn()",
+        getOpener: "fn()",
+        getPortletId: "fn()",
+        getPortletNamespace: "fn()",
+        getTop: "fn()",
+        getWindow: "fn()",
+        getWindowName: "fn()",
+        getWindowWidth: "fn()",
+        getURLWithSessionId: "fn()",
+        isArray: "fn() -> bool",
+        isEditorPresent: "fn() -> bool",
+        isPhone: "fn() -> bool",
+        isTablet: "fn() -> bool",
+        ns: "fn()",
+        openInDialog: "fn()",
+        openWindow: "fn()",
+        processTab: "fn()",
+        randomInt: "fn()",
+        randomMinMax: "fn()",
+        selectAndCopy: "fn()",
+        setBox: "fn()",
+        setCursorPosition: "fn()",
+        setSelectionRange: "fn()",
+        showCapsLock: "fn()",
+        sortByAscending: "fn()",
+        startsWith: "fn()",
+        textareaTabs: "fn()",
+        toCharCode: "fn()",
+        toNumber: "fn()",
+        uncamelize: "fn()",
+        unescapeHTML: "fn()"
+      },
+      Workflow: {
+        ACTION_PUBLISH: "number",
+        ACTION_SAVE_DRAFT: "number",
+        STATUS_ANY: "number",
+        STATUS_APPROVED: "number",
+        STATUS_DENIED: "number",
+        STATUS_DRAFT: "number",
+        STATUS_EXPIRED: "number",
+        STATUS_PENDING: "number"
+      },
+      addAttr: "fn()",
+      addAttrs: "fn()",
+      addTarget: "fn()",
+      after: "fn()",
+      attrAdded: "fn()",
+      authToken: {
+        "!type": "string",
+        "!doc": "TODO",
+        "!url": "TODO"
+      },
+      before: "fn()",
+      bind: "fn()",
+      bubble: "fn()",
+      component: "fn()",
+      currentURL: {
+        "!type": "string",
+        "!doc": "TODO",
+        "!url": "TODO"
+      },
+      currentURLEncoded: {
+        "!type": "string",
+        "!doc": "TODO",
+        "!url": "TODO"
+      },
+      delegateClick: "fn()",
+      detach: "fn()",
+      detachAll: "fn()",
+      fire: "fn()",
+      get: "fn()",
+      getAttrs: "fn()",
+      getEvent: "fn()",
+      getSibling: "fn()",
+      getTargets: "fn()",
+      modifyAttr: "fn()",
+      namespace: "fn()",
+      on: "fn()",
+      once: "fn()",
+      onceAfter: "fn()",
+      parseType: "fn()",
+      provide: "fn()",
+      publish: "fn()",
+      removeAttr: "fn()",
+      removeTarget: "fn()",
+      reset: "fn()",
+      set: "fn()",
+      setAttrs: "fn()",
+      subscribe: "fn()",
+      trigger: "fn()",
+      unbind: "fn()",
+      unsubscribe: "fn()",
+      unsubscribeAll: "fn()",
+      zIndex: {
+        DOCK: "number",
+        DOCK_PARENT: "number",
+        ALERT: "number",
+        DROP_AREA: "number",
+        DROP_POSITION: "number",
+        DRAG_ITEM: "number",
+        OVERLAY: "number",
+        WINDOW: "number",
+        MENU: "number",
+        TOOLTIP: "number"
+      }
+    }
+  }
 });
