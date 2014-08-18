@@ -1,0 +1,16 @@
+{
+  "name": "tern-liferay",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "liferay.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding JavaScript Liferay API support.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-liferay.git"
+  },
+  "keywords": [
+    "tern",
+    "liferay"
+  ]
+}
