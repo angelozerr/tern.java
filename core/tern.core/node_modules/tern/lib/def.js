@@ -81,10 +81,6 @@
         return this.parseFnType(name, top);
       } else if (this.eat("[")) {
         var inner = this.parseType();
-        if (inner == infer.ANull && this.spec == "[b.<i>]") {
-          var b = parsePath("b");
-          console.log(b.props["<i>"].types.length);
-        }
         this.eat("]") || this.error();
         if (top && this.base) {
           infer.Arr.call(this.base, inner);
@@ -225,12 +221,12 @@
 
   var currentTopScope;
 
-  var parsePath = exports.parsePath = function(path) {
+  var parsePath = exports.parsePath = function(path, scope) {
     var cx = infer.cx(), cached = cx.paths[path], origPath = path;
     if (cached != null) return cached;
     cx.paths[path] = infer.ANull;
 
-    var base = currentTopScope || cx.topScope;
+    var base = scope || currentTopScope || cx.topScope;
 
     if (cx.localDefs) for (var name in cx.localDefs) {
       if (path.indexOf(name) == 0) {
@@ -349,6 +345,7 @@
         if (inner["!span"]) known.span = inner["!span"];
       }
     }
+    return base;
   }
 
   function copyInfo(spec, type) {
@@ -400,6 +397,23 @@
       doLoadEnvironment(data, scope);
     } finally {
       currentTopScope = oldScope;
+    }
+  };
+
+  exports.parse = function(data, origin, path) {
+    var cx = infer.cx();
+    if (origin) {
+      cx.origin = origin;
+      cx.localDefs = cx.definitions[origin];
+    }
+
+    try {
+      if (typeof data == "string")
+        return parseType(data, path);
+      else
+        return passTwo(passOne(null, data, path), data, path);
+    } finally {
+      if (origin) cx.origin = cx.localDefs = null;
     }
   };
 

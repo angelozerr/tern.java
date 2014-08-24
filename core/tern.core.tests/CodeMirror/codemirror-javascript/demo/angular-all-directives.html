@@ -72,37 +72,55 @@ CodeMirror.tern.addDef = function(def) {
 <input type="checkbox" id="useAngularModule" value="use angular.module?" />
 <input type="button" onclick="completions()" value="Completions"/>
 <input type="button" onclick="definition()" value="Definition"/>
-<form><textarea id="code" name="code">
-"use strict";
-angular.module('demoModule').directive('phoneRowDirective', function() {
-  return {
-    restrict : 'A',
-    scope : {
-      phone : '=',
-      colors : "=",
-      linkPrefix : '@'
-    },
-    templateUrl : 'directives/phoneRowDirective.html',
-    replace : true,
-    controller : function($scope, $element) {
-      $scope.currentColor = $scope.colors[0];
-      $scope.changeColor = function() {
-        console.log("changeColor");
-        for (var i = 0; i < $scope.colors.length; i++) {
-          var color = $scope.colors[i];
-          console.log("\tcolor=" + color);
-          if (color == $scope.currentColor) {
-            console.log("\tcolor==current");
-            i++;
-            $scope.currentColor = $scope.colors[i % $scope.colors.length]; // next color
-            break;
-          }
-        }
-      };
+<form><textarea id="code" name="code">(function() {
+	var app = angular.module('store',[ ]);
 
-    }
-  };
-});
+	app.directive('productTitle',function(){
+		return {
+			restrict: 'E',
+			templateUrl: 'product-title.html'
+		};
+	});
+
+	app.controller('StoreController', function($scope){
+		$scope.model = {}
+		$scope.model.product = gem;
+		$scope.model.shoes =
+		[
+		 	{
+		 		name: 'Nike Free',
+		 		price: 99
+		 	},
+		 	{
+		 		name: 'Saucony Kinvara',
+		 		price: 99
+		 	}
+		];
+	});
+
+	app.controller('GreetingController', ['$scope', function($scope) {
+		$scope.greeting = 'Hola!';
+	}]);
+
+	app.controller('TabController', ['$scope', function($scope) {
+		console.log('TabController');
+		$scope.tab = 1;
+		$scope.setTab = function(tab) {
+			console.log('setTab ' + tab);
+			$scope.tab = tab;
+		};
+		$scope.isSet = function(tab) {
+			console.log('isSet ' + tab);
+			return $scope.tab === tab;
+		};
+	}]);
+
+	var gem = {
+			name: 'Dodecahedron',
+			price: 2.95,
+			description: '. . .',
+		}
+})();
 </textarea></p>
 
 <p>Demonstrates integration of <a href="http://ternjs.net/">Tern</a>

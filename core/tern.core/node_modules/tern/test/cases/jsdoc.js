@@ -17,6 +17,11 @@ c; //:: {x: number, y: [string]}
 function foo(a, b) { return hohoho(); }
 foo; //: fn(a: number, b: string) -> [number]
 
+/** @this Date */
+var abc = function() {
+  this; //: Date
+};
+
 /**
  * This is also a function
  * @returns {string}
@@ -53,3 +58,19 @@ closureMap[1]; //: bool
 function takesOpt(a) { console.log(a || 20); }
 
 takesOpt; //: fn(a?: number)
+
+/** @typedef {Array.<boolean>} Bitset */
+
+someNonDeclarationStatement();
+
+/** @type {Bitset} */
+var myBitset = getABitset();
+
+myBitset; //: [bool]
+
+function NonAscïį() { this.length = "hi"; }
+
+/** @type {NonAscïį} */
+var inst;
+
+inst.length; //: string
