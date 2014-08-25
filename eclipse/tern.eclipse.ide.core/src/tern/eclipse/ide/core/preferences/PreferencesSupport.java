@@ -53,16 +53,27 @@ public class PreferencesSupport {
 	public String getProjectSpecificPreferencesValue(String key, String def,
 			IProject project) {
 		assert project != null;
+		IEclipsePreferences node = getEclipsePreferences(project);
+		if (node != null) {
+			return node.get(key, def);
+		}
+		return null;
+	}
+
+	/**
+	 * Return the {@link IEclipsePreferences} from the given project.
+	 * 
+	 * @param project
+	 * @return the {@link IEclipsePreferences} from the given project.
+	 */
+	public IEclipsePreferences getEclipsePreferences(IProject project) {
 		ProjectScope scope = (ProjectScope) projectToScope.get(project);
 		if (scope == null) {
 			scope = new ProjectScope(project);
 			projectToScope.put(project, scope);
 		}
 		IEclipsePreferences node = scope.getNode(nodeQualifier);
-		if (node != null) {
-			return node.get(key, def);
-		}
-		return null;
+		return node;
 	}
 
 	/**
@@ -134,18 +145,13 @@ public class PreferencesSupport {
 		if (!project.exists()) {
 			return false;
 		}
-		ProjectScope scope = (ProjectScope) projectToScope.get(project);
-		if (scope == null) {
-			scope = new ProjectScope(project);
-			projectToScope.put(project, scope);
-		}
-		IEclipsePreferences node = scope.getNode(nodeQualifier);
+		IEclipsePreferences node = getEclipsePreferences(project);
 		if (node != null) {
 			node.put(key, value);
 			try {
 				node.flush();
 			} catch (Exception e) {
-				//Logger.logException(e);
+				// Logger.logException(e);
 			}
 			return true;
 		}
