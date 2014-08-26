@@ -17,3 +17,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources
 Bundle-Activator: tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin
 Import-Package: com.eclipsesource.json
+Export-Package: tern.eclipse.ide.server.nodejs.internal.ui;x-internal:=true,
+ tern.eclipse.ide.server.nodejs.internal.ui.preferences;x-internal:=true

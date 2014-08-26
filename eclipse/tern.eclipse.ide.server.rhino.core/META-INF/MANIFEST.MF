@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.core;bundle-version="0.2.0",
  tern.server.rhino;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy
+Export-Package: tern.eclipse.ide.server.rhino.internal.core;x-internal:=true

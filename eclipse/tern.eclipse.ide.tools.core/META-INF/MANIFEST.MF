@@ -12,6 +12,7 @@ Export-Package: tern.eclipse.ide.tools.core.generator,
  tern.eclipse.ide.tools.core.webbrowser,
  tern.eclipse.ide.tools.core.webbrowser.ace,
  tern.eclipse.ide.tools.core.webbrowser.codemirror,
- tern.eclipse.ide.tools.core.webbrowser.orion
+ tern.eclipse.ide.tools.core.webbrowser.orion,
+ tern.eclipse.ide.tools.internal.core;x-internal:=true
 Bundle-Activator: tern.eclipse.ide.tools.internal.core.TernToolsCorePlugin
 Bundle-ActivationPolicy: lazy
