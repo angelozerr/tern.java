@@ -24,3 +24,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.jsdt.internal.JSDTTernPlugin
 Import-Package: com.eclipsesource.json
+Export-Package: tern.eclipse.ide.jsdt.internal;x-internal:=true,
+ tern.eclipse.ide.jsdt.internal.contentassist;x-internal:=true,
+ tern.eclipse.ide.jsdt.internal.hover;x-internal:=true,
+ tern.eclipse.ide.jsdt.internal.utils;x-internal:=true

@@ -9,4 +9,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.eclipsesource.json,
  org.mozilla.javascript;bundle-version="1.7.4"
 Require-Bundle: tern.core;bundle-version="0.2.0"
-Export-Package: tern.server.rhino,tern.server.rhino.loader
+Export-Package: tern.server.rhino,
+ tern.server.rhino.internal.scripts;x-internal:=true,
+ tern.server.rhino.loader

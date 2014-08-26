@@ -16,7 +16,11 @@ Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.dom,
  tern.eclipse.ide.core.preferences,
  tern.eclipse.ide.core.scriptpath,
- tern.eclipse.ide.core.utils
+ tern.eclipse.ide.core.utils,
+ tern.eclipse.ide.internal.core;x-internal:=true,
+ tern.eclipse.ide.internal.core.builder;x-internal:=true,
+ tern.eclipse.ide.internal.core.preferences;x-internal:=true,
+ tern.eclipse.ide.internal.core.scriptpath;x-internal:=true
 Bundle-ActivationPolicy: lazy
 Import-Package: com.eclipsesource.json
 Bundle-Activator: tern.eclipse.ide.core.TernCorePlugin
