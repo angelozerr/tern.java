@@ -110,7 +110,7 @@
 	  <page
             name="%TernModulesPropertyPage.name"
             category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.properties.TernModulesPropertyPage"
+            class="tern.eclipse.ide.ui.properties.TernModulesPropertyPage"
             id="tern.eclipse.ide.internal.ui.properties.TernModulesPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">

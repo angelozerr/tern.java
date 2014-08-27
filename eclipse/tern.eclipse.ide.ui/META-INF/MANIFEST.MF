@@ -28,5 +28,6 @@ Export-Package: tern.eclipse.ide.ui,
  tern.eclipse.ide.ui.descriptors,
  tern.eclipse.ide.ui.hover,
  tern.eclipse.ide.ui.hyperlink,
+ tern.eclipse.ide.ui.properties,
  tern.eclipse.ide.ui.utils,
  tern.eclipse.ide.ui.viewers

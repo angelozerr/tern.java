@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.properties;
+package tern.eclipse.ide.ui.properties;
 
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -20,6 +20,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.internal.ui.properties.AbstractTernPropertyPage;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.controls.TernModulesBlock;
