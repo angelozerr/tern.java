@@ -100,7 +100,7 @@
       <page
             name="%TernMainPropertyPage.name"        
             class="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage">
+            id="tern.eclipse.ide.ui.properties.TernMainPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
@@ -109,9 +109,9 @@
       </page>    
 	  <page
             name="%TernModulesPropertyPage.name"
-            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
+            category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
             class="tern.eclipse.ide.ui.properties.TernModulesPropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernModulesPropertyPage">
+            id="tern.eclipse.ide.ui.properties.TernModulesPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
@@ -120,9 +120,9 @@
       </page>     
 	  <page
             name="%TernScriptPathsPropertyPage.name"
-            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
+            category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
             class="tern.eclipse.ide.internal.ui.properties.TernScriptPathsPropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernScriptPathsPropertyPage">
+            id="tern.eclipse.ide.ui.properties.TernScriptPathsPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
@@ -131,9 +131,9 @@
       </page>
 	  <page
             name="%TernConsolePropertyPage.name"
-            category="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"        
+            category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
             class="tern.eclipse.ide.internal.ui.properties.TernConsolePropertyPage"
-            id="tern.eclipse.ide.internal.ui.properties.TernConsolePropertyPage">
+            id="tern.eclipse.ide.ui.properties.TernConsolePropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
