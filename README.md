@@ -14,7 +14,7 @@ tern.java
  * an other idea is to use [javv8](https://code.google.com/p/jav8/) but it seems the project is dead and [I need win32 implementation](https://code.google.com/p/jav8/issues/detail?id=26).
  * one more idea is to explorer [Java 8 Nashorn JavaScript engine](https://blogs.oracle.com/nashorn/), possibly with [avatar.js](https://avatar-js.java.net/), see [#33](https://github.com/angelozerr/tern.java/issues/33)
  
-As  Tern is *very* CPU and memory intensive, the implementation with Rhino is very slow when javascript document is big. So it's better to use
+As  Tern is *very* CPU and memory intensive, the implementation with Rhino is very slow when JavaScript document is big. So it's better to use
 node.js or javv8.
 
 ## Features
@@ -23,7 +23,7 @@ Once that Tern Server is created with Java you can use it in any Java context (E
 Tern Server with Eclipse : 
 
  * contentassist which uses tern.java. If you start the SWT [TernEditor](https://github.com/angelozerr/tern.java/blob/master/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/rhino/RhinoTernEditor.java) demo, 
-you will see contentassist available for Javascript : 
+you will see contentassist available for JavaScript : 
 
 ![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
 
