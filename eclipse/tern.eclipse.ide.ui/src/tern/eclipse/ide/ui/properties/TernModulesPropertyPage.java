@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.ui.properties;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -59,7 +60,9 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		parent.setLayout(layout);
 
 		// create UI modules
-		modulesBlock = new TernModulesBlock(getResource().getProject(),
+		IResource resource = getResource();
+		modulesBlock = new TernModulesBlock(
+				resource != null ? resource.getProject() : null,
 				TernUIMessages.TernModulesPropertyPage_desc);
 		modulesBlock.createControl(parent);
 		Control control = modulesBlock.getControl();
