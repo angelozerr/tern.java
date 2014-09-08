@@ -91,7 +91,7 @@ Comment.prototype.getExpressionAval =
     function(typeManager, typeExpr, innerType) {
   switch (typeExpr.type) {
     case doctrine.Syntax.NameExpression:
-      return typeManager.getQualifiedType(typeExpr.name, innerType);
+      return typeManager.getInstanceType(typeExpr.name, innerType);
     case doctrine.Syntax.NullableType:
     case doctrine.Syntax.NonNullableType:
       // TODO: Expose nullability information #17.
