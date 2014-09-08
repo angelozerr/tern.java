@@ -4,7 +4,6 @@
    
    <feature id="tern-feature"><category name="Tern IDE"/></feature>
    <feature id="tern-jsdt-feature"><category name="Tern IDE"/></feature>
-   <feature id="tern-server-rhino-feature"><category name="Tern IDE"/></feature>
    <feature id="tern-server-nodejs-feature"><category name="Tern IDE"/></feature>
 
    <feature id="tern.eclipse.ide.tools.feature"><category name="Tern Tooling"/></feature>
