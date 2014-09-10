@@ -1,0 +1,58 @@
+#+OPTIONS: toc:nil
+
+* What's this?
+
+  This is a plugin of [[https://github.com/marijnh/tern][tern]] for completing Google Apps Script.  
+
+  
+* Install
+
+  #+BEGIN_SRC sh
+$ git clone https://github.com/aki2o/tern-gas.git
+$ cd tern-gas
+$ npm install -g
+  #+END_SRC
+
+
+* Configuration
+
+  A following config is put in =.tern-project= to enable this plugin.  
+
+  #+BEGIN_SRC js
+{
+    "plugins": {
+        "gas": {}
+    }
+}
+  #+END_SRC
+
+
+* Update definition
+
+  The definition of Google Apps Script is put as hard code in this plugin.  
+  Therefore, The update of Google Apps Script is not reflected into this plugin.  
+  
+  I'm going to make an effort to follow that, but it might not be done.  
+  In this case, you are able to update this plugin by using the script under =contrib= directory like a following steps.  
+
+  #+BEGIN_SRC sh
+$ git clone https://github.com/aki2o/tern-gas.git
+$ cd tern-gas
+$ npm install opts
+$ npm install request
+$ npm install jsdom
+$ npm install node.extend
+$ node contrib/make_plugin.js
+$ mv gas.new.js gas.js
+$ npm install -g
+  #+END_SRC
+  
+  - =make_plugin.js= ... A wrapper for =fetch_script_reference.js=, =build_reference.js=
+  - =fetch_script_reference.js= ... Fetch the reference of Google Apps Script from the site of Google and store that into =contrib/refs= directory
+  - =build_reference.js= ... Collect the reference in =contrib/refs= directory and convert that to the code for tern
+
+  For detail, run they having =--help= option.  
+
+
+  *Enjoy!!!*
+

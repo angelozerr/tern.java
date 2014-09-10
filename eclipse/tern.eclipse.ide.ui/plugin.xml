@@ -221,7 +221,11 @@
   	  <ternDescriptor
             id="gmaps"
             icon="/icons/full/obj16/gmaps.png" >
-      </ternDescriptor>       
+      </ternDescriptor>
+      <ternDescriptor
+            id="gas"
+            icon="/icons/full/obj16/gas.png" >
+      </ternDescriptor>             
   	  <ternDescriptor
             id="grunt"
             icon="/icons/full/obj16/grunt.png" >
