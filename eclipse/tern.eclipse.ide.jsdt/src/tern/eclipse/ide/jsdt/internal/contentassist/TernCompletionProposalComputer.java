@@ -78,7 +78,7 @@ public class TernCompletionProposalComputer implements
 
 						int startOffset = context.getInvocationOffset();
 						ternProject.request(query, scriptFile, document,
-								startOffset, new JSTernCompletionCollector(
+								startOffset, new JSDTTernCompletionCollector(
 										proposals, startOffset));
 						return proposals;
 

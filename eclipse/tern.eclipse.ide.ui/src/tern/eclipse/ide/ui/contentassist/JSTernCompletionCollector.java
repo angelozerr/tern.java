@@ -35,8 +35,8 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	@Override
 	public void addProposal(String name, String type, String doc, String url,
 			String origin, int pos, Object completion, ITernServer ternServer) {
-		JSTernCompletionProposal proposal = new JSTernCompletionProposal(name,
-				type, doc, url, origin, pos, startOffset);
+		JSTernCompletionProposal proposal = createProposal(name, type, doc,
+				url, origin, pos, startOffset);
 		proposals.add(proposal);
 
 		// expand functions if the functiosn contains several "optionnal"
@@ -47,10 +47,28 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 		String[] functions = proposal.expand();
 		if (functions != null) {
 			for (int i = 0; i < functions.length; i++) {
-				proposals.add(new JSTernCompletionProposal(name, functions[i],
-						doc, url, origin, pos, startOffset));
+				proposals.add(createProposal(name, functions[i], doc, url,
+						origin, pos, startOffset));
 			}
 		}
 
+	}
+
+	/**
+	 * Completion proposal factory.
+	 * 
+	 * @param name
+	 * @param type
+	 * @param doc
+	 * @param url
+	 * @param origin
+	 * @param pos
+	 * @param startOffset
+	 * @return
+	 */
+	protected JSTernCompletionProposal createProposal(String name, String type,
+			String doc, String url, String origin, int pos, int startOffset) {
+		return new JSTernCompletionProposal(name, type, doc, url, origin, pos,
+				startOffset);
 	}
 }
