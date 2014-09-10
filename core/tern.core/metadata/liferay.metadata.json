@@ -9,10 +9,10 @@
  ],
  "repository": {
   "type": "git",
-  "url": "https://github.com/angelozerr/tern.yuidoc.git"
+  "url": "https://github.com/angelozerr/tern-liferay.git"
  },
  "bugs": {
-  "url": "https://github.com/angelozerr/tern.yuidoc/issues"
+  "url": "https://github.com/angelozerr/tern-liferay/issues"
  },
  "help": {
   "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Liferay-support"
