@@ -38,3 +38,14 @@ exports.initialize = function(ternDir) {
   exports.infer = require(path.resolve(ternDir, 'lib/infer'));
   exports.comment = require(path.resolve(ternDir, 'lib/comment'));
 };
+
+
+/**
+ * Set the references to the core Tern modules, assuming that require will find
+ * the right modules.
+ */
+exports.initializeForTesting = function() {
+  exports.tern = require('tern/lib/tern');
+  exports.infer = require('tern/lib/infer');
+  exports.comment = require('tern/lib/comment');
+};
