@@ -290,7 +290,7 @@ public class HTMLTernPrinter {
 		buf.append(title);
 
 		buf.append("</div>"); //$NON-NLS-1$
-		// buf.append("</p>");
+		buf.append("<hr />");
 	}
 
 	private static String getImageURL(ImageDescriptor descriptor) {

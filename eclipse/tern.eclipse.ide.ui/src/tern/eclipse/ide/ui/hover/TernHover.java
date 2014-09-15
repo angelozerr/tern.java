@@ -18,6 +18,7 @@ import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextHoverExtension;
 import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.information.IInformationProviderExtension2;
 import org.eclipse.ui.IEditorPart;
 
 import tern.eclipse.ide.core.IDETernProject;
@@ -34,7 +35,7 @@ import tern.server.protocol.type.TernTypeQuery;
  *
  */
 public class TernHover implements ITextHover, ITextHoverExtension,
-		ITextHoverExtension2 {
+		ITextHoverExtension2, IInformationProviderExtension2 {
 
 	private IEditorPart editor;
 	private IInformationControlCreator fHoverControlCreator;
@@ -91,6 +92,10 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 		return JavaWordFinder.findWord(textViewer.getDocument(), offset);
 	}
 
+	public void setEditor(IEditorPart editor) {
+		this.editor = editor;
+	}
+
 	@Override
 	public IInformationControlCreator getHoverControlCreator() {
 		if (fHoverControlCreator == null)
@@ -99,15 +104,11 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 		return fHoverControlCreator;
 	}
 
-	// @Override
+	@Override
 	public IInformationControlCreator getInformationPresenterControlCreator() {
 		if (fPresenterControlCreator == null)
 			fPresenterControlCreator = new PresenterControlCreator();
 		return fPresenterControlCreator;
-	}
-
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
 	}
 
 }
