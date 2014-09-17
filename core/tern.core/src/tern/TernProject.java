@@ -146,9 +146,14 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 */
 	public JsonArray getLibs() {
 		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
-		if (libs == null) {
-			libs = new DirtyableJsonArray(this);
-			add(LIBS_FIELD_NAME, libs);
+		if (!(libs instanceof DirtyableJsonArray)) {
+			if (libs == null) {
+				libs = new DirtyableJsonArray(this);
+				add(LIBS_FIELD_NAME, libs);
+			} else {
+				libs = new DirtyableJsonArray(libs, this);
+				set(LIBS_FIELD_NAME, libs);
+			}
 		}
 		return libs;
 	}
@@ -204,9 +209,14 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 */
 	public JsonObject getPlugins() {
 		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
-		if (plugins == null) {
-			plugins = new DirtyableJsonObject(this);
-			add(PLUGINS_FIELD_NAME, plugins);
+		if (!(plugins instanceof DirtyableJsonObject)) {
+			if (plugins == null) {
+				plugins = new DirtyableJsonObject(this);
+				add(PLUGINS_FIELD_NAME, plugins);
+			} else {
+				plugins = new DirtyableJsonObject(plugins, this);
+				set(PLUGINS_FIELD_NAME, plugins);
+			}
 		}
 		return plugins;
 	}

@@ -26,6 +26,11 @@ public class DirtyableJsonObject extends JsonObject implements Dirtyable {
 		this.dirtyable = dirtyable;
 	}
 
+	public DirtyableJsonObject(JsonObject source, Dirtyable dirtyable) {
+		super(source);
+		this.dirtyable = dirtyable;
+	}
+	
 	@Override
 	public JsonObject add(String name, boolean value) {
 		setDirty(true);
