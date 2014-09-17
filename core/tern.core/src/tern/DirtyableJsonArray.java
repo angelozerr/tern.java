@@ -25,6 +25,11 @@ public class DirtyableJsonArray extends JsonArray implements Dirtyable {
 		this.dirtyable = dirtyable;
 	}
 
+	public DirtyableJsonArray(JsonArray source, Dirtyable dirtyable) {
+		super(source);
+		this.dirtyable = dirtyable;
+	}
+	
 	@Override
 	public JsonArray add(String value) {
 		setDirty(true);
