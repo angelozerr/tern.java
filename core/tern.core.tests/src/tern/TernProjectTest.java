@@ -1,12 +1,15 @@
 package tern;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.eclipsesource.json.JsonObject;
-
 import tern.server.TernDef;
 import tern.server.TernPlugin;
+
+import com.eclipsesource.json.JsonObject;
 
 public class TernProjectTest {
 
@@ -22,22 +25,72 @@ public class TernProjectTest {
 	}
 
 	@Test
+	public void loadAndAddLibs() throws IOException {
+		// Save project
+		File projectDir = new File(".");
+		TernProject project1 = new TernProject(projectDir);
+		project1.addLib(TernDef.ecma5);
+		project1.save();
+
+		// Load project
+		TernProject project = new TernProject(projectDir);
+		project.load();
+		
+		project.addLib(TernDef.browser);
+		Assert.assertTrue(project.isDirty());
+		project.setDirty(false);
+		project.addLib(TernDef.browser);
+		Assert.assertFalse(project.isDirty());
+		Assert.assertEquals("{\"libs\":[\"ecma5\",\"browser\"]}", project.toString());
+	}
+	
+	@Test
 	public void addPlugins() {
 		TernProject project = new TernProject(null);
-		
+
 		project.addPlugin(TernPlugin.angular);
 		Assert.assertTrue(project.isDirty());
-		
+
 		project.setDirty(false);
 		project.addPlugin(TernPlugin.angular);
 		Assert.assertFalse(project.isDirty());
 		Assert.assertEquals("{\"plugins\":{\"angular\":{}}}",
 				project.toString());
-		
+
 		project.setDirty(false);
 		project.addPlugin(TernPlugin.aui);
 		Assert.assertTrue(project.isDirty());
-		
+
+		project.setDirty(false);
+		project.addPlugin(TernPlugin.aui, new JsonObject());
+		Assert.assertFalse(project.isDirty());
+	}
+
+	@Test
+	public void loadAndAddPlugins() throws IOException {
+		// Save project
+		File projectDir = new File(".");
+		TernProject project1 = new TernProject(projectDir);
+		project1.addPlugin(TernPlugin.cordovajs);
+		project1.save();
+
+		// Load project
+		TernProject project = new TernProject(projectDir);
+		project.load();
+
+		project.addPlugin(TernPlugin.angular);
+		Assert.assertTrue(project.isDirty());
+
+		project.setDirty(false);
+		project.addPlugin(TernPlugin.angular);
+		Assert.assertFalse(project.isDirty());
+		Assert.assertEquals("{\"plugins\":{\"cordovajs\":{},\"angular\":{}}}",
+				project.toString());
+
+		project.setDirty(false);
+		project.addPlugin(TernPlugin.aui);
+		Assert.assertTrue(project.isDirty());
+
 		project.setDirty(false);
 		project.addPlugin(TernPlugin.aui, new JsonObject());
 		Assert.assertFalse(project.isDirty());
