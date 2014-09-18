@@ -207,37 +207,51 @@ public class JSDTClassPathManager implements IElementChangedListener,
 					}
 					break;
 				case IIncludePathEntry.CPE_SOURCE:
-					// JSDT Source folder => Tern script path folder.
-					IFolder folder = ResourcesPlugin.getWorkspace().getRoot()
-							.getFolder(entry.getPath());
-					try {
-						ternProject.addExternalScriptPath(folder,
-								ScriptPathsType.FOLDER, JSDT_EXTERNAL_LABEL);
-					} catch (IOException e) {
-						Trace.trace(Trace.SEVERE,
-								"Error while adding external tern script path for project "
-										+ ternProject.getProject().getName(), e);
+					if (entry.getPath().segmentCount() == 1) {
+						// It's a project
+						synchTernProjectScriptPaths(ternProject, entry);
+					} else {
+						// It's a folder
+						// JSDT Source folder => Tern script path folder.
+						IFolder folder = ResourcesPlugin.getWorkspace()
+								.getRoot().getFolder(entry.getPath());
+						try {
+							ternProject
+									.addExternalScriptPath(folder,
+											ScriptPathsType.FOLDER,
+											JSDT_EXTERNAL_LABEL);
+						} catch (IOException e) {
+							Trace.trace(Trace.SEVERE,
+									"Error while adding external tern script path for project "
+											+ ternProject.getProject()
+													.getName(), e);
+						}
 					}
 					break;
 				case IIncludePathEntry.CPE_PROJECT:
 					// JS file?
-					// JSDT Project => Tern script path project.
-					IProject project = ResourcesPlugin.getWorkspace().getRoot()
-							.getProject(entry.getPath().lastSegment());
-					try {
-						ternProject.addExternalScriptPath(project,
-								ScriptPathsType.PROJECT, JSDT_EXTERNAL_LABEL);
-					} catch (IOException e) {
-						Trace.trace(Trace.SEVERE,
-								"Error while adding external tern script path for project "
-										+ ternProject.getProject().getName(), e);
-					}
+					synchTernProjectScriptPaths(ternProject, entry);
 					break;
 				}
 			}
 		} catch (JavaScriptModelException e) {
 			Trace.trace(Trace.SEVERE,
 					"Error while getting JSDT ClassPath for project "
+							+ ternProject.getProject().getName(), e);
+		}
+	}
+
+	public void synchTernProjectScriptPaths(IIDETernProject ternProject,
+			IIncludePathEntry entry) {
+		// JSDT Project => Tern script path project.
+		IProject project = ResourcesPlugin.getWorkspace().getRoot()
+				.getProject(entry.getPath().lastSegment());
+		try {
+			ternProject.addExternalScriptPath(project,
+					ScriptPathsType.PROJECT, JSDT_EXTERNAL_LABEL);
+		} catch (IOException e) {
+			Trace.trace(Trace.SEVERE,
+					"Error while adding external tern script path for project "
 							+ ternProject.getProject().getName(), e);
 		}
 	}
