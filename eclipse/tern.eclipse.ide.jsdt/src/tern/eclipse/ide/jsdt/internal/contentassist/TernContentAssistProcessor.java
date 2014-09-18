@@ -26,14 +26,15 @@ import org.eclipse.wst.sse.ui.contentassist.CompletionProposalInvocationContext;
 import org.eclipse.wst.sse.ui.contentassist.ICompletionProposalComputer;
 import org.eclipse.wst.xml.ui.internal.contentassist.AbstractContentAssistProcessor;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.jsdt.internal.Trace;
 import tern.eclipse.ide.jsdt.internal.utils.DOMUtils;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
 /**
- * Content assist processor to manage completion Proposal for Javascript (inside
+ * Content assist processor to manage completion Proposal for JavaScript (inside
  * HTML)
  * 
  */
@@ -51,7 +52,7 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 		IFile file = DOMUtils.getFile(context.getDocument());
 		if (file != null) {
 			IProject project = file.getProject();
-			if (IDETernProject.hasTernNature(project)) {
+			if (TernCorePlugin.hasTernNature(project)) {
 
 				IDocument document = context.getDocument();
 				IResource resource = file;
@@ -60,7 +61,7 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 
 					try {
 
-						IDETernProject ternProject = IDETernProject
+						IIDETernProject ternProject = TernCorePlugin
 								.getTernProject(project);
 
 						TernCompletionsQuery query = new TernCompletionsQuery(

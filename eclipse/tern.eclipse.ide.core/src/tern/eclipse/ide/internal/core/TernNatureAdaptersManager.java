@@ -26,7 +26,6 @@ import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
-import tern.eclipse.ide.core.IDETernProject;
 import tern.eclipse.ide.core.ITernNatureCapability;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernNature;

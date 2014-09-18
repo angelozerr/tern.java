@@ -20,7 +20,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.wst.jsdt.internal.ui.wizards.NewJSWizard;
 import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
 import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
@@ -28,29 +27,27 @@ import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
 /**
  * JSDT completion extension with Tern.
  */
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.jsdt.internal.Trace;
-import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
-import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
-import tern.server.ITernServer;
-import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
 /**
- * JSDT compeltion proposal computer manage completion Proposal for Javascript
- * (inside Javascript file)
+ * JSDT completion proposal computer manage completion Proposal for Javascript
+ * (inside JavaScript files)
  * 
  */
 public class TernCompletionProposalComputer implements
 		IJavaCompletionProposalComputer {
 
+	
 	public List computeCompletionProposals(
 			ContentAssistInvocationContext context, IProgressMonitor monitor) {
 		if (context instanceof JavaContentAssistInvocationContext) {
 			JavaContentAssistInvocationContext javaContext = (JavaContentAssistInvocationContext) context;
 			IProject project = javaContext.getProject().getProject();
-			if (IDETernProject.hasTernNature(project)) {
-
+			if (TernCorePlugin.hasTernNature(project)) {
+	
 				IDocument document = javaContext.getDocument();
 				IResource resource = javaContext.getCompilationUnit()
 						.getResource();
@@ -61,7 +58,7 @@ public class TernCompletionProposalComputer implements
 
 						final List<ICompletionProposal> proposals = new ArrayList<ICompletionProposal>();
 
-						IDETernProject ternProject = IDETernProject
+						IIDETernProject ternProject = TernCorePlugin
 								.getTernProject(project);
 
 						TernCompletionsQuery query = new TernCompletionsQuery(

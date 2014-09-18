@@ -20,7 +20,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.console.TernConsole;
 import tern.eclipse.ide.internal.ui.console.TernConsoleHelper;
 import tern.eclipse.ide.internal.ui.descriptors.TernDescriptorManager;
@@ -49,7 +49,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext
 	 * )
@@ -60,7 +60,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 		/*
 		 * Display.getDefault().asyncExec(new Runnable() {
-		 *
+		 * 
 		 * public void run() { try { console = new TernConsole(); /* if
 		 * (prefStoreHelper.isOpenIvyConsoleOnStartup()) {
 		 * IvyConsoleFactory.showConsole(); }
@@ -74,7 +74,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see
 	 * org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext
 	 * )
@@ -113,7 +113,7 @@ public class TernUIPlugin extends AbstractUIPlugin {
 		return getActiveWorkbenchWindow().getActivePage();
 	}
 
-	public ITernConsole getConsole(IDETernProject project) {
+	public ITernConsole getConsole(IIDETernProject project) {
 		TernConsole console = consoles.get(project.getProject());
 		if (console == null) {
 			console = new TernConsole(project);

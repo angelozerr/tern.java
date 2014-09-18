@@ -27,6 +27,7 @@ import org.eclipse.jface.text.IDocument;
 
 import tern.TernFileManager;
 import tern.eclipse.ide.core.utils.FileUtils;
+import tern.eclipse.ide.internal.core.IDETernProject;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.utils.IOUtils;
 

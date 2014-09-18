@@ -14,9 +14,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.ui.utils.EditorUtils;
-import tern.server.protocol.TernDoc;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.utils.StringUtils;
 
@@ -24,9 +23,9 @@ public abstract class AbstractTernHyperlink implements IHyperlink,
 		ITernDefinitionCollector {
 
 	protected final IRegion region;
-	protected final IDETernProject ternProject;
+	protected final IIDETernProject ternProject;
 
-	public AbstractTernHyperlink(IRegion region, IDETernProject ternProject) {
+	public AbstractTernHyperlink(IRegion region, IIDETernProject ternProject) {
 		this.region = region;
 		this.ternProject = ternProject;
 	}

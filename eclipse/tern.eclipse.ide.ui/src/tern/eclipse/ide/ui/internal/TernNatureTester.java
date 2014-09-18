@@ -3,7 +3,7 @@ package tern.eclipse.ide.ui.internal;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 
 /**
  * Property Tester for a IProject receiver object
@@ -12,7 +12,8 @@ import tern.eclipse.ide.core.IDETernProject;
  * 
  * @author Victor Rubezhny
  */
-public class TernNatureTester extends org.eclipse.core.expressions.PropertyTester {
+public class TernNatureTester extends
+		org.eclipse.core.expressions.PropertyTester {
 	private static final String IS_TERN_PROJECT_PROPERTY = "isTernProject";
 
 	public TernNatureTester() {
@@ -22,14 +23,14 @@ public class TernNatureTester extends org.eclipse.core.expressions.PropertyTeste
 	/**
 	 * Tests if the receiver object is a project is a Tern project
 	 * 
-	 * @return true if the receiver object is a Project that has a nature that is treated as Tern nature,
-	 * 		   otherwise false is returned 
+	 * @return true if the receiver object is a Project that has a nature that
+	 *         is treated as Tern nature, otherwise false is returned
 	 */
 	@Override
 	public boolean test(Object receiver, String property, Object[] args,
 			Object expectedValue) {
-		
-		if (IS_TERN_PROJECT_PROPERTY.equals(property)) 
+
+		if (IS_TERN_PROJECT_PROPERTY.equals(property))
 			return testIsTernProject(receiver);
 
 		return false;
@@ -37,13 +38,14 @@ public class TernNatureTester extends org.eclipse.core.expressions.PropertyTeste
 
 	private boolean testIsTernProject(Object receiver) {
 		if (receiver instanceof IAdaptable) {
-			IProject project = (IProject)((IAdaptable)receiver).getAdapter(IProject.class);
+			IProject project = (IProject) ((IAdaptable) receiver)
+					.getAdapter(IProject.class);
 			if (project != null) {
-				return IDETernProject.hasTernNature(project);
+				return TernCorePlugin.hasTernNature(project);
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 }

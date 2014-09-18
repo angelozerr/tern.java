@@ -33,8 +33,8 @@ public class JSFileScriptPath extends AbstractTernScriptPath {
 
 	private final List<IScriptResource> resources;
 
-	public JSFileScriptPath(IFile file) {
-		super(file, ScriptPathsType.FILE);
+	public JSFileScriptPath(IFile file, String external) {
+		super(file, ScriptPathsType.FILE, external);
 		this.resources = new ArrayList<IScriptResource>();
 		resources.add(new JSFileScriptResource(file));
 	}

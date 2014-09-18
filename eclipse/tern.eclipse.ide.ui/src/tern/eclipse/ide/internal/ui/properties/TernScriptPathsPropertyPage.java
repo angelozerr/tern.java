@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
@@ -57,7 +57,7 @@ public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
 		layout.marginWidth = 0;
 		parent.setLayout(layout);
 
-		IDETernProject ternProject = null;
+		IIDETernProject ternProject = null;
 		try {
 			ternProject = getTernProject();
 		} catch (CoreException e1) {
@@ -84,9 +84,8 @@ public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
 		List<ITernScriptPath> scriptPaths = scriptPathsBlock
 				.getTernScriptPaths();
 		try {
-			IDETernProject ternProject = getTernProject();
+			IIDETernProject ternProject = getTernProject();
 			ternProject.setScriptPaths(scriptPaths);
-			ternProject.save();
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
 		}
@@ -98,7 +97,7 @@ public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
 	 */
 	private void loadScriptPaths() {
 		try {
-			IDETernProject ternProject = getTernProject();
+			IIDETernProject ternProject = getTernProject();
 			scriptPathsBlock.setTernScriptPaths(ternProject.getScriptPaths());
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while loading scriptPaths.", e);

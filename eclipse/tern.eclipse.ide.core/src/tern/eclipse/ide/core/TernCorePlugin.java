@@ -11,16 +11,25 @@
 package tern.eclipse.ide.core;
 
 import java.io.File;
+import java.io.IOException;
 
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
+import tern.eclipse.ide.internal.core.IDETernProject;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
+import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
+import tern.eclipse.ide.internal.core.Trace;
 import tern.metadata.TernModuleMetadataManager;
 import tern.server.nodejs.process.NodejsProcessManager;
+import tern.server.protocol.lint.ITernLintCollector;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -63,6 +72,34 @@ public class TernCorePlugin extends Plugin {
 	}
 
 	/**
+	 * Return true if the given project have tern nature
+	 * "tern.eclipse.ide.core.ternnature" and false otherwise.
+	 * 
+	 * @param project
+	 *            Eclipse project.
+	 * @return true if the given project have tern nature
+	 *         "tern.eclipse.ide.core.ternnature" and false otherwise.
+	 */
+	public static boolean hasTernNature(IProject project) {
+		return IDETernProject.hasTernNature(project);
+	}
+
+	/**
+	 * Returns the tern project of the given eclipse projectand throws exception
+	 * if the eclipse project has not tern nature.
+	 * 
+	 * @param project
+	 *            eclipse project.
+	 * @return the tern project of the given eclipse projectand throws exception
+	 *         if the eclipse project has not tern nature.
+	 * @throws CoreException
+	 */
+	public static IIDETernProject getTernProject(IProject project)
+			throws CoreException {
+		return IDETernProject.getTernProject(project);
+	}
+
+	/**
 	 * Returns the shared instance
 	 * 
 	 * @return the shared instance
@@ -78,6 +115,19 @@ public class TernCorePlugin extends Plugin {
 	 */
 	public static ITernServerTypeManager getTernServerTypeManager() {
 		return TernServerTypeManager.getManager();
+	}
+
+	public static void addTernProjectLifeCycleListener(
+			ITernProjectLifecycleListener listener) {
+		TernProjectLifecycleManager.getManager()
+				.addTernProjectLifeCycleListener(listener);
+	}
+
+	public static void removeTernProjectLifeCycleListener(
+			ITernProjectLifecycleListener listener) {
+		TernProjectLifecycleManager.getManager()
+				.removeTernProjectLifeCycleListener(listener);
+
 	}
 
 }

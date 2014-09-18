@@ -18,7 +18,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.properties.AbstractTernPropertyPage;
@@ -84,7 +84,7 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		// save the checked plugins in the tern project
 		Object[] checkedModules = modulesBlock.getCheckedModules();
 		try {
-			IDETernProject ternProject = getTernProject();
+			IIDETernProject ternProject = getTernProject();
 			// clear Plugin + JSON Type Definition
 			ternProject.clearPlugins();
 			ternProject.clearLibs();

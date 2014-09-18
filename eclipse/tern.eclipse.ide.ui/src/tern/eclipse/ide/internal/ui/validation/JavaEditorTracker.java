@@ -31,7 +31,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
@@ -160,7 +160,7 @@ public class JavaEditorTracker implements IWindowListener, IPageListener,
 					&& resource.getType() == IResource.FILE
 					&& (FileUtils.isJSFile(resource) || FileUtils
 							.isHTMLFile(resource))
-					&& IDETernProject.hasTernNature(resource.getProject())) {
+					&& TernCorePlugin.hasTernNature(resource.getProject())) {
 				ISourceViewer viewer = EditorUtils.getSourceViewer(part);
 				if (viewer != null) {
 					JavaDirtyRegionProcessor processor = fAsYouTypeValidators

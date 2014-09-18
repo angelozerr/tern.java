@@ -43,7 +43,7 @@ import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 
 import tern.TernException;
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
@@ -400,7 +400,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 				// Select Tern Plugins + JSON Type Definitions according
 				// settings of
 				// the project.
-				IDETernProject ternProject = IDETernProject
+				IIDETernProject ternProject = TernCorePlugin
 						.getTernProject(project);
 				initialModules = new ArrayList<ITernModule>();
 				// Tern Plugins

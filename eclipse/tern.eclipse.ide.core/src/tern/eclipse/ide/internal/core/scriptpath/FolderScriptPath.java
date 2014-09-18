@@ -43,8 +43,8 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 
 	private IResourceVisitor scriptResourcesVisitor;
 
-	public FolderScriptPath(IFolder folder) {
-		super(folder, ScriptPathsType.FOLDER);
+	public FolderScriptPath(IFolder folder, String external) {
+		super(folder, ScriptPathsType.FOLDER, external);
 		this.scripts = new ArrayList<IScriptResource>();
 	}
 

@@ -23,7 +23,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.console.ITernConsole;
@@ -44,9 +44,9 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 
 	private boolean initialized;
 
-	private final IDETernProject project;
+	private final IIDETernProject project;
 
-	public TernConsole(IDETernProject project) {
+	public TernConsole(IIDETernProject project) {
 		super(getName(project), ImageResource
 				.getImageDescriptor(ImageResource.IMG_LOGO));
 		this.project = project;
@@ -54,7 +54,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 		document = new ConsoleDocument();
 	}
 
-	private static String getName(IDETernProject project) {
+	private static String getName(IIDETernProject project) {
 		return new StringBuilder("Tern [")
 				.append(project.getProject().getName()).append("]").toString();
 	}
@@ -210,7 +210,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 		}
 	}
 
-	public IDETernProject getProject() {
+	public IIDETernProject getProject() {
 		return project;
 	}
 }

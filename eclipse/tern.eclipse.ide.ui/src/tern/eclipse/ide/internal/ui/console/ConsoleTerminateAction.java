@@ -13,7 +13,7 @@ package tern.eclipse.ide.internal.ui.console;
 import org.eclipse.jface.action.Action;
 import org.eclipse.osgi.util.NLS;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.server.ITernServer;
@@ -26,9 +26,9 @@ import tern.server.ITernServerListener;
 public class ConsoleTerminateAction extends Action implements
 		ITernServerListener {
 
-	private final IDETernProject project;
+	private final IIDETernProject project;
 
-	public ConsoleTerminateAction(IDETernProject project) {
+	public ConsoleTerminateAction(IIDETernProject project) {
 		this.project = project;
 		setToolTipText(NLS.bind(
 				TernUIMessages.ConsoleTerminateAction_tooltipText, project
@@ -45,7 +45,7 @@ public class ConsoleTerminateAction extends Action implements
 	@Override
 	public void run() {
 		try {
-			if (project.isTernServerDisposed()) {
+			if (project.isServerDisposed()) {
 				this.setEnabled(false);
 			} else {
 				project.disposeServer();

@@ -14,6 +14,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
+import tern.utils.StringUtils;
 
 /**
  * Base class for {@link ITernScriptPath}
@@ -23,10 +24,15 @@ public abstract class AbstractTernScriptPath implements ITernScriptPath {
 
 	private final IResource resource;
 	private final ScriptPathsType type;
+	private final boolean external;
+	private final String externalLabel;
 
-	public AbstractTernScriptPath(IResource resource, ScriptPathsType type) {
+	public AbstractTernScriptPath(IResource resource, ScriptPathsType type,
+			String externalLabel) {
 		this.resource = resource;
 		this.type = type;
+		this.external = !StringUtils.isEmpty(externalLabel);
+		this.externalLabel = externalLabel;
 	}
 
 	@Override
@@ -48,4 +54,15 @@ public abstract class AbstractTernScriptPath implements ITernScriptPath {
 	public ScriptPathsType getType() {
 		return type;
 	}
+
+	@Override
+	public boolean isExternal() {
+		return external;
+	}
+
+	@Override
+	public String getExternalLabel() {
+		return externalLabel;
+	}
+
 }

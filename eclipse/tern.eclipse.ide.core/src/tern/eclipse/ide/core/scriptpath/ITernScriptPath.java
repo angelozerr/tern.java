@@ -78,6 +78,22 @@ public interface ITernScriptPath {
 	ScriptPathsType getType();
 
 	/**
+	 * Returns true if script path is external and false otherwise.
+	 * 
+	 * @return
+	 */
+	boolean isExternal();
+
+	/**
+	 * Returns the external label if the script path is external and null
+	 * otherwise.
+	 * 
+	 * @return the external label if the script path is external and null
+	 *         otherwise.
+	 */
+	String getExternalLabel();
+
+	/**
 	 * Returns list of scripts defined by the script path.
 	 * 
 	 * @return
@@ -95,7 +111,7 @@ public interface ITernScriptPath {
 	 *            list of file names which must be used for the tern query.
 	 * @throws IOException
 	 */
-	void updateFiles(TernFileManager ternFileManager, TernDoc doc, JsonArray names)
-			throws IOException;
+	void updateFiles(TernFileManager ternFileManager, TernDoc doc,
+			JsonArray names) throws IOException;
 
 }

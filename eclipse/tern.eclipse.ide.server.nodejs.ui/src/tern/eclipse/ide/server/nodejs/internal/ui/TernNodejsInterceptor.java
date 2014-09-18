@@ -18,7 +18,7 @@ import java.io.StringWriter;
 import java.util.List;
 
 import tern.TernProject;
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.console.LineType;
@@ -30,9 +30,9 @@ import tern.utils.IOUtils;
 public class TernNodejsInterceptor extends LoggingInterceptor implements
 		INodejsProcessListener {
 
-	private final IDETernProject project;
+	private final IIDETernProject project;
 
-	public TernNodejsInterceptor(IDETernProject project) {
+	public TernNodejsInterceptor(IIDETernProject project) {
 		this.project = project;
 	}
 

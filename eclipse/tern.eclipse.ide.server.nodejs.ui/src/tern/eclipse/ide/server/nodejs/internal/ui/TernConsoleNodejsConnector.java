@@ -10,7 +10,7 @@
  */
 package tern.eclipse.ide.server.nodejs.internal.ui;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.server.ITernServer;
 import tern.server.nodejs.NodejsTernServer;
@@ -23,7 +23,7 @@ public class TernConsoleNodejsConnector implements ITernConsoleConnector {
 	}
 
 	@Override
-	public void connectToConsole(ITernServer server, IDETernProject project) {
+	public void connectToConsole(ITernServer server, IIDETernProject project) {
 		NodejsTernServer nodeServer = (NodejsTernServer) server;
 		TernNodejsInterceptor interceptor = getInterceptor(project);
 		nodeServer.addInterceptor(interceptor);
@@ -31,14 +31,14 @@ public class TernConsoleNodejsConnector implements ITernConsoleConnector {
 	}
 
 	@Override
-	public void disconnectToConsole(ITernServer server, IDETernProject project) {
+	public void disconnectToConsole(ITernServer server, IIDETernProject project) {
 		NodejsTernServer nodeServer = (NodejsTernServer) server;
 		TernNodejsInterceptor interceptor = getInterceptor(project);
 		nodeServer.removeInterceptor(interceptor);
 		nodeServer.removeProcessListener(interceptor);
 	}
 
-	public TernNodejsInterceptor getInterceptor(IDETernProject project) {
+	public TernNodejsInterceptor getInterceptor(IIDETernProject project) {
 		String key = TernNodejsInterceptor.class.getName();
 		TernNodejsInterceptor interceptor = project.getData(key);
 		if (interceptor == null) {

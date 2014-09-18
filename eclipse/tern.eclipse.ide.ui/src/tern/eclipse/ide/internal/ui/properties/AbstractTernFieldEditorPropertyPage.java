@@ -17,7 +17,8 @@ import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPropertyPage;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 
 public abstract class AbstractTernFieldEditorPropertyPage extends
 		FieldEditorPreferencePage implements IWorkbenchPropertyPage {
@@ -49,8 +50,8 @@ public abstract class AbstractTernFieldEditorPropertyPage extends
 		this.element = element;
 	}
 
-	public IDETernProject getTernProject() throws CoreException {
-		return IDETernProject.getTernProject(getResource().getProject());
+	public IIDETernProject getTernProject() throws CoreException {
+		return TernCorePlugin.getTernProject(getResource().getProject());
 	}
 
 	private IResource getResource() {

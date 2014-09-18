@@ -20,7 +20,8 @@ import org.eclipse.jface.text.hyperlink.AbstractHyperlinkDetector;
 import org.eclipse.jface.text.hyperlink.IHyperlink;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 
@@ -45,9 +46,9 @@ public class TernHyperLinkDetector extends AbstractHyperlinkDetector {
 			return null;
 		}
 		IProject project = resource.getProject();
-		if (IDETernProject.hasTernNature(project)) {
+		if (TernCorePlugin.hasTernNature(project)) {
 			try {
-				IDETernProject ternProject = IDETernProject
+				IIDETernProject ternProject = TernCorePlugin
 						.getTernProject(project);
 
 				IDocument document = textViewer.getDocument();

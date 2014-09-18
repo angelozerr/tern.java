@@ -12,6 +12,7 @@ package tern.eclipse.ide.internal.ui.properties;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -48,7 +49,8 @@ import org.eclipse.ui.dialogs.SelectionDialog;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -72,9 +74,9 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	private Button addProjectButton;
 	private Button removeButton;
 
-	private final IDETernProject ternProject;
+	private final IIDETernProject ternProject;
 
-	public TernScriptPathsBlock(IDETernProject project) {
+	public TernScriptPathsBlock(IIDETernProject project) {
 		this.ternProject = project;
 	}
 
@@ -120,8 +122,21 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
-				removeButton.setEnabled(!((IStructuredSelection) event
-						.getSelection()).isEmpty());
+				IStructuredSelection selection = (IStructuredSelection) event
+						.getSelection();
+				boolean enabled = false;
+				if (!selection.isEmpty()) {
+					for (Iterator iterator = selection.iterator(); iterator
+							.hasNext();) {
+						Object element = iterator.next();
+						if (element instanceof ITernScriptPath
+								&& !((ITernScriptPath) element).isExternal()) {
+							enabled = true;
+							break;
+						}
+					}
+				}
+				removeButton.setEnabled(enabled);
 			}
 		});
 
@@ -144,8 +159,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		buttons.setFont(font);
 
 		// Add "File" button
-		addFileButton = createPushButton(buttons,
-				TernUIMessages.Button_addFile);
+		addFileButton = createPushButton(buttons, TernUIMessages.Button_addFile);
 		addFileButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				addScriptPath(ScriptPathsType.FILE);
@@ -174,8 +188,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		addProjectButton.setEnabled(true);
 
 		// Remove button
-		removeButton = createPushButton(buttons,
-				TernUIMessages.Button_remove);
+		removeButton = createPushButton(buttons, TernUIMessages.Button_remove);
 		removeButton.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event evt) {
 				removeScriptPaths();
@@ -270,7 +283,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 				if (showAllProjects) {
 					if (element instanceof IProject) {
 						IProject p = (IProject) element;
-						return (!p.equals(project) && IDETernProject
+						return (!p.equals(project) && TernCorePlugin
 								.hasTernNature(p));
 					}
 				} else {

@@ -32,14 +32,28 @@ public class TernScriptPathLabelProvider extends LabelProvider {
 			return super.getText(element);
 		}
 
-		IResource resource = ((ITernScriptPath) element).getResource();
+		ITernScriptPath scriptPath = ((ITernScriptPath) element);
+		IResource resource = scriptPath.getResource();
+		String externalLabel = scriptPath.getExternalLabel();
+		return getText(resource, scriptPath.getExternalLabel());
+	}
+
+	private String getText(IResource resource, String externalLabel) {
 		if (resource.getType() == IResource.PROJECT) {
+			if (externalLabel != null) {
+				return new StringBuilder(resource.getName()).append(" (")
+						.append(externalLabel).append(")").toString();
+			}
 			return resource.getName();
 		}
-		return new StringBuilder(resource.getName())
-				.append(" - ")
-				.append(resource.getParent().getFullPath().makeRelative()
-						.toString()).toString();
+		StringBuilder text = new StringBuilder(resource.getName())
+				.append(" - ").append(
+						resource.getParent().getFullPath().makeRelative()
+								.toString());
+		if (externalLabel != null) {
+			text.append(" (").append(externalLabel).append(")");
+		}
+		return text.toString();
 	}
 
 	@Override

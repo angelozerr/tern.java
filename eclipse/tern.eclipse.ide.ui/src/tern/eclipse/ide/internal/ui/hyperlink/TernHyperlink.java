@@ -15,7 +15,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.hyperlink.AbstractTernHyperlink;
 import tern.server.protocol.definition.TernDefinitionQuery;
@@ -31,7 +31,7 @@ public class TernHyperlink extends AbstractTernHyperlink {
 	private final IResource resource;
 
 	public TernHyperlink(IDocument document, IRegion region,
-			IResource resource, IDETernProject ternProject) {
+			IResource resource, IIDETernProject ternProject) {
 		super(region, ternProject);
 		this.document = document;
 		this.resource = resource;

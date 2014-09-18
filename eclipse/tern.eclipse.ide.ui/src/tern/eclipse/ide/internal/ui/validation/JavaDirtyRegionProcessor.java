@@ -23,7 +23,8 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.server.TernPlugin;
 import tern.server.protocol.lint.ITernLintCollector;
@@ -37,13 +38,13 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 
 	private final ITextEditor editor;
 	private final IFile file;
-	private final IDETernProject ternProject;
+	private final IIDETernProject ternProject;
 
 	public JavaDirtyRegionProcessor(ITextEditor editor, IFile resource)
 			throws CoreException {
 		this.editor = editor;
 		this.file = resource;
-		this.ternProject = IDETernProject.getTernProject(resource.getProject());
+		this.ternProject = TernCorePlugin.getTernProject(resource.getProject());
 	}
 
 	@Override

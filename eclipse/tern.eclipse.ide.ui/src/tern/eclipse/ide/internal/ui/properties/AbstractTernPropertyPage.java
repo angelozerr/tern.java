@@ -15,7 +15,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.dialogs.PropertyPage;
 
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 
 /**
  * 
@@ -24,8 +25,8 @@ import tern.eclipse.ide.core.IDETernProject;
  */
 public abstract class AbstractTernPropertyPage extends PropertyPage {
 
-	public IDETernProject getTernProject() throws CoreException {
-		return IDETernProject.getTernProject(getResource().getProject());
+	public IIDETernProject getTernProject() throws CoreException {
+		return TernCorePlugin.getTernProject(getResource().getProject());
 	}
 
 	protected IResource getResource() {

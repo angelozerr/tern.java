@@ -51,7 +51,8 @@ import com.eclipsesource.json.ParseException;
  * 
  * @see http://ternjs.net/doc/manual.html#configuration
  */
-public class TernProject<T> extends DirtyableJsonObject {
+public class TernProject<T> extends DirtyableJsonObject implements
+		ITernProject<T> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -96,6 +97,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * @param lib
 	 *            the JSON Type Definition.
 	 */
+	@Override
 	public void addLib(ITernDef lib) {
 		addLib(lib.getName());
 	}
@@ -106,6 +108,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * @param lib
 	 *            the JSON Type Definition.
 	 */
+	@Override
 	public void addLib(String lib) {
 		if (!hasLib(lib)) {
 			getLibs().add(lib);
@@ -118,6 +121,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * @param lib
 	 * @return true if the given lib exists and false otherwise.
 	 */
+	@Override
 	public boolean hasLib(String lib) {
 		JsonArray libs = getLibs();
 		if (libs != null) {
@@ -135,6 +139,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * @param lib
 	 * @return true if the given lib exists and false otherwise.
 	 */
+	@Override
 	public boolean hasLib(ITernDef lib) {
 		return hasLib(lib.getName());
 	}
@@ -144,6 +149,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * 
 	 * @return the JSON Type Definitions of the tern project.
 	 */
+	@Override
 	public JsonArray getLibs() {
 		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
 		if (!(libs instanceof DirtyableJsonArray)) {
@@ -159,15 +165,11 @@ public class TernProject<T> extends DirtyableJsonObject {
 	}
 
 	/**
-	 * Add Tern plugin.
-	 * 
-	 * @param plugin
-	 *            the tern plugin to add.
-	 * @return true if plugin to add, replace an existing plugin and false
-	 *         otherwise.
+	 * Clear JSON Type Definitions.
 	 */
-	public void addPlugin(ITernPlugin plugin) {
-		addPlugin(plugin, null);
+	@Override
+	public void clearLibs() {
+		remove(LIBS_FIELD_NAME);
 	}
 
 	/**
@@ -175,9 +177,23 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * 
 	 * @param plugin
 	 *            the tern plugin to add.
+	 * @return true if plugin to add, replace an existing plugin and false
+	 *         otherwise.
+	 */
+	@Override
+	public void addPlugin(ITernPlugin plugin) {
+		addPlugin(plugin, null);
+	}
+
+	/**
+	 * Add Tern plugin with options.
+	 * 
+	 * @param plugin
+	 *            the tern plugin to add.
 	 * @param options
 	 *            plugin options.
 	 */
+	@Override
 	public void addPlugin(ITernPlugin plugin, JsonObject options) {
 		JsonObject plugins = getPlugins();
 		if (options == null)
@@ -197,9 +213,21 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * @param plugin
 	 * @return true if the given plugin exists and false otherwise.
 	 */
+	@Override
 	public boolean hasPlugin(ITernPlugin plugin) {
+		return hasPlugin(plugin.getName());
+	}
+
+	/**
+	 * Returns true if the given plugin exists and false otherwise.
+	 * 
+	 * @param plugin
+	 * @return true if the given plugin exists and false otherwise.
+	 */
+	@Override
+	public boolean hasPlugin(String plugin) {
 		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
-		return plugins == null ? false : plugins.get(plugin.getName()) != null;
+		return plugins == null ? false : plugins.get(plugin) != null;
 	}
 
 	/**
@@ -207,6 +235,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * 
 	 * @return the JSON plugins of the tern project.
 	 */
+	@Override
 	public JsonObject getPlugins() {
 		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
 		if (!(plugins instanceof DirtyableJsonObject)) {
@@ -219,6 +248,14 @@ public class TernProject<T> extends DirtyableJsonObject {
 			}
 		}
 		return plugins;
+	}
+
+	/**
+	 * Clear plugins.
+	 */
+	@Override
+	public void clearPlugins() {
+		remove(PLUGINS_FIELD_NAME);
 	}
 
 	public void addLoadEagerlyPattern(String pattern) {
@@ -234,6 +271,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * 
 	 * @throws IOException
 	 */
+	@Override
 	public void save() throws IOException {
 		projectDir.mkdirs();
 		Writer writer = null;
@@ -254,6 +292,7 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * 
 	 * @throws IOException
 	 */
+	@Override
 	public void saveIfNeeded() throws IOException {
 		if (isDirty()) {
 			save();
@@ -291,16 +330,9 @@ public class TernProject<T> extends DirtyableJsonObject {
 	 * 
 	 * @return
 	 */
+	@Override
 	public TernFileManager<T> getFileManager() {
 		return fileManager;
-	}
-
-	public void clearLibs() {
-		remove(LIBS_FIELD_NAME);
-	}
-
-	public void clearPlugins() {
-		remove(PLUGINS_FIELD_NAME);
 	}
 
 	/**

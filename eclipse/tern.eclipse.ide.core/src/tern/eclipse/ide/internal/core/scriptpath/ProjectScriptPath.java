@@ -18,9 +18,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 
 import tern.TernFileManager;
-import tern.eclipse.ide.core.IDETernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.scriptpath.IScriptResource;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
+import tern.eclipse.ide.internal.core.IDETernProject;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.server.protocol.TernDoc;
 
@@ -38,8 +40,9 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 	private final IProject ownerProject;
 	private final Collection<IScriptResource> scripts;
 
-	public ProjectScriptPath(IProject project, IProject ownerProject) {
-		super(project, ScriptPathsType.PROJECT);
+	public ProjectScriptPath(IProject project, IProject ownerProject,
+			String external) {
+		super(project, ScriptPathsType.PROJECT, external);
 		this.ownerProject = ownerProject;
 		this.scripts = new ArrayList<IScriptResource>();
 	}
@@ -59,7 +62,8 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 		this.scripts.clear();
 		IProject project = (IProject) getResource();
 		try {
-			IDETernProject ternProject = IDETernProject.getTernProject(project);
+			IIDETernProject ternProject = TernCorePlugin
+					.getTernProject(project);
 			Collection<ITernScriptPath> scriptPaths = ternProject
 					.getScriptPaths();
 			for (ITernScriptPath scriptPath : scriptPaths) {
@@ -79,7 +83,8 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 
 		IProject project = (IProject) getResource();
 		try {
-			IDETernProject ternProject = IDETernProject.getTernProject(project);
+			IIDETernProject ternProject = TernCorePlugin
+					.getTernProject(project);
 			Collection<ITernScriptPath> scriptPaths = ternProject
 					.getScriptPaths();
 			for (ITernScriptPath scriptPath : scriptPaths) {

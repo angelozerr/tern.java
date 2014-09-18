@@ -44,6 +44,7 @@ public class JSDTTernPlugin extends AbstractUIPlugin {
 		plugin = this;
 		// Initialize DOMProvider with DOM-SSE
 		DOMProviderHelper.setProvider(DOMSSEProvider.INSTANCE);
+		JSDTClassPathManager.getManager().startup();
 	}
 
 	/*
@@ -54,6 +55,7 @@ public class JSDTTernPlugin extends AbstractUIPlugin {
 	 * )
 	 */
 	public void stop(BundleContext context) throws Exception {
+		JSDTClassPathManager.getManager().shutdown();
 		plugin = null;
 		super.stop(context);
 	}

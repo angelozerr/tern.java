@@ -32,13 +32,13 @@ public interface ITernConsoleConnector {
 	 * 
 	 * @param ternServer
 	 */
-	void connectToConsole(ITernServer ternServer, IDETernProject project);
+	void connectToConsole(ITernServer ternServer, IIDETernProject project);
 
 	/**
 	 * Disconnect the give tern server to the eclipse tern console.
 	 * 
 	 * @param ternServer
 	 */
-	void disconnectToConsole(ITernServer ternServer, IDETernProject project);
+	void disconnectToConsole(ITernServer ternServer, IIDETernProject project);
 
 }

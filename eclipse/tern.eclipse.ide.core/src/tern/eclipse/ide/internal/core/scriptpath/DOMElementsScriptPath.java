@@ -42,8 +42,8 @@ public class DOMElementsScriptPath extends AbstractTernScriptPath {
 	private static final String HTTP_ATTR = "http";
 	private static final String SRC_ATTR = "src";
 
-	public DOMElementsScriptPath(IFile resource) {
-		super(resource, ScriptPathsType.FILE);
+	public DOMElementsScriptPath(IFile resource, String external) {
+		super(resource, ScriptPathsType.FILE, external);
 	}
 
 	@Override
