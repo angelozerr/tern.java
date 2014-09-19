@@ -27,11 +27,4 @@ public class JSDTTernCompletionProposal extends JSTernCompletionProposal
 			String url, String origin, int pos, int startOffset) {
 		super(name, type, doc, url, origin, pos, startOffset);
 	}
-
-	@Override
-	public int getRelevance() {
-		// TODO : compute relevance switch type?
-		return 10000;
-	}
-
 }
