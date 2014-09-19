@@ -12,7 +12,6 @@ package tern.eclipse.ide.ui.contentassist;
 
 import java.util.List;
 
-import org.eclipse.jface.internal.text.html.HTMLPrinter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -31,14 +30,15 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
+import org.eclipse.wst.sse.ui.internal.contentassist.IRelevanceCompletionProposal;
 
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.protocol.completions.Parameter;
-import tern.utils.StringUtils;
 
-public class JSTernCompletionProposal extends TernCompletionProposal {
+public class JSTernCompletionProposal extends TernCompletionProposal 
+		implements IRelevanceCompletionProposal {
 
 	private static final String COMMA = ",";
 
@@ -47,12 +47,20 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	private int[] fArgumentLengths;
 	private ITextViewer fTextViewer;
 	private boolean fReplacementStringComputed;
+	private int fRelevance;
 
 	private boolean fToggleEating;
 
+
 	public JSTernCompletionProposal(String name, String type, String doc,
 			String url, String origin, int pos, int startOffset) {
+		this(name, type, doc, url, origin, pos, startOffset, 10000);
+	}
+
+	public JSTernCompletionProposal(String name, String type, String doc,
+			String url, String origin, int pos, int startOffset, int relevance) {
 		super(name, type, doc, url, origin, pos, startOffset);
+		this.fRelevance = relevance;
 	}
 
 	@Override
@@ -281,5 +289,10 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	@Override
 	protected Shell getActiveWorkbenchShell() {
 		return TernUIPlugin.getActiveWorkbenchShell();
+	}
+
+	@Override
+	public int getRelevance() {
+		return fRelevance;
 	}
 }
