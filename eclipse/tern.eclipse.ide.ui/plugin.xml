@@ -19,7 +19,7 @@
 			
     <extension point="org.eclipse.ui.startup">
         <startup
-            class="tern.eclipse.ide.ui.internal.TernIDEStartup">
+            class="tern.eclipse.ide.internal.ui.TernIDEStartup">
         </startup>
     </extension> 
     
@@ -29,7 +29,7 @@
 			type="org.eclipse.core.resources.IResource"
 			namespace="tern.eclipse.ide.ui"
 			properties="isTernProject"
-			class="tern.eclipse.ide.ui.internal.TernNatureTester">
+			class="tern.eclipse.ide.internal.ui.TernNatureTester">
 		</propertyTester>
 	</extension>
 	    

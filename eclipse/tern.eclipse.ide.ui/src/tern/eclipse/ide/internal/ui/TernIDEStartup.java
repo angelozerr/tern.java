@@ -1,4 +1,4 @@
-package tern.eclipse.ide.ui.internal;
+package tern.eclipse.ide.internal.ui;
 
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;

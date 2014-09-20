@@ -1,4 +1,4 @@
-package tern.eclipse.ide.ui.internal;
+package tern.eclipse.ide.internal.ui;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IAdaptable;
