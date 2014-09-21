@@ -33,8 +33,9 @@ import org.eclipse.swt.widgets.Composite;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.controls.TernModuleOptionsPanel;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.descriptors.ITernDescriptor;
-import tern.eclipse.ide.ui.descriptors.ITernDescriptorManager;
+import tern.eclipse.ide.ui.descriptors.ITernModuleImage;
+import tern.eclipse.ide.ui.descriptors.ITernModuleDescriptorManager;
+import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
 import tern.eclipse.jface.TernImagesRegistry;
 import tern.server.ITernModule;
 import tern.server.protocol.completions.TernCompletionItem;
@@ -44,17 +45,19 @@ import tern.utils.StringUtils;
  * Tern descriptor manager.
  *
  */
-public class TernDescriptorManager implements ITernDescriptorManager,
-		IRegistryChangeListener {
+public class TernModuleDescriptorManager implements
+		ITernModuleDescriptorManager, IRegistryChangeListener {
 
-	private static final String EXTENSION_TERN_DESCRIPTORS = "ternDescriptors";
+	private static final String EXTENSION_TERN_MODULE_DESCRIPTORS = "ternModuleDescriptors";
 
-	private static final TernDescriptorManager INSTANCE = new TernDescriptorManager();
+	private static final TernModuleDescriptorManager INSTANCE = new TernModuleDescriptorManager();
 
 	private static final String IMAGE_DIR = "tern-images"; //$NON-NLS-1$
 
-	// cached copy of alltern additional infos
-	private Map<String, ITernDescriptor> ternDescriptors;
+	// cached copy of all tern module images
+	private Map<String, ITernModuleImage> ternModuleImages;
+	// cached copy of all tern module images
+	private Map<String, ITernModuleOptionFactory> ternModuleOptionFactories;
 
 	private boolean registryListenerIntialized;
 
@@ -62,11 +65,11 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	private final File fTempDir;
 	private int fImageCount;
 
-	public static TernDescriptorManager getManager() {
+	public static TernModuleDescriptorManager getManager() {
 		return INSTANCE;
 	}
 
-	public TernDescriptorManager() {
+	public TernModuleDescriptorManager() {
 		this.registryListenerIntialized = false;
 		fURLMap = new HashMap<ImageDescriptor, URL>();
 		fTempDir = getTempDir();
@@ -76,7 +79,7 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	@Override
 	public void registryChanged(final IRegistryChangeEvent event) {
 		IExtensionDelta[] deltas = event.getExtensionDeltas(
-				TernUIPlugin.PLUGIN_ID, EXTENSION_TERN_DESCRIPTORS);
+				TernUIPlugin.PLUGIN_ID, EXTENSION_TERN_MODULE_DESCRIPTORS);
 		if (deltas != null) {
 			for (IExtensionDelta delta : deltas)
 				handleTernDescriptorDelta(delta);
@@ -85,7 +88,7 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 
 	@Override
 	public Image getImage(String id) {
-		ITernDescriptor descriptor = getTernDescriptor(id);
+		ITernModuleImage descriptor = getTernModuleImage(id);
 		if (descriptor != null) {
 			return descriptor.getImage();
 		}
@@ -93,7 +96,7 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	}
 
 	private ImageDescriptor getImageDescriptor(String id) {
-		ITernDescriptor descriptor = getTernDescriptor(id);
+		ITernModuleImage descriptor = getTernModuleImage(id);
 		if (descriptor != null) {
 			return descriptor.getImageDescriptor();
 		}
@@ -107,44 +110,62 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	}
 
 	@Override
-	public ITernDescriptor getTernDescriptor(String id) {
-		if (ternDescriptors == null)
+	public ITernModuleImage getTernModuleImage(String id) {
+		if (ternModuleImages == null)
 			loadTernDescriptors();
-		return ternDescriptors.get(id);
+		return ternModuleImages.get(id);
+	}
+
+	@Override
+	public ITernModuleOptionFactory getTernModuleOptionFactory(String id) {
+		if (ternModuleOptionFactories == null)
+			loadTernDescriptors();
+		return ternModuleOptionFactories.get(id);
 	}
 
 	/**
 	 * Load the Nodejs installs.
 	 */
 	private synchronized void loadTernDescriptors() {
-		if (ternDescriptors != null)
+		if (ternModuleImages != null)
 			return;
 
 		Trace.trace(Trace.EXTENSION_POINT,
-				"->- Loading .ternDescriptors extension point ->-");
+				"->- Loading .ternModuleDescriptors extension point ->-");
 
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
-				TernUIPlugin.PLUGIN_ID, EXTENSION_TERN_DESCRIPTORS);
-		Map<String, ITernDescriptor> list = new HashMap<String, ITernDescriptor>(
-				cf.length);
-		addTernDescriptors(cf, list);
+				TernUIPlugin.PLUGIN_ID, EXTENSION_TERN_MODULE_DESCRIPTORS);
+		Map<String, ITernModuleOptionFactory> optionFactories = new HashMap<String, ITernModuleOptionFactory>();
+		Map<String, ITernModuleImage> images = new HashMap<String, ITernModuleImage>();
+		addTernDescriptors(cf, images, optionFactories);
 		addRegistryListenerIfNeeded();
-		ternDescriptors = list;
+		ternModuleImages = images;
+		ternModuleOptionFactories = optionFactories;
 
 		Trace.trace(Trace.EXTENSION_POINT,
-				"-<- Done loading .ternDescriptors extension point -<-");
+				"-<- Done loading .ternModuleDescriptors extension point -<-");
 	}
 
 	/**
 	 * Load the Nodejs installs.
+	 * 
+	 * @param optionFactories
 	 */
 	private synchronized void addTernDescriptors(IConfigurationElement[] cf,
-			Map<String, ITernDescriptor> list) {
+			Map<String, ITernModuleImage> images,
+			Map<String, ITernModuleOptionFactory> optionFactories) {
 		for (IConfigurationElement ce : cf) {
 			try {
-				TernDescriptor ternDescriptor = new TernDescriptor(ce);
-				list.put(ternDescriptor.getId(), ternDescriptor);
+				if ("optionFactory".equals(ce.getName())) {
+					String id = ce.getAttribute("id");
+					ITernModuleOptionFactory factory = (ITernModuleOptionFactory) ce
+							.createExecutableExtension("class");
+					optionFactories.put(id, factory);
+				} else if ("image".equals(ce.getName())) {
+					TernModuleImage ternDescriptor = new TernModuleImage(ce);
+					images.put(ternDescriptor.getId(), ternDescriptor);
+				}
 				Trace.trace(Trace.EXTENSION_POINT, "  Loaded ternDescriptor: "
 						+ ce.getAttribute("id"));
 			} catch (Throwable t) {
@@ -155,31 +176,32 @@ public class TernDescriptorManager implements ITernDescriptorManager,
 	}
 
 	protected void handleTernDescriptorDelta(IExtensionDelta delta) {
-		if (ternDescriptors == null) // not loaded yet
+		if (ternModuleImages == null) // not loaded yet
 			return;
 
 		IConfigurationElement[] cf = delta.getExtension()
 				.getConfigurationElements();
 
-		Map<String, ITernDescriptor> list = new HashMap<String, ITernDescriptor>(
-				ternDescriptors);
+		Map<String, ITernModuleOptionFactory> optionFactories = new HashMap<String, ITernModuleOptionFactory>();
+		Map<String, ITernModuleImage> images = new HashMap<String, ITernModuleImage>();
 		if (delta.getKind() == IExtensionDelta.ADDED) {
-			addTernDescriptors(cf, list);
+			addTernDescriptors(cf, images, optionFactories);
 		} else {
-			int size = list.size();
-			TernDescriptor[] st = new TernDescriptor[size];
-			int size2 = cf.length;
-
-			for (int i = 0; i < size; i++) {
-				for (int j = 0; j < size2; j++) {
-					if (st[i].getId().equals(cf[j].getAttribute("id"))) {
-						st[i].dispose();
-						list.remove(st[i]);
-					}
-				}
-			}
+			// int size = list.size();
+			// TernModuleImage[] st = new TernModuleImage[size];
+			// int size2 = cf.length;
+			//
+			// for (int i = 0; i < size; i++) {
+			// for (int j = 0; j < size2; j++) {
+			// if (st[i].getId().equals(cf[j].getAttribute("id"))) {
+			// st[i].dispose();
+			// list.remove(st[i]);
+			// }
+			// }
+			// }
 		}
-		ternDescriptors = list;
+		ternModuleImages = images;
+		ternModuleOptionFactories = optionFactories;
 	}
 
 	private void addRegistryListenerIfNeeded() {

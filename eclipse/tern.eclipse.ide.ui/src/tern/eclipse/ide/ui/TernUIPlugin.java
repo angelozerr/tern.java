@@ -23,9 +23,9 @@ import org.osgi.framework.BundleContext;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.console.TernConsole;
 import tern.eclipse.ide.internal.ui.console.TernConsoleHelper;
-import tern.eclipse.ide.internal.ui.descriptors.TernDescriptorManager;
+import tern.eclipse.ide.internal.ui.descriptors.TernModuleDescriptorManager;
 import tern.eclipse.ide.ui.console.ITernConsole;
-import tern.eclipse.ide.ui.descriptors.ITernDescriptorManager;
+import tern.eclipse.ide.ui.descriptors.ITernModuleDescriptorManager;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -123,8 +123,8 @@ public class TernUIPlugin extends AbstractUIPlugin {
 		return console;
 	}
 
-	public static ITernDescriptorManager getTernDescriptorManager() {
-		return TernDescriptorManager.getManager();
+	public static ITernModuleDescriptorManager getTernDescriptorManager() {
+		return TernModuleDescriptorManager.getManager();
 	}
 
 }

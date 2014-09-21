@@ -16,19 +16,19 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import tern.eclipse.ide.ui.ImageResource;
-import tern.eclipse.ide.ui.descriptors.ITernDescriptor;
+import tern.eclipse.ide.ui.descriptors.ITernModuleImage;
 import tern.utils.StringUtils;
 
 /**
- * Tern descriptor.
+ * Tern module image.
  *
  */
-public class TernDescriptor implements ITernDescriptor {
+public class TernModuleImage implements ITernModuleImage {
 
 	private final String id;
 	private final String imageKey;
 
-	public TernDescriptor(IConfigurationElement ce) {
+	public TernModuleImage(IConfigurationElement ce) {
 		this.id = ce.getAttribute("id");
 		this.imageKey = getImageKey(ce, id);
 	}

@@ -3,7 +3,7 @@
 <schema targetNamespace="tern.eclipse.ide.ui" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="tern.eclipse.ide.ui" id="ternDescriptors" name="tern descriptors"/>
+         <meta.schema plugin="tern.eclipse.ide.ui" id="ternModuleDescriptors" name="tern module descriptors"/>
       </appInfo>
       <documentation>
          Extension point for provide Tern descriptors.
@@ -18,7 +18,8 @@
       </annotation>
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="ternDescriptor" minOccurs="1" maxOccurs="unbounded"/>
+            <element ref="optionFactory" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="image" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,7 +45,7 @@
       </complexType>
    </element>
 
-   <element name="ternDescriptor">
+   <element name="optionFactory">
       <complexType>
          <sequence>
          </sequence>
@@ -55,7 +56,31 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="icon" type="string">
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory"/>
+               </appInfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="image">
+      <complexType>
+         <sequence>
+         </sequence>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="icon" type="string" use="required">
             <annotation>
                <documentation>
                   

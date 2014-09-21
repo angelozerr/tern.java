@@ -14,9 +14,9 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * Tern descriptor API.
+ * Tern module image API.
  */
-public interface ITernDescriptor {
+public interface ITernModuleImage {
 
 	/**
 	 * Returns the module name.

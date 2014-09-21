@@ -13,7 +13,7 @@ package tern.eclipse.ide.internal.ui.controls;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.widgets.Composite;
 
-import tern.eclipse.ide.internal.ui.descriptors.TernDescriptorManager;
+import tern.eclipse.ide.internal.ui.descriptors.TernModuleDescriptorManager;
 import tern.server.ITernModule;
 
 /**
@@ -34,7 +34,7 @@ public class OptionsPanel extends AbstractPanel {
 	@Override
 	protected Composite createContent(Composite parent, ITernModule module,
 			IProject project) {
-		return TernDescriptorManager.getManager().createOptionsPanel(parent,
+		return TernModuleDescriptorManager.getManager().createOptionsPanel(parent,
 				module, project);
 	}
 }

@@ -7,10 +7,11 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
+import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
 import tern.server.ITernModule;
 import tern.server.protocol.completions.TernCompletionItem;
 
-public interface ITernDescriptorManager {
+public interface ITernModuleDescriptorManager {
 
 	/**
 	 * Returns the image for the given module name.
@@ -55,7 +56,7 @@ public interface ITernDescriptorManager {
 	 *            module name.
 	 * @return the descriptor for the given module name.
 	 */
-	ITernDescriptor getTernDescriptor(String id);
+	ITernModuleImage getTernModuleImage(String id);
 
 	/**
 	 * Create options panel for the given module.
@@ -72,5 +73,7 @@ public interface ITernDescriptorManager {
 			IProject project);
 
 	void destroy();
+
+	ITernModuleOptionFactory getTernModuleOptionFactory(String id);
 
 }

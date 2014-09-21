@@ -14,8 +14,8 @@
  -->
 <plugin>
 	
-	<extension-point id="ternDescriptors" name="%ternDescriptors.name"
-		schema="schema/ternDescriptors.exsd" />
+	<extension-point id="ternModuleDescriptors" name="%ternModuleDescriptors.name"
+		schema="schema/ternModuleDescriptors.exsd" />
 			
     <extension point="org.eclipse.ui.startup">
         <startup
@@ -165,95 +165,115 @@
             targetId="org.eclipse.wst.jsdt.ui.javaCode">
       </hyperlinkDetector>
    </extension>
-   
+      
    <!-- Tern Defs + Plugins descriptor -->
    <extension
-         point="tern.eclipse.ide.ui.ternDescriptors">
+         point="tern.eclipse.ide.ui.ternModuleDescriptors">
+      
+      <!-- Options -->
+      <optionFactory
+         id="string"
+         class="tern.eclipse.ide.internal.ui.descriptors.options.StringTernModuleOptionFactory" >
+      </optionFactory>      
+      <optionFactory
+         id="boolean"
+         class="tern.eclipse.ide.internal.ui.descriptors.options.BooleanTernModuleOptionFactory" >
+      </optionFactory>  
+      <optionFactory
+         id="path"
+         class="tern.eclipse.ide.internal.ui.descriptors.options.PathTernModuleOptionFactory" >         
+      </optionFactory>  
+      <optionFactory
+         id="path[]"
+         class="tern.eclipse.ide.internal.ui.descriptors.options.PathArrayTernModuleOptionFactory" >         
+      </optionFactory>      
+      <optionFactory
+         id="finder"
+         class="tern.eclipse.ide.internal.ui.descriptors.options.FinderTernModuleOptionFactory" >         
+      </optionFactory>  
+      
       <!-- Tern def descriptors -->
-      <ternDescriptor
-            id="browser"
-            icon="/icons/full/obj16/browser.gif" >
-      </ternDescriptor>
-      <ternDescriptor
-            id="chai" >
-      </ternDescriptor>
-      <ternDescriptor
-            id="ecma5"
-            icon="/icons/full/obj16/ecma5.png" >
-      </ternDescriptor>       
-      <ternDescriptor
-            id="jquery"
-            icon="/icons/full/obj16/jquery.png" >
-      </ternDescriptor>      
-      <ternDescriptor
+      <image
+      	 id="browser"
+      	 icon="/icons/full/obj16/browser.gif" >
+      </image>
+      <image
+         id="ecma5"
+         icon="/icons/full/obj16/ecma5.png" >
+      </image>       
+      <image
+         id="jquery"
+         icon="/icons/full/obj16/jquery.png" >
+      </image>      
+      <image
             id="underscore"
             icon="/icons/full/obj16/underscore.png" >
-      </ternDescriptor>  
+      </image>  
       <!-- Tern plugin descriptors -->
-      <ternDescriptor
+      <image
             id="angular"
             icon="/icons/full/obj16/angular.png" >
-      </ternDescriptor>
-      <ternDescriptor
+      </image>
+      <image
             id="aui"
             icon="/icons/full/obj16/aui.png" >
-      </ternDescriptor>       
-      <ternDescriptor
+      </image>       
+      <image
             id="ckeditor"
             icon="/icons/full/obj16/ckeditor.png" >
-      </ternDescriptor>
-      <ternDescriptor
+      </image>
+      <image
             id="closure"
             icon="/icons/full/obj16/closure.png" >
-      </ternDescriptor>      
-      <ternDescriptor
+      </image>      
+      <image
             id="cordovajs"
             icon="/icons/full/obj16/cordovajs.png" >
-      </ternDescriptor>
-      <ternDescriptor
+      </image>
+      <image
             id="dojotoolkit"
             icon="/icons/full/obj16/dojotoolkit.png" >
-      </ternDescriptor>
-      <ternDescriptor
+      </image>
+      <image
             id="extjs"
             icon="/icons/full/obj16/extjs.png" >
-      </ternDescriptor>
-  	  <ternDescriptor
+      </image>
+  	  <image
             id="gmaps"
             icon="/icons/full/obj16/gmaps.png" >
-      </ternDescriptor>
-      <ternDescriptor
+      </image>
+      <image
             id="gas"
             icon="/icons/full/obj16/gas.png" >
-      </ternDescriptor>             
-  	  <ternDescriptor
+      </image>             
+  	  <image
             id="grunt"
             icon="/icons/full/obj16/grunt.png" >
-      </ternDescriptor>
-      <ternDescriptor
+      </image>
+      <image
             id="liferay"
             icon="/icons/full/obj16/liferay.png" >
-      </ternDescriptor>
-  	  <ternDescriptor
+      </image>
+  	  <image
             id="meteor"
             icon="/icons/full/obj16/meteor.png" >        
-      </ternDescriptor>                    
-  	  <ternDescriptor
+      </image>                    
+  	  <image
             id="node"
             icon="/icons/full/obj16/node.png" >
-      </ternDescriptor>
-  	  <ternDescriptor
+      </image>
+  	  <image
             id="qooxdoo"
             icon="/icons/full/obj16/qooxdoo.png" >
-      </ternDescriptor>      
-  	  <ternDescriptor
+      </image>      
+  	  <image
             id="requirejs"
             icon="/icons/full/obj16/requirejs.png" >
-      </ternDescriptor>                 
-      <ternDescriptor
+      </image>                 
+      <image
             id="yui"
             icon="/icons/full/obj16/yui.png" >
-      </ternDescriptor>      
+      </image>      
    </extension>   
          	       	 
 </plugin>        
