@@ -31,9 +31,9 @@ public class TernFile extends JsonObject {
 		part, full
 	}
 
-	public TernFile(String name, String text, boolean isHTML, Integer offset) {
+	public TernFile(String name, String text, boolean isHTML, Integer offset, String[] tags) {
 		super.add(NAME_FIELD_NAME, name);
-		super.add(TEXT_FIELD_NAME, getText(text, isHTML));
+		super.add(TEXT_FIELD_NAME, getText(text, isHTML, tags));
 		if (offset != null) {
 			super.add(TYPE_FIELD_NAME, FileType.part.name());
 			super.add(OFFSET_LINES_FIELD_TYPE, offset);
@@ -42,11 +42,11 @@ public class TernFile extends JsonObject {
 		}
 	}
 
-	private String getText(String text, boolean isHTML) {
+	private String getText(String text, boolean isHTML, String[] tags) {
 		if (text == null || !isHTML) {
 			return text;
 		}
-		return HtmlHelper.extractJS(text);
+		return HtmlHelper.extractJS(text, tags);
 	}
 
 	public String getName() {

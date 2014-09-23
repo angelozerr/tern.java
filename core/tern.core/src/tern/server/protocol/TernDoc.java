@@ -75,7 +75,11 @@ public class TernDoc extends JsonObject {
 	 *            null if "full" file type and "part" otherwise.
 	 */
 	public void addFile(String name, String text, boolean isHTML, Integer offset) {
-		addFile(new TernFile(name, text, isHTML, offset));
+		addFile(new TernFile(name, text, isHTML, offset, new String[] {"script"}));
+	}
+
+	public void addFile(String name, String text, boolean isHTML, Integer offset, String[] tags) {
+		addFile(new TernFile(name, text, isHTML, offset, tags));
 	}
 
 	/**
