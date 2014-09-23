@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
+import tern.metadata.TernModuleMetadataOption;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
@@ -30,9 +31,12 @@ import com.eclipsesource.json.JsonObject;
  */
 public class StringTernModuleOptionFactory implements ITernModuleOptionFactory {
 
+	public static final String ID = "string";
+	
 	@Override
 	public void createOption(Composite parent, IProject project,
-			final String name, final JsonObject options) {
+			TernModuleMetadataOption metadata, final JsonObject options) {
+		final String name = metadata.getName();
 		// create UI
 		final Text textField = new Text(parent, SWT.BORDER);
 		textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));

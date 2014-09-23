@@ -24,14 +24,16 @@ public class TernModuleMetadataOption {
 	private static final String DESCRIPTION_FIELD = "description";
 	private static final String TYPE_FIELD = "type";
 
+	private final JsonObject jsonObject;
 	private final String name;
 	private final String description;
 	private final String type;
 
-	public TernModuleMetadataOption(JsonObject json) {
-		this.name = JsonHelper.getString(json, NAME_FIELD);
-		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
-		this.type = JsonHelper.getString(json, TYPE_FIELD);
+	public TernModuleMetadataOption(JsonObject jsonObject) {
+		this.jsonObject = jsonObject;
+		this.name = JsonHelper.getString(jsonObject, NAME_FIELD);
+		this.description = JsonHelper.getString(jsonObject, DESCRIPTION_FIELD);
+		this.type = JsonHelper.getString(jsonObject, TYPE_FIELD);
 	}
 
 	public String getName() {
@@ -44,6 +46,10 @@ public class TernModuleMetadataOption {
 
 	public String getType() {
 		return type;
+	}
+
+	public JsonObject getJsonObject() {
+		return jsonObject;
 	}
 
 }

@@ -14,21 +14,33 @@
   {
    "name": "rules",
    "description": "Defines rules level",
-   "type": "array",
-   "value": {
-    "UnknownProperty": {
-     "severity": "warning"
+   "type": "lintRules",
+   "values": [
+    {
+     "UnknownProperty": {
+      "label": "Unknown property",
+      "severity": "warning"
+     }
     },
-    "UnknownIdentifier": {
-     "severity": "warning"
+    {
+     "UnknownIdentifier": {
+      "label": "Unknown identifier",
+      "severity": "warning"
+     }
     },
-    "NotAFunction": {
-     "severity": "error"
+    {
+     "NotAFunction": {
+      "label": "Not a function",
+      "severity": "error"
+     }
     },
-    "InvalidArgument": {
-     "severity": "error"
+    {
+     "InvalidArgument": {
+      "label": "Invalid argument",
+      "severity": "error"
+     }
     }
-   }
+   ]
   }
  ]
 }

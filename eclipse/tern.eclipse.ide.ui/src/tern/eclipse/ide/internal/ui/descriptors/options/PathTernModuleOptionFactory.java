@@ -31,6 +31,7 @@ import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.descriptors.TernModuleDescriptorManager;
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
 import tern.eclipse.ide.ui.utils.DialogUtils;
+import tern.metadata.TernModuleMetadataOption;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
@@ -44,11 +45,14 @@ public class PathTernModuleOptionFactory implements ITernModuleOptionFactory {
 
 	@Override
 	public void createOption(Composite ancestor, final IProject project,
-			final String name, final JsonObject options) {
+			TernModuleMetadataOption metadata, final JsonObject options) {
+		final String name = metadata.getName();
 		if (project == null) {
-			TernModuleDescriptorManager.getManager()
-					.getTernModuleOptionFactory("string")
-					.createOption(ancestor, project, name, options);
+			TernModuleDescriptorManager
+					.getManager()
+					.getTernModuleOptionFactory(
+							StringTernModuleOptionFactory.ID)
+					.createOption(ancestor, project, metadata, options);
 			return;
 		}
 
@@ -68,7 +72,7 @@ public class PathTernModuleOptionFactory implements ITernModuleOptionFactory {
 				.getImage();
 
 		// set description and image
-		deco.setDescriptionText(TernUIMessages.TernModuleOptionsPanel_validatePath);
+		deco.setDescriptionText(TernUIMessages.PathTernModuleOptionFactory_validatePath);
 		deco.setImage(image);
 		deco.hide();
 

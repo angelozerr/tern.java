@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
+import tern.metadata.TernModuleMetadataOption;
 import tern.server.protocol.JsonHelper;
 
 import com.eclipsesource.json.JsonObject;
@@ -31,7 +32,8 @@ public class BooleanTernModuleOptionFactory implements ITernModuleOptionFactory 
 
 	@Override
 	public void createOption(Composite parent, IProject project,
-			final String name, final JsonObject options) {
+			TernModuleMetadataOption metadata, final JsonObject options) {
+		final String name = metadata.getName();
 		// create UI
 		final Button checkbox = new Button(parent, SWT.CHECK);
 		checkbox.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));

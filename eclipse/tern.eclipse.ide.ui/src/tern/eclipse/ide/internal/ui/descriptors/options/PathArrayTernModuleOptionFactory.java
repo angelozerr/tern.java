@@ -13,12 +13,9 @@ package tern.eclipse.ide.internal.ui.descriptors.options;
 import java.util.Iterator;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -26,30 +23,25 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Text;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.controls.FilenameEditingSupport;
-import tern.eclipse.ide.internal.ui.controls.PathEditingSupport;
 import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
+import tern.eclipse.ide.internal.ui.viewers.FilenameEditingSupport;
+import tern.eclipse.ide.internal.ui.viewers.PathEditingSupport;
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
-import tern.eclipse.ide.ui.utils.DialogUtils;
 import tern.eclipse.ide.ui.viewers.JsonContentProvider;
 import tern.eclipse.ide.ui.viewers.JsonLabelProvider;
 import tern.eclipse.ide.ui.viewers.MemberWrapper;
+import tern.metadata.TernModuleMetadataOption;
 import tern.server.protocol.JsonHelper;
-import tern.utils.StringUtils;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
@@ -63,7 +55,8 @@ public class PathArrayTernModuleOptionFactory implements
 
 	@Override
 	public void createOption(final Composite ancestor, final IProject project,
-			final String name, final JsonObject options) {
+			TernModuleMetadataOption metadata, final JsonObject options) {
+		final String name = metadata.getName();
 		Label title = new Label(ancestor, SWT.NONE);
 		title.setText("fill mappings of filename/path.");
 		title.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -85,8 +78,10 @@ public class PathArrayTernModuleOptionFactory implements
 				SWT.NONE);
 		filenameColumn.getColumn().setWidth(100);
 		filenameColumn.getColumn().setResizable(true);
-		filenameColumn.getColumn().setText(
-				TernUIMessages.TernModuleOptionsPanel_paths_filenameColumn);
+		filenameColumn
+				.getColumn()
+				.setText(
+						TernUIMessages.FinderTernModuleOptionFactory_paths_filenameColumn);
 		filenameColumn.setEditingSupport(new FilenameEditingSupport(viewer));
 
 		// create path column
@@ -114,8 +109,9 @@ public class PathArrayTernModuleOptionFactory implements
 		toolbarComposite.setLayout(new GridLayout());
 		toolbarComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+		// Add button
 		Button addButton = new Button(toolbarComposite, SWT.PUSH);
-		addButton.setText("Add..");
+		addButton.setText(TernUIMessages.Button_add);
 		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		addButton.addSelectionListener(new SelectionAdapter() {
 
@@ -157,8 +153,9 @@ public class PathArrayTernModuleOptionFactory implements
 			}
 		});
 
+		// Remove button
 		final Button removeButton = new Button(toolbarComposite, SWT.PUSH);
-		removeButton.setText("Remove..");
+		removeButton.setText(TernUIMessages.Button_remove);
 		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		removeButton.setEnabled(false);
 		removeButton.addSelectionListener(new SelectionAdapter() {

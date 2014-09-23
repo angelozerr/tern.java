@@ -29,6 +29,7 @@ public final class TernUIMessages extends NLS {
 	public static String Button_addFile;
 	public static String Button_addFolder;
 	public static String Button_addProject;
+	public static String Button_add;
 	public static String Button_remove;
 	public static String Button_newFolder;
 	public static String Button_selectPath;
@@ -54,9 +55,11 @@ public final class TernUIMessages extends NLS {
 	public static String TernModuleDetailsPanel_helpURL;
 	public static String DetailsPanel_noSelectionLabel;
 	public static String TernModuleOptionsPanel_selectPathDialogTitle;
-	public static String TernModuleOptionsPanel_validatePath;
-	public static String TernModuleOptionsPanel_paths_filenameColumn;
+	public static String PathTernModuleOptionFactory_validatePath;
+	public static String FinderTernModuleOptionFactory_paths_filenameColumn;
 	public static String TernModuleOptionsPanel_paths_pathColumn;
+	public static String LintRulesTernModuleOptionFactory_rules_ruleColumn;
+	public static String LintRulesTernModuleOptionFactory_rules_severityColumn;
 
 	public static String TernScriptPathsBlock_desc;
 

@@ -27,6 +27,12 @@ import tern.server.ITernPlugin;
 public class TernModuleLabelProvider extends LabelProvider implements
 		ITableLabelProvider {
 
+	private static final ITableLabelProvider INSTANCE = new TernModuleLabelProvider();
+
+	public static ITableLabelProvider getInstance() {
+		return INSTANCE;
+	}
+
 	@Override
 	public String getColumnText(Object element, int columnIndex) {
 		if (element instanceof ITernModule) {

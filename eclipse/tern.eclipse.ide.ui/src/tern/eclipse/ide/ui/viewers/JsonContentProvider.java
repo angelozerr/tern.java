@@ -37,10 +37,10 @@ public class JsonContentProvider implements IStructuredContentProvider {
 			List<MemberWrapper> members = new ArrayList<MemberWrapper>();
 			for (String name : ((JsonObject) element).names()) {
 				members.add(new MemberWrapper((JsonObject) element, name));
-			}			
+			}
 			return members.toArray(new MemberWrapper[0]);
 		} else if (element instanceof JsonArray) {
-			return ((JsonArray)element).values().toArray();
+			return ((JsonArray) element).values().toArray();
 		}
 		return null;
 	}

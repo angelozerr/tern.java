@@ -105,11 +105,11 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 	}
 
 	protected void createUI(Composite parent, final JsonObject options,
-			IProject project, TernModuleMetadataOption option) {
+			IProject project, TernModuleMetadataOption metadata) {
 
-		final String name = option.getName();
-		String description = option.getDescription();
-		String type = option.getType();
+		final String name = metadata.getName();
+		String description = metadata.getDescription();
+		String type = metadata.getType();
 
 		Label label = new Label(parent, SWT.NONE);
 		label.setLayoutData(new GridData(GridData.VERTICAL_ALIGN_BEGINNING));
@@ -119,7 +119,7 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 		ITernModuleOptionFactory factory = TernModuleDescriptorManager
 				.getManager().getTernModuleOptionFactory(type);
 		if (factory != null) {
-			factory.createOption(parent, project, name, options);
+			factory.createOption(parent, project, metadata, options);
 		} else {
 			createJsonOption(parent, name, options);
 		}

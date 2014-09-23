@@ -191,7 +191,10 @@
          id="finder"
          class="tern.eclipse.ide.internal.ui.descriptors.options.FinderTernModuleOptionFactory" >         
       </optionFactory>  
-      
+      <optionFactory
+         id="lintRules"
+         class="tern.eclipse.ide.internal.ui.descriptors.options.LintRulesTernModuleOptionFactory" >         
+      </optionFactory>       
       <!-- Tern def descriptors -->
       <image
       	 id="browser"

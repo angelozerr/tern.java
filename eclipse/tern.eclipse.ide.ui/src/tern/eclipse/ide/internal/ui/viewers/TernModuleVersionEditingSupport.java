@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.controls;
+package tern.eclipse.ide.internal.ui.viewers;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -38,7 +38,7 @@ public class TernModuleVersionEditingSupport extends EditingSupport {
 		cellEditor = new ComboBoxViewerCellEditor((Composite) getViewer()
 				.getControl(), SWT.READ_ONLY);
 		cellEditor.setLabelProvider(new LabelProvider());
-		cellEditor.setContenProvider(ArrayContentProvider.getInstance());
+		cellEditor.setContentProvider(ArrayContentProvider.getInstance());
 	}
 
 	@Override

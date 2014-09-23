@@ -50,8 +50,8 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.controls.DependenciesPanel;
 import tern.eclipse.ide.internal.ui.controls.DetailsPanel;
 import tern.eclipse.ide.internal.ui.controls.OptionsPanel;
-import tern.eclipse.ide.internal.ui.controls.TernModuleVersionEditingSupport;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
+import tern.eclipse.ide.internal.ui.viewers.TernModuleVersionEditingSupport;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
 import tern.metadata.TernModuleMetadata;
@@ -184,7 +184,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 		versionColumn.setEditingSupport(new TernModuleVersionEditingSupport(
 				tableViewer));
 
-		tableViewer.setLabelProvider(new TernModuleLabelProvider());
+		tableViewer.setLabelProvider(TernModuleLabelProvider.getInstance());
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 
 		// when a module is checked and dependencies checkbox is checked, tern

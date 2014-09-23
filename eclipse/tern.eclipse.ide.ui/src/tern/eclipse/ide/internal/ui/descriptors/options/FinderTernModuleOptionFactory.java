@@ -35,6 +35,7 @@ import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
 import tern.eclipse.ide.ui.utils.DialogUtils;
 import tern.eclipse.ide.ui.viewers.JsonContentProvider;
 import tern.eclipse.ide.ui.viewers.JsonLabelProvider;
+import tern.metadata.TernModuleMetadataOption;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -46,13 +47,20 @@ import com.eclipsesource.json.JsonValue;
  */
 public class FinderTernModuleOptionFactory implements ITernModuleOptionFactory {
 
+	private static final String FINDER_FIELD = "finder";
+	private static final String NAME_FIELD = "name";
+	private static final String GREP = "grep";
+	private static final String DIRS_FIELD = "dirs";
+
 	@Override
 	public void createOption(final Composite ancestor, final IProject project,
-			final String name, final JsonObject options) {
+			TernModuleMetadataOption metadata, final JsonObject options) {
 		if (project == null) {
-			TernModuleDescriptorManager.getManager()
-					.getTernModuleOptionFactory("string")
-					.createOption(ancestor, project, name, options);
+			TernModuleDescriptorManager
+					.getManager()
+					.getTernModuleOptionFactory(
+							StringTernModuleOptionFactory.ID)
+					.createOption(ancestor, project, metadata, options);
 			return;
 		}
 
@@ -77,8 +85,10 @@ public class FinderTernModuleOptionFactory implements ITernModuleOptionFactory {
 				SWT.NONE);
 		filenameColumn.getColumn().setWidth(100);
 		filenameColumn.getColumn().setResizable(true);
-		filenameColumn.getColumn().setText(
-				TernUIMessages.TernModuleOptionsPanel_paths_filenameColumn);
+		filenameColumn
+				.getColumn()
+				.setText(
+						TernUIMessages.FinderTernModuleOptionFactory_paths_filenameColumn);
 
 		viewer.setLabelProvider(JsonLabelProvider.getInstance());
 		viewer.setContentProvider(JsonContentProvider.getInstance());
@@ -97,8 +107,9 @@ public class FinderTernModuleOptionFactory implements ITernModuleOptionFactory {
 		toolbarComposite.setLayout(new GridLayout());
 		toolbarComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+		// Add button
 		Button addButton = new Button(toolbarComposite, SWT.PUSH);
-		addButton.setText("Add..");
+		addButton.setText(TernUIMessages.Button_add);
 		addButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		addButton.addSelectionListener(new SelectionAdapter() {
 
@@ -129,8 +140,9 @@ public class FinderTernModuleOptionFactory implements ITernModuleOptionFactory {
 			}
 		});
 
+		// Remove button
 		final Button removeButton = new Button(toolbarComposite, SWT.PUSH);
-		removeButton.setText("Remove..");
+		removeButton.setText(TernUIMessages.Button_remove);
 		removeButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		removeButton.setEnabled(false);
 		removeButton.addSelectionListener(new SelectionAdapter() {
@@ -165,17 +177,17 @@ public class FinderTernModuleOptionFactory implements ITernModuleOptionFactory {
 	}
 
 	public JsonArray getFinderDirsOption(final JsonObject options) {
-		JsonValue finderOption = options.get("finder");
+		JsonValue finderOption = options.get(FINDER_FIELD);
 		if (finderOption == null || !(finderOption instanceof JsonObject)) {
 			finderOption = new JsonObject();
-			options.set("finder", finderOption);
+			options.set(FINDER_FIELD, finderOption);
 		}
-		((JsonObject) finderOption).set("name", "grep");
+		((JsonObject) finderOption).set(NAME_FIELD, GREP);
 		JsonObject grepFinderOptions = ((JsonObject) finderOption);
-		JsonArray dirs = (JsonArray) grepFinderOptions.get("dirs");
+		JsonArray dirs = (JsonArray) grepFinderOptions.get(DIRS_FIELD);
 		if (dirs == null) {
 			dirs = new JsonArray();
-			grepFinderOptions.set("dirs", dirs);
+			grepFinderOptions.set(DIRS_FIELD, dirs);
 		}
 		return dirs;
 	}
