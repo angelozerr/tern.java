@@ -15,9 +15,11 @@
 <plugin>
 	
 	<extension-point id="ternServerTypes" name="%ternServerTypes.name"
-		schema="schema/ternServerTypes.exsd" />	
+		schema="schema/ternServerTypes.exsd" />
+	<extension-point id="ternFileHelpers" name="%ternFileHelpers.name"
+		schema="schema/ternFileHelpers.exsd" />
 	<extension-point id="ternConsoleConnectors" name="%ternConsoleConnectors.name"
-		schema="schema/ternConsoleConnectors.exsd" />	
+		schema="schema/ternConsoleConnectors.exsd" />
 	<extension-point id="ternNatureAdapters" name="%ternNatureAdapters.name"
 		schema="schema/ternNatureAdapters.exsd" />	
 	

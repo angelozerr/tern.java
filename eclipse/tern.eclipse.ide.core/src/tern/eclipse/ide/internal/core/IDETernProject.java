@@ -10,12 +10,18 @@
  */
 package tern.eclipse.ide.internal.core;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -35,6 +41,7 @@ import tern.angular.protocol.completions.TernAngularCompletionsQuery;
 import tern.eclipse.ide.core.IDETernFileManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernConsoleConnector;
+import tern.eclipse.ide.core.ITernFileHelper;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener.LifecycleEventType;
 import tern.eclipse.ide.core.ITernServerPreferencesListener;
 import tern.eclipse.ide.core.ITernServerType;
@@ -61,8 +68,6 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 
 /**
  * Eclipse IDE Tern project.
@@ -681,7 +686,14 @@ public class IDETernProject extends TernProject<IFile> implements
 				String name = getFileManager().getFileName(file);
 				String text = document.get();
 				boolean isHTML = FileUtils.isHTMLFile(file);
-				doc.addFile(name, text, isHTML, null);
+				ITernFileHelper[] ternFileHelpers =
+					TernFileHelperManager.getManager().getTernFileHelpers();
+				Set<String> tags = new HashSet<String>();
+				tags.add( "script" );
+				for( ITernFileHelper helper : ternFileHelpers ) {
+					Collections.addAll( tags, helper.getExtraTags().split(",") );
+				}
+				doc.addFile(name, text, isHTML, null, tags.toArray( new String[0] ));
 				TernQuery query = doc.getQuery();
 				if (query != null) {
 					query.setFile(name);
