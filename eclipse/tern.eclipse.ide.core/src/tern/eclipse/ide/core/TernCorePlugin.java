@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
 import tern.eclipse.ide.internal.core.IDETernProject;
+import tern.eclipse.ide.internal.core.TernFileConfigurationManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
@@ -60,15 +61,17 @@ public class TernCorePlugin extends Plugin {
 				.getBundle(tern.Activator.PLUGIN_ID));
 		NodejsProcessManager.getInstance().init(ternCoreBaseDir);
 		TernModuleMetadataManager.getInstance().init(ternCoreBaseDir);
+		TernFileConfigurationManager.getManager().initialize();
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
 		NodejsProcessManager.getInstance().dispose();
 		TernServerTypeManager.getManager().destroy();
 		TernNatureAdaptersManager.getManager().destroy();
+		TernFileConfigurationManager.getManager().destroy();
+		plugin = null;
+		super.stop(context);
 	}
 
 	/**

@@ -31,7 +31,7 @@ import tern.server.protocol.html.ScriptTagRegion;
  */
 public class TernFileConfigurationManager implements IRegistryChangeListener {
 
-	private static final String EXTENSION_TERN_FILE_CONFIGURATION = "ternFileConfigurations";
+	private static final String EXTENSION_TERN_FILE_CONFIGURATIONS = "ternFileConfigurations";
 
 	private static final TernFileConfigurationManager INSTANCE = new TernFileConfigurationManager();
 
@@ -50,7 +50,7 @@ public class TernFileConfigurationManager implements IRegistryChangeListener {
 	@Override
 	public void registryChanged(final IRegistryChangeEvent event) {
 		IExtensionDelta[] deltas = event.getExtensionDeltas(
-				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_FILE_CONFIGURATION);
+				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_FILE_CONFIGURATIONS);
 		if (deltas != null) {
 			for (IExtensionDelta delta : deltas)
 				handleTernServerConfigurationDelta(delta);
@@ -79,7 +79,7 @@ public class TernFileConfigurationManager implements IRegistryChangeListener {
 
 		IExtensionRegistry registry = Platform.getExtensionRegistry();
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
-				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_FILE_CONFIGURATION);
+				TernCorePlugin.PLUGIN_ID, EXTENSION_TERN_FILE_CONFIGURATIONS);
 		List<ITernFileConfiguration> list = new ArrayList<ITernFileConfiguration>(
 				cf.length);
 		addTernServerConfigurations(cf, list);
