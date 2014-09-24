@@ -6,7 +6,6 @@
   mod(tern, tern, acorn.walk);
 })(function(infer, tern, walk) {
   "use strict";
-  
   function outputPos(query, file, pos) {
     if (query.lineCharPositions) {
       var out = file.asLineChar(pos);
@@ -16,7 +15,7 @@
     }
   }
 
-  function makeVisitors(query, file, messages) {
+  function makeVisitors(server, query, file, messages) {
 	
     function addMessage(node, msg, severity) {
       var error = makeError(node, msg, severity);
@@ -77,6 +76,25 @@
       return false;
     }
     
+    function checkPropsInObject(i, node, expectedArg, actualObj, invalidArgument) {
+      var
+        object = expectedArg.proto.props,
+        expectedArgType = expectedArg.getType(),
+        props = actualObj.props,
+        prop_count = 0;
+      for (var prop in props) {
+        if (! ( prop in object ) ) {
+          addMessage(node.properties[prop_count].key, "Invalid argument at " + (i+1) + ": " + prop + " is not a property in " + getTypeName(expectedArgType), invalidArgument.severity);
+        } else {
+          // test that each object literal prop is the correct type
+          var actualType = actualObj.props[prop].getType();
+          if (getTypeName(expectedArgType.proto.props[prop].getType()) !== getTypeName(actualType)) {
+            addMessage(node.properties[prop_count].value, "Invalid argument at " + (i+1) + ": cannot convert from " + getTypeName(actualType) + " to " + getTypeName(object[prop].getType()), invalidArgument.severity);
+          }
+        }
+        prop_count++;
+      }
+    }
     function validateCallExpression(node, state, c) {
       var notAFunctionRule = getRule("NotAFunction"), invalidArgument = getRule("InvalidArgument");
       if (!notAFunctionRule && !invalidArgument) return;        
@@ -104,31 +122,30 @@
               var actualNode = actualArgs[i];
               var actualArg = infer.expressionType({node: actualNode, state: state});
               if (!compareType(expectedArg.getType(), actualArg.getType())) {
-                // Type check an object literal in a parameter, see tests labelled #JSObjectLiteralInParameter
+                // Type check an object literal in a parameter, see tests labeled #JSObjectLiteralInParameter
                 // often an object literal is used to express bunch of optional arguments to a function
                 // this has a low overhead because Object Literals (typed as a function argument) rarely have more than 20 properties
-                if (actualNode.type === "ObjectExpression") {
-                  var prop_count = 0;
-                  for (var prop in actualArg.props) {
-                    // test that each object literal prop exists in expectedArg.proto.props
-                    if (! ( prop in expectedArg.proto.props ) ) {
-                      addMessage(actualNode.properties[prop_count].key, "Invalid argument at " + (i+1) + ": " + prop + " is not a property in " + getTypeName(expectedArg.getType()), invalidArgument.severity);
-                    } else {
-                      // test that each object literal prop is the correct type
-                      if (getTypeName(expectedArg.proto.props[prop].getType()) !== getTypeName(actualArg.props[prop].getType())) {
-                        addMessage(actualNode.properties[prop_count].value, "Invalid argument at " + (i+1) + ": cannot convert from " + getTypeName(actualArg.props[prop].getType()) + " to " + getTypeName(expectedArg.proto.props[prop].getType()), invalidArgument.severity);
-                      }
-                    }
-                    prop_count++;
-                  }
-                /* TODO: handle the case where the identifier points to an object literal
-                } else if (actualNode.type === "Identifier") {
-                  findDef()
-                */
+                var notCheckableOLTypes = ["Object.prototype", // because their would be no properties to check
+                                          ,"Boolean.prototype"
+                                          ,"Function.prototype"
+                                          ,"String.prototype"
+                                          ]
+                var canBeOL = notCheckableOLTypes.indexOf(getTypeName(expectedArg.getType())) === -1;
+                if ( actualNode.type === "ObjectExpression" && canBeOL) {
+                  checkPropsInObject(i, actualNode, expectedArg, actualArg, invalidArgument);
+                // handle the case where the identifier points to an object literal
+                } else if ((actualNode.type === "Identifier") && canBeOL) {
+                  // logic from findDef
+                  // first we have to find the object literal
+                  var query = {type: "definition", start: actualNode.start, end: actualNode.end};
+                  var expr = tern.findQueryExpr(file, query);
+                  var type = infer.expressionType(expr);
+                  var objExpr = type.types[0];
+                  checkPropsInObject(i, objExpr.originNode, expectedArg, objExpr, invalidArgument);
                 } else
                   addMessage(actualNode, "Invalid argument at " + (i+1) + ": cannot convert from " + getTypeName(actualArg.getType()) + " to " + getTypeName(expectedArg.getType()), invalidArgument.severity);
               }
-            }              
+            }      
           }
         }
       }
@@ -231,7 +248,7 @@
     run: function(server, query, file) {
       try {
         var messages = [], ast = file.ast, state = file.scope;
-        var visitors = makeVisitors(query, file, messages);
+        var visitors = makeVisitors(server, query, file, messages);
         walk.simple(ast, visitors, base, state);
         return {messages: messages};
       } catch(err) {
@@ -253,7 +270,7 @@
     "UnknownIdentifier" : {"severity" : "warning"},
     "NotAFunction" : {"severity" : "error"},
     "InvalidArgument" : {"severity" : "error"}
-  }
+  };
   
   tern.registerPlugin("lint", function(server, options) {	
     server._lint = {
