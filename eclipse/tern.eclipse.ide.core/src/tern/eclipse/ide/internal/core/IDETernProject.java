@@ -58,6 +58,7 @@ import tern.server.protocol.TernFile;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
@@ -680,8 +681,8 @@ public class IDETernProject extends TernProject<IFile> implements
 			if (file != null && file.exists()) {
 				String name = getFileManager().getFileName(file);
 				String text = document.get();
-				boolean isHTML = FileUtils.isHTMLFile(file);
-				doc.addFile(name, text, isHTML, null);
+				ScriptTagRegion[] tags = getFileManager().getScriptTags(file);
+				doc.addFile(name, text, tags, null);
 				TernQuery query = doc.getQuery();
 				if (query != null) {
 					query.setFile(name);

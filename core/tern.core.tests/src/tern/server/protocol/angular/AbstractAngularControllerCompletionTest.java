@@ -74,7 +74,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\n}]);";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false, null);
+		doc.addFile(name, text, null, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -113,7 +113,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\n};})";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false, null);
+		doc.addFile(name, text, null, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -146,7 +146,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\n};})";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false, null);
+		doc.addFile(name, text, null, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -179,7 +179,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\nfunction SomeCtrl($scope) {};";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false, null);
+		doc.addFile(name, text, null, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
@@ -211,7 +211,7 @@ public abstract class AbstractAngularControllerCompletionTest extends
 		text += "\nfunction SomeCtrl($scope) {};";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false, null);
+		doc.addFile(name, text, null, null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);

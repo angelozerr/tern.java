@@ -10,6 +10,9 @@
  */
 package tern.server.protocol;
 
+import tern.server.protocol.html.HtmlHelper;
+import tern.server.protocol.html.ScriptTagRegion;
+
 import com.eclipsesource.json.JsonObject;
 
 /**
@@ -31,9 +34,10 @@ public class TernFile extends JsonObject {
 		part, full
 	}
 
-	public TernFile(String name, String text, boolean isHTML, Integer offset) {
+	public TernFile(String name, String text, ScriptTagRegion[] tags,
+			Integer offset) {
 		super.add(NAME_FIELD_NAME, name);
-		super.add(TEXT_FIELD_NAME, getText(text, isHTML));
+		super.add(TEXT_FIELD_NAME, getText(text, tags));
 		if (offset != null) {
 			super.add(TYPE_FIELD_NAME, FileType.part.name());
 			super.add(OFFSET_LINES_FIELD_TYPE, offset);
@@ -42,11 +46,11 @@ public class TernFile extends JsonObject {
 		}
 	}
 
-	private String getText(String text, boolean isHTML) {
-		if (text == null || !isHTML) {
+	private String getText(String text, ScriptTagRegion[] tags) {
+		if (text == null || tags == null) {
 			return text;
 		}
-		return HtmlHelper.extractJS(text);
+		return HtmlHelper.extractJS(text, tags);
 	}
 
 	public String getName() {

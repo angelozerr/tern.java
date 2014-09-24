@@ -119,7 +119,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 		String text = "var arr = [];";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false, null);
+		doc.addFile(name, text, null, null);
 		return doc;
 	}
 }

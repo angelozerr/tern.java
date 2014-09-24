@@ -183,7 +183,7 @@ public abstract class AbstractAngularModelCompletionTest extends
 				+ "{text:'build an angular app', done:false}];" + "}";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 		return doc;
 	}
 }

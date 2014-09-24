@@ -13,6 +13,7 @@ package tern.server;
 import java.io.IOException;
 
 import tern.TernFileManager;
+import tern.server.protocol.html.ScriptTagRegion;
 
 public class MapTernFileManager extends TernFileManager<MapTernFile> {
 
@@ -37,8 +38,8 @@ public class MapTernFileManager extends TernFileManager<MapTernFile> {
 	}
 
 	@Override
-	protected boolean isHTML(MapTernFile file) {
-		return false;
+	public ScriptTagRegion[] getScriptTags(MapTernFile file) {
+		return null;
 	}
 
 }

@@ -48,7 +48,7 @@ public abstract class AbstractAngularDirectiveCompletionTest extends
 		text += "\n});";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.directive);
@@ -83,7 +83,7 @@ public abstract class AbstractAngularDirectiveCompletionTest extends
 		text += "\n});";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.directive);
@@ -116,7 +116,7 @@ public abstract class AbstractAngularDirectiveCompletionTest extends
 		text += "\n}];";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.directive);

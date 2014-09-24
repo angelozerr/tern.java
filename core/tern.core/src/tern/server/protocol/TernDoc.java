@@ -10,6 +10,8 @@
  */
 package tern.server.protocol;
 
+import tern.server.protocol.html.ScriptTagRegion;
+
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 
@@ -69,13 +71,14 @@ public class TernDoc extends JsonObject {
 	 *            the file name.
 	 * @param text
 	 *            the file text content.
-	 * @param isHTML
-	 *            true if file is HTML and false otherwise.
+	 * @param tags
+	 *            null if it's JS file content and filled if it's HTML file.
 	 * @param offset
 	 *            null if "full" file type and "part" otherwise.
 	 */
-	public void addFile(String name, String text, boolean isHTML, Integer offset) {
-		addFile(new TernFile(name, text, isHTML, offset));
+	public void addFile(String name, String text, ScriptTagRegion[] tags,
+			Integer offset) {
+		addFile(new TernFile(name, text, tags, offset));
 	}
 
 	/**

@@ -21,6 +21,8 @@ import org.w3c.dom.NodeList;
 
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
+import tern.server.protocol.html.IScriptTagRegionProvider;
+import tern.server.protocol.html.ScriptTagRegion;
 import tern.utils.StringUtils;
 
 import com.eclipsesource.json.JsonArray;
@@ -33,7 +35,7 @@ import com.eclipsesource.json.JsonArray;
  * @param <T>
  *            the generic file.
  */
-public abstract class TernFileManager<T> {
+public abstract class TernFileManager<T> implements IScriptTagRegionProvider<T> {
 
 	// HTML elements/attributes names
 	private static final String SCRIPT_ELT = "script";
@@ -144,11 +146,14 @@ public abstract class TernFileManager<T> {
 	 *            file name
 	 * @param text
 	 *            file content.
+	 * @param tags
+	 *            null if it's JS file content and filled if it's HTML file.
 	 * @param doc
 	 *            tern doc.
 	 */
-	protected void addFile(String name, String text, boolean isHTML, TernDoc doc) {
-		doc.addFile(name, text, isHTML, null);
+	protected void addFile(String name, String text, ScriptTagRegion[] tags,
+			TernDoc doc) {
+		doc.addFile(name, text, tags, null);
 	}
 
 	/**
@@ -299,8 +304,8 @@ public abstract class TernFileManager<T> {
 			// parse
 			// in the tern doc files.
 			String text = getFileContent(file);
-			boolean isHTML = isHTML(file);
-			addFile(name, text, isHTML, doc);
+			ScriptTagRegion[] tags = getScriptTags(file);
+			addFile(name, text, tags, doc);
 		}
 		// add the file name in the visited list.
 		if (names != null) {
@@ -386,12 +391,4 @@ public abstract class TernFileManager<T> {
 	 */
 	protected abstract T getFile(String projectName, String path);
 
-	/**
-	 * Returns true if the given file is HTML and false otherwise.
-	 * 
-	 * @param file
-	 *            the generic file.
-	 * @return true if the given file is HTML and false otherwise.
-	 */
-	protected abstract boolean isHTML(T file);
 }

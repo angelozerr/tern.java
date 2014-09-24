@@ -31,6 +31,7 @@ import tern.server.ITernPlugin;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.server.rhino.loader.ClassPathScriptLoader;
@@ -133,7 +134,7 @@ public class RhinoTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void addFile(String name, String text, boolean isHTML) {
+	public void addFile(String name, String text, ScriptTagRegion[] tags) {
 		Context cx = Context.enter();
 		try {
 			// tern.js checks if file.text is typeof string

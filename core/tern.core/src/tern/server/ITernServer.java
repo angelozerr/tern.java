@@ -17,6 +17,7 @@ import tern.TernFileManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
@@ -54,7 +55,7 @@ public interface ITernServer {
 	 *            the content file.
 	 */
 	void addFile(String name, String text);
-	
+
 	/**
 	 * Register a file with the server. Note that files can also be included in
 	 * requests.
@@ -64,7 +65,7 @@ public interface ITernServer {
 	 * @param text
 	 *            the content file.
 	 */
-	void addFile(String name, String text, boolean isHTML);
+	void addFile(String name, String text, ScriptTagRegion[] tags);
 
 	void request(TernDoc doc, IResponseHandler handler);
 

@@ -20,6 +20,7 @@ Export-Package: tern,
  tern.server.protocol,
  tern.server.protocol.completions,
  tern.server.protocol.definition,
+ tern.server.protocol.html,
  tern.server.protocol.lint,
  tern.server.protocol.type,
  tern.utils

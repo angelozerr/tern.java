@@ -28,7 +28,9 @@ import org.eclipse.jface.text.IDocument;
 import tern.TernFileManager;
 import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.core.IDETernProject;
+import tern.eclipse.ide.internal.core.TernFileConfigurationManager;
 import tern.eclipse.ide.internal.core.Trace;
+import tern.server.protocol.html.ScriptTagRegion;
 import tern.utils.IOUtils;
 
 /**
@@ -172,8 +174,11 @@ public class IDETernFileManager extends TernFileManager<IFile> implements
 	}
 
 	@Override
-	protected boolean isHTML(IFile file) {
-		return FileUtils.isHTMLFile(file);
+	public ScriptTagRegion[] getScriptTags(IFile file) {
+		if (FileUtils.isHTMLFile(file)) {
+			return TernFileConfigurationManager.getManager().getScriptTags(file);
+		}
+		return null;
 	}
 
 }

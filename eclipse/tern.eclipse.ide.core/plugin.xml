@@ -20,7 +20,9 @@
 		schema="schema/ternConsoleConnectors.exsd" />	
 	<extension-point id="ternNatureAdapters" name="%ternNatureAdapters.name"
 		schema="schema/ternNatureAdapters.exsd" />	
-	
+	<extension-point id="ternFileConfigurations" name="%ternFileConfigurations.name"
+		schema="schema/ternFileConfigurations.exsd" />
+			
 	<!-- =================================================================================== -->
 	<!-- Tern Builder                                                                        -->
 	<!-- =================================================================================== -->

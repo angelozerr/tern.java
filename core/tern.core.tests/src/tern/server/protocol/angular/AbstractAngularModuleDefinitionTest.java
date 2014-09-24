@@ -41,7 +41,7 @@ public abstract class AbstractAngularModuleDefinitionTest extends
 				+ "angular.module('phonecatAnimations');";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.module);
@@ -68,7 +68,7 @@ public abstract class AbstractAngularModuleDefinitionTest extends
 				+ "angular.module('phonecatAnimations');";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.module);

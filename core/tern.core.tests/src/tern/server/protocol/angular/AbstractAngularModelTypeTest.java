@@ -174,7 +174,7 @@ public abstract class AbstractAngularModelTypeTest extends
 				+ "\n$scope.todoText = '';" + "\n};" + "\n}";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 		return doc;
 	}
 
@@ -211,7 +211,7 @@ public abstract class AbstractAngularModelTypeTest extends
 				+ "\n$http. // <-- you'll have completions now" + "\n});";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, text, false,  null);
+		doc.addFile(name, text, null,  null);
 		return doc;
 	}
 }

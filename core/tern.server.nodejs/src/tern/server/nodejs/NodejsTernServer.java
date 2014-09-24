@@ -31,6 +31,7 @@ import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
@@ -132,9 +133,9 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	@Override
-	public void addFile(String name, String text, boolean isHTML) {
+	public void addFile(String name, String text, ScriptTagRegion[] tags) {
 		TernDoc t = new TernDoc();
-		t.addFile(name, text, isHTML, null);
+		t.addFile(name, text, tags, null);
 		try {
 			JsonObject json = makeRequest(t);
 		} catch (Exception e) {

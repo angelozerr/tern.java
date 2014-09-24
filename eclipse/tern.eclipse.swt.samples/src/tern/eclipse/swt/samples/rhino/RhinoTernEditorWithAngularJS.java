@@ -141,7 +141,7 @@ public class RhinoTernEditorWithAngularJS {
 					long start = System.currentTimeMillis();
 					server.addFile(baseDir.getPath(),
 							IOUtils.toString(new FileInputStream(baseDir)),
-							false);
+							null);
 					// server.addFile(baseDir.getPath(), null);
 					System.err.println(baseDir.getPath() + " =>"
 							+ (System.currentTimeMillis() - start) + "ms");

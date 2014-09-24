@@ -127,6 +127,6 @@ public abstract class AbstractTernServer implements ITernServer {
 
 	@Override
 	public void addFile(String name, String text) {
-		addFile(name, text, false);
+		addFile(name, text, null);
 	}
 }

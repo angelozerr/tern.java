@@ -32,7 +32,7 @@ public class JSDocumentHelper {
 		TernDoc t = new TernDoc(query);
 		if (changed) {
 			// the js doc has changed since last completion, reparse the js doc.
-			t.addFile(doc.getName(), doc.getValue(), false, null);
+			t.addFile(doc.getName(), doc.getValue(), null, null);
 		} else {
 			// non changes, the js doc must not reparsed.
 		}
