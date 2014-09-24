@@ -69,7 +69,7 @@ public abstract class AbstractTernServerCompletionQueryTest extends
 		String text = "var arr = [];arr.";
 
 		TernDoc doc = new TernDoc();
-		doc.addFile(name, null, null, null);
+		doc.addFile(name, text, null, null);
 
 		TernCompletionsQuery query = new TernCompletionsQuery(name, 17);
 		doc.setQuery(query);
