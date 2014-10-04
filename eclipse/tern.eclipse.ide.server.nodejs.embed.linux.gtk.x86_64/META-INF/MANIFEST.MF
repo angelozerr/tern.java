@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86_64;singleton:=true
-Bundle-Version: 0.6.0.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: tern.eclipse.ide.server.nodejs.core;bundle-version="0.2.0"
 Bundle-ActivationPolicy: lazy

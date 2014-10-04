@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Tests2
 Bundle-SymbolicName: tern.core.tests
-Bundle-Version: 0.6.0.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: tern.core;bundle-version="0.2.0",
  tern.server.nodejs;bundle-version="0.2.0",
