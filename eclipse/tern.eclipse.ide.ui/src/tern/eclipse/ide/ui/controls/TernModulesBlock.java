@@ -11,7 +11,9 @@
 package tern.eclipse.ide.ui.controls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -77,7 +79,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 	private final IProject project;
 
 	private Composite fControl;
-	private final List<ITernModule> ternModules = new ArrayList<ITernModule>();
+	private final Map<String, ITernModule> ternModules = new HashMap<String, ITernModule>();
 	private CheckboxTableViewer tableViewer;
 	private DetailsPanel detailsPanel;
 	private DependenciesPanel dependenciesPanel;
@@ -207,9 +209,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 							ITernModule dependencyModule = null;
 							// loop for each dependencies and check it if needed
 							for (String moduleName : metadata.getDependencies()) {
-								dependencyModule = TernCorePlugin
-										.getTernServerTypeManager()
-										.findTernModule(moduleName);
+								dependencyModule = ternModules.get(moduleName);
 								if (dependencyModule != null) {
 									if (!tableViewer
 											.getChecked(dependencyModule)) {
@@ -337,11 +337,10 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 	protected void setTernModules(ITernModule[] vms) {
 		ternModules.clear();
-		for (ITernModule element : vms) {
-			ternModules.add(element);
+		for (ITernModule module : vms) {
+			ternModules.put(module.getName(), module);
 		}
-		tableViewer.setInput(ternModules);
-		// tableViewer.refresh();
+		tableViewer.setInput(ternModules.values());
 	}
 
 	public Object[] getCheckedModules() {
