@@ -197,6 +197,10 @@
       </optionFactory>       
       <!-- Tern def descriptors -->
       <image
+      	 id="chrome-apps"
+      	 icon="/icons/full/obj16/chrome-apps.png" >
+      </image>
+      <image
       	 id="browser"
       	 icon="/icons/full/obj16/browser.gif" >
       </image>

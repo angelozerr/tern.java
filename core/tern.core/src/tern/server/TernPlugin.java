@@ -15,7 +15,8 @@ import tern.metadata.TernModuleMetadataManager;
 
 public enum TernPlugin implements ITernPlugin {
 
-	aui("tern/plugin/aui"), angular("tern/plugin/angular"), component(
+	aui("tern/plugin/aui"), angular("tern/plugin/angular"), chromeApps(
+			"chrome-apps", "chrome-apps", null, null), component(
 			"tern/plugin/component"), ckeditor_4_4_1("ckeditor", "4.4.1"), closure(
 			""), cordovajs("tern/plugin/cordovajs"), doc_comment(
 			"tern/plugin/doc_comment"), dojotoolkit_1_6("dojotoolkit", "1.6"), dojotoolkit_1_8(

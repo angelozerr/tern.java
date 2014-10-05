@@ -1,0 +1,15 @@
+{
+  "name": "tern-chrome-apps",
+  "version": "0.0.1",
+  "description": "A Tern plugin adding support for Chrome Apps API.",
+  "main": "chrome-apps.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MetaMemoryT/tern-chrome-apps.git"
+  },
+  "author": "MetaMemoryT",
+  "license": "?",
+  "bugs": {
+    "url": "https://github.com/MetaMemoryT/tern-chrome-apps/issues"
+  }
+}
