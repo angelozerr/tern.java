@@ -264,7 +264,11 @@
   	  <image
             id="meteor"
             icon="/icons/full/obj16/meteor.png" >        
-      </image>                    
+      </image>
+  	  <image
+            id="node-express"
+            icon="/icons/full/obj16/node-express.png" >
+      </image>                          
   	  <image
             id="node"
             icon="/icons/full/obj16/node.png" >

@@ -15,7 +15,7 @@ import tern.metadata.TernModuleMetadataManager;
 
 public enum TernPlugin implements ITernPlugin {
 
-	aui("tern/plugin/aui"), angular("tern/plugin/angular"), chromeApps(
+	aui("tern/plugin/aui"), angular("tern/plugin/angular"), chrome_apps(
 			"chrome-apps", "chrome-apps", null, null), component(
 			"tern/plugin/component"), ckeditor_4_4_1("ckeditor", "4.4.1"), closure(
 			""), cordovajs("tern/plugin/cordovajs"), doc_comment(
@@ -24,7 +24,8 @@ public enum TernPlugin implements ITernPlugin {
 			"extjs", "4.2.1"), extjs_5_0_0("extjs", "5.0.0"), gas(
 			"tern/plugin/gas"), gmaps_3_16("gmaps", "3.16"), gmaps_3_17(
 			"gmaps", "3.17"), grunt("tern/plugin/grunt"), liferay(
-			"tern/plugin/liferay"), lint("tern/plugin/lint"), node(
+			"tern/plugin/liferay"), lint("tern/plugin/lint"), node_express(
+					"node-express", "node-express", null, null), node(
 			"tern/plugin/node"), meteor("tern/plugin/meteor"), qooxdoo_4_1(
 			"qooxdoo", "4.1"), requirejs("tern/plugin/requirejs"), yui(
 			"tern/plugin/yui");

@@ -1,0 +1,20 @@
+{
+ "name": "node-express",
+ "homepage": "http://expressjs.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add express web application framework for node support. Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.",
+ "dependencies": [
+  "ecma5",
+  "node"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-node-express.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-node-express/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Node-Express-support"
+ }
+}
