@@ -89,19 +89,19 @@
       application: {
         Application: {
           get: {
-            "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+            "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
             "!effects": ["custom express_callback"],
             "!url": "http://expressjs.com/4x/api.html#app.VERB",
             "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.get()). "
           },
           post: {
-            "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+            "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
             "!effects": ["custom express_callback"],
             "!url": "http://expressjs.com/4x/api.html#app.VERB",
             "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.post()). "
           },
           put: {
-            "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+            "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
             "!effects": ["custom express_callback"],
             "!url": "http://expressjs.com/4x/api.html#app.VERB",
             "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.put()). "
@@ -132,7 +132,7 @@
             "!doc": "Check if setting name is disabled."
           },
           use: {
-            "!type": "fn(path?: string, callback: fn(req: +request.Request, req: +response.Response, next: fn())) -> !this",
+            "!type": "fn(path?: string, callback: fn(req: +request.Request, res: +response.Response, next: fn())) -> !this",
             "!effects": ["custom express_callback"],
             "!url": "http://expressjs.com/4x/api.html#app.use",
             "!doc" : "Mount the middleware function(s) at the path. If path is not specified, it defaults to \"/\". Mounting a middleware at a path will cause the middleware function to be executed whenever the base of the requested path matches the path."
@@ -143,13 +143,13 @@
             "!doc": "Register the given template engine callback as ext. By default, Express will require() the engine based on the file extension. For example if you try to render a \"foo.jade\" file Express will invoke the following internally, and cache the require() on subsequent calls to increase performance."
           },
           param: {
-            "!type": "fn(name?: string, callback: fn(req: +request.Request, req: +response.Response, next: fn())) -> !this",
+            "!type": "fn(name?: string, callback: fn(req: +request.Request, res: +response.Response, next: fn())) -> !this",
             "!effects": ["custom express_callback"],
             "!url": "http://expressjs.com/4x/api.html#app.param",
             "!doc" : "Map logic to route parameters. For example, when :user is present in a route path, you may map user loading logic to automatically provide req.user to the route, or perform validations on the parameter input."
           },
           all: {
-            "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+            "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
             "!effects": ["custom express_callback"],
             "!url": "http://expressjs.com/4x/api.html#app.all",
             "!doc" : "This method functions just like the app.VERB() methods, however it matches all HTTP verbs. This method is extremely useful for mapping \"global\" logic for specific path prefixes or arbitrary matches. For example if you placed the following route at the top of all other route definitions, it would require that all routes from that point on would require authentication, and automatically load a user. Keep in mind that these callbacks do not have to act as end points, loadUser can perform a task, then next() to continue matching subsequent routes."
@@ -391,7 +391,8 @@
                 "!doc": "Sets the Content-Disposition header field to \"attachment\". If a filename is given, then the Content-Type will be automatically set based on the extname via res.type(), and the Content-Disposition's \"filename=\" parameter will be set."           	
             },
             sendFile: {
-                "!type": "fn(path: string, options?: +Object, callback?: fn(err: Error))",
+                "!type": "fn(path: string, options?: +Object, callback?: fn(err: +Error))",
+                "!effects": ["custom express_render"],
                 "!url": "http://expressjs.com/4x/api.html#res.sendFile",
                 "!doc" : "Transfer the file at the given path. The Content-Type response header field is automatically set based on the filename's extension. Unless the root option is set in the options object, path must be an absolute path of the file. Note: res.sendFile requires Express version to be at least 4.8.0"  	  
             },
@@ -401,7 +402,8 @@
                 "!doc": "Set the response HTTP status code to statusCode and send its string representation as the response body."     	
             },
             download: {
-                "!type": "fn(path: string, filename?: string, callback?: fn(err: Error))",
+                "!type": "fn(path: string, filename?: string, callback?: fn(err: +Error))",
+                "!effects": ["custom express_render"],
                 "!url": "http://expressjs.com/4x/api.html#res.download",
                 "!doc" : "Transfer the file at path as an \"attachment\". Typically, browsers will prompt the user for download. The Content-Disposition \"filename=\" parameter (i.e. the one that will appear in the brower dialog) is set to path by default. However, you may provide an override filename. When an error has ocurred or transfer is complete the optional callback fn is invoked. This method uses res.sendFile() to transfer the file."           	
             },
@@ -416,7 +418,8 @@
                 "!doc": "Response local variables are scoped to the request, and therefore only available to the view(s) rendered during that request / response cycle (if any). Otherwise, this API is identical to app.locals."
             },
             render: {
-                "!type": "fn(view: string, locals?: +Object, callback: fn(err: Error, html: string))",
+                "!type": "fn(view: string, locals?: +Object, callback: fn(err: +Error, html: string))",
+                "!effects": ["custom express_render"],
                 "!url": "http://expressjs.com/4x/api.html#res.render",
                 "!doc" : "Render a view with a callback responding with the rendered string. When an error occurs next(err) is invoked internally. When a callback is provided both the possible error and rendered string are passed, and no automated response is performed."  	             	
             },
@@ -443,31 +446,31 @@
           "!type": "fn()",
           prototype : {
             all: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.all",
               "!doc" : "This method functions just like the app.VERB() methods, however it matches all HTTP verbs. This method is extremely useful for mapping \"global\" logic for specific path prefixes or arbitrary matches. For example if you placed the following route at the top of all other route definitions, it would require that all routes from that point on would require authentication, and automatically load a user. Keep in mind that these callbacks do not have to act as end points, loadUser can perform a task, then next() to continue matching subsequent routes."
             },
             get: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.get()). "
             },
             post: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.post()). "
             },
             put: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.put()). "
             },
             "delete": {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.delete()). "
@@ -478,13 +481,14 @@
           "!type": "fn()",
           prototype : {
             use: {
-              "!type": "fn(path?: string, callback: fn(req: +request.Request, req: +response.Response, next: fn())) -> !this",
+              "!type": "fn(path?: string, callback: fn(req: +request.Request, res: +response.Response, next: fn())) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#router.use",
               "!doc" : "Use the given middleware function, with optional mount path, defaulting to "/". Middleware is like a plumbing pipe, requests start at the first middleware you define and work their way \"down\" the middleware stack processing for each path they match."
             },
             param: {
-              "!type": "fn(name?: string, callback: fn(req: +request.Request, req: +response.Response, next: fn(), id: ?)) -> !this",
+              "!type": "fn(name?: string, callback: fn(req: +request.Request, res: +response.Response, next: fn(), id: ?)) -> !this",
+              "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#router.param",
               "!doc" : "Map logic to route parameters. For example, when :user is present in a route path you may map user loading logic to automatically provide req.user to the route, or perform validations on the parameter input."
             },
@@ -494,31 +498,31 @@
               "!doc": "Returns an instance of a single route, which can then be used to handle HTTP verbs with optional middleware. Using router.route() is a recommended approach to avoiding duplicate route naming and thus typo errors."
             },
             all: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.all",
               "!doc" : "This method functions just like the app.VERB() methods, however it matches all HTTP verbs. This method is extremely useful for mapping \"global\" logic for specific path prefixes or arbitrary matches. For example if you placed the following route at the top of all other route definitions, it would require that all routes from that point on would require authentication, and automatically load a user. Keep in mind that these callbacks do not have to act as end points, loadUser can perform a task, then next() to continue matching subsequent routes."
             },
             get: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.get()). "
             },
             post: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.post()). "
             },
             put: {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.put()). "
             },
             "delete": {
-              "!type": "fn(path: string, callback: [fn(req: +request.Request, req: +response.Response)]) -> !this",
+              "!type": "fn(path: string, callback: [fn(req: +request.Request, res: +response.Response)]) -> !this",
               "!effects": ["custom express_callback"],
               "!url": "http://expressjs.com/4x/api.html#app.VERB",
               "!doc": "The app.VERB() methods provide the routing functionality in Express, where VERB is one of the HTTP verbs (such as app.delete()). "
