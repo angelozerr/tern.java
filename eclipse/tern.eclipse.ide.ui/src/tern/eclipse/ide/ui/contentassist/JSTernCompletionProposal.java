@@ -10,9 +10,9 @@
  */
 package tern.eclipse.ide.ui.contentassist;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.jface.internal.text.html.HTMLPrinter;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
@@ -35,20 +35,23 @@ import org.eclipse.ui.texteditor.link.EditorLinkedModeUI;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
+import tern.server.protocol.completions.FunctionInfo;
 import tern.server.protocol.completions.Parameter;
-import tern.utils.StringUtils;
 
 public class JSTernCompletionProposal extends TernCompletionProposal {
 
+	private static final String RPAREN = ")";
+	private static final String LPAREN = "(";
 	private static final String COMMA = ",";
+	private static final String SPACE = " ";
 
 	private IRegion fSelectedRegion; // initialized by apply()
-	private int[] fArgumentOffsets;
-	private int[] fArgumentLengths;
+	private List<Integer> fArgumentOffsets;
+	private List<Integer> fArgumentLengths;
 	private ITextViewer fTextViewer;
-	private boolean fReplacementStringComputed;
 
 	private boolean fToggleEating;
+	private boolean generateAnonymousFunction;
 
 	public JSTernCompletionProposal(String name, String type, String doc,
 			String url, String origin, int pos, int startOffset) {
@@ -79,23 +82,23 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		fToggleEating = false;
 	}
 
-	private boolean insertCompletion() {
-		return true;
-	}
-
 	@Override
 	public void apply(IDocument document, char trigger, int offset) {
+		// compute replacement string
+		String replacement = computeReplacementString(document, offset);
+		setReplacementString(replacement);
+
+		// apply the replacement.
 		super.apply(document, trigger, offset);
 		int baseOffset = getReplacementOffset();
-		String replacement = getReplacementString();
 
 		if (fArgumentOffsets != null && getTextViewer() != null) {
 			try {
 				LinkedModeModel model = new LinkedModeModel();
-				for (int i = 0; i != fArgumentOffsets.length; i++) {
+				for (int i = 0; i != fArgumentOffsets.size(); i++) {
 					LinkedPositionGroup group = new LinkedPositionGroup();
 					group.addPosition(new LinkedPosition(document, baseOffset
-							+ fArgumentOffsets[i], fArgumentLengths[i],
+							+ fArgumentOffsets.get(i), fArgumentLengths.get(i),
 							LinkedPositionGroup.NO_STOP));
 					model.addGroup(group);
 				}
@@ -146,55 +149,83 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	 */
 	@Override
 	public final String getReplacementString() {
-		if (!fReplacementStringComputed)
-			setReplacementString(computeReplacementString());
+		// if (!fReplacementStringComputed)
+		// setReplacementString(computeReplacementString());
 		return super.getReplacementString();
 	}
 
-	/**
-	 * Sets the replacement string.
-	 * 
-	 * @param replacementString
-	 *            The replacement string to set
-	 */
-	public final void setReplacementString(String replacementString) {
-		fReplacementStringComputed = true;
-		super.setReplacementString(replacementString);
-	}
-
-	protected String computeReplacementString() {
+	private String computeReplacementString(IDocument document, int offset) {
 
 		List<Parameter> parameters = super.getParameters();
 		if (parameters == null) {
 			return super.getReplacementString();
 		}
 
-		int count = parameters.size();
-		fArgumentOffsets = new int[count];
-		fArgumentLengths = new int[count];
-		StringBuilder buffer = new StringBuilder(
-				String.valueOf(super.getName()));
-		buffer.append("(");
-		setCursorPosition(buffer.length());
+		String indentation = getIndentation(document, offset);
+		fArgumentOffsets = new ArrayList<Integer>();
+		fArgumentLengths = new ArrayList<Integer>();
 
+		StringBuilder replacement = new StringBuilder(super.getName());
+		replacement.append(LPAREN);
+		setCursorPosition(replacement.length());
+
+		computeReplacementString(parameters, replacement, fArgumentOffsets,
+				fArgumentLengths, indentation, 1);
+		return replacement.toString();
+
+	}
+
+	private void computeReplacementString(List<Parameter> parameters,
+			StringBuilder replacement, List<Integer> argumentOffsets,
+			List<Integer> argumentLengths, String indentation,
+			int nbIndentations) {
+		int count = parameters.size();
+		Parameter parameter = null;
 		String paramName = null;
 		for (int i = 0; i != count; i++) {
+			parameter = parameters.get(i);
 			if (i != 0) {
 				// if (prefs.beforeComma)
 				// buffer.append(SPACE);
-				buffer.append(COMMA);
+				replacement.append(COMMA);
 				// if (prefs.afterComma)
-				// buffer.append(SPACE);
+				replacement.append(SPACE);
 			}
 
-			paramName = parameters.get(i).getName();
-			fArgumentOffsets[i] = buffer.length();
-			buffer.append(paramName);
-			fArgumentLengths[i] = paramName.length();
+			if (parameter.isFunction() && isGenerateAnonymousFunction()) {
+				FunctionInfo info = parameter.getInfo();
+				List<Parameter> parametersOfParam = info.getParameters();
+				replacement.append("function(");
+				if (parametersOfParam != null) {
+					computeReplacementString(parametersOfParam, replacement,
+							argumentOffsets, argumentLengths, indentation,
+							nbIndentations + 1);
+				} else {
+					// to select focus inside the () of generated inline
+					// function
+					fArgumentOffsets.add(replacement.length());
+					fArgumentLengths.add(0);
+				}
+				replacement.append(") {");
+				replacement.append("\n");
+				indent(replacement, indentation, nbIndentations);
+				replacement.append("\t");
+				// to select focus inside the {} of generated inline function
+				fArgumentOffsets.add(replacement.length());
+				fArgumentLengths.add(0);
+				replacement.append("\n");
+				indent(replacement, indentation, nbIndentations);
+				replacement.append("}");
+			} else {
+				paramName = parameter.getName();
+				// to select focus for parameter
+				fArgumentOffsets.add(replacement.length());
+				replacement.append(paramName);
+				fArgumentLengths.add(paramName.length());
+			}
 		}
 
-		buffer.append(")");
-
+		replacement.append(RPAREN);
 		/*
 		 * if (!hasParameters() || !hasArgumentList()) return
 		 * super.computeReplacementString();
@@ -226,7 +257,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		 * 
 		 * return buffer.toString();
 		 */
-		return buffer.toString();
+
 	}
 
 	@Override
@@ -282,4 +313,80 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	protected Shell getActiveWorkbenchShell() {
 		return TernUIPlugin.getActiveWorkbenchShell();
 	}
+
+	/**
+	 * Returns true if anonymous function must be generated and false otherwise.
+	 * 
+	 * @return true if anonymous function must be generated and false otherwise.
+	 */
+	public boolean isGenerateAnonymousFunction() {
+		return generateAnonymousFunction;
+	}
+
+	/**
+	 * Set true if anonymous function must be generated and false otherwise.
+	 * 
+	 * @param generateAnonymousFunction
+	 */
+	public void setGenerateAnonymousFunction(boolean generateAnonymousFunction) {
+		this.generateAnonymousFunction = generateAnonymousFunction;
+	}
+
+	/**
+	 * Returns true if completion must be inserted and false otheriwse.
+	 * 
+	 * @return true if completion must be inserted and false otheriwse.
+	 */
+	private boolean insertCompletion() {
+		// TODO : manage that with preferences
+		return true;
+	}
+
+	/**
+	 * Indent the given replacement with indentation * nbIndentations.
+	 * 
+	 * @param replacement
+	 *            the buffer ton indent.
+	 * @param indentation
+	 *            the indentation composed by \t and spaces.
+	 * @param nbIndentations
+	 *            number of indentation.
+	 */
+	private void indent(StringBuilder replacement, String indentation,
+			int nbIndentations) {
+		for (int j = 0; j < nbIndentations; j++) {
+			replacement.append(indentation);
+		}
+	}
+
+	/**
+	 * Returns the indentation characters from the given line.
+	 * 
+	 * @param document
+	 * @param offset
+	 * @return the indentation characters from the given line.
+	 */
+	private String getIndentation(IDocument document, int offset) {
+		try {
+			IRegion lineRegion = document.getLineInformationOfOffset(offset);
+			String lineText = document.get(lineRegion.getOffset(),
+					lineRegion.getLength());
+			StringBuilder indentation = new StringBuilder();
+			char[] chars = lineText.toCharArray();
+			char c;
+			for (int i = 0; i < chars.length; i++) {
+				c = chars[i];
+				if (c == ' ' || c == '\t') {
+					indentation.append(c);
+				} else {
+					break;
+				}
+			}
+			return indentation.toString();
+
+		} catch (BadLocationException e1) {
+		}
+		return "";
+	}
+
 }

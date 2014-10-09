@@ -37,9 +37,11 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 			String origin, int pos, Object completion, ITernServer ternServer) {
 		JSTernCompletionProposal proposal = createProposal(name, type, doc,
 				url, origin, pos, startOffset);
+		// TODO : manage that with preferences
+		proposal.setGenerateAnonymousFunction(true);
 		proposals.add(proposal);
 
-		// expand functions if the functiosn contains several "optionnal"
+		// expand functions if the functions contains several "optionnal"
 		// parameters.
 		// ex : the expansion of "fn(selector: string, context?: frameElement)"
 		// returns an array of functions

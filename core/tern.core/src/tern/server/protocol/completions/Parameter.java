@@ -52,4 +52,24 @@ public class Parameter {
 	public String getType() {
 		return type;
 	}
+
+	/**
+	 * Returns true if parameter type is a function and false otherwise.
+	 * 
+	 * @return true if parameter type is a function and false otherwise.
+	 */
+	public boolean isFunction() {
+		return TernTypeHelper.isFunction(type);
+	}
+
+	/**
+	 * Returns the function information of parameter is a function and null
+	 * otherwise.
+	 * 
+	 * @return the function information of parameter is a function and null
+	 *         otherwise.
+	 */
+	public FunctionInfo getInfo() {
+		return TernTypeHelper.parseFunction(null, type);
+	}
 }
