@@ -79,7 +79,7 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 						int startOffset = context.getInvocationOffset();
 						ternProject.request(query, scriptFile, document,
 								startOffset, new JSTernCompletionCollector(
-										proposals, startOffset));
+										proposals, startOffset, project));
 						return proposals;
 
 					} catch (Exception e) {

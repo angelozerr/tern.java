@@ -14,9 +14,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Preferences;
 
 import tern.eclipse.ide.core.ITernServerType;
-import tern.eclipse.ide.core.TernCoreConstants;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
+import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.utils.StringUtils;
 
 public class TernCorePreferencesSupport {
@@ -42,13 +42,13 @@ public class TernCorePreferencesSupport {
 
 	public ITernServerType getServerType() {
 		String id = preferencesSupport
-				.getWorkspacePreferencesValue(TernCoreConstants.TERN_SERVER_TYPE);
+				.getWorkspacePreferencesValue(TernCorePreferenceConstants.TERN_SERVER_TYPE);
 		return TernCorePlugin.getTernServerTypeManager().findTernServerType(id);
 	}
 
 	public boolean isTraceOnConsole(IProject project) {
 		String result = preferencesSupport.getPreferencesValue(
-				TernCoreConstants.TRACE_ON_CONSOLE, null, project);
+				TernCorePreferenceConstants.TRACE_ON_CONSOLE, null, project);
 		return StringUtils.asBoolean(result, false);
 	}
 

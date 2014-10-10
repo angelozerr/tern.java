@@ -40,14 +40,13 @@ import tern.server.protocol.completions.TernCompletionsQuery;
 public class TernCompletionProposalComputer implements
 		IJavaCompletionProposalComputer {
 
-	
 	public List computeCompletionProposals(
 			ContentAssistInvocationContext context, IProgressMonitor monitor) {
 		if (context instanceof JavaContentAssistInvocationContext) {
 			JavaContentAssistInvocationContext javaContext = (JavaContentAssistInvocationContext) context;
 			IProject project = javaContext.getProject().getProject();
 			if (TernCorePlugin.hasTernNature(project)) {
-	
+
 				IDocument document = javaContext.getDocument();
 				IResource resource = javaContext.getCompilationUnit()
 						.getResource();
@@ -76,7 +75,7 @@ public class TernCompletionProposalComputer implements
 						int startOffset = context.getInvocationOffset();
 						ternProject.request(query, scriptFile, document,
 								startOffset, new JSDTTernCompletionCollector(
-										proposals, startOffset));
+										proposals, startOffset, project));
 						return proposals;
 
 					} catch (Exception e) {

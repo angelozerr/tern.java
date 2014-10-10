@@ -13,7 +13,6 @@ package tern.eclipse.ide.internal.core.scriptpath;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;

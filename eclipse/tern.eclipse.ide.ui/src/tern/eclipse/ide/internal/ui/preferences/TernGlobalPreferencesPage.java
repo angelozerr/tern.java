@@ -22,7 +22,7 @@ import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.core.TernCoreConstants;
+import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
 
@@ -55,7 +55,7 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 		}
 
 		ComboFieldEditor ternServerEditor = new ComboFieldEditor(
-				TernCoreConstants.TERN_SERVER_TYPE,
+				TernCorePreferenceConstants.TERN_SERVER_TYPE,
 				TernUIMessages.TernGlobalPreferencesPage_serverType, types,
 				getFieldEditorParent());
 		addField(ternServerEditor);

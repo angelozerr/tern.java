@@ -8,26 +8,25 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.core.preferences;
+package tern.eclipse.ide.internal.ui.preferences;
 
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.core.runtime.preferences.DefaultScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
-import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
+import tern.eclipse.ide.ui.TernUIPlugin;
 
-public class TernCorePreferenceInitializer extends
-		AbstractPreferenceInitializer {
+public class TernUIPreferenceInitializer extends AbstractPreferenceInitializer {
 
 	@Override
 	public void initializeDefaultPreferences() {
 		IEclipsePreferences node = new DefaultScope()
-				.getNode(TernCorePlugin.PLUGIN_ID);
-		// By default Tern with Node.js is used.
-		node.put(TernCorePreferenceConstants.TERN_SERVER_TYPE,
-				"tern.eclipse.ide.server.nodejs");
-		// trace server on console
-		node.putBoolean(TernCorePreferenceConstants.TRACE_ON_CONSOLE, false);
+				.getNode(TernUIPlugin.PLUGIN_ID);
+		node.putBoolean(
+				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
+				true);
+		node.putBoolean(
+				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST, true);
 	}
+
 }

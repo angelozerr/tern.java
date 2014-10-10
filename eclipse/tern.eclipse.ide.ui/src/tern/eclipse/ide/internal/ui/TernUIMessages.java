@@ -41,6 +41,13 @@ public final class TernUIMessages extends NLS {
 	public static String TernGlobalPreferencesPage_desc;
 	public static String TernGlobalPreferencesPage_serverType;
 
+	// Commons Property preferences
+	public static String EnableProjectSettings;
+	public static String ConfigureWorkspaceSettings;
+	public static String ConfigureProjectSettings;
+	public static String PropertyPreferencePage_02;
+	public static String PropertyPreferencePage_01;
+
 	// Properties page
 	public static String TernModulesPropertyPage_desc;
 	public static String TernModulesBlock_moduleName;
@@ -74,6 +81,9 @@ public final class TernUIMessages extends NLS {
 	public static String TernConsoleJob_name;
 
 	public static String ConsoleTerminateAction_tooltipText;
+
+	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
+	public static String TernContentAssistPreferencesPage_expandFunction_label;
 
 	private TernUIMessages() {
 	}

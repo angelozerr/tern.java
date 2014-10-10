@@ -12,6 +12,7 @@ package tern.eclipse.ide.jsdt.internal.contentassist;
 
 import java.util.List;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
@@ -25,8 +26,8 @@ import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 public class JSDTTernCompletionCollector extends JSTernCompletionCollector {
 
 	public JSDTTernCompletionCollector(List<ICompletionProposal> proposals,
-			int startOffset) {
-		super(proposals, startOffset);
+			int startOffset, IProject project) {
+		super(proposals, startOffset, project);
 	}
 
 	@Override

@@ -85,14 +85,29 @@
 		
 	</extension>
 		 
+	<!-- Preferences initialization -->
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer
+			class="tern.eclipse.ide.internal.ui.preferences.TernUIPreferenceInitializer" />
+	</extension>
+			 
 	<!--Preferences:-->
     <extension
        point="org.eclipse.ui.preferencePages">  
        <!-- Tern Global preferences page -->  
        <page
+	          name="%TernPreferencePage.name"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
-	          id="tern.eclipse.ide.preferences"
-	          name="%TernPreferencePage.name"/>
+	          id="tern.eclipse.ide.preferences" />	  
+       <page  name="%TernConsolePropertyPage.name"
+              category="tern.eclipse.ide.preferences"
+	          class="tern.eclipse.ide.internal.ui.preferences.TernConsolePreferencesPage"
+	          id="tern.eclipse.ide.ui.preferences.TernConsolePropertyPage" />
+	   <page  name="%TernContentAssistPropertyPage.name"
+              category="tern.eclipse.ide.preferences"
+	          class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
+	          id="tern.eclipse.ide.ui.preferences.TernContentAssistPropertyPage" />	          	          	          
 	</extension>
 
 	<extension
@@ -132,14 +147,25 @@
 	  <page
             name="%TernConsolePropertyPage.name"
             category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.properties.TernConsolePropertyPage"
+            class="tern.eclipse.ide.internal.ui.preferences.TernConsolePreferencesPage"
             id="tern.eclipse.ide.ui.properties.TernConsolePropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
-      </page>                    		          		  	
+      </page>
+	  <page
+            name="%TernContentAssistPropertyPage.name"
+            category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
+            class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
+            id="tern.eclipse.ide.ui.properties.TernContentAssistPropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
+		     </adapt>         
+         </enabledWhen>
+      </page>                          		          		  	
 	</extension>
      
     <!-- Tern Console -->
