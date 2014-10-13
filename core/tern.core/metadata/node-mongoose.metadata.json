@@ -1,0 +1,20 @@
+{
+ "name": "node-mongoose",
+ "homepage": "http://mongoosejs.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add mongoose support. mongoose is a elegant mongodb object modeling for node.js.",
+ "dependencies": [
+  "ecma5",
+  "node"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-node-mongoose.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-node-mongoose/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Node-mongoose-support"
+ }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "tern-node-mongoose",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "node-mongoose.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding support for mongoose.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-node-mongoose.git"
+  },
+  "devDependencies": { 
+  	"dox": "0.4.4" 
+  },  
+  "keywords": [
+    "tern",
+    "node",
+    "mongoose"
+  ]
+}
