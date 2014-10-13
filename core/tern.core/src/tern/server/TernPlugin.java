@@ -25,7 +25,9 @@ public enum TernPlugin implements ITernPlugin {
 			"tern/plugin/gas"), gmaps_3_16("gmaps", "3.16"), gmaps_3_17(
 			"gmaps", "3.17"), grunt("tern/plugin/grunt"), liferay(
 			"tern/plugin/liferay"), lint("tern/plugin/lint"), node_express(
-					"node-express", "node-express", null, null), node(
+			"node-express", "node-express", null, null), node_mongodb_native(
+			"node-mongodb-native", "node-mongodb-native", null, null), node_mongoose(
+			"node-mongoose", "node-mongoose", null, null), node(
 			"tern/plugin/node"), meteor("tern/plugin/meteor"), qooxdoo_4_1(
 			"qooxdoo", "4.1"), requirejs("tern/plugin/requirejs"), yui(
 			"tern/plugin/yui");

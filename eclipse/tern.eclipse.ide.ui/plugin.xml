@@ -294,7 +294,15 @@
   	  <image
             id="node-express"
             icon="/icons/full/obj16/node-express.png" >
-      </image>                          
+      </image>
+  	  <image
+            id="node-mongodb-native"
+            icon="/icons/full/obj16/node-mongodb-native.png" >
+      </image>
+  	  <image
+            id="node-mongoose"
+            icon="/icons/full/obj16/node-mongoose.png" >
+      </image>                                      
   	  <image
             id="node"
             icon="/icons/full/obj16/node.png" >

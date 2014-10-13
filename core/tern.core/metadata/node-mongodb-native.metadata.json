@@ -1,0 +1,20 @@
+{
+ "name": "node-mongodb-native",
+ "homepage": "http://mongodb.github.io/node-mongodb-native/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add node mongodb native support. Node.js Native is the MongoDB official Node.js driver allowing you to use MongoDB in you applications.applications.",
+ "dependencies": [
+  "ecma5",
+  "node"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-node-mongodb-native.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-node-mongodb-native/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Node-mongodb-native-support"
+ }
+}
