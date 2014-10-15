@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Platform;
 import tern.eclipse.ide.core.ITernNatureCapability;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernNature;
+import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
 import tern.utils.StringUtils;

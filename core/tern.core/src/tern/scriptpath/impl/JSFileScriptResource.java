@@ -8,34 +8,33 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.core.scriptpath;
+package tern.scriptpath.impl;
 
-import org.eclipse.core.resources.IFile;
-
-import tern.eclipse.ide.core.scriptpath.IScriptResource;
+import tern.ITernFile;
+import tern.ITernProject;
+import tern.scriptpath.ITernScriptResource;
 
 /**
  * Script resources linked to a JS file.
  */
-public class JSFileScriptResource implements IScriptResource {
+public class JSFileScriptResource implements ITernScriptResource {
 
-	private final IFile file;
+	private final ITernProject project;
+	private final ITernFile file;
 
-	public JSFileScriptResource(IFile file) {
+	public JSFileScriptResource(ITernProject project, ITernFile file) {
+		this.project = project;
 		this.file = file;
 	}
 
 	@Override
-	public IFile getFile() {
+	public ITernFile getFile() {
 		return file;
 	}
 
 	@Override
 	public String getLabel() {
-		String str = file.getName();
-		str = str + " - "
-				+ file.getParent().getFullPath().makeRelative().toString();
-		return str;
+		return file.getFileName() + " - " + file.getFullName(project); //$NON-NLS-1$
 	}
 
 }

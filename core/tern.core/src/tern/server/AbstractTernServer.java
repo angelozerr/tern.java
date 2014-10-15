@@ -13,23 +13,23 @@ package tern.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import tern.TernFileManager;
-import tern.TernProject;
+import tern.ITernCacheManager;
+import tern.ITernProject;
 import tern.server.protocol.completions.ITernCompletionCollector;
 
 public abstract class AbstractTernServer implements ITernServer {
 
-	private final TernProject<?> project;
+	private final ITernProject project;
 
 	private final List<ITernServerListener> listeners;
 
 	private boolean dataAsJsonString;
 	private boolean dispose;
 
-	public AbstractTernServer(TernProject<?> project) {
+	public AbstractTernServer(ITernProject project) {
 		this.project = project;
 		this.listeners = new ArrayList<ITernServerListener>();
-		final TernFileManager<?> fileManager = getFileManager();
+		final ITernCacheManager fileManager = getCacheManager();
 		if (fileManager != null) {
 			this.addServerListener(new TernServerAdapter() {
 				@Override
@@ -114,14 +114,14 @@ public abstract class AbstractTernServer implements ITernServer {
 	public abstract Object getValue(Object value, String name);
 
 	@Override
-	public TernFileManager<?> getFileManager() {
+	public ITernCacheManager getCacheManager() {
 		if (project != null) {
-			return project.getFileManager();
+			return project.getCacheManager();
 		}
 		return null;
 	}
 
-	public TernProject<?> getProject() {
+	public ITernProject getProject() {
 		return project;
 	}
 

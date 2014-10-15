@@ -51,14 +51,14 @@ import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.dialogs.MultipleFolderSelectionDialog;
 import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernScriptPathContentProvider;
 import tern.eclipse.ide.ui.viewers.TernScriptPathLabelProvider;
+import tern.scriptpath.ITernScriptPath;
+import tern.scriptpath.ITernScriptPath.ScriptPathsType;
 
 /**
  * Block which hosts the Tree of the Tern scripts path.
@@ -313,7 +313,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 	 */
 	private ITernScriptPath getScriptPath(IResource resource) {
 		for (ITernScriptPath scriptPath : ternScriptPaths) {
-			if (resource.equals(scriptPath.getResource())) {
+			if (resource.equals(scriptPath.getAdapter(IResource.class))) {
 				return scriptPath;
 			}
 		}

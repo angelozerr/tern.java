@@ -8,12 +8,10 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.core.scriptpath;
+package tern.scriptpath.impl;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
+import tern.ITernProject;
+import tern.scriptpath.ITernScriptPath;
 import tern.utils.StringUtils;
 
 /**
@@ -22,32 +20,22 @@ import tern.utils.StringUtils;
  */
 public abstract class AbstractTernScriptPath implements ITernScriptPath {
 
-	private final IResource resource;
+	private final ITernProject project;
 	private final ScriptPathsType type;
 	private final boolean external;
 	private final String externalLabel;
 
-	public AbstractTernScriptPath(IResource resource, ScriptPathsType type,
+	public AbstractTernScriptPath(ITernProject project, ScriptPathsType type,
 			String externalLabel) {
-		this.resource = resource;
+		this.project = project;
 		this.type = type;
 		this.external = !StringUtils.isEmpty(externalLabel);
 		this.externalLabel = externalLabel;
 	}
 
 	@Override
-	public IResource getResource() {
-		return resource;
-	}
-
-	@Override
-	public IProject getOwnerProject() {
-		return getResource().getProject();
-	}
-
-	@Override
-	public String getPath() {
-		return getResource().getProjectRelativePath().toString();
+	public ITernProject getOwnerProject() {
+		return project;
 	}
 
 	@Override

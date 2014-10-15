@@ -29,7 +29,7 @@ import org.eclipse.wst.jsdt.internal.core.JavaProject;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener;
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.scriptpath.ITernScriptPath.ScriptPathsType;
 
 /**
  * JSDT Class Path manager used to synchronize tern script paths with JSDT

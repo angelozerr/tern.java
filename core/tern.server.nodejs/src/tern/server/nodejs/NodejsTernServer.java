@@ -15,8 +15,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import tern.ITernProject;
 import tern.TernException;
-import tern.TernProject;
+import tern.TernResourcesManager;
 import tern.server.AbstractTernServer;
 import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
@@ -73,32 +74,32 @@ public class NodejsTernServer extends AbstractTernServer {
 	private boolean persistent;
 
 	public NodejsTernServer(File projectDir, int port) {
-		this(new TernProject(projectDir), port);
+		this(TernResourcesManager.getTernProject(projectDir), port);
 	}
 
-	public NodejsTernServer(TernProject project, int port) {
+	public NodejsTernServer(ITernProject project, int port) {
 		super(project);
 		this.baseURL = computeBaseURL(port);
 	}
 
-	public NodejsTernServer(TernProject project) throws TernException {
+	public NodejsTernServer(ITernProject project) throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir()));
 	}
 
-	public NodejsTernServer(TernProject project, File nodejsBaseDir)
+	public NodejsTernServer(ITernProject project, File nodejsBaseDir)
 			throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir(), nodejsBaseDir));
 	}
 
-	public NodejsTernServer(TernProject project, File nodejsBaseDir,
+	public NodejsTernServer(ITernProject project, File nodejsBaseDir,
 			File nodejsTernBaseDir) throws TernException {
 		this(project, NodejsProcessManager.getInstance().create(
 				project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
 	}
 
-	public NodejsTernServer(TernProject project, NodejsProcess process) {
+	public NodejsTernServer(ITernProject project, NodejsProcess process) {
 		super(project);
 		this.process = process;
 		process.setPersistent(persistent);
@@ -112,7 +113,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	@Override
 	public void addDef(ITernDef def) throws TernException {
-		TernProject project = getProject();
+		ITernProject project = getProject();
 		project.addLib(def);
 		try {
 			project.save();
@@ -123,7 +124,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	@Override
 	public void addPlugin(ITernPlugin plugin) throws TernException {
-		TernProject project = getProject();
+		ITernProject project = getProject();
 		project.addPlugin(plugin);
 		try {
 			project.save();
@@ -199,7 +200,7 @@ public class NodejsTernServer extends AbstractTernServer {
 			process.setPersistent(persistent);
 			return process;
 		}
-		TernProject project = super.getProject();
+		ITernProject project = super.getProject();
 		process = NodejsProcessManager.getInstance().create(
 				project.getProjectDir());
 		process.setPersistent(persistent);

@@ -10,24 +10,23 @@
  */
 package tern.eclipse.ide.internal.core.scriptpath;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 
-import tern.TernFileManager;
-import tern.eclipse.ide.core.scriptpath.IScriptResource;
-import tern.eclipse.ide.core.utils.FileUtils;
+import tern.ITernFile;
+import tern.ITernProject;
+import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.Trace;
-import tern.server.protocol.TernDoc;
-
-import com.eclipsesource.json.JsonArray;
+import tern.scriptpath.ITernScriptResource;
+import tern.scriptpath.impl.AbstractTernScriptPath;
+import tern.scriptpath.impl.JSFileScriptResource;
 
 /**
  * Folder script path. This script path implementation gives the capability to
@@ -38,93 +37,71 @@ import com.eclipsesource.json.JsonArray;
  */
 public class FolderScriptPath extends AbstractTernScriptPath {
 
-	private final Collection<IScriptResource> scripts;
-
-	private IResourceVisitor scriptResourcesVisitor;
-
-	public FolderScriptPath(IFolder folder, String external) {
-		super(folder, ScriptPathsType.FOLDER, external);
-		this.scripts = new ArrayList<IScriptResource>();
+	private IContainer container;
+	
+	public FolderScriptPath(ITernProject project, IContainer container, String external) {
+		super(project, ScriptPathsType.FOLDER, external);
+		this.container = container;
 	}
 
 	@Override
-	public Collection<IScriptResource> getScriptResources() {
-		this.scripts.clear();
-		IFolder folder = (IFolder) getResource();
+	public List<ITernScriptResource> getScriptResources() {
+		ScriptResourceVisitor visitor = new ScriptResourceVisitor();
 		try {
-			folder.accept(getScriptResourcesVisitor());
+			container.accept(visitor);
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE,
 					"Error while retrieving script resources from the folder script path "
-							+ folder.getName(), e);
+							+ container.getName(), e);
 		}
-		return scripts;
+		return visitor.resources;
 	}
+	
+	public String getLabel() {
+		StringBuilder text = new StringBuilder(container.getName()).append(" - ").append( //$NON-NLS-1$
+				container.getFullPath().makeRelative().toString());
+		if (getExternalLabel() != null) {
+			text.append(" (").append(getExternalLabel()).append(")"); //$NON-NLS-1$ //$NON-NLS-2$
+		}
+		return text.toString();
+	};
 
 	@Override
-	public void updateFiles(TernFileManager ternFileManager, TernDoc doc,
-			JsonArray names) throws IOException {
-		IContainer container = (IContainer) getResource();
-		try {
-			container
-					.accept(newUpdateFilesVisitor(ternFileManager, doc, names));
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
+	public String getPath() {
+		return container.getProjectRelativePath().toString();
 	}
+	
+	private class ScriptResourceVisitor implements IResourceVisitor{
+		
+		public List<ITernScriptResource> resources = new ArrayList<ITernScriptResource>();
 
-	public IResourceVisitor getScriptResourcesVisitor() {
-		if (scriptResourcesVisitor == null) {
-			scriptResourcesVisitor = new IResourceVisitor() {
-
-				@Override
-				public boolean visit(IResource resource) throws CoreException {
-					switch (resource.getType()) {
-					case IResource.FILE:
-						IFile file = (IFile) resource;
-						if (FileUtils.isJSFile(file)) {
-							FolderScriptPath.this.scripts
-									.add(new JSFileScriptResource(file));
-							return true;
-						}
-						return false;
-					case IResource.PROJECT:
-					case IResource.FOLDER:
-						return true;
-					default:
-						return false;
-					}
-				}
-			};
-		}
-		return scriptResourcesVisitor;
-	}
-
-	public IResourceVisitor newUpdateFilesVisitor(
-			final TernFileManager ternFileManager, final TernDoc doc,
-			final JsonArray names) {
-		return new IResourceVisitor() {
-			@Override
-			public boolean visit(IResource resource) throws CoreException {
-				switch (resource.getType()) {
-				case IResource.FILE:
-					IFile file = (IFile) resource;
-					if (FileUtils.isJSFile(file)) {
-						try {
-							ternFileManager.updateFile(file, doc, names);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-						return true;
-					}
-					return false;
+		@Override
+		public boolean visit(IResource resource) throws CoreException {
+			switch (resource.getType()) {
 				case IResource.PROJECT:
 				case IResource.FOLDER:
 					return true;
-				default:
-					return false;
-				}
+				case IResource.FILE:
+					if (TernResourcesManager.isJSFile(resource)) {
+						ITernFile file = TernResourcesManager.getTernFile(resource);
+						if (file != null) {
+							resources.add(new JSFileScriptResource(getOwnerProject(), file));
+						}
+					}
 			}
-		};
+			return false;
+		}
+		
+	}
+
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
+		if (clazz == IContainer.class || clazz == IResource.class || clazz == IFolder.class) {
+			return container;
+		}
+		if (clazz == IProject.class && container instanceof IProject) {
+			return container;
+		}
+		return null;
 	}
 }

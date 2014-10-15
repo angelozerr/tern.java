@@ -8,12 +8,10 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.core.scriptpath;
+package tern.scriptpath.impl.dom;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.Path;
-
-import tern.eclipse.ide.core.scriptpath.IScriptResource;
+import tern.ITernFile;
+import tern.scriptpath.ITernScriptResource;
 
 /**
  * Javascript declared in a script/@src element inside HTML/JSP where script/@src
@@ -23,19 +21,19 @@ import tern.eclipse.ide.core.scriptpath.IScriptResource;
  * 	<script src="/scripts/example.js" ></script>
  * </pre>
  */
-public class DOMRelativeURLScriptResource implements IScriptResource {
+public class DOMRelativeURLScriptResource implements ITernScriptResource {
 
-	private final IFile domFile;
+	private final ITernFile relativeFile;
 	private final String src;
 
-	public DOMRelativeURLScriptResource(IFile domFile, String src) {
-		this.domFile = domFile;
+	public DOMRelativeURLScriptResource(ITernFile domFile, String src) {
+		this.relativeFile = domFile.getRelativeFile(src);
 		this.src = src;
 	}
 
 	@Override
-	public IFile getFile() {
-		return domFile.getParent().getFile(new Path(src));
+	public ITernFile getFile() {
+		return relativeFile;
 	}
 
 	@Override

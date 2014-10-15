@@ -10,40 +10,13 @@
  */
 package tern.eclipse.ide.core.utils;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
 public class FileUtils {
-
-	/**
-	 * Extension file
-	 */
-	public static final String JS_EXTENSION = "js";
-	public static final String HTM_EXTENSION = "htm";
-	public static final String HTML_EXTENSION = "html";
-	public static final String JSP_EXTENSION = "jsp";
-	public static final String PHP_EXTENSION = "php";
-	public static final String JSF_EXTENSION = "jsf";
-	public static final String JSON_EXTENSION = "json";
-
-	private static final List<String> HTML_EXTENSIONS = Arrays
-			.asList(new String[] { HTM_EXTENSION, HTML_EXTENSION,
-					JSP_EXTENSION, PHP_EXTENSION, JSF_EXTENSION });
-
-	public static boolean isJSFile(IResource resource) {
-		return JS_EXTENSION.equals(resource.getFileExtension());
-	}
-
-	public static boolean isHTMLFile(IResource resource) {
-		return HTML_EXTENSIONS.contains(resource.getFileExtension());
-	}
 
 	/**
 	 * Returns the preferences of line seperator.
@@ -73,7 +46,7 @@ public class FileUtils {
 			if (lineSeparator != null)
 				return lineSeparator;
 		}
-		return System.getProperty("line.separator");
+		return System.getProperty("line.separator"); //$NON-NLS-1$
 	}
 
 }

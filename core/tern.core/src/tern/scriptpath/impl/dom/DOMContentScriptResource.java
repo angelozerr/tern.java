@@ -8,11 +8,10 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.core.scriptpath;
+package tern.scriptpath.impl.dom;
 
-import org.eclipse.core.resources.IFile;
-
-import tern.eclipse.ide.core.scriptpath.IScriptResource;
+import tern.ITernFile;
+import tern.scriptpath.ITernScriptResource;
 
 /**
  * Javascript declared in a script element inside HTML/JSP where script is
@@ -24,24 +23,24 @@ import tern.eclipse.ide.core.scriptpath.IScriptResource;
  * </script>
  * </pre>
  */
-public class DOMContentScriptResource implements IScriptResource {
+public class DOMContentScriptResource implements ITernScriptResource {
 
-	private final IFile domFile;
+	private final ITernFile domFile;
 	private final int indexScript;
 
-	public DOMContentScriptResource(IFile domFile, int indexScript) {
+	public DOMContentScriptResource(ITernFile domFile, int indexScript) {
 		this.domFile = domFile;
 		this.indexScript = indexScript;
 	}
 
 	@Override
-	public IFile getFile() {
+	public ITernFile getFile() {
 		return domFile;
 	}
 
 	@Override
 	public String getLabel() {
-		return new StringBuilder("script#").append(indexScript).toString();
+		return new StringBuilder("script#").append(indexScript).toString(); //$NON-NLS-1$
 	}
 
 }

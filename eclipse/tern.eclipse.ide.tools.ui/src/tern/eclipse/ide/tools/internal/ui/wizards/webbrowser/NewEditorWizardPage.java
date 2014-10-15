@@ -12,15 +12,15 @@ package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
 import org.eclipse.swt.widgets.Composite;
 
-import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
 import tern.eclipse.ide.tools.internal.ui.wizards.NewFileWizardPage;
+import tern.utils.ExtensionUtils;
 
 public abstract class NewEditorWizardPage<T extends EditorOptions> extends
 		NewFileWizardPage<T> {
 
 	public NewEditorWizardPage(String pageName) {
-		super(pageName, FileUtils.HTML_EXTENSION);
+		super(pageName, ExtensionUtils.HTML_EXTENSION);
 	}
 
 	@Override

@@ -18,11 +18,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.core.generator.TernDefGenerator;
 import tern.eclipse.ide.tools.core.generator.TernDefOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
+import tern.utils.ExtensionUtils;
 
 /**
  * Page to fill tern def information.
@@ -35,7 +35,7 @@ public class NewTernDefWizardPage extends NewFileWizardPage<TernDefOptions> {
 	private Text nameText;
 
 	public NewTernDefWizardPage() {
-		super(PAGE, FileUtils.JSON_EXTENSION);
+		super(PAGE, ExtensionUtils.JSON_EXTENSION);
 		setTitle(TernToolsUIMessages.NewTernDefWizardPage_title);
 		setDescription(TernToolsUIMessages.NewTernDefWizardPage_description);
 	}

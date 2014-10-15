@@ -16,7 +16,6 @@ import java.util.Map;
 
 import tern.ITernProject;
 import tern.TernException;
-import tern.TernProject;
 import tern.metadata.TernModuleMetadata;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
@@ -127,7 +126,7 @@ public class TernModuleHelper {
 	 * @param module
 	 * @param ternProject
 	 */
-	public static void update(ITernModule module, ITernProject<?> ternProject) {
+	public static void update(ITernModule module, ITernProject ternProject) {
 		update(module, null, ternProject);
 	}
 
@@ -138,7 +137,7 @@ public class TernModuleHelper {
 	 * @param ternProject
 	 */
 	public static void update(ITernModule module, JsonObject options,
-			ITernProject<?> ternProject) {
+			ITernProject ternProject) {
 		switch (module.getModuleType()) {
 		case Def:
 			ternProject.addLib((ITernDef) module);

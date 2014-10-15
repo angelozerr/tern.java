@@ -10,7 +10,7 @@
  */
 package tern.eclipse.ide.core;
 
-import tern.TernProject;
+import tern.ITernProject;
 
 /**
  * 
@@ -19,6 +19,6 @@ import tern.TernProject;
  */
 public interface ITernModuleConfigurator {
 
-	void configure(TernProject project);
+	void configure(ITernProject project);
 	
 }

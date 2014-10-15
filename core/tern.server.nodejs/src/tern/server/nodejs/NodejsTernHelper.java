@@ -25,8 +25,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import tern.ITernCacheManager;
 import tern.TernException;
-import tern.TernFileManager;
 import tern.server.IInterceptor;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
@@ -97,9 +97,9 @@ public class NodejsTernHelper {
 					}
 				}
 				// Update file manager if needed.
-				TernFileManager<?> fileManager = server.getFileManager();
-				if (fileManager != null) {
-					fileManager.updateIndexedFiles(doc);
+				ITernCacheManager cacheManager = server.getCacheManager();
+				if (cacheManager != null) {
+					cacheManager.filesUploaded(doc);
 				}
 				return response;
 			} catch (ParseException e) {

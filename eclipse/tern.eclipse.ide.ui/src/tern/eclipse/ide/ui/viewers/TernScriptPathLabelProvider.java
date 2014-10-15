@@ -15,9 +15,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
-import tern.eclipse.ide.core.scriptpath.IScriptResource;
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.ui.ImageResource;
+import tern.scriptpath.ITernScriptResource;
+import tern.scriptpath.ITernScriptPath;
 
 public class TernScriptPathLabelProvider extends LabelProvider {
 
@@ -25,44 +25,23 @@ public class TernScriptPathLabelProvider extends LabelProvider {
 
 	@Override
 	public String getText(Object element) {
-		if (element instanceof IScriptResource) {
-			return ((IScriptResource) element).getLabel();
+		if (element instanceof ITernScriptResource) {
+			return ((ITernScriptResource) element).getLabel();
 		}
-		if (!(element instanceof ITernScriptPath)) {
-			return super.getText(element);
+		if (element instanceof ITernScriptPath) {
+			return ((ITernScriptPath)element).getLabel();
 		}
-
-		ITernScriptPath scriptPath = ((ITernScriptPath) element);
-		IResource resource = scriptPath.getResource();
-		String externalLabel = scriptPath.getExternalLabel();
-		return getText(resource, scriptPath.getExternalLabel());
-	}
-
-	private String getText(IResource resource, String externalLabel) {
-		if (resource.getType() == IResource.PROJECT) {
-			if (externalLabel != null) {
-				return new StringBuilder(resource.getName()).append(" (")
-						.append(externalLabel).append(")").toString();
-			}
-			return resource.getName();
-		}
-		StringBuilder text = new StringBuilder(resource.getName())
-				.append(" - ").append(
-						resource.getParent().getFullPath().makeRelative()
-								.toString());
-		if (externalLabel != null) {
-			text.append(" (").append(externalLabel).append(")");
-		}
-		return text.toString();
+		
+		return super.getText(element);
 	}
 
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof ITernScriptPath) {
-			IResource res = ((ITernScriptPath) element).getResource();
+			IResource res = (IResource) ((ITernScriptPath) element).getAdapter(IResource.class);
 			return provider.getImage(res);
 		}
-		if (element instanceof IScriptResource) {
+		if (element instanceof ITernScriptResource) {
 			return ImageResource.getImage(ImageResource.IMG_SCRIPT);
 		}
 		return super.getImage(element);

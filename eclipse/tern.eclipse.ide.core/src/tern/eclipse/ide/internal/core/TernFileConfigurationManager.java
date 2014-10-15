@@ -13,7 +13,6 @@ package tern.eclipse.ide.internal.core;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionDelta;
 import org.eclipse.core.runtime.IExtensionRegistry;
@@ -21,15 +20,18 @@ import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
+import tern.ITernFile;
+import tern.TernResourcesManager;
 import tern.eclipse.ide.core.ITernFileConfiguration;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.server.protocol.html.IScriptTagRegionProvider;
 import tern.server.protocol.html.ScriptTagRegion;
 
 /**
  * Tern file configuration manager.
  * 
  */
-public class TernFileConfigurationManager implements IRegistryChangeListener {
+public class TernFileConfigurationManager implements IRegistryChangeListener, IScriptTagRegionProvider {
 
 	private static final String EXTENSION_TERN_FILE_CONFIGURATIONS = "ternFileConfigurations";
 
@@ -43,7 +45,7 @@ public class TernFileConfigurationManager implements IRegistryChangeListener {
 		return INSTANCE;
 	}
 
-	public TernFileConfigurationManager() {
+	private TernFileConfigurationManager() {
 		this.registryListenerIntialized = false;
 	}
 
@@ -167,7 +169,10 @@ public class TernFileConfigurationManager implements IRegistryChangeListener {
 	 * @return the list of script tags to use for the given HTML file and null
 	 *         otherwise.
 	 */
-	public ScriptTagRegion[] getScriptTags(IFile file) {
+	public ScriptTagRegion[] getScriptTags(ITernFile file) {
+		if (!TernResourcesManager.isHTMLFile(file)) {
+			return null;
+		}
 		ScriptTagRegion[] tags = null;
 		ITernFileConfiguration[] configurations = getTernFileConfigurations();
 		for (ITernFileConfiguration configuration : configurations) {

@@ -8,17 +8,12 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.core.dom;
+package tern;
 
-public class DOMProviderHelper {
+import org.w3c.dom.Document;
 
-	private static IDOMProvider provider = DefaultDOMProvider.INSTANCE;
+public interface IDOMProvider {
 
-	public static void setProvider(IDOMProvider provider) {
-		DOMProviderHelper.provider = provider;
-	}
+	Document getDocument(ITernFile resource);
 
-	public static IDOMProvider getProvider() {
-		return provider;
-	}
 }

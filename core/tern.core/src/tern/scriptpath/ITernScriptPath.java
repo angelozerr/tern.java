@@ -8,26 +8,19 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.core.scriptpath;
+package tern.scriptpath;
 
-import java.io.IOException;
-import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-
-import com.eclipsesource.json.JsonArray;
-
-import tern.TernFileManager;
-import tern.server.protocol.TernDoc;
+import tern.ITernAdaptable;
+import tern.ITernProject;
 
 /**
  * API of tern script path used to retrieve a list of JS files to load by tern
  * server.
  * 
  */
-public interface ITernScriptPath {
+public interface ITernScriptPath extends ITernAdaptable {
 
 	public static final ITernScriptPath[] EMPTY_SCRIPT_PATHS = new ITernScriptPath[0];
 
@@ -52,18 +45,11 @@ public interface ITernScriptPath {
 	}
 
 	/**
-	 * Returns the root resource which contains the scripts to load.
-	 * 
-	 * @return
-	 */
-	IResource getResource();
-
-	/**
 	 * Returns the project where script path belongs to.
 	 * 
 	 * @return
 	 */
-	IProject getOwnerProject();
+	ITernProject getOwnerProject();
 
 	/**
 	 * Returns the path of the root resource.
@@ -71,7 +57,12 @@ public interface ITernScriptPath {
 	 * @return
 	 */
 	String getPath();
-
+	
+	/**
+	 * Returns label
+	 */
+	String getLabel();
+	
 	/**
 	 * Returns the script path type.
 	 */
@@ -98,20 +89,6 @@ public interface ITernScriptPath {
 	 * 
 	 * @return
 	 */
-	Collection<IScriptResource> getScriptResources();
-
-	/**
-	 * Update files of the given tern doc.
-	 * 
-	 * @param ternFileManager
-	 *            the tern file manager.
-	 * @param doc
-	 *            the tern doc.
-	 * @param names
-	 *            list of file names which must be used for the tern query.
-	 * @throws IOException
-	 */
-	void updateFiles(TernFileManager ternFileManager, TernDoc doc,
-			JsonArray names) throws IOException;
-
+	List<ITernScriptResource> getScriptResources();
+	
 }

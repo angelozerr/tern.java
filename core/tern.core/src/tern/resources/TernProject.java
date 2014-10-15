@@ -8,17 +8,38 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern;
+package tern.resources;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Collections;
+import java.util.List;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import tern.DirtyableJsonArray;
+import tern.DirtyableJsonObject;
+import tern.ITernCacheManager;
+import tern.ITernFile;
+import tern.ITernProject;
+import tern.TernException;
+import tern.internal.resources.InternalTernResourcesManager;
+import tern.scriptpath.ITernScriptPath;
+import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
+import tern.server.ITernServer;
 import tern.server.protocol.JsonHelper;
+import tern.server.protocol.TernDoc;
+import tern.server.protocol.TernQuery;
+import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.IOUtils;
 
 import com.eclipsesource.json.JsonArray;
@@ -51,15 +72,13 @@ import com.eclipsesource.json.ParseException;
  * 
  * @see http://ternjs.net/doc/manual.html#configuration
  */
-public class TernProject<T> extends DirtyableJsonObject implements
-		ITernProject<T> {
+public class TernProject extends DirtyableJsonObject implements
+		ITernProject {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String TERN_PROJECT = ".tern-project";
-
-	private static final String PLUGINS_FIELD_NAME = "plugins";
-	private static final String LIBS_FIELD_NAME = "libs";
+	private static final String PLUGINS_FIELD_NAME = "plugins"; //$NON-NLS-1$
+	private static final String LIBS_FIELD_NAME = "libs"; //$NON-NLS-1$
 
 	private final File projectDir;
 	private DirtyableJsonArray patterns;
@@ -69,7 +88,7 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	/**
 	 * tern file manager.
 	 */
-	private TernFileManager<T> fileManager;
+	private ITernCacheManager cacheManager;
 
 	/**
 	 * Tern project constructor.
@@ -80,6 +99,12 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	public TernProject(File projectDir) {
 		super(null);
 		this.projectDir = projectDir;
+		this.cacheManager = InternalTernResourcesManager.getInstance().createTernCacheManager(this);
+	}
+	
+	@Override
+	public String getName() {
+		return projectDir.getName();
 	}
 
 	/**
@@ -87,6 +112,7 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	 * 
 	 * @return the project base dir.
 	 */
+	@Override
 	public File getProjectDir() {
 		return projectDir;
 	}
@@ -261,7 +287,7 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	public void addLoadEagerlyPattern(String pattern) {
 		if (patterns == null) {
 			patterns = new DirtyableJsonArray(this);
-			add("loadEagerly", patterns);
+			add("loadEagerly", patterns); //$NON-NLS-1$
 		}
 		patterns.add(pattern);
 	}
@@ -273,10 +299,10 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	 */
 	@Override
 	public void save() throws IOException {
-		projectDir.mkdirs();
+		getProjectDir().mkdirs();
 		Writer writer = null;
 		try {
-			writer = new FileWriter(new File(projectDir, TERN_PROJECT));
+			writer = new FileWriter(new File(getProjectDir(), TERN_PROJECT_FILE));
 			super.writeTo(writer);
 		} finally {
 			if (writer != null) {
@@ -305,7 +331,7 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	 * @throws IOException
 	 */
 	public void load() throws IOException {
-		File file = new File(projectDir, TERN_PROJECT);
+		File file = new File(getProjectDir(), TERN_PROJECT_FILE);
 		if (file.exists()) {
 			try {
 				JsonHelper.readFrom(new FileReader(file), this);
@@ -315,26 +341,27 @@ public class TernProject<T> extends DirtyableJsonObject implements
 		}
 		this.dirty = false;
 	}
-
-	/**
-	 * Set the tern file manager.
-	 * 
-	 * @param fileManager
-	 */
-	public void setFileManager(TernFileManager<T> fileManager) {
-		this.fileManager = fileManager;
+	
+	@Override
+	public void handleException(Throwable t) {
+		t.printStackTrace();
 	}
 
 	/**
-	 * Returns the setted tern file manager and null otherwise.
+	 * Returns file cache manager.
 	 * 
 	 * @return
 	 */
 	@Override
-	public TernFileManager<T> getFileManager() {
-		return fileManager;
+	public ITernCacheManager getCacheManager() {
+		return cacheManager;
 	}
-
+	
+	@Override
+	public ITernServer getTernServer() {
+		return null;
+	}
+	
 	/**
 	 * Returns true if the project is dirty and false otherwise.
 	 * 
@@ -347,5 +374,123 @@ public class TernProject<T> extends DirtyableJsonObject implements
 	@Override
 	public void setDirty(boolean dirty) {
 		this.dirty = dirty;
+	}
+
+	@Override
+	public ITernFile getFile(String name) {
+		return InternalTernResourcesManager.getInstance().getTernFile(this, name);
+	}
+
+	@Override
+	public ITernFile getFile(Object fileObject) {
+		return InternalTernResourcesManager.getInstance().getTernFile(fileObject);
+	}
+
+	@Override
+	public List<ITernScriptPath> getScriptPaths() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
+		if (adapterClass == File.class) {
+			return getProjectDir();
+		}
+		return null;
+	}
+
+	protected void synchronize(TernQuery query, JsonArray names, ITernScriptPath scriptPath, 
+			Node domNode, ITernFile file) {
+		ITernCacheManager cache = getCacheManager();
+		cache.ensureSynchronized();
+		if (file != null) {
+			if (domNode != null) {
+				DOMElementsScriptPath domPath = createDOMElementsScriptPath(domNode, file);
+				cache.synchronizeScriptPath(domPath);
+			} else {
+				try {
+					cache.synchronizeFile(file);
+				} catch (IOException e) {
+					handleException(e);
+				}
+			}
+			if (query != null) {
+				query.setFile(file.getFullName(this));
+			}
+		}
+		if (names != null) {
+			cache.fillSyncedFileNames(names, scriptPath);
+		}
+	}
+	
+	protected DOMElementsScriptPath createDOMElementsScriptPath(Node domNode, ITernFile file) {
+		final Document doc = domNode.getOwnerDocument();
+		return new DOMElementsScriptPath(this, file, null) {			
+			@Override
+			protected Document getDocument() {
+				return doc;
+			}
+		};
+	}
+	
+	@Override
+	public void request(TernQuery query, ITernFile file,
+			ITernCompletionCollector collector) throws IOException,
+			TernException {
+		request(query, null, null, null, file, collector);
+	}
+
+	@Override
+	public void request(TernQuery query, JsonArray names,
+			ITernScriptPath scriptPath, Node domNode, ITernFile file,
+			ITernCompletionCollector collector) throws IOException,
+			TernException {
+		synchronize(query, names, scriptPath, domNode, file);
+		ITernServer server = getTernServer();
+		TernDoc doc = new TernDoc(query);
+		server.request(doc, collector);
+	}
+
+	@Override
+	public void request(TernQuery query, ITernFile file,
+			ITernDefinitionCollector collector) throws IOException,
+			TernException {
+		request(query, null, null, null, file, collector);
+	}
+
+	@Override
+	public void request(TernQuery query, JsonArray names,
+			ITernScriptPath scriptPath, Node domNode, ITernFile file,
+			ITernDefinitionCollector collector) throws IOException,
+			TernException {
+		synchronize(query, names, scriptPath, domNode, file);
+		ITernServer server = getTernServer();
+		TernDoc doc = new TernDoc(query);
+		server.request(doc, collector);
+	}
+
+	@Override
+	public void request(TernQuery query, ITernFile file,
+			ITernTypeCollector collector) throws IOException, TernException {
+		request(query, null, null, null, file, collector);
+	}
+
+	@Override
+	public void request(TernQuery query, JsonArray names,
+			ITernScriptPath scriptPath, Node domNode, ITernFile file,
+			ITernTypeCollector collector) throws IOException, TernException {
+		synchronize(query, names, scriptPath, domNode, file);
+		ITernServer server = getTernServer();
+		TernDoc doc = new TernDoc(query);
+		server.request(doc, collector);
+	}
+
+	@Override
+	public void request(TernQuery query, ITernFile file,
+			ITernLintCollector collector) throws IOException, TernException {
+		synchronize(query, null, null, null, file);
+		ITernServer server = getTernServer();
+		TernDoc doc = new TernDoc(query);
+		server.request(doc, collector);
 	}
 }
