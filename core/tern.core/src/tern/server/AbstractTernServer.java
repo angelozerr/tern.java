@@ -13,7 +13,7 @@ package tern.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernProject;
 import tern.server.protocol.completions.ITernCompletionCollector;
 
@@ -29,12 +29,12 @@ public abstract class AbstractTernServer implements ITernServer {
 	public AbstractTernServer(ITernProject project) {
 		this.project = project;
 		this.listeners = new ArrayList<ITernServerListener>();
-		final ITernCacheManager fileManager = getCacheManager();
-		if (fileManager != null) {
+		final ITernFileSynchronizer fileSynchronizer = getFileSynchronizer();
+		if (fileSynchronizer != null) {
 			this.addServerListener(new TernServerAdapter() {
 				@Override
 				public void onStop(ITernServer server) {
-					fileManager.cleanIndexedFiles();
+					fileSynchronizer.cleanIndexedFiles();
 				}
 			});
 		}
@@ -114,9 +114,9 @@ public abstract class AbstractTernServer implements ITernServer {
 	public abstract Object getValue(Object value, String name);
 
 	@Override
-	public ITernCacheManager getCacheManager() {
+	public ITernFileSynchronizer getFileSynchronizer() {
 		if (project != null) {
-			return project.getCacheManager();
+			return project.getFileSynchronizer();
 		}
 		return null;
 	}

@@ -11,7 +11,7 @@ import com.eclipsesource.json.JsonArray;
 import tern.scriptpath.ITernScriptPath;
 import tern.server.protocol.TernDoc;
 
-public interface ITernCacheManager {
+public interface ITernFileSynchronizer {
 
 	public ITernProject getProject();
 

@@ -20,7 +20,7 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernProject;
 import tern.TernException;
 import tern.server.AbstractTernServer;
@@ -210,9 +210,9 @@ public class RhinoTernServer extends AbstractTernServer {
 			f.call(cx, ternScope, ternScope, functionArgs);
 
 			// Update file manager if needed.
-			ITernCacheManager fileManager = super.getCacheManager();
-			if (fileManager != null) {
-				fileManager.filesUploaded(doc);
+			ITernFileSynchronizer fileSynchronizer = super.getFileSynchronizer();
+			if (fileSynchronizer != null) {
+				fileSynchronizer.filesUploaded(doc);
 			}
 
 		} finally {

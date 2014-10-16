@@ -23,7 +23,7 @@ import org.w3c.dom.Node;
 
 import tern.DirtyableJsonArray;
 import tern.DirtyableJsonObject;
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernFile;
 import tern.ITernProject;
 import tern.TernException;
@@ -88,7 +88,7 @@ public class TernProject extends DirtyableJsonObject implements
 	/**
 	 * tern file manager.
 	 */
-	private ITernCacheManager cacheManager;
+	private ITernFileSynchronizer fileSynchronizer;
 
 	/**
 	 * Tern project constructor.
@@ -99,7 +99,7 @@ public class TernProject extends DirtyableJsonObject implements
 	public TernProject(File projectDir) {
 		super(null);
 		this.projectDir = projectDir;
-		this.cacheManager = InternalTernResourcesManager.getInstance().createTernCacheManager(this);
+		this.fileSynchronizer = InternalTernResourcesManager.getInstance().createTernFileSynchronizer(this);
 	}
 	
 	@Override
@@ -353,8 +353,8 @@ public class TernProject extends DirtyableJsonObject implements
 	 * @return
 	 */
 	@Override
-	public ITernCacheManager getCacheManager() {
-		return cacheManager;
+	public ITernFileSynchronizer getFileSynchronizer() {
+		return fileSynchronizer;
 	}
 	
 	@Override
@@ -401,15 +401,15 @@ public class TernProject extends DirtyableJsonObject implements
 
 	protected void synchronize(TernQuery query, JsonArray names, ITernScriptPath scriptPath, 
 			Node domNode, ITernFile file) {
-		ITernCacheManager cache = getCacheManager();
-		cache.ensureSynchronized();
+		ITernFileSynchronizer synchronizer = getFileSynchronizer();
+		synchronizer.ensureSynchronized();
 		if (file != null) {
 			if (domNode != null) {
 				DOMElementsScriptPath domPath = createDOMElementsScriptPath(domNode, file);
-				cache.synchronizeScriptPath(domPath);
+				synchronizer.synchronizeScriptPath(domPath, file.getFullName(this));
 			} else {
 				try {
-					cache.synchronizeFile(file);
+					synchronizer.synchronizeFile(file);
 				} catch (IOException e) {
 					handleException(e);
 				}
@@ -419,7 +419,7 @@ public class TernProject extends DirtyableJsonObject implements
 			}
 		}
 		if (names != null) {
-			cache.fillSyncedFileNames(names, scriptPath);
+			synchronizer.fillSyncedFileNames(names, scriptPath);
 		}
 	}
 	

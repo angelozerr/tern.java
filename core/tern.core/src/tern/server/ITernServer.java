@@ -12,7 +12,7 @@ package tern.server;
 
 import java.io.IOException;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.TernException;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
@@ -90,7 +90,7 @@ public interface ITernServer {
 	 * 
 	 * @return the tern file manager and null otherwise.
 	 */
-	ITernCacheManager getCacheManager();
+	ITernFileSynchronizer getFileSynchronizer();
 
 	boolean isDataAsJsonString();
 

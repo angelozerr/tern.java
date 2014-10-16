@@ -204,7 +204,7 @@ public interface ITernProject extends ITernAdaptable {
 	 * 
 	 * @return
 	 */
-	ITernCacheManager getCacheManager();
+	ITernFileSynchronizer getFileSynchronizer();
 	
 	/**
 	 * Returns a list of script include paths

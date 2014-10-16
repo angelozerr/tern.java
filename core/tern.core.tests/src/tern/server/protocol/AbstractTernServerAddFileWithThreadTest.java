@@ -15,7 +15,7 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.TernException;
 import tern.server.AbstractTernServerTest;
 import tern.server.DefaultResponseHandler;
@@ -33,7 +33,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 	// @Test
 	public void addBigFileWith2Threads() throws TernException, IOException {
 
-		final ITernCacheManager manager = server.getCacheManager();
+		final ITernFileSynchronizer manager = server.getFileSynchronizer();
 
 		final MapTernFile jQuery = new MapTernFile("jquery",
 				IOUtils.toString(MapTernFile.class
@@ -88,7 +88,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 
 	}
 
-	public Thread createRequestThread(final ITernCacheManager fileManager,
+	public Thread createRequestThread(final ITernFileSynchronizer fileManager,
 			final MapTernFile jQuery, final DefaultResponseHandler response,
 			final TernDoc doc) {
 		return new Thread(new Runnable() {

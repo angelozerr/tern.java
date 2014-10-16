@@ -127,7 +127,7 @@ public class IDETernProject extends TernProject implements
 				this.ternServer.addServerListener(new TernServerAdapter() {
 					@Override
 					public void onStop(ITernServer server) {
-						getCacheManager().cleanIndexedFiles();
+						getFileSynchronizer().cleanIndexedFiles();
 					}
 				});
 				copyListeners();

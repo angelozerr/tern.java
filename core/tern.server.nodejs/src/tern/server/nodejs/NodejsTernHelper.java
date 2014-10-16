@@ -25,7 +25,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.TernException;
 import tern.server.IInterceptor;
 import tern.server.ITernServer;
@@ -96,10 +96,10 @@ public class NodejsTernHelper {
 								methodName, getElapsedTimeInMs(startTime));
 					}
 				}
-				// Update file manager if needed.
-				ITernCacheManager cacheManager = server.getCacheManager();
-				if (cacheManager != null) {
-					cacheManager.filesUploaded(doc);
+				// Update file synchronizer if needed.
+				ITernFileSynchronizer fileSynchronizer = server.getFileSynchronizer();
+				if (fileSynchronizer != null) {
+					fileSynchronizer.filesUploaded(doc);
 				}
 				return response;
 			} catch (ParseException e) {

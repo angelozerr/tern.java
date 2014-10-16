@@ -22,7 +22,7 @@ public interface ITernResourcesManagerDelegate {
 	 * @param project
 	 * @return
 	 */
-	ITernCacheManager createTernCacheManager(ITernProject project);
+	ITernFileSynchronizer createTernFileSynchronizer(ITernProject project);
 
 	/**
 	 * Creates a new tern file object with specified name. The name is

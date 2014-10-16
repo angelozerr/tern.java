@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernFile;
 import tern.ITernProject;
 import tern.TernException;
@@ -32,12 +32,12 @@ import tern.server.protocol.TernFile;
 import com.eclipsesource.json.JsonArray;
 
 /**
- * Tern file manager is used to maintains a cache with indexed files which was
+ * Tern file synchronizer is used to maintain a cache with indexed files which was
  * already parsed by the tern server to avoid parsing files on each tern
- * request.
- * 
+ * request. It is also responsible to keep up-to-date version of those files on the 
+ * server.
  */
-public class TernCacheManager implements ITernCacheManager {
+public class TernFileSynchronizer implements ITernFileSynchronizer {
 
 	private static final int MAX_FILES = 20;
 
@@ -52,7 +52,7 @@ public class TernCacheManager implements ITernCacheManager {
 	/**
 	 * Tern file manager constructor.
 	 */
-	public TernCacheManager(ITernProject project) {
+	public TernFileSynchronizer(ITernProject project) {
 		this.indexedFiles = new HashSet<String>();
 		this.syncedFiles = new HashSet<String>();
 		this.syncedFilesPerPath = new HashMap<ITernScriptPath, Set<String>>();

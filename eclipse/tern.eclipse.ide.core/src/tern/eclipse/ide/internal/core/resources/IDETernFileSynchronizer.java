@@ -25,20 +25,20 @@ import tern.ITernProject;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
-import tern.resources.TernCacheManager;
+import tern.resources.TernFileSynchronizer;
 
 /**
  * Extension of {@link TernFileManager} to works with Eclipse {@link IFile}
  * 
  */
-public class IDETernCacheManager extends TernCacheManager implements
+public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 		IResourceChangeListener, IResourceDeltaVisitor {
 
 
 	/**
 	 * Constructor of file manager with the owner Eclipse project.
 	 */
-	public IDETernCacheManager(ITernProject project) {
+	public IDETernFileSynchronizer(ITernProject project) {
 		super(project);
 		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
 	}

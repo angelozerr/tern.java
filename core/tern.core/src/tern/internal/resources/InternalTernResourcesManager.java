@@ -7,7 +7,7 @@ package tern.internal.resources;
 import org.w3c.dom.Document;
 
 import tern.IDOMProvider;
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernResourcesManagerDelegate;
 import tern.ITernFile;
 import tern.ITernProject;
@@ -45,8 +45,8 @@ public class InternalTernResourcesManager {
 		return ternResourcesManagerDelegate.getTernFile(fileObject);
 	}
 	
-	public ITernCacheManager createTernCacheManager(ITernProject project) {
-		return ternResourcesManagerDelegate.createTernCacheManager(project);
+	public ITernFileSynchronizer createTernFileSynchronizer(ITernProject project) {
+		return ternResourcesManagerDelegate.createTernFileSynchronizer(project);
 	}
 	
 	public void setTernResourcesManagerDelegate(

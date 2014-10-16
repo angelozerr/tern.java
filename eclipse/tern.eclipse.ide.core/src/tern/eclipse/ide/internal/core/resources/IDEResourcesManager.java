@@ -14,7 +14,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.QualifiedName;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernResourcesManagerDelegate;
 import tern.ITernFile;
 import tern.ITernProject;
@@ -99,8 +99,8 @@ public class IDEResourcesManager implements ITernResourcesManagerDelegate {
 	}
 
 	@Override
-	public ITernCacheManager createTernCacheManager(ITernProject project) {
-		return new IDETernCacheManager(project);
+	public ITernFileSynchronizer createTernFileSynchronizer(ITernProject project) {
+		return new IDETernFileSynchronizer(project);
 	}
 
 	protected String getExtension(Object fileObject) {

@@ -8,11 +8,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import tern.ITernCacheManager;
+import tern.ITernFileSynchronizer;
 import tern.ITernFile;
 import tern.ITernProject;
 import tern.ITernResourcesManagerDelegate;
-import tern.resources.TernCacheManager;
+import tern.resources.TernFileSynchronizer;
 import tern.resources.FilesystemTernFile;
 import tern.resources.TernProject;
 import tern.utils.ExtensionUtils;
@@ -22,8 +22,8 @@ public class DefaultTernResourcesManager implements ITernResourcesManagerDelegat
 	private Map<String, ITernProject> projectCache = new HashMap<String, ITernProject>();
 	
 	@Override
-	public ITernCacheManager createTernCacheManager(ITernProject project) {
-		return new TernCacheManager(project);
+	public ITernFileSynchronizer createTernFileSynchronizer(ITernProject project) {
+		return new TernFileSynchronizer(project);
 	}
 
 	@Override
