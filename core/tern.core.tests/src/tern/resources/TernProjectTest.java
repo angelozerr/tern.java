@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern;
+package tern.resources;
 
 import java.io.File;
 import java.io.IOException;

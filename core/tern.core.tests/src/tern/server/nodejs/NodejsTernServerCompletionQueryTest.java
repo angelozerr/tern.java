@@ -10,8 +10,8 @@
  */
 package tern.server.nodejs;
 
+import tern.ITernProject;
 import tern.TernException;
-import tern.TernProject;
 import tern.server.ITernServer;
 import tern.server.protocol.AbstractTernServerCompletionQueryTest;
 
@@ -21,7 +21,7 @@ import tern.server.protocol.AbstractTernServerCompletionQueryTest;
 public class NodejsTernServerCompletionQueryTest extends AbstractTernServerCompletionQueryTest {
 
 	@Override
-	protected ITernServer createServer(TernProject project ) throws TernException {
+	protected ITernServer createServer(ITernProject project ) throws TernException {
 		return NodejsTernServerFactory.createServer(project);
 	}
 

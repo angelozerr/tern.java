@@ -10,18 +10,17 @@
  */
 package tern.server.nodejs.angular;
 
+import tern.ITernProject;
 import tern.TernException;
-import tern.TernProject;
 import tern.server.ITernServer;
 import tern.server.nodejs.NodejsTernServerFactory;
-import tern.server.protocol.angular.AbstractAngularControllerCompletionTest;
 import tern.server.protocol.angular.Issue39;
 
 public class NodejsIssue39 extends
 		Issue39 {
 
 	@Override
-	protected ITernServer createServer(TernProject project)
+	protected ITernServer createServer(ITernProject project)
 			throws TernException {
 		return NodejsTernServerFactory.createServer(project);
 	}

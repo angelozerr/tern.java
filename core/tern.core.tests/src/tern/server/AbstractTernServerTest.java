@@ -16,8 +16,9 @@ import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
 
+import tern.ITernProject;
 import tern.TernException;
-import tern.TernProject;
+import tern.TernResourcesManager;
 
 public abstract class AbstractTernServerTest {
 
@@ -25,13 +26,13 @@ public abstract class AbstractTernServerTest {
 
 	@Before
 	public void init() throws TernException, IOException {
-		TernProject project = createProject();
+		ITernProject project = createProject();
 		project.save();
 		server = createServer(project);
 	}
 
-	protected TernProject createProject() {
-		TernProject project = new TernProject(new File("."));
+	protected ITernProject createProject() {
+		ITernProject project = TernResourcesManager.getTernProject(new File("."));
 		return project;
 	}
 
@@ -40,7 +41,7 @@ public abstract class AbstractTernServerTest {
 		server.dispose();
 	}
 
-	protected abstract ITernServer createServer(TernProject project)
+	protected abstract ITernServer createServer(ITernProject project)
 			throws TernException;
 
 }
