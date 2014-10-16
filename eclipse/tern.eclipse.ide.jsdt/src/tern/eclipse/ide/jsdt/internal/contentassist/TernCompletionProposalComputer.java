@@ -61,7 +61,7 @@ public class TernCompletionProposalComputer implements
 
 						IIDETernProject ternProject = TernCorePlugin
 								.getTernProject(project);
-						ITernFile tf = TernDocumentFile.create(scriptFile, document);
+						ITernFile tf = new TernDocumentFile(scriptFile, document);
 
 						int startOffset = context.getInvocationOffset();
 						TernCompletionsQuery query = new TernCompletionsQuery(

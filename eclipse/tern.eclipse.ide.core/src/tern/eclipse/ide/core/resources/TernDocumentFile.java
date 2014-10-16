@@ -16,7 +16,7 @@ public class TernDocumentFile extends IDETernFile implements ITernFile {
 
 	private IDocument document;
 	
-	protected TernDocumentFile(IFile file, IDocument document) {
+	public TernDocumentFile(IFile file, IDocument document) {
 		super(file);
 		this.document = document;
 	}
@@ -24,13 +24,6 @@ public class TernDocumentFile extends IDETernFile implements ITernFile {
 	@Override
 	public String getContents() throws IOException {
 		return document.get();
-	}
-
-	public static TernDocumentFile create(IFile file, IDocument document) {
-		if (canCreate(file)) {
-			return new TernDocumentFile(file, document);
-		}
-		return null;
 	}
 	
 	@Override

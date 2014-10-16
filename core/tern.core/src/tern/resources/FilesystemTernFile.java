@@ -20,20 +20,28 @@ import tern.utils.IOUtils;
 public class FilesystemTernFile extends AbstractTernFile implements ITernFile {
 
 	private File file;
+	private File canonical;
 	
 	public FilesystemTernFile(File file) {
-		assert file.isFile();
 		this.file = file;
-		//get the canonical path of the file
-		try {
-			this.file = file.getCanonicalFile();
-		} catch (IOException ex) {
-			//best effort
-		}
+	}
+	
+	@Override
+	public boolean isAccessible() {
+		return file.isFile() && file.canRead();
 	}
 
 	@Override
 	public String getFullName(ITernProject project) {
+		if (canonical == null) {
+			//get the canonical path of the file
+			try {
+				canonical = file.getCanonicalFile();
+			} catch (IOException ex) {
+				//best effort
+				canonical = file;
+			}
+		}
 		if (project != null) {
 			//check if the file belongs to the project
 			try {
@@ -41,7 +49,7 @@ public class FilesystemTernFile extends AbstractTernFile implements ITernFile {
 				if (!path.endsWith("/")) { //$NON-NLS-1$
 					path += "/"; //$NON-NLS-1$
 				}
-				String fileName = file.toString().replace('\\', '/');
+				String fileName = canonical.toString().replace('\\', '/');
 				if (fileName.startsWith(path)) {
 					return fileName.substring(path.length());
 				}
@@ -50,7 +58,7 @@ public class FilesystemTernFile extends AbstractTernFile implements ITernFile {
 			}
 		}
 		//if it doesn't, use the external protocol
-		return EXTERNAL_PROTOCOL + file.toString();
+		return EXTERNAL_PROTOCOL + canonical.toString();
 	}
 
 	@Override
@@ -76,11 +84,7 @@ public class FilesystemTernFile extends AbstractTernFile implements ITernFile {
 	@Override
 	public ITernFile getRelativeFile(String relativePath) {
 		File f = new File(file, relativePath);
-		if (f.isFile()) {
-			//use cache if possible
-			TernResourcesManager.getTernFile(f);
-		}
-		return null;
+		return TernResourcesManager.getTernFile(f);
 	}
 	
 	@Override

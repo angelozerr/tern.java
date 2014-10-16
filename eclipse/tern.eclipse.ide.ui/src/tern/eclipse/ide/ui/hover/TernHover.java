@@ -63,7 +63,7 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 				// project has tern nature, get hover info with tern.
 				IIDETernProject ternProject = TernCorePlugin
 						.getTernProject(project);
-				ITernFile file = TernDocumentFile.create(scriptFile, 
+				ITernFile file = new TernDocumentFile(scriptFile, 
 						textViewer.getDocument());
 				TernTypeQuery query = new TernTypeQuery(file.getFullName(ternProject),
 						hoverRegion.getOffset());

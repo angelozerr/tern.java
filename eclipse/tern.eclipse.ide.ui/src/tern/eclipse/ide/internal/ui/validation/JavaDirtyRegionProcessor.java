@@ -113,7 +113,7 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				};
 
 				try {
-					ITernFile tf = TernDocumentFile.create(file, document);
+					ITernFile tf = new TernDocumentFile(file, document);
 					ternProject.request(query, tf, collector);
 				} catch (Exception e) {
 					Trace.trace(Trace.SEVERE, "Error while tern validation.", e);

@@ -28,9 +28,6 @@ public class IDEResourcesManager implements ITernResourcesManagerDelegate {
 	static final QualifiedName TERN_PROJECT = new QualifiedName(
 			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernProject"); //$NON-NLS-1$ //$NON-NLS-2$
 
-	static final QualifiedName TERN_FILE = new QualifiedName(
-			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernFile"); //$NON-NLS-1$ //$NON-NLS-2$
-
 	private static IDEResourcesManager instance = new IDEResourcesManager();
 	
 	private IDEResourcesManager() {
@@ -87,33 +84,16 @@ public class IDEResourcesManager implements ITernResourcesManagerDelegate {
 	public ITernFile getTernFile(Object fileObject) {
 		if (fileObject instanceof File) {
 			File file = (File)fileObject;
-			if (file.isFile()) {
-				//it is possible that this file maps to a file in workspace
-				IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(file.toURI());
-				if (files.length == 0 && files[0].exists()) {
-					return new FilesystemTernFile(file);
-				}
-				//create IDETernFile
-				fileObject = files[0];
+			//it is possible that this file maps to a file in the workspace
+			IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(file.toURI());
+			if (files.length == 0) {
+				return new FilesystemTernFile(file);
 			}
+			//create IDETernFile
+			fileObject = files[0];
 		}
 		if (fileObject instanceof IFile) {
-			IFile file = (IFile)fileObject;
-			ITernFile tf = null;
-			try {
-				tf = (ITernFile) file.getSessionProperty(TERN_FILE);
-			} catch (CoreException e) {
-				//ignore
-			}
-			if (tf == null) {
-				tf = IDETernFile.create((IFile)fileObject);
-				try {
-					file.setSessionProperty(TERN_FILE, tf);
-				} catch (CoreException e) {
-					//ignore
-				}
-			}
-			return tf;
+			return new IDETernFile((IFile)fileObject);
 		}
 		return null;
 	}

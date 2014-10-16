@@ -42,6 +42,15 @@ public interface ITernFile extends ITernAdaptable {
 	String getFileName();
 	
 	/**
+	 * Returns whether the file is present in the filesystem and
+	 * is accessible. This should be a relatively fast method and in 
+	 * case of non filesystem files, it may return false if method is sure that 
+	 * contents are not accessible. Even if this method returns true,
+	 * getContents method can still fail with IOException.
+	 */
+	boolean isAccessible();
+	
+	/**
 	 * Returns contents of the file.
 	 * 
 	 * @return contents of the file, never null

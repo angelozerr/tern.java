@@ -36,7 +36,7 @@ public interface ITernResourcesManagerDelegate {
 	
 	/**
 	 * Creates a new tern file object for the specified resource object.
-	 * Return null if specified resource does not point to an existing file.  
+	 * Return null if specified resource cannot be adapted to ITernFile.
 	 * 
 	 * @param fileObject
 	 * @return

@@ -34,19 +34,14 @@ public class DefaultTernResourcesManager implements ITernResourcesManagerDelegat
 		} else {
 			file = new File(project.getProjectDir(), name);
 		}
-		if (file.isFile()) {
-			return new FilesystemTernFile(file);
-		}
-		return null;
+		return new FilesystemTernFile(file);
 	}
 
 	@Override
 	public ITernFile getTernFile(Object fileObject) {
 		if (fileObject instanceof File) {
-			File f = (File)fileObject;
-			if (f.isFile()) {
-				return new FilesystemTernFile(f);
-			}
+			return new FilesystemTernFile(
+					(File)fileObject);
 		}
 		return null;
 	}

@@ -53,7 +53,7 @@ public class TernHyperlink extends AbstractTernHyperlink {
 	public void open() {
 		try {
 			IFile file = (IFile) resource;
-			ITernFile tf = TernDocumentFile.create(file, document);
+			ITernFile tf = new TernDocumentFile(file, document);
 			String filename = tf.getFullName(ternProject);
 			Integer pos = region.getOffset();
 			TernDefinitionQuery query = new TernDefinitionQuery(filename, pos);

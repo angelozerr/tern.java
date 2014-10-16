@@ -26,7 +26,7 @@ public class IDETernFile extends AbstractTernFile implements ITernFile {
 
 	private IFile iFile;
 	
-	protected IDETernFile(IFile file) {
+	public IDETernFile(IFile file) {
 		this.iFile = file;
 	}
 	
@@ -54,11 +54,10 @@ public class IDETernFile extends AbstractTernFile implements ITernFile {
 		IContainer parent = iFile.getParent();
 		IFile relativeFile = parent.getFile(new Path(relativePath));
 		if (relativeFile != null && relativeFile.exists()) {
-			//use cache if possible
 			return TernResourcesManager.getTernFile(relativeFile);
 		}
 		File rf = new File(parent.getLocation().toFile(), relativePath);
-		if (rf.exists()) {
+		if (rf.isFile()) {
 			return TernResourcesManager.getTernFile(rf);
 		}
 		return null;
@@ -84,7 +83,10 @@ public class IDETernFile extends AbstractTernFile implements ITernFile {
 			return iFile;
 		}
 		if (adapterClass == File.class) {
-			return iFile.getLocation().toFile();
+			IPath path = iFile.getLocation();
+			if (path != null) {
+				return path.toFile();
+			}
 		}
 		return null;
 	}
@@ -94,23 +96,9 @@ public class IDETernFile extends AbstractTernFile implements ITernFile {
 		return iFile.getFullPath().toString();
 	}
 
-	public static boolean canCreate(IFile file) {
-		IPath path = file.getLocation();
-		if (path == null) {
-			return false;
-		}
-		File f = path.toFile();
-		if (!f.isFile()) {
-			return false;
-		}
-		return true;
-	}
-	
-	public static IDETernFile create(IFile file) {
-		if (canCreate(file)) {
-			return new IDETernFile(file);
-		}
-		return null;
+	@Override
+	public boolean isAccessible() {
+		return iFile.isAccessible();
 	}
 	
 }

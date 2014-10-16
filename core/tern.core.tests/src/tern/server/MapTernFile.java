@@ -67,4 +67,9 @@ public class MapTernFile implements ITernFile {
 	public ScriptTagRegion[] getScriptTags() {
 		return null;
 	}
+
+	@Override
+	public boolean isAccessible() {
+		return true;
+	}
 }
