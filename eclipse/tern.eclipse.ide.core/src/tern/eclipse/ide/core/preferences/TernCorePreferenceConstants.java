@@ -21,6 +21,8 @@ public class TernCorePreferenceConstants {
 	 */
 	public static final String TERN_SERVER_TYPE = "ternServerType"; //$NON-NLS-1$
 	public static final String TRACE_ON_CONSOLE = "traceOnConsole"; //$NON-NLS-1$
+	public static final String LOADING_LOCAL_PLUGINS = "loadingLocalPlugin"; //$NON-NLS-1$
+	
 	public static final String USE_PROJECT_SETTINGS = "use-project-settings";//$NON-NLS-1$
 
 }

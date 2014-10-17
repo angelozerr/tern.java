@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
@@ -49,6 +50,7 @@ import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.ProjectScriptPath;
 import tern.server.IResponseHandler;
+import tern.server.ITernModule;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 import tern.server.TernServerAdapter;
@@ -61,6 +63,7 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
+import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -162,6 +165,9 @@ public class IDETernProject extends TernProject<IFile> implements
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
 						.getServerType();
 				this.ternServer = type.createServer(this);
+				this.ternServer
+						.setLoadingLocalPlugins(TernCorePreferencesSupport
+								.getInstance().isLoadingLocalPlugins(project));
 				this.ternServer.addServerListener(new TernServerAdapter() {
 					@Override
 					public void onStop(ITernServer server) {
@@ -851,5 +857,42 @@ public class IDETernProject extends TernProject<IFile> implements
 				this.ternServer.addServerListener(listener);
 			}
 		}
+	}
+
+	@Override
+	public List<ITernModule> getProjectModules() {
+		final List<ITernModule> modules = new ArrayList<ITernModule>();
+		if (project.isAccessible()
+				&& TernCorePreferencesSupport.getInstance()
+						.isLoadingLocalPlugins(project)) {
+			try {
+				project.accept(new IResourceVisitor() {
+
+					@Override
+					public boolean visit(IResource resource)
+							throws CoreException {
+						switch (resource.getType()) {
+						case IResource.PROJECT:
+							return true;
+						case IResource.FILE:
+							ITernModule module = TernModuleHelper
+									.getModule(resource.getName());
+							if (module != null) {
+								modules.add(module);
+							}
+							return false;
+						default:
+							return false;
+						}
+					}
+				});
+			} catch (CoreException e) {
+				Trace.trace(
+						Trace.SEVERE,
+						"Error while collecting tern plugin from the project root",
+						e);
+			}
+		}
+		return modules;
 	}
 }

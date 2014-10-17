@@ -25,6 +25,7 @@ import tern.TernException;
 import tern.angular.protocol.completions.TernAngularCompletionsQuery;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
 import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.server.ITernModule;
 import tern.server.ITernServerListener;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.ITernCompletionCollector;
@@ -73,7 +74,7 @@ public interface IIDETernProject extends ITernProject<IFile> {
 			ScriptPathsType type, String external) throws IOException;
 
 	void removeExternalScriptPaths(String external);
-	
+
 	// --- Completion
 
 	public void request(TernAngularCompletionsQuery query, JsonArray names,
@@ -141,5 +142,12 @@ public interface IIDETernProject extends ITernProject<IFile> {
 	void setData(String key, Object value);
 
 	IProject getProject();
+
+	/**
+	 * Returns the tern plugin hosted on the root project.
+	 * 
+	 * @return the tern plugin hosted on the root project.
+	 */
+	List<ITernModule> getProjectModules();
 
 }

@@ -34,19 +34,20 @@ import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.preferences.PropertyPreferencePage;
 
 /**
- * Tern console preferences page used for global and project preferences.
+ * Tern dev preferences page used for global and project preferences.
  *
  */
-public class TernConsolePreferencesPage extends PropertyPreferencePage {
+public class TernDevelopmentPreferencesPage extends PropertyPreferencePage {
 
-	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernConsolePropertyPage";
-	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernConsolePropertyPage";
+	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernDevelopmentPropertyPage";
+	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage";
 
 	private final IPreferencesService fPreferencesService;
 
 	private Button traceOnConsoleCheckbox;
+	private Button loadingLocalPluginCheckbox;
 
-	public TernConsolePreferencesPage() {
+	public TernDevelopmentPreferencesPage() {
 		setImageDescriptor(ImageResource
 				.getImageDescriptor(ImageResource.IMG_LOGO));
 		fPreferencesService = Platform.getPreferencesService();
@@ -58,9 +59,18 @@ public class TernConsolePreferencesPage extends PropertyPreferencePage {
 		page.setLayout(new GridLayout());
 
 		IScopeContext[] preferenceScopes = createPreferenceScopes();
-		traceOnConsoleCheckbox = createCheckbox(page,
-				TernCorePreferenceConstants.TRACE_ON_CONSOLE, preferenceScopes,
-				TernUIMessages.TernConsolePropertyPage_traceOnConsole_label);
+		// trace on console
+		traceOnConsoleCheckbox = createCheckbox(
+				page,
+				TernCorePreferenceConstants.TRACE_ON_CONSOLE,
+				preferenceScopes,
+				TernUIMessages.TernDevelopmentPreferencesPage_traceOnConsole_label);
+		// Make it possible to enable loading plugins from the project root,
+		loadingLocalPluginCheckbox = createCheckbox(
+				page,
+				TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS,
+				preferenceScopes,
+				TernUIMessages.TernDevelopmentPreferencesPage_loadingLocalPlugin_label);
 		return page;
 	}
 
@@ -98,6 +108,9 @@ public class TernConsolePreferencesPage extends PropertyPreferencePage {
 		updateCheckbox(traceOnConsoleCheckbox,
 				TernCorePreferenceConstants.TRACE_ON_CONSOLE,
 				defaultPreferences);
+		updateCheckbox(loadingLocalPluginCheckbox,
+				TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS,
+				defaultPreferences);
 	}
 
 	@Override
@@ -109,6 +122,9 @@ public class TernConsolePreferencesPage extends PropertyPreferencePage {
 		boolean remove = project != null && !isElementSettingsEnabled();
 		updateContexts(traceOnConsoleCheckbox,
 				TernCorePreferenceConstants.TRACE_ON_CONSOLE, contexts, remove);
+		updateContexts(loadingLocalPluginCheckbox,
+				TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS, contexts,
+				remove);
 		for (int i = 0; i < contexts.length; i++) {
 			try {
 				contexts[i].getNode(getPreferenceNodeQualifier()).flush();

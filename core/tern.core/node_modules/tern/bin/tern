@@ -13,6 +13,7 @@ var projectFileName = ".tern-project", portFileName = ".tern-port";
 var maxIdleTime = 6e4 * 5; // Shut down after five minutes of inactivity
 
 var persistent = process.argv.indexOf("--persistent") > -1;
+var disableLoadingLocal = process.argv.indexOf("--disable-loading-local") > -1;
 var verbose = process.argv.indexOf("--verbose") > -1;
 var noPortFile = process.argv.indexOf("--no-port-file") > -1;
 var host = "127.0.0.1";
@@ -51,8 +52,18 @@ var homeDir = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFIL
 if (homeDir && fs.existsSync(path.resolve(homeDir, ".tern-config")))
   defaultConfig = readProjectFile(path.resolve(homeDir, ".tern-config"));
 
+function readJSON(fileName) {
+  var file = fs.readFileSync(fileName, "utf8");
+  try {
+    return JSON.parse(file);
+  } catch (e) {
+    console.error("Bad JSON in " + fileName + ": " + e.message);
+    process.exit(1);
+  }
+}
+
 function readProjectFile(fileName) {
-  var data = JSON.parse(fs.readFileSync(fileName, "utf8"));
+  var data = readJSON(fileName);
   for (var option in defaultConfig) if (!data.hasOwnProperty(option))
     data[option] = defaultConfig[option];
   return data;
@@ -60,7 +71,7 @@ function readProjectFile(fileName) {
 
 function findFile(file, projectDir, fallbackDir) {
   var local = path.resolve(projectDir, file);
-  if (fs.existsSync(local)) return local;
+  if (!disableLoadingLocal && fs.existsSync(local)) return local;
   var shared = path.resolve(fallbackDir, file);
   if (fs.existsSync(shared)) return shared;
 }
@@ -74,7 +85,7 @@ function findDefs(projectDir, config) {
     var file = src[i];
     if (!/\.json$/.test(file)) file = file + ".json";
     var found = findFile(file, projectDir, path.resolve(distDir, "defs"));
-    if (found) defs.push(JSON.parse(fs.readFileSync(found, "utf8")));
+    if (found) defs.push(readJSON(found));
     else process.stderr.write("Failed to find library " + src[i] + ".\n");
   }
   return defs;

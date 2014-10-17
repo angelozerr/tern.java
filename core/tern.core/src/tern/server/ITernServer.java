@@ -102,4 +102,23 @@ public interface ITernServer {
 
 	void dispose();
 
+	/**
+	 * Set true if tern plugins can be loaded from the project root and false
+	 * otherwise.
+	 * 
+	 * @see https://github.com/marijnh/tern/commit/154
+	 *      b0587a64eea193d124005e03d80065ac310e2
+	 */
+	void setLoadingLocalPlugins(boolean loadingLocalPlugins);
+
+	/**
+	 * Returns true if tern plugins can be loaded from the project root and
+	 * false otherwise.
+	 * 
+	 * @return true if tern plugins can be loaded from the project root and
+	 *         false otherwise.
+	 * @see https://github.com/marijnh/tern/commit/154
+	 *      b0587a64eea193d124005e03d80065ac310e2
+	 */
+	boolean isLoadingLocalPlugins();
 }

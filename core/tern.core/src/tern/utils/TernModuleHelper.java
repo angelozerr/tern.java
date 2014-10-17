@@ -18,6 +18,8 @@ import tern.ITernProject;
 import tern.TernException;
 import tern.TernProject;
 import tern.metadata.TernModuleMetadata;
+import tern.server.BasicTernDef;
+import tern.server.BasicTernPlugin;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
@@ -167,8 +169,7 @@ public class TernModuleHelper {
 	 * @throws TernException
 	 */
 	public static ITernModuleConfigurable findConfigurable(ITernModule module,
-			JsonValue options, List<ITernModule> allModules)
-			throws TernException {
+			JsonValue options, ITernModule[] allModules) throws TernException {
 		String version = module.getVersion();
 		for (ITernModule f : allModules) {
 			if (f.getModuleType() == ModuleType.Configurable
@@ -198,6 +199,22 @@ public class TernModuleHelper {
 			return false;
 		}
 		return module.getMetadata().getOptions().size() > 0;
+	}
+
+	public static ITernModule getModule(String filename) {
+		int index = filename.lastIndexOf('.');
+		if (index == -1) {
+			return null;
+		}
+		String fileExtension = filename.substring(index + 1, filename.length());
+		if (fileExtension.equals("json")) {
+			String name = filename.substring(0, index);
+			return new BasicTernDef(name);
+		} else if (fileExtension.equals("js")) {
+			String name = filename.substring(0, index);
+			return new BasicTernPlugin(name);
+		}
+		return null;
 	}
 
 }

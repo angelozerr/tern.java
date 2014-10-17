@@ -70,6 +70,12 @@ public class NodejsProcess {
 	private boolean persistent;
 
 	/**
+	 * true if tern plugins can be loaded from the project root and false
+	 * otherwise
+	 */
+	private boolean loadingLocalPlugins;
+
+	/**
 	 * node.js process.
 	 */
 	private Process process;
@@ -273,6 +279,9 @@ public class NodejsProcess {
 		if (isPersistent()) {
 			commands.add("--persistent");
 		}
+		if (!isLoadingLocalPlugins()) {
+			commands.add("--disable-loading-local");
+		}
 		return commands;
 	}
 
@@ -472,6 +481,28 @@ public class NodejsProcess {
 	 */
 	public boolean isPersistent() {
 		return persistent;
+	}
+
+	/**
+	 * Set true if tern plugins can be loaded from the project root and false
+	 * otherwise.
+	 * 
+	 * @see https://github.com/marijnh/tern/pull/394
+	 */
+	public void setLoadingLocalPlugins(boolean loadingLocalPlugins) {
+		this.loadingLocalPlugins = loadingLocalPlugins;
+	}
+
+	/**
+	 * Returns true if tern plugins can be loaded from the project root and
+	 * false otherwise.
+	 * 
+	 * @return true if tern plugins can be loaded from the project root and
+	 *         false otherwise.
+	 * @see https://github.com/marijnh/tern/pull/394
+	 */
+	public boolean isLoadingLocalPlugins() {
+		return loadingLocalPlugins;
 	}
 
 	/**

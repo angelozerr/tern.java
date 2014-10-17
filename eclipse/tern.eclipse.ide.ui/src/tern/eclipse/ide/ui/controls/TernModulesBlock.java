@@ -72,9 +72,6 @@ import com.eclipsesource.json.JsonValue;
  */
 public class TernModulesBlock extends AbstractTableBlock {
 
-	// private static final String SASH2W1 = "sash.2.weight.1";
-	// private static final String SASH2W2 = "sash.2.weight.2";
-
 	private final String tableLabel;
 	private final IProject project;
 
@@ -387,21 +384,18 @@ public class TernModulesBlock extends AbstractTableBlock {
 	 */
 	public void loadModules() {
 		try {
+			List<ITernModule> checkedModules = project != null ? new ArrayList<ITernModule>()
+					: null;
+			IIDETernProject ternProject = project != null ? TernCorePlugin
+					.getTernProject(project) : null;
 			// Load list of Tern Plugins + JSON Type Definitions.
-			List<ITernModule> allModules = new ArrayList<ITernModule>();
-			ITernModule[] defaultModules = TernCorePlugin
-					.getTernServerTypeManager().getTernModulesGroupByType();
-			for (ITernModule defaultModule : defaultModules) {
-				allModules.add(defaultModule);
-			}
-			List<ITernModule> initialModules = null;
-			if (project != null) {
+			ITernModule[] allModules = TernCorePlugin
+					.getTernServerTypeManager().getTernModules(ternProject, checkedModules);
+			/*if (project != null) {
 				// Select Tern Plugins + JSON Type Definitions according
 				// settings of
 				// the project.
-				IIDETernProject ternProject = TernCorePlugin
-						.getTernProject(project);
-				initialModules = new ArrayList<ITernModule>();
+				checkedModules = new ArrayList<ITernModule>();
 				// Tern Plugins
 				JsonValue options = null;
 				JsonObject plugins = ternProject.getPlugins();
@@ -410,49 +404,24 @@ public class TernModulesBlock extends AbstractTableBlock {
 					ITernPlugin plugin = TernCorePlugin
 							.getTernServerTypeManager().findTernPlugin(
 									name.toString());
-					updateInitialModule(plugin, options, allModules,
-							initialModules);
+					updateCheckedModule(plugin, options, allModules,
+							checkedModules);
 				}
 				// JSON Type Definitions
 				JsonArray defs = ternProject.getLibs();
 				for (JsonValue name : defs) {
 					ITernDef def = TernCorePlugin.getTernServerTypeManager()
 							.findTernDef(name.asString());
-					updateInitialModule(def, null, allModules, initialModules);
+					updateCheckedModule(def, null, allModules, checkedModules);
 				}
-			}
-			this.setTernModules(allModules.toArray(ITernModule.EMPTY_MODULE));
-			if (initialModules != null) {
-				this.setCheckedModules(initialModules.toArray());
+			}*/
+			this.setTernModules(allModules);
+			if (checkedModules != null) {
+				this.setCheckedModules(checkedModules.toArray());
 			}
 
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
-		}
-	}
-
-	/**
-	 * Initialize the initial module with the given module.
-	 * 
-	 * @param module
-	 * @param options
-	 * @param allModules
-	 * @param initialModules
-	 */
-	private void updateInitialModule(ITernModule module, JsonValue options,
-			List<ITernModule> allModules, List<ITernModule> initialModules) {
-		if (module != null) {
-			if (!TernModuleHelper.isConfigurableModule(module)) {
-				initialModules.add(module);
-			} else {
-				try {
-					initialModules.add(TernModuleHelper.findConfigurable(
-							module, options, allModules));
-				} catch (TernException e) {
-					Trace.trace(Trace.SEVERE,
-							"Error while finding configurable module.", e);
-				}
-			}
 		}
 	}
 
