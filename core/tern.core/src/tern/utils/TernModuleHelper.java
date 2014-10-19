@@ -25,7 +25,9 @@ import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.server.ITernPlugin;
 import tern.server.ModuleType;
+import tern.server.TernDef;
 import tern.server.TernModuleConfigurable;
+import tern.server.TernPlugin;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
@@ -204,17 +206,40 @@ public class TernModuleHelper {
 	public static ITernModule getModule(String filename) {
 		int index = filename.lastIndexOf('.');
 		if (index == -1) {
+			if (filename.startsWith("tern-")) {
+				String name = filename.substring("tern-".length(),
+						filename.length());
+				return getPlugin(name);
+			}
 			return null;
 		}
 		String fileExtension = filename.substring(index + 1, filename.length());
 		if (fileExtension.equals("json")) {
 			String name = filename.substring(0, index);
-			return new BasicTernDef(name);
+			return getDef(name);
 		} else if (fileExtension.equals("js")) {
 			String name = filename.substring(0, index);
-			return new BasicTernPlugin(name);
+			return getPlugin(name);
 		}
 		return null;
+	}
+
+	private static ITernDef getDef(String name) {
+		try {
+			return TernDef.valueOf(name);
+		} catch (Throwable e) {
+
+		}
+		return new BasicTernDef(name);
+	}
+
+	private static ITernPlugin getPlugin(String name) {
+		try {
+			return TernPlugin.valueOf(name);
+		} catch (Throwable e) {
+
+		}
+		return new BasicTernPlugin(name);
 	}
 
 }

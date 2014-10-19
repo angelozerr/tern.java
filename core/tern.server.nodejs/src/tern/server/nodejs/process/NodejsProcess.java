@@ -225,7 +225,7 @@ public class NodejsProcess {
 					"You must initialize the base dir of the tern node.js server.");
 		}
 		File ternServerFile = new File(nodejsTernBaseDir,
-				"node_modules/tern/bin/tern");
+				"bin/tern");
 		if (!ternServerFile.exists()) {
 			try {
 				throw new TernException("Cannot find tern node.js server at "
