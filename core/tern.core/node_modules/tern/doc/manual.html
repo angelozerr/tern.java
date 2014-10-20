@@ -60,13 +60,11 @@ very top are the <a href="#editor">editor plugins</a>. These talk to a
 <a href="#plugin_node">node</a>
 </p>
 </li>
-</ul></div>
-</li>
 <li>
 <p>
 <a href="#plugin_requirejs">RequireJS</a>
 </p>
-<div class="ulist"><ul>
+</li>
 <li>
 <p>
 <a href="#plugin_angular">Angular.js</a>
@@ -156,6 +154,11 @@ very top are the <a href="#editor">editor plugins</a>. These talk to a
 <li>
 <p>
 <a href="#tern_java">Eclipse</a>
+</p>
+</li>
+<li>
+<p>
+<a href="#tern_for_gedit">Gedit</a>
 </p>
 </li>
 </ul></div>
@@ -968,6 +971,18 @@ passing the syntax tree and a <a href="#infer_scope">scope</a> object.
 <dd>
 <p>
 Run after the type inference pass.
+</p>
+</dd>
+<dt>
+<code>"typeAt" (file, end, expr, type)</code>
+</dt>
+<dd>
+<p>
+Run after Tern attempts to find the
+type at the position <code>end</code> in the given file, this should return either
+the given type (already calculated by Tern and earlier <code>"typeAt"</code>
+passes) or an alternate type to be used instead. This is useful when a
+plugin can provide a more helpful type than Tern (e.g. within comments).
 </p>
 </dd>
 </dl>

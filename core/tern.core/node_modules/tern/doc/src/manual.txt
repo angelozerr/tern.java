@@ -17,7 +17,7 @@ engine>> to do the actual type inference.
 ** <<plugins,Server plugins>>
 *** <<plugin_doc_comment,Doc comments>>
 *** <<plugin_node,node>>
-** <<plugin_requirejs,RequireJS>>
+*** <<plugin_requirejs,RequireJS>>
 *** <<plugin_angular,Angular.js>>
 *** <<plugin_third_party,Third-party plugins>>
 ** <<configuration,Project configuration>>
@@ -35,6 +35,7 @@ engine>> to do the actual type inference.
 ** <<vim,Vim>>
 ** <<sublime_text,Sublime Text>>
 ** <<tern_java,Eclipse>>
+** <<tern_for_gedit,Gedit>>
 * <<software,Related Software>>
 
 [[server]]
@@ -530,6 +531,12 @@ and passed the parse tree and the parsed file as arguments.
 passing the syntax tree and a <<infer_scope,scope>> object.
 
 `"postInfer" (ast, scope)`;; Run after the type inference pass.
+
+`"typeAt" (file, end, expr, type)`;; Run after Tern attempts to find the
+type at the position `end` in the given file, this should return either
+the given type (already calculated by Tern and earlier `"typeAt"`
+passes) or an alternate type to be used instead. This is useful when a
+plugin can provide a more helpful type than Tern (e.g. within comments).
 
 [[tern.defineQueryType]]`tern.defineQueryType(name: string, desc: object)`::
 Defines a new type of query with the server. The `desc` object is a

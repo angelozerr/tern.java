@@ -16,6 +16,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.wst.jsdt.core.ElementChangedEvent;
 import org.eclipse.wst.jsdt.core.IElementChangedListener;
 import org.eclipse.wst.jsdt.core.IIncludePathEntry;
@@ -58,8 +64,30 @@ public class JSDTClassPathManager implements IElementChangedListener,
 			// changes.
 			IJavaScriptProject jsProject = getJavaScriptProjectIfClassPathChanged(delta);
 			if (jsProject != null) {
-				// JSDT "Includes Path", has changed.
-				IProject project = jsProject.getProject();
+				Job configJob = new ConfigureJob(jsProject);
+				configJob.setRule(jsProject.getProject());
+			    configJob.schedule();
+			}
+		}
+	}
+
+	private class ConfigureJob extends WorkspaceJob {
+		IJavaScriptProject fJsProject;
+		
+		private ConfigureJob(IJavaScriptProject jsProject) {
+			super("Tern Project configuration job");
+		}
+
+		@Override
+		public IStatus runInWorkspace(IProgressMonitor monitor)
+				throws CoreException {
+			if (monitor.isCanceled()) {
+				return Status.CANCEL_STATUS;
+			}
+			monitor.beginTask("Confuguring the project", 1);
+			// JSDT "Includes Path", has changed.
+			if (fJsProject != null) {
+				IProject project = fJsProject.getProject();
 				if (TernCorePlugin.hasTernNature(project)) {
 					// It's a tern project
 					try {
@@ -67,17 +95,19 @@ public class JSDTClassPathManager implements IElementChangedListener,
 								.getTernProject(project);
 						// Synchronize tern script paths with JSDT
 						// "Include Path"
-						synchTernScriptPaths(jsProject, ternProject);
+						synchTernScriptPaths(fJsProject, ternProject);
 					} catch (Exception e) {
 						Trace.trace(Trace.SEVERE,
 								"Error while JSDT ClassPath changed.", e);
 					}
 				}
 			}
+			monitor.worked(1);
+			monitor.done();
+			return Status.OK_STATUS;
 		}
-
 	}
-
+	
 	/**
 	 * Retrieve the JSDT Project from the delta, if delta is about
 	 * "Includes Path" changes.

@@ -100,10 +100,10 @@
 	          name="%TernPreferencePage.name"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
 	          id="tern.eclipse.ide.preferences" />	  
-       <page  name="%TernConsolePropertyPage.name"
+       <page  name="%TernDevelopmentPropertyPage.name"
               category="tern.eclipse.ide.preferences"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernConsolePreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.TernConsolePropertyPage" />
+	          class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
+	          id="tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage" />
 	   <page  name="%TernContentAssistPropertyPage.name"
               category="tern.eclipse.ide.preferences"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
@@ -145,10 +145,10 @@
          </enabledWhen>
       </page>
 	  <page
-            name="%TernConsolePropertyPage.name"
+            name="%TernDevelopmentPropertyPage.name"
             category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.preferences.TernConsolePreferencesPage"
-            id="tern.eclipse.ide.ui.properties.TernConsolePropertyPage">
+            class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
+            id="tern.eclipse.ide.ui.properties.TernDevelopmentPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />

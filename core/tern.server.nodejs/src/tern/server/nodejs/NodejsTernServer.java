@@ -102,8 +102,8 @@ public class NodejsTernServer extends AbstractTernServer {
 	public NodejsTernServer(ITernProject project, NodejsProcess process) {
 		super(project);
 		this.process = process;
-		process.setPersistent(persistent);
 		process.addProcessListener(listener);
+		initProcess(process);
 	}
 
 	private String computeBaseURL(Integer port) {
@@ -196,16 +196,19 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	private NodejsProcess getProcess() throws TernException {
-		if (process != null) {
-			process.setPersistent(persistent);
-			return process;
+		if (process == null) {
+			ITernProject project = super.getProject();
+			process = NodejsProcessManager.getInstance().create(
+					project.getProjectDir());
+			process.addProcessListener(listener);
 		}
-		ITernProject project = super.getProject();
-		process = NodejsProcessManager.getInstance().create(
-				project.getProjectDir());
-		process.setPersistent(persistent);
-		process.addProcessListener(listener);
+		initProcess(process);
 		return process;
+	}
+
+	private void initProcess(NodejsProcess process) {
+		process.setPersistent(persistent);
+		process.setLoadingLocalPlugins(isLoadingLocalPlugins());
 	}
 
 	public void addProcessListener(INodejsProcessListener listener) {

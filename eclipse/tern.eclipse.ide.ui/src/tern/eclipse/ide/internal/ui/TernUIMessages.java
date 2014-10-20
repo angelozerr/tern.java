@@ -70,8 +70,8 @@ public final class TernUIMessages extends NLS {
 
 	public static String TernScriptPathsBlock_desc;
 
-	public static String TernConsolePropertyPage_desc;
-	public static String TernConsolePropertyPage_traceOnConsole_label;
+	public static String TernDevelopmentPreferencesPage_traceOnConsole_label;
+	public static String TernDevelopmentPreferencesPage_loadingLocalPlugin_label;
 
 	// Hyperlink
 	public static String TernHyperlink_typeLabel;

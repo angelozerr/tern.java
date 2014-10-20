@@ -23,6 +23,8 @@ import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
+import tern.TernException;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernServerPreferencesListener;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.ITernServerTypeManager;
@@ -33,6 +35,10 @@ import tern.server.ITernPlugin;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.utils.TernModuleHelper;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Manager of tern server type loaded by the extension point "ternServerTypes"
@@ -209,15 +215,67 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	}
 
 	@Override
-	public ITernModule[] getTernModules() {
-		return modules;
+	public ITernModule[] getTernModules(IIDETernProject ternProject,
+			List<ITernModule> checkedModules) {
+		ITernModule[] modulesArray = null;
+		List<ITernModule> allModules = new ArrayList<ITernModule>();
+		TernModuleHelper.groupByType(modules, allModules);
+		if (ternProject != null) {
+			// retrieve tern plugin from the root project
+			List<ITernModule> projectModules = ternProject.getProjectModules();
+			allModules.addAll(projectModules);
+
+			// fill checked modules
+
+			modulesArray = allModules.toArray(ITernModule.EMPTY_MODULE);
+			// Tern Plugins
+			JsonValue options = null;
+			JsonObject plugins = ternProject.getPlugins();
+			for (String name : plugins.names()) {
+				options = plugins.get(name);
+				ITernModule plugin = findTernModule(name.toString(),
+						projectModules);
+				updateCheckedModule(plugin, options, modulesArray,
+						checkedModules);
+			}
+
+			// JSON Type Definitions
+			JsonArray defs = ternProject.getLibs();
+			for (JsonValue name : defs) {
+				ITernModule def = findTernModule(name.asString(),
+						projectModules);
+				updateCheckedModule(def, null, modulesArray, checkedModules);
+			}
+		}
+		if (modulesArray == null) {
+			modulesArray = allModules.toArray(ITernModule.EMPTY_MODULE);
+		}
+		return modulesArray;
 	}
 
-	@Override
-	public ITernModule[] getTernModulesGroupByType() {
-		List<ITernModule> groupedModules = new ArrayList<ITernModule>();
-		TernModuleHelper.groupByType(modules, groupedModules);
-		return groupedModules.toArray(ITernModule.EMPTY_MODULE);
+	/**
+	 * Update the checked modules with the given module.
+	 * 
+	 * @param module
+	 * @param options
+	 * @param allModules
+	 * @param checkedModules
+	 */
+	private void updateCheckedModule(ITernModule module, JsonValue options,
+			ITernModule[] allModules, List<ITernModule> checkedModules) {
+		if (module != null) {
+			if (!TernModuleHelper.isConfigurableModule(module)) {
+				checkedModules.add(module);
+			} else {
+				try {
+					checkedModules.add(TernModuleHelper.findConfigurable(
+							module, options, allModules));
+				} catch (TernException e) {
+					Trace.trace(Trace.SEVERE,
+							"Error while finding configurable module.", e);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -251,6 +309,20 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 		}
 		// search from tern def
 		return findTernDef(name);
+	}
+
+	private ITernModule findTernModule(String name,
+			List<ITernModule> projectModules) {
+		ITernModule m = findTernModule(name);
+		if (m != null) {
+			return m;
+		}
+		for (ITernModule module : projectModules) {
+			if (module.getName().equals(name)) {
+				return module;
+			}
+		}
+		return null;
 	}
 
 	@Override

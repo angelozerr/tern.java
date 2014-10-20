@@ -10,6 +10,8 @@
  */
 package tern.eclipse.ide.core;
 
+import java.util.List;
+
 import org.eclipse.core.resources.IProject;
 
 import tern.server.ITernDef;
@@ -48,9 +50,16 @@ public interface ITernServerTypeManager {
 
 	void refresh();
 
-	ITernModule[] getTernModulesGroupByType();
-
-	ITernModule[] getTernModules();
+	/**
+	 * Returns the array of tern plugin and JSON Type definition from the tern
+	 * repository and project.
+	 * 
+	 * @param ternProject
+	 * @param checkedModules
+	 * @return
+	 */
+	ITernModule[] getTernModules(IIDETernProject ternProject,
+			List<ITernModule> checkedModules);
 
 	ITernPlugin[] getTernPlugins();
 

@@ -29,5 +29,8 @@ public class TernCorePreferenceInitializer extends
 				"tern.eclipse.ide.server.nodejs");
 		// trace server on console
 		node.putBoolean(TernCorePreferenceConstants.TRACE_ON_CONSOLE, false);
+		// disable loading plugins from the project root,
+		// see https://github.com/marijnh/tern/commit/154b0587a64eea193d124005e03d80065ac310e2
+		node.putBoolean(TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS, false);
 	}
 }

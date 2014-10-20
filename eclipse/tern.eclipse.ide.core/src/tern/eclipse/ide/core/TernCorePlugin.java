@@ -12,6 +12,7 @@
 package tern.eclipse.ide.core;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
@@ -59,10 +60,8 @@ public class TernCorePlugin extends Plugin {
 
 		// Initialize the NodeJs tern base dir usefull if (if tern.eclipse is
 		// not started).
-		File ternCoreBaseDir = FileLocator.getBundleFile(Platform
-				.getBundle(tern.Activator.PLUGIN_ID));
-		NodejsProcessManager.getInstance().init(ternCoreBaseDir);
-		TernModuleMetadataManager.getInstance().init(ternCoreBaseDir);
+		NodejsProcessManager.getInstance().init(getTernBaseDir());
+		TernModuleMetadataManager.getInstance().init(getTernCoreBaseDir());
 		TernFileConfigurationManager.getManager().initialize();
 		
 		//set up resource management for IDE
@@ -72,6 +71,16 @@ public class TernCorePlugin extends Plugin {
 		
 	}
 
+	public static File getTernCoreBaseDir() throws IOException {
+		return FileLocator.getBundleFile(Platform
+				.getBundle(tern.Activator.PLUGIN_ID));
+	}
+
+	public static File getTernBaseDir() throws IOException {
+		return new File(FileLocator.getBundleFile(Platform
+				.getBundle(tern.Activator.PLUGIN_ID)), "node_modules/tern");
+	}
+	
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		NodejsProcessManager.getInstance().dispose();

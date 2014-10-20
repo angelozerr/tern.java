@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IResource;
 import tern.ITernProject;
 import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.server.ITernModule;
 import tern.server.ITernServerListener;
 
 /**
@@ -71,5 +72,12 @@ public interface IIDETernProject extends ITernProject {
 	void setData(String key, Object value);
 
 	IProject getProject();
+
+	/**
+	 * Returns the tern plugin hosted on the root project.
+	 * 
+	 * @return the tern plugin hosted on the root project.
+	 */
+	List<ITernModule> getProjectModules();
 
 }

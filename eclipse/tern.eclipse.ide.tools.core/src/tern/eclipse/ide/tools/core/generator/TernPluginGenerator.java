@@ -1,13 +1,3 @@
-/**
- *  Copyright (c) 2013-2014 Angelo ZERR.
- *  All rights reserved. This program and the accompanying materials
- *  are made available under the terms of the Eclipse Public License v1.0
- *  which accompanies this distribution, and is available at
- *  http://www.eclipse.org/legal/epl-v10.html
- *
- *  Contributors:
- *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
- */
 package tern.eclipse.ide.tools.core.generator;
 
 public class TernPluginGenerator implements tern.eclipse.ide.tools.core.generator.IGenerator
@@ -22,7 +12,7 @@ public class TernPluginGenerator implements tern.eclipse.ide.tools.core.generato
   }
 
   public final String NL = nl == null ? (System.getProperties().getProperty("line.separator")) : nl;
-  protected final String TEXT_1 = "(function(mod) {" + NL + "  if (typeof exports == \"object\" && typeof module == \"object\") // CommonJS" + NL + "    return mod(require(\"tern/lib/infer\"), require(\"tern/lib/tern\"));" + NL + "  if (typeof define == \"function\" && define.amd) // AMD" + NL + "    return define([ \"tern/lib/infer\", \"tern/lib/tern\" ], mod);" + NL + "  mod(tern, tern);" + NL + "})(function(infer, tern) {" + NL + "  \"use strict\";" + NL + "" + NL + "  tern.registerPlugin(\"";
+  protected final String TEXT_1 = "(function(mod) {" + NL + "  if (typeof exports == \"object\" && typeof module == \"object\") { // CommonJS" + NL + "    var path = require(\"path\"), ternDir = path.resolve(process.argv[1], \"..\");" + NL + "    return mod(require(ternDir + \"/../lib/tern\"), require(ternDir + \"/../lib/tern\"));" + NL + "  }" + NL + "  if (typeof define == \"function\" && define.amd) // AMD" + NL + "    return define([ \"tern/lib/infer\", \"tern/lib/tern\" ], mod);" + NL + "  mod(tern, tern);" + NL + "})(function(infer, tern) {" + NL + "  \"use strict\";" + NL + "" + NL + "  tern.registerPlugin(\"";
   protected final String TEXT_2 = "\", function(server, options) {" + NL + "" + NL + "    return {" + NL + "      defs : defs" + NL + "    };" + NL + "  });" + NL + "  " + NL + "  var defs = {" + NL + "\t  \"!name\": \"";
   protected final String TEXT_3 = "\"," + NL + "\t  \"!define\": {" + NL + "\t    \"point\": {" + NL + "\t      \"x\": \"number\"," + NL + "\t      \"y\": \"number\"" + NL + "\t    }" + NL + "\t  }," + NL + "\t  \"MyConstructor\": {" + NL + "\t    \"!type\": \"fn(arg: string)\"," + NL + "\t    \"staticFunction\": \"fn() -> bool\"," + NL + "\t    \"prototype\": {" + NL + "\t      \"property\": \"[number]\"," + NL + "\t      \"clone\": \"fn() -> +MyConstructor\"," + NL + "\t      \"getPoint\": \"fn(i: number) -> point\"" + NL + "\t    }" + NL + "\t  }," + NL + "\t  \"someOtherGlobal\": \"string\"" + NL + "  }" + NL + "" + NL + "});";
 
