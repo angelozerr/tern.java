@@ -13,7 +13,7 @@ package tern.eclipse.ide.ui.viewers;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
+import tern.scriptpath.ITernScriptPath;
 
 public class TernScriptPathContentProvider extends ArrayContentProvider
 		implements ITreeContentProvider {

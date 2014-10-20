@@ -12,7 +12,7 @@ package tern.eclipse.ide.server.nodejs.internal.core;
 
 import java.io.File;
 
-import tern.TernProject;
+import tern.ITernProject;
 import tern.eclipse.ide.core.ITernServerFactory;
 import tern.eclipse.ide.server.nodejs.internal.core.preferences.TernNodejsCorePreferencesSupport;
 import tern.server.ITernServer;
@@ -24,7 +24,7 @@ import tern.server.nodejs.NodejsTernServer;
 public class TernNodejsServerFactory implements ITernServerFactory {
 
 	@Override
-	public ITernServer create(TernProject project) throws Exception {
+	public ITernServer create(ITernProject project) throws Exception {
 		File installPath = getInstallPath();
 		NodejsTernServer server = isRemoteAccess() ? new NodejsTernServer(
 				project, getRemotePort()) : new NodejsTernServer(project,

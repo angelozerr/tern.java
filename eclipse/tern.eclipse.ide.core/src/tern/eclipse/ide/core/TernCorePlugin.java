@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
  */
 package tern.eclipse.ide.core;
 
@@ -22,20 +23,22 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.osgi.framework.BundleContext;
 
-import tern.eclipse.ide.internal.core.IDETernProject;
+import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.TernFileConfigurationManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
-import tern.eclipse.ide.internal.core.Trace;
+import tern.eclipse.ide.internal.core.resources.IDEResourcesManager;
+import tern.eclipse.ide.internal.core.resources.IDETernProject;
+import tern.internal.resources.InternalTernResourcesManager;
 import tern.metadata.TernModuleMetadataManager;
 import tern.server.nodejs.process.NodejsProcessManager;
-import tern.server.protocol.lint.ITernLintCollector;
 
 /**
  * The activator class controls the plug-in life cycle
  */
 
+@SuppressWarnings("restriction")
 public class TernCorePlugin extends Plugin {
 
 	public static final String PLUGIN_ID = "tern.eclipse.ide.core"; //$NON-NLS-1$
@@ -60,6 +63,12 @@ public class TernCorePlugin extends Plugin {
 		NodejsProcessManager.getInstance().init(getTernBaseDir());
 		TernModuleMetadataManager.getInstance().init(getTernCoreBaseDir());
 		TernFileConfigurationManager.getManager().initialize();
+		
+		//set up resource management for IDE
+		InternalTernResourcesManager resMan = InternalTernResourcesManager.getInstance();
+		resMan.setScriptTagRegionProvider(TernFileConfigurationManager.getManager());
+		resMan.setTernResourcesManagerDelegate(IDEResourcesManager.getInstance());
+		
 	}
 
 	public static File getTernCoreBaseDir() throws IOException {
@@ -107,7 +116,14 @@ public class TernCorePlugin extends Plugin {
 	 */
 	public static IIDETernProject getTernProject(IProject project)
 			throws CoreException {
-		return IDETernProject.getTernProject(project);
+		IIDETernProject result = (IIDETernProject) 
+				TernResourcesManager.getTernProject(project);
+		if (result == null) {
+			throw new CoreException(new Status(IStatus.ERROR,
+					TernCorePlugin.PLUGIN_ID, "The project "
+							+ project.getName() + " is not a tern project."));
+		}
+		return result;
 	}
 
 	/**

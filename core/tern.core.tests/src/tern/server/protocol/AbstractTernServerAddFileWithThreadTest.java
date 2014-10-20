@@ -15,23 +15,15 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tern.ITernFileSynchronizer;
 import tern.TernException;
-import tern.TernProject;
 import tern.server.AbstractTernServerTest;
 import tern.server.DefaultResponseHandler;
 import tern.server.MapTernFile;
-import tern.server.MapTernFileManager;
 import tern.utils.IOUtils;
 
 public abstract class AbstractTernServerAddFileWithThreadTest extends
 		AbstractTernServerTest {
-
-	@Override
-	protected TernProject createProject() {
-		TernProject project = super.createProject();
-		project.setFileManager(new MapTernFileManager());
-		return project;
-	}
 
 	@Test
 	public void empty() {
@@ -41,8 +33,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 	// @Test
 	public void addBigFileWith2Threads() throws TernException, IOException {
 
-		final MapTernFileManager fileManager = (MapTernFileManager) server
-				.getFileManager();
+		final ITernFileSynchronizer manager = server.getFileSynchronizer();
 
 		final MapTernFile jQuery = new MapTernFile("jquery",
 				IOUtils.toString(MapTernFile.class
@@ -51,12 +42,12 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 		// Create 2 requests with big files started in the same time.
 		DefaultResponseHandler response1 = new DefaultResponseHandler(true);
 		TernDoc doc1 = new TernDoc();
-		Thread request1 = createRequestThread(fileManager, jQuery, response1,
+		Thread request1 = createRequestThread(manager, jQuery, response1,
 				doc1);
 
 		DefaultResponseHandler response2 = new DefaultResponseHandler(true);
 		TernDoc doc2 = new TernDoc();
-		Thread request2 = createRequestThread(fileManager, jQuery, response2,
+		Thread request2 = createRequestThread(manager, jQuery, response2,
 				doc2);
 
 		request1.start();
@@ -80,7 +71,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 		// doc should not contains this file.
 		DefaultResponseHandler response3 = new DefaultResponseHandler(true);
 		TernDoc doc3 = new TernDoc();
-		Thread request3 = createRequestThread(fileManager, jQuery, response3,
+		Thread request3 = createRequestThread(manager, jQuery, response3,
 				doc3);
 		request3.start();
 		try {
@@ -97,7 +88,7 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 
 	}
 
-	public Thread createRequestThread(final MapTernFileManager fileManager,
+	public Thread createRequestThread(final ITernFileSynchronizer fileManager,
 			final MapTernFile jQuery, final DefaultResponseHandler response,
 			final TernDoc doc) {
 		return new Thread(new Runnable() {
@@ -105,7 +96,10 @@ public abstract class AbstractTernServerAddFileWithThreadTest extends
 			@Override
 			public void run() {
 				try {
-					fileManager.updateFile(jQuery, doc, null);
+					//Test was already disabled when file management API has been
+					//updated. A special cache manager would have to be created to
+					//mimic old behaviour
+					//fileManager.updateFile(jQuery, doc, null);
 					server.request(doc, response);
 				} catch (Exception e) {
 					e.printStackTrace();

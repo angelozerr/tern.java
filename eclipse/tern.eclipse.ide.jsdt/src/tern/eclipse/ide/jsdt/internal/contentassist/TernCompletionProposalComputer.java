@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
  */
 package tern.eclipse.ide.jsdt.internal.contentassist;
 
@@ -24,11 +25,13 @@ import org.eclipse.wst.jsdt.ui.text.java.ContentAssistInvocationContext;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposalComputer;
 import org.eclipse.wst.jsdt.ui.text.java.JavaContentAssistInvocationContext;
 
+import tern.ITernFile;
 /**
  * JSDT completion extension with Tern.
  */
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.jsdt.internal.Trace;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
@@ -59,11 +62,12 @@ public class TernCompletionProposalComputer implements
 
 						IIDETernProject ternProject = TernCorePlugin
 								.getTernProject(project);
+						ITernFile tf = new TernDocumentFile(scriptFile, document);
 
+						int startOffset = context.getInvocationOffset();
 						TernCompletionsQuery query = new TernCompletionsQuery(
-								ternProject.getFileManager().getFileName(
-										scriptFile),
-								context.getInvocationOffset());
+								tf.getFullName(ternProject), 
+								startOffset);
 						query.setTypes(true);
 						query.setDocs(true);
 						query.setUrls(true);
@@ -72,9 +76,8 @@ public class TernCompletionProposalComputer implements
 						query.setLineCharPositions(true);
 						query.setExpandWordForward(false);
 
-						int startOffset = context.getInvocationOffset();
-						ternProject.request(query, scriptFile, document,
-								startOffset, new JSDTTernCompletionCollector(
+						ternProject.request(query, tf, 
+								new JSDTTernCompletionCollector(
 										proposals, startOffset, project));
 						return proposals;
 

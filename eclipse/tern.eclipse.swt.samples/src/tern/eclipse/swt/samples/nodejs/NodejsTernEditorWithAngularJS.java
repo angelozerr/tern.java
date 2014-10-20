@@ -27,8 +27,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import tern.ITernProject;
 import tern.TernException;
-import tern.TernProject;
+import tern.TernResourcesManager;
 import tern.doc.IJSDocument;
 import tern.eclipse.jface.TernLabelProvider;
 import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
@@ -67,7 +68,7 @@ public class NodejsTernEditorWithAngularJS {
 		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 
 		File projectDir = new File(".");
-		TernProject project = new TernProject(projectDir);
+		ITernProject project = TernResourcesManager.getTernProject(projectDir);
 		this.server = new NodejsTernServer(project);
 		((NodejsTernServer) server).addInterceptor(LoggingInterceptor
 				.getInstance());
@@ -208,9 +209,9 @@ public class NodejsTernEditorWithAngularJS {
 
 		IJSDocument document = new JSDocumentText(file.getName(), server, text);
 
-		// Les charactères qui déclenchent l'autocomplétion
+		// Les charactï¿½res qui dï¿½clenchent l'autocomplï¿½tion
 		char[] autoActivationCharacters = new char[] { '.' };
-		// La combinaison de touches qui déclenche l'autocomplétion
+		// La combinaison de touches qui dï¿½clenche l'autocomplï¿½tion
 		KeyStroke keyStroke = null;
 		try {
 			keyStroke = KeyStroke.getInstance("Ctrl+Space");

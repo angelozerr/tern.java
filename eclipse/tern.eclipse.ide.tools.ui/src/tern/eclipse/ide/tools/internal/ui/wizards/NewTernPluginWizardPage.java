@@ -18,11 +18,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.core.generator.TernPluginGenerator;
 import tern.eclipse.ide.tools.core.generator.TernPluginOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
+import tern.utils.ExtensionUtils;
 
 /**
  * Page to fill tern plugin information.
@@ -36,7 +36,7 @@ public class NewTernPluginWizardPage extends
 	private Text nameText;
 
 	public NewTernPluginWizardPage() {
-		super(PAGE, FileUtils.JS_EXTENSION);
+		super(PAGE, ExtensionUtils.JS_EXTENSION);
 		setTitle(TernToolsUIMessages.NewTernPluginWizardPage_title);
 		setDescription(TernToolsUIMessages.NewTernPluginWizardPage_description);
 	}

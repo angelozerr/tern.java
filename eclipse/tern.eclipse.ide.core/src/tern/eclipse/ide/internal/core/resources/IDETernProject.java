@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,16 +7,18 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
  */
-package tern.eclipse.ide.internal.core;
+package tern.eclipse.ide.internal.core.resources;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -24,16 +26,10 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.QualifiedName;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.text.IDocument;
-import org.w3c.dom.Node;
 
-import tern.TernException;
-import tern.TernProject;
-import tern.angular.protocol.completions.TernAngularCompletionsQuery;
-import tern.eclipse.ide.core.IDETernFileManager;
+import tern.ITernFile;
+import tern.ITernProject;
+import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener.LifecycleEventType;
@@ -41,28 +37,23 @@ import tern.eclipse.ide.core.ITernServerPreferencesListener;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.TernNature;
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath;
-import tern.eclipse.ide.core.scriptpath.ITernScriptPath.ScriptPathsType;
-import tern.eclipse.ide.core.utils.FileUtils;
+import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
+import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
+import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
+import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
-import tern.eclipse.ide.internal.core.scriptpath.DOMElementsScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
-import tern.eclipse.ide.internal.core.scriptpath.JSFileScriptPath;
-import tern.eclipse.ide.internal.core.scriptpath.ProjectScriptPath;
-import tern.server.IResponseHandler;
+import tern.resources.TernProject;
+import tern.scriptpath.ITernScriptPath;
+import tern.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.scriptpath.impl.JSFileScriptPath;
+import tern.scriptpath.impl.ProjectScriptPath;
+import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernModule;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 import tern.server.TernServerAdapter;
 import tern.server.protocol.JsonHelper;
-import tern.server.protocol.TernDoc;
-import tern.server.protocol.TernFile;
-import tern.server.protocol.TernQuery;
-import tern.server.protocol.completions.ITernCompletionCollector;
-import tern.server.protocol.definition.ITernDefinitionCollector;
-import tern.server.protocol.html.ScriptTagRegion;
-import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonArray;
@@ -72,31 +63,24 @@ import com.eclipsesource.json.JsonObject;
  * Eclipse IDE Tern project.
  * 
  */
-public class IDETernProject extends TernProject<IFile> implements
+public class IDETernProject extends TernProject implements
 		IIDETernProject, ITernServerPreferencesListener {
 
-	private static final int MAX_FILES = 20;
+	private static final String PATH_JSON_FIELD = "path"; //$NON-NLS-1$
 
-	private static final String PATH_JSON_FIELD = "path";
+	private static final String TYPE_JSON_FIELD = "type"; //$NON-NLS-1$
 
-	private static final String TYPE_JSON_FIELD = "type";
+	private static final String SCRIPT_PATHS_JSON_FIELD = "scriptPaths"; //$NON-NLS-1$
 
-	private static final String SCRIPT_PATHS_JSON_FIELD = "scriptPaths";
-
-	private static final String IDE_JSON_FIELD = "ide";
+	private static final String IDE_JSON_FIELD = "ide"; //$NON-NLS-1$
 
 	private static final long serialVersionUID = 1L;
-
-	private static final QualifiedName TERN_PROJECT = new QualifiedName(
-			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernProject");
 
 	private final IProject project;
 
 	private ITernServer ternServer;
 
 	private final List<ITernScriptPath> scriptPaths;
-
-	private final Object lock = new Object();
 
 	private final Map<String, Object> data;
 
@@ -105,44 +89,12 @@ public class IDETernProject extends TernProject<IFile> implements
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
-		super.setFileManager(new IDETernFileManager(getProject()));
-		project.setSessionProperty(TERN_PROJECT, this);
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
 		this.data = new HashMap<String, Object>();
 		this.listeners = new ArrayList<ITernServerListener>();
 		TernCorePlugin.getTernServerTypeManager().addServerPreferencesListener(
 				this);
 		ensureNatureIsConfigured();
-	}
-
-	/**
-	 * Returns the tern project of the given eclipse projectand throws exception
-	 * if the eclipse project has not tern nature.
-	 * 
-	 * @param project
-	 *            eclipse project.
-	 * @return the tern project of the given eclipse projectand throws exception
-	 *         if the eclipse project has not tern nature.
-	 * @throws CoreException
-	 */
-	public static IDETernProject getTernProject(IProject project)
-			throws CoreException {
-		if (!IDETernProject.hasTernNature(project)) {
-			throw new CoreException(new Status(IStatus.ERROR,
-					TernCorePlugin.PLUGIN_ID, "The project "
-							+ project.getName() + " is not a tern project."));
-		}
-		IDETernProject ternProject = (IDETernProject) project
-				.getSessionProperty(IDETernProject.TERN_PROJECT);
-		if (ternProject == null) {
-			ternProject = new IDETernProject(project);
-			try {
-				ternProject.load();
-			} catch (IOException e) {
-				Trace.trace(Trace.SEVERE, "Error while loading tern project", e);
-			}
-		}
-		return ternProject;
 	}
 
 	/**
@@ -153,13 +105,24 @@ public class IDETernProject extends TernProject<IFile> implements
 	public IProject getProject() {
 		return project;
 	}
+	
+	@Override
+	public String getName() {
+		return project.getName();
+	}
+	
+	@Override
+	public File getProjectDir() {
+		return project.getLocation().toFile();
+	}
 
 	/**
 	 * Returns the linked instance of tern server.
 	 * 
 	 * @return
 	 */
-	private ITernServer getTernServer() {
+	@Override
+	public ITernServer getTernServer() {
 		if (isServerDisposed()) {
 			try {
 				ITernServerType type = TernCorePreferencesSupport.getInstance()
@@ -171,8 +134,7 @@ public class IDETernProject extends TernProject<IFile> implements
 				this.ternServer.addServerListener(new TernServerAdapter() {
 					@Override
 					public void onStop(ITernServer server) {
-						IDETernProject.this.getFileManager()
-								.cleanIndexedFiles();
+						getFileSynchronizer().cleanIndexedFiles();
 					}
 				});
 				copyListeners();
@@ -305,6 +267,15 @@ public class IDETernProject extends TernProject<IFile> implements
 				"Cannot retrieve resource from the type=" + pathType
 						+ " of the path=" + path);
 	}
+	
+	@Override
+	public IFile getIDEFile(String name) {
+		ITernFile tf = getFile(name);
+		if (tf != null) {
+			return (IFile) tf.getAdapter(IFile.class);
+		}
+		return null;
+	}
 
 	@Override
 	public void save() throws IOException {
@@ -321,6 +292,11 @@ public class IDETernProject extends TernProject<IFile> implements
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onSaveAfter);
 		}
+	}
+	
+	@Override
+	public void handleException(Throwable t) {
+		Trace.trace(Trace.SEVERE, t.getMessage(), t);
 	}
 
 	/**
@@ -353,7 +329,7 @@ public class IDETernProject extends TernProject<IFile> implements
 	 * @return
 	 */
 	@Override
-	public Collection<ITernScriptPath> getScriptPaths() {
+	public List<ITernScriptPath> getScriptPaths() {
 		return scriptPaths;
 	}
 
@@ -374,17 +350,27 @@ public class IDETernProject extends TernProject<IFile> implements
 	private ITernScriptPath createScriptPath(IResource resource,
 			ScriptPathsType type, String external) {
 		switch (type) {
-		case FOLDER:
-			return new FolderScriptPath((IFolder) resource, external);
-		case FILE:
-			IFile file = (IFile) resource;
-			if (FileUtils.isJSFile(file)) {
-				return new JSFileScriptPath(file, external);
-			}
-			return new DOMElementsScriptPath(file, external);
-		case PROJECT:
-			return new ProjectScriptPath((IProject) resource, getProject(),
-					external);
+			case FOLDER:
+				return new FolderScriptPath(this, (IFolder) resource, external);
+			case FILE:
+				ITernFile file = getFile(resource);
+				if (file == null) {
+					break;
+				}
+				if (TernResourcesManager.isJSFile(file)) {
+					return new JSFileScriptPath(this, file, external);
+				}
+				return new DOMElementsScriptPath(this, file, external);
+			case PROJECT:
+				ITernProject project;
+				try {
+					project = TernCorePlugin.getTernProject((IProject) resource);
+					if (project != null) {
+						return new ProjectScriptPath(project, this, external);
+					}
+				} catch (CoreException e) {
+					Trace.trace(Trace.SEVERE, "Project " + resource.getName() + " is not a Tern project", e);
+				}
 		}
 		throw new UnsupportedOperationException(
 				"Cannot create script path for the given type " + type);
@@ -421,6 +407,16 @@ public class IDETernProject extends TernProject<IFile> implements
 				scriptPaths.remove(scriptPath);
 			}
 		}
+	}
+	
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
+		if (adapterClass == IProject.class || 
+				adapterClass == IContainer.class ||
+				adapterClass == IResource.class) {
+			return project;
+		}
+		return super.getAdapter(adapterClass);
 	}
 
 	@Override
@@ -479,326 +475,6 @@ public class IDETernProject extends TernProject<IFile> implements
 		}
 	}
 
-	// ---------------- Completions
-
-	@Override
-	public void request(TernAngularCompletionsQuery query, JsonArray names,
-			ITernCompletionCollector collector) throws IOException,
-			TernException {
-		syncFiles(new TernDoc(), names, null);
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	/**
-	 * 
-	 * @param query
-	 * @param scriptPath
-	 * @param names
-	 * @param collector
-	 * @throws IOException
-	 * @throws TernException
-	 */
-	@Override
-	public void request(TernQuery query, JsonArray names,
-			ITernScriptPath scriptPath, ITernCompletionCollector collector)
-			throws IOException, TernException {
-		// update files
-		syncFiles(new TernDoc(), names, scriptPath);
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, JsonArray names, Node domNode,
-			IFile domFile, IDocument document,
-			ITernCompletionCollector collector) throws IOException,
-			TernException {
-		synchFiles(names, domNode, domFile, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, IFile file, IDocument document,
-			int startOffset, ITernCompletionCollector collector)
-			throws IOException, TernException {
-		synchFiles(file, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		/*
-		 * String name = getFileManager().getFileName(file);
-		 * updateFragmentAround(doc, name, document, startOffset, startOffset);
-		 * query.setFile("#0");
-		 */
-		request(doc, collector);
-	}
-
-	private void request(TernDoc doc, ITernCompletionCollector collector)
-			throws TernException {
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	// ---------- Definition
-
-	/**
-	 * 
-	 * @param query
-	 * @param names
-	 * @param scriptPath
-	 * @param collector
-	 * @throws IOException
-	 * @throws TernException
-	 */
-	@Override
-	public void request(TernQuery query, JsonArray names,
-			ITernScriptPath scriptPath, ITernDefinitionCollector collector)
-			throws IOException, TernException {
-		// update files
-		syncFiles(new TernDoc(), names, scriptPath);
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, JsonArray names, Node domNode,
-			IFile domFile, IDocument document,
-			ITernDefinitionCollector collector) throws IOException,
-			TernException {
-		synchFiles(names, domNode, domFile, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, IFile file, IDocument document,
-			ITernDefinitionCollector collector) throws IOException,
-			TernException {
-		synchFiles(file, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	private void request(TernDoc doc, ITernDefinitionCollector collector)
-			throws TernException {
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	// ----------------------- lint
-
-	@Override
-	public void request(TernQuery query, IFile file, IDocument document,
-			ITernLintCollector collector) throws IOException, TernException {
-		synchFiles(file, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		String name = getFileManager().getFileName(file);
-		query.setFile(name);
-		/*
-		 * String name = getFileManager().getFileName(file);
-		 * updateFragmentAround(doc, name, document, startOffset, startOffset);
-		 * query.setFile("#0");
-		 */
-		request(doc, collector);
-	}
-
-	private void request(TernDoc doc, ITernLintCollector collector)
-			throws TernException {
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	// ------------- Type
-
-	@Override
-	public void request(TernQuery query, JsonArray names,
-			ITernScriptPath scriptPath, ITernTypeCollector collector)
-			throws IOException, TernException {
-		// update files
-		syncFiles(new TernDoc(), names, scriptPath);
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, JsonArray names, Node domNode,
-			IFile domFile, IDocument document, ITernTypeCollector collector)
-			throws IOException, TernException {
-		synchFiles(names, domNode, domFile, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, IFile file, IDocument document,
-			int startOffset, ITernTypeCollector collector) throws IOException,
-			TernException {
-		synchFiles(file, document, new TernDoc());
-		TernDoc doc = new TernDoc(query);
-		/*
-		 * String name = getFileManager().getFileName(file);
-		 * updateFragmentAround(doc, name, document, startOffset, startOffset);
-		 * query.setFile("#0");
-		 */
-		request(doc, collector);
-	}
-
-	private void request(TernDoc doc, ITernTypeCollector collector)
-			throws TernException {
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	// ----------------------- synch
-
-	/**
-	 * 
-	 * @param doc
-	 * @param names
-	 * @param scriptPaths
-	 * @throws IOException
-	 */
-	private void syncFiles(TernDoc doc, JsonArray names,
-			ITernScriptPath scriptPath) throws IOException {
-		synchronized (lock) {
-			for (ITernScriptPath currentScriptPath : scriptPaths) {
-				currentScriptPath.updateFiles(getFileManager(), doc,
-						getNames(names, currentScriptPath, scriptPath));
-			}
-			synchFiles(doc);
-		}
-	}
-
-	private JsonArray getNames(JsonArray names,
-			ITernScriptPath currentScriptPath, ITernScriptPath scriptPath) {
-		if (names != null) {
-			if (scriptPath == null || currentScriptPath.equals(scriptPath)) {
-				return names;
-			}
-			return null;
-		}
-		return names;
-	}
-
-	private void synchFiles(IFile file, IDocument document, TernDoc doc)
-			throws IOException {
-		synchronized (lock) {
-			syncFiles(doc, null, null);
-			if (file != null && file.exists()) {
-				String name = getFileManager().getFileName(file);
-				String text = document.get();
-				ScriptTagRegion[] tags = getFileManager().getScriptTags(file);
-				doc.addFile(name, text, tags, null);
-				TernQuery query = doc.getQuery();
-				if (query != null) {
-					query.setFile(name);
-				}
-			}
-			synchFiles(doc);
-		}
-	}
-
-	/*
-	 * private void updateFragmentAround(TernDoc doc, String name, IDocument
-	 * document, int start, int end) {
-	 * 
-	 * FindReplaceDocumentAdapter adapter = new FindReplaceDocumentAdapter(
-	 * document); try { long s = System.currentTimeMillis();
-	 * 
-	 * IRegion region = adapter.find(end, "\\bfunction\\b", false, false, false,
-	 * true); System.err.println(region);
-	 * System.err.println(System.currentTimeMillis() - s);
-	 * 
-	 * if (region != null) { String text = document.get(region.getOffset(), end
-	 * - region.getOffset()); int n =
-	 * document.getLineOfOffset(region.getOffset()); System.err.println(n);
-	 * doc.addFile(name, text, n); doc.getQuery().setEnd(
-	 * JsonHelper.getInteger(doc.getQuery(), "end") - region.getOffset()); }
-	 * else { String text = document.get(); doc.addFile(name, text, null); }
-	 * 
-	 * } catch (BadLocationException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); }
-	 * 
-	 * }
-	 */
-
-	/*
-	 * function getFragmentAround(data, start, end) { var doc = data.doc; var
-	 * minIndent = null, minLine = null, endLine, tabSize = 4; for (var p =
-	 * start.line - 1, min = Math.max(0, p - 50); p >= min; --p) { var line =
-	 * doc.getLine(p), fn = line.search(/\bfunction\b/); if (fn < 0) continue;
-	 * var indent = CodeMirror.countColumn(line, null, tabSize); if (minIndent
-	 * != null && minIndent <= indent) continue; minIndent = indent; minLine =
-	 * p; } if (minLine == null) minLine = min; var max =
-	 * Math.min(doc.lastLine(), end.line + 20); if (minIndent == null ||
-	 * minIndent == CodeMirror.countColumn(doc.getLine(start.line), null,
-	 * tabSize)) endLine = max; else for (endLine = end.line + 1; endLine < max;
-	 * ++endLine) { var indent = CodeMirror.countColumn(doc.getLine(endLine),
-	 * null, tabSize); if (indent <= minIndent) break; } var from = Pos(minLine,
-	 * 0); console.log(doc.getRange(from, Pos(endLine, 0))) return {type:
-	 * "part", name: data.name, offsetLines: from.line, text: doc.getRange(from,
-	 * Pos(endLine, 0))}; }
-	 */
-
-	private void synchFiles(TernDoc doc) {
-		if (doc.hasFiles()) {
-			JsonArray files = doc.getFiles();
-			if (files.size() > MAX_FILES) {
-				// max files size reached => send files grouped by MAX_FILES
-				TernDoc newDoc = new TernDoc();
-				for (int i = 0; i < files.size(); i++) {
-					newDoc.addFile((TernFile) files.get(i));
-					if (i > 0 && (i % MAX_FILES) == 0) {
-						request(newDoc);
-						newDoc.cleanFiles();
-					}
-				}
-				if (newDoc.hasFiles()) {
-					request(newDoc);
-				}
-			} else {
-				// no max files size reached => send all files.
-				request(doc);
-			}
-			doc.cleanFiles();
-		}
-	}
-
-	public void request(TernDoc doc) {
-		ITernServer server = getTernServer();
-		server.request(doc, new IResponseHandler() {
-
-			@Override
-			public void onSuccess(Object data, String dataAsJsonString) {
-			}
-
-			@Override
-			public void onError(String error) {
-				Trace.trace(Trace.SEVERE, error);
-			}
-
-			@Override
-			public boolean isDataAsJsonString() {
-				return false;
-			}
-		});
-	}
-
-	private void synchFiles(JsonArray names, Node domNode, IFile domFile,
-			IDocument document, TernDoc doc) throws IOException {
-		synchronized (lock) {
-			boolean hasJS = getFileManager().updateFiles(domNode, domFile, doc,
-					names);
-			if (!doc.hasFiles()) {
-				syncFiles(doc, names, null);
-			}
-			if (hasJS) {
-				synchFiles(domFile, document, doc);
-			}
-			synchFiles(doc);
-		}
-	}
-
 	public void disposeServer() {
 		if (!isServerDisposed()) {
 			if (ternServer != null) {
@@ -808,6 +484,7 @@ public class IDETernProject extends TernProject<IFile> implements
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T> T getData(String key) {
 		return (T) data.get(key);
 	}
@@ -858,6 +535,7 @@ public class IDETernProject extends TernProject<IFile> implements
 			}
 		}
 	}
+	
 
 	@Override
 	public List<ITernModule> getProjectModules() {

@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,18 +7,14 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
  */
-package tern.eclipse.ide.core.dom;
+package tern;
 
-public class DOMProviderHelper {
+import org.w3c.dom.Document;
 
-	private static IDOMProvider provider = DefaultDOMProvider.INSTANCE;
+public interface IDOMProvider {
 
-	public static void setProvider(IDOMProvider provider) {
-		DOMProviderHelper.provider = provider;
-	}
+	Document getDocument(ITernFile resource);
 
-	public static IDOMProvider getProvider() {
-		return provider;
-	}
 }

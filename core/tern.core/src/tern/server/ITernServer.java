@@ -12,8 +12,8 @@ package tern.server;
 
 import java.io.IOException;
 
+import tern.ITernFileSynchronizer;
 import tern.TernException;
-import tern.TernFileManager;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
@@ -90,7 +90,7 @@ public interface ITernServer {
 	 * 
 	 * @return the tern file manager and null otherwise.
 	 */
-	TernFileManager<?> getFileManager();
+	ITernFileSynchronizer getFileSynchronizer();
 
 	boolean isDataAsJsonString();
 

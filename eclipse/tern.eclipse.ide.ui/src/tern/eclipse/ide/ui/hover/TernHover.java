@@ -21,8 +21,10 @@ import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.information.IInformationProviderExtension2;
 import org.eclipse.ui.IEditorPart;
 
+import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.JavaWordFinder;
 import tern.eclipse.ide.ui.utils.EditorUtils;
@@ -61,16 +63,16 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 				// project has tern nature, get hover info with tern.
 				IIDETernProject ternProject = TernCorePlugin
 						.getTernProject(project);
-				TernTypeQuery query = new TernTypeQuery(ternProject
-						.getFileManager().getFileName(scriptFile),
+				ITernFile file = new TernDocumentFile(scriptFile, 
+						textViewer.getDocument());
+				TernTypeQuery query = new TernTypeQuery(file.getFullName(ternProject),
 						hoverRegion.getOffset());
 				query.setDocs(true);
 				query.setUrls(true);
 				query.setTypes(true);
 
 				HTMLTernTypeCollector collector = new HTMLTernTypeCollector();
-				ternProject.request(query, scriptFile,
-						textViewer.getDocument(), 0, collector);
+				ternProject.request(query, file, collector);
 				return new TernBrowserInformationControlInput(null,
 						collector.getInfo(), 20);
 			} catch (Exception e) {

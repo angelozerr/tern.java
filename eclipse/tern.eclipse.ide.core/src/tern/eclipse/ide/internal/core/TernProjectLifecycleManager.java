@@ -16,6 +16,7 @@ import java.util.List;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener.LifecycleEventType;
 import tern.eclipse.ide.core.ITernProjectLifecycleManager;
+import tern.eclipse.ide.internal.core.resources.IDETernProject;
 
 /**
  * Tern project lifecycle manager implementation.

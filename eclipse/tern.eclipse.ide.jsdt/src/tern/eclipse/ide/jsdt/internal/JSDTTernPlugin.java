@@ -13,11 +13,12 @@ package tern.eclipse.ide.jsdt.internal;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import tern.eclipse.ide.core.dom.DOMProviderHelper;
+import tern.internal.resources.InternalTernResourcesManager;
 
 /**
  * The activator class controls the plug-in life cycle
  */
+@SuppressWarnings("restriction")
 public class JSDTTernPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
@@ -43,7 +44,7 @@ public class JSDTTernPlugin extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		// Initialize DOMProvider with DOM-SSE
-		DOMProviderHelper.setProvider(DOMSSEProvider.INSTANCE);
+		InternalTernResourcesManager.getInstance().setDOMProvider(DOMSSEProvider.INSTANCE);
 		JSDTClassPathManager.getManager().startup();
 	}
 

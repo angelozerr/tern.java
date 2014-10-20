@@ -10,7 +10,15 @@
  */
 package tern.server;
 
-public class MapTernFile {
+import java.io.IOException;
+
+import tern.ITernFile;
+import tern.ITernProject;
+import tern.server.protocol.TernFile;
+import tern.server.protocol.html.ScriptTagRegion;
+import tern.utils.ExtensionUtils;
+
+public class MapTernFile implements ITernFile {
 
 	private final String name;
 	private final String content;
@@ -20,11 +28,48 @@ public class MapTernFile {
 		this.content = content;
 	}
 
-	public String getName() {
+	@Override
+	public String getFullName(ITernProject context) {
 		return name;
 	}
 
-	public String getContent() {
+	@Override
+	public String getFileName() {
+		return name;
+	}
+
+	@Override
+	public String getContents() throws IOException {
 		return content;
+	}
+
+	@Override
+	public ITernFile getRelativeFile(String relativePath) {
+		return null;
+	}
+
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
+		return null;
+	}
+
+	@Override
+	public String getFileExtension() {
+		return ExtensionUtils.getFileExtension(name);
+	}
+
+	@Override
+	public TernFile toTernServerFile(ITernProject context) throws IOException {
+		return new TernFile(name, content, null, null);
+	}
+
+	@Override
+	public ScriptTagRegion[] getScriptTags() {
+		return null;
+	}
+
+	@Override
+	public boolean isAccessible() {
+		return true;
 	}
 }

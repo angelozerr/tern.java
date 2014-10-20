@@ -20,9 +20,9 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 
+import tern.ITernFileSynchronizer;
+import tern.ITernProject;
 import tern.TernException;
-import tern.TernFileManager;
-import tern.TernProject;
 import tern.server.AbstractTernServer;
 import tern.server.DefaultResponseHandler;
 import tern.server.IResponseHandler;
@@ -54,10 +54,10 @@ public class RhinoTernServer extends AbstractTernServer {
 			"tern/lib/comment.js", "tern/lib/infer.js", "tern-server.js" };
 
 	public RhinoTernServer() throws IOException {
-		this((TernProject) null);
+		this((ITernProject) null);
 	}
 
-	public RhinoTernServer(TernProject project) throws IOException {
+	public RhinoTernServer(ITernProject project) throws IOException {
 		this(project, ClassPathScriptLoader.getInstance());
 	}
 
@@ -65,7 +65,7 @@ public class RhinoTernServer extends AbstractTernServer {
 		this(null, loader);
 	}
 
-	public RhinoTernServer(TernProject project, IScriptLoader loader)
+	public RhinoTernServer(ITernProject project, IScriptLoader loader)
 			throws IOException {
 		super(project);
 		this.loader = loader;
@@ -210,9 +210,9 @@ public class RhinoTernServer extends AbstractTernServer {
 			f.call(cx, ternScope, ternScope, functionArgs);
 
 			// Update file manager if needed.
-			TernFileManager<?> fileManager = super.getFileManager();
-			if (fileManager != null) {
-				fileManager.updateIndexedFiles(doc);
+			ITernFileSynchronizer fileSynchronizer = super.getFileSynchronizer();
+			if (fileSynchronizer != null) {
+				fileSynchronizer.filesUploaded(doc);
 			}
 
 		} finally {

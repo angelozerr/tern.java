@@ -15,7 +15,9 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 
+import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.hyperlink.AbstractTernHyperlink;
 import tern.server.protocol.definition.TernDefinitionQuery;
@@ -51,10 +53,11 @@ public class TernHyperlink extends AbstractTernHyperlink {
 	public void open() {
 		try {
 			IFile file = (IFile) resource;
-			String filename = ternProject.getFileManager().getFileName(file);
+			ITernFile tf = new TernDocumentFile(file, document);
+			String filename = tf.getFullName(ternProject);
 			Integer pos = region.getOffset();
 			TernDefinitionQuery query = new TernDefinitionQuery(filename, pos);
-			ternProject.request(query, file, document, this);
+			ternProject.request(query, tf, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

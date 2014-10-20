@@ -22,8 +22,10 @@ import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.IAnnotationModel;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.server.TernPlugin;
 import tern.server.protocol.lint.ITernLintCollector;
@@ -111,7 +113,8 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				};
 
 				try {
-					ternProject.request(query, file, document, collector);
+					ITernFile tf = new TernDocumentFile(file, document);
+					ternProject.request(query, tf, collector);
 				} catch (Exception e) {
 					Trace.trace(Trace.SEVERE, "Error while tern validation.", e);
 				}

@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
  */
 package tern.eclipse.ide.jsdt.internal.contentassist;
 
@@ -16,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -26,8 +26,10 @@ import org.eclipse.wst.sse.ui.contentassist.CompletionProposalInvocationContext;
 import org.eclipse.wst.sse.ui.contentassist.ICompletionProposalComputer;
 import org.eclipse.wst.xml.ui.internal.contentassist.AbstractContentAssistProcessor;
 
+import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.jsdt.internal.Trace;
 import tern.eclipse.ide.jsdt.internal.utils.DOMUtils;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
@@ -38,6 +40,7 @@ import tern.server.protocol.completions.TernCompletionsQuery;
  * HTML)
  * 
  */
+@SuppressWarnings({ "restriction", "deprecation" })
 public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 		implements ICompletionProposalComputer {
 
@@ -55,37 +58,34 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 			if (TernCorePlugin.hasTernNature(project)) {
 
 				IDocument document = context.getDocument();
-				IResource resource = file;
-				if (resource.getType() == IResource.FILE) {
-					IFile scriptFile = (IFile) resource;
+				
+				try {
 
-					try {
+					IIDETernProject ternProject = TernCorePlugin
+							.getTernProject(project);
 
-						IIDETernProject ternProject = TernCorePlugin
-								.getTernProject(project);
+					ITernFile tf = new TernDocumentFile(file, document);
 
-						TernCompletionsQuery query = new TernCompletionsQuery(
-								ternProject.getFileManager().getFileName(
-										scriptFile),
-								context.getInvocationOffset());
-						query.setTypes(true);
-						query.setDocs(true);
-						query.setUrls(true);
-						query.setOrigins(true);
-						query.setCaseInsensitive(true);
-						query.setLineCharPositions(true);
-						query.setExpandWordForward(false);
+					int startOffset = context.getInvocationOffset();
+					TernCompletionsQuery query = new TernCompletionsQuery(
+							tf.getFullName(ternProject),
+							startOffset);
+					query.setTypes(true);
+					query.setDocs(true);
+					query.setUrls(true);
+					query.setOrigins(true);
+					query.setCaseInsensitive(true);
+					query.setLineCharPositions(true);
+					query.setExpandWordForward(false);
 
-						int startOffset = context.getInvocationOffset();
-						ternProject.request(query, scriptFile, document,
-								startOffset, new JSTernCompletionCollector(
-										proposals, startOffset, project));
-						return proposals;
+					ternProject.request(query, tf, 
+							new JSTernCompletionCollector(
+									proposals, startOffset, project));
+					return proposals;
 
-					} catch (Exception e) {
-						Trace.trace(Trace.SEVERE,
-								"Error while JSDT Tern completion.", e);
-					}
+				} catch (Exception e) {
+					Trace.trace(Trace.SEVERE,
+							"Error while JSDT Tern completion.", e);
 				}
 			}
 		}
@@ -110,7 +110,6 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 
 	}
 
-	@SuppressWarnings("restriction")
 	@Override
 	public IContextInformationValidator getContextInformationValidator() {
 		if (fValidator == null) {

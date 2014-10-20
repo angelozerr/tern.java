@@ -13,13 +13,13 @@ package tern.server;
 import java.util.ArrayList;
 import java.util.List;
 
-import tern.TernFileManager;
-import tern.TernProject;
+import tern.ITernFileSynchronizer;
+import tern.ITernProject;
 import tern.server.protocol.completions.ITernCompletionCollector;
 
 public abstract class AbstractTernServer implements ITernServer {
 
-	private final TernProject<?> project;
+	private final ITernProject project;
 
 	private final List<ITernServerListener> listeners;
 
@@ -27,15 +27,15 @@ public abstract class AbstractTernServer implements ITernServer {
 	private boolean dispose;
 	private boolean loadingLocalPlugins;
 
-	public AbstractTernServer(TernProject<?> project) {
+	public AbstractTernServer(ITernProject project) {
 		this.project = project;
 		this.listeners = new ArrayList<ITernServerListener>();
-		final TernFileManager<?> fileManager = getFileManager();
-		if (fileManager != null) {
+		final ITernFileSynchronizer fileSynchronizer = getFileSynchronizer();
+		if (fileSynchronizer != null) {
 			this.addServerListener(new TernServerAdapter() {
 				@Override
 				public void onStop(ITernServer server) {
-					fileManager.cleanIndexedFiles();
+					fileSynchronizer.cleanIndexedFiles();
 				}
 			});
 		}
@@ -115,14 +115,14 @@ public abstract class AbstractTernServer implements ITernServer {
 	public abstract Object getValue(Object value, String name);
 
 	@Override
-	public TernFileManager<?> getFileManager() {
+	public ITernFileSynchronizer getFileSynchronizer() {
 		if (project != null) {
-			return project.getFileManager();
+			return project.getFileSynchronizer();
 		}
 		return null;
 	}
 
-	public TernProject<?> getProject() {
+	public ITernProject getProject() {
 		return project;
 	}
 

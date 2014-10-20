@@ -17,7 +17,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
-import tern.TernProject;
+import tern.ITernProject;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.console.ITernConsole;
@@ -99,13 +99,13 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 			String json = "";
 			try {
 				File ternProject = new File(projectDir,
-						TernProject.TERN_PROJECT);
+						ITernProject.TERN_PROJECT_FILE);
 				json = IOUtils.toString(new FileInputStream(ternProject));
 			} catch (Throwable e) {
 				errPrintln(e.getMessage());
 			}
 
-			outProcessPrintln(TernProject.TERN_PROJECT + ": " + json);
+			outProcessPrintln(ITernProject.TERN_PROJECT_FILE + ": " + json);
 		}
 	}
 
