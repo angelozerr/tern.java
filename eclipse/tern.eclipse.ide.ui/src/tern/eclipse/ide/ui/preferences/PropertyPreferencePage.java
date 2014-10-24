@@ -45,8 +45,10 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 import org.eclipse.ui.views.navigator.ResourceSorter;
+import org.osgi.service.prefs.BackingStoreException;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
 
 /**
@@ -183,6 +185,10 @@ public abstract class PropertyPreferencePage extends PropertyPage implements
 			return new IScopeContext[] { new ProjectScope(project),
 					new InstanceScope(), new DefaultScope() };
 		}
+		return createGlobalScopes();
+	}
+
+	protected IScopeContext[] createGlobalScopes() {
 		return new IScopeContext[] { new InstanceScope(), new DefaultScope() };
 	}
 
@@ -313,6 +319,18 @@ public abstract class PropertyPreferencePage extends PropertyPage implements
 		if (fData != null && fProjectSettingsLink != null) {
 			fProjectSettingsLink.setEnabled(!Boolean.TRUE.equals(fData
 					.get(DISABLE_LINK)));
+		}
+	}
+
+	protected void flushContexts(IScopeContext[] contexts) {
+		for (int i = 0; i < contexts.length; i++) {
+			try {
+				contexts[i].getNode(getPreferenceNodeQualifier()).flush();
+			} catch (BackingStoreException e) {
+				Trace.trace(
+						Trace.WARNING,
+						"problem saving preference settings to scope " + contexts[i].getName(), e); //$NON-NLS-1$
+			}
 		}
 	}
 }

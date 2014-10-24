@@ -24,12 +24,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
-import org.osgi.service.prefs.BackingStoreException;
 
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.preferences.PropertyPreferencePage;
 
@@ -125,16 +123,7 @@ public class TernDevelopmentPreferencesPage extends PropertyPreferencePage {
 		updateContexts(loadingLocalPluginCheckbox,
 				TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS, contexts,
 				remove);
-		for (int i = 0; i < contexts.length; i++) {
-			try {
-				contexts[i].getNode(getPreferenceNodeQualifier()).flush();
-			} catch (BackingStoreException e) {
-				Trace.trace(
-						Trace.WARNING,
-						"problem saving preference settings to scope " + contexts[i].getName(), e); //$NON-NLS-1$
-			}
-		}
-
+		flushContexts(contexts);
 		if (project != null) {
 			configureConsole(project);
 		} else {
@@ -180,7 +169,7 @@ public class TernDevelopmentPreferencesPage extends PropertyPreferencePage {
 
 	@Override
 	protected String getProjectSettingsKey() {
-		return TernCorePreferenceConstants.USE_PROJECT_SETTINGS;
+		return TernCorePreferenceConstants.DEVELOPMENT_USE_PROJECT_SETTINGS;
 	}
 
 	@Override

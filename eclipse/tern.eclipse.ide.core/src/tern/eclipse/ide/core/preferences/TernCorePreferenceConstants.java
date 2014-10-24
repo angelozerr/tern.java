@@ -11,18 +11,28 @@
 package tern.eclipse.ide.core.preferences;
 
 /**
- * Tern core constants.
+ * Tern Core preferences constants.
  * 
  */
 public class TernCorePreferenceConstants {
 
 	/**
-	 * Preferences constants of the tern.
+	 * Server preferences consttants.
 	 */
 	public static final String TERN_SERVER_TYPE = "ternServerType"; //$NON-NLS-1$
+
+	/**
+	 * Tern development preferences constants.
+	 */
+	public static final String DEVELOPMENT_USE_PROJECT_SETTINGS = "development-use-project-settings";//$NON-NLS-1$
 	public static final String TRACE_ON_CONSOLE = "traceOnConsole"; //$NON-NLS-1$
 	public static final String LOADING_LOCAL_PLUGINS = "loadingLocalPlugin"; //$NON-NLS-1$
-	
-	public static final String USE_PROJECT_SETTINGS = "use-project-settings";//$NON-NLS-1$
+
+	/**
+	 * Tern repository preferences constants.
+	 */
+	public static final String REPOSITORY_USE_PROJECT_SETTINGS = "repository-use-project-settings";//$NON-NLS-1$
+	public static final String REPOSITORIES = "repositories"; //$NON-NLS-1$
+	public static final String USED_REPOSITORY_NAME = "used-repository-name"; //$NON-NLS-1$
 
 }

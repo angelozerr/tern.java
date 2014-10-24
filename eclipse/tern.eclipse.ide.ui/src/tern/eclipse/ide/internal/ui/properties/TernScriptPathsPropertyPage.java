@@ -24,6 +24,7 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.controls.TernScriptPathsBlock;
 import tern.scriptpath.ITernScriptPath;
 
 /**

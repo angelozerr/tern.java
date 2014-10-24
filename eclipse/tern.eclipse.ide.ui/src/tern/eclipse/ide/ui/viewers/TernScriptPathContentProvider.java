@@ -15,8 +15,18 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 
 import tern.scriptpath.ITernScriptPath;
 
+/**
+ * Content provider for tern script path {@link ITernScriptPath}.
+ *
+ */
 public class TernScriptPathContentProvider extends ArrayContentProvider
 		implements ITreeContentProvider {
+
+	private static final TernScriptPathContentProvider INSTANCE = new TernScriptPathContentProvider();
+
+	public static TernScriptPathContentProvider getInstance() {
+		return INSTANCE;
+	}
 
 	@Override
 	public Object[] getChildren(Object element) {

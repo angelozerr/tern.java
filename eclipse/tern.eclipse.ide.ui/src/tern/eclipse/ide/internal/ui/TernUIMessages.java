@@ -30,10 +30,13 @@ public final class TernUIMessages extends NLS {
 	public static String Button_addFolder;
 	public static String Button_addProject;
 	public static String Button_add;
+	public static String Button_edit;
 	public static String Button_remove;
 	public static String Button_newFolder;
 	public static String Button_selectPath;
-
+	public static String Button_browse;
+	public static String Button_refresh;
+	
 	// Commands
 	public static String ConvertProjectToTern_converting_project_job_title;
 
@@ -67,6 +70,26 @@ public final class TernUIMessages extends NLS {
 	public static String TernModuleOptionsPanel_paths_pathColumn;
 	public static String LintRulesTernModuleOptionFactory_rules_ruleColumn;
 	public static String LintRulesTernModuleOptionFactory_rules_severityColumn;
+
+	public static String TernRepositoryBlock_repositoryName;
+	public static String TernRepositoryBlock_filenameColumn;
+	public static String TernRepositoryBlock_removeRepository_title;
+	public static String TernRepositoryBlock_removeRepository_message;
+
+	
+	public static String EditRepositoryDialog_title;
+	public static String EditRepositoryDialog_desc;
+	public static String EditRepositoryDialog_name_label;
+	public static String EditRepositoryDialog_ternBaseDir_label;
+	public static String EditRepositoryDialog_directoryDialog_title;
+	public static String EditRepositoryDialog_directoryDialog_desc;
+	public static String EditRepositoryDialog_name_required;
+	public static String EditRepositoryDialog_name_forbiddenToken;
+	public static String EditRepositoryDialog_name_alreadyExists;
+	public static String EditRepositoryDialog_ternBaseDir_required;
+	public static String EditRepositoryDialog_ternBaseDir_doesntExists;
+	public static String EditRepositoryDialog_ternBaseDir_notDir;
+	public static String EditRepositoryDialog_ternBaseDir_notValid;
 
 	public static String TernScriptPathsBlock_desc;
 

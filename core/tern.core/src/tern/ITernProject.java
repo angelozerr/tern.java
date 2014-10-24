@@ -252,4 +252,5 @@ public interface ITernProject extends ITernAdaptable {
 	void request(TernQuery query, ITernFile file, ITernLintCollector collector) 
 			throws IOException, TernException;
 	
+	ITernRepository getRepository();
 }

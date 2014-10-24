@@ -104,6 +104,10 @@
               category="tern.eclipse.ide.preferences"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
 	          id="tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage" />
+       <page  name="%TernRepositoryPropertyPage.name"
+              category="tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage"
+	          class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
+	          id="tern.eclipse.ide.ui.preferences.TernRepositoryPropertyPage" />	          
 	   <page  name="%TernContentAssistPropertyPage.name"
               category="tern.eclipse.ide.preferences"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
@@ -155,6 +159,17 @@
 		     </adapt>         
          </enabledWhen>
       </page>
+	  <page
+            name="%TernRepositoryPropertyPage.name"
+            category="tern.eclipse.ide.ui.properties.TernDevelopmentPropertyPage"        
+            class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
+            id="tern.eclipse.ide.ui.properties.TernRepositoryPropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
+		     </adapt>         
+         </enabledWhen>
+      </page>      
 	  <page
             name="%TernContentAssistPropertyPage.name"
             category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        

@@ -62,7 +62,7 @@ public class TernPluginsSelectionWizardPage extends
 		IResource resource = super.getResource();
 		IProject project = resource != null ? resource.getProject() : null;
 		modulesBlock = new TernModulesBlock(project, null);
-		modulesBlock.createControl(container);
+		Control control = modulesBlock.createControl(container);
 		modulesBlock
 				.addSelectionChangedListener(new ISelectionChangedListener() {
 
@@ -71,7 +71,6 @@ public class TernPluginsSelectionWizardPage extends
 						TernPluginsSelectionWizardPage.this.dialogChanged();
 					}
 				});
-		Control control = modulesBlock.getControl();
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
@@ -80,7 +79,7 @@ public class TernPluginsSelectionWizardPage extends
 	}
 
 	@Override
-	protected void initialize() {		
+	protected void initialize() {
 		modulesBlock.loadModules();
 	}
 

@@ -64,8 +64,7 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		modulesBlock = new TernModulesBlock(
 				resource != null ? resource.getProject() : null,
 				TernUIMessages.TernModulesPropertyPage_desc);
-		modulesBlock.createControl(parent);
-		Control control = modulesBlock.getControl();
+		Control control = modulesBlock.createControl(parent);
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);

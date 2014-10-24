@@ -13,15 +13,15 @@
 ###############################################################################
  -->
 <plugin>
-	
-	<extension-point id="ternServerTypes" name="%ternServerTypes.name"
-		schema="schema/ternServerTypes.exsd" />	
+
 	<extension-point id="ternConsoleConnectors" name="%ternConsoleConnectors.name"
-		schema="schema/ternConsoleConnectors.exsd" />	
-	<extension-point id="ternNatureAdapters" name="%ternNatureAdapters.name"
-		schema="schema/ternNatureAdapters.exsd" />	
+		schema="schema/ternConsoleConnectors.exsd" />
 	<extension-point id="ternFileConfigurations" name="%ternFileConfigurations.name"
 		schema="schema/ternFileConfigurations.exsd" />
+	<extension-point id="ternNatureAdapters" name="%ternNatureAdapters.name"
+		schema="schema/ternNatureAdapters.exsd" />
+	<extension-point id="ternServerTypes" name="%ternServerTypes.name"
+		schema="schema/ternServerTypes.exsd" />
 			
 	<!-- =================================================================================== -->
 	<!-- Tern Builder                                                                        -->
@@ -61,5 +61,5 @@
 		<initializer
 			class="tern.eclipse.ide.internal.core.preferences.TernCorePreferenceInitializer" />
 	</extension>
-		
+				
 </plugin>        

@@ -11,7 +11,6 @@
 package tern.eclipse.ide.internal.core;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -23,6 +22,7 @@ import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
 
+import tern.ITernRepository;
 import tern.TernException;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernServerPreferencesListener;
@@ -56,8 +56,6 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	private boolean registryListenerIntialized;
 
-	private final ITernModule[] modules;
-
 	private final List<ITernServerPreferencesListener> listeners;
 
 	public static TernServerTypeManager getManager() {
@@ -66,10 +64,6 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	public TernServerTypeManager() {
 		this.registryListenerIntialized = false;
-		List<ITernModule> modules = new ArrayList<ITernModule>();
-		Collections.addAll(modules, getTernDefs());
-		Collections.addAll(modules, getTernPlugins());
-		this.modules = modules.toArray(ITernModule.EMPTY_MODULE);
 		this.listeners = new ArrayList<ITernServerPreferencesListener>();
 	}
 
@@ -216,9 +210,11 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 
 	@Override
 	public ITernModule[] getTernModules(IIDETernProject ternProject,
-			List<ITernModule> checkedModules) {
+			List<ITernModule> checkedModules) throws TernException {
 		ITernModule[] modulesArray = null;
 		List<ITernModule> allModules = new ArrayList<ITernModule>();
+		ITernRepository repository = ternProject.getRepository();
+		ITernModule[] modules = repository.getModules();
 		TernModuleHelper.groupByType(modules, allModules);
 		if (ternProject != null) {
 			// retrieve tern plugin from the root project

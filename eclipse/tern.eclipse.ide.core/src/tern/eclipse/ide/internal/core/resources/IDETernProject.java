@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.CoreException;
 
 import tern.ITernFile;
 import tern.ITernProject;
+import tern.ITernRepository;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernConsoleConnector;
@@ -40,6 +41,7 @@ import tern.eclipse.ide.core.TernNature;
 import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
+import tern.eclipse.ide.internal.core.TernRepositoryManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
@@ -63,8 +65,8 @@ import com.eclipsesource.json.JsonObject;
  * Eclipse IDE Tern project.
  * 
  */
-public class IDETernProject extends TernProject implements
-		IIDETernProject, ITernServerPreferencesListener {
+public class IDETernProject extends TernProject implements IIDETernProject,
+		ITernServerPreferencesListener {
 
 	private static final String PATH_JSON_FIELD = "path"; //$NON-NLS-1$
 
@@ -105,12 +107,12 @@ public class IDETernProject extends TernProject implements
 	public IProject getProject() {
 		return project;
 	}
-	
+
 	@Override
 	public String getName() {
 		return project.getName();
 	}
-	
+
 	@Override
 	public File getProjectDir() {
 		return project.getLocation().toFile();
@@ -267,7 +269,7 @@ public class IDETernProject extends TernProject implements
 				"Cannot retrieve resource from the type=" + pathType
 						+ " of the path=" + path);
 	}
-	
+
 	@Override
 	public IFile getIDEFile(String name) {
 		ITernFile tf = getFile(name);
@@ -293,7 +295,7 @@ public class IDETernProject extends TernProject implements
 							LifecycleEventType.onSaveAfter);
 		}
 	}
-	
+
 	@Override
 	public void handleException(Throwable t) {
 		Trace.trace(Trace.SEVERE, t.getMessage(), t);
@@ -350,27 +352,28 @@ public class IDETernProject extends TernProject implements
 	private ITernScriptPath createScriptPath(IResource resource,
 			ScriptPathsType type, String external) {
 		switch (type) {
-			case FOLDER:
-				return new FolderScriptPath(this, (IFolder) resource, external);
-			case FILE:
-				ITernFile file = getFile(resource);
-				if (file == null) {
-					break;
+		case FOLDER:
+			return new FolderScriptPath(this, (IFolder) resource, external);
+		case FILE:
+			ITernFile file = getFile(resource);
+			if (file == null) {
+				break;
+			}
+			if (TernResourcesManager.isJSFile(file)) {
+				return new JSFileScriptPath(this, file, external);
+			}
+			return new DOMElementsScriptPath(this, file, external);
+		case PROJECT:
+			ITernProject project;
+			try {
+				project = TernCorePlugin.getTernProject((IProject) resource);
+				if (project != null) {
+					return new ProjectScriptPath(project, this, external);
 				}
-				if (TernResourcesManager.isJSFile(file)) {
-					return new JSFileScriptPath(this, file, external);
-				}
-				return new DOMElementsScriptPath(this, file, external);
-			case PROJECT:
-				ITernProject project;
-				try {
-					project = TernCorePlugin.getTernProject((IProject) resource);
-					if (project != null) {
-						return new ProjectScriptPath(project, this, external);
-					}
-				} catch (CoreException e) {
-					Trace.trace(Trace.SEVERE, "Project " + resource.getName() + " is not a Tern project", e);
-				}
+			} catch (CoreException e) {
+				Trace.trace(Trace.SEVERE, "Project " + resource.getName()
+						+ " is not a Tern project", e);
+			}
 		}
 		throw new UnsupportedOperationException(
 				"Cannot create script path for the given type " + type);
@@ -408,12 +411,11 @@ public class IDETernProject extends TernProject implements
 			}
 		}
 	}
-	
+
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
-		if (adapterClass == IProject.class || 
-				adapterClass == IContainer.class ||
-				adapterClass == IResource.class) {
+		if (adapterClass == IProject.class || adapterClass == IContainer.class
+				|| adapterClass == IResource.class) {
 			return project;
 		}
 		return super.getAdapter(adapterClass);
@@ -535,7 +537,6 @@ public class IDETernProject extends TernProject implements
 			}
 		}
 	}
-	
 
 	@Override
 	public List<ITernModule> getProjectModules() {
@@ -572,5 +573,10 @@ public class IDETernProject extends TernProject implements
 			}
 		}
 		return modules;
+	}
+
+	@Override
+	public ITernRepository getRepository() {
+		return TernRepositoryManager.getManager().getRepository(getProject());
 	}
 }

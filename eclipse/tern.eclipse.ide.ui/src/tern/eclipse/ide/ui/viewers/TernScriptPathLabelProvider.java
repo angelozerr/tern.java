@@ -17,10 +17,20 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import tern.eclipse.ide.ui.ImageResource;
-import tern.scriptpath.ITernScriptResource;
 import tern.scriptpath.ITernScriptPath;
+import tern.scriptpath.ITernScriptResource;
 
+/**
+ * Label provider for tern script path {@link ITernScriptPath}.
+ *
+ */
 public class TernScriptPathLabelProvider extends LabelProvider {
+
+	private static final TernScriptPathLabelProvider INSTANCE = new TernScriptPathLabelProvider();
+
+	public static TernScriptPathLabelProvider getInstance() {
+		return INSTANCE;
+	}
 
 	private final WorkbenchLabelProvider provider = new WorkbenchLabelProvider();
 
@@ -30,16 +40,17 @@ public class TernScriptPathLabelProvider extends LabelProvider {
 			return ((ITernScriptResource) element).getLabel();
 		}
 		if (element instanceof ITernScriptPath) {
-			return ((ITernScriptPath)element).getLabel();
+			return ((ITernScriptPath) element).getLabel();
 		}
-		
+
 		return super.getText(element);
 	}
 
 	@Override
 	public Image getImage(Object element) {
 		if (element instanceof ITernScriptPath) {
-			IResource res = (IResource) ((ITernScriptPath) element).getAdapter(IResource.class);
+			IResource res = (IResource) ((ITernScriptPath) element)
+					.getAdapter(IResource.class);
 			return provider.getImage(res);
 		}
 		if (element instanceof ITernScriptResource) {

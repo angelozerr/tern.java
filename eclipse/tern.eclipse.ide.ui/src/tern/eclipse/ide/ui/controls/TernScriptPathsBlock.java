@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.properties;
+package tern.eclipse.ide.ui.controls;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +54,7 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.dialogs.MultipleFolderSelectionDialog;
 import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
+import tern.eclipse.ide.internal.ui.properties.AbstractTreeBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernScriptPathContentProvider;
 import tern.eclipse.ide.ui.viewers.TernScriptPathLabelProvider;
@@ -113,8 +114,8 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		tree.setLinesVisible(false);
 
 		treeViewer = new TreeViewer(tree);
-		treeViewer.setLabelProvider(new TernScriptPathLabelProvider());
-		treeViewer.setContentProvider(new TernScriptPathContentProvider());
+		treeViewer.setLabelProvider(TernScriptPathLabelProvider.getInstance());
+		treeViewer.setContentProvider(TernScriptPathContentProvider.getInstance());
 
 		// Add tree selection listener to enable "Remove" button when a script
 		// path is selected.
@@ -340,7 +341,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		return fControl;
 	}
 
-	protected void setTernScriptPaths(
+	public void setTernScriptPaths(
 			Collection<ITernScriptPath> ternScriptPaths) {
 		this.ternScriptPaths.clear();
 		this.ternScriptPaths.addAll(ternScriptPaths);

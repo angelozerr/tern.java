@@ -27,6 +27,7 @@ import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.TernFileConfigurationManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
+import tern.eclipse.ide.internal.core.TernRepositoryManager;
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
 import tern.eclipse.ide.internal.core.resources.IDEResourcesManager;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
@@ -58,17 +59,17 @@ public class TernCorePlugin extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 
-		// Initialize the NodeJs tern base dir usefull if (if tern.eclipse is
-		// not started).
-		NodejsProcessManager.getInstance().init(getTernBaseDir());
 		TernModuleMetadataManager.getInstance().init(getTernCoreBaseDir());
 		TernFileConfigurationManager.getManager().initialize();
-		
-		//set up resource management for IDE
-		InternalTernResourcesManager resMan = InternalTernResourcesManager.getInstance();
-		resMan.setScriptTagRegionProvider(TernFileConfigurationManager.getManager());
-		resMan.setTernResourcesManagerDelegate(IDEResourcesManager.getInstance());
-		
+
+		// set up resource management for IDE
+		InternalTernResourcesManager resMan = InternalTernResourcesManager
+				.getInstance();
+		resMan.setScriptTagRegionProvider(TernFileConfigurationManager
+				.getManager());
+		resMan.setTernResourcesManagerDelegate(IDEResourcesManager
+				.getInstance());
+
 	}
 
 	public static File getTernCoreBaseDir() throws IOException {
@@ -80,13 +81,14 @@ public class TernCorePlugin extends Plugin {
 		return new File(FileLocator.getBundleFile(Platform
 				.getBundle(tern.Activator.PLUGIN_ID)), "node_modules/tern");
 	}
-	
+
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		NodejsProcessManager.getInstance().dispose();
 		TernServerTypeManager.getManager().destroy();
 		TernNatureAdaptersManager.getManager().destroy();
 		TernFileConfigurationManager.getManager().destroy();
+
 		plugin = null;
 		super.stop(context);
 	}
@@ -116,8 +118,8 @@ public class TernCorePlugin extends Plugin {
 	 */
 	public static IIDETernProject getTernProject(IProject project)
 			throws CoreException {
-		IIDETernProject result = (IIDETernProject) 
-				TernResourcesManager.getTernProject(project);
+		IIDETernProject result = (IIDETernProject) TernResourcesManager
+				.getTernProject(project);
 		if (result == null) {
 			throw new CoreException(new Status(IStatus.ERROR,
 					TernCorePlugin.PLUGIN_ID, "The project "
@@ -157,4 +159,7 @@ public class TernCorePlugin extends Plugin {
 
 	}
 
+	public static ITernRepositoryManager getTernRepositoryManager() {
+		return TernRepositoryManager.getManager();
+	}
 }

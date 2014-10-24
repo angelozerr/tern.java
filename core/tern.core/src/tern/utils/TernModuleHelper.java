@@ -224,19 +224,23 @@ public class TernModuleHelper {
 	}
 
 	private static ITernDef getDef(String name) {
-		try {
-			return TernDef.valueOf(name);
-		} catch (Throwable e) {
-
+		ITernDef def = TernDef.getTernDef(name);
+		if (def != null) {
+			return def;
 		}
 		return new BasicTernDef(name);
 	}
 
+	/**
+	 * Return the tern plugin by name.
+	 * 
+	 * @param name
+	 * @return
+	 */
 	private static ITernPlugin getPlugin(String name) {
-		try {
-			return TernPlugin.valueOf(name);
-		} catch (Throwable e) {
-
+		ITernPlugin plugin = TernPlugin.getTernPlugin(name);
+		if (plugin != null) {
+			return plugin;
 		}
 		return new BasicTernPlugin(name);
 	}

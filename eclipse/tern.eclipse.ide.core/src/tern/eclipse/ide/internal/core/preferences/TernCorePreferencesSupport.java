@@ -13,6 +13,7 @@ package tern.eclipse.ide.internal.core.preferences;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Preferences;
 
+import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
@@ -75,5 +76,19 @@ public class TernCorePreferencesSupport {
 				TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS, null,
 				project);
 		return StringUtils.asBoolean(result, false);
+	}
+
+	/**
+	 * Returns the used tern repository name for the given project.
+	 * 
+	 * @param project
+	 * @return the used tern repository name for the given project.
+	 */
+	public String getUsedTernRepositoryName(IProject project) {
+		return preferencesSupport
+				.getPreferencesValue(
+						TernCorePreferenceConstants.USED_REPOSITORY_NAME, null,
+						project);
+
 	}
 }

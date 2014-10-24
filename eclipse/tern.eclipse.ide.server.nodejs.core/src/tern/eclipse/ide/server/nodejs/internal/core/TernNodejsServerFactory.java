@@ -26,9 +26,10 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 	@Override
 	public ITernServer create(ITernProject project) throws Exception {
 		File installPath = getInstallPath();
+		File ternFile = project.getRepository().getTernBaseDir();
 		NodejsTernServer server = isRemoteAccess() ? new NodejsTernServer(
 				project, getRemotePort()) : new NodejsTernServer(project,
-				installPath);
+				installPath, ternFile);
 		server.setTimeout(getTimeout());
 		server.setTestNumber(getTestNumber());
 		server.setPersistent(isPersistent());

@@ -8,18 +8,14 @@ Bundle-Version: 0.7.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
- tern.core;bundle-version="0.2.0",
- tern.server.nodejs;bundle-version="0.2.0",
- tern.eclipse;bundle-version="0.2.0",
+ tern.core,
+ tern.server.nodejs,
+ tern.eclipse,
  org.eclipse.jface.text
 Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.preferences,
  tern.eclipse.ide.core.resources,
- tern.eclipse.ide.core.utils,
- tern.eclipse.ide.internal.core;x-internal:=true,
- tern.eclipse.ide.internal.core.builder;x-internal:=true,
- tern.eclipse.ide.internal.core.preferences;x-internal:=true,
- tern.eclipse.ide.internal.core.scriptpath;x-internal:=true
+ tern.eclipse.ide.core.utils
 Bundle-ActivationPolicy: lazy
 Import-Package: com.eclipsesource.json
 Bundle-Activator: tern.eclipse.ide.core.TernCorePlugin

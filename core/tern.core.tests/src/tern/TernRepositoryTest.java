@@ -13,7 +13,7 @@ public class TernRepositoryTest {
 	public void defaultRepository() {
 		File ternFile = PathHelper.getNodejsTernBaseDir();
 		try {
-			TernRepository repository = new TernRepository(ternFile);
+			TernRepository repository = new TernRepository("default", ternFile);
 			ITernModule[] modules = repository.getModules();
 			for (int i = 0; i < modules.length; i++) {
 				System.err.println(modules[i].getName());

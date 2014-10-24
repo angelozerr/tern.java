@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 
+import tern.TernException;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;
@@ -57,9 +58,10 @@ public interface ITernServerTypeManager {
 	 * @param ternProject
 	 * @param checkedModules
 	 * @return
+	 * @throws TernException
 	 */
 	ITernModule[] getTernModules(IIDETernProject ternProject,
-			List<ITernModule> checkedModules);
+			List<ITernModule> checkedModules) throws TernException;
 
 	ITernPlugin[] getTernPlugins();
 
