@@ -39,6 +39,12 @@
       "label": "Invalid argument",
       "severity": "error"
      }
+    },
+    {
+     "UnusedVariable": {
+      "label": "Unused variable",
+      "severity": "warning"
+     }
     }
    ]
   }
