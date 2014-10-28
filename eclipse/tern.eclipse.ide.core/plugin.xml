@@ -35,25 +35,7 @@
 			<run class="tern.eclipse.ide.internal.core.builder.TernBuilder">
 			</run>
 		</builder>
-	</extension>
-					
-	<!-- =================================================================================== -->
-	<!-- Tern Nature                                                                         -->
-	<!-- =================================================================================== -->
-	
-	<extension
-		id="ternnature"
-		name="%ternNature.name"
-		point="org.eclipse.core.resources.natures">
-		<runtime>
-			<run
-				class="tern.eclipse.ide.core.TernNature">
-			</run>
-		</runtime>
-	    <builder
-	          id="tern.eclipse.ide.core.ternBuilder">
-	    </builder>		
-	</extension>	
+	</extension>					
 	
 	<!-- Preferences initialization -->
 	<extension

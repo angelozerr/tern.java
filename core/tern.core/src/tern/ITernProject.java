@@ -41,24 +41,26 @@ public interface ITernProject extends ITernAdaptable {
 	// --------------------- Basic
 	/**
 	 * Returns name of the project
+	 * 
 	 * @return
 	 */
 	String getName();
-	
+
 	/**
-	 * Returns associated tern server if any. This call may result
-	 * in creating one if it hasn't been created already.
+	 * Returns associated tern server if any. This call may result in creating
+	 * one if it hasn't been created already.
+	 * 
 	 * @return
 	 */
 	ITernServer getTernServer();
-	
+
 	/**
 	 * Convenience method for handling exceptions.
 	 * 
 	 * @param t
 	 */
 	void handleException(Throwable t);
-	
+
 	// --------------------- JSON Type Definitions
 
 	/**
@@ -173,6 +175,7 @@ public interface ITernProject extends ITernAdaptable {
 	void saveIfNeeded() throws IOException;
 
 	// ---------------- File management
+
 	/**
 	 * Returns the project base dir.
 	 * 
@@ -181,19 +184,26 @@ public interface ITernProject extends ITernAdaptable {
 	File getProjectDir();
 
 	/**
-	 * Returns a tern file for the specified name. Name must be supported
-	 * by current ITernFileFactory and the file must exist, otherwise
-	 * null is returned.
+	 * Returns the .tern-project file.
+	 * 
+	 * @return the .tern-project file
+	 */
+	File getTernProjectFile();
+
+	/**
+	 * Returns a tern file for the specified name. Name must be supported by
+	 * current ITernFileFactory and the file must exist, otherwise null is
+	 * returned.
 	 * 
 	 * @param name
 	 * @return
 	 */
 	ITernFile getFile(String name);
-	
+
 	/**
-	 * Returns a tern file for the file object. File object has
-	 * to be supported by current ITernFileFactory and referred file
-	 * must exist, or null will be returned
+	 * Returns a tern file for the file object. File object has to be supported
+	 * by current ITernFileFactory and referred file must exist, or null will be
+	 * returned
 	 * 
 	 * @param name
 	 * @return ITernFile or null, if the file does not exist
@@ -206,7 +216,7 @@ public interface ITernProject extends ITernAdaptable {
 	 * @return
 	 */
 	ITernFileSynchronizer getFileSynchronizer();
-	
+
 	/**
 	 * Returns a list of script include paths
 	 * 
@@ -215,42 +225,44 @@ public interface ITernProject extends ITernAdaptable {
 	List<ITernScriptPath> getScriptPaths();
 
 	/**
-	 * Provides a way to adapt ITernProject to an environment specific object representing project.
-	 * E.g. it can return {@link java.io.File} object or Eclipse 
-	 * {@code org.eclipse.core.resources.IProject}. 
+	 * Provides a way to adapt ITernProject to an environment specific object
+	 * representing project. E.g. it can return {@link java.io.File} object or
+	 * Eclipse {@code org.eclipse.core.resources.IProject}.
 	 * 
 	 * @param adapterClass
 	 * @return Adapter extending/implementing requested class or null
 	 */
 	Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass);
-	
+
 	// ---------- Completion
-	void request(TernQuery query, ITernFile file, ITernCompletionCollector collector) 
+	void request(TernQuery query, ITernFile file,
+			ITernCompletionCollector collector) throws IOException,
+			TernException;
+
+	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath,
+			Node domNode, ITernFile file, ITernCompletionCollector collector)
 			throws IOException, TernException;
 
-	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath, 
-			Node domNode, ITernFile file, ITernCompletionCollector collector) 
-			throws IOException, TernException;
-	
 	// ---------- Definition
-	void request(TernQuery query, ITernFile file, ITernDefinitionCollector collector) 
-			throws IOException, TernException;
+	void request(TernQuery query, ITernFile file,
+			ITernDefinitionCollector collector) throws IOException,
+			TernException;
 
-	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath, 
-			Node domNode, ITernFile file, ITernDefinitionCollector collector) 
+	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath,
+			Node domNode, ITernFile file, ITernDefinitionCollector collector)
 			throws IOException, TernException;
 
 	// ---------- Type
-	void request(TernQuery query, ITernFile file, ITernTypeCollector collector) 
+	void request(TernQuery query, ITernFile file, ITernTypeCollector collector)
 			throws IOException, TernException;
 
-	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath, 
-			Node domNode, ITernFile file, ITernTypeCollector collector) 
+	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath,
+			Node domNode, ITernFile file, ITernTypeCollector collector)
 			throws IOException, TernException;
 
 	// ---------- Lint
-	void request(TernQuery query, ITernFile file, ITernLintCollector collector) 
+	void request(TernQuery query, ITernFile file, ITernLintCollector collector)
 			throws IOException, TernException;
-	
+
 	ITernRepository getRepository();
 }

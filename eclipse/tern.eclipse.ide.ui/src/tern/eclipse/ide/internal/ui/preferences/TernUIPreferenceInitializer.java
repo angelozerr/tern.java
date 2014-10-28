@@ -16,6 +16,10 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 
 import tern.eclipse.ide.ui.TernUIPlugin;
 
+/**
+ * Tern UI preferences initializer.
+ *
+ */
 public class TernUIPreferenceInitializer extends AbstractPreferenceInitializer {
 
 	@Override
@@ -27,6 +31,10 @@ public class TernUIPreferenceInitializer extends AbstractPreferenceInitializer {
 				true);
 		node.putBoolean(
 				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST, true);
+		node.put(TernUIPreferenceConstants.TERN_DEFS,
+				TernUIPreferenceConstants.TERN_DEFS_DEFAULT);
+		node.put(TernUIPreferenceConstants.TERN_PLUGINS,
+				TernUIPreferenceConstants.TERN_PLUGINS_DEFAULT);
 	}
 
 }

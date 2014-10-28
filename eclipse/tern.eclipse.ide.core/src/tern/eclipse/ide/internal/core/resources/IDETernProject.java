@@ -13,6 +13,7 @@ package tern.eclipse.ide.internal.core.resources;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.QualifiedName;
 
 import tern.ITernFile;
 import tern.ITernProject;
@@ -37,7 +39,6 @@ import tern.eclipse.ide.core.ITernProjectLifecycleListener.LifecycleEventType;
 import tern.eclipse.ide.core.ITernServerPreferencesListener;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.core.TernNature;
 import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
@@ -56,6 +57,7 @@ import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 import tern.server.TernServerAdapter;
 import tern.server.protocol.JsonHelper;
+import tern.utils.IOUtils;
 import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonArray;
@@ -67,6 +69,9 @@ import com.eclipsesource.json.JsonObject;
  */
 public class IDETernProject extends TernProject implements IIDETernProject,
 		ITernServerPreferencesListener {
+
+	private static final QualifiedName TERN_PROJECT = new QualifiedName(
+			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernProject"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	private static final String PATH_JSON_FIELD = "path"; //$NON-NLS-1$
 
@@ -96,7 +101,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		this.listeners = new ArrayList<ITernServerListener>();
 		TernCorePlugin.getTernServerTypeManager().addServerPreferencesListener(
 				this);
-		ensureNatureIsConfigured();
+		project.setSessionProperty(TERN_PROJECT, this);
 	}
 
 	/**
@@ -287,7 +292,19 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 							LifecycleEventType.onSaveBefore);
 			// Store IDE tern project info.
 			saveIDEInfos();
-			super.save();
+			// save .tern-project
+			IFile file = project.getFile(TERN_PROJECT_FILE);
+			try {
+				InputStream content = IOUtils.toInputStream(super.toString(),
+						file.exists() ? file.getCharset() : "UTF-8");
+				if (!file.exists()) {
+					file.create(content, true, null);
+				} else {
+					file.setContents(content, true, false, null);
+				}
+			} catch (CoreException e) {
+				throw new IOException("Cannot save .tern-project", e);
+			}
 			disposeServer();
 		} finally {
 			TernProjectLifecycleManager.getManager()
@@ -495,15 +512,6 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		data.put(key, value);
 	}
 
-	private void ensureNatureIsConfigured() throws CoreException {
-		// Check if .tern-project is correctly configured for adapted nature
-		final TernNature tempTernNature = new TernNature();
-		tempTernNature.setProject(project);
-		if (!tempTernNature.isConfigured()) {
-			tempTernNature.configure();
-		}
-	}
-
 	@Override
 	public void serverPreferencesChanged(IProject project) {
 		if (project == null || getProject().equals(project)) {
@@ -578,5 +586,15 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	@Override
 	public ITernRepository getRepository() {
 		return TernRepositoryManager.getManager().getRepository(getProject());
+	}
+
+	public void dispose() throws CoreException {
+		disposeServer();
+		project.setSessionProperty(TERN_PROJECT, null);
+	}
+
+	protected static IDETernProject getTernProject(IProject project)
+			throws CoreException {
+		return (IDETernProject) project.getSessionProperty(TERN_PROJECT);
 	}
 }

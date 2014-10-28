@@ -27,14 +27,15 @@ import org.eclipse.core.runtime.Platform;
 
 import tern.eclipse.ide.core.ITernNatureCapability;
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.core.TernNature;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.metadata.TernModuleMetadata;
+import tern.resources.TernProject;
 import tern.server.ITernModule;
 import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonObject;
+
 /**
  * Manager of tern nature adapters loaded by the extension point
  * "ternNatureAdapters"
@@ -128,18 +129,21 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 			String className = ce.getAttribute("class");
 			try {
 				if (!StringUtils.isEmpty(className)) {
-					map.put((ITernNatureCapability)ce.createExecutableExtension("class"), getDefaultModules(ce));
-				}
-				else if (!StringUtils.isEmpty(id)) {
-					map.put(new DefaultTernNatureAdapter(id), getDefaultModules(ce));
+					map.put((ITernNatureCapability) ce
+							.createExecutableExtension("class"),
+							getDefaultModules(ce));
+				} else if (!StringUtils.isEmpty(id)) {
+					map.put(new DefaultTernNatureAdapter(id),
+							getDefaultModules(ce));
 				}
 				Trace.trace(Trace.EXTENSION_POINT,
-						"  Loaded project describer: " + id != null ? id : className != null ? className : "");
+						"  Loaded project describer: " + id != null ? id
+								: className != null ? className : "");
 			} catch (Throwable t) {
 				Trace.trace(
 						Trace.SEVERE,
-						"  Could not load project describers: "
-								+ id != null ? id : className != null ? className : "", t);
+						"  Could not load project describers: " + id != null ? id
+								: className != null ? className : "", t);
 			}
 		}
 	}
@@ -217,13 +221,14 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	public boolean hasTernNature(IProject project) {
 		if (project.isAccessible()) {
 			try {
-				// test if project has tern nature
-				if (project.hasNature(TernNature.ID))
+				// test if project has a .tern-project file
+				if (project.getFile(TernProject.TERN_PROJECT_FILE).exists())
 					return true;
 
 				// use tern nature adapaters
 				Map<ITernNatureCapability, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
-				for (ITernNatureCapability natureAdapter : ternNatureAdapters.keySet()) {
+				for (ITernNatureCapability natureAdapter : ternNatureAdapters
+						.keySet()) {
 					if (natureAdapter.hasTernNature(project)) {
 						return true;
 					}
@@ -253,7 +258,8 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		Map<ITernNatureCapability, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
 		for (ITernNatureCapability natureAdapter : ternNatureAdapters.keySet()) {
 			if (natureAdapter.hasTernNature(project.getProject())) {
-				List<DefaultModule> defaultModules = ternNatureAdapters.get(natureAdapter);
+				List<DefaultModule> defaultModules = ternNatureAdapters
+						.get(natureAdapter);
 				for (DefaultModule defaultModule : defaultModules) {
 					ITernModule module = TernCorePlugin
 							.getTernServerTypeManager().findTernModule(
@@ -273,9 +279,9 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 											.getTernServerTypeManager()
 											.findTernModule(dependency);
 									if (dependencyModule != null) {
-										TernModuleHelper.update(
-												dependencyModule, null,
-												project);
+										TernModuleHelper
+												.update(dependencyModule, null,
+														project);
 									}
 								}
 							}

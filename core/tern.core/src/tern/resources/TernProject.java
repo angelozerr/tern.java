@@ -82,6 +82,7 @@ public class TernProject extends DirtyableJsonObject implements ITernProject {
 	private static final String LIBS_FIELD_NAME = "libs"; //$NON-NLS-1$
 
 	private final File projectDir;
+	private File ternProjectFile;
 	private DirtyableJsonArray patterns;
 
 	private boolean dirty;
@@ -100,6 +101,7 @@ public class TernProject extends DirtyableJsonObject implements ITernProject {
 	public TernProject(File projectDir) {
 		super(null);
 		this.projectDir = projectDir;
+		this.ternProjectFile = new File(projectDir, TERN_PROJECT_FILE);
 		this.fileSynchronizer = InternalTernResourcesManager.getInstance()
 				.createTernFileSynchronizer(this);
 	}
@@ -117,6 +119,11 @@ public class TernProject extends DirtyableJsonObject implements ITernProject {
 	@Override
 	public File getProjectDir() {
 		return projectDir;
+	}
+	
+	@Override
+	public File getTernProjectFile() {
+		return ternProjectFile;
 	}
 
 	/**
@@ -304,8 +311,7 @@ public class TernProject extends DirtyableJsonObject implements ITernProject {
 		getProjectDir().mkdirs();
 		Writer writer = null;
 		try {
-			writer = new FileWriter(
-					new File(getProjectDir(), TERN_PROJECT_FILE));
+			writer = new FileWriter(ternProjectFile);
 			super.writeTo(writer);
 		} finally {
 			if (writer != null) {
@@ -334,15 +340,25 @@ public class TernProject extends DirtyableJsonObject implements ITernProject {
 	 * @throws IOException
 	 */
 	public void load() throws IOException {
-		File file = new File(getProjectDir(), TERN_PROJECT_FILE);
-		if (file.exists()) {
+		if (ternProjectFile.exists()) {
 			try {
-				JsonHelper.readFrom(new FileReader(file), this);
+				JsonHelper.readFrom(new FileReader(ternProjectFile), this);
 			} catch (ParseException e) {
 				throw new IOException(e);
 			}
+		} else {
+			createEmptyTernProjectFile();
 		}
 		this.dirty = false;
+	}
+
+	/**
+	 * Create an empty a .tern-project file.
+	 * 
+	 * @throws IOException
+	 */
+	protected void createEmptyTernProjectFile() throws IOException {
+		save();
 	}
 
 	@Override

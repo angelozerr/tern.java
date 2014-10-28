@@ -107,8 +107,31 @@ public class TernCorePlugin extends Plugin {
 	}
 
 	/**
-	 * Returns the tern project of the given eclipse projectand throws exception
-	 * if the eclipse project has not tern nature.
+	 * Returns the tern project of the given eclipse project and throws
+	 * exception if the eclipse project has not tern nature.
+	 * 
+	 * @param project
+	 *            eclipse project.
+	 * @return the tern project of the given eclipse projectand throws exception
+	 *         if the eclipse project has not tern nature.
+	 * @throws CoreException
+	 */
+	public static IIDETernProject getTernProject(IProject project, boolean force)
+			throws CoreException {
+		try {
+			return (IIDETernProject) TernResourcesManager.getTernProject(
+					project, force);
+		} catch (IOException e) {
+			throw new CoreException(new Status(IStatus.ERROR,
+					TernCorePlugin.PLUGIN_ID, "The project "
+							+ project.getName()
+							+ " cannot be converted as tern project.", e));
+		}
+	}
+
+	/**
+	 * Returns the tern project of the given eclipse project and throws
+	 * exception if the eclipse project has not tern nature.
 	 * 
 	 * @param project
 	 *            eclipse project.
@@ -162,4 +185,5 @@ public class TernCorePlugin extends Plugin {
 	public static ITernRepositoryManager getTernRepositoryManager() {
 		return TernRepositoryManager.getManager();
 	}
+
 }
