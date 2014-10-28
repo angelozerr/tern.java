@@ -31,6 +31,7 @@ import tern.eclipse.ide.internal.core.TernRepositoryManager;
 import tern.eclipse.ide.internal.core.TernServerTypeManager;
 import tern.eclipse.ide.internal.core.resources.IDEResourcesManager;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
+import tern.eclipse.ide.internal.core.resources.IDETernProjectSynchronizer;
 import tern.internal.resources.InternalTernResourcesManager;
 import tern.metadata.TernModuleMetadataManager;
 import tern.server.nodejs.process.NodejsProcessManager;
@@ -59,6 +60,7 @@ public class TernCorePlugin extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 
+		IDETernProjectSynchronizer.getInstance().initialize();
 		TernModuleMetadataManager.getInstance().init(getTernCoreBaseDir());
 		TernFileConfigurationManager.getManager().initialize();
 
@@ -88,6 +90,7 @@ public class TernCorePlugin extends Plugin {
 		TernServerTypeManager.getManager().destroy();
 		TernNatureAdaptersManager.getManager().destroy();
 		TernFileConfigurationManager.getManager().destroy();
+		IDETernProjectSynchronizer.getInstance().dispose();
 
 		plugin = null;
 		super.stop(context);

@@ -28,47 +28,57 @@ public interface ITernFileSynchronizer {
 	public void ensureSynchronized();
 
 	/**
-	 * Fills fileNames array with names of script files synchronized with the server. 
-	 * If path is provided then only files from a particular path are going to be added
-	 * to the array.
+	 * Fills fileNames array with names of script files synchronized with the
+	 * server. If path is provided then only files from a particular path are
+	 * going to be added to the array.
 	 * 
-	 * @param fileNames JSON array to be filled with file names.
-	 * @param path optional script path, from which files should be included. 
+	 * @param fileNames
+	 *            JSON array to be filled with file names.
+	 * @param path
+	 *            optional script path, from which files should be included.
 	 */
 	public void fillSyncedFileNames(JsonArray fileNames, ITernScriptPath path);
-	
+
 	/**
-	 * Sends the specified file to Tern Server. Useful when needed to upload a specific 
-	 * version of file for auto-completion.  
-	 * @param domNode 
+	 * Sends the specified file to Tern Server. Useful when needed to upload a
+	 * specific version of file for auto-completion.
+	 * 
+	 * @param domNode
 	 * 
 	 * @param file
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void synchronizeFile(ITernFile file) throws IOException;
-	
+
 	/**
-	 * Sends contents referred by the custom script path to Tern Server. Useful when
-	 * needed for example to synchronize files referred by an HTML file. Files on the
-	 * forced list will be always synchronized if present on the path.
+	 * Sends contents referred by the custom script path to Tern Server. Useful
+	 * when needed for example to synchronize files referred by an HTML file.
+	 * Files on the forced list will be always synchronized if present on the
+	 * path.
 	 * 
 	 * @param path
 	 */
 	public void synchronizeScriptPath(ITernScriptPath path, String... forced);
-	
+
 	/**
-	 * Notifies cache manager that files has been successfully uploaded. This method
-	 * should be called by tern server if the tern response doesn't throws error.
+	 * Notifies cache manager that files has been successfully uploaded. This
+	 * method should be called by tern server if the tern response doesn't
+	 * throws error.
 	 * 
 	 * @param doc
 	 *            the tern doc.
 	 */
 	public void filesUploaded(TernDoc doc);
-	
+
 	/**
-	 * Cleans all cache information. Next call to ensureSynchronized will perform
-	 * full synchronization.
+	 * Cleans all cache information. Next call to ensureSynchronized will
+	 * perform full synchronization.
 	 */
 	public void cleanIndexedFiles();
-	
+
+	/**
+	 * Dispose the synchronizer.
+	 */
+	public void dispose();
+
 }

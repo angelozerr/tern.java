@@ -175,6 +175,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	@Override
 	public void load() throws IOException {
 		try {
+			disposeServer();
 			TernProjectLifecycleManager.getManager()
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onLoadBefore);
@@ -590,7 +591,10 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	public void dispose() throws CoreException {
 		disposeServer();
-		project.setSessionProperty(TERN_PROJECT, null);
+		getFileSynchronizer().dispose();
+		if (project.isAccessible()) {
+			project.setSessionProperty(TERN_PROJECT, null);
+		}
 	}
 
 	protected static IDETernProject getTernProject(IProject project)

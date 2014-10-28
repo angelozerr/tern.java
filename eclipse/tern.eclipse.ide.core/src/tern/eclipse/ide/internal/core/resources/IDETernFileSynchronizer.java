@@ -11,6 +11,8 @@
  */
 package tern.eclipse.ide.internal.core.resources;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -25,8 +27,8 @@ import tern.ITernFile;
 import tern.ITernProject;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.Trace;
-import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.resources.TernFileSynchronizer;
+import tern.resources.TernProject;
 
 /**
  * Extension of {@link TernFileManager} to works with Eclipse {@link IFile}
@@ -34,7 +36,6 @@ import tern.resources.TernFileSynchronizer;
  */
 public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 		IResourceChangeListener, IResourceDeltaVisitor {
-
 
 	/**
 	 * Constructor of file manager with the owner Eclipse project.
@@ -47,8 +48,9 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 	/**
 	 * Dispose the file manager.
 	 */
+	@Override
 	public void dispose() {
-		super.cleanIndexedFiles();
+		super.dispose();
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
 	}
 
@@ -62,12 +64,17 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 	@Override
 	public void resourceChanged(IResourceChangeEvent event) {
 		try {
-			IResourceDelta delta = event.getDelta();
-			if (delta != null) {
-				delta.accept(this);
+			switch (event.getType()) {
+			case IResourceChangeEvent.POST_CHANGE:
+				IResourceDelta delta = event.getDelta();
+				if (delta != null) {
+					delta.accept(this);
+				}
+				break;
 			}
 		} catch (Throwable e) {
-			Trace.trace(Trace.SEVERE, "", e);
+			Trace.trace(Trace.SEVERE, "Error while tern file synchronization",
+					e);
 		}
 	}
 
@@ -82,21 +89,62 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 		case IResource.FOLDER:
 			return true;
 		case IResource.PROJECT:
-			if (resource instanceof IProject) {
-				IProject project = (IProject) resource;
-				if (!(project.isAccessible())) {
-					return false;
-				}
-				if (!IDETernProject.hasTernNature(project)) {
-					return false;
-				}
-				return true;
+			IProject project = (IProject) resource;
+			if (!IDETernProject.hasTernNature(project)) {
+				return false;
 			}
+			return true;
 		case IResource.FILE:
-			removeIndexedFile((IFile) resource);
+			if (isTernProjectFile(resource)) {
+				try {
+					// check if the project is linked to the tern project
+					if (isBelongToProject(resource)) {
+						getIDETernProject().load();
+					}
+				} catch (IOException e) {
+					Trace.trace(Trace.SEVERE,
+							"error while loading tern project", e);
+				}
+			} else {
+				// FIXME : manage delete + move file
+				/*
+				 * switch (delta.getKind()) { case IResourceDelta.ADDED:
+				 * System.err.println("Resource " + resource.getLocation() +
+				 * " was added"); break; case IResourceDelta.REMOVED:
+				 * System.err.println("Resource " + resource.getLocation() +
+				 * " was removed"); break; case IResourceDelta.CHANGED:
+				 * System.err.println("Resource " + resource.getLocation() +
+				 * " has changed"); break; }
+				 */
+
+				removeIndexedFile((IFile) resource);
+			}
 			return true;
 		}
 		return false;
+	}
+
+	private boolean isTernProjectFile(IResource resource) {
+		// check if file name is .tern-project
+		if (!TernProject.TERN_PROJECT_FILE.equals(resource.getName())) {
+			return false;
+		}
+		// check if parent of file is a project
+		if (resource.getParent() == null
+				|| resource.getParent().getType() != IResource.PROJECT) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean isBelongToProject(IResource resource) {
+		IProject project = resource.getProject();
+		return getIDETernProject().getProject().equals(project);
+
+	}
+
+	private IDETernProject getIDETernProject() {
+		return (IDETernProject) getProject();
 	}
 
 }

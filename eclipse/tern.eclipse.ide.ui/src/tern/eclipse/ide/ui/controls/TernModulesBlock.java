@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
@@ -333,12 +334,6 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 	public void setCheckedModules(Object[] selectedModules) {
 		tableViewer.setCheckedElements(selectedModules);
-
-		/*
-		 * if (selectedModules == null) { setSelection(new
-		 * StructuredSelection()); } else { setSelection(new
-		 * StructuredSelection(selectedModules)); }
-		 */
 	}
 
 	@Override
@@ -382,6 +377,11 @@ public class TernModulesBlock extends AbstractTableBlock {
 			this.setTernModules(allModules);
 			if (checkedModules != null) {
 				this.setCheckedModules(checkedModules.toArray());
+				/*if (checkedModules.size() > 0) {
+					ITernModule firstModule = checkedModules.get(0);
+					tableViewer.setSelection(new StructuredSelection(
+							firstModule));
+				}*/
 			}
 
 		} catch (Throwable e) {
