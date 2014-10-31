@@ -99,7 +99,7 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 				try {
 					// check if the project is linked to the tern project
 					if (isBelongToProject(resource)) {
-						getIDETernProject().load();
+						getIDETernProject().refresh();
 					}
 				} catch (IOException e) {
 					Trace.trace(Trace.SEVERE,
