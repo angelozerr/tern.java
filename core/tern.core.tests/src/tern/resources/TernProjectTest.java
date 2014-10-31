@@ -20,90 +20,125 @@ import org.junit.Test;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 
-import com.eclipsesource.json.JsonObject;
-
 public class TernProjectTest {
 
 	@Test
-	public void addLibs() {
-		TernProject project = new TernProject(null);
+	public void addLibs() throws IOException {
+		File projectDir = new File(".");
+		TernProject project = new TernProject(projectDir);
+
+		// add new lib, project should be dirty
 		project.addLib(TernDef.browser);
 		Assert.assertTrue(project.isDirty());
-		project.setDirty(false);
+		Assert.assertEquals("{\"libs\":[\"browser\"]}", project.toString());
+
+		// save the project, project should be NOT dirty
+		project.save();
+		Assert.assertFalse(project.isDirty());
+
+		// add existing lib, project should be NOT dirty
 		project.addLib(TernDef.browser);
 		Assert.assertFalse(project.isDirty());
+
 		Assert.assertEquals("{\"libs\":[\"browser\"]}", project.toString());
+
+		// add new lib, project should be dirty
+		project.addLib(TernDef.ecma5);
+		Assert.assertTrue(project.isDirty());
+		Assert.assertEquals("{\"libs\":[\"browser\",\"ecma5\"]}",
+				project.toString());
 	}
 
 	@Test
 	public void loadAndAddLibs() throws IOException {
-		// Save project
+		// Create a new project and save it
 		File projectDir = new File(".");
 		TernProject project1 = new TernProject(projectDir);
+
+		// add new lib, project should be dirty
 		project1.addLib(TernDef.ecma5);
+		Assert.assertTrue(project1.isDirty());
+		Assert.assertEquals("{\"libs\":[\"ecma5\"]}", project1.toString());
+
+		// save the project, project should be NOT dirty
 		project1.save();
+		Assert.assertFalse(project1.isDirty());
 
 		// Load project
 		TernProject project = new TernProject(projectDir);
 		project.load();
-		
+		// project was loaded, project should be NOT dirty
+		Assert.assertFalse(project.isDirty());
+
+		// add new lib, project should be dirty
 		project.addLib(TernDef.browser);
 		Assert.assertTrue(project.isDirty());
-		project.setDirty(false);
-		project.addLib(TernDef.browser);
-		Assert.assertFalse(project.isDirty());
-		Assert.assertEquals("{\"libs\":[\"ecma5\",\"browser\"]}", project.toString());
-	}
-	
-	@Test
-	public void addPlugins() {
-		TernProject project = new TernProject(null);
 
-		project.addPlugin(TernPlugin.angular);
+		// add existing lib, project should be dirty while it is not saved.
+		project.addLib(TernDef.browser);
 		Assert.assertTrue(project.isDirty());
 
-		project.setDirty(false);
-		project.addPlugin(TernPlugin.angular);
-		Assert.assertFalse(project.isDirty());
-		Assert.assertEquals("{\"plugins\":{\"angular\":{}}}",
+		Assert.assertEquals("{\"libs\":[\"ecma5\",\"browser\"]}",
 				project.toString());
+	}
 
-		project.setDirty(false);
+	@Test
+	public void addPlugins() throws IOException {
+		File projectDir = new File(".");
+		TernProject project = new TernProject(projectDir);
+
+		// add new plugin, project should be dirty
+		project.addPlugin(TernPlugin.node);
+		Assert.assertTrue(project.isDirty());
+		Assert.assertEquals("{\"plugins\":{\"node\":{}}}", project.toString());
+
+		// save the project, project should be NOT dirty
+		project.save();
+		Assert.assertFalse(project.isDirty());
+
+		// add existing plugin, project should be NOT dirty
+		project.addPlugin(TernPlugin.node);
+		Assert.assertFalse(project.isDirty());
+
+		Assert.assertEquals("{\"plugins\":{\"node\":{}}}", project.toString());
+
+		// add new plugin, project should be dirty
 		project.addPlugin(TernPlugin.aui);
 		Assert.assertTrue(project.isDirty());
-
-		project.setDirty(false);
-		project.addPlugin(TernPlugin.aui, new JsonObject());
-		Assert.assertFalse(project.isDirty());
+		Assert.assertEquals("{\"plugins\":{\"node\":{},\"aui\":{}}}",
+				project.toString());
 	}
 
 	@Test
 	public void loadAndAddPlugins() throws IOException {
-		// Save project
+		// Create a new project and save it
 		File projectDir = new File(".");
 		TernProject project1 = new TernProject(projectDir);
-		project1.addPlugin(TernPlugin.cordovajs);
+
+		// add new plugin, project should be dirty
+		project1.addPlugin(TernPlugin.node);
+		Assert.assertTrue(project1.isDirty());
+		Assert.assertEquals("{\"plugins\":{\"node\":{}}}", project1.toString());
+
+		// save the project, project should be NOT dirty
 		project1.save();
+		Assert.assertFalse(project1.isDirty());
 
 		// Load project
 		TernProject project = new TernProject(projectDir);
 		project.load();
-
-		project.addPlugin(TernPlugin.angular);
-		Assert.assertTrue(project.isDirty());
-
-		project.setDirty(false);
-		project.addPlugin(TernPlugin.angular);
+		// project was loaded, project should be NOT dirty
 		Assert.assertFalse(project.isDirty());
-		Assert.assertEquals("{\"plugins\":{\"cordovajs\":{},\"angular\":{}}}",
-				project.toString());
 
-		project.setDirty(false);
+		// add new plugin, project should be dirty
 		project.addPlugin(TernPlugin.aui);
 		Assert.assertTrue(project.isDirty());
 
-		project.setDirty(false);
-		project.addPlugin(TernPlugin.aui, new JsonObject());
-		Assert.assertFalse(project.isDirty());
+		// add existing plugin, project should be dirty while it is not saved.
+		project.addPlugin(TernPlugin.aui);
+		Assert.assertTrue(project.isDirty());
+
+		Assert.assertEquals("{\"plugins\":{\"node\":{},\"aui\":{}}}",
+				project.toString());
 	}
 }

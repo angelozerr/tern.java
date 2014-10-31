@@ -79,7 +79,7 @@ public abstract class AbstractConvertProjectCommandHandler extends
 
 		// save tern project if needed
 		try {
-			ternProject.saveIfNeeded();
+			ternProject.save();
 		} catch (IOException e) {
 			Trace.trace(Trace.SEVERE,
 					"Error while configuring angular nature.", e);

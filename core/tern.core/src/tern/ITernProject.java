@@ -166,14 +166,6 @@ public interface ITernProject extends ITernAdaptable {
 	 */
 	void save() throws IOException;
 
-	/**
-	 * Save the tern project in the file .tern-project of the project base dir
-	 * if the project is dirty.
-	 * 
-	 * @throws IOException
-	 */
-	void saveIfNeeded() throws IOException;
-
 	// ---------------- File management
 
 	/**

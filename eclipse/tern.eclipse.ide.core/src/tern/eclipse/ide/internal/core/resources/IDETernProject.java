@@ -173,13 +173,13 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	}
 
 	@Override
-	public void load() throws IOException {
+	protected void doLoad() throws IOException {
 		try {
 			disposeServer();
 			TernProjectLifecycleManager.getManager()
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onLoadBefore);
-			super.load();
+			super.doLoad();
 			// Load IDE informations of the tern project.
 			loadIDEInfos();
 			initAdaptedNaturesInfos();
@@ -247,7 +247,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		}
 
 		try {
-			saveIfNeeded();
+			save();
 		} catch (IOException e) {
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
 		}
@@ -286,27 +286,32 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	}
 
 	@Override
-	public void save() throws IOException {
+	protected void doSave() throws IOException {
 		try {
 			TernProjectLifecycleManager.getManager()
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onSaveBefore);
 			// Store IDE tern project info.
 			saveIDEInfos();
-			// save .tern-project
-			IFile file = project.getFile(TERN_PROJECT_FILE);
-			try {
-				InputStream content = IOUtils.toInputStream(super.toString(),
-						file.exists() ? file.getCharset() : "UTF-8");
-				if (!file.exists()) {
-					file.create(content, true, null);
-				} else {
-					file.setContents(content, true, false, null);
+
+			if (isDirty()) {
+				// save .tern-project
+				IFile file = project.getFile(TERN_PROJECT_FILE);
+				try {
+					InputStream content = IOUtils.toInputStream(super
+							.toString(), file.exists() ? file.getCharset()
+							: "UTF-8");
+					if (!file.exists()) {
+						file.create(content, true, null);
+					} else {
+						file.setContents(content, true, false, null);
+					}
+				} catch (CoreException e) {
+					throw new IOException("Cannot save .tern-project", e);
 				}
-			} catch (CoreException e) {
-				throw new IOException("Cannot save .tern-project", e);
+				// .tern-project has changed, dispose the server.
+				disposeServer();
 			}
-			disposeServer();
 		} finally {
 			TernProjectLifecycleManager.getManager()
 					.fireTernProjectLifeCycleListenerChanged(this,
@@ -415,7 +420,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			ScriptPathsType type, String external) throws IOException {
 		ITernScriptPath path = createScriptPath(resource, type, external);
 		scriptPaths.add(path);
-		saveIfNeeded();
+		save();
 		return path;
 	}
 
