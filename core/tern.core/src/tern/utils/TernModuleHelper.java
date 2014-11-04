@@ -203,13 +203,13 @@ public class TernModuleHelper {
 	}
 
 	public static ITernModule getModule(String filename) {
+		if (filename.startsWith("tern-")) {
+			String name = filename.substring("tern-".length(),
+					filename.length());
+			return getPlugin(name);
+		}
 		int index = filename.lastIndexOf('.');
 		if (index == -1) {
-			if (filename.startsWith("tern-")) {
-				String name = filename.substring("tern-".length(),
-						filename.length());
-				return getPlugin(name);
-			}
 			return null;
 		}
 		String fileExtension = filename.substring(index + 1, filename.length());

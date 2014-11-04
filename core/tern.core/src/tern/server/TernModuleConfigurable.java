@@ -43,7 +43,7 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 
 	@Override
 	public String getName() {
-		return getType();
+		return wrappedModule.getName();
 	}
 
 	@Override

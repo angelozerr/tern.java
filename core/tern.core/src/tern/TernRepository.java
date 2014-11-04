@@ -24,6 +24,10 @@ import tern.utils.TernModuleHelper;
  */
 public class TernRepository implements ITernRepository {
 
+	private static final String DEFS_FOLDER = "defs";
+	private static final String PLUGIN_FOLDER = "plugin";
+	private static final String NODE_MODULES_FOLDER = "node_modules";
+
 	private final String name;
 	private File ternBaseDir;
 	private final boolean defaultRepository;
@@ -55,11 +59,11 @@ public class TernRepository implements ITernRepository {
 	private ITernModule[] loadModules() throws TernException {
 		List<ITernModule> modules = new ArrayList<ITernModule>();
 		// defs
-		loadModules(modules, "defs");
+		loadModules(modules, DEFS_FOLDER);
 		// plugin
-		loadModules(modules, "plugin");
+		loadModules(modules, PLUGIN_FOLDER);
 		// node_modules
-		loadModules(modules, "node_modules");
+		loadModules(modules, NODE_MODULES_FOLDER);
 		return modules.toArray(ITernModule.EMPTY_MODULE);
 	}
 

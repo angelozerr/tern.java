@@ -39,7 +39,7 @@ public class TernModuleLabelProvider extends LabelProvider implements
 			ITernModule module = (ITernModule) element;
 			switch (columnIndex) {
 			case 0:
-				return module.getName();
+				return module.getType();
 			case 1:
 				String version = module.getVersion();
 				return version != null ? version : "";
@@ -67,7 +67,7 @@ public class TernModuleLabelProvider extends LabelProvider implements
 	 */
 	public static Image getImageModule(ITernModule module) {
 		Image image = TernUIPlugin.getTernDescriptorManager().getImage(
-				module.getName());
+				module.getType());
 		if (image != null) {
 			return image;
 		}

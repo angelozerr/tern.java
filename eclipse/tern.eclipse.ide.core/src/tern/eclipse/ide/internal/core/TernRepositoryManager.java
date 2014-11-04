@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
 import tern.ITernRepository;

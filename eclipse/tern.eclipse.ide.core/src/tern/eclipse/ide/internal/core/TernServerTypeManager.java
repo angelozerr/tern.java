@@ -230,7 +230,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 			for (String name : plugins.names()) {
 				options = plugins.get(name);
 				ITernModule plugin = findTernModule(name.toString(),
-						projectModules);
+						allModules);
 				updateCheckedModule(plugin, options, modulesArray,
 						checkedModules);
 			}
@@ -239,7 +239,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 			JsonArray defs = ternProject.getLibs();
 			for (JsonValue name : defs) {
 				ITernModule def = findTernModule(name.asString(),
-						projectModules);
+						allModules);
 				updateCheckedModule(def, null, modulesArray, checkedModules);
 			}
 		}
