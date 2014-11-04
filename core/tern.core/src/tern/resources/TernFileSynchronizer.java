@@ -171,8 +171,10 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 			} else {
 				files = syncedFiles;
 			}
-			for (String file : files) {
-				fileNames.add(file);
+			if (files != null) {
+				for (String file : files) {
+					fileNames.add(file);
+				}
 			}
 		}
 	}
