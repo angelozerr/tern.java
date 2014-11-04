@@ -71,5 +71,19 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 		return project.getAdapter(clazz);
 	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode()*17 + project.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ProjectScriptPath) {
+			return super.equals(obj) &&
+					project.equals(((ProjectScriptPath) obj).project);
+		}
+		return false;
+	}
 
 }

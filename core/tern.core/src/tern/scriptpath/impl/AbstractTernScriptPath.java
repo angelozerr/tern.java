@@ -54,4 +54,22 @@ public abstract class AbstractTernScriptPath implements ITernScriptPath {
 		return externalLabel;
 	}
 
+	@Override
+	public int hashCode() {
+		return project.hashCode()*31 + 
+				(externalLabel == null ? 0 : externalLabel.hashCode());
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AbstractTernScriptPath) {
+			AbstractTernScriptPath sp = (AbstractTernScriptPath) obj;
+			return project.equals(sp.project) &&
+					type == sp.type &&
+					((externalLabel == null && sp.externalLabel == null) ||
+							(externalLabel != null && externalLabel.equals(sp.externalLabel)));
+		}
+		return super.equals(obj);
+	}
+	
 }
