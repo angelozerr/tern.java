@@ -71,6 +71,31 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 	public String getPath() {
 		return container.getProjectRelativePath().toString();
 	}
+
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
+		if (clazz == IContainer.class || clazz == IResource.class || clazz == IFolder.class) {
+			return container;
+		}
+		if (clazz == IProject.class && container instanceof IProject) {
+			return container;
+		}
+		return null;
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode()* 17 + container.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof FolderScriptPath) {
+			return super.equals(obj) &&
+					container.equals(((FolderScriptPath) obj).container);
+		}
+		return false;
+	}
 	
 	private class ScriptResourceVisitor implements IResourceVisitor{
 		
@@ -94,15 +119,5 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 		}
 		
 	}
-
-	@Override
-	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
-		if (clazz == IContainer.class || clazz == IResource.class || clazz == IFolder.class) {
-			return container;
-		}
-		if (clazz == IProject.class && container instanceof IProject) {
-			return container;
-		}
-		return null;
-	}
+	
 }

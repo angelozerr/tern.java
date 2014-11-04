@@ -54,5 +54,19 @@ public abstract class AbstractTernFileScriptPath extends AbstractTernScriptPath 
 		}
 		return file.getAdapter(clazz);
 	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode() * 17 + file.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AbstractTernFileScriptPath) {
+			return super.equals(obj) &&
+					file.equals(((AbstractTernFileScriptPath) obj).file);
+		}
+		return false;
+	}
 
 }
