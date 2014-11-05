@@ -10,10 +10,6 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards;
 
-import org.eclipse.jface.viewers.ISelection;
-
-import tern.eclipse.ide.tools.core.generator.IGenerator;
-import tern.eclipse.ide.tools.core.generator.TernPluginGenerator;
 import tern.eclipse.ide.tools.core.generator.TernPluginOptions;
 import tern.eclipse.ide.tools.internal.ui.ImageResource;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;

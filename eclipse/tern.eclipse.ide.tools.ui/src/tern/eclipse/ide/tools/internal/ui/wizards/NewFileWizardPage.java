@@ -71,7 +71,7 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 		Label label = new Label(container, SWT.NULL);
 		label.setText(TernToolsUIMessages.NewFileWizardPage_container_text);
 
-		containerText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		containerText = createFileText(container);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		containerText.setLayoutData(gd);
 		containerText.addModifyListener(new ModifyListener() {
@@ -92,7 +92,7 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 		label = new Label(container, SWT.NULL);
 		label.setText(TernToolsUIMessages.NewFileWizardPage_fileName_text);
 
-		fileText = new Text(container, SWT.BORDER | SWT.SINGLE);
+		fileText = createFileText(container);
 		gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 2;
 		fileText.setLayoutData(gd);
@@ -101,6 +101,16 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 				dialogChanged();
 			}
 		});
+	}
+
+	/**
+	 * Create file text.
+	 * 
+	 * @param parent
+	 * @return
+	 */
+	protected Text createFileText(Composite parent) {
+		return new Text(parent, SWT.BORDER | SWT.SINGLE);
 	}
 
 	/**
@@ -116,7 +126,7 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 			else
 				container = resource.getParent();
 			containerText.setText(container.getFullPath().toString());
-		}		
+		}
 	}
 
 	/**
@@ -187,6 +197,6 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 	public String getFileExtension() {
 		return fileExtension;
 	}
-	
+
 	public abstract IGenerator getGenerator(String lineSeparator);
 }

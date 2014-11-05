@@ -80,4 +80,12 @@ public class NewTernPluginWizardPage extends
 	public IGenerator getGenerator(String lineSeparator) {
 		return TernPluginGenerator.create(lineSeparator);
 	}
+
+	@Override
+	protected Text createFileText(Composite parent) {
+		// disable file text, to avoid having the problem explained in this
+		// issue
+		// https://github.com/angelozerr/tern.java/issues/164#issuecomment-61779619
+		return new Text(parent, SWT.BORDER | SWT.SINGLE | SWT.READ_ONLY);
+	}
 }
