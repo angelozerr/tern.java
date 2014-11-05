@@ -15,7 +15,7 @@ public class BasicTernPlugin implements ITernPlugin {
 			this.type = name.substring(0, index);
 			this.version = name.substring(index + 1, name.length());
 		} else {
-			this.type = null;
+			this.type = name;
 			this.version = null;
 		}
 	}
