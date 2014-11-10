@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -367,8 +368,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 		try {
 			List<ITernModule> checkedModules = project != null ? new ArrayList<ITernModule>()
 					: null;
-			IIDETernProject ternProject = project != null ? TernCorePlugin
-					.getTernProject(project) : null;
+			IIDETernProject ternProject = getTernProject();
 			// Load list of Tern Plugins + JSON Type Definitions.
 			ITernModule[] allModules = TernCorePlugin
 					.getTernServerTypeManager().getTernModules(ternProject,
@@ -398,5 +398,25 @@ public class TernModulesBlock extends AbstractTableBlock {
 	private boolean isSelectDependencies() {
 		return selectDependenciesCheckbox != null
 				&& selectDependenciesCheckbox.getSelection();
+	}
+
+	/**
+	 * Returns the tern project and null otherwise.
+	 * 
+	 * @return the tern project and null otherwise.
+	 * 
+	 * @throws CoreException
+	 */
+	public IIDETernProject getTernProject() throws CoreException {
+		return project != null ? TernCorePlugin.getTernProject(project) : null;
+	}
+
+	/**
+	 * Returns the eclipse project and null otherwise.
+	 * 
+	 * @return the eclipse project and null otherwise.
+	 */
+	public IProject getProject() {
+		return project;
 	}
 }

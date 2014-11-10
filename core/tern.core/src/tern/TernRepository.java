@@ -11,11 +11,11 @@
 package tern;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import tern.server.ITernModule;
+import tern.utils.ExtensionUtils;
 import tern.utils.TernModuleHelper;
 
 /**
@@ -96,11 +96,7 @@ public class TernRepository implements ITernRepository {
 
 	@Override
 	public String getTernBaseDirAsString() {
-		try {
-			return getTernBaseDir().getCanonicalPath();
-		} catch (IOException e) {
-			return getTernBaseDir().getPath();
-		}
+		return TernModuleHelper.getPath(getTernBaseDir());
 	}
 
 	@Override
@@ -111,5 +107,34 @@ public class TernRepository implements ITernRepository {
 	@Override
 	public boolean isDefault() {
 		return defaultRepository;
+	}
+
+	@Override
+	public File getFile(ITernModule module) {
+		// check if module is inside tern/defs or tern/plugin
+		String fileName = TernModuleHelper.getFileName(module);
+		File moduleFile = null;
+		switch (module.getModuleType()) {
+		case Plugin:
+		case Configurable:
+			moduleFile = new File(ternBaseDir, new StringBuilder(PLUGIN_FOLDER)
+					.append('/').append(fileName).toString());
+			break;
+		case Def:
+			moduleFile = new File(ternBaseDir, new StringBuilder(DEFS_FOLDER)
+					.append('/').append(fileName).toString());
+			break;
+		}
+		if (moduleFile.exists()) {
+			return moduleFile;
+		}
+		moduleFile = new File(ternBaseDir, new StringBuilder(
+				NODE_MODULES_FOLDER).append('/')
+				.append(ExtensionUtils.TERN_SUFFIX).append(module.getName())
+				.append('/').append(fileName).toString());
+		if (moduleFile.exists()) {
+			return moduleFile;
+		}
+		return null;
 	}
 }

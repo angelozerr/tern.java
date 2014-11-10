@@ -72,7 +72,7 @@ public String generate(Object argument)
 			plugin = ternPlugins[i];
 	
     stringBuffer.append(TEXT_11);
-    stringBuffer.append(options.resolveTernPlugin("plugin/" + plugin.getName() + ".js") );
+    stringBuffer.append(options.resolveTernModule(plugin) );
     stringBuffer.append(TEXT_12);
     			
 		}		

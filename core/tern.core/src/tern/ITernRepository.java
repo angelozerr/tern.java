@@ -78,4 +78,12 @@ public interface ITernRepository {
 	 * @throws TernException
 	 */
 	ITernModule[] getModules() throws TernException;
+
+	/**
+	 * Returns the file of the given module and null otherwise.
+	 * 
+	 * @param module
+	 * @return the file of the given module and null otherwise.
+	 */
+	File getFile(ITernModule module);
 }

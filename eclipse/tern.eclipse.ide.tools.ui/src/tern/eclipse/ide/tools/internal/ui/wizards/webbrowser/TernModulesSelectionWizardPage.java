@@ -23,6 +23,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+import tern.ITernRepository;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
@@ -33,19 +35,19 @@ import tern.server.ITernPlugin;
 import tern.utils.TernModuleHelper;
 
 /**
- * Wizard page to select Server plugins.
+ * Wizard page to select tern modules (JSON type definition or Server plugins).
  * 
  */
-public class TernPluginsSelectionWizardPage extends
+public class TernModulesSelectionWizardPage extends
 		TernWizardPage<EditorOptions> {
 
-	private static final String PAGE = "TernPluginsSelectionWizardPage";
+	private static final String PAGE = "TernModulesSelectionWizardPage";
 	private TernModulesBlock modulesBlock;
 
-	protected TernPluginsSelectionWizardPage() {
+	protected TernModulesSelectionWizardPage() {
 		super(PAGE);
-		setTitle(TernToolsUIMessages.TernPluginsSelectionWizardPage_title);
-		setDescription(TernToolsUIMessages.TernPluginsSelectionWizardPage_description);
+		setTitle(TernToolsUIMessages.TernModulesSelectionWizardPage_title);
+		setDescription(TernToolsUIMessages.TernModulesSelectionWizardPage_description);
 
 	}
 
@@ -68,7 +70,7 @@ public class TernPluginsSelectionWizardPage extends
 
 					@Override
 					public void selectionChanged(SelectionChangedEvent event) {
-						TernPluginsSelectionWizardPage.this.dialogChanged();
+						TernModulesSelectionWizardPage.this.dialogChanged();
 					}
 				});
 		GridData data = new GridData(GridData.FILL_BOTH);
@@ -100,6 +102,10 @@ public class TernPluginsSelectionWizardPage extends
 		}
 		model.setTernDefs(defs.toArray(ITernDef.EMPTY_DEF));
 		model.setTernPlugins(plugins.toArray(ITernPlugin.EMPTY_PLUGIN));
+		ITernRepository repository = TernCorePlugin.getTernRepositoryManager()
+				.getRepository(modulesBlock.getProject());
+		model.setRepository(repository);
+		model.setProject(modulesBlock.getProject());
 	}
 
 }

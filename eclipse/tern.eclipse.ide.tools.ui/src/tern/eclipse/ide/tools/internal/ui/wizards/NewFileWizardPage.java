@@ -33,9 +33,8 @@ import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 /**
  * The "New" wizard page allows setting the container for the new file as well
  * as the file name. The page will only accept file name without the extension
- * OR with the extension that matches the expected one (mpe).
+ * OR with the extension that matches the expected one.
  */
-
 public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 
 	private final String fileExtension;
@@ -45,9 +44,12 @@ public abstract class NewFileWizardPage<T> extends TernWizardPage<T> {
 	private Text fileText;
 
 	/**
-	 * Constructor for SampleNewWizardPage.
+	 * Constructor for NewFileWizardPage.
 	 * 
 	 * @param pageName
+	 *            wizard page name
+	 * @param fileExtension
+	 *            file extension
 	 */
 	public NewFileWizardPage(String pageName, String fileExtension) {
 		super(pageName);

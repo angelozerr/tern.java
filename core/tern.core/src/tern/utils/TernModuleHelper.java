@@ -10,6 +10,12 @@
  */
 package tern.utils;
 
+import static tern.utils.ExtensionUtils.JSON_EXTENSION;
+import static tern.utils.ExtensionUtils.JS_EXTENSION;
+import static tern.utils.ExtensionUtils.TERN_SUFFIX;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -203,8 +209,8 @@ public class TernModuleHelper {
 	}
 
 	public static ITernModule getModule(String filename) {
-		if (filename.startsWith("tern-")) {
-			String name = filename.substring("tern-".length(),
+		if (filename.startsWith(TERN_SUFFIX)) {
+			String name = filename.substring(TERN_SUFFIX.length(),
 					filename.length());
 			return getPlugin(name);
 		}
@@ -213,10 +219,10 @@ public class TernModuleHelper {
 			return null;
 		}
 		String fileExtension = filename.substring(index + 1, filename.length());
-		if (fileExtension.equals("json")) {
+		if (fileExtension.equals(JSON_EXTENSION)) {
 			String name = filename.substring(0, index);
 			return getDef(name);
-		} else if (fileExtension.equals("js")) {
+		} else if (fileExtension.equals(JS_EXTENSION)) {
 			String name = filename.substring(0, index);
 			return getPlugin(name);
 		}
@@ -243,6 +249,37 @@ public class TernModuleHelper {
 			return plugin;
 		}
 		return new BasicTernPlugin(name);
+	}
+
+	/**
+	 * Returns the file path as string.
+	 * 
+	 * @param file
+	 * @return the file path as string.
+	 */
+	public static String getPath(File file) {
+		try {
+			return file.getCanonicalPath();
+		} catch (IOException e) {
+			return file.getPath();
+		}
+	}
+
+	/**
+	 * Returns the file name of the given tern module.
+	 * 
+	 * @param module
+	 * @return the file name of the given tern module.
+	 */
+	public static String getFileName(ITernModule module) {
+		switch (module.getModuleType()) {
+		case Def:
+			return new StringBuilder(module.getName()).append('.')
+					.append(JSON_EXTENSION).toString();
+		default:
+			return new StringBuilder(module.getName()).append('.')
+					.append(JS_EXTENSION).toString();
+		}
 	}
 
 }

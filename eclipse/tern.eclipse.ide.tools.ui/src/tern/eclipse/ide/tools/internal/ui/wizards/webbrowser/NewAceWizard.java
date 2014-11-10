@@ -10,11 +10,7 @@
  */
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
-import org.eclipse.jface.viewers.ISelection;
-
-import tern.eclipse.ide.tools.core.generator.IGenerator;
 import tern.eclipse.ide.tools.core.webbrowser.ace.AceOptions;
-import tern.eclipse.ide.tools.core.webbrowser.ace.HTMLAceEditor;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 
 /**

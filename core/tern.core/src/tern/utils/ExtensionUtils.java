@@ -28,6 +28,8 @@ public class ExtensionUtils {
 	public static final String JSF_EXTENSION = "jsf";
 	public static final String JSON_EXTENSION = "json";
 
+	public static final String TERN_SUFFIX = "tern-";
+
 	public static final List<String> HTML_EXTENSIONS = Arrays
 			.asList(new String[] { HTM_EXTENSION, HTML_EXTENSION,
 					JSP_EXTENSION, PHP_EXTENSION, JSF_EXTENSION });
@@ -40,5 +42,5 @@ public class ExtensionUtils {
 			return ""; //$NON-NLS-1$
 		return fileName.substring(index + 1);
 	}
-	
+
 }

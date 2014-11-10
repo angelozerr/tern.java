@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Tern UI messages.
+ * Tern Tools UI messages.
  * 
  */
 public final class TernToolsUIMessages extends NLS {
@@ -42,11 +42,9 @@ public final class TernToolsUIMessages extends NLS {
 	public static String NewTernPluginWizardPage_title;
 	public static String NewTernPluginWizardPage_description;
 	public static String NewTernPluginWizard_taskLabel;
-	
-	public static String TernDefsSelectionWizardPage_title;
-	public static String TernDefsSelectionWizardPage_description;
-	public static String TernPluginsSelectionWizardPage_title;
-	public static String TernPluginsSelectionWizardPage_description;
+
+	public static String TernModulesSelectionWizardPage_title;
+	public static String TernModulesSelectionWizardPage_description;
 	public static String NewCodeMirrorWizard_windowTitle;
 	public static String NewCodeMirrorWizard_taskLabel;
 	public static String NewCodeMirrorWizardPage_title;

@@ -7,7 +7,9 @@ Bundle-SymbolicName: tern.eclipse.ide.tools.core;singleton:=true
 Bundle-Version: 0.7.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
- tern.core
+ tern.core,
+ tern.eclipse.ide.core,
+ org.eclipse.core.resources
 Export-Package: tern.eclipse.ide.tools.core.generator,
  tern.eclipse.ide.tools.core.webbrowser,
  tern.eclipse.ide.tools.core.webbrowser.ace,

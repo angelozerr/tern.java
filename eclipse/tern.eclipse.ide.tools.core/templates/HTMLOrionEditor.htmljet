@@ -36,7 +36,7 @@
 		tern.server.ITernPlugin plugin = null;
 		for (int i = 0; i < ternPlugins.length; i++) {
 			plugin = ternPlugins[i];
-	%><script src="<%=options.resolveTernPlugin("plugin/" + plugin.getName() + ".js") %>"></script>
+	%><script src="<%=options.resolveTernModule(plugin) %>"></script>
 	<%			
 		}		
 	} 
