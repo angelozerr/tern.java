@@ -16,25 +16,39 @@
 	<script src="<%=options.resolveTern("lib/infer.js") %>"></script>
 	<%=options.getTernDefsScriptsToInclude() %>
 	<%
+	boolean hasTernLint = false;
 	tern.server.ITernPlugin[] ternPlugins = options.getTernPlugins();
 	if (ternPlugins != null) { 
 		tern.server.ITernPlugin plugin = null;
 		for (int i = 0; i < ternPlugins.length; i++) {
 			plugin = ternPlugins[i];
+			if (plugin.getName().equals(tern.server.TernPlugin.lint.name())) {
+				hasTernLint = true;
+			}
 	%><script src="<%=options.resolveTernModule(plugin) %>"></script>
 	<%			
 		}		
 	} 
 	%>
 	<!-- CodeMirror -->
-	<link rel=stylesheet href="<%=options.resolve("lib/codemirror.css") %>">
-	<link rel=stylesheet href="<%=options.resolve("doc/docs.css") %>">
-	<script src="<%=options.resolve("lib/codemirror.js") %>"></script>
-	<script src="<%=options.resolve("mode/javascript/javascript.js") %>"></script>
-	<link rel=stylesheet href="<%=options.resolve("addon/hint/show-hint.css") %>">
-	<script src="<%=options.resolve("addon/hint/show-hint.js") %>"></script>
+	<link rel=stylesheet href="<%=options.resolve("codemirror/lib/codemirror.css") %>">
+	<link rel=stylesheet href="<%=options.resolve("codemirror/doc/docs.css") %>">
+	<script src="<%=options.resolve("codemirror/lib/codemirror.js") %>"></script>
+	<script src="<%=options.resolve("codemirror/mode/javascript/javascript.js") %>"></script>
+	<link rel=stylesheet href="<%=options.resolve("codemirror/addon/hint/show-hint.css") %>">
+	<script src="<%=options.resolve("codemirror/addon/hint/show-hint.js") %>"></script>
 	<!-- CodeMirror & Tern -->
-	 <script src="<%=options.resolve("addon/tern/tern.js") %>"></script>
+	 <script src="<%=options.resolve("codemirror/addon/tern/tern.js") %>"></script>
+	 <link rel=stylesheet href="<%=options.resolve("codemirror/addon/tern/tern.css") %>">
+	 <%
+	   if (hasTernLint) {
+	   %>
+	    <script src="<%=options.resolve("codemirror/addon/lint/lint.js") %>"></script>
+    	<link rel="stylesheet" href="<%=options.resolve("codemirror/addon/lint/lint.css") %>">
+	   	 <script src="<%=options.resolve("tern-lint/codemirror/addon/lint/tern-lint.js") %>"></script>
+	   <%	   
+	   }
+	 %>
 </head>
 <body>
 	<p>
@@ -61,7 +75,11 @@
 	      "Alt-.": function(cm) { server.jumpToDef(cm); },
 	      "Alt-,": function(cm) { server.jumpBack(cm); },
 	      "Ctrl-Q": function(cm) { server.rename(cm); },
-	    })
+	    });
+	    <% if (hasTernLint) { %>
+	    editor.setOption("gutters",["CodeMirror-lint-markers"]);
+    	editor.setOption("lint", {getAnnotations: CodeMirror.ternLint, async : true, server: server})
+    	<% } %>
 	    editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); });  		
 	</script>
 </body>

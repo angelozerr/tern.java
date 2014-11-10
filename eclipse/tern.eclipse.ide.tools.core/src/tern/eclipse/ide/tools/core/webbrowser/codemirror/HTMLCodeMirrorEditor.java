@@ -31,12 +31,20 @@ public class HTMLCodeMirrorEditor implements tern.eclipse.ide.tools.core.generat
   protected final String TEXT_17 = "\"></script>" + NL + "\t<link rel=stylesheet href=\"";
   protected final String TEXT_18 = "\">" + NL + "\t<script src=\"";
   protected final String TEXT_19 = "\"></script>" + NL + "\t<!-- CodeMirror & Tern -->" + NL + "\t <script src=\"";
-  protected final String TEXT_20 = "\"></script>" + NL + "</head>" + NL + "<body>" + NL + "\t<p>" + NL + "\t\t<textarea id=\"code\" name=\"code\">";
-  protected final String TEXT_21 = "</textarea>" + NL + "\t</p>" + NL + "\t<dl>" + NL + "\t  <dt>Ctrl-Space</dt><dd>Autocomplete</dd>" + NL + "\t  <dt>Ctrl-I</dt><dd>Find type at cursor</dd>" + NL + "\t  <dt>Alt-.</dt><dd>Jump to definition (Alt-, to jump back)</dd>" + NL + "\t  <dt>Ctrl-Q</dt><dd>Rename variable</dd>" + NL + "\t</dl>\t" + NL + "\t";
-  protected final String TEXT_22 = "\t" + NL + "\t<script>" + NL + "\t\tvar editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" + NL + "    \t\tlineNumbers: true," + NL + "    \t\tmode: \"javascript\"" + NL + "  \t\t});" + NL + "  \t\tvar defs = ";
-  protected final String TEXT_23 = ";" + NL + "  \t\tvar plugins = ";
-  protected final String TEXT_24 = ";" + NL + "\t\tvar server = new CodeMirror.TernServer({defs: defs, plugins: plugins});" + NL + "\t    editor.setOption(\"extraKeys\", {" + NL + "\t      \"Ctrl-Space\": function(cm) { server.complete(cm); }," + NL + "\t      \"Ctrl-I\": function(cm) { server.showType(cm); }," + NL + "\t      \"Alt-.\": function(cm) { server.jumpToDef(cm); }," + NL + "\t      \"Alt-,\": function(cm) { server.jumpBack(cm); }," + NL + "\t      \"Ctrl-Q\": function(cm) { server.rename(cm); }," + NL + "\t    })" + NL + "\t    editor.on(\"cursorActivity\", function(cm) { server.updateArgHints(cm); });  \t\t" + NL + "\t</script>" + NL + "</body>" + NL + "</html>";
-  protected final String TEXT_25 = NL;
+  protected final String TEXT_20 = "\"></script>" + NL + "\t <link rel=stylesheet href=\"";
+  protected final String TEXT_21 = "\">" + NL + "\t ";
+  protected final String TEXT_22 = NL + "\t    <script src=\"";
+  protected final String TEXT_23 = "\"></script>" + NL + "    \t<link rel=\"stylesheet\" href=\"";
+  protected final String TEXT_24 = "\">" + NL + "\t   \t <script src=\"";
+  protected final String TEXT_25 = "\"></script>" + NL + "\t   ";
+  protected final String TEXT_26 = NL + "</head>" + NL + "<body>" + NL + "\t<p>" + NL + "\t\t<textarea id=\"code\" name=\"code\">";
+  protected final String TEXT_27 = "</textarea>" + NL + "\t</p>" + NL + "\t<dl>" + NL + "\t  <dt>Ctrl-Space</dt><dd>Autocomplete</dd>" + NL + "\t  <dt>Ctrl-I</dt><dd>Find type at cursor</dd>" + NL + "\t  <dt>Alt-.</dt><dd>Jump to definition (Alt-, to jump back)</dd>" + NL + "\t  <dt>Ctrl-Q</dt><dd>Rename variable</dd>" + NL + "\t</dl>\t" + NL + "\t";
+  protected final String TEXT_28 = "\t" + NL + "\t<script>" + NL + "\t\tvar editor = CodeMirror.fromTextArea(document.getElementById(\"code\"), {" + NL + "    \t\tlineNumbers: true," + NL + "    \t\tmode: \"javascript\"" + NL + "  \t\t});" + NL + "  \t\tvar defs = ";
+  protected final String TEXT_29 = ";" + NL + "  \t\tvar plugins = ";
+  protected final String TEXT_30 = ";" + NL + "\t\tvar server = new CodeMirror.TernServer({defs: defs, plugins: plugins});" + NL + "\t    editor.setOption(\"extraKeys\", {" + NL + "\t      \"Ctrl-Space\": function(cm) { server.complete(cm); }," + NL + "\t      \"Ctrl-I\": function(cm) { server.showType(cm); }," + NL + "\t      \"Alt-.\": function(cm) { server.jumpToDef(cm); }," + NL + "\t      \"Alt-,\": function(cm) { server.jumpBack(cm); }," + NL + "\t      \"Ctrl-Q\": function(cm) { server.rename(cm); }," + NL + "\t    });" + NL + "\t    ";
+  protected final String TEXT_31 = NL + "\t    editor.setOption(\"gutters\",[\"CodeMirror-lint-markers\"]);" + NL + "    \teditor.setOption(\"lint\", {getAnnotations: CodeMirror.ternLint, async : true, server: server})" + NL + "    \t";
+  protected final String TEXT_32 = NL + "\t    editor.on(\"cursorActivity\", function(cm) { server.updateArgHints(cm); });  \t\t" + NL + "\t</script>" + NL + "</body>" + NL + "</html>";
+  protected final String TEXT_33 = NL;
 
 /* (non-javadoc)
     * @see IGenerator#generate(Object)
@@ -65,11 +73,15 @@ public String generate(Object argument)
     stringBuffer.append(options.getTernDefsScriptsToInclude() );
     stringBuffer.append(TEXT_10);
     
+	boolean hasTernLint = false;
 	tern.server.ITernPlugin[] ternPlugins = options.getTernPlugins();
 	if (ternPlugins != null) { 
 		tern.server.ITernPlugin plugin = null;
 		for (int i = 0; i < ternPlugins.length; i++) {
 			plugin = ternPlugins[i];
+			if (plugin.getName().equals(tern.server.TernPlugin.lint.name())) {
+				hasTernLint = true;
+			}
 	
     stringBuffer.append(TEXT_11);
     stringBuffer.append(options.resolveTernModule(plugin) );
@@ -79,29 +91,49 @@ public String generate(Object argument)
 	} 
 	
     stringBuffer.append(TEXT_13);
-    stringBuffer.append(options.resolve("lib/codemirror.css") );
+    stringBuffer.append(options.resolve("codemirror/lib/codemirror.css") );
     stringBuffer.append(TEXT_14);
-    stringBuffer.append(options.resolve("doc/docs.css") );
+    stringBuffer.append(options.resolve("codemirror/doc/docs.css") );
     stringBuffer.append(TEXT_15);
-    stringBuffer.append(options.resolve("lib/codemirror.js") );
+    stringBuffer.append(options.resolve("codemirror/lib/codemirror.js") );
     stringBuffer.append(TEXT_16);
-    stringBuffer.append(options.resolve("mode/javascript/javascript.js") );
+    stringBuffer.append(options.resolve("codemirror/mode/javascript/javascript.js") );
     stringBuffer.append(TEXT_17);
-    stringBuffer.append(options.resolve("addon/hint/show-hint.css") );
+    stringBuffer.append(options.resolve("codemirror/addon/hint/show-hint.css") );
     stringBuffer.append(TEXT_18);
-    stringBuffer.append(options.resolve("addon/hint/show-hint.js") );
+    stringBuffer.append(options.resolve("codemirror/addon/hint/show-hint.js") );
     stringBuffer.append(TEXT_19);
-    stringBuffer.append(options.resolve("addon/tern/tern.js") );
+    stringBuffer.append(options.resolve("codemirror/addon/tern/tern.js") );
     stringBuffer.append(TEXT_20);
-    stringBuffer.append( options.getEditorContent() );
+    stringBuffer.append(options.resolve("codemirror/addon/tern/tern.css") );
     stringBuffer.append(TEXT_21);
-    stringBuffer.append(options.getEmbedJSONDefs() );
+    
+	   if (hasTernLint) {
+	   
     stringBuffer.append(TEXT_22);
-    stringBuffer.append(options.toJSONDefs() );
+    stringBuffer.append(options.resolve("codemirror/addon/lint/lint.js") );
     stringBuffer.append(TEXT_23);
-    stringBuffer.append(options.toJSONPlugins() );
+    stringBuffer.append(options.resolve("codemirror/addon/lint/lint.css") );
     stringBuffer.append(TEXT_24);
+    stringBuffer.append(options.resolve("tern-lint/codemirror/addon/lint/tern-lint.js") );
     stringBuffer.append(TEXT_25);
+    	   
+	   }
+	 
+    stringBuffer.append(TEXT_26);
+    stringBuffer.append( options.getEditorContent() );
+    stringBuffer.append(TEXT_27);
+    stringBuffer.append(options.getEmbedJSONDefs() );
+    stringBuffer.append(TEXT_28);
+    stringBuffer.append(options.toJSONDefs() );
+    stringBuffer.append(TEXT_29);
+    stringBuffer.append(options.toJSONPlugins() );
+    stringBuffer.append(TEXT_30);
+     if (hasTernLint) { 
+    stringBuffer.append(TEXT_31);
+     } 
+    stringBuffer.append(TEXT_32);
+    stringBuffer.append(TEXT_33);
     return stringBuffer.toString();
   }
 }
