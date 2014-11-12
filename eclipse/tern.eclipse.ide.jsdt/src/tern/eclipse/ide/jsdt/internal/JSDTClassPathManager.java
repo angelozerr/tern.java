@@ -12,7 +12,6 @@ package tern.eclipse.ide.jsdt.internal;
 
 import java.io.IOException;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -66,14 +65,14 @@ public class JSDTClassPathManager implements IElementChangedListener,
 			if (jsProject != null) {
 				Job configJob = new ConfigureJob(jsProject);
 				configJob.setRule(jsProject.getProject());
-			    configJob.schedule();
+				configJob.schedule();
 			}
 		}
 	}
 
 	private class ConfigureJob extends WorkspaceJob {
 		IJavaScriptProject fJsProject;
-		
+
 		private ConfigureJob(IJavaScriptProject jsProject) {
 			super("Tern Project configuration job");
 		}
@@ -107,7 +106,7 @@ public class JSDTClassPathManager implements IElementChangedListener,
 			return Status.OK_STATUS;
 		}
 	}
-	
+
 	/**
 	 * Retrieve the JSDT Project from the delta, if delta is about
 	 * "Includes Path" changes.
@@ -223,18 +222,18 @@ public class JSDTClassPathManager implements IElementChangedListener,
 				IIncludePathEntry entry = entries[i];
 				switch (entry.getEntryKind()) {
 				case IIncludePathEntry.CPE_LIBRARY:
-					// JS file?
+					// TODO : manage JSDT library
 					// JSDT Source file => Tern script path file.
-					IFile file = ResourcesPlugin.getWorkspace().getRoot()
-							.getFile(entry.getPath());
+					/*IFolder libFolder = ResourcesPlugin.getWorkspace().getRoot()
+							.getFolder(entry.getPath());
 					try {
-						ternProject.addExternalScriptPath(file,
-								ScriptPathsType.FILE, JSDT_EXTERNAL_LABEL);
+						ternProject.addExternalScriptPath(libFolder,
+								ScriptPathsType.FOLDER, JSDT_EXTERNAL_LABEL);
 					} catch (IOException e) {
 						Trace.trace(Trace.SEVERE,
 								"Error while adding external tern script path for project "
 										+ ternProject.getProject().getName(), e);
-					}
+					}*/
 					break;
 				case IIncludePathEntry.CPE_SOURCE:
 					if (entry.getPath().segmentCount() == 1) {
