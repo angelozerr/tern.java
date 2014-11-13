@@ -93,8 +93,6 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	private final List<ITernServerListener> listeners;
 
-	private boolean refreshing;
-
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
 		this.project = project;
@@ -184,36 +182,15 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			super.doLoad();
 			// Load IDE informations of the tern project.
 			loadIDEInfos();
-			// don't initialize default modules declared in the extension
-			// point "ternNatureAdapters" (when .tern-project is modified.)
-			// fix https://github.com/angelozerr/tern.java/issues/161
-			if (!refreshing) {
-				// the tern project is loaded on the first time, load default
-				// modules and save .tern-project.				
-				initAdaptedNaturesInfos();
-			}
+
+			// the tern project is loaded on the first time, load default
+			// modules and save .tern-project.
+			initAdaptedNaturesInfos();
 		} finally {
 			TernProjectLifecycleManager.getManager()
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onLoadAfter);
 		}
-	}
-
-	/**
-	 * Refresh the project : this method does the same thing than load except
-	 * that it doesn't initialize default module coming from the extension point
-	 * "ternNatureAdapters".
-	 * 
-	 * @throws IOException
-	 */
-	public synchronized void refresh() throws IOException {
-		try {
-			refreshing = true;
-			load();
-		} finally {
-			refreshing = false;
-		}
-
 	}
 
 	/**

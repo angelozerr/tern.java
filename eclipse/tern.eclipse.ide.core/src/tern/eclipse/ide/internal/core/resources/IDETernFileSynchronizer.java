@@ -11,8 +11,6 @@
  */
 package tern.eclipse.ide.internal.core.resources;
 
-import java.io.IOException;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -22,6 +20,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.jobs.Job;
 
 import tern.ITernFile;
 import tern.ITernProject;
@@ -90,21 +89,18 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 			return true;
 		case IResource.PROJECT:
 			IProject project = (IProject) resource;
-			if (!IDETernProject.hasTernNature(project)) {
-				return false;
-			}
-			return true;
+			// check if the current project is the tern project
+			return project.equals(getIDETernProject().getProject());
 		case IResource.FILE:
 			if (isTernProjectFile(resource)) {
-				try {
-					// check if the project is linked to the tern project
-					if (isBelongToProject(resource)) {
-						getIDETernProject().refresh();
-					}
-				} catch (IOException e) {
-					Trace.trace(Trace.SEVERE,
-							"error while loading tern project", e);
-				}
+				IDETernProject ternProject = getIDETernProject();
+				// refresh tern project outside the resource delta to avoid
+				// having problem
+				// "org.eclipse.core.internal.resources.ResourceException: The resource tree is locked for modifications"
+				// See https://github.com/angelozerr/tern.java/issues/161
+				Job configJob = new RefreshTernProjectJob(ternProject);
+				configJob.setRule(ternProject.getProject());
+				configJob.schedule();
 			} else {
 				// FIXME : manage delete + move file
 				/*
