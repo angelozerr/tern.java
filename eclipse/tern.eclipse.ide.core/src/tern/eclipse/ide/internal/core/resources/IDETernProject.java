@@ -597,11 +597,21 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	}
 
 	public void dispose() throws CoreException {
-		disposeServer();
-		getFileSynchronizer().dispose();
-		if (project.isAccessible()) {
-			project.setSessionProperty(TERN_PROJECT, null);
+		try {
+			TernProjectLifecycleManager.getManager()
+					.fireTernProjectLifeCycleListenerChanged(this,
+							LifecycleEventType.onDisposeBefore);
+			disposeServer();
+			getFileSynchronizer().dispose();
+			if (project.isAccessible()) {
+				project.setSessionProperty(TERN_PROJECT, null);
+			}
+		} finally {
+			TernProjectLifecycleManager.getManager()
+					.fireTernProjectLifeCycleListenerChanged(this,
+							LifecycleEventType.onDisposeAfter);
 		}
+
 	}
 
 	protected static IDETernProject getTernProject(IProject project)

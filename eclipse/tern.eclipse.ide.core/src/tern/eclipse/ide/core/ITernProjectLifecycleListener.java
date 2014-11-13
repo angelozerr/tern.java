@@ -21,7 +21,7 @@ public interface ITernProjectLifecycleListener {
 	 *
 	 */
 	public enum LifecycleEventType {
-		onLoadBefore, onLoadAfter, onSaveBefore, onSaveAfter;
+		onLoadBefore, onLoadAfter, onSaveBefore, onSaveAfter, onDisposeBefore, onDisposeAfter;
 	}
 
 	/**
