@@ -1,5 +1,6 @@
 {
  "name": "grunt",
+ "label": "Grunt",  
  "homepage": "http://dojotoolkit.org/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add Grunt support. Grunt is the JavaScript Task Runner",

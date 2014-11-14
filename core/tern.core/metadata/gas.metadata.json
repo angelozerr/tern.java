@@ -1,5 +1,6 @@
 {
  "name": "gas",
+ "label": "Google Apps Script",  
  "homepage": "https://developers.google.com/apps-script/",
  "author": "Hiroaki Otsu",
  "description": "A Tern plugin adding Google Apps Script support. Google Apps Script is a scripting language based on JavaScript that lets you do new and cool things with Google Apps like Docs, Sheets, and Forms. There's nothing to install — we give you a code editor right in your browser, and your scripts run on Google's servers",

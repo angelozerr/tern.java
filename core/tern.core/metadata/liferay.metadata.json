@@ -1,5 +1,6 @@
 {
  "name": "liferay",
+ "label": "Liferay",  
  "homepage": "https://www.liferay.com/fr/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Adds Liferay Javascript API support.",

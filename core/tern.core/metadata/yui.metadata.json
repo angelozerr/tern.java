@@ -1,5 +1,6 @@
 {
  "name": "yui",
+ "label": "YUI",  
  "homepage": "http://yuilibrary.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Adds YUI Library support. YUI is a free, open source JavaScript and CSS library for building richly interactive web applications.",

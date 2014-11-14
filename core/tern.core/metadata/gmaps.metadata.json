@@ -1,5 +1,6 @@
 {
  "name": "gmaps",
+ "label": "Google Maps", 
  "homepage": "https://developers.google.com/maps/documentation/javascript/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add Google Maps Javascript API support.",

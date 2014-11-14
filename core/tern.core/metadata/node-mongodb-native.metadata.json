@@ -1,5 +1,6 @@
 {
  "name": "node-mongodb-native",
+ "label": "Mongo DB Native NodeJS Driver",  
  "homepage": "http://mongodb.github.io/node-mongodb-native/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add node mongodb native support. Node.js Native is the MongoDB official Node.js driver allowing you to use MongoDB in you applications.applications.",

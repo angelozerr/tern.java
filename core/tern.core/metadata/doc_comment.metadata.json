@@ -1,5 +1,6 @@
 {
  "name": "doc_comment",
+ "label": "JSDoc Support",  
  "homepage": "http://ternjs.net/doc/manual.html#plugin_doc_comment",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "This plugin, which is enabled by default in the bin/tern server, parses comments before function declarations, variable declarations, and object properties. It will look for JSDoc-style type declarations, and try to parse them and add them to the inferred types, and it will treat the first sentence of comment text as the docstring for the defined variable or property.",

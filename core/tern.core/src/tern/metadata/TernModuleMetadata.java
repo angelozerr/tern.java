@@ -29,6 +29,7 @@ import com.eclipsesource.json.JsonValue;
 public class TernModuleMetadata {
 
 	private static final String NAME_FIELD = "name";
+	private static final String LABEL_FIELD = "label";
 	private static final String DESCRIPTION_FIELD = "description";
 	private static final String HOMEPAGE_FIELD = "homepage";
 	private static final String AUTHOR_FIELD = "author";
@@ -40,6 +41,7 @@ public class TernModuleMetadata {
 	private static final String OPTIONS_FIELD = "options";
 
 	private final String name;
+	private final String label;
 	private final String description;
 	private final String homepage;
 	private final String author;
@@ -56,6 +58,7 @@ public class TernModuleMetadata {
 	 */
 	public TernModuleMetadata(JsonObject json) {
 		this.name = JsonHelper.getString(json, NAME_FIELD);
+		this.label = JsonHelper.getString(json, LABEL_FIELD);
 		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
 		this.homepage = JsonHelper.getString(json, HOMEPAGE_FIELD);
 		this.author = JsonHelper.getString(json, AUTHOR_FIELD);
@@ -101,6 +104,15 @@ public class TernModuleMetadata {
 			options.add(new TernModuleMetadataOption((JsonObject) jsonOption));
 		}
 		return options;
+	}
+
+	/**
+	 * Returns the label of the module.
+	 * 
+	 * @return the label of the module.
+	 */
+	public String getLabel() {
+		return label;
 	}
 
 	/**

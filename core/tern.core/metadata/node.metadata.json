@@ -1,5 +1,6 @@
 {
  "name": "node",
+  "label": "Node.js",
  "homepage": "http://www.nodeclipse.org/",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "Adds node.js support.",

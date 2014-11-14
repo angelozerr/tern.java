@@ -1,5 +1,6 @@
 {
  "name": "chrome-apps",
+ "label": "Chrome Apps",
  "homepage": "https://developer.chrome.com/apps/",
  "author": "MetaMemoryT",
  "description": "A Tern plugin adding support for Chrome Apps API. Chrome Apps deliver an experience as capable as a native app, but as safe as a web page. Just like web apps, Chrome Apps are written in HTML5, JavaScript, and CSS. But Chrome Apps look and behave like native apps, and they have native-like capabilities that are much more powerful than those available to web apps.",
