@@ -62,8 +62,8 @@ public class TernResourcesManager {
 		return INSTANCE.isHTMLFile(fileObject);
 	}
 
-	public static boolean isJSFile(Object fileObject) {
-		return INSTANCE.isJSFile(fileObject);
+	public static boolean isJSFile(String filename) {
+		return INSTANCE.isJSFile(filename);
 	}
 
 }

@@ -18,7 +18,8 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.IResourceProxy;
+import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.runtime.CoreException;
 
 import tern.ITernFile;
@@ -39,17 +40,20 @@ import tern.scriptpath.impl.JSFileScriptResource;
 public class FolderScriptPath extends AbstractTernScriptPath {
 
 	private IContainer container;
-	
-	public FolderScriptPath(ITernProject project, IContainer container, String external) {
+
+	public FolderScriptPath(ITernProject project, IContainer container,
+			String external) {
 		super(project, ScriptPathsType.FOLDER, external);
 		this.container = container;
 	}
 
 	@Override
 	public List<ITernScriptResource> getScriptResources() {
-		ScriptResourceVisitor visitor = new ScriptResourceVisitor();
+		ScriptResourceProxyVisitor visitor = new ScriptResourceProxyVisitor();
 		try {
-			container.accept(visitor);
+			if (container.exists()) {
+				container.accept(visitor, IResource.NONE);
+			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE,
 					"Error while retrieving script resources from the folder script path "
@@ -57,9 +61,10 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 		}
 		return visitor.resources;
 	}
-	
+
 	public String getLabel() {
-		StringBuilder text = new StringBuilder(container.getName()).append(" - ").append( //$NON-NLS-1$
+		StringBuilder text = new StringBuilder(container.getName()).append(
+				" - ").append( //$NON-NLS-1$
 				container.getFullPath().makeRelative().toString());
 		if (getExternalLabel() != null) {
 			text.append(" (").append(getExternalLabel()).append(")"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -74,7 +79,8 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
-		if (clazz == IContainer.class || clazz == IResource.class || clazz == IFolder.class) {
+		if (clazz == IContainer.class || clazz == IResource.class
+				|| clazz == IFolder.class) {
 			return container;
 		}
 		if (clazz == IProject.class && container instanceof IProject) {
@@ -82,42 +88,45 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return super.hashCode()* 17 + container.hashCode();
+		return super.hashCode() * 17 + container.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof FolderScriptPath) {
-			return super.equals(obj) &&
-					container.equals(((FolderScriptPath) obj).container);
+			return super.equals(obj)
+					&& container.equals(((FolderScriptPath) obj).container);
 		}
 		return false;
 	}
-	
-	private class ScriptResourceVisitor implements IResourceVisitor{
-		
+
+	private class ScriptResourceProxyVisitor implements IResourceProxyVisitor {
+
 		public List<ITernScriptResource> resources = new ArrayList<ITernScriptResource>();
 
 		@Override
-		public boolean visit(IResource resource) throws CoreException {
-			switch (resource.getType()) {
-				case IResource.PROJECT:
-				case IResource.FOLDER:
-					return true;
-				case IResource.FILE:
-					if (TernResourcesManager.isJSFile(resource)) {
-						ITernFile file = TernResourcesManager.getTernFile(resource);
-						if (file != null) {
-							resources.add(new JSFileScriptResource(getOwnerProject(), file));
-						}
+		public boolean visit(IResourceProxy proxy) throws CoreException {
+			int type = proxy.getType();
+			switch (type) {
+			case IResource.PROJECT:
+			case IResource.FOLDER:
+				return true;
+			case IResource.FILE:
+				String filename = proxy.getName();
+				if (TernResourcesManager.isJSFile(filename)) {
+					IResource resource = proxy.requestResource();
+					ITernFile file = TernResourcesManager.getTernFile(resource);
+					if (file != null) {
+						resources.add(new JSFileScriptResource(
+								getOwnerProject(), file));
 					}
+				}
 			}
 			return false;
 		}
-		
 	}
-	
+
 }

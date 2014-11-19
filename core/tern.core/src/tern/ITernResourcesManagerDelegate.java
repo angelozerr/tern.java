@@ -64,11 +64,11 @@ public interface ITernResourcesManagerDelegate {
 	boolean isHTMLFile(Object fileObject);
 
 	/**
-	 * Returns whether the file referred by a file object is a JS file.
+	 * Returns whether the file name is a JS file and false otherwise.
 	 * 
-	 * @param fileObject
+	 * @param filename
 	 * @return
 	 */
-	boolean isJSFile(Object fileObject);
+	boolean isJSFile(String filename);
 
 }

@@ -97,8 +97,8 @@ public class DefaultTernResourcesManager implements
 	}
 
 	@Override
-	public boolean isJSFile(Object fileObject) {
-		String ext = getExtension(fileObject);
+	public boolean isJSFile(String filename) {
+		String ext = ExtensionUtils.getFileExtension(filename);
 		return ext != null
 				&& ExtensionUtils.JS_EXTENSION.equals(ext.toLowerCase());
 	}

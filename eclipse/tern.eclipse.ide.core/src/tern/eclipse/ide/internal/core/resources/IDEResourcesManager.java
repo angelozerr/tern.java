@@ -18,13 +18,11 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.QualifiedName;
 
-import tern.ITernFileSynchronizer;
-import tern.ITernResourcesManagerDelegate;
 import tern.ITernFile;
+import tern.ITernFileSynchronizer;
 import tern.ITernProject;
-import tern.eclipse.ide.core.TernCorePlugin;
+import tern.ITernResourcesManagerDelegate;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.resources.FilesystemTernFile;
 import tern.utils.ExtensionUtils;
@@ -142,8 +140,8 @@ public class IDEResourcesManager implements ITernResourcesManagerDelegate {
 	}
 
 	@Override
-	public boolean isJSFile(Object fileObject) {
-		String ext = getExtension(fileObject);
+	public boolean isJSFile(String filename) {
+		String ext = ExtensionUtils.getFileExtension(filename);
 		return ext != null
 				&& ExtensionUtils.JS_EXTENSION.equals(ext.toLowerCase());
 	}

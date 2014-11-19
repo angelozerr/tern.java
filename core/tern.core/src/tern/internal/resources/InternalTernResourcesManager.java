@@ -76,8 +76,8 @@ public class InternalTernResourcesManager {
 		return ternResourcesManagerDelegate.isHTMLFile(fileObject);
 	}
 
-	public boolean isJSFile(Object fileObject) {
-		return ternResourcesManagerDelegate.isJSFile(fileObject);
+	public boolean isJSFile(String filename) {
+		return ternResourcesManagerDelegate.isJSFile(filename);
 	}
 
 	public Document getDocument(ITernFile resource) {

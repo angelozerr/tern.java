@@ -157,7 +157,7 @@ public class JavaEditorTracker implements IWindowListener, IPageListener,
 			IResource resource = EditorUtils.getResource(part);
 			if (resource != null
 					&& resource.getType() == IResource.FILE
-					&& (TernResourcesManager.isJSFile(resource) || TernResourcesManager
+					&& (TernResourcesManager.isJSFile(resource.getName()) || TernResourcesManager
 							.isHTMLFile(resource))
 					&& TernCorePlugin.hasTernNature(resource.getProject())) {
 				ISourceViewer viewer = EditorUtils.getSourceViewer(part);
