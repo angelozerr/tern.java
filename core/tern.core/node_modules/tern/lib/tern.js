@@ -579,6 +579,11 @@
 
   function findCompletions(srv, query, file) {
     if (query.end == null) throw ternError("missing .query.end field");
+    if (srv.passes.completion) for (var i = 0; i < srv.passes.completion.length; i++) {
+      var result = srv.passes.completion[i](file, query);
+      if (result) return result;
+    }
+
     var wordStart = resolvePos(file, query.end), wordEnd = wordStart, text = file.text;
     while (wordStart && acorn.isIdentifierChar(text.charCodeAt(wordStart - 1))) --wordStart;
     if (query.expandWordForward !== false)
@@ -654,7 +659,7 @@
       if (query.includeKeywords) jsKeywords.forEach(function(kw) {
         gather(kw, null, 0, function(rec) { rec.isKeyword = true; });
       });
-      hookname = "completion";
+      hookname = "variableCompletion";
     }
     if (srv.passes[hookname])
       srv.passes[hookname].forEach(function(hook) {hook(file, wordStart, wordEnd, gather);});
@@ -718,7 +723,7 @@
 
   function findTypeAt(srv, query, file) {
     var expr = findExpr(file, query), exprName;
-    var type = findExprType(srv, query, file, expr);
+    var type = findExprType(srv, query, file, expr), exprType = type;
     if (query.preferFunction)
       type = type.getFunctionType() || type.getType();
     else
@@ -737,7 +742,9 @@
     var result = {guess: infer.didGuess(),
                   type: infer.toString(type, query.depth),
                   name: type && type.name,
-                  exprName: exprName};
+                  exprName: exprName,
+                  doc: exprType && exprType.doc
+    };
     if (type) storeTypeDocs(type, result);
 
     return clean(result);
@@ -746,7 +753,7 @@
   function findDocs(srv, query, file) {
     var expr = findExpr(file, query);
     var type = findExprType(srv, query, file, expr);
-    var result = {url: type.url, doc: type.doc};
+    var result = {url: type.url, doc: type.doc, type: infer.toString(type)};
     var inner = type.getType();
     if (inner) storeTypeDocs(inner, result);
     return clean(result);
