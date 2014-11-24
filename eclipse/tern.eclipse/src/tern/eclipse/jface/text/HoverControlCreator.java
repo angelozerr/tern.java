@@ -10,9 +10,6 @@
  */
 package tern.eclipse.jface.text;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.AbstractReusableInformationControlCreator;
@@ -20,10 +17,6 @@ import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IInformationControlExtension4;
-import org.eclipse.swt.browser.LocationAdapter;
-import org.eclipse.swt.browser.LocationEvent;
-import org.eclipse.swt.program.Program;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 public class HoverControlCreator extends
@@ -91,6 +84,10 @@ public class HoverControlCreator extends
 		}
 	}
 
+	protected void addLinkListener(BrowserInformationControl control) {
+		HoverLocationListener.addLinkListener(control);
+	}
+
 	/*
 	 * @see org.eclipse.jdt.internal.ui.text.java.hover.
 	 * AbstractReusableInformationControlCreator
@@ -110,59 +107,4 @@ public class HoverControlCreator extends
 		return true;
 	}
 
-	@SuppressWarnings("restriction")
-	protected static void addLinkListener(
-			final BrowserInformationControl control) {
-		control.addLocationListener(new LocationAdapter() {
-			@Override
-			public void changing(LocationEvent event) {
-				String loc = event.location;
-				if ("about:blank".equals(loc)) { //$NON-NLS-1$
-					/*
-					 * Using the Browser.setText API triggers a location change
-					 * to "about:blank". XXX: remove this code once
-					 * https://bugs.eclipse.org/bugs/show_bug.cgi?id=130314 is
-					 * fixed
-					 */
-					// input set with setText
-					handleTextSet();
-					return;
-				}
-
-				event.doit = false;
-
-				if (loc.startsWith("about:")) { //$NON-NLS-1$
-					// Relative links should be handled via head > base tag.
-					// If no base is available, links just won't work.
-					return;
-				}
-
-				if (loc.startsWith("tern:")) { //$NON-NLS-1$
-
-				}
-
-				if (loc.startsWith("http")) { //$NON-NLS-1$
-					try {
-						handleExternalLink(new URL(loc), event.display);
-					} catch (MalformedURLException e) {
-
-					}
-				}
-
-			}
-
-			private void handleTextSet() {
-
-			}
-
-			private void handleExternalLink(URL url, Display display) {
-				control.notifyDelayedInputChange(null);
-				control.dispose(); // FIXME: should have protocol to hide,
-									// rather than dispose
-
-				// Open attached Javadoc links
-				Program.launch(url.toExternalForm());
-			}
-		});
-	}
 }

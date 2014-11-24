@@ -31,6 +31,8 @@ import tern.eclipse.ide.ui.console.LineType;
 
 public class TernConsole extends MessageConsole implements ITernConsole {
 
+	private static final String CONSOLE_KEY = TernConsole.class.getName();
+
 	private boolean showOnMessage;
 
 	private IConsoleManager consoleManager;
@@ -49,6 +51,7 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 	public TernConsole(IIDETernProject project) {
 		super(getName(project), ImageResource
 				.getImageDescriptor(ImageResource.IMG_LOGO));
+		project.setData(CONSOLE_KEY, this);
 		this.project = project;
 		consoleManager = ConsolePlugin.getDefault().getConsoleManager();
 		document = new ConsoleDocument();
@@ -212,5 +215,18 @@ public class TernConsole extends MessageConsole implements ITernConsole {
 
 	public IIDETernProject getProject() {
 		return project;
+	}
+
+	public static TernConsole getConsole(IIDETernProject project) {
+		return project.getData(CONSOLE_KEY);
+	}
+
+	public static TernConsole getOrCreateConsole(
+			IIDETernProject project) {
+		TernConsole console = getConsole(project);
+		if (console == null) {
+			console = new TernConsole(project);
+		}
+		return console;
 	}
 }

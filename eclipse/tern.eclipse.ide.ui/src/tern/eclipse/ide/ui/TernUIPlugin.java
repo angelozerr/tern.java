@@ -10,10 +10,7 @@
  */
 package tern.eclipse.ide.ui;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -38,13 +35,10 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	// The shared instance
 	private static TernUIPlugin plugin;
 
-	private final Map<IProject, TernConsole> consoles;
-
 	/**
 	 * The constructor
 	 */
 	public TernUIPlugin() {
-		this.consoles = new HashMap<IProject, TernConsole>();
 	}
 
 	/*
@@ -114,13 +108,19 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	}
 
 	public ITernConsole getConsole(IIDETernProject project) {
-		TernConsole console = consoles.get(project.getProject());
-		if (console == null) {
-			console = new TernConsole(project);
-			consoles.put(project.getProject(), console);
+		if (project.isServerDisposed()) {
+			return null;
 		}
+		TernConsole console = TernConsole.getOrCreateConsole(project);
 		TernConsoleHelper.showConsole(console);
 		return console;
+	}
+
+	public void closeConsole(IIDETernProject project) {
+		TernConsole console = TernConsole.getConsole(project);
+		if (console != null) {
+			TernConsoleHelper.closeConsole(console);
+		}
 	}
 
 	public static ITernModuleDescriptorManager getTernDescriptorManager() {

@@ -28,10 +28,14 @@ public class PresenterControlCreator extends
 			TernBrowserInformationControl control = new TernBrowserInformationControl(
 					parent, null, tbm);
 			tbm.update(true);
-			HoverControlCreator.addLinkListener(control);
+			addLinkListener(control);
 			return control;
 		} else {
 			return new DefaultInformationControl(parent, true);
 		}
+	}
+
+	protected void addLinkListener(TernBrowserInformationControl control) {
+		HoverLocationListener.addLinkListener(control);
 	}
 }

@@ -27,6 +27,7 @@ import org.osgi.framework.Bundle;
 
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.jface.text.HoverLocationListener;
 import tern.server.protocol.completions.Parameter;
 import tern.server.protocol.completions.TernCompletionItem;
 import tern.utils.StringUtils;
@@ -110,8 +111,9 @@ public class HTMLTernPrinter {
 	}
 
 	public static String getTitle(TernCompletionItem item) {
-		return new StringBuilder("<b>").append(item.getSignature())
-				.append("</b>").toString();
+		StringBuilder buffer = new StringBuilder("<b>").append(
+				item.getSignature()).append("</b>");
+		return buffer.toString();
 	}
 
 	public static void addDocContent(StringBuffer buffer, String doc) {
@@ -129,7 +131,9 @@ public class HTMLTernPrinter {
 	}
 
 	public static void addOriginContent(StringBuffer buffer, String origin) {
-		addDefinitionListItem(buffer, "Origin", origin);
+		addLinkContent(buffer, "Origin", new StringBuilder(
+				HoverLocationListener.TERN_PROTOCOL).append(origin).toString(),
+				origin);
 	}
 
 	public static void addDefinitionListItem(StringBuffer buffer, String name,
@@ -154,15 +158,22 @@ public class HTMLTernPrinter {
 
 	public static void addURLContent(StringBuffer buffer, String url) {
 		if (!StringUtils.isEmpty(url)) {
-			buffer.append("<dt><b>See:</b></dt>");
-			buffer.append("<dd>");
-			buffer.append("<a href=\"");
-			buffer.append(url);
-			buffer.append("\" >");
-			buffer.append(url);
-			buffer.append("</a>");
-			buffer.append("</dd>");
+			addLinkContent(buffer, "See", url, url);
 		}
+	}
+
+	protected static void addLinkContent(StringBuffer buffer, String label,
+			String linkHref, String linkLabel) {
+		buffer.append("<dt><b>");
+		buffer.append(label);
+		buffer.append(":</b></dt>");
+		buffer.append("<dd>");
+		buffer.append("<a href=\"");
+		buffer.append(linkHref);
+		buffer.append("\" >");
+		buffer.append(linkLabel);
+		buffer.append("</a>");
+		buffer.append("</dd>");
 	}
 
 	public static void startDefinitionList(StringBuffer buffer) {

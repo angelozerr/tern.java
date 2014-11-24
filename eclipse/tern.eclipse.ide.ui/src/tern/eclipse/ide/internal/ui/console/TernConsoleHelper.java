@@ -34,13 +34,14 @@ public class TernConsoleHelper {
 		}
 	}
 
-	/*
-	 * public static void closeConsole() { IConsoleManager manager =
-	 * ConsolePlugin.getDefault() .getConsoleManager(); TernConsole console =
-	 * (TernConsole) TernUIPlugin.getDefault() .getConsole(); if (console !=
-	 * null) { manager.removeConsoles(new IConsole[] { console });
-	 * ConsolePlugin.getDefault().getConsoleManager()
-	 * .addConsoleListener(console.new MyLifecycle()); } }
-	 */
+	public static void closeConsole(TernConsole console) {
+		IConsoleManager manager = ConsolePlugin.getDefault()
+				.getConsoleManager();
+		if (console != null) {
+			manager.removeConsoles(new IConsole[] { console });
+//			ConsolePlugin.getDefault().getConsoleManager()
+//					.addConsoleListener(console.new MyLifecycle());
+		}
+	}
 
 }
