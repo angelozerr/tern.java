@@ -125,7 +125,7 @@ public class ImageResource {
 	 * Initialize the image resources.
 	 */
 	protected static void initializeImageRegistry() {
-		imageRegistry = new ImageRegistry();
+		imageRegistry = TernUIPlugin.getDefault().getImageRegistry();
 		imageDescriptors = new HashMap<String, ImageDescriptor>();
 
 		// load general object images

@@ -115,7 +115,7 @@ public class ImageResource {
 	 * Initialize the image resources.
 	 */
 	protected static void initializeImageRegistry() {
-		imageRegistry = new ImageRegistry();
+		imageRegistry = TernToolsUIPlugin.getDefault().getImageRegistry();
 		imageDescriptors = new HashMap<String, ImageDescriptor>();
 
 		// Wizban
