@@ -108,6 +108,8 @@ public final class TernUIMessages extends NLS {
 	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
 	public static String TernContentAssistPreferencesPage_expandFunction_label;
 
+	public static String TernHover_openDeclaration;
+
 	private TernUIMessages() {
 	}
 

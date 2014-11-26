@@ -33,6 +33,7 @@ import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.jsdt.internal.Trace;
 import tern.eclipse.ide.jsdt.internal.utils.DOMUtils;
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionCollector;
+import tern.eclipse.ide.ui.contentassist.TernCompletionsQueryFactory;
 import tern.server.protocol.completions.TernCompletionsQuery;
 
 /**
@@ -58,7 +59,7 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 			if (TernCorePlugin.hasTernNature(project)) {
 
 				IDocument document = context.getDocument();
-				
+
 				try {
 
 					IIDETernProject ternProject = TernCorePlugin
@@ -67,20 +68,13 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 					ITernFile tf = new TernDocumentFile(file, document);
 
 					int startOffset = context.getInvocationOffset();
-					TernCompletionsQuery query = new TernCompletionsQuery(
-							tf.getFullName(ternProject),
-							startOffset);
-					query.setTypes(true);
-					query.setDocs(true);
-					query.setUrls(true);
-					query.setOrigins(true);
-					query.setCaseInsensitive(true);
-					query.setLineCharPositions(true);
-					query.setExpandWordForward(false);
+					TernCompletionsQuery query = TernCompletionsQueryFactory
+							.createQuery(tf.getFullName(ternProject),
+									startOffset);
 
-					ternProject.request(query, tf, 
-							new JSTernCompletionCollector(
-									proposals, startOffset, project));
+					ternProject.request(query, tf,
+							new JSTernCompletionCollector(proposals,
+									startOffset, project));
 					return proposals;
 
 				} catch (Exception e) {
