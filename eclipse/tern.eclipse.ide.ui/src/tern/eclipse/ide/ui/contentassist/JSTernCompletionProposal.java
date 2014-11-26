@@ -168,9 +168,9 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		StringBuilder replacement = new StringBuilder(super.getName());
 		replacement.append(LPAREN);
 		setCursorPosition(replacement.length());
-
 		computeReplacementString(parameters, replacement, fArgumentOffsets,
 				fArgumentLengths, indentation, 1);
+		replacement.append(RPAREN);
 		return replacement.toString();
 
 	}
@@ -224,8 +224,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				fArgumentLengths.add(paramName.length());
 			}
 		}
-
-		replacement.append(RPAREN);
+		
 		/*
 		 * if (!hasParameters() || !hasArgumentList()) return
 		 * super.computeReplacementString();
