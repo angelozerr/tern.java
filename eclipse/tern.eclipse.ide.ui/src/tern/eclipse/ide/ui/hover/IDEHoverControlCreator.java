@@ -23,18 +23,18 @@ import tern.eclipse.jface.text.HoverLocationListener;
  */
 public class IDEHoverControlCreator extends HoverControlCreator {
 
-	private final IIDETernProjectProvider provider;
+	private final ITernHoverInfoProvider provider;
 
 	public IDEHoverControlCreator(
 			IInformationControlCreator informationPresenterControlCreator,
-			IIDETernProjectProvider provider) {
+			ITernHoverInfoProvider provider) {
 		super(informationPresenterControlCreator);
 		this.provider = provider;
 	}
 
 	public IDEHoverControlCreator(
 			IInformationControlCreator informationPresenterControlCreator,
-			boolean additionalInfoAffordance, IIDETernProjectProvider provider) {
+			boolean additionalInfoAffordance, ITernHoverInfoProvider provider) {
 		super(informationPresenterControlCreator, additionalInfoAffordance);
 		this.provider = provider;
 	}

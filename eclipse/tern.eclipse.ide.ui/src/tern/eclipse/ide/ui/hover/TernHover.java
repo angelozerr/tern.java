@@ -12,6 +12,8 @@ package tern.eclipse.ide.ui.hover;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
@@ -38,12 +40,14 @@ import tern.server.protocol.type.TernTypeQuery;
  */
 public class TernHover implements ITextHover, ITextHoverExtension,
 		ITextHoverExtension2, IInformationProviderExtension2,
-		IIDETernProjectProvider {
+		ITernHoverInfoProvider {
 
 	private IEditorPart editor;
 	private IInformationControlCreator fHoverControlCreator;
 	private IInformationControlCreator fPresenterControlCreator;
 	private IIDETernProject ternProject;
+	private String filename;
+	private Integer offset;
 
 	@Override
 	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
@@ -54,6 +58,10 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 
 	@Override
 	public Object getHoverInfo2(ITextViewer textViewer, IRegion hoverRegion) {
+		this.ternProject = null;
+		this.filename = null;
+		this.offset = null;
+
 		IFile scriptFile = getFile(textViewer);
 		if (scriptFile == null) {
 			return null;
@@ -65,8 +73,9 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 				this.ternProject = TernCorePlugin.getTernProject(project);
 				ITernFile file = new TernDocumentFile(scriptFile,
 						textViewer.getDocument());
-				TernTypeQuery query = new TernTypeQuery(
-						file.getFullName(ternProject), hoverRegion.getOffset());
+				this.filename = file.getFullName(ternProject);
+				this.offset = hoverRegion.getOffset();
+				TernTypeQuery query = new TernTypeQuery(filename, offset);
 				query.setDocs(true);
 				query.setUrls(true);
 				query.setTypes(true);
@@ -117,5 +126,15 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 	@Override
 	public IIDETernProject getTernProject() {
 		return ternProject;
+	}
+
+	@Override
+	public String getFilemane() {
+		return filename;
+	}
+
+	@Override
+	public Integer getOffset() {
+		return offset;
 	}
 }

@@ -10,7 +10,6 @@
  */
 package tern.eclipse.ide.ui.hover;
 
-import tern.eclipse.ide.core.IIDETernProjectProvider;
 import tern.eclipse.jface.text.HoverLocationListener;
 import tern.eclipse.jface.text.PresenterControlCreator;
 import tern.eclipse.jface.text.TernBrowserInformationControl;
@@ -21,9 +20,9 @@ import tern.eclipse.jface.text.TernBrowserInformationControl;
  */
 public class IDEPresenterControlCreator extends PresenterControlCreator {
 
-	private final IIDETernProjectProvider provider;
+	private final ITernHoverInfoProvider provider;
 
-	public IDEPresenterControlCreator(IIDETernProjectProvider provider) {
+	public IDEPresenterControlCreator(ITernHoverInfoProvider provider) {
 		this.provider = provider;
 	}
 

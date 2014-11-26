@@ -25,6 +25,7 @@ import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.FontData;
 import org.osgi.framework.Bundle;
 
+import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.jface.text.HoverLocationListener;
@@ -132,7 +133,7 @@ public class HTMLTernPrinter {
 
 	public static void addOriginContent(StringBuffer buffer, String origin) {
 		addLinkContent(buffer, "Origin", new StringBuilder(
-				HoverLocationListener.TERN_PROTOCOL).append(origin).toString(),
+				HoverLocationListener.TERN_FILE_PROTOCOL).append(origin).toString(),
 				origin);
 	}
 
@@ -266,14 +267,12 @@ public class HTMLTernPrinter {
 
 		buf.append("'>"); //$NON-NLS-1$
 		if (imageSrcPath != null) {
-			/*
-			 * if (element != null) { // try { // String uri = ""; // TODO //
-			 * JavaElementLinks.createURI(JavaElementLinks.OPEN_LINK_SCHEME, //
-			 * element); //buf.append("<a href='").append(uri).append("'>");
-			 * //$NON-NLS-1$//$NON-NLS-2$ /* } catch (URISyntaxException e) {
-			 * element= null; // no link }
-			 */
-			// }
+			
+			String uri = HoverLocationListener.TERN_DEFINITION_PROTOCOL;
+			buf.append("<a href=\"");
+			buf.append(uri);
+			buf.append("\" >");
+			
 			StringBuffer imageStyle = new StringBuffer(
 					"border:none; position: absolute; "); //$NON-NLS-1$
 			imageStyle.append("width: ").append(imageWidth).append("px; "); //$NON-NLS-1$ //$NON-NLS-2$
@@ -283,7 +282,7 @@ public class HTMLTernPrinter {
 			// hack for broken transparent PNG support in IE 6, see
 			// https://bugs.eclipse.org/bugs/show_bug.cgi?id=223900 :
 			buf.append("<!--[if lte IE 6]><![if gte IE 5.5]>\n"); //$NON-NLS-1$
-			String tooltip = ""; // TODO element == null ? "" : "alt='" + JavaHoverMessages.JavadocHover_openDeclaration + "' "; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			String tooltip = "alt='" + TernUIMessages.TernHover_openDeclaration + "' "; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			buf.append("<span ").append(tooltip).append("style=\"").append(imageStyle). //$NON-NLS-1$ //$NON-NLS-2$
 					append("filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='").append(imageSrcPath).append("')\"></span>\n"); //$NON-NLS-1$ //$NON-NLS-2$
 			buf.append("<![endif]><![endif]-->\n"); //$NON-NLS-1$
@@ -295,7 +294,9 @@ public class HTMLTernPrinter {
 			buf.append("<img ").append(tooltip).append("style='").append(imageStyle).append("' src='").append(imageSrcPath).append("'/>\n"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 			buf.append("<![endif]-->\n"); //$NON-NLS-1$
 			// if (element != null) {
-			//	buf.append("</a>"); //$NON-NLS-1$
+			
+			buf.append("</a>"); //$NON-NLS-1$
+			
 			// }
 		}
 		buf.append(title);

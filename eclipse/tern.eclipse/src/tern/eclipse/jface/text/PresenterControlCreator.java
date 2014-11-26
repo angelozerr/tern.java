@@ -38,4 +38,5 @@ public class PresenterControlCreator extends
 	protected void addLinkListener(TernBrowserInformationControl control) {
 		HoverLocationListener.addLinkListener(control);
 	}
+
 }
