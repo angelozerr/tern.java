@@ -22,6 +22,10 @@ public class TernException extends Exception {
 		super(message);
 	}
 
+	public TernException(String message, Throwable e) {
+		super(message, e);
+	}
+	
 	public TernException(Throwable e) {
 		super(e);
 	}

@@ -153,7 +153,7 @@ public class NodejsTernServer extends AbstractTernServer {
 			handler.onSuccess(json,
 					handler.isDataAsJsonString() ? json.toString() : null);
 		} catch (Exception e) {
-			handler.onError(e.getMessage());
+			handler.onError(e.getMessage(), e);
 		}
 	}
 
