@@ -290,8 +290,8 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 			}
 
 			@Override
-			public void onError(String error) {
-				getProject().handleException(new TernException(error));
+			public void onError(String error, Throwable t) {
+				getProject().handleException(new TernException(error, t));
 			}
 
 			@Override

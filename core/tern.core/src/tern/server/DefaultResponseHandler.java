@@ -17,6 +17,7 @@ public class DefaultResponseHandler implements IResponseHandler {
 	private String error;
 	private Object data;
 	private boolean dataAsJsonString;
+	private Throwable t;
 	private String json;
 
 	public DefaultResponseHandler(boolean dataAsJsonString) {
@@ -25,8 +26,12 @@ public class DefaultResponseHandler implements IResponseHandler {
 	}
 
 	@Override
-	public void onError(String error) {
+	public void onError(String error, Throwable t) {
 		this.error = error;
+		this.t = t;
+		if (this.error == null && t != null) {
+			this.error = t.getMessage();
+		}
 	}
 
 	@Override
@@ -36,15 +41,15 @@ public class DefaultResponseHandler implements IResponseHandler {
 	}
 
 	public Object getData() throws TernException {
-		if (error != null) {
-			throw new TernException(error);
+		if (error != null || t != null) {
+			throw new TernException(error, t);
 		}
 		return data;
 	}
 
 	public String getJsonString() throws TernException {
-		if (error != null) {
-			throw new TernException(error);
+		if (error != null || t != null) {
+			throw new TernException(error, t);
 		}
 		return json;
 	}
