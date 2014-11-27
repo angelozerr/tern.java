@@ -128,6 +128,8 @@ public class IDEResourcesManager implements ITernResourcesManagerDelegate {
 		} else if (fileObject instanceof File) {
 			return ExtensionUtils.getFileExtension(((File) fileObject)
 					.getName());
+		} else if (fileObject instanceof String) {
+			return ExtensionUtils.getFileExtension((String) fileObject);
 		}
 		return null;
 	}
@@ -140,8 +142,8 @@ public class IDEResourcesManager implements ITernResourcesManagerDelegate {
 	}
 
 	@Override
-	public boolean isJSFile(String filename) {
-		String ext = ExtensionUtils.getFileExtension(filename);
+	public boolean isJSFile(Object fileObject) {
+		String ext = getExtension(fileObject);
 		return ext != null
 				&& ExtensionUtils.JS_EXTENSION.equals(ext.toLowerCase());
 	}
