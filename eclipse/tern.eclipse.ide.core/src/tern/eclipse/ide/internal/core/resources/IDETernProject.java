@@ -385,7 +385,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			if (file == null) {
 				break;
 			}
-			if (TernResourcesManager.isJSFile(file.getFileName())) {
+			if (TernResourcesManager.isJSFile(file)) {
 				return new JSFileScriptPath(this, file, external);
 			}
 			return new DOMElementsScriptPath(this, file, external);
