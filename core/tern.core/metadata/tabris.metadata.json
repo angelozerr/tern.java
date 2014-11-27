@@ -1,0 +1,20 @@
+{
+ "name": "tabris",
+ "label": "tabris.js",  
+ "homepage": "https://github.com/eclipsesource/tabris-js",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Adds tabris.js Javascript API support. Native apps in JavaScript https://tabrisjs.com",
+ "dependencies": [
+  "ecma5"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-tabris.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-tabris/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Tabris-support"
+ }
+}

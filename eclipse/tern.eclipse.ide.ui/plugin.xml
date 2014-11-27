@@ -325,7 +325,11 @@
   	  <image
             id="qooxdoo"
             icon="/icons/full/obj16/qooxdoo.png" >
-      </image>      
+      </image>
+  	  <image
+            id="tabris"
+            icon="/icons/full/obj16/tabris.png" >
+      </image>            
   	  <image
             id="requirejs"
             icon="/icons/full/obj16/requirejs.png" >

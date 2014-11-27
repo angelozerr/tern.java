@@ -28,7 +28,7 @@ public enum TernPlugin implements ITernPlugin {
 			"node-express", "node-express", null, null), node_mongodb_native(
 			"node-mongodb-native", "node-mongodb-native", null, null), node_mongoose(
 			"node-mongoose", "node-mongoose", null, null), node(
-			"tern/plugin/node"), meteor("tern/plugin/meteor"), qooxdoo_4_1(
+			"tern/plugin/node"), tabris("tern-tabris"), meteor("tern/plugin/meteor"), qooxdoo_4_1(
 			"qooxdoo", "4.1"), requirejs("tern/plugin/requirejs"), yui(
 			"tern/plugin/yui");
 
