@@ -27,10 +27,13 @@ public class TernUIPreferenceInitializer extends AbstractPreferenceInitializer {
 		IEclipsePreferences node = new DefaultScope()
 				.getNode(TernUIPlugin.PLUGIN_ID);
 		node.putBoolean(
+				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST, true);
+		node.putBoolean(
 				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
 				true);
 		node.putBoolean(
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST, true);
+				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
+				false);
 		node.put(TernUIPreferenceConstants.TERN_DEFS,
 				TernUIPreferenceConstants.TERN_DEFS_DEFAULT);
 		node.put(TernUIPreferenceConstants.TERN_PLUGINS,

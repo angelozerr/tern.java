@@ -1,5 +1,6 @@
 package tern.eclipse.ide.ui.contentassist;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
@@ -13,7 +14,8 @@ import tern.server.protocol.completions.TernCompletionsQuery;
 
 public class TernCompletionsQueryFactory {
 
-	public static TernCompletionsQuery createQuery(String file, int pos) {
+	public static TernCompletionsQuery createQuery(IProject project,
+			String file, int pos) {
 		TernCompletionsQuery query = new TernCompletionsQuery(file, pos);
 
 		query.setTypes(true);
@@ -26,15 +28,22 @@ public class TernCompletionsQueryFactory {
 
 		IPreferencesService preferencesService = Platform
 				.getPreferencesService();
-		/*IScopeContext[] lookupOrder = new IScopeContext[] {
+		IScopeContext[] lookupOrder = new IScopeContext[] {
 				new ProjectScope(project), new InstanceScope(),
 				new DefaultScope() };
 
-		generateAnonymousFunction = preferencesService
-				.getBoolean(
-						TernUIPlugin.getDefault().getBundle().getSymbolicName(),
-						TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
-						true, lookupOrder);*/
+		boolean omitObjectPrototype = getBoolean(
+				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
+				preferencesService, lookupOrder);
+		if (!omitObjectPrototype) {
+			query.setOmitObjectPrototype (omitObjectPrototype );
+		}
 		return query;
+	}
+
+	protected static boolean getBoolean(String key,
+			IPreferencesService preferencesService, IScopeContext[] lookupOrder) {
+		return preferencesService.getBoolean(TernUIPlugin.getDefault()
+				.getBundle().getSymbolicName(), key, true, lookupOrder);
 	}
 }

@@ -36,7 +36,7 @@ public final class TernUIMessages extends NLS {
 	public static String Button_selectPath;
 	public static String Button_browse;
 	public static String Button_refresh;
-	
+
 	// Commands
 	public static String ConvertProjectToTern_converting_project_job_title;
 
@@ -76,7 +76,6 @@ public final class TernUIMessages extends NLS {
 	public static String TernRepositoryBlock_removeRepository_title;
 	public static String TernRepositoryBlock_removeRepository_message;
 
-	
 	public static String EditRepositoryDialog_title;
 	public static String EditRepositoryDialog_desc;
 	public static String EditRepositoryDialog_name_label;
@@ -105,8 +104,10 @@ public final class TernUIMessages extends NLS {
 
 	public static String ConsoleTerminateAction_tooltipText;
 
-	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
+	// Content assist preferences
 	public static String TernContentAssistPreferencesPage_expandFunction_label;
+	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
+	public static String TernContentAssistPreferencesPage_omitObjectPrototype_label;
 
 	public static String TernHover_openDeclaration;
 

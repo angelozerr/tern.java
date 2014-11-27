@@ -40,6 +40,7 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 
 	private Button generateAnonymousFunctionCheckbox;
 	private Button expandFunctionCheckbox;
+	private Button omitObjectPrototype;
 
 	public TernContentAssistPreferencesPage() {
 		setImageDescriptor(ImageResource
@@ -53,16 +54,22 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		page.setLayout(new GridLayout());
 
 		IScopeContext[] preferenceScopes = createPreferenceScopes();
-		generateAnonymousFunctionCheckbox = createCheckbox(
-				page,
-				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
-				preferenceScopes,
-				TernUIMessages.TernContentAssistPreferencesPage_generateAnonymousFunction_label);
 		expandFunctionCheckbox = createCheckbox(
 				page,
 				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
 				preferenceScopes,
 				TernUIMessages.TernContentAssistPreferencesPage_expandFunction_label);
+
+		generateAnonymousFunctionCheckbox = createCheckbox(
+				page,
+				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
+				preferenceScopes,
+				TernUIMessages.TernContentAssistPreferencesPage_generateAnonymousFunction_label);
+		omitObjectPrototype = createCheckbox(
+				page,
+				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
+				preferenceScopes,
+				TernUIMessages.TernContentAssistPreferencesPage_omitObjectPrototype_label);
 		return page;
 	}
 
@@ -97,12 +104,15 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		super.performDefaults();
 		IEclipsePreferences defaultPreferences = createPreferenceScopes()[1]
 				.getNode(getPreferenceNodeQualifier());
+		updateCheckbox(expandFunctionCheckbox,
+				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
+				defaultPreferences);
 		updateCheckbox(
 				generateAnonymousFunctionCheckbox,
 				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
 				defaultPreferences);
-		updateCheckbox(expandFunctionCheckbox,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
+		updateCheckbox(omitObjectPrototype,
+				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				defaultPreferences);
 	}
 
@@ -112,12 +122,16 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		IScopeContext[] contexts = createPreferenceScopes();
 		// remove project-specific information if it's not enabled
 		boolean remove = getProject() != null && !isElementSettingsEnabled();
+		updateContexts(expandFunctionCheckbox,
+				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
+				contexts, remove);
+		flushContexts(contexts);
 		updateContexts(
 				generateAnonymousFunctionCheckbox,
 				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
 				contexts, remove);
-		updateContexts(expandFunctionCheckbox,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
+		updateContexts(omitObjectPrototype,
+				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				contexts, remove);
 		flushContexts(contexts);
 		return ok;

@@ -68,7 +68,8 @@ public class TernCompletionProposalComputer implements
 
 						int startOffset = context.getInvocationOffset();
 						TernCompletionsQuery query = TernCompletionsQueryFactory
-								.createQuery(tf.getFullName(ternProject),
+								.createQuery(project,
+										tf.getFullName(ternProject),
 										startOffset);
 
 						ternProject.request(query, tf,

@@ -24,6 +24,7 @@ public class TernUIPreferenceConstants {
 	public static final String CONTENT_ASSIST_USE_PROJECT_SETTINGS = "contentassist-use-project-settings";//$NON-NLS-1$
 	public static final String GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST = "generate-anonymous-function-contentassist";//$NON-NLS-1$
 	public static final String EXPAND_FUNCTION_CONTENT_ASSIST = "expand-function-contentassist";//$NON-NLS-1$
+	public static final String OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST = "omitObjectPrototype"; //$NON-NLS-1$
 
 	/**
 	 * Default tern plugins + JSON type definitions
@@ -34,4 +35,5 @@ public class TernUIPreferenceConstants {
 	public static final String TERN_PLUGINS_DEFAULT = "";
 	public static final String TERN_PLUGINS = "tern-plugins";
 	public static final String TERN_DEFS = "tern-defs";
+
 }

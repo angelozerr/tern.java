@@ -38,6 +38,8 @@ public class TernCompletionsQuery extends TernQuery {
 
 	private static final String EXPANDWORDFORWARD_FIELD_NAME = "expandWordForward";
 
+	private static final String OMIT_OBJECT_PROTOTYPE_FIELD_NAME = "omitObjectPrototype";
+
 	public TernCompletionsQuery(String file, Integer pos) {
 		super(COMPLETIONS_TYPE_QUERY);
 		setFile(file);
@@ -128,4 +130,24 @@ public class TernCompletionsQuery extends TernQuery {
 		return JsonHelper.getBoolean(this, EXPANDWORDFORWARD_FIELD_NAME, true);
 	}
 
+	/**
+	 * Whether to ignore the properties of Object.prototype unless they have
+	 * been spelled out by at least to characters.
+	 * 
+	 * @param omitObjectPrototype
+	 */
+	public void setOmitObjectPrototype(boolean omitObjectPrototype) {
+		super.add(OMIT_OBJECT_PROTOTYPE_FIELD_NAME, omitObjectPrototype);
+	}
+
+	/**
+	 * Whether to ignore the properties of Object.prototype unless they have
+	 * been spelled out by at least to characters.
+	 * 
+	 * @return
+	 */
+	public boolean isOmitObjectPrototype() {
+		return JsonHelper.getBoolean(this, OMIT_OBJECT_PROTOTYPE_FIELD_NAME,
+				true);
+	}
 }
