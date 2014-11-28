@@ -56,13 +56,13 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	private IInformationControlCreator ternControlCreator;
 
 	public TernCompletionProposal(String name, String type, String doc,
-			String url, String origin, int pos, int startOffset) {
+			String url, String origin, int start, int end) {
 		super(name, type, doc, url, origin);
 
 		String text = super.getSignature();
 		this.fReplacementString = text;
-		this.fReplacementOffset = startOffset - pos;
-		this.fReplacementLength = pos;
+		this.fReplacementOffset = start;
+		this.fReplacementLength = end - start;
 		this.fCursorPosition = text.length();
 
 		this.fImage = getDefaultImage();

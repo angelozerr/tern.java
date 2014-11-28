@@ -23,7 +23,7 @@ public class TernCompletionsQueryFactory {
 		query.setUrls(true);
 		query.setOrigins(true);
 		query.setCaseInsensitive(true);
-		query.setLineCharPositions(true);
+		query.setLineCharPositions(false);
 		query.setExpandWordForward(false);
 
 		IPreferencesService preferencesService = Platform

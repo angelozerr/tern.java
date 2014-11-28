@@ -54,8 +54,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	private boolean generateAnonymousFunction;
 
 	public JSTernCompletionProposal(String name, String type, String doc,
-			String url, String origin, int pos, int startOffset) {
-		super(name, type, doc, url, origin, pos, startOffset);
+			String url, String origin, int start, int end) {
+		super(name, type, doc, url, origin, start, end);
 	}
 
 	@Override
@@ -338,7 +338,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	 */
 	private boolean insertCompletion() {
 		// TODO : manage that with preferences
-		return true;
+		return false;
 	}
 
 	/**

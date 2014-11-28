@@ -24,8 +24,8 @@ public class JSDTTernCompletionProposal extends JSTernCompletionProposal
 		implements IJavaCompletionProposal {
 
 	public JSDTTernCompletionProposal(String name, String type, String doc,
-			String url, String origin, int pos, int startOffset) {
-		super(name, type, doc, url, origin, pos, startOffset);
+			String url, String origin, int start, int end) {
+		super(name, type, doc, url, origin, start, end);
 	}
 
 	@Override

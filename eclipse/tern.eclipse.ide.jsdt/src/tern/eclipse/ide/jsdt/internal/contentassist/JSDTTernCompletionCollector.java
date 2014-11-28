@@ -32,8 +32,8 @@ public class JSDTTernCompletionCollector extends JSTernCompletionCollector {
 
 	@Override
 	protected JSTernCompletionProposal createProposal(String name, String type,
-			String doc, String url, String origin, int pos, int startOffset) {
+			String doc, String url, String origin, int start, int end) {
 		return new JSDTTernCompletionProposal(name, type, doc, url, origin,
-				pos, startOffset);
+				start, end);
 	}
 }

@@ -20,8 +20,10 @@ public abstract class AbstractTernContentProposalCollector implements
 
 	@Override
 	public void addProposal(String name, String type, String doc, String url,
-			String origin, int pos, Object completion, ITernServer ternServer) {
-		addProposal(new TernContentProposal(name, type, doc, url, origin, pos));
+			String origin, int start, int end, Object completion,
+			ITernServer ternServer) {
+		addProposal(new TernContentProposal(name, type, doc, url, origin,
+				start, end));
 	}
 
 	protected abstract void addProposal(IContentProposal proposal);

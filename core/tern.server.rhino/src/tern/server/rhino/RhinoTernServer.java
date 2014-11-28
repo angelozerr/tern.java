@@ -210,7 +210,8 @@ public class RhinoTernServer extends AbstractTernServer {
 			f.call(cx, ternScope, ternScope, functionArgs);
 
 			// Update file manager if needed.
-			ITernFileSynchronizer fileSynchronizer = super.getFileSynchronizer();
+			ITernFileSynchronizer fileSynchronizer = super
+					.getFileSynchronizer();
 			if (fileSynchronizer != null) {
 				fileSynchronizer.filesUploaded(doc);
 			}
@@ -237,7 +238,8 @@ public class RhinoTernServer extends AbstractTernServer {
 					rhinoObject);
 			for (Object object : completions) {
 
-				addProposal(object, pos, collector);
+				addProposal(object, startCh != null ? startCh.intValue() : 0, 
+						 endCh != null ? endCh.intValue() : 0, collector);
 			}
 		}
 	}

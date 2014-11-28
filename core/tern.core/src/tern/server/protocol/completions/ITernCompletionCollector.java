@@ -31,7 +31,8 @@ public interface ITernCompletionCollector {
 	 *            of the completion item.
 	 * @param origin
 	 *            of the completion item.
-	 * @param pos
+	 * @param start
+	 * @param end
 	 *            of the cursor.
 	 * @param completion
 	 *            object of completion item (ex : JsonObject)
@@ -39,5 +40,6 @@ public interface ITernCompletionCollector {
 	 *            the tern server.
 	 */
 	void addProposal(String name, String type, String doc, String url,
-			String origin, int pos, Object completion, ITernServer ternServer);
+			String origin, int start, int end, Object completion,
+			ITernServer ternServer);
 }
