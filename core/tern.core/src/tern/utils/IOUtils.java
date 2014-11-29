@@ -34,8 +34,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import tern.internal.org.apache.commons.io.output.ByteArrayOutputStream;
-import tern.internal.org.apache.commons.io.output.StringBuilderWriter;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.io.output.StringBuilderWriter;
 
 /**
  * General IO stream manipulation utilities.
