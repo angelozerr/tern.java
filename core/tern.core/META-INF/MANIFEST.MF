@@ -30,6 +30,7 @@ Export-Package: tern,
  tern.server.protocol.type,
  tern.utils
 Import-Package: com.eclipsesource.json,
+ org.apache.commons.io.input,
  org.osgi.framework
 Bundle-Activator: tern.Activator
 Bundle-ActivationPolicy: lazy
