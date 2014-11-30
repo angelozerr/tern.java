@@ -338,7 +338,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	 */
 	private boolean insertCompletion() {
 		// TODO : manage that with preferences
-		return false;
+		return true;
 	}
 
 	/**
