@@ -94,6 +94,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<releaseProfiles>sonatype-oss-release</releaseProfiles>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -153,9 +154,17 @@
 						<strictVersions>false</strictVersions>
 						</configuration>
 					</plugin>
+					<plugin>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>${tycho-version}</version>
+						<configuration>
+							<test>skip</test>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
+		
 
 	</profiles>
 </project>
