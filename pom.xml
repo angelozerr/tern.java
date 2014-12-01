@@ -156,7 +156,7 @@
 					</plugin>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>tycho-surefire</artifactId>
+      					<artifactId>tycho-maven-plugin</artifactId>
 						<version>${tycho-version}</version>
 						<configuration>
 							<test>skip</test>
