@@ -1,0 +1,13 @@
+Apache Commons IO
+Copyright 2002-2012 The Apache Software Foundation
+
+This product includes software developed by
+The Apache Software Foundation (http://www.apache.org/).
+
+This NOTICE.txt file exists to satisfy the Apache License, version
+2.0, which covers the following files in this distribution:
+
+core/tern.core/src/tern/utils/IOUtils.java
+core/tern.core/src/tern/internal/org/apache/commons/io/input/ClosedInputStream.java
+core/tern.core/src/tern/internal/org/apache/commons/io/output/StringBuilderWriter.java
+core/tern.core/src/tern/internal/org/apache/commons/io/output/ByteArrayOutputStream.java
