@@ -52,12 +52,12 @@ public class IDEHoverLocationListener extends HoverLocationListener implements
 	protected void handleTernDefinitionLink(String loc) {
 		super.handleTernDefinitionLink(loc);
 
-		String filename = provider.getFilemane();
-		if (!StringUtils.isEmpty(filename)) {
+		ITernFile tf = provider.getFile();
+		if (tf != null) {
 			IIDETernProject ternProject = provider.getTernProject();
-			ITernFile tf = ternProject.getFile(filename);
 			Integer pos = provider.getOffset();
-			TernDefinitionQuery query = new TernDefinitionQuery(filename, pos);
+			TernDefinitionQuery query = new TernDefinitionQuery(
+					tf.getFullName(ternProject), pos);
 			try {
 				ternProject.request(query, tf, this);
 			} catch (Exception e) {
@@ -70,8 +70,11 @@ public class IDEHoverLocationListener extends HoverLocationListener implements
 	public void setDefinition(String filename, Long start, Long end) {
 		IFile file = getFile(filename);
 		if (file != null && file.exists()) {
-			EditorUtils.openInEditor(file, start.intValue(), end.intValue()
-					- start.intValue(), true);
+			EditorUtils.openInEditor(
+					file,
+					start != null ? start.intValue() : -1,
+					start != null && end != null ? end.intValue()
+							- start.intValue() : -1, true);
 		}
 	}
 

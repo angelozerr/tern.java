@@ -12,8 +12,6 @@ package tern.eclipse.ide.ui.hover;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
@@ -25,7 +23,6 @@ import org.eclipse.ui.IEditorPart;
 
 import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
-import tern.eclipse.ide.core.IIDETernProjectProvider;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
@@ -48,6 +45,7 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 	private IIDETernProject ternProject;
 	private String filename;
 	private Integer offset;
+	private ITernFile file;
 
 	@Override
 	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
@@ -71,9 +69,9 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 			try {
 				// project has tern nature, get hover info with tern.
 				this.ternProject = TernCorePlugin.getTernProject(project);
-				ITernFile file = new TernDocumentFile(scriptFile,
+				this.file = new TernDocumentFile(scriptFile,
 						textViewer.getDocument());
-				this.filename = file.getFullName(ternProject);
+				String filename = file.getFullName(ternProject);
 				this.offset = hoverRegion.getOffset();
 				TernTypeQuery query = new TernTypeQuery(filename, offset);
 				query.setDocs(true);
@@ -129,12 +127,13 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 	}
 
 	@Override
-	public String getFilemane() {
-		return filename;
+	public ITernFile getFile() {
+		return file;
 	}
 
 	@Override
 	public Integer getOffset() {
 		return offset;
 	}
+
 }
