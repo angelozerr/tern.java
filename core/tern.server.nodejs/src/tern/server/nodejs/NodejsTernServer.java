@@ -35,6 +35,7 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
+import tern.utils.StringUtils;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
@@ -298,6 +299,9 @@ public class NodejsTernServer extends AbstractTernServer {
 				Long startCh = getCh(jsonObject, "start");
 				Long endCh = getCh(jsonObject, "end");
 				String file = getText(jsonObject.get("file"));
+				if (StringUtils.isEmpty(file)) {
+					file = getText(jsonObject.get("origin"));
+				}
 				collector.setDefinition(file, startCh, endCh);
 			}
 		} catch (Throwable e) {

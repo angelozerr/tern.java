@@ -39,8 +39,11 @@ public abstract class AbstractTernHyperlink implements IHyperlink,
 	public void setDefinition(String filename, Long start, Long end) {
 		IFile file = getFile(filename);
 		if (file != null && file.exists()) {
-			EditorUtils.openInEditor(file, start.intValue(), end.intValue()
-					- start.intValue(), true);
+			EditorUtils.openInEditor(
+					file,
+					start != null ? start.intValue() : -1,
+					start != null && end != null ? end.intValue()
+							- start.intValue() : -1, true);
 		}
 	}
 
