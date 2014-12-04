@@ -55,7 +55,13 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	public JSTernCompletionProposal(String name, String type, String doc,
 			String url, String origin, int start, int end) {
-		super(name, type, doc, url, origin, start, end);
+		this(name, name, type, doc, url, origin, start, end);
+	}
+
+	public JSTernCompletionProposal(String name, String displayName,
+			String type, String doc, String url, String origin, int start,
+			int end) {
+		super(name, displayName, type, doc, url, origin, start, end);
 	}
 
 	@Override
@@ -87,6 +93,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		// compute replacement string
 		String replacement = computeReplacementString(document, offset);
 		setReplacementString(replacement);
+
+		updateReplacementLengthForString(document, offset, replacement);
 
 		// apply the replacement.
 		super.apply(document, trigger, offset);
@@ -126,6 +134,44 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 			}
 		} else {
 			fSelectedRegion = new Region(baseOffset + replacement.length(), 0);
+		}
+	}
+
+	/**
+	 * Compute new replacement length for string replacement.
+	 * 
+	 * @param document
+	 * @param offset
+	 * @param replacement
+	 */
+	protected void updateReplacementLengthForString(IDocument document,
+			int offset, String replacement) {
+		boolean isString = replacement.startsWith("\"")
+				|| replacement.startsWith("'");
+		if (isString) {
+			int length = document.getLength();
+			int pos = offset;
+			char c;
+			while (pos < length) {
+				try {
+					c = document.getChar(pos);
+					switch (c) {
+					case '\r':
+					case '\n':
+					case '\t':
+					case ' ':
+						return;
+					case '"':
+					case '\'':
+						setReplacementLength(getReplacementLength() + pos
+								- offset + 1);
+						return;
+					}
+					++pos;
+				} catch (BadLocationException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -224,7 +270,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				fArgumentLengths.add(paramName.length());
 			}
 		}
-		
+
 		/*
 		 * if (!hasParameters() || !hasArgumentList()) return
 		 * super.computeReplacementString();

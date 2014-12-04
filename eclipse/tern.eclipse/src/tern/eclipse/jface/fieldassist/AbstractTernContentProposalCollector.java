@@ -19,11 +19,11 @@ public abstract class AbstractTernContentProposalCollector implements
 		ITernCompletionCollector {
 
 	@Override
-	public void addProposal(String name, String type, String doc, String url,
-			String origin, int start, int end, Object completion,
-			ITernServer ternServer) {
-		addProposal(new TernContentProposal(name, type, doc, url, origin,
-				start, end));
+	public void addProposal(String name, String displayName, String type,
+			String doc, String url, String origin, int start, int end,
+			Object completion, ITernServer ternServer) {
+		addProposal(new TernContentProposal(name, displayName, type, doc, url,
+				origin, start, end));
 	}
 
 	protected abstract void addProposal(IContentProposal proposal);

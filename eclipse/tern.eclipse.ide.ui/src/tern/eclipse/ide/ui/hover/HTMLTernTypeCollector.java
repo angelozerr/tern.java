@@ -33,8 +33,8 @@ public class HTMLTernTypeCollector implements ITernTypeCollector {
 			Object object, ITernServer server) {
 		if (type != null || name != null || exprName != null) {
 			String label = name != null ? name : exprName;
-			TernCompletionItem item = new TernCompletionItem(label, type, doc,
-					url, origin);
+			TernCompletionItem item = new TernCompletionItem(label, null, type,
+					doc, url, origin);
 			this.info = HTMLTernPrinter.getAdditionalProposalInfo(item, guess);
 		}
 	}

@@ -23,9 +23,10 @@ import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 public class JSDTTernCompletionProposal extends JSTernCompletionProposal
 		implements IJavaCompletionProposal {
 
-	public JSDTTernCompletionProposal(String name, String type, String doc,
-			String url, String origin, int start, int end) {
-		super(name, type, doc, url, origin, start, end);
+	public JSDTTernCompletionProposal(String name, String displayName,
+			String type, String doc, String url, String origin, int start,
+			int end) {
+		super(name, displayName, type, doc, url, origin, start, end);
 	}
 
 	@Override

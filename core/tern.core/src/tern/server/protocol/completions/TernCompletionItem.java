@@ -22,6 +22,7 @@ import tern.utils.StringUtils;
 public class TernCompletionItem {
 
 	private final String name;
+	private final String displayName;
 	private final String type;
 	private final String doc;
 	private final String url;
@@ -33,10 +34,19 @@ public class TernCompletionItem {
 	private String jsType;
 	private List<Parameter> parameters;
 	private String[] allTypes;
+	private boolean hasDisplayName;
 
 	public TernCompletionItem(String name, String type, String doc, String url,
 			String origin) {
+		this(name, null, type, doc, url, origin);
+	}
+
+	public TernCompletionItem(String name, String displayName, String type,
+			String doc, String url, String origin) {
 		this.name = name;
+		// we consider that we are inside string when display name is defined.
+		this.hasDisplayName = !StringUtils.isEmpty(displayName);
+		this.displayName = hasDisplayName ? displayName : name;
 		this.type = type;
 		this.doc = doc;
 		this.url = url;
@@ -44,7 +54,7 @@ public class TernCompletionItem {
 		this.parameters = null;
 		String signature = name;
 		this.jsType = type;
-		if (!StringUtils.isEmpty(type)) {
+		if (!hasDisplayName && !StringUtils.isEmpty(type)) {
 			this.function = TernTypeHelper.isFunction(type);
 			if (function) {
 				FunctionInfo functionInfo = TernTypeHelper.parseFunction(name,
@@ -245,9 +255,10 @@ public class TernCompletionItem {
 
 	public String getText() {
 		if (StringUtils.isEmpty(origin) && StringUtils.isEmpty(jsType)) {
-			return signature;
+			return hasDisplayName ? displayName : signature;
 		}
-		StringBuilder text = new StringBuilder(signature);
+		StringBuilder text = new StringBuilder(hasDisplayName ? displayName
+				: signature);
 
 		if (!StringUtils.isEmpty(jsType)) {
 			text.append(" : ");

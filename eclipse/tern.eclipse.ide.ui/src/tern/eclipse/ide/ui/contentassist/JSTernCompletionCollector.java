@@ -60,11 +60,11 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	}
 
 	@Override
-	public void addProposal(String name, String type, String doc, String url,
-			String origin, int start, int end, Object completion,
-			ITernServer ternServer) {
-		JSTernCompletionProposal proposal = internalCreateProposal(name, type,
-				doc, url, origin, start, end);
+	public void addProposal(String name, String displayName, String type,
+			String doc, String url, String origin, int start, int end,
+			Object completion, ITernServer ternServer) {
+		JSTernCompletionProposal proposal = internalCreateProposal(name,
+				displayName, type, doc, url, origin, start, end);
 		proposals.add(proposal);
 
 		if (expandFunction) {
@@ -77,18 +77,18 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 			String[] functions = proposal.expand();
 			if (functions != null) {
 				for (int i = 0; i < functions.length; i++) {
-					proposals.add(internalCreateProposal(name, functions[i],
-							doc, url, origin, start, end));
+					proposals.add(internalCreateProposal(name, displayName,
+							functions[i], doc, url, origin, start, end));
 				}
 			}
 		}
 	}
 
 	private JSTernCompletionProposal internalCreateProposal(String name,
-			String type, String doc, String url, String origin, int start,
-			int end) {
-		JSTernCompletionProposal proposal = createProposal(name, type, doc,
-				url, origin, start, end);
+			String displayName, String type, String doc, String url,
+			String origin, int start, int end) {
+		JSTernCompletionProposal proposal = createProposal(name, displayName,
+				type, doc, url, origin, start, end);
 		proposal.setGenerateAnonymousFunction(generateAnonymousFunction);
 		return proposal;
 	}
@@ -105,9 +105,10 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	 * @param startOffset
 	 * @return
 	 */
-	protected JSTernCompletionProposal createProposal(String name, String type,
-			String doc, String url, String origin, int start, int end) {
-		return new JSTernCompletionProposal(name, type, doc, url, origin,
-				start, end);
+	protected JSTernCompletionProposal createProposal(String name,
+			String displayName, String type, String doc, String url,
+			String origin, int start, int end) {
+		return new JSTernCompletionProposal(name, displayName, type, doc, url,
+				origin, start, end);
 	}
 }

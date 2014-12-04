@@ -26,9 +26,9 @@ public class MockTernAngularCompletionCollector extends
 	}
 
 	@Override
-	public void addProposal(String name, String type, String doc, String url,
-			String origin, int start, int end, Object completion,
-			ITernServer ternServer) {
+	public void addProposal(String name, String displayName, String type,
+			String doc, String url, String origin, int start, int end,
+			Object completion, ITernServer ternServer) {
 		super.put(
 				name,
 				new TernAngularCompletionItem(name, type, origin, ternServer

@@ -248,8 +248,8 @@ public class NodejsTernServer extends AbstractTernServer {
 				if (completions != null) {
 					for (JsonValue value : completions) {
 						if (value.isString()) {
-							collector.addProposal(value.asString(), null, null,
-									null, null,
+							collector.addProposal(value.asString(),
+									value.asString(), null, null, null, null,
 									startCh != null ? startCh.intValue() : 0,
 									endCh != null ? endCh.intValue() : 0,
 									value, this);
