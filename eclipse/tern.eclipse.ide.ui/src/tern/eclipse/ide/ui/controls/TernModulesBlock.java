@@ -320,7 +320,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 		});
 	}
 
-	protected void setTernModules(ITernModule[] vms) {
+	public void setTernModules(ITernModule[] vms) {
 		ternModules.clear();
 		for (ITernModule module : vms) {
 			ternModules.put(module.getType(), module);

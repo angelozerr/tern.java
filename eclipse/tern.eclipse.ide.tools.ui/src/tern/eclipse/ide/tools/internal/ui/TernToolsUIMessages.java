@@ -62,6 +62,10 @@ public final class TernToolsUIMessages extends NLS {
 	public static String TernDefsSelectionWizardPage_defLoader_embedInHTML;
 	public static String TernDefsSelectionWizardPage_defLoader_embedInJS;
 
+	public static String DownloadTernModulesWizard_taskLabel;
+	public static String DownloadTernModulesSelectionWizardPage_title;
+	public static String DownloadTernModulesSelectionWizardPage_description;
+
 	private TernToolsUIMessages() {
 	}
 
