@@ -16,7 +16,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import tern.ITernRepository;
+import tern.repository.ITernRepository;
 import tern.server.ITernModule;
 
 /**
@@ -63,5 +63,10 @@ public class TernRepositoryLabelProvider extends LabelProvider implements
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String getText(Object element) {
+		return getColumnText(element, 0);
 	}
 }

@@ -38,9 +38,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
-import tern.ITernRepository;
 import tern.TernException;
-import tern.TernRepository;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
@@ -49,6 +47,8 @@ import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
 import tern.eclipse.ide.ui.viewers.TernRepositoryLabelProvider;
+import tern.repository.ITernRepository;
+import tern.repository.TernRepository;
 
 /**
  * Tern repositoryy block.

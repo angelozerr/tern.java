@@ -5,6 +5,7 @@ import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tern.repository.TernRepository;
 import tern.server.ITernModule;
 import tern.server.nodejs.process.PathHelper;
 

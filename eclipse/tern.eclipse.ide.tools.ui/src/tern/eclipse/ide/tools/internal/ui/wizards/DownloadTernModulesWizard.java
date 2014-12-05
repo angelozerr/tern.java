@@ -11,6 +11,7 @@ public class DownloadTernModulesWizard extends TernWizard<DownloadOptions>
 	@Override
 	public void addPages() {
 		super.addPage(new DownloadTernModulesSelectionWizardPage());
+		super.addOperation(new DownloadTernModulesOperation());
 	}
 
 	@Override

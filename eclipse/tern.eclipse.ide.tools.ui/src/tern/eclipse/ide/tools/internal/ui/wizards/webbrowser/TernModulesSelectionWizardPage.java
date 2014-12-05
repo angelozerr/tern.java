@@ -23,12 +23,12 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-import tern.ITernRepository;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
 import tern.eclipse.ide.ui.controls.TernModulesBlock;
+import tern.repository.ITernRepository;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;

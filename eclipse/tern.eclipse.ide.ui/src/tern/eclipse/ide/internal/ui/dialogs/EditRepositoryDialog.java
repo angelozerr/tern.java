@@ -31,10 +31,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import tern.ITernRepository;
-import tern.TernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.repository.ITernRepository;
+import tern.repository.TernRepository;
 import tern.utils.StringUtils;
 
 /**

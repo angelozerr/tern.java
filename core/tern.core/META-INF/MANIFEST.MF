@@ -17,6 +17,7 @@ Export-Package: tern,
  tern.doc,
  tern.internal.resources;x-internal:=true,
  tern.metadata,
+ tern.repository,
  tern.resources,
  tern.scriptpath,
  tern.scriptpath.impl,
@@ -30,6 +31,10 @@ Export-Package: tern,
  tern.server.protocol.type,
  tern.utils
 Import-Package: com.eclipsesource.json,
+ org.apache.http;resolution:=optional,
+ org.apache.http.client;resolution:=optional,
+ org.apache.http.client.methods;resolution:=optional,
+ org.apache.http.impl.client;resolution:=optional,
  org.osgi.framework
 Bundle-Activator: tern.Activator
 Bundle-ActivationPolicy: lazy

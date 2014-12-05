@@ -8,14 +8,15 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern;
+package tern.repository;
 
 import java.io.File;
 
+import tern.TernException;
 import tern.server.ITernModule;
 
 /**
- * Tern repository is a base dir which contains the tern.js JS files :
+ * Tern repository is a local base dir which contains the tern.js JS files :
  * 
  * <ul>
  * <li>bin folder</li>

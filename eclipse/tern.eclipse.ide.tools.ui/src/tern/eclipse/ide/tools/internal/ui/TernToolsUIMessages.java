@@ -27,6 +27,7 @@ public final class TernToolsUIMessages extends NLS {
 
 	// Buttons
 	public static String Button_browse;
+	public static String Button_refresh;
 
 	// Wizard
 	public static String NewFileWizardPage_name_text;
@@ -64,7 +65,14 @@ public final class TernToolsUIMessages extends NLS {
 
 	public static String DownloadTernModulesWizard_taskLabel;
 	public static String DownloadTernModulesSelectionWizardPage_title;
+	public static String DownloadTernModulesSelectionWizardPage_repositoryURL_text;
+	public static String DownloadTernModulesSelectionWizardPage_localRespositoryName_text;
 	public static String DownloadTernModulesSelectionWizardPage_description;
+	public static String DownloadTernModulesSelectionWizardPage_errorMessage;
+	public static String DownloadTernModulesSelectionWizardPage_errorTitle;
+	public static String DownloadTernModulesSelectionWizardPage_modules_selection_validation;
+	public static String RefreshRepositoryJob_name;
+	public static String RefreshRepositoryJob_loading;
 
 	private TernToolsUIMessages() {
 	}

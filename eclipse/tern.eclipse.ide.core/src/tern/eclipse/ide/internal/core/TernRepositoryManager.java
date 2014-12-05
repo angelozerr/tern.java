@@ -19,13 +19,13 @@ import java.util.Map;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
-import tern.ITernRepository;
 import tern.TernException;
-import tern.TernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
+import tern.repository.ITernRepository;
+import tern.repository.TernRepository;
 import tern.utils.StringUtils;
 
 /**

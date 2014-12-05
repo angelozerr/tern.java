@@ -8,12 +8,13 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern;
+package tern.repository;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import tern.TernException;
 import tern.server.ITernModule;
 import tern.utils.ExtensionUtils;
 import tern.utils.TernModuleHelper;

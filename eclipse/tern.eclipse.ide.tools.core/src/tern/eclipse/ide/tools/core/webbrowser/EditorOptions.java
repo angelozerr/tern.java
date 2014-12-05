@@ -17,9 +17,9 @@ import java.io.IOException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
-import tern.ITernRepository;
 import tern.eclipse.ide.tools.core.generator.Options;
 import tern.eclipse.ide.tools.internal.core.TernToolsCorePlugin;
+import tern.repository.ITernRepository;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;

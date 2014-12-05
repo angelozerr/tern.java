@@ -31,7 +31,6 @@ import org.eclipse.core.runtime.QualifiedName;
 
 import tern.ITernFile;
 import tern.ITernProject;
-import tern.ITernRepository;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernConsoleConnector;
@@ -46,6 +45,7 @@ import tern.eclipse.ide.internal.core.TernRepositoryManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
+import tern.repository.ITernRepository;
 import tern.resources.TernProject;
 import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;

@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.eclipse.core.resources.IProject;
 
-import tern.ITernRepository;
+import tern.repository.ITernRepository;
 
 public interface ITernRepositoryManager {
 

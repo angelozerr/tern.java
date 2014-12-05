@@ -63,7 +63,7 @@ public abstract class TernWizard<T> extends Wizard {
 				monitor.beginTask(getTaskLabel(), total);
 				try {
 					for (IOperation operation : operations) {
-						operation.run(monitor);
+						operation.run(monitor, model);
 					}
 				} catch (Throwable e) {
 					throw new InvocationTargetException(e);

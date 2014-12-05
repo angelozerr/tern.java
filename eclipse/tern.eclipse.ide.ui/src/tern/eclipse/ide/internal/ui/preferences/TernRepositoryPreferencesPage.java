@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 
-import tern.ITernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
@@ -34,6 +33,7 @@ import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.controls.TernRepositoryBlock;
 import tern.eclipse.ide.ui.preferences.PropertyPreferencePage;
+import tern.repository.ITernRepository;
 
 /**
  * Tern dev preferences page used for global and project preferences.

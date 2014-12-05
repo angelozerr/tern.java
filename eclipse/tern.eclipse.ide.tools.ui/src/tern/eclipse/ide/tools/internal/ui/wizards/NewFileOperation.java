@@ -51,7 +51,8 @@ public class NewFileOperation implements IOperation {
 	}
 
 	@Override
-	public void run(IProgressMonitor monitor) throws CoreException {
+	public void run(IProgressMonitor monitor, Object model)
+			throws CoreException {
 		doFinish(containerName, fileName, monitor);
 	}
 

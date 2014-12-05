@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import tern.repository.ITernRepository;
 import tern.scriptpath.ITernScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
