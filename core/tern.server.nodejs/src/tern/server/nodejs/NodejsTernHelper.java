@@ -10,7 +10,6 @@
  */
 package tern.server.nodejs;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -89,11 +88,8 @@ public class NodejsTernHelper {
 			}
 
 			try {
-				
-				byte[] bytes = IOUtils.toByteArray(in);
-				System.err.println(IOUtils.toString(bytes));
 				JsonObject response = JsonObject
-						.readFrom(new InputStreamReader(new ByteArrayInputStream(bytes)));
+						.readFrom(new InputStreamReader(in));
 				if (interceptors != null) {
 					for (IInterceptor interceptor : interceptors) {
 						interceptor.handleResponse(response, server,
