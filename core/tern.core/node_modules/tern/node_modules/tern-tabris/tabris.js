@@ -14,35 +14,49 @@
     "UnknownTabrisEvent" : {"severity" : "error"}
   };
   
-  // tabris.create(
+  if (tern.registerLint) {
+    
+    // validate tabris.create(
+    tern.registerLint("tabrisCreate_lint", function(node, addMessage, getRule) {
+      var argNode = node.arguments[0];
+      if (argNode) {
+        var cx = infer.cx(), types = cx.definitions.tabris["!types"], typeName = argNode.value;
+        if (!types.hasProp(typeName)) addMessage(argNode, "Unknown tabris type '" + typeName + "'", defaultRules.UnknownTabrisType.severity);
+      }
+    });
+    
+    // validate widget.get(    
+    tern.registerLint("tabrisGet_lint", function(node, addMessage, getRule) {
+      var argNode = node.arguments[0];
+      if (argNode) {
+        var cx = infer.cx(), proxyType = argNode._tabris && argNode._tabris.proxyType, propertyName = argNode.value;
+        if (!getPropertyType(proxyType, propertyName)) addMessage(argNode, "Unknown tabris property '" + propertyName + "'", defaultRules.UnknownTabrisProperty.severity);
+      }
+    });
+
+    // validate on, off, trigger event(    
+    tern.registerLint("tabrisEvent_lint", function(node, addMessage, getRule) {
+      var argNode = node.arguments[0];
+      if (argNode) {
+        var cx = infer.cx(), proxyType = argNode._tabris && argNode._tabris.proxyType, eventName = argNode.value;
+        if (!getEventType(proxyType, eventName)) addMessage(argNode, "Unknown tabris event '" + eventName + "'", defaultRules.UnknownTabrisEvent.severity);
+      }
+    });
+    
+  }     
   
-  function validateTabrisType(node, addMessage) {
-    var argNode = node.arguments[0];
-    if (argNode) {
-      var cx = infer.cx(), types = cx.definitions.tabris["!types"], typeName = argNode.value;
-      if (!types.hasProp(typeName)) addMessage(argNode, "Unknown tabris type '" + typeName + "'", defaultRules.UnknownTabrisType.severity);
-    }
-  };
+  // tabris.create(
   
   infer.registerFunction("tabris_create", function(_self, args, argNodes) {
     if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
-	    return infer.ANull;
+      return infer.ANull;
     var cx = infer.cx(), server = cx.parent, name = argNodes[0].value, locals = cx.definitions.tabris["!types"], tabrisType = locals.hasProp(name);
-	  argNodes[0]._tabris = {"type" : "tabris_create"};
-	  if (_self.hasProp) _self.hasProp("create").getFunctionType().lint = validateTabrisType;
+    argNodes[0]._tabris = {"type" : "tabris_create"};
     if (tabrisType) return new infer.Obj(tabrisType.getType().getProp("prototype").getType());    
     return infer.ANull;
   });
 
   // widget.get(
-  
-  function validateTabrisProperty(node, addMessage) {
-    var argNode = node.arguments[0];
-    if (argNode) {
-      var cx = infer.cx(), proxyType = argNode._tabris && argNode._tabris.proxyType, propertyName = argNode.value;
-      if (!getPropertyType(proxyType, propertyName)) addMessage(argNode, "Unknown tabris property '" + propertyName + "'", defaultRules.UnknownTabrisProperty.severity);
-    }
-  };
   
   function getObjectProperties(proto) {
     var cx = infer.cx(), locals = cx.definitions.tabris;    
@@ -65,14 +79,13 @@
   }
   
   infer.registerFunction("tabris_Proxy_get", function(_self, args, argNodes) {
-	  if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
-	    return infer.ANull;
+    if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
+      return infer.ANull;
 	  
-	  var widgetType = _self.getType(), propertyName = argNodes[0].value, propertyType = getPropertyType(widgetType, propertyName);
-	  argNodes[0]._tabris = {"type" : "tabris_Proxy_get", "proxyType" : widgetType};
-	  if (_self.hasProp) _self.hasProp("get").getFunctionType().lint = validateTabrisProperty;
-	  if (propertyType) return propertyType.getType();
-	  return infer.ANull;
+    var widgetType = _self.getType(), propertyName = argNodes[0].value, propertyType = getPropertyType(widgetType, propertyName);
+    argNodes[0]._tabris = {"type" : "tabris_Proxy_get", "proxyType" : widgetType};
+    if (propertyType) return propertyType.getType();
+    return infer.ANull;
   });
 
   // widget.on(
@@ -97,28 +110,12 @@
     return null;
   }
   
-  function validateTabrisEventType(node, addMessage) {
-    var argNode = node.arguments[0];
-    if (argNode) {
-      var cx = infer.cx(), proxyType = argNode._tabris && argNode._tabris.proxyType, eventName = argNode.value;
-      if (!getEventType(proxyType, eventName)) addMessage(argNode, "Unknown tabris event '" + eventName + "'", defaultRules.UnknownTabrisEvent.severity);
-    }
-  };
-  
   infer.registerFunction("tabris_Proxy_eventtype", function(_self, args, argNodes) {
     if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
       return infer.ANull;
     
     var proxyType = _self.getType();
     argNodes[0]._tabris = {"type" : "tabris_Proxy_eventtype", "proxyType" : proxyType};
-    if (_self.hasProp) {
-      var fn = _self.hasProp("on");
-      if (!fn) fn = _self.hasProp("off");
-      if (!fn) fn = _self.hasProp("trigget");      
-      if (fn) fn.getFunctionType().lint = validateTabrisEventType;
-    }
-    //if (propertyType) return propertyType.getType();
-    //return infer.ANull;
   });
   
   tern.registerPlugin("tabris", function(server, options) {    
@@ -537,7 +534,10 @@
           "prototype" : {
             "get" : {
               "!type" : "fn(name: string) -> !custom:tabris_Proxy_get",
-              "!doc" : "Retrieves the current value of the given property from the a and returns it."
+              "!doc" : "Retrieves the current value of the given property from the a and returns it.",
+              "!data": {
+                "!lint": "tabrisGet_lint"
+              }
             }
           }
         },
@@ -547,7 +547,10 @@
             "get" : {
               "!type" : "fn(name: string) -> !custom:tabris_Proxy_get",
               "!doc" : "Retrieves the current value of the given property from the widget and returns it.",
-              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#getname"
+              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#getname",
+              "!data": {
+                "!lint": "tabrisGet_lint"
+              }
             },
             "set" : {
               "!type" : "fn(name: string, value: string) -> !this",
@@ -583,19 +586,28 @@
               "!type" : "fn(type: string, listener: fn(), context?: ?) -> !this",
               "!effects" : [ "custom tabris_Proxy_eventtype", "call !1 this=!this" ],
               "!doc" : "Binds a listener function to the widget. The listener will be invoked whenever an event of the given event type is fired.",
-              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#ontype-listener-context"
+              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#ontype-listener-context",
+              "!data": {
+                "!lint": "tabrisEvent_lint"
+              }
             },
             "off" : {
               "!type" : "fn(type?: string, listener?: fn(), context?: ?) -> !this",
               "!effects" : [ "custom tabris_Proxy_eventtype", "call !1 this=!this" ],
               "!doc" : "Removes a previously-bound listener function from a widget. If no context is specified, all of the versions of the listener with different contexts will be removed. If no listener is specified, all listeners for the event will be removed. If no type is specified, callbacks for all events will be removed. Returns the widget itself.",
-              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#ontype-listener-context"
+              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#ontype-listener-context",
+              "!data": {
+                "!lint": "tabrisEvent_lint"
+              }
             },
             "trigger" : {
               "!type" : "fn(type?: string, param?: ?) -> !this",
               "!effects" : [ "custom tabris_Proxy_eventtype"],
               "!doc" : "Programmatically invokes all listeners for the given event type with a given set of parameters. Returns the widget itself.",
-              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#triggertype-param-"
+              "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#triggertype-param-",
+              "!data": {
+                "!lint": "tabrisEvent_lint"
+              }
             },
             "dispose" : {
               "!type" : "fn()",
@@ -647,7 +659,10 @@
       "create" : {
         "!type" : "fn(type: string, properties?: ?) -> !custom:tabris_create",
         "!doc" : "Creates a native widget of a given type and returns its reference.",
-        "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#tabriscreatetype-properties"
+        "!url" : "https://github.com/eclipsesource/tabris-js/blob/master/doc/widgets.md#tabriscreatetype-properties",
+        "!data": {
+          "!lint": "tabrisCreate_lint"  
+        }
       }
     }
   }
