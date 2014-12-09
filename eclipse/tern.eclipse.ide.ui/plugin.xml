@@ -317,7 +317,11 @@
   	  <image
             id="node-mongoose"
             icon="/icons/full/obj16/node-mongoose.png" >
-      </image>                                      
+      </image>   
+ 	  <image
+            id="node-lint"
+            icon="/icons/full/obj16/node.png" >
+      </image>                                         
   	  <image
             id="node"
             icon="/icons/full/obj16/node.png" >
