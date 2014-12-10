@@ -15,7 +15,18 @@ import tern.server.protocol.lint.ITernLintCollector;
 public class MockTernLintCollector implements ITernLintCollector {
 
 	@Override
-	public void addMessage(String message, Long start, Long end, String severity) {
+	public void startLint(String file) {
+
+	}
+
+	@Override
+	public void addMessage(String message, Long start, Long end,
+			String severity, String file) {
+
+	}
+
+	@Override
+	public void endLint(String file) {
 
 	}
 

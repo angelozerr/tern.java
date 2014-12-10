@@ -12,5 +12,11 @@ package tern.server.protocol.lint;
 
 public interface ITernLintCollector {
 
-	void addMessage(String message, Long start, Long end, String severity);
+	void startLint(String file);
+
+	void addMessage(String message, Long start, Long end, String severity,
+			String file);
+
+	void endLint(String file);
+
 }

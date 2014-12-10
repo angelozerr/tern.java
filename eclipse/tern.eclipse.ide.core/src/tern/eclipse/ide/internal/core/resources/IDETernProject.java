@@ -43,6 +43,7 @@ import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
 import tern.eclipse.ide.internal.core.TernRepositoryManager;
 import tern.eclipse.ide.internal.core.Trace;
+import tern.eclipse.ide.internal.core.builder.TernBuilder;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.repository.ITernRepository;
@@ -180,6 +181,12 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onLoadBefore);
 			super.doLoad();
+			// add tern builder if needed
+			try {
+				TernBuilder.addTernBuilder(project);
+			} catch (CoreException e) {
+				Trace.trace(Trace.SEVERE, "Error while adding tern builder", e);
+			}
 			// Load IDE informations of the tern project.
 			loadIDEInfos();
 

@@ -87,8 +87,7 @@ public abstract class AbstractConvertProjectCommandHandler extends
 	}
 
 	private void doUninstall(IProject project, IProgressMonitor monitor) {
-		// TODO Auto-generated method stub
-
+	
 	}
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {

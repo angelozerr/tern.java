@@ -31,11 +31,23 @@
 		point="org.eclipse.core.resources.builders" 
 		id="ternBuilder"
 		name="%ternBuilder.name">
-		<builder hasNature="true" >
+		<builder>
 			<run class="tern.eclipse.ide.internal.core.builder.TernBuilder">
 			</run>
 		</builder>
 	</extension>					
+	
+	<!-- =================================================================================== -->
+	<!-- Extension: Tern JavaScript Problem                                                             -->
+	<!-- =================================================================================== -->
+	<extension 
+			point="org.eclipse.core.resources.markers"
+			id="problem"  
+			name="%ternProblemName">
+		<super type="org.eclipse.core.resources.problemmarker"/>
+		<super type="org.eclipse.core.resources.textmarker"/>
+		<persistent value="true"/>
+	</extension> 
 	
 	<!-- Preferences initialization -->
 	<extension

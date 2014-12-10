@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.core,
  tern.server.nodejs,
  tern.eclipse,
- org.eclipse.jface.text
+ org.eclipse.jface.text,
+ org.eclipse.core.commands
 Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.preferences,
  tern.eclipse.ide.core.resources,

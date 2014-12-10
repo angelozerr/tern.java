@@ -504,6 +504,12 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	@Override
+	public void request(TernQuery query, ITernLintCollector collector)
+			throws IOException, TernException {
+		request(query, null, collector);
+	}
+
+	@Override
 	public ITernRepository getRepository() {
 		return null;
 	}

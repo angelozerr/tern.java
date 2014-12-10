@@ -79,8 +79,13 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				ITernLintCollector collector = new ITernLintCollector() {
 
 					@Override
+					public void startLint(String file) {
+
+					}
+
+					@Override
 					public void addMessage(String message, Long start,
-							Long end, String severity) {
+							Long end, String severity, String file) {
 						TernAnnotation existingAnnotation = getExistingAnnotation(
 								message, start.intValue(), end.intValue(),
 								severity, annotationsToRemove);
@@ -96,6 +101,11 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 									annotation.getStart(), annotation.getEnd()
 											- annotation.getStart()));
 						}
+					}
+
+					@Override
+					public void endLint(String file) {
+
 					}
 
 					private TernAnnotation getExistingAnnotation(

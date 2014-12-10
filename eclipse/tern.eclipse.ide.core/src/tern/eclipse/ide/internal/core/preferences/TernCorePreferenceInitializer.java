@@ -39,5 +39,8 @@ public class TernCorePreferenceInitializer extends
 		// tern.core/node_modules/tern
 		node.put(TernCorePreferenceConstants.USED_REPOSITORY_NAME,
 				ITernRepositoryManager.DEFAULT_REPOSITORY_NAME);
+		// Validation
+		node.putBoolean(TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER,
+				false);
 	}
 }

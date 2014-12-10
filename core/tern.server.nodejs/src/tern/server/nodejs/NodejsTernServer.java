@@ -34,6 +34,7 @@ import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.lint.TernLintQuery;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.StringUtils;
 
@@ -339,16 +340,24 @@ public class NodejsTernServer extends AbstractTernServer {
 			if (jsonObject != null) {
 				JsonArray messages = (JsonArray) jsonObject.get("messages");
 				if (messages != null) {
-					String message = null;
-					String severity = null;
-					JsonObject messageObject = null;
-					for (JsonValue value : messages) {
-						messageObject = (JsonObject) value;
-						message = getText(messageObject.get("message"));
-						severity = getText(messageObject.get("severity"));
-						Long startCh = getCh(messageObject, "from");
-						Long endCh = getCh(messageObject, "to");
-						collector.addMessage(message, startCh, endCh, severity);
+					TernLintQuery query = (TernLintQuery) doc.getQuery();
+					if (query.isGroupByFiles()) {
+						JsonObject filesObject = null;
+						String file = null;
+						for (JsonValue files : messages) {
+							filesObject = (JsonObject) files;
+							file = getText(filesObject.get("file"));
+							collector.startLint(file);
+
+							JsonArray messagesFile = (JsonArray) filesObject
+									.get("messages");
+							if (messagesFile != null) {
+								addMessages(messagesFile, collector);
+							}
+							collector.endLint(file);
+						}
+					} else {
+						addMessages(messages, collector);
 					}
 				}
 			}
@@ -356,6 +365,22 @@ public class NodejsTernServer extends AbstractTernServer {
 			throw new TernException(e);
 		}
 
+	}
+
+	protected void addMessages(JsonArray messages, ITernLintCollector collector) {
+		String message = null;
+		String severity = null;
+		String file = null;
+		JsonObject messageObject = null;
+		for (JsonValue value : messages) {
+			messageObject = (JsonObject) value;
+			message = getText(messageObject.get("message"));
+			severity = getText(messageObject.get("severity"));
+			Long startCh = getCh(messageObject, "from");
+			Long endCh = getCh(messageObject, "to");
+			file = getText(messageObject.get("file"));
+			collector.addMessage(message, startCh, endCh, severity, file);
+		}
 	}
 
 	@Override

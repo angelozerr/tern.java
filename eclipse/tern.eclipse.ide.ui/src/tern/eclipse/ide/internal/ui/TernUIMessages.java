@@ -109,6 +109,10 @@ public final class TernUIMessages extends NLS {
 	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
 	public static String TernContentAssistPreferencesPage_omitObjectPrototype_label;
 
+	// Validation preferences
+	public static String TernValidationPreferencesPage_availableTernBuilder_label;
+
+	// Tern Hover
 	public static String TernHover_openDeclaration;
 
 	private TernUIMessages() {

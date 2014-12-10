@@ -35,4 +35,9 @@ public class TernCorePreferenceConstants {
 	public static final String REPOSITORIES = "repositories"; //$NON-NLS-1$
 	public static final String USED_REPOSITORY_NAME = "used-repository-name"; //$NON-NLS-1$
 
+	/**
+	 * Tern validation preferences constants.
+	 */
+	public static final String VALIDATION_USE_PROJECT_SETTINGS = "validation-use-project-settings";//$NON-NLS-1$
+	public static final String AVAILABLE_TERN_BUILDER = "availableTernBuilder"; //$NON-NLS-1$
 }

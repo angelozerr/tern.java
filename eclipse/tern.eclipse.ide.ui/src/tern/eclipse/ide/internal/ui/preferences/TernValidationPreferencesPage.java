@@ -22,27 +22,26 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 
+import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.ImageResource;
-import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.preferences.PropertyPreferencePage;
 
 /**
- * Tern content assist preferences page used for global and project preferences.
+ * Tern validation preferences page used for global and project preferences.
  *
  */
-public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
+public class TernValidationPreferencesPage extends PropertyPreferencePage {
 
-	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernContentAssistPropertyPage";
-	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernContentAssistPropertyPage";
+	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernValidationPropertyPage";
+	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernValidationPropertyPage";
 
 	private final IPreferencesService fPreferencesService;
 
-	private Button generateAnonymousFunctionCheckbox;
-	private Button expandFunctionCheckbox;
-	private Button omitObjectPrototype;
+	private Button availableTernBuilderCheckbox;
 
-	public TernContentAssistPreferencesPage() {
+	public TernValidationPreferencesPage() {
 		setImageDescriptor(ImageResource
 				.getImageDescriptor(ImageResource.IMG_LOGO));
 		fPreferencesService = Platform.getPreferencesService();
@@ -54,22 +53,12 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		page.setLayout(new GridLayout());
 
 		IScopeContext[] preferenceScopes = createPreferenceScopes();
-		expandFunctionCheckbox = createCheckbox(
+		availableTernBuilderCheckbox = createCheckbox(
 				page,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
+				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER,
 				preferenceScopes,
-				TernUIMessages.TernContentAssistPreferencesPage_expandFunction_label);
+				TernUIMessages.TernValidationPreferencesPage_availableTernBuilder_label);
 
-		generateAnonymousFunctionCheckbox = createCheckbox(
-				page,
-				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
-				preferenceScopes,
-				TernUIMessages.TernContentAssistPreferencesPage_generateAnonymousFunction_label);
-		omitObjectPrototype = createCheckbox(
-				page,
-				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
-				preferenceScopes,
-				TernUIMessages.TernContentAssistPreferencesPage_omitObjectPrototype_label);
 		return page;
 	}
 
@@ -104,15 +93,8 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		super.performDefaults();
 		IEclipsePreferences defaultPreferences = createPreferenceScopes()[1]
 				.getNode(getPreferenceNodeQualifier());
-		updateCheckbox(expandFunctionCheckbox,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
-				defaultPreferences);
-		updateCheckbox(
-				generateAnonymousFunctionCheckbox,
-				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
-				defaultPreferences);
-		updateCheckbox(omitObjectPrototype,
-				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
+		updateCheckbox(availableTernBuilderCheckbox,
+				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER,
 				defaultPreferences);
 	}
 
@@ -122,16 +104,9 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		IScopeContext[] contexts = createPreferenceScopes();
 		// remove project-specific information if it's not enabled
 		boolean remove = getProject() != null && !isElementSettingsEnabled();
-		updateContexts(expandFunctionCheckbox,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
-				contexts, remove);
-		updateContexts(
-				generateAnonymousFunctionCheckbox,
-				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
-				contexts, remove);
-		updateContexts(omitObjectPrototype,
-				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
-				contexts, remove);
+		updateContexts(availableTernBuilderCheckbox,
+				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER, contexts,
+				remove);
 		flushContexts(contexts);
 		return ok;
 	}
@@ -150,7 +125,7 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 
 	@Override
 	protected String getPreferenceNodeQualifier() {
-		return TernUIPlugin.getDefault().getBundle().getSymbolicName();
+		return TernCorePlugin.getDefault().getBundle().getSymbolicName();
 	}
 
 	@Override
@@ -160,7 +135,7 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 
 	@Override
 	protected String getProjectSettingsKey() {
-		return TernUIPreferenceConstants.CONTENT_ASSIST_USE_PROJECT_SETTINGS;
+		return TernCorePreferenceConstants.VALIDATION_USE_PROJECT_SETTINGS;
 	}
 
 	@Override

@@ -99,7 +99,11 @@
        <page
 	          name="%TernPreferencePage.name"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
-	          id="tern.eclipse.ide.preferences" />	  
+	          id="tern.eclipse.ide.preferences" />
+	   <page  name="%TernContentAssistPropertyPage.name"
+              category="tern.eclipse.ide.preferences"
+	          class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
+	          id="tern.eclipse.ide.ui.preferences.TernContentAssistPropertyPage" />		          	  
        <page  name="%TernDevelopmentPropertyPage.name"
               category="tern.eclipse.ide.preferences"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
@@ -107,11 +111,11 @@
        <page  name="%TernRepositoryPropertyPage.name"
               category="tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.TernRepositoryPropertyPage" />	          
-	   <page  name="%TernContentAssistPropertyPage.name"
+	          id="tern.eclipse.ide.ui.preferences.TernRepositoryPropertyPage" />  
+	   <page  name="%TernValidationPropertyPage.name"
               category="tern.eclipse.ide.preferences"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.TernContentAssistPropertyPage" />	          	          	          
+	          class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"
+	          id="tern.eclipse.ide.ui.preferences.TernValidationPropertyPage" />
 	</extension>
 
 	<extension
@@ -125,7 +129,18 @@
                   <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
-      </page>    
+      </page>
+	  <page
+            name="%TernContentAssistPropertyPage.name"
+            category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
+            class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
+            id="tern.eclipse.ide.ui.properties.TernContentAssistPropertyPage">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
+		     </adapt>         
+         </enabledWhen>
+      </page>          
 	  <page
             name="%TernModulesPropertyPage.name"
             category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
@@ -171,16 +186,16 @@
          </enabledWhen>
       </page>      
 	  <page
-            name="%TernContentAssistPropertyPage.name"
+            name="%TernValidationPropertyPage.name"
             category="tern.eclipse.ide.ui.properties.TernMainPropertyPage"        
-            class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
-            id="tern.eclipse.ide.ui.properties.TernContentAssistPropertyPage">
+            class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"
+            id="tern.eclipse.ide.ui.properties.TernValidationPropertyPage">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
 		     </adapt>         
          </enabledWhen>
-      </page>                          		          		  	
+      </page>
 	</extension>
      
     <!-- Tern Console -->
