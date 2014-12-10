@@ -10,10 +10,10 @@
  ],
  "repository": {
   "type": "git",
-  "url": "https://github.com/angelozerr/tern.java.git"
+  "url": "https://github.com/vrubezhny/tern-cordovajs.git"
  },
  "bugs": {
-  "url": "https://github.com/angelozerr/tern.java/issues"
+  "url": "https://github.com/vrubezhny/tern-cordovajs/issues"
  },
  "help": {
   "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-CordovaJS-support"
