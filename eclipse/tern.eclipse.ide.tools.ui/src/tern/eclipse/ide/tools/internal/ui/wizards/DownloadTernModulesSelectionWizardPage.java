@@ -194,9 +194,7 @@ public class DownloadTernModulesSelectionWizardPage extends
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				refreshButton.setEnabled(false);
-				Job refreshJob = new RefreshRepositoryJob(repositoryURL
-						.getText());
-				refreshJob.schedule();
+				refreshModules();
 
 			}
 		});
@@ -256,7 +254,9 @@ public class DownloadTernModulesSelectionWizardPage extends
 										NLS.bind(
 												TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_errorMessage,
 												url), status);
-					}
+					} else {
+						modulesBlock.setEnabled(true);	
+					}					
 				}
 			});
 		}
@@ -264,6 +264,12 @@ public class DownloadTernModulesSelectionWizardPage extends
 
 	@Override
 	protected void initialize() {
+		refreshModules();
+	}
+
+	protected void refreshModules() {
+		modulesBlock.setEnabled(false);
+		modulesBlock.setTernModules(ITernModule.EMPTY_MODULE);
 		Job refreshJob = new RefreshRepositoryJob(repositoryURL.getText());
 		refreshJob.schedule();
 	}

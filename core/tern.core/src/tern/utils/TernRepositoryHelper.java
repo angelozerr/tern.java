@@ -41,7 +41,7 @@ public class TernRepositoryHelper {
 	/**
 	 * Default tern repository.json URL
 	 */
-	public static final String DEFAULT_TERN_REPOSITORY_URL = "https://raw.githubusercontent.com/angelozerr/tern.java/master/eclipse/tern.eclipse.ide.tools.ui/TO_DELETE/repository.json";
+	public static final String DEFAULT_TERN_REPOSITORY_URL = "https://raw.githubusercontent.com/paulvi/tern-plugins/master/plugins.json";
 
 	/**
 	 * Load tern modules coming from the given repository.json URL.

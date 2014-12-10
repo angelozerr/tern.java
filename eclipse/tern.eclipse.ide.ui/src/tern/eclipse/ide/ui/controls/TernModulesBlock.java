@@ -419,4 +419,8 @@ public class TernModulesBlock extends AbstractTableBlock {
 	public IProject getProject() {
 		return project;
 	}
+
+	public void setEnabled(boolean enabled) {
+		getTable().setEnabled(enabled);
+	}
 }
