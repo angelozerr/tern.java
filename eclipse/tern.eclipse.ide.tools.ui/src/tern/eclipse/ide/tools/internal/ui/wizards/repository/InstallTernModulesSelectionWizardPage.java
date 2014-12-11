@@ -156,7 +156,7 @@ public class InstallTernModulesSelectionWizardPage extends
 						repositoryPath.setText(repository
 								.getTernBaseDirAsString());
 						InstallTernModulesSelectionWizardPage.this
-								.dialogChanged();
+								.getModel().setRepository(repository);
 					}
 				});
 
