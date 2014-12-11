@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.tools.internal.ui.wizards;
+package tern.eclipse.ide.tools.internal.ui.wizards.repository;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -42,18 +42,19 @@ import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIPlugin;
+import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
 import tern.eclipse.ide.ui.controls.TernModulesBlock;
 import tern.eclipse.ide.ui.viewers.TernRepositoryLabelProvider;
 import tern.repository.ITernRepository;
+import tern.repository.TernRepositoryHelper;
 import tern.server.ITernModule;
-import tern.utils.TernRepositoryHelper;
 
 /**
  * Wizard page used to load repository.json and select tern modules to download.
  *
  */
-public class DownloadTernModulesSelectionWizardPage extends
-		TernWizardPage<DownloadOptions> {
+public class InstallTernModulesSelectionWizardPage extends
+		TernWizardPage<InstallTernModulesOptions> {
 
 	private static final String PAGE = "DownloadTernModulesSelectionWizardPage";
 
@@ -65,10 +66,10 @@ public class DownloadTernModulesSelectionWizardPage extends
 
 	private Text repositoryURL;
 
-	public DownloadTernModulesSelectionWizardPage() {
+	public InstallTernModulesSelectionWizardPage() {
 		super(PAGE);
-		setTitle(TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_title);
-		setDescription(TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_description);
+		setTitle(TernToolsUIMessages.InstallTernModulesSelectionWizardPage_title);
+		setDescription(TernToolsUIMessages.InstallTernModulesSelectionWizardPage_description);
 	}
 
 	@Override
@@ -86,6 +87,11 @@ public class DownloadTernModulesSelectionWizardPage extends
 		// Repository URL
 		createRepositoryURL(container);
 		// Tern Modules list
+		createModules(container);
+		return container;
+	}
+
+	protected void createModules(Composite container) {
 		modulesBlock = new TernModulesBlock(null, null);
 		Control control = modulesBlock.createControl(container);
 		modulesBlock
@@ -93,15 +99,13 @@ public class DownloadTernModulesSelectionWizardPage extends
 
 					@Override
 					public void selectionChanged(SelectionChangedEvent event) {
-						DownloadTernModulesSelectionWizardPage.this
+						InstallTernModulesSelectionWizardPage.this
 								.dialogChanged();
 					}
 				});
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
-
-		return container;
 	}
 
 	/**
@@ -121,7 +125,7 @@ public class DownloadTernModulesSelectionWizardPage extends
 		// Label
 		Label repositoryNameLabel = new Label(container, SWT.NONE);
 		repositoryNameLabel
-				.setText(TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_localRespositoryName_text);
+				.setText(TernToolsUIMessages.InstallTernModulesSelectionWizardPage_localRespositoryName_text);
 
 		// Combo repository
 		repositoryViewer = new ComboViewer(container, SWT.DROP_DOWN
@@ -151,6 +155,8 @@ public class DownloadTernModulesSelectionWizardPage extends
 								.getSelection()).getFirstElement();
 						repositoryPath.setText(repository
 								.getTernBaseDirAsString());
+						InstallTernModulesSelectionWizardPage.this
+								.dialogChanged();
 					}
 				});
 
@@ -181,7 +187,7 @@ public class DownloadTernModulesSelectionWizardPage extends
 
 		Label repositoryURLLabel = new Label(container, SWT.NONE);
 		repositoryURLLabel
-				.setText(TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_repositoryURL_text);
+				.setText(TernToolsUIMessages.InstallTernModulesSelectionWizardPage_repositoryURL_text);
 
 		repositoryURL = new Text(container, SWT.BORDER);
 		repositoryURL.setText(TernRepositoryHelper.DEFAULT_TERN_REPOSITORY_URL);
@@ -245,18 +251,18 @@ public class DownloadTernModulesSelectionWizardPage extends
 								TernToolsUIPlugin.PLUGIN_ID,
 								IStatus.ERROR,
 								NLS.bind(
-										TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_errorMessage,
+										TernToolsUIMessages.InstallTernModulesSelectionWizardPage_errorMessage,
 										url), e);
 						ErrorDialog
 								.openError(
 										Display.getDefault().getActiveShell(),
-										TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_errorTitle,
+										TernToolsUIMessages.InstallTernModulesSelectionWizardPage_errorTitle,
 										NLS.bind(
-												TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_errorMessage,
+												TernToolsUIMessages.InstallTernModulesSelectionWizardPage_errorMessage,
 												url), status);
 					} else {
-						modulesBlock.setEnabled(true);	
-					}					
+						modulesBlock.setEnabled(true);
+					}
 				}
 			});
 		}
@@ -278,13 +284,13 @@ public class DownloadTernModulesSelectionWizardPage extends
 	protected String validate() {
 		Object[] objModules = modulesBlock.getCheckedModules();
 		if (objModules.length == 0) {
-			return TernToolsUIMessages.DownloadTernModulesSelectionWizardPage_modules_selection_validation;
+			return TernToolsUIMessages.InstallTernModulesSelectionWizardPage_modules_selection_validation;
 		}
 		return null;
 	}
 
 	@Override
-	protected void updateModel(DownloadOptions model) {
+	protected void updateModel(InstallTernModulesOptions model) {
 		Object[] objModules = modulesBlock.getCheckedModules();
 		ITernModule[] modules = new ITernModule[objModules.length];
 		ITernModule module = null;

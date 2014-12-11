@@ -1,9 +1,10 @@
-package tern.eclipse.ide.tools.internal.ui.wizards;
+package tern.eclipse.ide.tools.internal.ui.wizards.repository;
 
 import tern.repository.ITernRepository;
 import tern.server.ITernModule;
+import tern.server.nodejs.npm.INPMProcessListener;
 
-public class DownloadOptions {
+public class InstallTernModulesOptions {
 
 	private ITernRepository repository;
 	private ITernModule[] ternModules;

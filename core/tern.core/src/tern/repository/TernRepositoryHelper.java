@@ -8,8 +8,9 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.utils;
+package tern.repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,8 +27,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import tern.TernException;
-import tern.server.BasicTernPlugin;
 import tern.server.ITernModule;
+import tern.utils.IOUtils;
+import tern.utils.StringUtils;
+import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
@@ -77,9 +80,11 @@ public class TernRepositoryHelper {
 		ITernModule module = null;
 		List<ITernModule> modules = new ArrayList<ITernModule>();
 		for (Member member : repository) {
-			module = new BasicTernPlugin(member.getName());
+			module = new TernModuleToDownload(member.getName(),
+					(JsonObject) member.getValue());
 			modules.add(module);
 		}
 		return modules;
 	}
+
 }

@@ -47,11 +47,11 @@
             id="tern.eclipse.ide.ui.wizard">
       </category>         
       <wizard
-            name="%DownloadTernModulesWizard.name"
-            icon="icons/full/etool16/plugin.gif"
+            name="%InstallTernModulesWizard.name"
+            icon="icons/full/etool16/logo.png"
             category="tern.eclipse.ide.ui.wizard"
-            class="tern.eclipse.ide.tools.internal.ui.wizards.DownloadTernModulesWizard"
-            id="tern.eclipse.ide.tools.ui.wizards.DownloadTernModulesWizard">
+            class="tern.eclipse.ide.tools.internal.ui.wizards.repository.InstallTernModulesWizard"
+            id="tern.eclipse.ide.tools.ui.wizards.repository.InstallTernModulesWizard">
       </wizard> 
    </extension>
    	  	      
@@ -88,5 +88,18 @@
             id="tern.eclipse.ide.tools.ui.wizards.webbrowser.NewOrionWizard">
       </wizard>      
    </extension>
+   
+    <!-- Tern Repository Console -->
+ 	<extension
+       point="org.eclipse.ui.console.consolePageParticipants">
+	    <consolePageParticipant
+	          class="tern.eclipse.ide.tools.internal.ui.console.TernRepositoryConsolePageParticipant"
+	          id="tern.eclipse.ide.tools.ui.console.TernRepositoryConsolePageParticipant">
+	       <enablement>
+	          <instanceof
+	                value="tern.eclipse.ide.tools.internal.ui.console.TernRepositoryConsole">
+	          </instanceof></enablement>
+	    </consolePageParticipant>
+	 </extension>   
          	       	 
 </plugin>        

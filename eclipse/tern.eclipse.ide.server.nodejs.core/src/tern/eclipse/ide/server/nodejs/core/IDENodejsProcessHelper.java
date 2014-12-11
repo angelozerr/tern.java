@@ -12,8 +12,9 @@ package tern.eclipse.ide.server.nodejs.core;
 
 import org.eclipse.core.runtime.Platform;
 
+import tern.OS;
+import tern.server.nodejs.process.NPMProcessHelper;
 import tern.server.nodejs.process.NodejsProcessHelper;
-import tern.server.nodejs.process.NodejsProcessHelper.OS;
 
 /**
  * IDE node.js process helper.
@@ -38,5 +39,17 @@ public class IDENodejsProcessHelper {
 
 	public static String[] getDefaultNodejsPaths() {
 		return NodejsProcessHelper.getDefaultNodejsPaths(os);
+	}
+
+	public static String getNPMPath() {
+		return NPMProcessHelper.getNPMPath(os);
+	}
+
+	public static String[] getDefaultNPMPaths() {
+		return NPMProcessHelper.getDefaultNPMPaths(os);
+	}
+
+	public static OS getOs() {
+		return os;
 	}
 }

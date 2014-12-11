@@ -17,36 +17,36 @@ import java.util.List;
 import tern.OS;
 
 /**
- * Node path helper.
+ * NPM path helper.
  *
  */
-public class NodejsProcessHelper {
+public class NPMProcessHelper {
 
 	private static final String[] WINDOWS_NODE_PATHS = new String[] {
-			"C:/Program Files/nodejs/node.exe".replace('/', File.separatorChar),
-			"C:/Program Files (x86)/nodejs/node.exe".replace('/',
-					File.separatorChar), "node" };
+			"C:/Program Files/nodejs/npm.cmd".replace('/', File.separatorChar),
+			"C:/Program Files (x86)/nodejs/npm.cmd".replace('/',
+					File.separatorChar), "npm.cmd" };
 
 	private static final String[] MACOS_NODE_PATHS = new String[] {
-			"/usr/local/bin/node", "/opt/local/bin/node", "node" };
+			"/usr/local/bin/npm", "/opt/local/bin/npm", "npm" };
 
 	private static final String[] LINUX_NODE_PATHS = new String[] {
-			"/usr/local/bin/node", "node" };
+			"/usr/local/bin/npm", "npm" };
 
-	public static String getNodejsPath(OS os) {
-		String path = getDefaultNodejsPath(os);
+	public static String getNPMPath(OS os) {
+		String path = getDefaultNPMPath(os);
 		if (path != null) {
 			return path;
 		}
-		File nodeFile = findNode(os);
+		File nodeFile = findNPM(os);
 		if (nodeFile != null) {
 			return nodeFile.getAbsolutePath();
 		}
-		return "node";
+		return "npm";
 	}
 
-	public static String getDefaultNodejsPath(OS os) {
-		String[] paths = getDefaultNodejsPaths(os);
+	public static String getDefaultNPMPath(OS os) {
+		String[] paths = getDefaultNPMPaths(os);
 		String path = null;
 		for (int i = 0; i < paths.length; i++) {
 			path = paths[i];
@@ -57,7 +57,7 @@ public class NodejsProcessHelper {
 		return null;
 	}
 
-	public static String[] getDefaultNodejsPaths(OS os) {
+	public static String[] getDefaultNPMPaths(OS os) {
 		switch (os) {
 		case Windows:
 			return WINDOWS_NODE_PATHS;
@@ -68,7 +68,7 @@ public class NodejsProcessHelper {
 		}
 	}
 
-	public static File findNode(OS os) {
+	public static File findNPM(OS os) {
 		String nodeFileName = getNodeFileName(os);
 		String path = System.getenv("PATH");
 		String[] paths = path.split("" + File.pathSeparatorChar, 0);
@@ -96,9 +96,9 @@ public class NodejsProcessHelper {
 
 	private static String getNodeFileName(OS os) {
 		if (os == OS.Windows) {
-			return "node.exe";
+			return "npm.cmd";
 		}
-		return "node";
+		return "npm";
 	}
 
 }

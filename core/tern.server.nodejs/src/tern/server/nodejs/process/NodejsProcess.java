@@ -320,7 +320,6 @@ public class NodejsProcess {
 			notifyErrorProcess("");
 			throw new NodejsProcessException(e);
 		}
-
 	}
 
 	/**

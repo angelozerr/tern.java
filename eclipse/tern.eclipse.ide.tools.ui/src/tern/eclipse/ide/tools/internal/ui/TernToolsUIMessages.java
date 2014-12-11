@@ -63,16 +63,20 @@ public final class TernToolsUIMessages extends NLS {
 	public static String TernDefsSelectionWizardPage_defLoader_embedInHTML;
 	public static String TernDefsSelectionWizardPage_defLoader_embedInJS;
 
-	public static String DownloadTernModulesWizard_taskLabel;
-	public static String DownloadTernModulesSelectionWizardPage_title;
-	public static String DownloadTernModulesSelectionWizardPage_repositoryURL_text;
-	public static String DownloadTernModulesSelectionWizardPage_localRespositoryName_text;
-	public static String DownloadTernModulesSelectionWizardPage_description;
-	public static String DownloadTernModulesSelectionWizardPage_errorMessage;
-	public static String DownloadTernModulesSelectionWizardPage_errorTitle;
-	public static String DownloadTernModulesSelectionWizardPage_modules_selection_validation;
+	public static String InstallTernModulesWizard_taskLabel;
+	public static String InstallTernModulesSelectionWizardPage_title;
+	public static String InstallTernModulesSelectionWizardPage_repositoryURL_text;
+	public static String InstallTernModulesSelectionWizardPage_localRespositoryName_text;
+	public static String InstallTernModulesSelectionWizardPage_description;
+	public static String InstallTernModulesSelectionWizardPage_errorMessage;
+	public static String InstallTernModulesSelectionWizardPage_errorTitle;
+	public static String InstallTernModulesSelectionWizardPage_modules_selection_validation;
 	public static String RefreshRepositoryJob_name;
 	public static String RefreshRepositoryJob_loading;
+
+	// Ten repository console
+	public static String TernRepository_name;
+	public static String TernRepositoryConsoleJob_name;
 
 	private TernToolsUIMessages() {
 	}

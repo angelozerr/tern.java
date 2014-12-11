@@ -8,17 +8,13 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.server;
+package tern;
 
 /**
- * Basic tern plugin.
+ * OS enumerations.
  *
  */
-public class BasicTernPlugin extends AbstractBasicTernModule implements
-		ITernPlugin {
+public enum OS {
 
-	public BasicTernPlugin(String name) {
-		super(name, ModuleType.Plugin);
-	}
-
+	Windows, MacOS, Linux;
 }
