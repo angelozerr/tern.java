@@ -37,14 +37,22 @@
             category="tern.eclipse.ide.ui.wizard"
             class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard"
             id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard">
-      </wizard>
+      </wizard>     
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <category
+            name="%TernWizard.name"
+            id="tern.eclipse.ide.ui.wizard">
+      </category>         
       <wizard
             name="%DownloadTernModulesWizard.name"
             icon="icons/full/etool16/plugin.gif"
             category="tern.eclipse.ide.ui.wizard"
             class="tern.eclipse.ide.tools.internal.ui.wizards.DownloadTernModulesWizard"
             id="tern.eclipse.ide.tools.internal.ui.wizards.DownloadTernModulesWizard">
-      </wizard>      
+      </wizard> 
    </extension>
    	  	      
     <!-- =================================================================================== -->
