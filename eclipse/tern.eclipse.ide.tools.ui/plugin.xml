@@ -29,14 +29,14 @@
             icon="icons/full/etool16/typedef.gif"
             category="tern.eclipse.ide.ui.wizard"
             class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernDefWizard">
+            id="tern.eclipse.ide.tools.ui.wizards.NewTernDefWizard">
       </wizard>
       <wizard
             name="%NewTernPluginWizard.name"
             icon="icons/full/etool16/plugin.gif"
             category="tern.eclipse.ide.ui.wizard"
             class="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.NewTernPluginWizard">
+            id="tern.eclipse.ide.tools.ui.wizards.NewTernPluginWizard">
       </wizard>     
    </extension>
    
@@ -51,7 +51,7 @@
             icon="icons/full/etool16/plugin.gif"
             category="tern.eclipse.ide.ui.wizard"
             class="tern.eclipse.ide.tools.internal.ui.wizards.DownloadTernModulesWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.DownloadTernModulesWizard">
+            id="tern.eclipse.ide.tools.ui.wizards.DownloadTernModulesWizard">
       </wizard> 
    </extension>
    	  	      
@@ -71,21 +71,21 @@
             icon="icons/full/etool16/codemirror.png"
             category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
             class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewCodeMirrorWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewCodeMirrorWizard">
+            id="tern.eclipse.ide.tools.ui.wizards.webbrowser.NewCodeMirrorWizard">
       </wizard>
       <wizard
             name="%NewAceWizard.name"
             icon="icons/full/etool16/ace.png"
             category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
             class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewAceWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewAceWizard">
+            id="tern.eclipse.ide.tools.ui.wizards.webbrowser.NewAceWizard">
       </wizard>
       <wizard
             name="%NewOrionWizard.name"
             icon="icons/full/etool16/orion.png"
             category="tern.eclipse.ide.ui.wizard/tern.eclipse.ide.webbrowser.ui"
             class="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewOrionWizard"
-            id="tern.eclipse.ide.tools.internal.ui.wizards.webbrowser.NewOrionWizard">
+            id="tern.eclipse.ide.tools.ui.wizards.webbrowser.NewOrionWizard">
       </wizard>      
    </extension>
          	       	 
