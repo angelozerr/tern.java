@@ -55,7 +55,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	public JSTernCompletionProposal(String name, String type, String doc,
 			String url, String origin, int start, int end) {
-		this(name, name, type, doc, url, origin, start, end);
+		this(name, null, type, doc, url, origin, start, end);
 	}
 
 	public JSTernCompletionProposal(String name, String displayName,
