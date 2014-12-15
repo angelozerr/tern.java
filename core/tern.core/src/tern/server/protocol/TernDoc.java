@@ -82,6 +82,16 @@ public class TernDoc extends JsonObject {
 	}
 
 	/**
+	 * Delete the given file name.
+	 * 
+	 * @param name
+	 *            file name to delete.
+	 */
+	public void delFile(String name) {
+		addFile(new TernFile(name));
+	}
+
+	/**
 	 * Add a tern file specifications. It may be omitted when the query should
 	 * operate on the code that the server already has, without adding anything
 	 * new.

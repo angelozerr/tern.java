@@ -246,7 +246,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 		// delete files
 		synchronized (filesToDelete) {
 			for (String name : filesToDelete) {
-				doc.addFile(new TernFile(name));
+				doc.delFile(name);
 			}
 			filesToDelete.clear();
 		}
