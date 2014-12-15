@@ -53,6 +53,13 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
 	}
 
+	private void addFileToDelete(IFile file) {
+		ITernFile tf = TernResourcesManager.getTernFile(file);
+		if (tf != null) {
+			super.addFileToDelete(tf.getFullName(getProject()));
+		}
+	}
+
 	void removeIndexedFile(IFile file) {
 		ITernFile tf = TernResourcesManager.getTernFile(file);
 		if (tf != null) {
@@ -102,18 +109,16 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 				configJob.setRule(ternProject.getProject());
 				configJob.schedule();
 			} else {
-				// FIXME : manage delete + move file
-				/*
-				 * switch (delta.getKind()) { case IResourceDelta.ADDED:
-				 * System.err.println("Resource " + resource.getLocation() +
-				 * " was added"); break; case IResourceDelta.REMOVED:
-				 * System.err.println("Resource " + resource.getLocation() +
-				 * " was removed"); break; case IResourceDelta.CHANGED:
-				 * System.err.println("Resource " + resource.getLocation() +
-				 * " has changed"); break; }
-				 */
-
-				removeIndexedFile((IFile) resource);
+				if (TernResourcesManager.isJSFile(resource.getName())) {
+					switch (delta.getKind()) {
+					case IResourceDelta.REMOVED:
+						addFileToDelete((IFile) resource);
+						break;
+					default:
+						removeIndexedFile((IFile) resource);
+						break;
+					}
+				}
 			}
 			return true;
 		}
@@ -131,12 +136,6 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 			return false;
 		}
 		return true;
-	}
-
-	private boolean isBelongToProject(IResource resource) {
-		IProject project = resource.getProject();
-		return getIDETernProject().getProject().equals(project);
-
 	}
 
 	private IDETernProject getIDETernProject() {

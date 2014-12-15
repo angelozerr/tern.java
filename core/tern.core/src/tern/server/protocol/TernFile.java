@@ -31,9 +31,44 @@ public class TernFile extends JsonObject {
 	private static final String OFFSET_LINES_FIELD_TYPE = "offsetLines";
 
 	private enum FileType {
-		part, full
+		part, full, delete
 	}
 
+	/**
+	 * Tern file to 'delete' file.
+	 * 
+	 * @param name
+	 *            file name
+	 */
+	public TernFile(String name) {
+		super.add(NAME_FIELD_NAME, name);
+		super.add(TYPE_FIELD_NAME, FileType.delete.name());
+	}
+
+	/**
+	 * Tern file for 'full' type.
+	 * 
+	 * @param name
+	 *            file name
+	 * @param text
+	 *            content of the file
+	 * @param tags
+	 *            supported tags.
+	 */
+	public TernFile(String name, String text, ScriptTagRegion[] tags) {
+		this(name, text, tags, null);
+	}
+
+	/**
+	 * Tern file for 'part' type.
+	 * 
+	 * @param name
+	 *            file name
+	 * @param text
+	 *            content of the file
+	 * @param tags
+	 *            supported tags.
+	 */
 	public TernFile(String name, String text, ScriptTagRegion[] tags,
 			Integer offset) {
 		super.add(NAME_FIELD_NAME, name);

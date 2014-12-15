@@ -48,6 +48,12 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 	private final Set<String> indexedFiles;
 	private final Set<String> syncedFiles;
 	private final Map<ITernScriptPath, Set<String>> syncedFilesPerPath;
+
+	/**
+	 * List of JS files to delete.
+	 */
+	private final Set<String> filesToDelete;
+
 	private final ITernProject project;
 
 	/**
@@ -57,12 +63,37 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 		this.indexedFiles = new HashSet<String>();
 		this.syncedFiles = new HashSet<String>();
 		this.syncedFilesPerPath = new HashMap<ITernScriptPath, Set<String>>();
+		this.filesToDelete = new HashSet<String>();
 		this.project = project;
 	}
 
 	@Override
 	public ITernProject getProject() {
 		return project;
+	}
+
+	/**
+	 * Add the given file name to delete.
+	 * 
+	 * @param name
+	 *            file name.
+	 */
+	protected void addFileToDelete(String name) {
+		synchronized (filesToDelete) {
+			filesToDelete.add(name);
+		}
+	}
+
+	/**
+	 * Remove the given file name to delete.
+	 * 
+	 * @param name
+	 *            file name.
+	 */
+	protected void removeFileToDelete(String name) {
+		synchronized (filesToDelete) {
+			filesToDelete.remove(name);
+		}
 	}
 
 	/**
@@ -75,6 +106,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 		synchronized (indexedFiles) {
 			internalRemoveIndexedFile(name);
 		}
+		removeFileToDelete(name);
 	}
 
 	/**
@@ -182,6 +214,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 	@Override
 	public void ensureSynchronized() {
 		TernDoc doc = new TernDoc();
+		// updated/added new JS files
 		synchronized (indexedFiles) {
 			// make sure we do not send duplicate files
 			Set<String> requestedFiles = new HashSet<String>();
@@ -209,6 +242,13 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 					}
 				}
 			}
+		}
+		// delete files
+		synchronized (filesToDelete) {
+			for (String name : filesToDelete) {
+				doc.addFile(new TernFile(name));
+			}
+			filesToDelete.clear();
 		}
 		// perform actual synchronization with the server
 		sendFiles(doc);
