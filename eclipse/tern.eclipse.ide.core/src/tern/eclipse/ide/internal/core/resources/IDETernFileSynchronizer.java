@@ -109,16 +109,16 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 				configJob.setRule(ternProject.getProject());
 				configJob.schedule();
 			} else {
-				if (TernResourcesManager.isJSFile(resource.getName())) {
-					switch (delta.getKind()) {
-					case IResourceDelta.REMOVED:
-						addFileToDelete((IFile) resource);
-						break;
-					default:
-						removeIndexedFile((IFile) resource);
-						break;
-					}
+				// if (TernResourcesManager.isJSFile(resource.getName())) {
+				switch (delta.getKind()) {
+				case IResourceDelta.REMOVED:
+					addFileToDelete((IFile) resource);
+					break;
+				default:
+					removeIndexedFile((IFile) resource);
+					break;
 				}
+				// }
 			}
 			return true;
 		}
