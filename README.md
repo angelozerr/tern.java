@@ -35,7 +35,6 @@ Tern.java provides an Eclipse IDE integration with Tern. For more information pl
 
 You can see [AngularJS Eclipse](https://github.com/angelozerr/angularjs-eclipse) which is based on tern.java.
 
-
 To install Tern IDE, please read [Installation - Update site](https://github.com/angelozerr/tern.java/wiki/Installation-Update-Site) section.
 
 ## Tern Tooling
@@ -44,6 +43,28 @@ There are also advanced tools for creators of tern plugins,
 see wiki pages [Tern-Toolings](https://github.com/angelozerr/tern.java/wiki/Tern-Toolings),
 [Tern-Console](https://github.com/angelozerr/tern.java/wiki/Tern-Console) and 
 [Debugging](https://github.com/angelozerr/tern.java/wiki/Debugging-tern.js-with-Nodeclipse).
+
+# Who is using tern.java?
+
+ * [JBoss Studio](http://www.jboss.org/products/devstudio/overview/) for : 
+  * Cordova Support 
+  * Angular Support
+ 
+See http://tools.jboss.org/blog/2014-06-19-beta2-for-luna.html#better-javascript for more informations.
+
+ * Liferay IDE 2.2 for : 
+  *  YUI, AUI support
+  *  Liferay support
+
+See http://www.liferay.com/fr/web/gregory.amerson/blog/-/blogs/liferay-ide-2-2-release for more informations.
+
+ * [Nodeclipse](http://www.nodeclipse.org/) for :
+  * node, express, support
+  * mongodb native, mongoose support
+  
+ * [MyEclipse](https://www.genuitec.com/products/myeclipse/) :
+
+See https://www.genuitec.com/tag/tern/ for more informations.
 
 # Developing
 
