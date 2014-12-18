@@ -51,17 +51,19 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	private ITextViewer fTextViewer;
 
 	private boolean fToggleEating;
+	private boolean generateObjectValue;
 	private boolean generateAnonymousFunction;
 
 	public JSTernCompletionProposal(String name, String type, String doc,
 			String url, String origin, int start, int end) {
-		this(name, null, type, doc, url, origin, start, end);
+		this(name, null, type, doc, url, origin, start, end, false, false);
 	}
 
 	public JSTernCompletionProposal(String name, String displayName,
 			String type, String doc, String url, String origin, int start,
-			int end) {
-		super(name, displayName, type, doc, url, origin, start, end);
+			int end, boolean isProperty, boolean isObjectKey) {
+		super(name, displayName, type, doc, url, origin, start, end,
+				isProperty, isObjectKey);
 	}
 
 	@Override
@@ -133,7 +135,12 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				// openErrorDialog(e);
 			}
 		} else {
-			fSelectedRegion = new Region(baseOffset + replacement.length(), 0);
+			int newOffset = baseOffset + replacement.length();
+			if (isObjectKey() && "string".equals(getType())) {
+				// select cursor inside quote of property value (ex : config: "")
+				newOffset--;
+			}
+			fSelectedRegion = new Region(newOffset, 0);
 		}
 	}
 
@@ -202,6 +209,20 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	private String computeReplacementString(IDocument document, int offset) {
 
+		if (isObjectKey()) {
+			StringBuilder replacement = new StringBuilder(super.getName());
+			replacement.append(": ");
+			if ("string".equals(getType())) {
+				replacement.append("\"\"");
+			}
+			// else if ("number".equals(getType())) {
+			// replacement.append("0");
+			// }
+			else if ("bool".equals(getType())) {
+				replacement.append("false");
+			}
+			return replacement.toString();
+		}
 		List<Parameter> parameters = super.getParameters();
 		if (parameters == null) {
 			return super.getReplacementString();
@@ -357,6 +378,14 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	@Override
 	protected Shell getActiveWorkbenchShell() {
 		return TernUIPlugin.getActiveWorkbenchShell();
+	}
+
+	public boolean isGenerateObjectValue() {
+		return generateObjectValue;
+	}
+
+	public void setGenerateObjectValue(boolean generateObjectValue) {
+		this.generateObjectValue = generateObjectValue;
 	}
 
 	/**

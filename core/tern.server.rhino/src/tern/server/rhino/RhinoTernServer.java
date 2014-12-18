@@ -234,12 +234,16 @@ public class RhinoTernServer extends AbstractTernServer {
 			Double startCh = getCh(rhinoObject, "start");
 			Double endCh = getCh(rhinoObject, "end");
 			int pos = endCh.intValue() - startCh.intValue();
+			// FIXME : retrieve values from completions
+			boolean isProperty = false;
+			boolean isObjectKey = false;
 			List completions = (List) rhinoObject.get("completions",
 					rhinoObject);
 			for (Object object : completions) {
 
-				addProposal(object, startCh != null ? startCh.intValue() : 0, 
-						 endCh != null ? endCh.intValue() : 0, collector);
+				addProposal(object, startCh != null ? startCh.intValue() : 0,
+						endCh != null ? endCh.intValue() : 0, isProperty,
+						isObjectKey, collector);
 			}
 		}
 	}
@@ -283,6 +287,6 @@ public class RhinoTernServer extends AbstractTernServer {
 
 	@Override
 	public void doDispose() {
-		// do nothing
+		fireEndServer();
 	}
 }

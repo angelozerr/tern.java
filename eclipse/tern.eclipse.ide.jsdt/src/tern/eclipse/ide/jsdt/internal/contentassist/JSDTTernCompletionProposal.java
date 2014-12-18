@@ -25,8 +25,9 @@ public class JSDTTernCompletionProposal extends JSTernCompletionProposal
 
 	public JSDTTernCompletionProposal(String name, String displayName,
 			String type, String doc, String url, String origin, int start,
-			int end) {
-		super(name, displayName, type, doc, url, origin, start, end);
+			int end, boolean isProperty, boolean isObjectKey) {
+		super(name, displayName, type, doc, url, origin, start, end,
+				isProperty, isObjectKey);
 	}
 
 	@Override

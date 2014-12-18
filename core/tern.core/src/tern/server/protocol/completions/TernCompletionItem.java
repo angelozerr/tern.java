@@ -27,6 +27,8 @@ public class TernCompletionItem {
 	private final String doc;
 	private final String url;
 	private final String origin;
+	private final boolean isProperty;
+	private final boolean isObjectKey;
 
 	private final String signature;
 	private final boolean function;
@@ -38,11 +40,12 @@ public class TernCompletionItem {
 
 	public TernCompletionItem(String name, String type, String doc, String url,
 			String origin) {
-		this(name, null, type, doc, url, origin);
+		this(name, null, type, doc, url, origin, false, false);
 	}
 
 	public TernCompletionItem(String name, String displayName, String type,
-			String doc, String url, String origin) {
+			String doc, String url, String origin, boolean isProperty,
+			boolean isObjectKey) {
 		this.name = name;
 		// we consider that we are inside string when display name is defined.
 		this.hasDisplayName = !StringUtils.isEmpty(displayName);
@@ -70,6 +73,8 @@ public class TernCompletionItem {
 			this.array = false;
 		}
 		this.signature = signature;
+		this.isProperty = isProperty;
+		this.isObjectKey = isObjectKey;
 	}
 
 	/**
@@ -311,4 +316,11 @@ public class TernCompletionItem {
 		return jsType;
 	}
 
+	public boolean isProperty() {
+		return isProperty;
+	}
+
+	public boolean isObjectKey() {
+		return isObjectKey;
+	}
 }

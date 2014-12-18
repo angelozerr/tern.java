@@ -69,6 +69,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		@Override
 		public void onStop(NodejsProcess server) {
 			dispose();
+			fireEndServer();
 		}
 
 	};
@@ -244,6 +245,10 @@ public class NodejsTernServer extends AbstractTernServer {
 				if (startCh != null && endCh != null) {
 					pos = endCh.intValue() - startCh.intValue();
 				}
+				boolean isProperty = StringUtils.asBoolean(
+						getText(jsonObject, IS_PROPERTY_PROPERTY), false);
+				boolean isObjectKey = StringUtils.asBoolean(
+						getText(jsonObject, IS_OBJECT_KEY_PROPERTY), false);
 				JsonArray completions = (JsonArray) jsonObject
 						.get("completions");
 				if (completions != null) {
@@ -253,12 +258,12 @@ public class NodejsTernServer extends AbstractTernServer {
 									value.asString(), null, null, null, null,
 									startCh != null ? startCh.intValue() : 0,
 									endCh != null ? endCh.intValue() : 0,
-									value, this);
+									isProperty, isObjectKey, value, this);
 						} else {
 							super.addProposal(value,
 									startCh != null ? startCh.intValue() : 0,
 									endCh != null ? endCh.intValue() : 0,
-									collector);
+									isProperty, isObjectKey, collector);
 						}
 					}
 				}

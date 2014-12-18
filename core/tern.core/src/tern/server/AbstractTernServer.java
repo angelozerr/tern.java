@@ -16,9 +16,24 @@ import java.util.List;
 import tern.ITernFileSynchronizer;
 import tern.ITernProject;
 import tern.server.protocol.completions.ITernCompletionCollector;
-import tern.utils.StringUtils;
 
+/**
+ * Abstract tern server.
+ *
+ */
 public abstract class AbstractTernServer implements ITernServer {
+
+	/**
+	 * Properties for JSON completion result.
+	 */
+	protected static final String NAME_PROPERTY = "name";
+	protected static final String DISPLAY_NAME_PROPERTY = "displayName";
+	protected static final String TYPE_PROPERTY = "type";
+	protected static final String DOC_PROPERTY = "doc";
+	protected static final String URL_PROPERTY = "url";
+	protected static final String ORIGIN_PROPERTY = "origin";
+	protected static final String IS_PROPERTY_PROPERTY = "isProperty";
+	protected static final String IS_OBJECT_KEY_PROPERTY = "isObjectKey";
 
 	private final ITernProject project;
 
@@ -85,7 +100,7 @@ public abstract class AbstractTernServer implements ITernServer {
 		if (!isDisposed()) {
 			this.dispose = true;
 			doDispose();
-			fireEndServer();
+			// fireEndServer();
 		}
 	}
 
@@ -97,15 +112,16 @@ public abstract class AbstractTernServer implements ITernServer {
 	protected abstract void doDispose();
 
 	protected void addProposal(Object completion, int start, int end,
+			boolean isProperty, boolean isObjectKey,
 			ITernCompletionCollector collector) {
-		String name = getText(completion, "name");
-		String displayName = getText(completion, "displayName");
-		String type = getText(completion, "type");
-		String doc = getText(completion, "doc");
-		String url = getText(completion, "url");
-		String origin = getText(completion, "origin");
+		String name = getText(completion, NAME_PROPERTY);
+		String displayName = getText(completion, DISPLAY_NAME_PROPERTY);
+		String type = getText(completion, TYPE_PROPERTY);
+		String doc = getText(completion, DOC_PROPERTY);
+		String url = getText(completion, URL_PROPERTY);
+		String origin = getText(completion, ORIGIN_PROPERTY);
 		collector.addProposal(name, displayName, type, doc, url, origin, start,
-				end, completion, this);
+				end, isProperty, isObjectKey, completion, this);
 	}
 
 	public abstract String getText(Object value);

@@ -62,9 +62,11 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	@Override
 	public void addProposal(String name, String displayName, String type,
 			String doc, String url, String origin, int start, int end,
-			Object completion, ITernServer ternServer) {
+			boolean isProperty, boolean isObjectKey, Object completion,
+			ITernServer ternServer) {
 		JSTernCompletionProposal proposal = internalCreateProposal(name,
-				displayName, type, doc, url, origin, start, end);
+				displayName, type, doc, url, origin, start, end, isProperty,
+				isObjectKey);
 		proposals.add(proposal);
 
 		if (expandFunction) {
@@ -78,7 +80,8 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 			if (functions != null) {
 				for (int i = 0; i < functions.length; i++) {
 					proposals.add(internalCreateProposal(name, displayName,
-							functions[i], doc, url, origin, start, end));
+							functions[i], doc, url, origin, start, end,
+							isProperty, isObjectKey));
 				}
 			}
 		}
@@ -86,10 +89,13 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 
 	private JSTernCompletionProposal internalCreateProposal(String name,
 			String displayName, String type, String doc, String url,
-			String origin, int start, int end) {
+			String origin, int start, int end, boolean isProperty,
+			boolean isObjectKey) {
 		JSTernCompletionProposal proposal = createProposal(name, displayName,
-				type, doc, url, origin, start, end);
+				type, doc, url, origin, start, end, isProperty, isObjectKey);
 		proposal.setGenerateAnonymousFunction(generateAnonymousFunction);
+		// TODO manage that with preferences
+		proposal.setGenerateObjectValue(true);
 		return proposal;
 	}
 
@@ -101,14 +107,17 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	 * @param doc
 	 * @param url
 	 * @param origin
+	 * @param isObjectKey
+	 * @param isProperty
 	 * @param pos
 	 * @param startOffset
 	 * @return
 	 */
 	protected JSTernCompletionProposal createProposal(String name,
 			String displayName, String type, String doc, String url,
-			String origin, int start, int end) {
+			String origin, int start, int end, boolean isProperty,
+			boolean isObjectKey) {
 		return new JSTernCompletionProposal(name, displayName, type, doc, url,
-				origin, start, end);
+				origin, start, end, isProperty, isObjectKey);
 	}
 }

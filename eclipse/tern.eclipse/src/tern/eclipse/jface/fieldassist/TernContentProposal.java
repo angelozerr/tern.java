@@ -21,8 +21,10 @@ public class TernContentProposal extends TernCompletionItem implements
 	private final String description;
 
 	public TernContentProposal(String name, String displayName, String type,
-			String doc, String url, String origin, int start, int end) {
-		super(name, displayName, type, doc, url, origin);
+			String doc, String url, String origin, int start, int end,
+			boolean isProperty, boolean isObjectKey) {
+		super(name, displayName, type, doc, url, origin, isProperty,
+				isObjectKey);
 		int pos = end - start;
 		this.content = getSignature().substring(pos, getSignature().length());
 		this.description = getDoc();

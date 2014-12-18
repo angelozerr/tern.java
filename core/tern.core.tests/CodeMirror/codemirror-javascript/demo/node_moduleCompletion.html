@@ -1,0 +1,199 @@
+<!doctype html>
+
+<title>CodeMirror: Tern Demo</title>
+<meta charset="utf-8"/>
+<link rel=stylesheet href="../../codemirror/doc/docs.css">
+
+<!-- CodeMirror -->
+    <link rel="stylesheet" href="../../codemirror/lib/codemirror.css">
+    <script src="../../codemirror/lib/codemirror.js"></script>
+    <link rel="stylesheet" href="../../codemirror/theme/eclipse.css">
+    <script src="../../codemirror/addon/edit/closetag.js"></script>
+    <script src="../../codemirror/addon/edit/closebrackets.js"></script>    
+    <script src="../../codemirror/addon/edit/matchbrackets.js"></script>
+    <script src="../../codemirror/addon/selection/active-line.js"></script>
+    <script src="../../codemirror/addon/runmode/runmode.js"></script>
+    <script src="../../codemirror/mode/javascript/javascript.js"></script>    
+
+<script>
+var defs = [];
+CodeMirror.tern = {};
+CodeMirror.tern.addDef = function(def) {
+	defs.push(def);
+}
+</script>
+    <script src="../addon/hint/tern/defs/ecma5.json.js"></script>    
+    
+  <!-- Tern JS -->
+  <script src="../../../../tern.core/node_modules/tern/node_modules/acorn/acorn.js"></script>
+  <script src="	../../../../tern.core/node_modules/tern/node_modules/acorn/acorn_loose.js"></script>
+  <script src="../../../../tern.core/node_modules/tern/node_modules/acorn/util/walk.js"></script>
+  <script src="../../../../tern.core/node_modules/tern/lib/signal.js"></script>
+  <script src="../../../../tern.core/node_modules/tern/lib/tern.js"></script>
+  <script src="../../../../tern.core/node_modules/tern/lib/def.js"></script>
+  <script src="../../../../tern.core/node_modules/tern/lib/comment.js"></script>
+  <script src="../../../../tern.core/node_modules/tern/lib/infer.js"></script>
+
+  <!-- Official CodeMirror Tern addon -->
+  <script src="../../codemirror/addon/tern/tern.js"></script>   
+  
+<link rel="stylesheet" href="../../codemirror/addon/dialog/dialog.css">
+<link rel="stylesheet" href="../../codemirror/addon/hint/show-hint.css">
+<link rel="stylesheet" href="../../codemirror/addon/tern/tern.css">
+<script src="../../codemirror/addon/dialog/dialog.js"></script>
+<script src="../../codemirror/addon/hint/show-hint.js"></script>
+<script src="../../codemirror/addon/tern/tern.js"></script>
+
+<script src="../../../../tern.core/node_modules/tern/plugin/node.js"></script>
+
+<style>
+      .CodeMirror {border: 1px solid #ddd;}
+    </style>
+<div id=nav>
+  <a href="http://codemirror.net"><img id=logo src="../../codemirror/doc/logo.png"></a>
+
+  <ul>
+    <li><a href="../index.html">Home</a>
+    <li><a href="../doc/manual.html">Manual</a>
+    <li><a href="https://github.com/marijnh/codemirror">Code</a>
+  </ul>
+  <ul>
+    <li><a class=active href="#">Tern</a>
+  </ul>
+</div>
+
+<article>
+<h2>Tern Demo</h2>
+
+<form><textarea id="code" name="code">
+var fs = require('fs');
+fs.
+</textarea></p>
+
+<p>Demonstrates integration of <a href="http://ternjs.net/">Tern</a>
+and CodeMirror with AlloyUI. The following keys are bound:</p>
+
+<dl>
+  <dt>Ctrl-Space</dt><dd>Autocomplete</dd>
+  <dt>Ctrl-I</dt><dd>Find type at cursor</dd>
+  <dt>Alt-.</dt><dd>Jump to definition (Alt-, to jump back)</dd>
+  <dt>Ctrl-Q</dt><dd>Rename variable</dd>
+</dl>
+
+<p>Documentation is sparse for now. See the top of
+the <a href="../../codemirror/addon/tern/tern.js">script</a> for a rough API
+overview.</p>
+
+<script>
+
+  function getURL(url, c) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("get", url, true);
+    xhr.send();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState != 4) return;
+      if (xhr.status < 400) return c(null, xhr.responseText);
+      var e = new Error(xhr.responseText || "No response");
+      e.status = xhr.status;
+      c(e);
+    };
+  }
+
+  var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    lineNumbers: true,
+    mode: "javascript"
+  });
+
+  //var server;
+  //getURL("http://ternjs.net/defs/ecma5.json", function(err, code) {
+  //  if (err) throw new Error("Request for ecma5.json: " + err);
+  var server = new CodeMirror.TernServer({defs: defs, plugins:{"node":"../"}});
+    editor.setOption("extraKeys", {
+      "Ctrl-Space": function(cm) { server.complete(cm); },
+      "Ctrl-I": function(cm) { server.showType(cm); },
+      "Alt-.": function(cm) { server.jumpToDef(cm); },
+      "Alt-,": function(cm) { server.jumpBack(cm); },
+      "Ctrl-Q": function(cm) { server.rename(cm); },
+    })
+    editor.on("cursorActivity", function(cm) { server.updateArgHints(cm); });
+  //});
+    
+  function onAngularTypeChanged() {
+	  var angularType = document.getElementById('angularType').value;
+	  
+	  var indexDot = angularType.indexOf('.');
+	  	if (indexDot != -1) {
+	  		document.getElementById('angularField').value = angularType.substring(indexDot + 1, angularType.length);
+	  	}  
+  }
+  
+  function completions() {
+	
+	var angularType = document.getElementById('angularType').value;
+	var angularField = document.getElementById('angularField').value;
+	var useAngularModule = document.getElementById('useAngularModule').checked;
+	
+  	var files = [];
+  	files.push({type: "full",
+                    name: "[doc]",
+                    text: editor.getValue()});
+
+  	var scope = {module:'phonecatFilters'};       
+  	var query = {type: "angular", 
+  			     subtype: "completions",
+  			     files: ["[doc]"],
+  				 angularTypes: [angularType],
+  				 expression: angularField,
+  				 scope: scope
+				};
+  	        
+  	var doc = {query: query, files: files};
+  	server.server.request(doc, function(error, response) {
+  		alert(JSON.stringify(response));
+  	});
+  	
+  	}
+
+  function definition() {
+		
+	var angularType = document.getElementById('angularType').value;
+	var angularField = document.getElementById('angularField').value;
+	var useAngularModule = document.getElementById('useAngularModule').checked;
+	
+  	var files = [];
+  	files.push({type: "full",
+                    name: "[doc]",
+                    text: editor.getValue()});
+
+  	var scope = {};
+  	if (angularType != 'module') {
+  		if (useAngularModule) {
+  	  		scope.module = 'Demo';
+  		}  		
+  		if (angularType != 'controller') {
+  			if (useAngularModule) {
+  				scope.controller = 'SlaveController';
+  			} else {
+  				scope.controller = 'TodoCtrl';
+  			}
+  			angularType = 'model';
+  	  	}
+  	}        
+  	
+  	var query = {type: "angular", 
+  			     subtype: "definition",
+  			     files: ["[doc]"],
+  				 angularType: angularType,
+  				 expression: angularField,
+  				 scope: scope
+				};
+  	        
+  	var doc = {query: query, files: files};
+  	server.server.request(doc, function(error, response) {
+  		alert(JSON.stringify(response));
+  	});
+  	
+  	}
+</script>
+
+  </article>

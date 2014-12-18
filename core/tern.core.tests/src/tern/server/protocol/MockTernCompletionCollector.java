@@ -23,9 +23,10 @@ public class MockTernCompletionCollector extends
 	@Override
 	public void addProposal(String name, String displayName, String type,
 			String doc, String url, String origin, int start, int end,
-			Object completion, ITernServer ternServer) {
+			boolean isProperty, boolean isObjectKey, Object completion,
+			ITernServer ternServer) {
 		super.put(name, new TernCompletionItem(name, displayName, type, doc,
-				url, origin));
+				url, origin, isProperty, isObjectKey));
 	}
 
 	public Collection<TernCompletionItem> getCompletions() {
