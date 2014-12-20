@@ -169,6 +169,7 @@
     var callExpr = infer.findExpressionAround(file.ast, null, wordPos, file.scope, "CallExpression");
     if (callExpr && callExpr.node.arguments && callExpr.node.arguments.length && callExpr.node.arguments.length > 0) {
       var nodeArg = callExpr.node.arguments[0];
+      if (!(nodeArg.start <= wordPos && nodeArg.end >= wordPos)) return;
       if (nodeArg._tabris) {
         var startQuote = getQuote(nodeArg.raw.charAt(0)), endQuote = getQuote(nodeArg.raw.length > 1 ? nodeArg.raw.charAt(nodeArg.raw.length - 1) : null);  
         var wordEnd = endQuote != null ? nodeArg.end - 1: nodeArg.end, wordStart = startQuote != null ? nodeArg.start + 1: nodeArg.start,    
