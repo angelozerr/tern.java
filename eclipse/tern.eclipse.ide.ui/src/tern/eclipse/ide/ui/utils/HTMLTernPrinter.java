@@ -112,8 +112,9 @@ public class HTMLTernPrinter {
 	}
 
 	public static String getTitle(TernCompletionItem item) {
+		String title = item.hasDisplayName() ? item.getDisplayName() : item.getSignature();
 		StringBuilder buffer = new StringBuilder("<b>").append(
-				item.getSignature()).append("</b>");
+				title).append("</b>");
 		return buffer.toString();
 	}
 
