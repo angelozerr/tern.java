@@ -323,4 +323,13 @@ public class TernCompletionItem {
 	public boolean isObjectKey() {
 		return isObjectKey;
 	}
+
+	public boolean hasDisplayName() {
+		return hasDisplayName;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
 }
