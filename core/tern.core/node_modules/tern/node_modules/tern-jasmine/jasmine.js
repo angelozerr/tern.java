@@ -8,6 +8,10 @@
 })(function(infer, tern) {
   "use strict";
 
+  /**
+   * For Jasmine API doc. See https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/ch04.html
+   */
+  
   infer.registerFunction("jasmineExpect", function(_self, args, argNodes) {
     var cx = infer.cx(), data = cx.parent._jasmine;
     return data.matchers;
@@ -42,12 +46,12 @@
   /*
    * https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/ch04.html
    * toBeDefined',
-        'toBeFalsy',
+        
         'toBeGreaterThan',
         'toBeLessThan',
         'toBeNaN',
         'toBeNull',
-        'toBeTruthy',
+        
         'toBeUndefined',
         'toContain',
         'toEqual',
@@ -63,14 +67,29 @@
     "!define": {
       "!jasmine": {
         "toBe": {
-          "!type": "fn()"	
+          "!type": "fn(expected: ?)",
+          "!doc": "At first, the toBe matcher looks a lot like the toEqual matcher, but it's not exactly the same. toBe checks if two things are the same object, not just if they are equivalent.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_identity_tobe.html"
         },
         "toBeCloseTo": {
           "!type": "fn(expected: number, precision: number)",
           "!doc": "toBeCloseTo allows you to check if a number is close to another number, given a certain amount of decimal precision as the second argument."
+        },
+        "toBeFalsy": {
+          "!type": "fn()",
+          "!doc": "To test if something evaluates to false, you use the toBeFalsy matcher.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_yes_or_no_tobetruthy_tobefalsy.html"
+        },
+        "toBeTruthy": {
+          "!type": "fn()",
+          "!doc": "To test if something evaluates to true, you use the toBeTruthy matcher.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_yes_or_no_tobetruthy_tobefalsy.html"
+        },
+        "toEqual": {
+          "!type": "fn(expected: ?)",
+          "!doc": "Perhaps the simplest matcher in Jasmine is toEqual. It simply checks if two things are equal (and not necessarily the same exact object).",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_equality_toequal.html"
         }
-        
-        
       }
     },
     "describe": {
