@@ -1,0 +1,20 @@
+{
+ "name": "jasmine",
+ "label": "Jasmine",  
+ "homepage": "http://jasmine.github.io/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Jasmine support. Behavior-Driven JavaScript.",
+ "dependencies": [
+  "ecma5"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-jasmine.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-jasmine/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Jasmine-support"
+ }
+}

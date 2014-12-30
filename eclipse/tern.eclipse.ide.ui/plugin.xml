@@ -313,6 +313,10 @@
             id="grunt"
             icon="/icons/full/obj16/grunt.png" >
       </image>
+  	  <image
+            id="jasmine"
+            icon="/icons/full/obj16/jasmine.png" >
+      </image>      
       <image
             id="liferay"
             icon="/icons/full/obj16/liferay.png" >
