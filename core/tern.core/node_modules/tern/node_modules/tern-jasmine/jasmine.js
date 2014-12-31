@@ -43,29 +43,20 @@
    }
   }
  
-  /*
-   * https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/ch04.html
-   * toBeDefined',
-        
-        'toBeGreaterThan',
-        'toBeLessThan',
-        'toBeNaN',
-        'toBeNull',
-        
-        'toBeUndefined',
-        'toContain',
-        'toEqual',
-        'toHaveBeenCalled',
-        'toHaveBeenCalledWith',
-        'toMatch',
-        'toThrow',
-        'toThrowError'
-        */
-   
   var defs = {
     "!name": "jasmine",
     "!define": {
-      "!jasmine": {
+      "!jasmine": {        
+        "not": {
+          "!type": "!custom:jasmineExpect",
+           "!doc": "It’s frequently useful to reverse Jasmine's matchers to make sure that they aren't true. To do that, simply prefix things with .not",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_negate_other_matchers_with_not.html"
+        },
+        "toBeDefined": {
+          "!type": "fn(expected: ?)",
+          "!doc": "As with truthiness and falsiness, there are matchers to check if something is defined or undefined.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_is_it_defined_tobedefined_tobeundefined.html"
+        },
         "toBe": {
           "!type": "fn(expected: ?)",
           "!doc": "At first, the toBe matcher looks a lot like the toEqual matcher, but it's not exactly the same. toBe checks if two things are the same object, not just if they are equivalent.",
@@ -85,10 +76,61 @@
           "!doc": "To test if something evaluates to true, you use the toBeTruthy matcher.",
           "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_yes_or_no_tobetruthy_tobefalsy.html"
         },
+        "toBeGreaterThan": {
+          "!type": "fn(expected: ?)",
+          "!doc": "The toBeGreaterThan and toBeLessThan matchers check if something is greater than or less than something else.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_comparators_tobegreaterthan_tobelessthan.html"
+        },
+        "toBeLessThan": {
+          "!type": "fn(expected: ?)",
+          "!doc": "The toBeGreaterThan and toBeLessThan matchers check if something is greater than or less than something else.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_comparators_tobegreaterthan_tobelessthan.html"
+        },
+        "toBeNaN": {
+          "!type": "fn()",
+          "!doc": "Like toBeNull, toBeNaN checks if something is NaN",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_is_it_nan_tobenan.html"
+        },
+        "toBeNull": {
+          "!type": "fn()",
+          "!doc": "The toBeNull matcher is fairly straightforward. If you hadn’t guessed by now, it checks if something is null",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_nullness_tobenull.html"
+        },
+        "toBeUndefined": {
+          "!type": "fn(expected: ?)",
+          "!doc": "As with truthiness and falsiness, there are matchers to check if something is defined or undefined.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_is_it_defined_tobedefined_tobeundefined.html"
+        },
+        "toContain": {
+          "!type": "fn(expected: ?)",
+          "!doc": "Sometimes you want to verify that an element is a member of an array, somewhere. To do that, you can use the toContain matcher:",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_check_if_an_element_is_present_with_tocontain.html"
+        },
         "toEqual": {
           "!type": "fn(expected: ?)",
           "!doc": "Perhaps the simplest matcher in Jasmine is toEqual. It simply checks if two things are equal (and not necessarily the same exact object).",
           "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_equality_toequal.html"
+        },
+        "toHaveBeenCalled": {
+          "!type": "fn(expected: ?)"          
+        },
+        "toHaveBeenCalledWith": {
+          "!type": "fn(expected: ?)"
+        },
+        "toMatch": {
+          "!type": "fn(expected: +RegExp)",
+          "!doc": "toMatch checks if something is matched, given a regular expression. It can be passed as a regular expression or a string, which is then parsed as a regular expression.",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_using_tomatch_with_regular_expressions.html"
+        },
+        "toThrow": {
+          "!type": "fn()",
+          "!doc": "toThrow lets you express, 'Hey, I expect this function to throw an error'",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_checking_if_a_function_throws_an_error_with_tothrow.html"
+        },
+        "toThrowError": {
+          "!type": "fn()",
+          "!doc": "toThrow lets you express, 'Hey, I expect this function to throw an error'",
+          "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_checking_if_a_function_throws_an_error_with_tothrow.html"
         }
       }
     },
