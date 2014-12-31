@@ -145,6 +145,16 @@
     "expect": {
       "!type": "fn(value: ?) -> !custom:jasmineExpect",
       "!doc": "Expectations are built with the function expect which takes a value, called the actual. It is chained with a Matcher function, which takes the expected value."
+    },
+    "beforeEach": {
+      "!type": "fn(f: fn())",
+      "!doc": "To execute some code before every spec, simply put it in a beforeEach. Note that you have to scope variables properly in order to have them throughout each spec",
+      "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_before_and_after.html"
+    },
+    "afterEach": {
+      "!type": "fn(f: fn())",
+      "!doc": "To execute some code after every spec, simply put it in a afterEach. Note that you have to scope variables properly in order to have them throughout each spec",
+      "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_before_and_after.html"
     }
   }
 
