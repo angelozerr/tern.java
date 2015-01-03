@@ -100,7 +100,7 @@
   }
   
   var defs = {
- "!name": "yui_3",
+ "!name": "yui3",
  "!define": {
   "anim": {
    "Anim": {
