@@ -50,7 +50,7 @@ public class TernRepositoryTest {
 		assertHasModule(repository, "node-mongoose");
 		assertHasModule(repository, "tabris");
 		assertHasModule(repository, "yui3", "yui", "3");
-		//assertHasModule(repository, "aui_2.0.x", "aui", "2.0.x");
+		assertHasModule(repository, "aui2.0.x", "aui", "2.0.x");
 	}
 
 	private void assertHasModule(TernRepository repository, String name)

@@ -10,7 +10,6 @@
  */
 package tern.repository;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -30,7 +29,6 @@ import tern.TernException;
 import tern.server.ITernModule;
 import tern.utils.IOUtils;
 import tern.utils.StringUtils;
-import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
