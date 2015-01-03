@@ -33,7 +33,7 @@ public abstract class AbstractBasicTernModule implements ITernModule {
 		int index = getVersionIndex(name);
 		if (index != -1) {
 			this.type = name.substring(0, index);
-			this.version = name.substring(index + 1, name.length());
+			this.version = name.substring(index, name.length());
 		} else {
 			this.type = name;
 			this.version = null;
@@ -41,11 +41,10 @@ public abstract class AbstractBasicTernModule implements ITernModule {
 	}
 
 	private int getVersionIndex(String name) {
-		int index = name.lastIndexOf("_");
-		if (index != -1) {
-			if (index < name.length()
-					&& Character.isDigit(name.charAt(index + 1))) {
-				return index;
+		char[] chars = name.toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			if (Character.isDigit(chars[i])) {
+				return i;
 			}
 		}
 		return -1;

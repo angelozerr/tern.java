@@ -42,12 +42,14 @@ public class TernRepositoryTest {
 		assertHasModule(repository, "closure");
 		assertHasModule(repository, "cordovajs");
 		assertHasModule(repository, "gas");
+		assertHasModule(repository, "jasmine");
 		assertHasModule(repository, "liferay");
 		assertHasModule(repository, "lint");
 		assertHasModule(repository, "node-express");
 		assertHasModule(repository, "node-mongodb-native");
 		assertHasModule(repository, "node-mongoose");
-		//assertHasModule(repository, "yui_3", "yui", "3");
+		assertHasModule(repository, "tabris");
+		assertHasModule(repository, "yui3", "yui", "3");
 		//assertHasModule(repository, "aui_2.0.x", "aui", "2.0.x");
 	}
 
