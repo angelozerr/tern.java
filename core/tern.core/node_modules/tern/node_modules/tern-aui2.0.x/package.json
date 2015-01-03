@@ -1,0 +1,16 @@
+{
+  "name": "tern-aui2.0.x",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "aui2.0.x.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding AlloyUI 2.0.x support.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-aui2.0.x.git"
+  },
+  "keywords": [
+    "tern",
+    "AlloyUI"
+  ]
+}
