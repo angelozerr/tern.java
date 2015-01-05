@@ -143,6 +143,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.widthHint = 350;
+		data.heightHint = 400;
 		table.setLayoutData(data);
 		table.setFont(parent.getFont());
 
