@@ -1,0 +1,22 @@
+{
+ "name": "protractor",
+ "label": "protractor",  
+ "homepage": "http://angular.github.io/protractor/#/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Protractor support. End to end testing for AngularJS",
+ "dependencies": [
+  "ecma5",
+  "browser",
+  "jasmine"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-protractor.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-protractor/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-protractor-support"
+ }
+}
