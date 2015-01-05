@@ -346,9 +346,13 @@
             icon="/icons/full/obj16/node.png" >
       </image>
   	  <image
+            id="protractor"
+            icon="/icons/full/obj16/protractor.png" >
+      </image>
+  	  <image
             id="qooxdoo"
             icon="/icons/full/obj16/qooxdoo.png" >
-      </image>
+      </image>      
   	  <image
             id="tabris"
             icon="/icons/full/obj16/tabris.png" >

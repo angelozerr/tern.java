@@ -17,6 +17,54 @@
  "!define": {
   "ElementArrayFinder": {
    "prototype": {
+    "click": {
+     "!type": "webdriver.WebElement.prototype.click"
+    },
+    "sendKeys": {
+     "!type": "webdriver.WebElement.prototype.sendKeys"
+    },
+    "getTagName": {
+     "!type": "webdriver.WebElement.prototype.getTagName"
+    },
+    "getCssValue": {
+     "!type": "webdriver.WebElement.prototype.getCssValue"
+    },
+    "getAttribute": {
+     "!type": "webdriver.WebElement.prototype.getAttribute"
+    },
+    "getText": {
+     "!type": "webdriver.WebElement.prototype.getText"
+    },
+    "getSize": {
+     "!type": "webdriver.WebElement.prototype.getSize"
+    },
+    "getLocation": {
+     "!type": "webdriver.WebElement.prototype.getLocation"
+    },
+    "isEnabled": {
+     "!type": "webdriver.WebElement.prototype.isEnabled"
+    },
+    "isSelected": {
+     "!type": "webdriver.WebElement.prototype.isSelected"
+    },
+    "submit": {
+     "!type": "webdriver.WebElement.prototype.submit"
+    },
+    "clear": {
+     "!type": "webdriver.WebElement.prototype.clear"
+    },
+    "isDisplayed": {
+     "!type": "webdriver.WebElement.prototype.isDisplayed"
+    },
+    "getOuterHtml": {
+     "!type": "webdriver.WebElement.prototype.getOuterHtml"
+    },
+    "getInnerHtml": {
+     "!type": "webdriver.WebElement.prototype.getInnerHtml"
+    },
+    "getId": {
+     "!type": "webdriver.WebElement.prototype.getId"
+    },
     "clone": {
      "!type": "fn() -> +ElementArrayFinder",
      "!doc": "Create a shallow copy of ElementArrayFinder.",
@@ -86,6 +134,54 @@
   },
   "ElementFinder": {
    "prototype": {
+    "click": {
+     "!type": "webdriver.WebElement.prototype.click"
+    },
+    "sendKeys": {
+     "!type": "webdriver.WebElement.prototype.sendKeys"
+    },
+    "getTagName": {
+     "!type": "webdriver.WebElement.prototype.getTagName"
+    },
+    "getCssValue": {
+     "!type": "webdriver.WebElement.prototype.getCssValue"
+    },
+    "getAttribute": {
+     "!type": "webdriver.WebElement.prototype.getAttribute"
+    },
+    "getText": {
+     "!type": "webdriver.WebElement.prototype.getText"
+    },
+    "getSize": {
+     "!type": "webdriver.WebElement.prototype.getSize"
+    },
+    "getLocation": {
+     "!type": "webdriver.WebElement.prototype.getLocation"
+    },
+    "isEnabled": {
+     "!type": "webdriver.WebElement.prototype.isEnabled"
+    },
+    "isSelected": {
+     "!type": "webdriver.WebElement.prototype.isSelected"
+    },
+    "submit": {
+     "!type": "webdriver.WebElement.prototype.submit"
+    },
+    "clear": {
+     "!type": "webdriver.WebElement.prototype.clear"
+    },
+    "isDisplayed": {
+     "!type": "webdriver.WebElement.prototype.isDisplayed"
+    },
+    "getOuterHtml": {
+     "!type": "webdriver.WebElement.prototype.getOuterHtml"
+    },
+    "getInnerHtml": {
+     "!type": "webdriver.WebElement.prototype.getInnerHtml"
+    },
+    "getId": {
+     "!type": "webdriver.WebElement.prototype.getId"
+    },
     "clone": {
      "!type": "fn() -> +ElementFinder",
      "!doc": "Create a shallow copy of ElementFinder.",
@@ -153,6 +249,7 @@
   },
   "Protractor": {
    "prototype": {
+    "!proto": "webdriver.WebDriver.prototype",
     "waitForAngular": {
      "!type": "fn() -> +webdriver.promise.Promise",
      "!doc": "Instruct webdriver to wait until Angular has finished rendering and has\nno outstanding $http calls before continuing.",
@@ -222,6 +319,7 @@
   },
   "ProtractorBy": {
    "prototype": {
+    "!proto": "WebdriverBy.prototype",
     "addLocator": {
      "!type": "fn(name: string, script: fn())",
      "!doc": "Add a locator to this instance of ProtractorBy. This locator can then be\nused with element(by.locatorName(args)).",
@@ -269,6 +367,7 @@
   },
   "WebdriverBy": {
    "prototype": {
+    "!proto": "webdriver.By",
     "!doc": "webdriver's By is an enum of locator functions, so we must set it to\na prototype before inheriting from it.",
     "!url": "http://angular.github.io/protractor/#/api?view=WebdriverBy.prototype"
    }

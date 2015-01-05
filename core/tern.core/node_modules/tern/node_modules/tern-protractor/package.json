@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "main": "protractor.js",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
-  "description": "A Tern plugin adding support for protractor.",
+  "description": "A Tern plugin adding support for Protractor. E2E test framework for Angular apps.",
   "repository": {
     "type": "git",
     "url": "git://github.com/angelozerr/tern-protractor.git"

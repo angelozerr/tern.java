@@ -1,9 +1,9 @@
 {
  "name": "protractor",
- "label": "protractor",  
+ "label": "Protractor",  
  "homepage": "http://angular.github.io/protractor/#/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
- "description": "Add Protractor support. End to end testing for AngularJS",
+ "description": "Add Protractor support. E2E test framework for Angular apps",
  "dependencies": [
   "ecma5",
   "browser",
