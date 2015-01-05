@@ -1,0 +1,16 @@
+{
+  "name": "tern-snabbt",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "snabbt.js",
+  "author": "Daniel Lundin <daniel@d-dog.se>",
+  "description": "A Tern plugin adding snabbt.js support.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/daniel-lundin/tern-snabbt.git"
+  },
+  "keywords": [
+    "tern",
+    "snabbt"
+  ]
+}

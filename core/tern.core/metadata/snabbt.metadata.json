@@ -1,0 +1,21 @@
+{
+ "name": "snabbt",
+ "label": "snabbt.js",  
+ "homepage": "http://daniel-lundin.github.io/snabbt.js/",
+ "author": "Daniel Lundin <d-dog@d-dog.se>",
+ "description": "Add snabbt.js support. Minimalistic animation library in javascript",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/daniel-lundin/tern-snabbt.git"
+ },
+ "bugs": {
+  "url": "https://github.com/daniel-lundin/tern-snabbt/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Snabbt-support"
+ }
+}
