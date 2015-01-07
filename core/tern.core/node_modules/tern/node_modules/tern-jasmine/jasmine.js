@@ -13,42 +13,38 @@
    */
   
   infer.registerFunction("jasmineExpect", function(_self, args, argNodes) {
-    var cx = infer.cx(), data = cx.parent._jasmine;
-    return data.matchers;
+    var cx = infer.cx();
+    return cx.definitions["jasmine"]["!jasmine"];
   });
   
   tern.registerPlugin("jasmine", function(server, options) {
-    server._jasmine = {
-      matchers: null
-    };
-	  
     return {
       defs : defs,
       passes: {
           postLoadDef: postLoadDef
-        }
+      }
     };
   });
   
   function postLoadDef(data) {
-   var cx = infer.cx(), interfaces = cx.definitions[data["!name"]]["!jasmine"];
-   var data = cx.parent._jasmine;   
-   if (interfaces) {
-	 if (!data.matchers) data.matchers = new infer.Obj();
-     var from = interfaces;  
-	  from.forAllProps(function(prop, val, local) {
-	    if (local && prop != "<i>")
-	  	 data.matchers.propagate(new infer.PropHasSubset(prop, val));
-	  });	
-   }
+    if (data["!name"] === 'jasmine') return;
+    var cx = infer.cx(), interfaces = cx.definitions[data["!name"]]["!jasmine"];
+    if (interfaces) {
+      // it's a custom matchers, fill !jasmine object with custom property matchers.
+      var to = cx.definitions["jasmine"]["!jasmine"];
+      var from = interfaces;  
+      from.forAllProps(function(prop, val, local) {
+        if (local && prop != "<i>") to.propagate(new infer.PropHasSubset(prop, val));
+      });	
+    }
   }
  
   var defs = {
     "!name": "jasmine",
     "!define": {
       "!jasmine": {        
-        "not": {
-          "!type": "!custom:jasmineExpect",
+        "not": {	
+          "!type": "!jasmine",
            "!doc": "It’s frequently useful to reverse Jasmine's matchers to make sure that they aren't true. To do that, simply prefix things with .not",
           "!url": "https://www.safaribooksonline.com/library/view/javascript-testing-with/9781449356729/_negate_other_matchers_with_not.html"
         },
