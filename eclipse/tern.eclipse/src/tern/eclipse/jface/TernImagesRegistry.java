@@ -87,6 +87,9 @@ public class TernImagesRegistry {
 			if ("bool".equals(jsType)) {
 				return TernImagesRegistry.IMG_BOOLEAN;
 			}
+			if ("fn".equals(jsType)) {
+				return TernImagesRegistry.IMG_FN;
+			}
 		}
 		if (returnNullIfUnknown) {
 			return null;

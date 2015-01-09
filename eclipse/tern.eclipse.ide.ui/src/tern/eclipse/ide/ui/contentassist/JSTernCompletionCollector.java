@@ -67,6 +67,12 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 		JSTernCompletionProposal proposal = internalCreateProposal(name,
 				displayName, type, doc, url, origin, start, end, isProperty,
 				isObjectKey);
+		if (proposal.isFunction()) {
+			// Add the function reference
+			proposals.add(internalCreateProposal(name, displayName, "fn", doc,
+					url, origin, start, end, isProperty, isObjectKey));
+		}
+
 		proposals.add(proposal);
 
 		if (expandFunction) {
