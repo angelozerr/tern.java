@@ -26,8 +26,11 @@
     var yuiType = type.hasProp('A');
     var from  = yuiType ? yuiType : type;  
     from.forAllProps(function(prop, val, local) {
-      if (local && prop != "<i>")
-        Y.propagate(new infer.PropHasSubset(prop, val));
+      if (local && prop != "<i>") {
+        var t = new infer.PropHasSubset(prop, val);
+        t.origin = from.origin;
+        Y.propagate(t);
+      }
     });	
   }  
   
