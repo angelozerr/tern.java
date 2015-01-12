@@ -92,7 +92,7 @@
   });        
 	  
   function postLoadDef(data) {
-    var cx = infer.cx(), mods = cx.definitions[data["!name"]]["!yui"];
+    var cx = infer.cx(), mods = cx.definitions[data["!name"]]["_yui"];
     var data = cx.parent._yui;
     if (mods) for (var name in mods.props) {
       var origin = name.replace(/`/g, ".");
