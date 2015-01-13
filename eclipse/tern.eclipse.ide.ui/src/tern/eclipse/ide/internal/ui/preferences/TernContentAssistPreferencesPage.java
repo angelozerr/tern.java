@@ -20,6 +20,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.ui.IWorkbench;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -54,23 +55,61 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		page.setLayout(new GridLayout());
 
 		IScopeContext[] preferenceScopes = createPreferenceScopes();
+		// Insertion panel
+		createInsertionContents(page, preferenceScopes);
+		// Filtering panel
+		createFilteringContents(page, preferenceScopes);
+
+		return page;
+	}
+
+	/**
+	 * Create "Filtering" contents panel.
+	 * 
+	 * @param parent
+	 * @param preferenceScopes
+	 */
+	private void createFilteringContents(final Composite parent,
+			IScopeContext[] preferenceScopes) {
+
+		Group filteringGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		filteringGroup
+				.setText(TernUIMessages.TernContentAssistPreferencesPage_filteringGroup_label);
+		filteringGroup.setLayout(new GridLayout());
+		filteringGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
 		expandFunctionCheckbox = createCheckbox(
-				page,
+				filteringGroup,
 				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
 				preferenceScopes,
 				TernUIMessages.TernContentAssistPreferencesPage_expandFunction_label);
-
-		generateAnonymousFunctionCheckbox = createCheckbox(
-				page,
-				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
-				preferenceScopes,
-				TernUIMessages.TernContentAssistPreferencesPage_generateAnonymousFunction_label);
 		omitObjectPrototype = createCheckbox(
-				page,
+				filteringGroup,
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				preferenceScopes,
 				TernUIMessages.TernContentAssistPreferencesPage_omitObjectPrototype_label);
-		return page;
+	}
+
+	/**
+	 * Create "Insertion" contents panel.
+	 * 
+	 * @param parent
+	 * @param preferenceScopes
+	 */
+	private void createInsertionContents(final Composite parent,
+			IScopeContext[] preferenceScopes) {
+
+		Group insertionGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		insertionGroup
+				.setText(TernUIMessages.TernContentAssistPreferencesPage_insertionGroup_label);
+		insertionGroup.setLayout(new GridLayout());
+		insertionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		generateAnonymousFunctionCheckbox = createCheckbox(
+				insertionGroup,
+				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
+				preferenceScopes,
+				TernUIMessages.TernContentAssistPreferencesPage_generateAnonymousFunction_label);
 	}
 
 	private Button createCheckbox(Composite parent, String preferenceName,
