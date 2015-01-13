@@ -261,8 +261,8 @@
       	 icon="/icons/full/obj16/browser.gif" >
       </image>
       <image
-         id="ecma5"
-         icon="/icons/full/obj16/ecma5.png" >
+         id="ecma"
+         icon="/icons/full/obj16/ecma.png" >
       </image>       
       <image
          id="jquery"

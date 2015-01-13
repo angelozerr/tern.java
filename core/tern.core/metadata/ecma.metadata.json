@@ -1,9 +1,14 @@
 {
- "name": "ecma5",
- "label": "EcmaScript 5",  
+ "name": "ecma",
+ "label": "ECMAScript",
  "homepage": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
- "description": "Adds ECMAScript 5 support.",
+ "description": "Adds ECMAScript support.",
+ "dependencies": {
+  "ecma6": [
+   "ecma5"
+  ]
+ },
  "repository": {
   "type": "git",
   "url": "https://github.com/marijnh/tern.git"

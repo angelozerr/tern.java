@@ -69,7 +69,7 @@ public class TernModuleVersionEditingSupport extends EditingSupport {
 	}
 
 	@Override
-	protected void setValue(Object element, Object value) {
+	public void setValue(Object element, Object value) {
 		if (element instanceof ITernModuleConfigurable) {
 			try {
 				((ITernModuleConfigurable) element).setVersion(value.toString());

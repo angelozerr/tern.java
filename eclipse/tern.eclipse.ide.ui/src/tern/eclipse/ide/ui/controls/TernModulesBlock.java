@@ -11,6 +11,7 @@
 package tern.eclipse.ide.ui.controls;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,7 @@ import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
 import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
+import tern.server.ITernModuleConfigurable;
 import tern.utils.TernModuleHelper;
 
 /**
@@ -173,8 +175,9 @@ public class TernModulesBlock extends AbstractTableBlock {
 		versionColumn.getColumn().setResizable(true);
 		versionColumn.getColumn().setText(
 				TernUIMessages.TernModulesBlock_moduleVersion);
-		versionColumn.setEditingSupport(new TernModuleVersionEditingSupport(
-				tableViewer));
+		final TernModuleVersionEditingSupport versionEditiongSupport = new TernModuleVersionEditingSupport(
+				tableViewer);
+		versionColumn.setEditingSupport(versionEditiongSupport);
 
 		tableViewer.setLabelProvider(TernModuleLabelProvider.getInstance());
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
@@ -198,13 +201,24 @@ public class TernModulesBlock extends AbstractTableBlock {
 						if (metadata != null) {
 							ITernModule dependencyModule = null;
 							// loop for each dependencies and check it if needed
-							for (String moduleName : metadata.getDependencies()) {
+							for (String moduleName : metadata
+									.getDependencies(module.getVersion())) {
 								dependencyModule = ternModules.get(moduleName);
 								if (dependencyModule != null) {
+									// update module selection
 									if (!tableViewer
 											.getChecked(dependencyModule)) {
 										tableViewer.setChecked(
 												dependencyModule, true);
+									}
+									if (dependencyModule instanceof ITernModuleConfigurable) {
+										ITernModuleConfigurable configurable = (ITernModuleConfigurable) dependencyModule;
+										String version = configurable
+												.getModule(moduleName)
+												.getVersion();
+										// update version
+										versionEditiongSupport.setValue(
+												dependencyModule, version);
 									}
 								}
 							}
@@ -321,12 +335,20 @@ public class TernModulesBlock extends AbstractTableBlock {
 		});
 	}
 
-	public void setTernModules(ITernModule[] vms) {
+	public void setTernModules(ITernModule[] modules) {
 		ternModules.clear();
-		for (ITernModule module : vms) {
-			ternModules.put(module.getType(), module);
+		for (ITernModule module : modules) {
+			if (module instanceof ITernModuleConfigurable) {
+				ITernModuleConfigurable configurable = (ITernModuleConfigurable) module;
+				Collection<ITernModule> mods = configurable.getModules();
+				for (ITernModule mod : mods) {
+					ternModules.put(mod.getName(), module);
+				}
+			} else {
+				ternModules.put(module.getName(), module);
+			}
 		}
-		tableViewer.setInput(ternModules.values());
+		tableViewer.setInput(modules);
 	}
 
 	public Object[] getCheckedModules() {

@@ -37,6 +37,7 @@ import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.protocol.completions.FunctionInfo;
 import tern.server.protocol.completions.Parameter;
+import tern.utils.StringUtils;
 
 public class JSTernCompletionProposal extends TernCompletionProposal {
 
@@ -137,7 +138,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		} else {
 			int newOffset = baseOffset + replacement.length();
 			if (isObjectKey() && "string".equals(getType())) {
-				// select cursor inside quote of property value (ex : config: "")
+				// select cursor inside quote of property value (ex : config:
+				// "")
 				newOffset--;
 			}
 			fSelectedRegion = new Region(newOffset, 0);
@@ -277,18 +279,48 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				replacement.append("\n");
 				indent(replacement, indentation, nbIndentations);
 				replacement.append("\t");
-				// to select focus inside the {} of generated inline function
-				fArgumentOffsets.add(replacement.length());
-				fArgumentLengths.add(0);
+				if (!StringUtils.isEmpty(info.getReturnType())) {
+					if ("string".equals(info.getReturnType())) {
+						replacement.append("return \"\";");
+					} else if ("bool".equals(info.getReturnType())) {
+						replacement.append("return true;");
+					} else if ("{}".equals(info.getReturnType())) {
+						replacement.append("return {");
+						replacement.append("\n");
+						indent(replacement, indentation, nbIndentations);
+						replacement.append("\t");
+						replacement.append("\t");
+						// to select focus inside the {} of generated return
+						// statement of the function.
+						fArgumentOffsets.add(replacement.length());
+						fArgumentLengths.add(0);
+						replacement.append("\n");
+						indent(replacement, indentation, nbIndentations);
+						replacement.append("\t");
+						replacement.append("}");
+					}
+				} else {
+					// to select focus inside the {} of generated inline
+					// function
+					fArgumentOffsets.add(replacement.length());
+					fArgumentLengths.add(0);
+				}
 				replacement.append("\n");
 				indent(replacement, indentation, nbIndentations);
 				replacement.append("}");
 			} else {
-				paramName = parameter.getName();
-				// to select focus for parameter
-				fArgumentOffsets.add(replacement.length());
-				replacement.append(paramName);
-				fArgumentLengths.add(paramName.length());
+				if ("{}".equals(parameter.getType()) && isGenerateObjectValue()) {
+					replacement.append("{");
+					replacement.append("\n");
+					indent(replacement, indentation, nbIndentations);
+					replacement.append("}");
+				} else {
+					paramName = parameter.getName();
+					// to select focus for parameter
+					fArgumentOffsets.add(replacement.length());
+					replacement.append(paramName);
+					fArgumentLengths.add(paramName.length());
+				}
 			}
 		}
 

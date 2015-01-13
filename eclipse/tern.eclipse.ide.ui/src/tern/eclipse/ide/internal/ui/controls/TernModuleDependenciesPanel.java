@@ -42,7 +42,8 @@ public class TernModuleDependenciesPanel extends AbstractTernModulePanel {
 	}
 
 	@Override
-	protected void createUI(Composite parent, ITernModule module, IProject project) {
+	protected void createUI(Composite parent, ITernModule module,
+			IProject project) {
 
 		GridLayout layout = new GridLayout(1, false);
 		super.setLayout(layout);
@@ -64,22 +65,23 @@ public class TernModuleDependenciesPanel extends AbstractTernModulePanel {
 				SWT.NONE);
 		nameColumn.getColumn().setWidth(180);
 		nameColumn.getColumn().setResizable(true);
-		nameColumn.getColumn()
-				.setText(TernUIMessages.TernModulesBlock_moduleName);
+		nameColumn.getColumn().setText(
+				TernUIMessages.TernModulesBlock_moduleName);
 
 		List<ITernModule> ternModules = new ArrayList<ITernModule>();
 		TernModuleMetadata metadata = module.getMetadata();
 		if (metadata != null) {
 			ITernModule dependencyModule = null;
-			Collection<String> dependencies = metadata.getDependencies();
+			Collection<String> dependencies = metadata.getDependencies(module
+					.getVersion());
 			for (String dependency : dependencies) {
 				// try plugin
 				dependencyModule = TernCorePlugin.getTernServerTypeManager()
 						.findTernPlugin(dependency);
 				if (dependencyModule == null) {
 					// try def
-					dependencyModule = TernCorePlugin.getTernServerTypeManager()
-							.findTernDef(dependency);
+					dependencyModule = TernCorePlugin
+							.getTernServerTypeManager().findTernDef(dependency);
 				}
 				if (dependencyModule != null) {
 					ternModules.add(dependencyModule);
