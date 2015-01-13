@@ -14,6 +14,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,6 +22,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -42,6 +45,8 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 	private Button generateAnonymousFunctionCheckbox;
 	private Button expandFunctionCheckbox;
 	private Button omitObjectPrototype;
+	private Text indentSizeText;
+	private Button indentTabsButton;
 
 	public TernContentAssistPreferencesPage() {
 		setImageDescriptor(ImageResource
@@ -105,6 +110,56 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		insertionGroup.setLayout(new GridLayout());
 		insertionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
+		createIndentatContent(insertionGroup, preferenceScopes);
+
+		// Function Insertion
+		createFunctionInsertionContents(insertionGroup, preferenceScopes);
+		// Object literal Insertion
+		createObjLitInsertionContents(insertionGroup, preferenceScopes);
+	}
+
+	private void createIndentatContent(Composite ancestor,
+			IScopeContext[] preferenceScopes) {
+
+		Composite parent = new Composite(ancestor, SWT.NONE);
+		parent.setLayout(new GridLayout(4, false));
+		parent.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		Label indentLabel = new Label(parent, SWT.NONE);
+		indentLabel
+				.setText(TernUIMessages.TernContentAssistPreferencesPage_indentation_label);
+
+		indentSizeText = new Text(parent, SWT.BORDER);
+		updateTextInt(indentSizeText,
+				TernUIPreferenceConstants.INDENT_SIZE_CONTENT_ASSIST,
+				preferenceScopes);
+
+		Button indentSpacesButton = new Button(parent, SWT.RADIO);
+		indentSpacesButton.setText("Spaces");
+
+		indentTabsButton = new Button(parent, SWT.RADIO);
+		indentTabsButton.setText("Tabs");
+		updateCheckbox(indentTabsButton,
+				TernUIPreferenceConstants.INDENT_TABS_CONTENT_ASSIST,
+				preferenceScopes);
+		indentSpacesButton.setSelection(!indentTabsButton.getSelection());
+		/*
+		 * ComboViewer indentationCombo = createComboViewer( insertionGroup,
+		 * TernUIPreferenceConstants.INDENTATION_CONTENT_ASSIST,
+		 * preferenceScopes,
+		 * TernUIMessages.TernContentAssistPreferencesPage_indentation_label);
+		 */
+
+	}
+
+	private void createFunctionInsertionContents(Composite parent,
+			IScopeContext[] preferenceScopes) {
+		Group insertionGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		insertionGroup
+				.setText(TernUIMessages.TernContentAssistPreferencesPage_functionInsertionGroup_label);
+		insertionGroup.setLayout(new GridLayout());
+		insertionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
 		generateAnonymousFunctionCheckbox = createCheckbox(
 				insertionGroup,
 				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
@@ -112,9 +167,30 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 				TernUIMessages.TernContentAssistPreferencesPage_generateAnonymousFunction_label);
 	}
 
+	private void createObjLitInsertionContents(Composite parent,
+			IScopeContext[] preferenceScopes) {
+		Group insertionGroup = new Group(parent, SWT.SHADOW_ETCHED_IN);
+		insertionGroup
+				.setText(TernUIMessages.TernContentAssistPreferencesPage_objLitInsertionGroup_label);
+		insertionGroup.setLayout(new GridLayout());
+		insertionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+	}
+
+	private ComboViewer createComboViewer(Composite ancestor,
+			String preferenceName, IScopeContext[] preferenceScopes,
+			String label) {
+		Composite parent = new Composite(ancestor, SWT.NONE);
+		parent.setLayout(new GridLayout(2, false));
+		parent.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		Label comboLabel = new Label(parent, SWT.NONE);
+		comboLabel.setText(label);
+		ComboViewer viewer = new ComboViewer(parent);
+		return viewer;
+	}
+
 	private Button createCheckbox(Composite parent, String preferenceName,
 			IScopeContext[] preferenceScopes, String label) {
-
 		Button checkbox = new Button(parent, SWT.CHECK);
 		checkbox.setText(label); //$NON-NLS-1$
 		checkbox.setLayoutData(new GridData(
@@ -138,17 +214,37 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		checkbox.setSelection(checked);
 	}
 
+	private void updateTextInt(Text text, String preferenceName,
+			IScopeContext[] preferenceScopes) {
+		int value = fPreferencesService.getInt(getPreferenceNodeQualifier(),
+				preferenceName, 1, preferenceScopes);
+		text.setText(String.valueOf(value));
+	}
+
+	private void updateTextAsInt(Text text, String preferenceName,
+			IEclipsePreferences defaultPreferences) {
+		int value = defaultPreferences.getInt(preferenceName, 1);
+		text.setText(String.valueOf(value));
+	}
+
 	@Override
 	protected void performDefaults() {
 		super.performDefaults();
 		IEclipsePreferences defaultPreferences = createPreferenceScopes()[1]
 				.getNode(getPreferenceNodeQualifier());
-		updateCheckbox(expandFunctionCheckbox,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
-				defaultPreferences);
 		updateCheckbox(
 				generateAnonymousFunctionCheckbox,
 				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
+				defaultPreferences);
+		updateTextAsInt(indentSizeText,
+				TernUIPreferenceConstants.INDENT_SIZE_CONTENT_ASSIST,
+				defaultPreferences);
+		updateCheckbox(indentTabsButton,
+				TernUIPreferenceConstants.INDENT_TABS_CONTENT_ASSIST,
+				defaultPreferences);
+
+		updateCheckbox(expandFunctionCheckbox,
+				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
 				defaultPreferences);
 		updateCheckbox(omitObjectPrototype,
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
@@ -161,12 +257,19 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		IScopeContext[] contexts = createPreferenceScopes();
 		// remove project-specific information if it's not enabled
 		boolean remove = getProject() != null && !isElementSettingsEnabled();
-		updateContexts(expandFunctionCheckbox,
-				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
-				contexts, remove);
 		updateContexts(
 				generateAnonymousFunctionCheckbox,
 				TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
+				contexts, remove);
+		updateContextsAsInt(indentSizeText,
+				TernUIPreferenceConstants.INDENT_SIZE_CONTENT_ASSIST, contexts,
+				remove);
+		updateContexts(indentTabsButton,
+				TernUIPreferenceConstants.INDENT_TABS_CONTENT_ASSIST, contexts,
+				remove);
+
+		updateContexts(expandFunctionCheckbox,
+				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST,
 				contexts, remove);
 		updateContexts(omitObjectPrototype,
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
@@ -184,6 +287,22 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		} else {
 			contexts[0].getNode(getPreferenceNodeQualifier()).putBoolean(
 					preferenceName, checkbox.getSelection());
+		}
+	}
+
+	private void updateContextsAsInt(Text text, String preferenceName,
+			IScopeContext[] contexts, boolean remove) {
+		if (remove) {
+			contexts[0].getNode(getPreferenceNodeQualifier()).remove(
+					preferenceName);
+
+		} else {
+			try {
+				contexts[0].getNode(getPreferenceNodeQualifier()).putInt(
+						preferenceName, Integer.parseInt(text.getText()));
+			} catch (Throwable e) {
+
+			}
 		}
 	}
 

@@ -21,8 +21,12 @@ import tern.utils.StringUtils;
  */
 public class TernTypeHelper {
 
-	private static final String FUNCTION_START = "fn(";
+	public static final String STRING_TYPE = "string";
+	public static final String NUMBER_TYPE = "number";
+	public static final String BOOL_TYPE = "bool";
 
+	private static final String FUNCTION_REF = "fn";
+	private static final String FUNCTION_START = "fn(";
 	private static final String FUNCTION_ARRAY_START = "[fn(";
 
 	/**
@@ -157,5 +161,45 @@ public class TernTypeHelper {
 		String returnType = s != null ? s.toString().trim() : null;
 		return new FunctionInfo(parameters,
 				signature != null ? signature.toString() : null, returnType);
+	}
+
+	/**
+	 * Returns true if the given type is "string" type and false otherwise.
+	 * 
+	 * @param type
+	 * @return true if the given type is "string" type and false otherwise.
+	 */
+	public static boolean isStringType(String type) {
+		return STRING_TYPE.equals(type);
+	}
+
+	/**
+	 * Returns true if the given type is "number" type and false otherwise.
+	 * 
+	 * @param type
+	 * @return true if the given type is "number" type and false otherwise.
+	 */
+	public static boolean isNumberType(String type) {
+		return NUMBER_TYPE.equals(type);
+	}
+
+	/**
+	 * Returns true if the given type is "bool" type and false otherwise.
+	 * 
+	 * @param type
+	 * @return true if the given type is "bool" type and false otherwise.
+	 */
+	public static boolean isBoolType(String type) {
+		return BOOL_TYPE.equals(type);
+	}
+
+	/**
+	 * Returns true if the given type is "fn" type and false otherwise.
+	 * 
+	 * @param type
+	 * @return true if the given type is "fn" type and false otherwise.
+	 */
+	public static boolean isFunctionRefType(String type) {
+		return FUNCTION_REF.equals(type);
 	}
 }

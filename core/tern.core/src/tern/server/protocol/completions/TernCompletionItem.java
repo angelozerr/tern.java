@@ -332,4 +332,11 @@ public class TernCompletionItem {
 		return displayName;
 	}
 
+	public boolean isStringType() {
+		return "string".equals(getType());
+	}
+
+	public boolean isStringReturnType() {
+		return "string".equals(getJsType());
+	}
 }

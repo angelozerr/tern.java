@@ -37,14 +37,17 @@ import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.protocol.completions.FunctionInfo;
 import tern.server.protocol.completions.Parameter;
+import tern.server.protocol.completions.TernTypeHelper;
 import tern.utils.StringUtils;
 
 public class JSTernCompletionProposal extends TernCompletionProposal {
 
+	public static final String TAB = "\t";
+	public static final String SPACE = " ";
+
 	private static final String RPAREN = ")";
 	private static final String LPAREN = "(";
 	private static final String COMMA = ",";
-	private static final String SPACE = " ";
 
 	private IRegion fSelectedRegion; // initialized by apply()
 	private List<Integer> fArgumentOffsets;
@@ -54,6 +57,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	private boolean fToggleEating;
 	private boolean generateObjectValue;
 	private boolean generateAnonymousFunction;
+	private String indentChars;
 
 	public JSTernCompletionProposal(String name, String type, String doc,
 			String url, String origin, int start, int end) {
@@ -65,6 +69,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 			int end, boolean isProperty, boolean isObjectKey) {
 		super(name, displayName, type, doc, url, origin, start, end,
 				isProperty, isObjectKey);
+		this.indentChars = TAB;
 	}
 
 	@Override
@@ -137,7 +142,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 			}
 		} else {
 			int newOffset = baseOffset + replacement.length();
-			if (isObjectKey() && "string".equals(getType())) {
+			if (isObjectKey() && TernTypeHelper.isStringType(getType())) {
 				// select cursor inside quote of property value (ex : config:
 				// "")
 				newOffset--;
@@ -214,13 +219,13 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		if (isObjectKey()) {
 			StringBuilder replacement = new StringBuilder(super.getName());
 			replacement.append(": ");
-			if ("string".equals(getType())) {
+			if (TernTypeHelper.isStringType(getType())) {
 				replacement.append("\"\"");
 			}
 			// else if ("number".equals(getType())) {
 			// replacement.append("0");
 			// }
-			else if ("bool".equals(getType())) {
+			else if (TernTypeHelper.isBoolType(getType())) {
 				replacement.append("false");
 			}
 			return replacement.toString();
@@ -278,25 +283,25 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				replacement.append(") {");
 				replacement.append("\n");
 				indent(replacement, indentation, nbIndentations);
-				replacement.append("\t");
+				indent(replacement);
 				if (!StringUtils.isEmpty(info.getReturnType())) {
-					if ("string".equals(info.getReturnType())) {
+					if (TernTypeHelper.isStringType(info.getReturnType())) {
 						replacement.append("return \"\";");
-					} else if ("bool".equals(info.getReturnType())) {
+					} else if (TernTypeHelper.isBoolType(info.getReturnType())) {
 						replacement.append("return true;");
 					} else if ("{}".equals(info.getReturnType())) {
 						replacement.append("return {");
 						replacement.append("\n");
 						indent(replacement, indentation, nbIndentations);
-						replacement.append("\t");
-						replacement.append("\t");
+						indent(replacement);
+						indent(replacement);
 						// to select focus inside the {} of generated return
 						// statement of the function.
 						fArgumentOffsets.add(replacement.length());
 						fArgumentLengths.add(0);
 						replacement.append("\n");
 						indent(replacement, indentation, nbIndentations);
-						replacement.append("\t");
+						indent(replacement);
 						replacement.append("}");
 					}
 				} else {
@@ -356,6 +361,10 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		 * return buffer.toString();
 		 */
 
+	}
+
+	protected void indent(StringBuilder replacement) {
+		replacement.append(indentChars);
 	}
 
 	@Override
@@ -493,6 +502,14 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		} catch (BadLocationException e1) {
 		}
 		return "";
+	}
+
+	public void setIndentChars(String indentChars) {
+		this.indentChars = indentChars;
+	}
+
+	public String getIndentChars() {
+		return indentChars;
 	}
 
 }

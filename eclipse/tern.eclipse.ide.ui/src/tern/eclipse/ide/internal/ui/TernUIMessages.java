@@ -109,7 +109,10 @@ public final class TernUIMessages extends NLS {
 	public static String TernContentAssistPreferencesPage_expandFunction_label;
 	public static String TernContentAssistPreferencesPage_omitObjectPrototype_label;
 	public static String TernContentAssistPreferencesPage_insertionGroup_label;
+	public static String TernContentAssistPreferencesPage_indentation_label;
+	public static String TernContentAssistPreferencesPage_functionInsertionGroup_label;
 	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
+	public static String TernContentAssistPreferencesPage_objLitInsertionGroup_label;
 	
 	// Validation preferences
 	public static String TernValidationPreferencesPage_availableTernBuilder_label;

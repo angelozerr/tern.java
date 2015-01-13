@@ -33,14 +33,13 @@ import tern.server.protocol.completions.ITernCompletionCollector;
 public class JSTernCompletionCollector implements ITernCompletionCollector {
 
 	private final List<ICompletionProposal> proposals;
-	private final int startOffset;
 	private boolean generateAnonymousFunction;
 	private boolean expandFunction;
+	private String indentChars;
 
 	public JSTernCompletionCollector(List<ICompletionProposal> proposals,
 			int startOffset, IProject project) {
 		this.proposals = proposals;
-		this.startOffset = startOffset;
 
 		IPreferencesService preferencesService = Platform
 				.getPreferencesService();
@@ -53,10 +52,32 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 						TernUIPlugin.getDefault().getBundle().getSymbolicName(),
 						TernUIPreferenceConstants.GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST,
 						true, lookupOrder);
+
+		int indentSize = preferencesService.getInt(TernUIPlugin.getDefault()
+				.getBundle().getSymbolicName(),
+				TernUIPreferenceConstants.INDENT_SIZE_CONTENT_ASSIST,
+				TernUIPreferenceConstants.INDENT_SIZE_CONTENT_ASSIST_DEFAULT,
+				lookupOrder);
+		boolean indentWithTabs = preferencesService.getBoolean(TernUIPlugin
+				.getDefault().getBundle().getSymbolicName(),
+				TernUIPreferenceConstants.INDENT_TABS_CONTENT_ASSIST,
+				TernUIPreferenceConstants.INDENT_TABS_CONTENT_ASSIST_DEFAULT,
+				lookupOrder);
+		indentChars = getIndentChars(indentWithTabs, indentSize);
+
 		expandFunction = preferencesService.getBoolean(TernUIPlugin
 				.getDefault().getBundle().getSymbolicName(),
 				TernUIPreferenceConstants.EXPAND_FUNCTION_CONTENT_ASSIST, true,
 				lookupOrder);
+	}
+
+	private String getIndentChars(boolean indentWithTabs, int indentSize) {
+		StringBuilder indent = new StringBuilder();
+		for (int i = 0; i < indentSize; i++) {
+			indent.append(indentWithTabs ? JSTernCompletionProposal.TAB
+					: JSTernCompletionProposal.SPACE);
+		}
+		return indent.toString();
 	}
 
 	@Override
@@ -100,6 +121,7 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 		JSTernCompletionProposal proposal = createProposal(name, displayName,
 				type, doc, url, origin, start, end, isProperty, isObjectKey);
 		proposal.setGenerateAnonymousFunction(generateAnonymousFunction);
+		proposal.setIndentChars(indentChars);
 		// TODO manage that with preferences
 		proposal.setGenerateObjectValue(true);
 		return proposal;
