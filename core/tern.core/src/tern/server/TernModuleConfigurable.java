@@ -10,6 +10,7 @@
  */
 package tern.server;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -106,5 +107,20 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	@Override
 	public void setOptions(JsonObject options) {
 		this.options = options;
+	}
+
+	@Override
+	public ITernModule getModule(String name) {
+		for (ITernModule module : modules.values()) {
+			if (name.equals(module.getName())) {
+				return module;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Collection<ITernModule> getModules() {
+		return modules.values();
 	}
 }

@@ -4,10 +4,10 @@
  "homepage": "http://alloyui.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Adds AlloyUI support. AlloyUI is a framework built on top of YUI3 (JavaScript) that uses Bootstrap (HTML/CSS) to provide a simple API for building high scalable applications.",
- "dependencies": [
-  "ecma5",
-  "browser"
- ],
+ "dependencies": {
+   "?": ["ecma5", "browser"],
+   "2.0.x": ["yui3"]  
+ },
  "repository": {
   "type": "git",
   "url": "https://github.com/angelozerr/tern.yuidoc.git"

@@ -274,7 +274,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 							TernModuleMetadata metadata = module.getMetadata();
 							if (metadata != null) {
 								Collection<String> dependencies = metadata
-										.getDependencies();
+										.getDependencies(module.getVersion());
 								for (String dependency : dependencies) {
 									ITernModule dependencyModule = TernCorePlugin
 											.getTernServerTypeManager()
