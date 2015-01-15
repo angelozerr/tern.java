@@ -63,11 +63,7 @@ public interface ITernServerTypeManager {
 	ITernModule[] getTernModules(IIDETernProject ternProject,
 			List<ITernModule> checkedModules) throws TernException;
 
-	ITernPlugin[] getTernPlugins();
-
 	ITernPlugin findTernPlugin(String name);
-
-	ITernDef[] getTernDefs();
 
 	ITernDef findTernDef(String string);
 

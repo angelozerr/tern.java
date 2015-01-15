@@ -103,9 +103,9 @@ public class TernProjectTest {
 		Assert.assertEquals("{\"plugins\":{\"node\":{}}}", project.toString());
 
 		// add new plugin, project should be dirty
-		project.addPlugin(TernPlugin.aui);
+		project.addPlugin(TernPlugin.aui2);
 		Assert.assertTrue(project.isDirty());
-		Assert.assertEquals("{\"plugins\":{\"node\":{},\"aui\":{}}}",
+		Assert.assertEquals("{\"plugins\":{\"node\":{},\"aui2.0.x\":{}}}",
 				project.toString());
 	}
 
@@ -131,14 +131,14 @@ public class TernProjectTest {
 		Assert.assertFalse(project.isDirty());
 
 		// add new plugin, project should be dirty
-		project.addPlugin(TernPlugin.aui);
+		project.addPlugin(TernPlugin.aui2);
 		Assert.assertTrue(project.isDirty());
 
 		// add existing plugin, project should be dirty while it is not saved.
-		project.addPlugin(TernPlugin.aui);
+		project.addPlugin(TernPlugin.aui2);
 		Assert.assertTrue(project.isDirty());
 
-		Assert.assertEquals("{\"plugins\":{\"node\":{},\"aui\":{}}}",
+		Assert.assertEquals("{\"plugins\":{\"node\":{},\"aui2.0.x\":{}}}",
 				project.toString());
 	}
 }

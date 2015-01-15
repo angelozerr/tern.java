@@ -229,8 +229,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 			JsonObject plugins = ternProject.getPlugins();
 			for (String name : plugins.names()) {
 				options = plugins.get(name);
-				ITernModule plugin = findTernModule(name.toString(),
-						allModules);
+				ITernModule plugin = findTernModule(name.toString(), allModules);
 				updateCheckedModule(plugin, options, modulesArray,
 						checkedModules);
 			}
@@ -238,8 +237,7 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 			// JSON Type Definitions
 			JsonArray defs = ternProject.getLibs();
 			for (JsonValue name : defs) {
-				ITernModule def = findTernModule(name.asString(),
-						allModules);
+				ITernModule def = findTernModule(name.asString(), allModules);
 				updateCheckedModule(def, null, modulesArray, checkedModules);
 			}
 		}
@@ -275,20 +273,8 @@ public class TernServerTypeManager implements ITernServerTypeManager,
 	}
 
 	@Override
-	public ITernPlugin[] getTernPlugins() {
-		// TODO : manage tern plugins with extension point
-		return TernPlugin.values();
-	}
-
-	@Override
 	public ITernPlugin findTernPlugin(String name) {
 		return TernPlugin.getTernPlugin(name);
-	}
-
-	@Override
-	public ITernDef[] getTernDefs() {
-		// TODO : manage tern plugins with extension point
-		return TernDef.values();
 	}
 
 	@Override
