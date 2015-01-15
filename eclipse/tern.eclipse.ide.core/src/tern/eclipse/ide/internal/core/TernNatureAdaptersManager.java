@@ -31,7 +31,6 @@ import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.metadata.TernModuleMetadata;
 import tern.resources.TernProject;
 import tern.server.ITernModule;
-import tern.server.TernPlugin;
 import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
