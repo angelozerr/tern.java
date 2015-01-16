@@ -325,6 +325,10 @@
             id="liferay"
             icon="/icons/full/obj16/liferay.png" >
       </image>
+      <image
+            id="lint"
+            icon="/icons/full/obj16/lint.png" >
+      </image>      
   	  <image
             id="meteor"
             icon="/icons/full/obj16/meteor.png" >        
