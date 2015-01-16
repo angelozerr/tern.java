@@ -30,7 +30,7 @@ public class Arguments extends ArrayList<Arg> implements
 	}
 
 	public void setBaseOffset(int baseOffset) {
-		for (Arg arg : parameters) {
+		for (Arg arg : this) {
 			arg.updateOffset(baseOffset);
 		}
 	}

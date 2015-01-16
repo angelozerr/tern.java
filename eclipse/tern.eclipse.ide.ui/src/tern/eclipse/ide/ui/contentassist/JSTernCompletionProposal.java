@@ -139,8 +139,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 								.getOffset(), arg.getLength(),
 								LinkedPositionGroup.NO_STOP));
 					} else {
-						group.addPosition(new ProposalPosition(document,
-								baseOffset + arg.getOffset(), arg.getLength(),
+						group.addPosition(new ProposalPosition(document, arg
+								.getOffset(), arg.getLength(),
 								LinkedPositionGroup.NO_STOP, arg.getProposals()));
 					}
 					model.addGroup(group);

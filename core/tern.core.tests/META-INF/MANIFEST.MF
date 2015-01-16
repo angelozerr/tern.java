@@ -4,7 +4,7 @@ Bundle-Name: Tests2
 Bundle-SymbolicName: tern.core.tests
 Bundle-Version: 0.8.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: tern.core;bundle-version="0.2.0",
- tern.server.nodejs;bundle-version="0.2.0",
+Require-Bundle: tern.core,
+ tern.server.nodejs,
  org.junit;bundle-version="4.11.0"
 Import-Package: com.eclipsesource.json;version="0.9.1"
