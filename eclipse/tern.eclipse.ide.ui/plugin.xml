@@ -288,6 +288,10 @@
       <image
             id="closure"
             icon="/icons/full/obj16/closure.png" >
+      </image>
+      <image
+            id="complete_strings"
+            icon="/icons/full/obj16/completion.png" >
       </image>      
       <image
             id="cordovajs"

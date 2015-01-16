@@ -1,0 +1,17 @@
+{
+ "name": "complete_strings",
+ "label": "Completion String",  
+ "homepage": "http://ternjs.net/doc/manual.html#plugin_complete_strings",
+ "author": "Marijn Haverbeke <marijnh@gmail.com>",
+ "description": "When enabled, this plugin will gather (short) strings in your code, and completing when inside a string will try to complete to previously seen strings. Takes a single option, maxLength, which controls the maximum length of string values to gather, and defaults to 15.",
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/marijnh/tern.git"
+ },
+ "bugs": {
+  "url": "https://github.com/marijnh/tern/issues"
+ },
+ "help": {
+  "url": "http://ternjs.net/doc/manual.html#plugin_complete_strings"
+ }
+}
