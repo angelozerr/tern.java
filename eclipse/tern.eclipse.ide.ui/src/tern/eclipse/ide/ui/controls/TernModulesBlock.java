@@ -59,6 +59,7 @@ import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
 import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
+import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
 /**
@@ -323,9 +324,19 @@ public class TernModulesBlock extends AbstractTableBlock {
 				if ((e1 instanceof ITernModule) && (e2 instanceof ITernModule)) {
 					ITernModule left = (ITernModule) e1;
 					ITernModule right = (ITernModule) e2;
-					return left.getName().compareToIgnoreCase(right.getName());
+					return getNameOrLabel(left).compareToIgnoreCase(
+							getNameOrLabel(right));
 				}
 				return super.compare(viewer, e1, e2);
+			}
+
+			private String getNameOrLabel(ITernModule module) {
+				TernModuleMetadata metadata = module.getMetadata();
+				if (metadata == null) {
+					return module.getName();
+				}
+				return StringUtils.isEmpty(metadata.getLabel()) ? module
+						.getName() : metadata.getLabel();
 			}
 
 			@Override
