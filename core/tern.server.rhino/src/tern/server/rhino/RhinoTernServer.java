@@ -31,6 +31,7 @@ import tern.server.ITernPlugin;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
@@ -281,6 +282,12 @@ public class RhinoTernServer extends AbstractTernServer {
 
 	@Override
 	public void request(TernDoc doc, ITernLintCollector collector)
+			throws TernException {
+
+	}
+
+	@Override
+	public void request(TernDoc doc, ITernGuessTypesCollector collector)
 			throws TernException {
 
 	}

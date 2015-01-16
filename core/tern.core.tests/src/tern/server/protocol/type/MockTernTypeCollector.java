@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.server.protocol;
+package tern.server.protocol.type;
 
 import tern.server.ITernServer;
 import tern.server.protocol.type.ITernTypeCollector;

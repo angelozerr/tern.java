@@ -12,7 +12,6 @@ package tern.eclipse.ide.ui.contentassist;
 
 import java.util.List;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.DefaultScope;
@@ -21,6 +20,8 @@ import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
+import tern.ITernFile;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.preferences.TernUIPreferenceConstants;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernServer;
@@ -36,16 +37,20 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	private boolean generateAnonymousFunction;
 	private boolean expandFunction;
 	private String indentChars;
+	private final ITernFile ternFile;
+	private final IIDETernProject ternProject;
 
 	public JSTernCompletionCollector(List<ICompletionProposal> proposals,
-			int startOffset, IProject project) {
+			int startOffset, ITernFile ternFile, IIDETernProject ternProject) {
 		this.proposals = proposals;
+		this.ternFile = ternFile;
+		this.ternProject = ternProject;
 
 		IPreferencesService preferencesService = Platform
 				.getPreferencesService();
 		IScopeContext[] lookupOrder = new IScopeContext[] {
-				new ProjectScope(project), new InstanceScope(),
-				new DefaultScope() };
+				new ProjectScope(ternProject.getProject()),
+				new InstanceScope(), new DefaultScope() };
 
 		generateAnonymousFunction = preferencesService
 				.getBoolean(
@@ -124,6 +129,9 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 		proposal.setIndentChars(indentChars);
 		// TODO manage that with preferences
 		proposal.setGenerateObjectValue(true);
+
+		proposal.setTernFile(ternFile);
+		proposal.setTernProject(ternProject);
 		return proposal;
 	}
 

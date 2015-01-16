@@ -307,17 +307,21 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			if (isDirty()) {
 				// save .tern-project
 				IFile file = project.getFile(TERN_PROJECT_FILE);
+				InputStream content = null;
 				try {
-					InputStream content = IOUtils.toInputStream(super
-							.toString(), file.exists() ? file.getCharset()
-							: "UTF-8");
+					content = IOUtils.toInputStream(super.toString(),
+							file.exists() ? file.getCharset() : "UTF-8");
 					if (!file.exists()) {
-						file.create(content, true, null);
+						file.create(content, IResource.NONE, null);
 					} else {
 						file.setContents(content, true, false, null);
 					}
 				} catch (CoreException e) {
 					throw new IOException("Cannot save .tern-project", e);
+				} finally {
+					if (content != null) {
+						IOUtils.closeQuietly(content);
+					}
 				}
 				// .tern-project has changed, dispose the server.
 				disposeServer();

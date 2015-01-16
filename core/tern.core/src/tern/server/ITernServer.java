@@ -17,6 +17,7 @@ import tern.TernException;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
@@ -78,11 +79,42 @@ public interface ITernServer {
 	void request(TernDoc doc, ITernTypeCollector collector)
 			throws TernException;
 
+	/**
+	 * Request tern server for lint.
+	 * 
+	 * @param doc
+	 *            the tern doc.
+	 * @param collector
+	 *            the lint collector.
+	 * @throws TernException
+	 */
 	void request(TernDoc doc, ITernLintCollector collector)
 			throws TernException;
 
+	/**
+	 * Request tern server for guessing types.
+	 * 
+	 * @param doc
+	 *            the tern doc.
+	 * @param collector
+	 *            the guess types collector.
+	 * @throws TernException
+	 */
+	void request(TernDoc doc, ITernGuessTypesCollector collector)
+			throws TernException;
+
+	/**
+	 * Add server listener.
+	 * 
+	 * @param listener
+	 */
 	void addServerListener(ITernServerListener listener);
 
+	/**
+	 * Remove server listener.
+	 * 
+	 * @param listener
+	 */
 	void removeServerListener(ITernServerListener listener);
 
 	/**

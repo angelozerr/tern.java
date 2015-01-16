@@ -68,13 +68,13 @@ public class TernContentAssistProcessor extends AbstractContentAssistProcessor
 					ITernFile tf = new TernDocumentFile(file, document);
 
 					int startOffset = context.getInvocationOffset();
+					String filename = tf.getFullName(ternProject);
 					TernCompletionsQuery query = TernCompletionsQueryFactory
-							.createQuery(project, tf.getFullName(ternProject),
-									startOffset);
+							.createQuery(project, filename, startOffset);
 
 					ternProject.request(query, tf,
 							new JSTernCompletionCollector(proposals,
-									startOffset, project));
+									startOffset, tf, ternProject));
 					return proposals;
 
 				} catch (Exception e) {

@@ -25,6 +25,8 @@ import tern.server.ITernServer;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
+import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.type.ITernTypeCollector;
 
@@ -259,6 +261,12 @@ public interface ITernProject extends ITernAdaptable {
 
 	void request(TernQuery query, ITernLintCollector collector)
 			throws IOException, TernException;
+
+	// ---------- Guess types
+
+	void request(TernGuessTypesQuery query, ITernFile file,
+			ITernGuessTypesCollector collector) throws IOException,
+			TernException;
 
 	/**
 	 * Returns the tern repository used by the tern project.

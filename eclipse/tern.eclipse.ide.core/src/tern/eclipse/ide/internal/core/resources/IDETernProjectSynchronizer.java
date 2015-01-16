@@ -121,6 +121,11 @@ public class IDETernProjectSynchronizer implements IResourceChangeListener,
 		case IResource.FILE:
 			IDETernProject ternProject = IDETernProject.getTernProject(resource
 					.getProject());
+			if (ternProject == null) {
+				// tern project was not loaded, none synchronization is
+				// required.
+				return false;
+			}
 			if (isTernProjectFile(resource)) {
 				switch (delta.getKind()) {
 				case IResourceDelta.CHANGED:

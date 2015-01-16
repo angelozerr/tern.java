@@ -32,6 +32,7 @@ import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
+import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.html.ScriptTagRegion;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.lint.TernLintQuery;
@@ -386,6 +387,34 @@ public class NodejsTernServer extends AbstractTernServer {
 			file = getText(messageObject.get("file"));
 			collector.addMessage(message, startCh, endCh, severity, file);
 		}
+	}
+
+	@Override
+	public void request(TernDoc doc, ITernGuessTypesCollector collector)
+			throws TernException {
+		try {
+			JsonObject jsonObject = makeRequest(doc);
+			if (jsonObject != null) {
+				JsonArray args = (JsonArray) jsonObject.get("args");
+				if (args != null) {
+					JsonArray namesForArg;
+					String argType = null;
+					int argIndex = 0;
+					for (JsonValue arg : args) {
+						argType = JsonHelper.getString(arg);
+						namesForArg = (JsonArray) jsonObject.get(argType);
+						for (JsonValue name : namesForArg) {
+							collector.addProposal(argIndex,
+									JsonHelper.getString(name));
+						}
+						argIndex++;
+					}
+				}
+			}
+		} catch (Throwable e) {
+			throw new TernException(e);
+		}
+
 	}
 
 	@Override

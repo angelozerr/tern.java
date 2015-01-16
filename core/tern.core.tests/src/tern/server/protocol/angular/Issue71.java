@@ -16,8 +16,8 @@ import org.junit.Test;
 import tern.TernException;
 import tern.angular.AngularType;
 import tern.angular.protocol.completions.TernAngularCompletionsQuery;
-import tern.server.protocol.MockTernCompletionCollector;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.completions.MockTernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionItem;
 
 /**

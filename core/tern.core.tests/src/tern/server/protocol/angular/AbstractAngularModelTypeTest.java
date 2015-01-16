@@ -16,8 +16,8 @@ import org.junit.Test;
 import tern.TernException;
 import tern.angular.AngularType;
 import tern.angular.protocol.type.TernAngularTypeQuery;
-import tern.server.protocol.MockTernTypeCollector;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.type.MockTernTypeCollector;
 
 /**
  * Tests with tern angular module Type.

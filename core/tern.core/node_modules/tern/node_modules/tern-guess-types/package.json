@@ -1,0 +1,15 @@
+{
+  "name": "tern-guess-types",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "guess-types.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin for guessing types.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-guess-types.git"
+  },
+  "keywords": [
+    "tern"
+  ]
+}
