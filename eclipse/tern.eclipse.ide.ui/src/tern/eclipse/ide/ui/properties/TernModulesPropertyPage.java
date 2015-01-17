@@ -10,6 +10,9 @@
  */
 package tern.eclipse.ide.ui.properties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -88,8 +91,13 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 			ternProject.clearPlugins();
 			ternProject.clearLibs();
 			// Add Plugin + JSON Type Definition
+			List<ITernModule> sortedModules = new ArrayList<ITernModule>();
 			for (Object module : checkedModules) {
-				TernModuleHelper.update((ITernModule) module, ternProject);
+				sortedModules.add((ITernModule) module);
+			}
+			TernModuleHelper.sort(sortedModules);
+			for (ITernModule module : sortedModules) {
+				TernModuleHelper.update(module, ternProject);
 			}
 			ternProject.save();
 		} catch (Exception e) {

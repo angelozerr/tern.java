@@ -16,12 +16,15 @@ import static tern.utils.ExtensionUtils.TERN_SUFFIX;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import tern.ITernProject;
 import tern.TernException;
+import tern.metadata.ModuleDependenciesComparator;
 import tern.metadata.TernModuleMetadata;
 import tern.server.BasicTernDef;
 import tern.server.BasicTernPlugin;
@@ -280,6 +283,15 @@ public class TernModuleHelper {
 			return new StringBuilder(module.getName()).append('.')
 					.append(JS_EXTENSION).toString();
 		}
+	}
+
+	/**
+	 * Sort the given list of modules by dependencies.
+	 * 
+	 * @param modules
+	 */
+	public static void sort(List<ITernModule> modules) {
+		Collections.sort(modules, ModuleDependenciesComparator.getInstance());
 	}
 
 }
