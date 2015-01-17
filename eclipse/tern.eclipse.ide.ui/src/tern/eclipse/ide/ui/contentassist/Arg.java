@@ -3,17 +3,16 @@ package tern.eclipse.ide.ui.contentassist;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
 import tern.utils.StringUtils;
 
-public class Arg {
+public class Arg extends Position {
 
 	private static final ICompletionProposal[] EMPTY_PROPOSALS = new ICompletionProposal[0];
 
-	private int offset;
-	private final int length;
 	private final String name;
 	private List<ICompletionProposal> proposals;
 
@@ -22,17 +21,8 @@ public class Arg {
 	}
 
 	public Arg(int offset, int length, String name) {
-		this.offset = offset;
-		this.length = length;
+		super(offset, length);
 		this.name = name;
-	}
-
-	public int getOffset() {
-		return offset;
-	}
-
-	public int getLength() {
-		return length;
 	}
 
 	public String getName() {
@@ -54,8 +44,11 @@ public class Arg {
 		if (proposals == null) {
 			proposals = new ArrayList<ICompletionProposal>();
 		}
-		proposals.add(new CompletionProposal(name, getOffset(), getLength(),
-				getLength()));
+
+		proposals.add(new PositionBasedCompletionProposal(name, this,
+				getLength(), null, name, null, name));
+		// proposals.add(new CompletionProposal(name, getOffset(), getLength(),
+		// getLength()));
 	}
 
 	public void updateOffset(int baseOffset) {

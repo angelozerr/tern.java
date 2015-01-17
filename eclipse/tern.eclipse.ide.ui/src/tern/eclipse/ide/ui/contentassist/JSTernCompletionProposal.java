@@ -10,20 +10,17 @@
  */
 package tern.eclipse.ide.ui.contentassist;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IPositionUpdater;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Region;
-import org.eclipse.jface.text.contentassist.CompletionProposal;
-import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.text.link.ILinkedModeListener;
+import org.eclipse.jface.text.link.InclusivePositionUpdater;
 import org.eclipse.jface.text.link.LinkedModeModel;
 import org.eclipse.jface.text.link.LinkedModeUI;
 import org.eclipse.jface.text.link.LinkedModeUI.ExitFlags;
@@ -48,7 +45,6 @@ import tern.server.TernPlugin;
 import tern.server.protocol.completions.FunctionInfo;
 import tern.server.protocol.completions.Parameter;
 import tern.server.protocol.completions.TernTypeHelper;
-import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.utils.StringUtils;
 
@@ -62,6 +58,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	private static final String COMMA = ",";
 
 	private IRegion fSelectedRegion; // initialized by apply()
+	private IPositionUpdater fUpdater;
+
 	private Arguments arguments;
 	private ITextViewer fTextViewer;
 
@@ -139,6 +137,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 								.getOffset(), arg.getLength(),
 								LinkedPositionGroup.NO_STOP));
 					} else {
+						ensurePositionCategoryInstalled(document, model);
+						document.addPosition(getCategory(), arg);
 						group.addPosition(new ProposalPosition(document, arg
 								.getOffset(), arg.getLength(),
 								LinkedPositionGroup.NO_STOP, arg.getProposals()));
@@ -164,8 +164,13 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				fSelectedRegion = ui.getSelectedRegion();
 
 			} catch (BadLocationException e) {
-				// JavaScriptPlugin.log(e);
-				// openErrorDialog(e);
+				ensurePositionCategoryRemoved(document);
+				//JavaScriptPlugin.log(e);
+				//openErrorDialog(e);
+			} catch (BadPositionCategoryException e) {
+				ensurePositionCategoryRemoved(document);
+				//JavaScriptPlugin.log(e);
+				//openErrorDialog(e);
 			}
 		} else {
 			int newOffset = baseOffset + replacement.length();
@@ -562,6 +567,48 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	public IIDETernProject getTernProject() {
 		return ternProject;
+	}
+
+	private void ensurePositionCategoryInstalled(final IDocument document,
+			LinkedModeModel model) {
+		if (!document.containsPositionCategory(getCategory())) {
+			document.addPositionCategory(getCategory());
+			fUpdater = new InclusivePositionUpdater(getCategory());
+			document.addPositionUpdater(fUpdater);
+
+			model.addLinkingListener(new ILinkedModeListener() {
+
+				/*
+				 * @see
+				 * org.eclipse.jface.text.link.ILinkedModeListener#left(org.
+				 * eclipse.jface.text.link.LinkedModeModel, int)
+				 */
+				public void left(LinkedModeModel environment, int flags) {
+					ensurePositionCategoryRemoved(document);
+				}
+
+				public void suspend(LinkedModeModel environment) {
+				}
+
+				public void resume(LinkedModeModel environment, int flags) {
+				}
+			});
+		}
+	}
+
+	private void ensurePositionCategoryRemoved(IDocument document) {
+		if (document.containsPositionCategory(getCategory())) {
+			try {
+				document.removePositionCategory(getCategory());
+			} catch (BadPositionCategoryException e) {
+				// ignore
+			}
+			document.removePositionUpdater(fUpdater);
+		}
+	}
+
+	private String getCategory() {
+		return "ParameterGuessingProposal_" + toString(); //$NON-NLS-1$
 	}
 
 }
