@@ -31,4 +31,19 @@ public class ModuleDependenciesComparatorTest {
 		Assert.assertEquals(TernPlugin.yui3, modules.get(0));
 		Assert.assertEquals(TernPlugin.aui15, modules.get(1));
 	}
+	
+	@Test
+	public void sortSeveral() {
+		// AlloyUI depends on YUI3, aui2 must be loaded after yui3.
+		List<ITernModule> modules = new ArrayList<ITernModule>();
+		modules.add(TernPlugin.aui15);
+		modules.add(TernPlugin.liferay);
+		modules.add(TernPlugin.yui3);
+
+		Collections.sort(modules, ModuleDependenciesComparator.getInstance());
+
+		Assert.assertEquals(TernPlugin.yui3, modules.get(0));
+		Assert.assertEquals(TernPlugin.liferay, modules.get(1));
+		Assert.assertEquals(TernPlugin.aui15, modules.get(2));
+	}
 }

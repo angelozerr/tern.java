@@ -42,7 +42,7 @@ public class ModuleDependenciesComparator implements Comparator<ITernModule> {
 		if (dependencies == null) {
 			return 0;
 		}
-		return dependencies.contains(mod2.getName()) ? 1000 : 0;
+		return dependencies.contains(mod2.getName()) ? 1000 : 500;
 	}
 
 }
