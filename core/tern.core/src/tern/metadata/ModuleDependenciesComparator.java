@@ -11,7 +11,11 @@
 package tern.metadata;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import tern.server.ITernModule;
 
@@ -25,24 +29,70 @@ import tern.server.ITernModule;
  */
 public class ModuleDependenciesComparator implements Comparator<ITernModule> {
 
-	private static final ModuleDependenciesComparator INSTANCE = new ModuleDependenciesComparator();
+	private final Map<ITernModule, Integer> modulesMap;
 
-	public static Comparator<ITernModule> getInstance() {
-		return INSTANCE;
+	public ModuleDependenciesComparator(List<ITernModule> modules) {
+		modulesMap = new HashMap<ITernModule, Integer>();
+		for (ITernModule module : modules) {
+			getRelevant(module, modules, modulesMap);
+		}
+		Collections.sort(modules, this);
+	}
+
+	/**
+	 * Returns the relevant of the given module computed with dependencies
+	 * modules.
+	 * 
+	 * @param module
+	 * @param modules
+	 * @param modulesMap
+	 * @return the relevant of the given module computed with dependencies
+	 *         modules.
+	 */
+	private int getRelevant(ITernModule module, List<ITernModule> modules,
+			Map<ITernModule, Integer> modulesMap) {
+		if (modulesMap.containsKey(module)) {
+			// relevant already computed, return it.
+			return modulesMap.get(module);
+		}
+		// Compute relevant by using dependencies
+		int relevant = 1;
+		TernModuleMetadata metadata = module.getMetadata();
+		if (metadata != null) {
+			Collection<String> dependencies = metadata.getDependencies(module
+					.getVersion());
+			if (dependencies != null) {
+				for (String dependency : dependencies) {
+					ITernModule dependencyModule = getModule(dependency,
+							modules);
+					if (dependencyModule != null) {
+						relevant += getRelevant(dependencyModule, modules,
+								modulesMap);
+					}
+				}
+			}
+		}
+		modulesMap.put(module, relevant);
+		return relevant;
+	}
+
+	private ITernModule getModule(String name, List<ITernModule> modules) {
+		for (ITernModule module : modules) {
+			if (module.getName().equals(name)) {
+				return module;
+			}
+		}
+		return null;
 	}
 
 	@Override
 	public int compare(ITernModule mod1, ITernModule mod2) {
-		TernModuleMetadata metadata1 = mod1.getMetadata();
-		if (metadata1 == null) {
-			return 0;
+		Integer relevant1 = modulesMap.get(mod1);
+		Integer relevant2 = modulesMap.get(mod2);
+		if (relevant1 != null && relevant2 != null) {
+			return relevant1 - relevant2;
 		}
-		Collection<String> dependencies = metadata1.getDependencies(mod1
-				.getVersion());
-		if (dependencies == null) {
-			return 0;
-		}
-		return dependencies.contains(mod2.getName()) ? 1000 : 500;
+		return 0;
 	}
 
 }
