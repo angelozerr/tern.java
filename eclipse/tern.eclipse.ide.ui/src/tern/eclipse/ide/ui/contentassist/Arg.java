@@ -1,14 +1,25 @@
+/**
+ *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
 package tern.eclipse.ide.ui.contentassist;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.jface.text.Position;
-import org.eclipse.jface.text.contentassist.CompletionProposal;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 
-import tern.utils.StringUtils;
-
+/**
+ * Position for argument.
+ *
+ */
 public class Arg extends Position {
 
 	private static final ICompletionProposal[] EMPTY_PROPOSALS = new ICompletionProposal[0];
@@ -29,10 +40,6 @@ public class Arg extends Position {
 		return name;
 	}
 
-	public boolean isParameter() {
-		return !StringUtils.isEmpty(getName());
-	}
-
 	public ICompletionProposal[] getProposals() {
 		if (proposals == null) {
 			return null;
@@ -47,8 +54,6 @@ public class Arg extends Position {
 
 		proposals.add(new PositionBasedCompletionProposal(name, this,
 				getLength(), null, name, null, name));
-		// proposals.add(new CompletionProposal(name, getOffset(), getLength(),
-		// getLength()));
 	}
 
 	public void updateOffset(int baseOffset) {

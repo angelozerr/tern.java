@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -48,6 +48,10 @@ import tern.server.protocol.completions.TernTypeHelper;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.utils.StringUtils;
 
+/**
+ * JavaScript tern completion proposal.
+ *
+ */
 public class JSTernCompletionProposal extends TernCompletionProposal {
 
 	public static final String TAB = "\t";
@@ -165,12 +169,12 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 
 			} catch (BadLocationException e) {
 				ensurePositionCategoryRemoved(document);
-				//JavaScriptPlugin.log(e);
-				//openErrorDialog(e);
+				// JavaScriptPlugin.log(e);
+				// openErrorDialog(e);
 			} catch (BadPositionCategoryException e) {
 				ensurePositionCategoryRemoved(document);
-				//JavaScriptPlugin.log(e);
-				//openErrorDialog(e);
+				// JavaScriptPlugin.log(e);
+				// openErrorDialog(e);
 			}
 		} else {
 			int newOffset = baseOffset + replacement.length();
@@ -289,15 +293,25 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		replacement.append(LPAREN);
 		setCursorPosition(replacement.length());
 		computeReplacementString(parameters, replacement, arguments,
-				indentation, 1);
+				indentation, 1, true);
 		replacement.append(RPAREN);
 		return replacement.toString();
 
 	}
 
+	/**
+	 * Compute replacement string for the given function.
+	 * 
+	 * @param parameters
+	 * @param replacement
+	 * @param arguments
+	 * @param indentation
+	 * @param nbIndentations
+	 * @param initialFunction
+	 */
 	private void computeReplacementString(List<Parameter> parameters,
 			StringBuilder replacement, Arguments arguments, String indentation,
-			int nbIndentations) {
+			int nbIndentations, boolean initialFunction) {
 		int count = parameters.size();
 		Parameter parameter = null;
 		String paramName = null;
@@ -317,7 +331,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				replacement.append("function(");
 				if (parametersOfParam != null) {
 					computeReplacementString(parametersOfParam, replacement,
-							arguments, indentation, nbIndentations + 1);
+							arguments, indentation, nbIndentations + 1, false);
 				} else {
 					// to select focus inside the () of generated inline
 					// function
@@ -365,7 +379,13 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 					paramName = parameter.getName();
 					// to select focus for parameter
 					replacement.append(paramName);
-					arguments.addArg(offset, paramName.length(), paramName);
+					if (initialFunction) {
+						arguments.addParameter(offset, paramName.length(),
+								paramName, i);
+					} else {
+						arguments.addArg(offset, paramName.length());
+					}
+
 				}
 			}
 		}
