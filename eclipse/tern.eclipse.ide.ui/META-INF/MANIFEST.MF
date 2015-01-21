@@ -9,18 +9,18 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- tern.eclipse.ide.core;bundle-version="0.2.0",
- tern.core;bundle-version="0.2.0",
+ tern.eclipse.ide.core,
+ tern.core,
  org.eclipse.ui.ide,
  org.eclipse.ui.console,
  org.eclipse.ui.editors,
  org.eclipse.jface.text,
  org.eclipse.ui.workbench.texteditor,
- tern.eclipse;bundle-version="0.2.0",
- org.eclipse.core.expressions
+ tern.eclipse,
+ org.eclipse.core.expressions,
+ minimal-json;bundle-version="0.9.2"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.ui.TernUIPlugin
-Import-Package: com.eclipsesource.json
 Export-Package: tern.eclipse.ide.ui,
  tern.eclipse.ide.ui.console,
  tern.eclipse.ide.ui.contentassist,

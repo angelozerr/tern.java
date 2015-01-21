@@ -31,11 +31,11 @@ Export-Package: tern,
  tern.server.protocol.lint,
  tern.server.protocol.type,
  tern.utils
-Import-Package: com.eclipsesource.json,
- org.apache.http;resolution:=optional,
+Import-Package: org.apache.http;resolution:=optional,
  org.apache.http.client;resolution:=optional,
  org.apache.http.client.methods;resolution:=optional,
  org.apache.http.impl.client;resolution:=optional,
  org.osgi.framework
 Bundle-Activator: tern.Activator
 Bundle-ActivationPolicy: lazy
+Require-Bundle: minimal-json;bundle-version="0.9.2"

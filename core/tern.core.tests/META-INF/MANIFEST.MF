@@ -6,5 +6,5 @@ Bundle-Version: 0.8.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: tern.core,
  tern.server.nodejs,
- org.junit;bundle-version="4.11.0"
-Import-Package: com.eclipsesource.json;version="0.9.1"
+ org.junit;bundle-version="4.11.0",
+ minimal-json;bundle-version="0.9.2"

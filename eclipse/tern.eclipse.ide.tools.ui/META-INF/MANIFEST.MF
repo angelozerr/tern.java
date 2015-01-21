@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.core,
  tern.server.nodejs,
  org.eclipse.ui.console,
- tern.eclipse.ide.server.nodejs.core
+ tern.eclipse.ide.server.nodejs.core,
+ minimal-json;bundle-version="0.9.2"
 Bundle-Activator: tern.eclipse.ide.tools.internal.ui.TernToolsUIPlugin
 Bundle-ActivationPolicy: lazy
-Import-Package: com.eclipsesource.json

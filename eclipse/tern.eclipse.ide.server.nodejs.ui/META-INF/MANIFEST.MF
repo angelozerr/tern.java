@@ -9,11 +9,11 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- tern.eclipse.ide.server.nodejs.core;bundle-version="0.2.0",
- tern.eclipse.ide.core;bundle-version="0.2.0",
- tern.core;bundle-version="0.2.0",
- tern.eclipse.ide.ui;bundle-version="0.2.0",
- tern.server.nodejs;bundle-version="0.2.0",
- org.eclipse.core.resources
+ tern.eclipse.ide.server.nodejs.core,
+ tern.eclipse.ide.core,
+ tern.core,
+ tern.eclipse.ide.ui,
+ tern.server.nodejs,
+ org.eclipse.core.resources,
+ minimal-json;bundle-version="0.9.2"
 Bundle-Activator: tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin
-Import-Package: com.eclipsesource.json

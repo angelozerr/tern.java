@@ -6,13 +6,10 @@ Bundle-Localization: plugin
 Bundle-SymbolicName: tern.server.nodejs;singleton:=true
 Bundle-Version: 0.8.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: tern.server.nodejs,
- tern.server.nodejs.npm,
- tern.server.nodejs.process
-Require-Bundle: tern.core
+Require-Bundle: tern.core, 
+ minimal-json;bundle-version="0.9.2"
 Bundle-ClassPath: .
-Import-Package: com.eclipsesource.json,
- org.apache.commons.logging,
+Import-Package: org.apache.commons.logging,
  org.apache.http,
  org.apache.http.client,
  org.apache.http.client.methods,
@@ -23,3 +20,6 @@ Import-Package: com.eclipsesource.json,
  org.osgi.framework
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.server.nodejs.Activator
+Export-Package: tern.server.nodejs,
+ tern.server.nodejs.npm,
+ tern.server.nodejs.process
