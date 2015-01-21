@@ -17,8 +17,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.workbench.texteditor,
  tern.eclipse,
- org.eclipse.core.expressions,
- minimal-json;bundle-version="0.9.2"
+ org.eclipse.core.expressions
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.ui.TernUIPlugin
 Export-Package: tern.eclipse.ide.ui,
@@ -34,3 +33,4 @@ Export-Package: tern.eclipse.ide.ui,
  tern.eclipse.ide.ui.properties,
  tern.eclipse.ide.ui.utils,
  tern.eclipse.ide.ui.viewers
+Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"

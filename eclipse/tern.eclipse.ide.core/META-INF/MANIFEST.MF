@@ -12,11 +12,11 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.server.nodejs,
  tern.eclipse,
  org.eclipse.jface.text,
- org.eclipse.core.commands,
- minimal-json;bundle-version="0.9.2"
+ org.eclipse.core.commands
 Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.preferences,
  tern.eclipse.ide.core.resources,
  tern.eclipse.ide.core.utils
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.core.TernCorePlugin
+Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"

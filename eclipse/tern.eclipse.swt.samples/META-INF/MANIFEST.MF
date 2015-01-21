@@ -12,6 +12,6 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
  tern.core,
  tern.eclipse,
  tern.server.nodejs,
- tern.server.rhino,
- minimal-json;bundle-version="0.9.2"
-Import-Package: org.mozilla.javascript
+ tern.server.rhino
+Import-Package: org.mozilla.javascript,
+ com.eclipsesource.json;version="[0.9.2,0.9.3)"

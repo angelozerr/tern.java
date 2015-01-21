@@ -6,7 +6,7 @@ Bundle-Localization: plugin
 Bundle-SymbolicName: tern.server.rhino
 Bundle-Version: 0.8.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.mozilla.javascript;bundle-version="1.7.4"
-Require-Bundle: tern.core,
- minimal-json;bundle-version="0.9.2"
+Import-Package: org.mozilla.javascript;bundle-version="1.7.4",
+ com.eclipsesource.json;version="[0.9.2,0.9.3)"
+Require-Bundle: tern.core
 Export-Package: tern.server.rhino,tern.server.rhino.loader
