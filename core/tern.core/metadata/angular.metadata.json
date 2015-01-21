@@ -1,5 +1,6 @@
 {
  "name": "angular",
+ "metadataurl": "https://raw.githubusercontent.com/angelozerr/tern.java/master/core/tern.core/metadata/angular.metadata.json", 
  "label": "AngularJS", 
  "homepage": "https://angularjs.org/",
  "author": "Marijn Haverbeke <marijnh@gmail.com> forked by Angelo ZERR",
