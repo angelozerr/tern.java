@@ -13,6 +13,7 @@ package tern.eclipse.ide.jsdt.internal.contentassist;
 import org.eclipse.wst.jsdt.ui.text.java.IJavaCompletionProposal;
 
 import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
+import tern.server.protocol.completions.TernCompletionProposalRec;
 
 /**
  * Extends {@link JSTernCompletionProposal} to implements JSDT
@@ -23,11 +24,8 @@ import tern.eclipse.ide.ui.contentassist.JSTernCompletionProposal;
 public class JSDTTernCompletionProposal extends JSTernCompletionProposal
 		implements IJavaCompletionProposal {
 
-	public JSDTTernCompletionProposal(String name, String displayName,
-			String type, String doc, String url, String origin, int start,
-			int end, boolean isProperty, boolean isObjectKey) {
-		super(name, displayName, type, doc, url, origin, start, end,
-				isProperty, isObjectKey);
+	public JSDTTernCompletionProposal(TernCompletionProposalRec proposal) {
+		super(proposal);
 	}
 
 	@Override

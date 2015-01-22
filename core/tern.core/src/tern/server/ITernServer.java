@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genutiec.com> - asynchronous request processing and 
+ *  									refactoring of collectors API 
  */
 package tern.server;
 
@@ -14,13 +16,10 @@ import java.io.IOException;
 
 import tern.ITernFileSynchronizer;
 import tern.TernException;
+import tern.server.protocol.IJSONObjectHelper;
+import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernDoc;
-import tern.server.protocol.completions.ITernCompletionCollector;
-import tern.server.protocol.definition.ITernDefinitionCollector;
-import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.html.ScriptTagRegion;
-import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.type.ITernTypeCollector;
 
 /**
  * Tern server API.
@@ -70,37 +69,7 @@ public interface ITernServer {
 
 	void request(TernDoc doc, IResponseHandler handler);
 
-	void request(TernDoc doc, ITernCompletionCollector collector)
-			throws TernException;
-
-	void request(TernDoc doc, ITernDefinitionCollector collector)
-			throws TernException;
-
-	void request(TernDoc doc, ITernTypeCollector collector)
-			throws TernException;
-
-	/**
-	 * Request tern server for lint.
-	 * 
-	 * @param doc
-	 *            the tern doc.
-	 * @param collector
-	 *            the lint collector.
-	 * @throws TernException
-	 */
-	void request(TernDoc doc, ITernLintCollector collector)
-			throws TernException;
-
-	/**
-	 * Request tern server for guessing types.
-	 * 
-	 * @param doc
-	 *            the tern doc.
-	 * @param collector
-	 *            the guess types collector.
-	 * @throws TernException
-	 */
-	void request(TernDoc doc, ITernGuessTypesCollector collector)
+	void request(TernDoc doc, ITernResultsCollector collector)
 			throws TernException;
 
 	/**
@@ -128,8 +97,6 @@ public interface ITernServer {
 
 	void setDataAsJsonString(boolean dataAsJsonString);
 
-	String getText(Object value, String name);
-
 	boolean isDisposed();
 
 	void dispose();
@@ -153,4 +120,12 @@ public interface ITernServer {
 	 *      b0587a64eea193d124005e03d80065ac310e2
 	 */
 	boolean isLoadingLocalPlugins();
+
+	ITernServerAsyncRequestProcessor getAsyncRequestProcessor();
+
+	void setAsyncRequestProcessor(
+			ITernServerAsyncRequestProcessor asyncReqProcessor);
+
+	IJSONObjectHelper getJSONObjectHelper();
+
 }

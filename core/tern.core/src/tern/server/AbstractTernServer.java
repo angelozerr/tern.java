@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,33 +7,28 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genutiec.com> - asynchronous request processing and 
+ *  									refactoring of collectors API 
  */
 package tern.server;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import tern.ITernFileSynchronizer;
 import tern.ITernProject;
-import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.TernException;
+import tern.server.protocol.ITernResultsAsyncCollector;
+import tern.server.protocol.ITernResultsCollector;
+import tern.server.protocol.TernDoc;
+import tern.server.protocol.TernResultsProcessorsFactory;
 
 /**
  * Abstract tern server.
- *
+ * 
  */
 public abstract class AbstractTernServer implements ITernServer {
-
-	/**
-	 * Properties for JSON completion result.
-	 */
-	protected static final String NAME_PROPERTY = "name";
-	protected static final String DISPLAY_NAME_PROPERTY = "displayName";
-	protected static final String TYPE_PROPERTY = "type";
-	protected static final String DOC_PROPERTY = "doc";
-	protected static final String URL_PROPERTY = "url";
-	protected static final String ORIGIN_PROPERTY = "origin";
-	protected static final String IS_PROPERTY_PROPERTY = "isProperty";
-	protected static final String IS_OBJECT_KEY_PROPERTY = "isObjectKey";
 
 	private final ITernProject project;
 
@@ -42,6 +37,10 @@ public abstract class AbstractTernServer implements ITernServer {
 	private boolean dataAsJsonString;
 	private boolean dispose;
 	private boolean loadingLocalPlugins;
+
+	private ITernServerAsyncRequestProcessor asyncReqProcessor;
+
+	private ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
 
 	public AbstractTernServer(ITernProject project) {
 		this.project = project;
@@ -55,6 +54,22 @@ public abstract class AbstractTernServer implements ITernServer {
 				}
 			});
 		}
+	}
+
+	protected void beginReadState() {
+		stateLock.readLock().lock();
+	}
+
+	protected void endReadState() {
+		stateLock.readLock().unlock();
+	}
+
+	protected void beginWriteState() {
+		stateLock.writeLock().lock();
+	}
+
+	protected void endWriteState() {
+		stateLock.writeLock().unlock();
 	}
 
 	public boolean isDataAsJsonString() {
@@ -97,10 +112,15 @@ public abstract class AbstractTernServer implements ITernServer {
 
 	@Override
 	public final void dispose() {
-		if (!isDisposed()) {
-			this.dispose = true;
-			doDispose();
-			// fireEndServer();
+		beginWriteState();
+		try {
+			if (!isDisposed()) {
+				this.dispose = true;
+				doDispose();
+				// fireEndServer();
+			}
+		} finally {
+			endWriteState();
 		}
 	}
 
@@ -110,27 +130,6 @@ public abstract class AbstractTernServer implements ITernServer {
 	}
 
 	protected abstract void doDispose();
-
-	protected void addProposal(Object completion, int start, int end,
-			boolean isProperty, boolean isObjectKey,
-			ITernCompletionCollector collector) {
-		String name = getText(completion, NAME_PROPERTY);
-		String displayName = getText(completion, DISPLAY_NAME_PROPERTY);
-		String type = getText(completion, TYPE_PROPERTY);
-		String doc = getText(completion, DOC_PROPERTY);
-		String url = getText(completion, URL_PROPERTY);
-		String origin = getText(completion, ORIGIN_PROPERTY);
-		collector.addProposal(name, displayName, type, doc, url, origin, start,
-				end, isProperty, isObjectKey, completion, this);
-	}
-
-	public abstract String getText(Object value);
-
-	public String getText(Object value, String name) {
-		return getText(getValue(value, name));
-	}
-
-	public abstract Object getValue(Object value, String name);
 
 	@Override
 	public ITernFileSynchronizer getFileSynchronizer() {
@@ -158,4 +157,38 @@ public abstract class AbstractTernServer implements ITernServer {
 	public boolean isLoadingLocalPlugins() {
 		return loadingLocalPlugins;
 	}
+
+	@Override
+	public void request(TernDoc doc, ITernResultsCollector collector)
+			throws TernException {
+		ITernServerAsyncRequestProcessor asyncReqProc = this.asyncReqProcessor;
+		if (!(collector instanceof ITernResultsAsyncCollector)) {
+			try {
+				TernResultsProcessorsFactory.makeRequestAndProcess(doc, this,
+						collector);
+			} catch (TernException ex) {
+				throw ex;
+			} catch (Throwable t) {
+				throw new TernException(t);
+			}
+		} else if (asyncReqProc == null) {
+			throw new TernException(
+					"Cannot make an asynchronous request without an asynchronous request processor.");
+		} else {
+			asyncReqProc.processRequest(doc,
+					(ITernResultsAsyncCollector) collector);
+		}
+	}
+
+	@Override
+	public ITernServerAsyncRequestProcessor getAsyncRequestProcessor() {
+		return asyncReqProcessor;
+	}
+
+	@Override
+	public void setAsyncRequestProcessor(
+			ITernServerAsyncRequestProcessor asyncReqProcessor) {
+		this.asyncReqProcessor = asyncReqProcessor;
+	}
+
 }

@@ -13,9 +13,11 @@ package tern.server.protocol.angular;
 import java.util.Collection;
 import java.util.HashMap;
 
+import tern.angular.protocol.completions.AngularCompletionProposalRec;
 import tern.angular.protocol.completions.TernAngularCompletionItem;
-import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.completions.TernCompletionProposalRec;
 
 public class MockTernAngularCompletionCollector extends
 		HashMap<String, TernAngularCompletionItem> implements
@@ -26,15 +28,12 @@ public class MockTernAngularCompletionCollector extends
 	}
 
 	@Override
-	public void addProposal(String name, String displayName, String type,
-			String doc, String url, String origin, int start, int end,
-			boolean isProperty, boolean isObjectKey, Object completion,
-			ITernServer ternServer) {
-		super.put(
-				name,
-				new TernAngularCompletionItem(name, type, origin, ternServer
-						.getText(completion, "module"), ternServer.getText(
-						completion, "controller")));
+	public void addProposal(TernCompletionProposalRec proposal,
+			Object completion, IJSONObjectHelper jsonObjectHelper) {
+		super.put(proposal.name, new TernAngularCompletionItem(
+				new AngularCompletionProposalRec(proposal, -1),
+				jsonObjectHelper.getText(completion, "module"),
+				jsonObjectHelper.getText(completion, "controller")));
 	}
 
 	public Collection<TernAngularCompletionItem> getCompletions() {
