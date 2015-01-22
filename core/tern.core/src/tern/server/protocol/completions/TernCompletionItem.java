@@ -21,15 +21,9 @@ import tern.utils.StringUtils;
  */
 public class TernCompletionItem {
 
-	private final String name;
+	private final TernCompletionProposalRec proposal;
 	private final String displayName;
-	private final String type;
-	private final String doc;
-	private final String url;
-	private final String origin;
-	private final boolean isProperty;
-	private final boolean isObjectKey;
-
+	
 	private final String signature;
 	private final boolean function;
 	private boolean array;
@@ -38,43 +32,30 @@ public class TernCompletionItem {
 	private String[] allTypes;
 	private boolean hasDisplayName;
 
-	public TernCompletionItem(String name, String type, String doc, String url,
-			String origin) {
-		this(name, null, type, doc, url, origin, false, false);
-	}
-
-	public TernCompletionItem(String name, String displayName, String type,
-			String doc, String url, String origin, boolean isProperty,
-			boolean isObjectKey) {
-		this.name = name;
+	public TernCompletionItem(TernCompletionProposalRec proposal) {
+		this.proposal = proposal;
 		// we consider that we are inside string when display name is defined.
-		this.hasDisplayName = !StringUtils.isEmpty(displayName);
-		this.displayName = hasDisplayName ? displayName : name;
-		this.type = type;
-		this.doc = doc;
-		this.url = url;
-		this.origin = origin;
+		this.hasDisplayName = !StringUtils.isEmpty(proposal.displayName);
+		this.displayName = hasDisplayName ? proposal.displayName : proposal.name;
 		this.parameters = null;
-		String signature = name;
-		this.jsType = type;
-		if (!hasDisplayName && !StringUtils.isEmpty(type)) {
-			this.function = TernTypeHelper.isFunction(type);
+		String signature = proposal.name;
+		this.jsType = proposal.type;
+		if (!hasDisplayName && !StringUtils.isEmpty(proposal.type)) {
+			this.function = TernTypeHelper.isFunction(proposal.type);
 			if (function) {
-				FunctionInfo functionInfo = TernTypeHelper.parseFunction(name,
-						type);
+				FunctionInfo functionInfo = TernTypeHelper.parseFunction(proposal.name,
+						proposal.type);
 				this.parameters = functionInfo.getParameters();
 				signature = functionInfo.getSignature();
 				this.jsType = functionInfo.getReturnType();
 			} else {
-				this.array = type.indexOf("[") != -1;
+				this.array = proposal.type.indexOf("[") != -1;
 			}
 		} else {
 			this.function = false;
 			this.array = false;
 		}
 		this.signature = signature;
-		this.isProperty = isProperty;
-		this.isObjectKey = isObjectKey;
 	}
 
 	/**
@@ -259,7 +240,7 @@ public class TernCompletionItem {
 	}
 
 	public String getText() {
-		if (StringUtils.isEmpty(origin) && StringUtils.isEmpty(jsType)) {
+		if (StringUtils.isEmpty(proposal.origin) && StringUtils.isEmpty(jsType)) {
 			return hasDisplayName ? displayName : signature;
 		}
 		StringBuilder text = new StringBuilder(hasDisplayName ? displayName
@@ -269,9 +250,9 @@ public class TernCompletionItem {
 			text.append(" : ");
 			text.append(jsType);
 		}
-		if (!StringUtils.isEmpty(origin)) {
+		if (!StringUtils.isEmpty(proposal.origin)) {
 			text.append(" - ");
-			text.append(origin);
+			text.append(proposal.origin);
 		}
 		return text.toString();
 	}
@@ -289,19 +270,19 @@ public class TernCompletionItem {
 	}
 
 	public String getName() {
-		return name;
+		return proposal.name;
 	}
 
 	public String getDoc() {
-		return doc;
+		return proposal.doc;
 	}
 
 	public String getURL() {
-		return url;
+		return proposal.url;
 	}
 
 	public String getOrigin() {
-		return origin;
+		return proposal.origin;
 	}
 
 	public String getSignature() {
@@ -309,7 +290,11 @@ public class TernCompletionItem {
 	}
 
 	public String getType() {
-		return type;
+		return proposal.type;
+	}
+	
+	public TernCompletionProposalRec getProposal() {
+		return proposal;
 	}
 
 	public String getJsType() {
@@ -317,11 +302,11 @@ public class TernCompletionItem {
 	}
 
 	public boolean isProperty() {
-		return isProperty;
+		return proposal.isProperty;
 	}
 
 	public boolean isObjectKey() {
-		return isObjectKey;
+		return proposal.isObjectKey;
 	}
 
 	public boolean hasDisplayName() {
