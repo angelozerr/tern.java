@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -51,15 +52,16 @@ import tern.repository.ITernRepository;
 import tern.repository.TernRepository;
 
 /**
- * Tern repositoryy block.
+ * Tern repository block.
  * 
  */
 public class TernRepositoryBlock extends AbstractTableBlock {
 
 	private CheckboxTableViewer repositoryViewer;
-	private TableViewer modulesViewer;
+	// private TableViewer modulesViewer;
 
 	private final IProject project;
+	private TernModulesBlock modulesBlock;
 
 	public TernRepositoryBlock(IProject project) {
 		this.project = project;
@@ -145,6 +147,22 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	}
 
 	private void createModulesTable(Composite parent) {
+		GridLayout layout = new GridLayout();
+		layout.numColumns = 1;
+		layout.marginHeight = 0;
+		layout.marginWidth = 0;
+		parent.setLayout(layout);
+
+		// create UI modules
+		modulesBlock = new TernModulesBlock(project, null);
+		Control control = modulesBlock.createControl(parent);
+		GridData data = new GridData(GridData.FILL_BOTH);
+		data.horizontalSpan = 1;
+		control.setLayoutData(data);
+
+	}
+
+	private void createModulesTableOLD(Composite parent) {
 		Table table = new Table(parent, SWT.BORDER | SWT.FULL_SELECTION
 				| SWT.V_SCROLL);
 
@@ -156,10 +174,10 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 		table.setHeaderVisible(false);
 		table.setLinesVisible(false);
 
-		modulesViewer = new TableViewer(table);
+		// modulesViewer = new TableViewer(table);
 
-		modulesViewer.setLabelProvider(TernModuleLabelProvider.getInstance());
-		modulesViewer.setContentProvider(ArrayContentProvider.getInstance());
+		// modulesViewer.setLabelProvider(TernModuleLabelProvider.getInstance());
+		// modulesViewer.setContentProvider(ArrayContentProvider.getInstance());
 
 	}
 
@@ -174,13 +192,17 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	}
 
 	private void refreshModules(ITernRepository repository) {
-		try {
-			modulesViewer.setInput(repository.getModules());
-		} catch (TernException e) {
-			Trace.trace(Trace.WARNING,
-					"Error while getting modules of tern repository.", e);
-			modulesViewer.setInput(Collections.EMPTY_LIST);
-		}
+		modulesBlock.setRepository(repository);
+		modulesBlock.loadModules();
+	}
+
+	private void refreshModulesOLD(ITernRepository repository) {
+		/*
+		 * try { //modulesViewer.setInput(repository.getModules()); } catch
+		 * (TernException e) { Trace.trace(Trace.WARNING,
+		 * "Error while getting modules of tern repository.", e);
+		 * //modulesViewer.setInput(Collections.EMPTY_LIST); }
+		 */
 	}
 
 	@Override

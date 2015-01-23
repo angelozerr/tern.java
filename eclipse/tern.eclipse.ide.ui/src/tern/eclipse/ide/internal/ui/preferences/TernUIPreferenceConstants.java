@@ -10,8 +10,6 @@
  */
 package tern.eclipse.ide.internal.ui.preferences;
 
-import tern.server.TernDef;
-
 /**
  * Tern UI preferences constants.
  * 
@@ -29,15 +27,5 @@ public class TernUIPreferenceConstants {
 	public static final String GENERATE_ANONYMOUS_FUNCTION_CONTENT_ASSIST = "generate-anonymous-function-contentassist";//$NON-NLS-1$
 	public static final String EXPAND_FUNCTION_CONTENT_ASSIST = "expand-function-contentassist";//$NON-NLS-1$
 	public static final String OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST = "omitObjectPrototype"; //$NON-NLS-1$
-
-	/**
-	 * Default tern plugins + JSON type definitions
-	 */
-	public static final String TERN_DEFS_DEFAULT = new StringBuilder(
-			TernDef.ecma5.name()).append(",").append(TernDef.browser.name())
-			.toString();
-	public static final String TERN_PLUGINS_DEFAULT = "";
-	public static final String TERN_PLUGINS = "tern-plugins";
-	public static final String TERN_DEFS = "tern-defs";
 
 }

@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-present Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -87,4 +87,12 @@ public interface ITernRepository {
 	 * @return the file of the given module and null otherwise.
 	 */
 	File getFile(ITernModule module);
+
+	/**
+	 * Returns the module by name and null otherwise.
+	 * 
+	 * @param name
+	 * @return the module by name and null otherwise.
+	 */
+	ITernModule getModule(String name);
 }

@@ -72,4 +72,10 @@ public interface ITernModuleConfigurable extends ITernModule {
 	 */
 	Collection<ITernModule> getModules();
 
+	/**
+	 * Returns true if configurable module has version and false otherwise.
+	 * 
+	 * @return true if configurable module has version and false otherwise.
+	 */
+	boolean hasVersion();
 }

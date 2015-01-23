@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IPreferencesService;
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -41,10 +42,10 @@ import org.eclipse.ui.handlers.HandlerUtil;
 
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.server.ITernDef;
-import tern.server.ITernPlugin;
+import tern.server.ITernModule;
 import tern.utils.TernModuleHelper;
 
 /**
@@ -53,6 +54,12 @@ import tern.utils.TernModuleHelper;
  */
 public abstract class AbstractConvertProjectCommandHandler extends
 		AbstractHandler {
+
+	private IPreferencesService fPreferenceService;
+
+	public AbstractConvertProjectCommandHandler() {
+		fPreferenceService = Platform.getPreferencesService();
+	}
 
 	private void doInstall(IProject project, IProgressMonitor monitor,
 			ExecutionEvent event) throws CoreException {
@@ -65,14 +72,9 @@ public abstract class AbstractConvertProjectCommandHandler extends
 				InstanceScope.INSTANCE, DefaultScope.INSTANCE };
 
 		// add default JSON type definitions and plugins
-		ITernDef defs[] = getDefs(fLookupOrder);
-		ITernPlugin[] plugins = getPlugins(fLookupOrder);
-
-		for (int i = 0; i < plugins.length; i++) {
-			TernModuleHelper.update(plugins[i], ternProject);
-		}
-		for (int i = 0; i < defs.length; i++) {
-			TernModuleHelper.update(defs[i], ternProject);
+		ITernModule modules[] = getModules(fLookupOrder);
+		for (int i = 0; i < modules.length; i++) {
+			TernModuleHelper.update(modules[i], ternProject);
 		}
 
 		showPropertiesOn(project, monitor, event);
@@ -87,7 +89,7 @@ public abstract class AbstractConvertProjectCommandHandler extends
 	}
 
 	private void doUninstall(IProject project, IProgressMonitor monitor) {
-	
+
 	}
 
 	public Object execute(final ExecutionEvent event) throws ExecutionException {
@@ -167,10 +169,16 @@ public abstract class AbstractConvertProjectCommandHandler extends
 		}
 	}
 
+	protected ITernModule[] getModules(IScopeContext[] fLookupOrder) {
+		String moduleNames = fPreferenceService.getString(TernCorePlugin
+				.getDefault().getBundle().getSymbolicName(),
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES,
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES_VALUE,
+				fLookupOrder);
+		return TernCorePlugin.getTernRepositoryManager().getTernModules(
+				moduleNames, null);
+	}
+
 	protected abstract String getConvertingProjectJobTitle(IProject project);
-
-	protected abstract ITernPlugin[] getPlugins(IScopeContext[] fLookupOrder);
-
-	protected abstract ITernDef[] getDefs(IScopeContext[] fLookupOrder);
 
 }

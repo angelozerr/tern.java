@@ -126,6 +126,15 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	/**
+	 * Returns true if lib or plugins exists and false otheriwse.
+	 * 
+	 * @return true if lib or plugins exists and false otheriwse.
+	 */
+	public boolean hasModules() {
+		return hasLibs() || hasPlugins();
+	}
+
+	/**
 	 * Add JSON Type Definition.
 	 * 
 	 * @param lib
@@ -168,6 +177,15 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	/**
+	 * Returns true if lib exist and false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean hasLibs() {
+		return super.get(LIBS_FIELD_NAME) != null;
+	}
+
+	/**
 	 * Returns true if the given lib exists and false otherwise.
 	 * 
 	 * @param lib
@@ -199,6 +217,15 @@ public class TernProject extends JsonObject implements ITernProject {
 	@Override
 	public void clearLibs() {
 		remove(LIBS_FIELD_NAME);
+	}
+
+	/**
+	 * Returns true if plugins exist and false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean hasPlugins() {
+		return super.get(PLUGINS_FIELD_NAME) != null;
 	}
 
 	/**

@@ -10,14 +10,7 @@
  */
 package tern.eclipse.ide.core;
 
-import java.util.List;
-
 import org.eclipse.core.resources.IProject;
-
-import tern.TernException;
-import tern.server.ITernDef;
-import tern.server.ITernModule;
-import tern.server.ITernPlugin;
 
 /**
  * Tern server type manager API.
@@ -50,31 +43,6 @@ public interface ITernServerTypeManager {
 	ITernServerType findTernServerType(String id);
 
 	void refresh();
-
-	/**
-	 * Returns the array of tern plugin and JSON Type definition from the tern
-	 * repository and project.
-	 * 
-	 * @param ternProject
-	 * @param checkedModules
-	 * @return
-	 * @throws TernException
-	 */
-	ITernModule[] getTernModules(IIDETernProject ternProject,
-			List<ITernModule> checkedModules) throws TernException;
-
-	ITernPlugin findTernPlugin(String name);
-
-	ITernDef findTernDef(String string);
-
-	/**
-	 * Returns the tern module (plugin or def) with the given name.
-	 * 
-	 * @param name
-	 *            of the module.
-	 * @return the tern module with the given name.
-	 */
-	ITernModule findTernModule(String name);
 
 	/**
 	 * Add server preferences listener.

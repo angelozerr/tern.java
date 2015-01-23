@@ -111,7 +111,7 @@
        <page  name="%TernRepositoryPropertyPage.name"
               category="tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.TernRepositoryPropertyPage" />  
+	          id="tern.eclipse.ide.ui.preferences.TernRepositoryPropertyPage" />
 	   <page  name="%TernValidationPropertyPage.name"
               category="tern.eclipse.ide.preferences"
 	          class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"

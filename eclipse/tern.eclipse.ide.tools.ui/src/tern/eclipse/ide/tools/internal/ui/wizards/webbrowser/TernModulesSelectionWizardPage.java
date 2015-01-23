@@ -11,6 +11,7 @@
 package tern.eclipse.ide.tools.internal.ui.wizards.webbrowser;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
@@ -28,6 +29,7 @@ import tern.eclipse.ide.tools.core.webbrowser.EditorOptions;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
 import tern.eclipse.ide.tools.internal.ui.wizards.TernWizardPage;
 import tern.eclipse.ide.ui.controls.TernModulesBlock;
+import tern.metadata.TernModuleMetadata;
 import tern.repository.ITernRepository;
 import tern.server.ITernDef;
 import tern.server.ITernModule;
@@ -92,20 +94,38 @@ public class TernModulesSelectionWizardPage extends
 
 	@Override
 	protected void updateModel(EditorOptions model) {
+		ITernRepository repository = TernCorePlugin.getTernRepositoryManager()
+				.getRepository(modulesBlock.getProject());
 		Object[] modules = modulesBlock.getCheckedModules();
 		List<ITernDef> defs = new ArrayList<ITernDef>();
 		List<ITernPlugin> plugins = new ArrayList<ITernPlugin>();
 		ITernModule module = null;
+		ITernModule dependencyModule = null;
+		TernModuleMetadata metadata = null;
+		Collection<String> requiredDependencies = null;
 		for (int i = 0; i < modules.length; i++) {
 			module = (ITernModule) modules[i];
+			// add required dependencies (ex : if ecma6 is checked, ecma5 must
+			// be added too).
+			metadata = module.getMetadata();
+			if (metadata != null) {
+				requiredDependencies = metadata.getRequiredDependencies(module
+						.getVersion());
+				for (String dependency : requiredDependencies) {
+					dependencyModule = repository.getModule(dependency);
+					if (dependencyModule != null) {
+						TernModuleHelper
+								.update(defs, plugins, dependencyModule);
+					}
+				}
+			}
+			// add module
 			TernModuleHelper.update(defs, plugins, module);
+
 		}
 		model.setTernDefs(defs.toArray(ITernDef.EMPTY_DEF));
 		model.setTernPlugins(plugins.toArray(ITernPlugin.EMPTY_PLUGIN));
-		ITernRepository repository = TernCorePlugin.getTernRepositoryManager()
-				.getRepository(modulesBlock.getProject());
 		model.setRepository(repository);
 		model.setProject(modulesBlock.getProject());
 	}
-
 }

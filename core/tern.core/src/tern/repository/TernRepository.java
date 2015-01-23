@@ -11,8 +11,8 @@
 package tern.repository;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import tern.TernException;
 import tern.server.ITernModule;
@@ -32,7 +32,7 @@ public class TernRepository implements ITernRepository {
 	private final String name;
 	private File ternBaseDir;
 	private final boolean defaultRepository;
-	private ITernModule[] modules;
+	private Map<String, ITernModule> modules;
 
 	public TernRepository(String name, File ternBaseDir) {
 		this(name, ternBaseDir, false);
@@ -51,24 +51,39 @@ public class TernRepository implements ITernRepository {
 
 	@Override
 	public ITernModule[] getModules() throws TernException {
+		intializeIfNeeded();
+		return modules.values().toArray(ITernModule.EMPTY_MODULE);
+	}
+
+	@Override
+	public ITernModule getModule(String name) {
+		try {
+			intializeIfNeeded();
+			return modules.get(name);
+		} catch (TernException e) {
+			return null;
+		}
+
+	}
+
+	private void intializeIfNeeded() throws TernException {
 		if (modules == null) {
 			modules = loadModules();
 		}
-		return modules;
 	}
 
-	private ITernModule[] loadModules() throws TernException {
-		List<ITernModule> modules = new ArrayList<ITernModule>();
+	private Map<String, ITernModule> loadModules() throws TernException {
+		Map<String, ITernModule> modules = new HashMap<String, ITernModule>();
 		// defs
 		loadModules(modules, DEFS_FOLDER);
 		// plugin
 		loadModules(modules, PLUGIN_FOLDER);
 		// node_modules
 		loadModules(modules, NODE_MODULES_FOLDER);
-		return modules.toArray(ITernModule.EMPTY_MODULE);
+		return modules;
 	}
 
-	private void loadModules(List<ITernModule> modules, String dir)
+	private void loadModules(Map<String, ITernModule> modules, String dir)
 			throws TernException {
 		File baseDir = new File(getTernBaseDir(), dir);
 		if (baseDir.exists()) {
@@ -79,7 +94,7 @@ public class TernRepository implements ITernRepository {
 				file = files[i];
 				module = TernModuleHelper.getModule(file.getName());
 				if (module != null) {
-					modules.add(module);
+					modules.put(module.getName(), module);
 				}
 			}
 		}

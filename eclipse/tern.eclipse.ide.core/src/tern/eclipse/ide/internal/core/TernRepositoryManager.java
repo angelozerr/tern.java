@@ -12,21 +12,32 @@ package tern.eclipse.ide.internal.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
 import tern.TernException;
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
+import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.repository.ITernRepository;
 import tern.repository.TernRepository;
+import tern.server.ITernModule;
+import tern.server.ITernPlugin;
 import tern.utils.StringUtils;
+import tern.utils.TernModuleHelper;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Manager of tern repository.
@@ -136,6 +147,11 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		return repositories.get(name);
 	}
 
+	private ITernRepository getRepository(IIDETernProject ternProject) {
+		return getRepository(ternProject != null ? ternProject.getProject()
+				: null);
+	}
+
 	@Override
 	public ITernRepository getRepository(IProject project) {
 		loadRepositoriesIfNeeded();
@@ -168,4 +184,87 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 				TernCorePreferenceConstants.REPOSITORIES, value.toString());
 		loadRepositories();
 	}
+
+	@Override
+	public List<ITernModule> getCheckedModules(IIDETernProject ternProject,
+			List<ITernModule> allModules) {
+		List<ITernModule> checkedModules = new ArrayList<ITernModule>();
+		// Tern Plugins
+		JsonValue options = null;
+		JsonObject plugins = ternProject.getPlugins();
+		for (String name : plugins.names()) {
+			options = plugins.get(name);
+			ITernModule plugin = findTernModule(name.toString(), ternProject);
+			updateCheckedModule(plugin, options, allModules, checkedModules);
+		}
+
+		// JSON Type Definitions
+		JsonArray defs = ternProject.getLibs();
+		for (JsonValue name : defs) {
+			ITernModule def = findTernModule(name.asString(), ternProject);
+			updateCheckedModule(def, null, allModules, checkedModules);
+		}
+		return checkedModules;
+	}
+
+	/**
+	 * Update the checked modules with the given module.
+	 * 
+	 * @param module
+	 * @param options
+	 * @param allModules
+	 * @param checkedModules
+	 */
+	private void updateCheckedModule(ITernModule module, JsonValue options,
+			List<ITernModule> allModules, List<ITernModule> checkedModules) {
+		if (module != null) {
+			if (!TernModuleHelper.isConfigurableModule(module)) {
+				checkedModules.add(module);
+			} else {
+				try {
+					checkedModules.add(TernModuleHelper.findConfigurable(
+							module, options, allModules));
+				} catch (TernException e) {
+					Trace.trace(Trace.SEVERE,
+							"Error while finding configurable module.", e);
+				}
+			}
+		}
+	}
+
+	@Override
+	public ITernModule findTernModule(String name, IIDETernProject ternProject) {
+		ITernRepository repository = getRepository(ternProject);
+		ITernModule m = repository.getModule(name);
+		if (m != null) {
+			return m;
+		}
+		if (ternProject != null) {
+			List<ITernModule> projectModules = ternProject.getProjectModules();
+			if (projectModules != null) {
+				for (ITernModule module : projectModules) {
+					if (module.getName().equals(name)) {
+						return module;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public ITernModule[] getTernModules(String moduleNames,
+			IDETernProject ternProject) {
+		ITernModule module = null;
+		List<ITernModule> modules = new ArrayList<ITernModule>();
+		String[] names = moduleNames.split(",");
+		for (int i = 0; i < names.length; i++) {
+			module = findTernModule(names[i], ternProject);
+			if (module != null) {
+				modules.add(module);
+			}
+		}
+		return modules.toArray(ITernPlugin.EMPTY_MODULE);
+	}
+
 }

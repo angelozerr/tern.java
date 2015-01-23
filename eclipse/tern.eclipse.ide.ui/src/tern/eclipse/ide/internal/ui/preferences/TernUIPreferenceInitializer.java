@@ -42,12 +42,6 @@ public class TernUIPreferenceInitializer extends AbstractPreferenceInitializer {
 		node.putBoolean(
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				false);
-
-		// Tern modules selection
-		node.put(TernUIPreferenceConstants.TERN_DEFS,
-				TernUIPreferenceConstants.TERN_DEFS_DEFAULT);
-		node.put(TernUIPreferenceConstants.TERN_PLUGINS,
-				TernUIPreferenceConstants.TERN_PLUGINS_DEFAULT);
 	}
 
 }

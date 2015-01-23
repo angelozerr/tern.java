@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import tern.server.ITernModule;
+import tern.server.TernModuleInfo;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
@@ -55,6 +56,7 @@ public class TernModuleMetadata {
 	private final String bugsURL;
 	private final String helpURL;
 	private final Map<String, Collection<String>> dependencies;
+	private final Map<String, Collection<String>> requiredDependencies;
 	private final Collection<TernModuleMetadataOption> options;
 
 	/**
@@ -78,6 +80,8 @@ public class TernModuleMetadata {
 		} else {
 			this.dependencies = Collections.emptyMap();
 		}
+		// required dependencies
+		requiredDependencies = getRequiredDependencies();
 		// options
 		JsonValue options = json.get(OPTIONS_FIELD);
 		if (options != null && options instanceof JsonArray) {
@@ -85,6 +89,33 @@ public class TernModuleMetadata {
 		} else {
 			this.options = Collections.emptyList();
 		}
+	}
+
+	private Map<String, Collection<String>> getRequiredDependencies() {
+		Map<String, Collection<String>> requiredDependenciesMap = new HashMap<String, Collection<String>>();
+		Collection<String> requiredDependencies = null;
+		String version = null;
+		Collection<String> dependencies = null;
+		TernModuleInfo info = null;
+		for (Map.Entry<String, Collection<String>> entry : this.dependencies
+				.entrySet()) {
+			version = entry.getKey();
+			dependencies = entry.getValue();
+			for (String dependency : dependencies) {
+				info = new TernModuleInfo(dependency);
+				if (info.getType().equals(getName())) {
+					// same type, add it
+					requiredDependencies = requiredDependenciesMap.get(version);
+					if (requiredDependencies == null) {
+						requiredDependencies = new ArrayList<String>();
+						requiredDependenciesMap.put(version,
+								requiredDependencies);
+					}
+					requiredDependencies.add(dependency);
+				}
+			}
+		}
+		return requiredDependenciesMap;
 	}
 
 	public String getURL(JsonObject json, String name) {
@@ -248,6 +279,22 @@ public class TernModuleMetadata {
 				.get(StringUtils.isEmpty(version) ? ANY_VERSION : version);
 		if (deps == null) {
 			deps = dependencies.get(ANY_VERSION);
+		}
+		return (Collection<String>) (deps != null ? deps : Collections
+				.emptyList());
+	}
+
+	/**
+	 * Returns list of required {@link ITernModule} name dependencies.
+	 * 
+	 * @return list of required {@link ITernModule} name dependencies.
+	 */
+	@SuppressWarnings("unchecked")
+	public Collection<String> getRequiredDependencies(String version) {
+		Collection<String> deps = requiredDependencies.get(StringUtils
+				.isEmpty(version) ? ANY_VERSION : version);
+		if (deps == null) {
+			deps = requiredDependencies.get(ANY_VERSION);
 		}
 		return (Collection<String>) (deps != null ? deps : Collections
 				.emptyList());

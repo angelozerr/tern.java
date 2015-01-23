@@ -10,6 +10,9 @@
  */
 package tern.eclipse.ide.core.preferences;
 
+import tern.server.TernDef;
+import tern.server.TernPlugin;
+
 /**
  * Tern Core preferences constants.
  * 
@@ -40,4 +43,26 @@ public class TernCorePreferenceConstants {
 	 */
 	public static final String VALIDATION_USE_PROJECT_SETTINGS = "validation-use-project-settings";//$NON-NLS-1$
 	public static final String AVAILABLE_TERN_BUILDER = "availableTernBuilder"; //$NON-NLS-1$
+
+	/**
+	 * Default tern modules to add to .tern-project when project is converted to
+	 * tern project.
+	 */
+	public static final String DEFAULT_TERN_MODULES = "defaultTernModules"; //$NON-NLS-1$
+	public static final String DEFAULT_TERN_MODULES_VALUE = getDefaultModules(); //$NON-NLS-1$
+
+	/**
+	 * Returns the tern modules to add to .tern-project when project is
+	 * converted to tern project.
+	 * 
+	 * @return the tern modules to add to .tern-project when project is
+	 *         converted to tern project.
+	 */
+	private static String getDefaultModules() {
+		StringBuilder modules = new StringBuilder();
+		modules.append(TernDef.ecma5.getName());
+		modules.append(",");
+		modules.append(TernPlugin.guess_types.getName());
+		return modules.toString();
+	}
 }

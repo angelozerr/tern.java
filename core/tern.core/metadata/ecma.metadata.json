@@ -5,7 +5,7 @@
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "Adds ECMAScript support.",
  "dependencies": {
-  "ecma6": [
+  "6": [
    "ecma5"
   ]
  },

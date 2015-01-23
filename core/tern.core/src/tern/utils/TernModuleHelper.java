@@ -17,7 +17,6 @@ import static tern.utils.ExtensionUtils.TERN_SUFFIX;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,13 +46,13 @@ import com.eclipsesource.json.JsonValue;
 public class TernModuleHelper {
 
 	/**
-	 * Group the given list {@link ITernDef} by {@link ITernModule#getType()};
+	 * Group the given list tern modules by {@link ITernModule#getType()}.
 	 * 
 	 * @param modules
 	 * @param groupedModules
 	 */
-	public static void groupByType(ITernModule[] modules,
-			List<ITernModule> groupedModules) {
+	public static List<ITernModule> groupByType(List<ITernModule> modules) {
+		List<ITernModule> groupedModules = new ArrayList<ITernModule>();
 		Map<String, TernModuleConfigurable> wrappers = null;
 		for (ITernModule module : modules) {
 			if (!isConfigurableModule(module)) {
@@ -75,6 +74,7 @@ public class TernModuleHelper {
 				}
 			}
 		}
+		return groupedModules;
 	}
 
 	/**
@@ -179,7 +179,8 @@ public class TernModuleHelper {
 	 * @throws TernException
 	 */
 	public static ITernModuleConfigurable findConfigurable(ITernModule module,
-			JsonValue options, ITernModule[] allModules) throws TernException {
+			JsonValue options, List<ITernModule> allModules)
+			throws TernException {
 		String version = module.getVersion();
 		for (ITernModule f : allModules) {
 			if (f.getModuleType() == ModuleType.Configurable
@@ -292,37 +293,6 @@ public class TernModuleHelper {
 	 */
 	public static void sort(List<ITernModule> modules) {
 		new ModuleDependenciesComparator(modules);
-		/*TernModuleMetadata metadata = null;
-		Collection<String> dependencies = null;
-		Integer moduleIndex = null;
-		for (ITernModule module : new ArrayList<ITernModule>(modules)) {
-			metadata = module.getMetadata();
-			if (metadata != null) {
-				dependencies = metadata.getDependencies(module.getVersion());
-				if (dependencies != null) {
-					for (String dependency : dependencies) {
-						moduleIndex = getModuleIndex(dependency, modules);
-						if (moduleIndex != null) {
-							int oldIndex = modules.indexOf(module);
-							if (oldIndex < moduleIndex) {
-								modules.set(moduleIndex + 1, module);
-							}
-						}
-					}
-				}
-			}
-		}*/
-	}
-
-	private static Integer getModuleIndex(String name, List<ITernModule> modules) {
-		ITernModule module = null;
-		for (int i = 0; i < modules.size(); i++) {
-			module = modules.get(i);
-			if (module.getName().equals(name)) {
-				return i;
-			}
-		}
-		return null;
 	}
 
 }

@@ -24,9 +24,14 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.IRegistryChangeEvent;
 import org.eclipse.core.runtime.IRegistryChangeListener;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 
 import tern.eclipse.ide.core.ITernNatureCapability;
+import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.metadata.TernModuleMetadata;
 import tern.resources.TernProject;
@@ -250,32 +255,52 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 	/**
 	 * Add default modules for the given tern project.
 	 *
-	 * @param project
+	 * @param ternProject
 	 *            tern project
 	 * @throws CoreException
 	 */
-	public void addDefaultModules(IDETernProject project) throws CoreException {
+	public void addDefaultModules(IDETernProject ternProject)
+			throws CoreException {
+		if (ternProject.hasModules()) {
+			// tern project is not empty, don't add default modules
+			return;
+		}
+
+		List<ITernModule> contributedModules = new ArrayList<ITernModule>();
+		Map<ITernModule, JsonObject> moduleOptions = null;
+
+		// add default module from preferences
+		ITernModule moduleFromPreferences = null;
+		ITernModule[] modulesFromPreferences = getModulesFromPreferences(ternProject);
+		for (int i = 0; i < modulesFromPreferences.length; i++) {
+			moduleFromPreferences = modulesFromPreferences[i];
+			if (!contributedModules.contains(moduleFromPreferences)) {
+				contributedModules.add(moduleFromPreferences);
+			}
+		}
+
+		// Add default module from extension point.
+		ITernRepositoryManager repositoryManager = TernCorePlugin
+				.getTernRepositoryManager();
 		Map<ITernNatureCapability, List<DefaultModule>> ternNatureAdapters = getTernNatureAdapters();
 		for (ITernNatureCapability natureAdapter : ternNatureAdapters.keySet()) {
-			if (natureAdapter.hasTernNature(project.getProject())) {
+			if (natureAdapter.hasTernNature(ternProject.getProject())) {
 				List<DefaultModule> defaultModules = ternNatureAdapters
 						.get(natureAdapter);
-
 				// collect default modules and sort it.
-				List<ITernModule> sortedModules = new ArrayList<ITernModule>();
-				Map<ITernModule, JsonObject> moduleOptions = null;
 				for (DefaultModule defaultModule : defaultModules) {
-					ITernModule module = TernCorePlugin
-							.getTernServerTypeManager().findTernModule(
-									defaultModule.getName());
+					ITernModule module = repositoryManager.findTernModule(
+							defaultModule.getName(), ternProject);
 					if (module != null) {
-						sortedModules.add(module);
-						if (defaultModule.getOptions() != null) {
-							if (moduleOptions == null) {
-								moduleOptions = new HashMap<ITernModule, JsonObject>();
+						if (!contributedModules.contains(module)) {
+							contributedModules.add(module);
+							if (defaultModule.getOptions() != null) {
+								if (moduleOptions == null) {
+									moduleOptions = new HashMap<ITernModule, JsonObject>();
+								}
+								moduleOptions.put(module,
+										defaultModule.getOptions());
 							}
-							moduleOptions.put(module,
-									defaultModule.getOptions());
 						}
 						if (defaultModule.isWithDependencies()) {
 							// add modules dependencies
@@ -284,47 +309,46 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 								Collection<String> dependencies = metadata
 										.getDependencies(module.getVersion());
 								for (String dependency : dependencies) {
-									ITernModule dependencyModule = TernCorePlugin
-											.getTernServerTypeManager()
-											.findTernModule(dependency);
+									ITernModule dependencyModule = repositoryManager
+											.findTernModule(dependency,
+													ternProject);
 									if (dependencyModule != null) {
-										sortedModules.add(dependencyModule);
+										if (!contributedModules
+												.contains(dependencyModule)) {
+											contributedModules
+													.add(dependencyModule);
+										}
 									}
 								}
 							}
 						}
 					}
 				}
-				TernModuleHelper.sort(sortedModules);
-
-				// loop for collected sorted modules
-				JsonObject options = null;
-				for (ITernModule module : sortedModules) {
-					options = moduleOptions != null ? moduleOptions.get(module)
-							: null;
-					TernModuleHelper.update(module, options, project);
-				}
-
-				/*
-				 * for (DefaultModule defaultModule : defaultModules) {
-				 * ITernModule module = TernCorePlugin
-				 * .getTernServerTypeManager().findTernModule(
-				 * defaultModule.getName()); if (module != null) { // add the
-				 * module with the options JsonObject options =
-				 * defaultModule.getOptions(); TernModuleHelper.update(module,
-				 * options, project); if (defaultModule.isWithDependencies()) {
-				 * // add modules dependencies TernModuleMetadata metadata =
-				 * module.getMetadata(); if (metadata != null) {
-				 * Collection<String> dependencies = metadata
-				 * .getDependencies(module.getVersion()); for (String dependency
-				 * : dependencies) { ITernModule dependencyModule =
-				 * TernCorePlugin .getTernServerTypeManager()
-				 * .findTernModule(dependency); if (dependencyModule != null) {
-				 * TernModuleHelper .update(dependencyModule, null, project); }
-				 * } } } } }
-				 */
 			}
 		}
+
+		// sort modules
+		TernModuleHelper.sort(contributedModules);
+
+		// loop for collected sorted modules
+		JsonObject options = null;
+		for (ITernModule module : contributedModules) {
+			options = moduleOptions != null ? moduleOptions.get(module) : null;
+			TernModuleHelper.update(module, options, ternProject);
+		}
+
+	}
+
+	private ITernModule[] getModulesFromPreferences(IDETernProject ternProject) {
+		IScopeContext[] lookupOrder = new IScopeContext[] {
+				InstanceScope.INSTANCE, DefaultScope.INSTANCE };
+		String moduleNames = Platform.getPreferencesService().getString(
+				TernCorePlugin.getDefault().getBundle().getSymbolicName(),
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES,
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES_VALUE,
+				lookupOrder);
+		return TernCorePlugin.getTernRepositoryManager().getTernModules(
+				moduleNames, ternProject);
 	}
 
 }

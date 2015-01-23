@@ -116,9 +116,10 @@ public final class TernUIMessages extends NLS {
 	
 	// Validation preferences
 	public static String TernValidationPreferencesPage_availableTernBuilder_label;
-
+	
 	// Tern Hover
 	public static String TernHover_openDeclaration;
+
 
 	private TernUIMessages() {
 	}

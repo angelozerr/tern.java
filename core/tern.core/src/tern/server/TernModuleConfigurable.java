@@ -123,4 +123,14 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	public Collection<ITernModule> getModules() {
 		return modules.values();
 	}
+	
+	@Override
+	public boolean hasVersion() {
+		return !modules.isEmpty();
+	}
+	
+	@Override
+	public String toString() {		
+		return getType();
+	}
 }

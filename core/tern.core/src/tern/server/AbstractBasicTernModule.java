@@ -16,53 +16,16 @@ import tern.metadata.TernModuleMetadataManager;
 /**
  * Abstract class for basic tern moduleµ.
  * 
- * @author azerr
- *
  */
-public abstract class AbstractBasicTernModule implements ITernModule {
+public abstract class AbstractBasicTernModule extends TernModuleInfo implements
+		ITernModule {
 
-	private final String name;
-	private final String type;
-	private final String version;
 	private final ModuleType moduleType;
 	private TernModuleMetadata metadata;
 
 	public AbstractBasicTernModule(String name, ModuleType moduleType) {
-		this.name = name;
+		super(name);
 		this.moduleType = moduleType;
-		int index = getVersionIndex(name);
-		if (index != -1) {
-			this.type = name.substring(0, index);
-			this.version = name.substring(index, name.length());
-		} else {
-			this.type = name;
-			this.version = null;
-		}
-	}
-
-	private int getVersionIndex(String name) {
-		char[] chars = name.toCharArray();
-		for (int i = 0; i < chars.length; i++) {
-			if (Character.isDigit(chars[i])) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	@Override
-	public String getType() {
-		return type;
-	}
-
-	@Override
-	public String getVersion() {
-		return version;
-	}
-
-	@Override
-	public String getName() {
-		return name;
 	}
 
 	@Override
@@ -82,5 +45,10 @@ public abstract class AbstractBasicTernModule implements ITernModule {
 					getType());
 		}
 		return metadata;
+	}
+
+	@Override
+	public String toString() {
+		return getType();
 	}
 }

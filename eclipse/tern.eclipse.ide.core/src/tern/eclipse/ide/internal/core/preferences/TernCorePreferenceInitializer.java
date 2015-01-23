@@ -18,6 +18,10 @@ import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 
+/**
+ * Tern core prereferences initializer.
+ *
+ */
 public class TernCorePreferenceInitializer extends
 		AbstractPreferenceInitializer {
 
@@ -42,5 +46,9 @@ public class TernCorePreferenceInitializer extends
 		// Validation
 		node.putBoolean(TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER,
 				false);
+		// default modules
+		node.put(TernCorePreferenceConstants.DEFAULT_TERN_MODULES,
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES_VALUE);
 	}
+
 }
