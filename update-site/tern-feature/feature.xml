@@ -19,15 +19,12 @@
       %license
    </license>
 
-   <plugin
-         id="tern.eclipse.ide.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <requires>
+         <import plugin="minimal-json"/>
+   </requires>
 
    <plugin
-         id="minimal-json"
+         id="tern.eclipse.ide.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
