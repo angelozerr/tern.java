@@ -325,7 +325,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				replacement.append(SPACE);
 			}
 
-			if (parameter.isFunction() && isGenerateAnonymousFunction()) {
+			if (parameter.isFunction() && isGenerateAnonymousFunction()
+					&& initialFunction) {
 				FunctionInfo info = parameter.getInfo();
 				List<Parameter> parametersOfParam = info.getParameters();
 				replacement.append("function(");
@@ -628,7 +629,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	}
 
 	private String getCategory() {
-		return "ParameterGuessingProposal_" + toString(); //$NON-NLS-1$
+		return "JSTernCompletionProposal_" + toString(); //$NON-NLS-1$
 	}
 
 }
