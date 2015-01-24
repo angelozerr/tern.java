@@ -25,6 +25,7 @@ import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.IElementComparer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -70,9 +71,21 @@ import tern.utils.TernModuleHelper;
  */
 public class TernModulesBlock extends AbstractTableBlock {
 
+	private static final IElementComparer TERN_MODULES_COMPARER = new IElementComparer() {
+
+		@Override
+		public boolean equals(Object a, Object b) {
+			return a.equals(b);
+		}
+
+		@Override
+		public int hashCode(Object element) {
+			return element.hashCode();
+		}
+	};
+
 	private final String tableLabel;
 	private final IProject project;
-	private ITernRepository repository;
 
 	private final Map<String, ITernModule> ternModules = new HashMap<String, ITernModule>();
 	private CheckboxTableViewer tableViewer;
@@ -183,6 +196,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 				tableViewer);
 		versionColumn.setEditingSupport(versionEditiongSupport);
 
+		tableViewer.setComparer(TERN_MODULES_COMPARER);
 		tableViewer.setLabelProvider(TernModuleLabelProvider.getInstance());
 		tableViewer.setContentProvider(ArrayContentProvider.getInstance());
 
@@ -406,49 +420,67 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 	/**
 	 * Load plugins from tern project.
+	 * 
+	 * @param moduleNames
+	 * @param repository
 	 */
 	public void loadModules() {
 		List<ITernModule> allModules = null;
 		List<ITernModule> checkedModules = null;
 		try {
-			if (repository != null) {
-				// load modules from the given repository
+
+			// load modules from the given tern project
+			IIDETernProject ternProject = getTernProject();
+			if (ternProject != null) {
+
+				// Add list of tern modules from the repository
 				allModules = new ArrayList<ITernModule>(
-						Arrays.asList(repository.getModules()));
+						Arrays.asList(ternProject.getRepository().getModules()));
+				// Add local tern modules
+				List<ITernModule> projectModules = ternProject
+						.getProjectModules();
+				allModules.addAll(projectModules);
 				// Group by type
 				allModules = TernModuleHelper.groupByType(allModules);
-			} else {
-				// load modules from the given tern project
-				IIDETernProject ternProject = getTernProject();
-				if (ternProject != null) {
 
-					// Add list of tern modules from the repository
-					allModules = new ArrayList<ITernModule>(
-							Arrays.asList(ternProject.getRepository()
-									.getModules()));
-					// Add local tern modules
-					List<ITernModule> projectModules = ternProject
-							.getProjectModules();
-					allModules.addAll(projectModules);
-					// Group by type
-					allModules = TernModuleHelper.groupByType(allModules);
+				// checked modules
+				checkedModules = TernCorePlugin.getTernRepositoryManager()
+						.getCheckedModules(ternProject, allModules);
 
-					// checked modules
-					checkedModules = TernCorePlugin.getTernRepositoryManager()
-							.getCheckedModules(ternProject, allModules);
-
-					/*
-					 * if (checkedModules.size() > 0) { ITernModule firstModule
-					 * = checkedModules.get(0); tableViewer.setSelection(new
-					 * StructuredSelection( firstModule)); }
-					 */
-				}
+				/*
+				 * if (checkedModules.size() > 0) { ITernModule firstModule =
+				 * checkedModules.get(0); tableViewer.setSelection(new
+				 * StructuredSelection( firstModule)); }
+				 */
 			}
 
 			if (allModules != null) {
 				this.setTernModules(allModules
 						.toArray(ITernModule.EMPTY_MODULE));
 			}
+			if (checkedModules != null) {
+				this.setCheckedModules(checkedModules.toArray());
+			}
+		} catch (Throwable e) {
+			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
+		}
+	}
+
+	public void loadModules(ITernRepository repository, String[] moduleNames) {
+		try {
+			// load modules from the given repository
+			List<ITernModule> allModules = new ArrayList<ITernModule>(
+					Arrays.asList(repository.getModules()));
+			// Group by type
+			List<ITernModule> groupedModules = TernModuleHelper
+					.groupByType(allModules);
+			// checked modules
+			List<ITernModule> checkedModules = TernCorePlugin
+					.getTernRepositoryManager().getCheckedModules(moduleNames,
+							allModules, groupedModules);
+
+			this.setTernModules(groupedModules
+					.toArray(ITernModule.EMPTY_MODULE));
 			if (checkedModules != null) {
 				this.setCheckedModules(checkedModules.toArray());
 			}
@@ -491,14 +523,6 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 	public void setEnabled(boolean enabled) {
 		getTable().setEnabled(enabled);
-	}
-
-	public void setRepository(ITernRepository repository) {
-		this.repository = repository;
-	}
-
-	public ITernRepository getRepository() {
-		return repository;
 	}
 
 }

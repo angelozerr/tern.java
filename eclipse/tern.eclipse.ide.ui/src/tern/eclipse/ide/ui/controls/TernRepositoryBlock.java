@@ -12,10 +12,12 @@ package tern.eclipse.ide.ui.controls;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.DefaultScope;
+import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -27,7 +29,6 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -39,17 +40,17 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
-import tern.TernException;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.dialogs.EditRepositoryDialog;
 import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;
 import tern.eclipse.ide.ui.viewers.TernRepositoryLabelProvider;
 import tern.repository.ITernRepository;
 import tern.repository.TernRepository;
+import tern.server.ITernModule;
+import tern.utils.TernModuleHelper;
 
 /**
  * Tern repository block.
@@ -58,8 +59,6 @@ import tern.repository.TernRepository;
 public class TernRepositoryBlock extends AbstractTableBlock {
 
 	private CheckboxTableViewer repositoryViewer;
-	// private TableViewer modulesViewer;
-
 	private final IProject project;
 	private TernModulesBlock modulesBlock;
 
@@ -154,30 +153,12 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 		parent.setLayout(layout);
 
 		// create UI modules
-		modulesBlock = new TernModulesBlock(project, null);
+		modulesBlock = new TernModulesBlock(project,
+				TernUIMessages.TernRepositoryBlock_modules_desc);
 		Control control = modulesBlock.createControl(parent);
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
-
-	}
-
-	private void createModulesTableOLD(Composite parent) {
-		Table table = new Table(parent, SWT.BORDER | SWT.FULL_SELECTION
-				| SWT.V_SCROLL);
-
-		GridData data = new GridData(GridData.FILL_BOTH);
-		data.heightHint = 200;
-		table.setLayoutData(data);
-		table.setFont(parent.getFont());
-
-		table.setHeaderVisible(false);
-		table.setLinesVisible(false);
-
-		// modulesViewer = new TableViewer(table);
-
-		// modulesViewer.setLabelProvider(TernModuleLabelProvider.getInstance());
-		// modulesViewer.setContentProvider(ArrayContentProvider.getInstance());
 
 	}
 
@@ -192,17 +173,18 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	}
 
 	private void refreshModules(ITernRepository repository) {
-		modulesBlock.setRepository(repository);
-		modulesBlock.loadModules();
+		IScopeContext[] lookupOrder = new IScopeContext[] {
+				InstanceScope.INSTANCE, DefaultScope.INSTANCE };
+		String moduleNames = Platform.getPreferencesService().getString(
+				TernCorePlugin.getDefault().getBundle().getSymbolicName(),
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES,
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES_VALUE,
+				lookupOrder);
+		modulesBlock.loadModules(repository, moduleNames.split(","));
 	}
 
-	private void refreshModulesOLD(ITernRepository repository) {
-		/*
-		 * try { //modulesViewer.setInput(repository.getModules()); } catch
-		 * (TernException e) { Trace.trace(Trace.WARNING,
-		 * "Error while getting modules of tern repository.", e);
-		 * //modulesViewer.setInput(Collections.EMPTY_LIST); }
-		 */
+	public void setCheckedModules(String[] selectedModules) {
+		modulesBlock.loadModules(getCurrentRepository(), selectedModules);
 	}
 
 	@Override
@@ -352,8 +334,27 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	 * Save repositories.
 	 */
 	public void saveRepositories() {
+		// save repositories
 		TernCorePlugin.getTernRepositoryManager().setRepositories(
 				getRepositories());
+		saveDefaultModules();
+	}
+
+	public void saveDefaultModules() {
+		// save default modules
+		new InstanceScope().getNode(
+				TernCorePlugin.getDefault().getBundle().getSymbolicName()).put(
+				TernCorePreferenceConstants.DEFAULT_TERN_MODULES,
+				getDefaultModules());
+	}
+
+	private String getDefaultModules() {
+		Object[] checkedModules = modulesBlock.getCheckedModules();
+		ITernModule[] modules = new ITernModule[checkedModules.length];
+		for (int i = 0; i < checkedModules.length; i++) {
+			modules[i] = (ITernModule) checkedModules[i];
+		}
+		return TernModuleHelper.getModulesAsString(modules);
 	}
 
 	/**

@@ -207,6 +207,17 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		return checkedModules;
 	}
 
+	@Override
+	public List<ITernModule> getCheckedModules(String[] moduleNames,
+			List<ITernModule> allModules, List<ITernModule> groupedModules) {
+		List<ITernModule> checkedModules = new ArrayList<ITernModule>();
+		for (String name : moduleNames) {
+			ITernModule module = findTernModule(name, allModules);
+			updateCheckedModule(module, null, groupedModules, checkedModules);
+		}
+		return checkedModules;
+	}
+
 	/**
 	 * Update the checked modules with the given module.
 	 * 
@@ -241,11 +252,17 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		}
 		if (ternProject != null) {
 			List<ITernModule> projectModules = ternProject.getProjectModules();
-			if (projectModules != null) {
-				for (ITernModule module : projectModules) {
-					if (module.getName().equals(name)) {
-						return module;
-					}
+			return findTernModule(name, projectModules);
+		}
+		return null;
+	}
+
+	private ITernModule findTernModule(String name,
+			List<ITernModule> projectModules) {
+		if (projectModules != null) {
+			for (ITernModule module : projectModules) {
+				if (module.getName().equals(name)) {
+					return module;
 				}
 			}
 		}

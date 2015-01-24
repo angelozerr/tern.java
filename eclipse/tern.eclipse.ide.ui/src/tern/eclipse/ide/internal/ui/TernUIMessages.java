@@ -71,6 +71,8 @@ public final class TernUIMessages extends NLS {
 	public static String LintRulesTernModuleOptionFactory_rules_ruleColumn;
 	public static String LintRulesTernModuleOptionFactory_rules_severityColumn;
 
+	// Repository block
+	public static String TernRepositoryBlock_modules_desc;
 	public static String TernRepositoryBlock_repositoryName;
 	public static String TernRepositoryBlock_filenameColumn;
 	public static String TernRepositoryBlock_removeRepository_title;
@@ -113,13 +115,12 @@ public final class TernUIMessages extends NLS {
 	public static String TernContentAssistPreferencesPage_functionInsertionGroup_label;
 	public static String TernContentAssistPreferencesPage_generateAnonymousFunction_label;
 	public static String TernContentAssistPreferencesPage_objLitInsertionGroup_label;
-	
+
 	// Validation preferences
 	public static String TernValidationPreferencesPage_availableTernBuilder_label;
-	
+
 	// Tern Hover
 	public static String TernHover_openDeclaration;
-
 
 	private TernUIMessages() {
 	}

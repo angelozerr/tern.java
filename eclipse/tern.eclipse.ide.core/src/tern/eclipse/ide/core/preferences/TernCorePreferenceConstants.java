@@ -12,6 +12,7 @@ package tern.eclipse.ide.core.preferences;
 
 import tern.server.TernDef;
 import tern.server.TernPlugin;
+import tern.utils.TernModuleHelper;
 
 /**
  * Tern Core preferences constants.
@@ -59,10 +60,7 @@ public class TernCorePreferenceConstants {
 	 *         converted to tern project.
 	 */
 	private static String getDefaultModules() {
-		StringBuilder modules = new StringBuilder();
-		modules.append(TernDef.ecma5.getName());
-		modules.append(",");
-		modules.append(TernPlugin.guess_types.getName());
-		return modules.toString();
+		return TernModuleHelper.getModulesAsString(TernDef.ecma5,
+				TernPlugin.guess_types);
 	}
 }

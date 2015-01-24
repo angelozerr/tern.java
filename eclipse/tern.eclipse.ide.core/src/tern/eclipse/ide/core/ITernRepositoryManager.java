@@ -68,6 +68,9 @@ public interface ITernRepositoryManager {
 	List<ITernModule> getCheckedModules(IIDETernProject ternProject,
 			List<ITernModule> allModules);
 
+	List<ITernModule> getCheckedModules(String[] moduleNames,
+			List<ITernModule> allModules, List<ITernModule> groupedModules);
+
 	/**
 	 * Returns the tern module (plugin or def) with the given name. Tern modules
 	 * comes from :

@@ -295,4 +295,19 @@ public class TernModuleHelper {
 		new ModuleDependenciesComparator(modules);
 	}
 
+	/**
+	 * Format list modules as string.
+	 * 
+	 * @return format list modules as string.
+	 */
+	public static String getModulesAsString(ITernModule... modules) {
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < modules.length; i++) {
+			if (i > 0) {
+				s.append(",");
+			}
+			s.append(modules[i].getName());
+		}
+		return s.toString();
+	}
 }

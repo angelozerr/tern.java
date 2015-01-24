@@ -180,6 +180,8 @@ public class TernRepositoryPreferencesPage extends PropertyPreferencePage {
 		ITernRepository repository = TernCorePlugin.getTernRepositoryManager()
 				.getRepository(repositoryName);
 		repositoryBlock.setCheckedRepository(repository);
+		repositoryBlock
+				.setCheckedModules(TernCorePreferenceConstants.DEFAULT_TERN_MODULES_VALUE.split(","));
 	}
 
 	@Override
