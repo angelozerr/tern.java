@@ -66,7 +66,9 @@
          <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  An optional interface to allow extenders to customize the nature mapping mechanism
+                  An optional interface to allow extenders to customize the nature mapping mechanism.
+
+tern.eclipse.ide.core.IDefaultTernModulesProvider can be implements if default tern modules are dynamic (depends on the project).
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn=":tern.eclipse.ide.core.ITernNatureCapability"/>
@@ -97,36 +99,29 @@
       </annotation>
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
-            <element ref="options" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-
+                  
                </documentation>
             </annotation>
          </attribute>
          <attribute name="withDependencies" type="boolean">
             <annotation>
                <documentation>
-
+                  
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="class" type="string">
+         <attribute name="options" type="string">
             <annotation>
                <documentation>
-
+                  
                </documentation>
-               <appInfo>
-                  <meta.attribute kind="java" basedOn=":tern.eclipse.ide.core.ITernModuleConfigurator"/>
-               </appInfo>
             </annotation>
          </attribute>
       </complexType>
-   </element>
-
-   <element name="options" type="string">
    </element>
 
    <annotation>
