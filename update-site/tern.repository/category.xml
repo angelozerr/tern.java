@@ -20,8 +20,9 @@
    <feature url="features/tern.eclipse.ide.tools.feature.source_0.0.0.jar" id="tern.eclipse.ide.tools.feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
    </feature>
-   <bundle id="minimal-json" />
-
+   <bundle id="minimal-json" >
+      <category name="Tern IDE"/>
+   </bundle>
    <category-def name="Tern - Embed Node.js" label="Tern - Embed Node.js">
       <description>
          Embed Node.js switch OS
