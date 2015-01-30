@@ -64,7 +64,7 @@ public class NodejsTernEditorWithAngularJS {
 	private void createUI() throws TernException, IOException,
 			InterruptedException {
 
-		File nodejsTernBaseDir = new File("../../core/tern.core/node_modules/tern");
+		File nodejsTernBaseDir = new File("../../core/ternjs/node_modules/tern");
 		NodejsProcessManager.getInstance().init(nodejsTernBaseDir);
 
 		File projectDir = new File(".");

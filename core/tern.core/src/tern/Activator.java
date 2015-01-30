@@ -15,6 +15,8 @@ import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator {
 
+	public static final String TERNJS_PLUGIN_ID = "ternjs";
+	
 	public static final String PLUGIN_ID = "tern.core";
 	
 	private static BundleContext context;

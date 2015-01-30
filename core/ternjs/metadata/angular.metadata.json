@@ -1,6 +1,6 @@
 {
  "name": "angular",
- "label": "AngularJS", 
+ "label": "AngularJS",
  "homepage": "https://angularjs.org/",
  "author": "Marijn Haverbeke <marijnh@gmail.com> forked by Angelo ZERR",
  "description": "Adds AngularJS support.",
@@ -17,5 +17,12 @@
  },
  "help": {
   "url": "https://github.com/angelozerr/angularjs-eclipse"
- }
+ },
+ "options": [
+  {
+   "name": "baseURL",
+   "description": "The base path to prefix to dependency filenames.",
+   "type": "path"
+  }
+ ]
 }

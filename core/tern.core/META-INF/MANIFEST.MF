@@ -6,7 +6,6 @@ Bundle-Localization: plugin
 Bundle-SymbolicName: tern.core
 Bundle-Version: 0.9.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Eclipse-BundleShape: dir
 Export-Package: tern,
  tern.angular,
  tern.angular.modules,

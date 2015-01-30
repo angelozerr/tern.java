@@ -16,7 +16,7 @@ public class TernModulesHelperSortTest {
 
 	@Before
 	public void init() {
-		TernModuleMetadataManager.getInstance().init(new File("../tern.core"));
+		TernModuleMetadataManager.getInstance().init(new File("../ternjs"));
 	}
 
 	@Test
