@@ -24,6 +24,7 @@ import com.eclipsesource.json.JsonValue;
 
 import tern.ITernProject;
 import tern.TernException;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.resources.ITernFileUploader;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
@@ -33,18 +34,18 @@ import tern.server.protocol.TernFile;
 public class IDETernFileUploader extends Job implements ITernFileUploader {
 
 	private static final int MAX_FILES = 30;
-	
+
 	private LinkedHashMap<String, TernFile> files = new LinkedHashMap<String, TernFile>();
 	private ITernProject project;
-	
+
 	public IDETernFileUploader(ITernProject project) {
 		super("Synchronizing script resources with Tern server...");
 		this.project = project;
 	}
-	
+
 	@Override
 	public void join(long timeout) {
-		while(timeout > 0 && getState() != NONE) {
+		while (timeout > 0 && getState() != NONE) {
 			try {
 				Thread.sleep(25);
 			} catch (InterruptedException e) {
@@ -56,16 +57,16 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 
 	@Override
 	public boolean cancel(String fileName) {
-		synchronized(files) {
+		synchronized (files) {
 			return files.remove(fileName) != null;
 		}
 	}
-	
+
 	@Override
 	public void request(TernDoc doc) {
 		if (doc.hasFiles()) {
-			synchronized(files) {
-				for (JsonValue val: doc.getFiles().values()) {
+			synchronized (files) {
+				for (JsonValue val : doc.getFiles().values()) {
 					if (val instanceof TernFile) {
 						TernFile file = (TernFile) val;
 						files.remove(file.getName());
@@ -76,17 +77,21 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 			}
 		}
 	}
-	
+
 	@Override
 	protected IStatus run(IProgressMonitor mon) {
 		SubMonitor monitor = SubMonitor.convert(mon, 100);
 		do {
+			if (mon.isCanceled()) {
+				return Status.CANCEL_STATUS;
+			}
 			int i = 0;
 			final TernDoc doc = new TernDoc();
 			synchronized (files) {
 				monitor.setWorkRemaining(files.size());
-				Iterator<Entry<String, TernFile>> it = files.entrySet().iterator();
-				while(i < MAX_FILES && it.hasNext()) {
+				Iterator<Entry<String, TernFile>> it = files.entrySet()
+						.iterator();
+				while (i < MAX_FILES && it.hasNext()) {
 					Entry<String, TernFile> entry = it.next();
 					it.remove();
 					doc.addFile(entry.getValue());
@@ -106,7 +111,7 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 
 					@Override
 					public void onError(String error, Throwable t) {
-						//submit stuff again if server is disposed
+						// submit stuff again if server is disposed
 						if (server.isDisposed()) {
 							request(doc);
 							return;
@@ -121,8 +126,8 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 				});
 				monitor.worked(i);
 			}
-		} while(true);
+		} while (true);
 		return Status.OK_STATUS;
 	}
-	
+
 }
