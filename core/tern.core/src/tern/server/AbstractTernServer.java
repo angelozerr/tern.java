@@ -19,10 +19,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import tern.ITernFileSynchronizer;
 import tern.ITernProject;
 import tern.TernException;
-import tern.server.protocol.ITernResultsAsyncCollector;
 import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernDoc;
-import tern.server.protocol.TernResultsProcessorsFactory;
 
 /**
  * Abstract tern server.
@@ -38,7 +36,7 @@ public abstract class AbstractTernServer implements ITernServer {
 	private boolean dispose;
 	private boolean loadingLocalPlugins;
 
-	private ITernServerAsyncRequestProcessor asyncReqProcessor;
+	private ITernServerRequestProcessor reqProcessor;
 
 	private ReentrantReadWriteLock stateLock = new ReentrantReadWriteLock();
 
@@ -161,34 +159,22 @@ public abstract class AbstractTernServer implements ITernServer {
 	@Override
 	public void request(TernDoc doc, ITernResultsCollector collector)
 			throws TernException {
-		ITernServerAsyncRequestProcessor asyncReqProc = this.asyncReqProcessor;
-		if (!(collector instanceof ITernResultsAsyncCollector)) {
-			try {
-				TernResultsProcessorsFactory.makeRequestAndProcess(doc, this,
-						collector);
-			} catch (TernException ex) {
-				throw ex;
-			} catch (Throwable t) {
-				throw new TernException(t);
-			}
-		} else if (asyncReqProc == null) {
-			throw new TernException(
-					"Cannot make an asynchronous request without an asynchronous request processor.");
-		} else {
-			asyncReqProc.processRequest(doc,
-					(ITernResultsAsyncCollector) collector);
+		if (reqProcessor == null) {
+			//always provide request processor
+			reqProcessor = new SynchronousRequestProcessor(this);
 		}
+		reqProcessor.processRequest(doc, collector);
 	}
 
 	@Override
-	public ITernServerAsyncRequestProcessor getAsyncRequestProcessor() {
-		return asyncReqProcessor;
+	public ITernServerRequestProcessor getRequestProcessor() {
+		return reqProcessor;
 	}
 
 	@Override
-	public void setAsyncRequestProcessor(
-			ITernServerAsyncRequestProcessor asyncReqProcessor) {
-		this.asyncReqProcessor = asyncReqProcessor;
+	public void setRequestProcessor(
+			ITernServerRequestProcessor reqProcessor) {
+		this.reqProcessor = reqProcessor;
 	}
 
 }

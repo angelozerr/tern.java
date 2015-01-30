@@ -11,12 +11,12 @@
 package tern.server;
 
 import tern.TernException;
-import tern.server.protocol.ITernResultsAsyncCollector;
+import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernDoc;
 
-public interface ITernServerAsyncRequestProcessor {
+public interface ITernServerRequestProcessor {
 
-	void processRequest(TernDoc doc, ITernResultsAsyncCollector collector)
+	void processRequest(TernDoc doc, ITernResultsCollector collector)
 			throws TernException;
 
 }

@@ -148,9 +148,12 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 							getFileSynchronizer().cleanIndexedFiles();
 						}
 					});
-					this.ternServer
-							.setAsyncRequestProcessor(new IDETernServerAsyncReqProcessor(
-									ternServer));
+					if (!TernCorePreferencesSupport.getInstance()
+							.isDisableAsynchronousReques(project)) {
+						this.ternServer
+								.setRequestProcessor(new IDETernServerAsyncReqProcessor(
+										ternServer));
+					}
 					copyListeners();
 					configureConsole();
 				} catch (Exception e) {
