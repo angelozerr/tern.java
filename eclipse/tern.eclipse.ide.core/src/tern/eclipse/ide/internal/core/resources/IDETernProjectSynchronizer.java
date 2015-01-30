@@ -10,7 +10,6 @@
  */
 package tern.eclipse.ide.internal.core.resources;
 
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -142,20 +141,7 @@ public class IDETernProjectSynchronizer implements IResourceChangeListener,
 					break;
 				}
 			} else {
-				// if (TernResourcesManager.isJSFile(resource.getName())) {
-				switch (delta.getKind()) {
-				case IResourceDelta.REMOVED:
-					((IDETernFileSynchronizer) ternProject
-							.getFileSynchronizer())
-							.addFileToDelete((IFile) resource);
-					break;
-				default:
-					((IDETernFileSynchronizer) ternProject
-							.getFileSynchronizer())
-							.removeIndexedFile((IFile) resource);
-					break;
-				}
-				// }
+				ternProject.getFileSynchronizer().refresh(resource);
 			}
 			return true;
 		}

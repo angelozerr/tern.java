@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,16 +7,18 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - collectors API and code refactoring
  */
 package tern.server.protocol.type;
 
-import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
+import tern.server.protocol.ITernResultsCollector;
 
 /**
  * API to collect tern type.
- *
+ * 
  */
-public interface ITernTypeCollector {
+public interface ITernTypeCollector extends ITernResultsCollector {
 
 	/**
 	 * Collector called for "type" query tern server.
@@ -43,10 +45,10 @@ public interface ITernTypeCollector {
 	 *            associated with it, these will also be returned.
 	 * @param item
 	 *            object of type (ex : JsonObject)
-	 * @param ternServer
-	 *            the tern server.
+	 * @param objectHelper
+	 *            helper for extracting values of JSON objects.
 	 */
 	void setType(String type, boolean guess, String name, String exprName,
 			String doc, String url, String origin, Object item,
-			ITernServer ternServer);
+			IJSONObjectHelper objectHelper);
 }

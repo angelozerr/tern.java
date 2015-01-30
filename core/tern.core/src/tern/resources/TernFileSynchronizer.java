@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -8,29 +8,33 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
+ *  								  - asynchronous file upload
  */
 package tern.resources;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
 
 import tern.ITernFileSynchronizer;
 import tern.ITernFile;
 import tern.ITernProject;
-import tern.TernException;
+import tern.TernResourcesManager;
 import tern.scriptpath.ITernScriptResource;
 import tern.scriptpath.ITernScriptPath;
-import tern.server.IResponseHandler;
-import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
+import tern.server.protocol.TernQuery;
 
 import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Tern file synchronizer is used to maintain a cache with indexed files which
@@ -40,31 +44,38 @@ import com.eclipsesource.json.JsonArray;
  */
 public class TernFileSynchronizer implements ITernFileSynchronizer {
 
-	private static final int MAX_FILES = 20;
-
-	/**
-	 * List of JS files which was already parsed by the tern server.
-	 */
-	private final Set<String> indexedFiles;
-	private final Set<String> syncedFiles;
-	private final Map<ITernScriptPath, Set<String>> syncedFilesPerPath;
-
-	/**
-	 * List of JS files to delete.
-	 */
-	private final Set<String> filesToDelete;
+	//wait 200ms for uploader to finish
+	private static final int TIMEOUT = 200;
+	
+	//allow to upload maximum 12MB
+	private static final int MAX_ALLOWED_SIZE = 12*1024*1024;
 
 	private final ITernProject project;
+	
+	private final ITernFileUploader uploader;
 
+	//Access synchronization
+	private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+	private final ReadLock readLock = lock.readLock();
+	private final WriteLock writeLock = lock.writeLock();
+	
+	//Files synchronization
+	private final Map<String, String> sentFiles = new HashMap<String, String>();
+	private final Set<String> toRefresh = new HashSet<String>();
+	private final Map<ITernScriptPath, Set<String>> syncedFilesPerPath = 
+			new HashMap<ITernScriptPath, Set<String>>();
+	
 	/**
 	 * Tern file manager constructor.
 	 */
 	public TernFileSynchronizer(ITernProject project) {
-		this.indexedFiles = new HashSet<String>();
-		this.syncedFiles = new HashSet<String>();
-		this.syncedFilesPerPath = new HashMap<ITernScriptPath, Set<String>>();
-		this.filesToDelete = new HashSet<String>();
 		this.project = project;
+		this.uploader = createTernFileUploader();
+		
+	}
+
+	protected ITernFileUploader createTernFileUploader() {
+		return new SynchronousTernFileUploader(project);
 	}
 
 	@Override
@@ -72,319 +83,267 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 		return project;
 	}
 
-	/**
-	 * Add the given file name to delete.
-	 * 
-	 * @param name
-	 *            file name.
-	 */
-	protected void addFileToDelete(String name) {
-		synchronized (filesToDelete) {
-			filesToDelete.add(name);
-		}
-	}
-
-	/**
-	 * Remove the given file name to delete.
-	 * 
-	 * @param name
-	 *            file name.
-	 */
-	protected void removeFileToDelete(String name) {
-		synchronized (filesToDelete) {
-			filesToDelete.remove(name);
-		}
-	}
-
-	/**
-	 * Remove the file name from the indexed files.
-	 * 
-	 * @param name
-	 *            file name.
-	 */
-	protected void removeIndexedFile(String name) {
-		synchronized (indexedFiles) {
-			internalRemoveIndexedFile(name);
-		}
-		removeFileToDelete(name);
-	}
-
-	/**
-	 * Returns true if the given file name was already parsed by the tern server
-	 * and false otherwise.
-	 * 
-	 * @param name
-	 *            file name.
-	 * @return true if the given file name was already parsed by the tern server
-	 *         and false otherwise.
-	 */
-	protected boolean isIndexedFile(String name) {
-		synchronized (indexedFiles) {
-			return internalIsIndexedFile(name);
-		}
-	}
-
-	/**
-	 * Clean indexed files.
-	 */
 	@Override
-	public void cleanIndexedFiles() {
-		synchronized (indexedFiles) {
-			indexedFiles.clear();
-		}
-	}
-
-	/**
-	 * Update indexed files from the files coming from tern doc. This method
-	 * should be called by tern server if the tern reponse doen't throws error.
-	 * 
-	 * @param doc
-	 *            the tern doc.
-	 */
-	@Override
-	public void filesUploaded(TernDoc doc) {
-		if (doc.hasFiles()) {
-			synchronized (indexedFiles) {
-				JsonArray files = doc.getFiles();
-				TernFile file = null;
-				for (Object object : files) {
-					file = (TernFile) object;
-					if (!internalIsIndexedFile(file.getName())) {
-						internalAddIndexedFile(file.getName());
-					}
-				}
+	public void refresh(Object file) {
+		ITernFile tf = TernResourcesManager.getTernFile(file);
+		if (tf != null) {
+			synchronized(toRefresh) {
+				toRefresh.add(tf.getFullName(getProject()));
 			}
 		}
 	}
 
-	// ----------------- Internal methods
-
-	/**
-	 * Add the given file name to the the indexed files.
-	 * 
-	 * @param name
-	 *            file name.
-	 * @return
-	 */
-	private boolean internalAddIndexedFile(String name) {
-		return indexedFiles.add(name);
+	@Override
+	public void cleanIndexedFiles() {
+		writeLock.lock();
+		try {
+			sentFiles.clear();
+			syncedFilesPerPath.clear();
+		} finally {
+			writeLock.unlock();
+		}
+		synchronized (toRefresh) {
+			toRefresh.clear();
+		}
 	}
 
-	/**
-	 * Remove the file name from the indexed files.
-	 * 
-	 * @param name
-	 *            file name.
-	 */
-	private boolean internalRemoveIndexedFile(String name) {
-		return indexedFiles.remove(name);
+	@Override
+	public void filesUploaded(TernDoc doc) {
+		//don't care
 	}
 
-	/**
-	 * Returns true if the given file name was already parsed by the tern server
-	 * and false otherwise.
-	 * 
-	 * @param name
-	 *            file name.
-	 * @return true if the given file name was already parsed by the tern server
-	 *         and false otherwise.
-	 */
-	protected boolean internalIsIndexedFile(String name) {
-		return indexedFiles.contains(name);
-	}
-
-	// ------- Main synchronization code
 	@Override
 	public void fillSyncedFileNames(JsonArray fileNames, ITernScriptPath path) {
-		synchronized (indexedFiles) {
+		readLock.lock();
+		try {
 			Set<String> files;
 			if (path != null) {
 				files = syncedFilesPerPath.get(path);
 			} else {
-				files = syncedFiles;
+				files = sentFiles.keySet();
 			}
 			if (files != null) {
 				for (String file : files) {
 					fileNames.add(file);
 				}
 			}
+		} finally {
+			  readLock.unlock();
 		}
+	}
+	
+	protected void sizeExceeded() {
+		System.out.println(MessageFormat.format(
+				"Size of scripts on {0} script path exceeds 12MB. Content assist might be incomplete.", 
+				getProject().getName()));
 	}
 
 	@Override
 	public void ensureSynchronized() {
 		TernDoc doc = new TernDoc();
-		// updated/added new JS files
-		synchronized (indexedFiles) {
-			// make sure we do not send duplicate files
-			Set<String> requestedFiles = new HashSet<String>();
+		writeLock.lock();
+		try {
 			syncedFilesPerPath.clear();
-			syncedFiles.clear();
+			
+			Set<String> synced = new HashSet<String>(sentFiles.keySet());
+			Set<String> toRefreshLocal = new HashSet<String>();
+			synchronized(toRefresh) {
+				toRefreshLocal.addAll(toRefresh);
+				toRefresh.clear();
+			}
+			synced.removeAll(toRefreshLocal);
+			
+			long totalSize = 0;
+			for (String file: synced) {
+				totalSize += sentFiles.get(file).length();
+			}
+			
 			for (ITernScriptPath path : getProject().getScriptPaths()) {
 				Set<String> perPath = new HashSet<String>();
 				syncedFilesPerPath.put(path, perPath);
 				for (ITernScriptResource resource : path.getScriptResources()) {
+					//limit the size of content being sent to the Tern server
+					if (totalSize >= MAX_ALLOWED_SIZE) {
+						sizeExceeded();
+						break;
+					}
 					ITernFile file = resource.getFile();
 					if (file == null) {
 						continue;
 					}
 					String name = file.getFullName(getProject());
 					perPath.add(name);
-					syncedFiles.add(name);
-					if (!indexedFiles.contains(name)
-							&& !requestedFiles.contains(name)) {
+					if (!synced.contains(name)) {
 						try {
-							doc.addFile(file.toTernServerFile(getProject()));
-							requestedFiles.add(name);
+							TernFile tf = file.toTernServerFile(getProject());
+							doc.addFile(tf);
+							synced.add(name);
+							totalSize += tf.getText().length();
 						} catch (IOException e) {
 							getProject().handleException(e);
 						}
 					}
 				}
 			}
-		}
-		// delete files
-		synchronized (filesToDelete) {
-			for (String name : filesToDelete) {
-				doc.delFile(name);
+			
+			toRefreshLocal.removeAll(synced);
+			for (String toRemove: toRefreshLocal) {
+				doc.addFile(toRemove, "", null, null); //$NON-NLS-1$
 			}
-			filesToDelete.clear();
+
+			// perform actual synchronization with the server
+			sendFiles(doc);
+		} finally {
+			writeLock.unlock();
 		}
-		// perform actual synchronization with the server
-		sendFiles(doc);
 	}
 
 	@Override
 	public void synchronizeFile(ITernFile file) throws IOException {
-		TernDoc doc = new TernDoc();
-		syncedFiles.add(file.getFullName(getProject()));
-		doc.addFile(file.toTernServerFile(getProject()));
-		request(doc);
+		writeLock.lock();
+		try {
+			TernFile tf = file.toTernServerFile(getProject());
+			String oldText = sentFiles.get(tf.getName());
+			if (tf.getText().equals(oldText) && !uploader.cancel(tf.getName())) {
+				//no need to synchronize the file, already up-to-date
+				return;
+			}
+			TernDoc doc = new TernDoc();
+			doc.addFile(tf);
+			sendFiles(doc);		
+		} finally {
+			writeLock.unlock();
+		}
+	}
+
+	@Override
+	public void synchronizeFile(TernDoc doc, ITernFile file) throws IOException {
+		writeLock.lock();
+		try {
+		  try {
+			TernQuery query = doc.getQuery();
+			if (query != null && TernResourcesManager.isJSFile(file)) {
+				addJSFile(doc, file);
+				return;
+			} else if (query != null && TernResourcesManager.isHTMLFile(file)) {
+				//This is HTML file case: never keep the file on the server
+				String queryType = query.getType();
+				if (queryType.equals("completions") || //$NON-NLS-1$
+						queryType.equals("definition") || //$NON-NLS-1$
+						queryType.equals("type")) { //$NON-NLS-1$
+					addHTMLFile(doc, file);
+					return;
+				}
+			}
+			TernFile tf = file.toTernServerFile(getProject());
+			String oldText = sentFiles.get(tf.getName());
+			if (tf.getText().equals(oldText) && !uploader.cancel(tf.getName())) {
+				//no need to synchronize the file, already up-to-date
+				return;
+			}
+			doc.addFile(tf);
+		  } finally{
+			updateSentFiles(doc);
+			//as this is 
+			//wait a bit for the sync to finish
+			uploader.join(TIMEOUT);
+		  }
+		} finally {
+			writeLock.unlock();
+		}
+	}
+	
+	protected void addJSFile(TernDoc doc, ITernFile file) throws IOException {
+		TernQuery query = doc.getQuery();
+		String fileName = file.getFullName(getProject());
+		query.setFile(fileName);
+		TernFile tf = file.toTernServerFile(getProject());
+		doc.addFile(tf);
+	}
+	
+	
+	protected void addHTMLFile(TernDoc doc, ITernFile file) throws IOException {
+		TernQuery query = doc.getQuery();
+		TernFile tf = file.toTernServerFile(getProject());
+		doc.addFile(tf);
+		query.set("file", "#" + (doc.getFiles().size() - 1)); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 
 	@Override
 	public void synchronizeScriptPath(ITernScriptPath path, String... forced) {
 		TernDoc doc = new TernDoc();
-		synchronized (indexedFiles) {
+		writeLock.lock();
+		try {
 			// make sure we do not send duplicate files
-			Set<String> requestedFiles = new HashSet<String>();
-			List<String> forcedFiles = Arrays.asList(forced);
+			Set<String> requestedFiles = new HashSet<String>(sentFiles.keySet());
 			Set<String> perPath = new HashSet<String>();
 			syncedFilesPerPath.put(path, perPath);
+
+			requestedFiles.remove(Arrays.asList(forced));
+			
+			long totalSize = 0;
+			for (String file: requestedFiles) {
+				totalSize += sentFiles.get(file).length();
+			}
+			
 			for (ITernScriptResource resource : path.getScriptResources()) {
+				//limit the number of files being sent to the Tern server
+				if (totalSize >= MAX_ALLOWED_SIZE) {
+					sizeExceeded();
+					break;
+				}
 				ITernFile file = resource.getFile();
 				if (file == null) {
 					continue;
 				}
 				String name = file.getFullName(getProject());
-				syncedFiles.add(name);
 				perPath.add(name);
-				if ((!indexedFiles.contains(name) || forcedFiles.contains(name))
-						&& !requestedFiles.contains(name)) {
+				if (!requestedFiles.contains(name)) {
 					try {
-						doc.addFile(file.toTernServerFile(getProject()));
+						TernFile tf = file.toTernServerFile(getProject());
+						doc.addFile(tf);
+						totalSize += tf.getText().length();
 						requestedFiles.add(name);
 					} catch (IOException e) {
 						getProject().handleException(e);
 					}
 				}
 			}
+			// perform actual synchronization with the server
+			sendFiles(doc);
+		} finally {
+			writeLock.unlock();
 		}
-		// perform actual synchronization with the server
-		sendFiles(doc);
+	}
+	
+	private void updateSentFiles(TernDoc doc) {
+		for (JsonValue value: doc.getFiles()) {
+			if (value instanceof TernFile) {
+				TernFile file = (TernFile)value;
+				if (file.getType().equals("full")) { //$NON-NLS-1$
+					String contents = file.getText();
+					if (contents == null || contents.isEmpty()) {
+						//treat file with empty contents as removed
+						sentFiles.remove(file.getName());
+					} else {
+						sentFiles.put(file.getName(), contents);
+					}
+				}
+			}
+		}
 	}
 
 	protected void sendFiles(TernDoc doc) {
 		if (doc.hasFiles()) {
-			JsonArray files = doc.getFiles();
-			if (files.size() > MAX_FILES) {
-				// max files size reached => send files grouped by MAX_FILES
-				TernDoc newDoc = new TernDoc();
-				for (int i = 0; i < files.size(); i++) {
-					newDoc.addFile((TernFile) files.get(i));
-					if (i > 0 && (i % MAX_FILES) == 0) {
-						request(newDoc);
-						newDoc.cleanFiles();
-					}
-				}
-				if (newDoc.hasFiles()) {
-					request(newDoc);
-				}
-			} else {
-				// no max files size reached => send all files.
-				request(doc);
-			}
-			doc.cleanFiles();
+			updateSentFiles(doc);
+			//sync is performed asynchronously
+			uploader.request(doc);
 		}
-	}
-
-	protected void request(TernDoc doc) {
-		ITernServer server = project.getTernServer();
-		if (server == null) {
-			return;
-		}
-		server.request(doc, new IResponseHandler() {
-
-			@Override
-			public void onSuccess(Object data, String dataAsJsonString) {
-			}
-
-			@Override
-			public void onError(String error, Throwable t) {
-				getProject().handleException(new TernException(error, t));
-			}
-
-			@Override
-			public boolean isDataAsJsonString() {
-				return false;
-			}
-		});
 	}
 
 	@Override
 	public void dispose() {
 		cleanIndexedFiles();
 	}
-	/*
-	 * private void updateFragmentAround(TernDoc doc, String name, IDocument
-	 * document, int start, int end) {
-	 * 
-	 * FindReplaceDocumentAdapter adapter = new FindReplaceDocumentAdapter(
-	 * document); try { long s = System.currentTimeMillis();
-	 * 
-	 * IRegion region = adapter.find(end, "\\bfunction\\b", false, false, false,
-	 * true); System.err.println(region);
-	 * System.err.println(System.currentTimeMillis() - s);
-	 * 
-	 * if (region != null) { String text = document.get(region.getOffset(), end
-	 * - region.getOffset()); int n =
-	 * document.getLineOfOffset(region.getOffset()); System.err.println(n);
-	 * doc.addFile(name, text, n); doc.getQuery().setEnd(
-	 * JsonHelper.getInteger(doc.getQuery(), "end") - region.getOffset()); }
-	 * else { String text = document.get(); doc.addFile(name, text, null); }
-	 * 
-	 * } catch (BadLocationException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); }
-	 * 
-	 * }
-	 */
-
-	/*
-	 * function getFragmentAround(data, start, end) { var doc = data.doc; var
-	 * minIndent = null, minLine = null, endLine, tabSize = 4; for (var p =
-	 * start.line - 1, min = Math.max(0, p - 50); p >= min; --p) { var line =
-	 * doc.getLine(p), fn = line.search(/\bfunction\b/); if (fn < 0) continue;
-	 * var indent = CodeMirror.countColumn(line, null, tabSize); if (minIndent
-	 * != null && minIndent <= indent) continue; minIndent = indent; minLine =
-	 * p; } if (minLine == null) minLine = min; var max =
-	 * Math.min(doc.lastLine(), end.line + 20); if (minIndent == null ||
-	 * minIndent == CodeMirror.countColumn(doc.getLine(start.line), null,
-	 * tabSize)) endLine = max; else for (endLine = end.line + 1; endLine < max;
-	 * ++endLine) { var indent = CodeMirror.countColumn(doc.getLine(endLine),
-	 * null, tabSize); if (indent <= minIndent) break; } var from = Pos(minLine,
-	 * 0); console.log(doc.getRange(from, Pos(endLine, 0))) return {type:
-	 * "part", name: data.name, offsetLines: from.line, text: doc.getRange(from,
-	 * Pos(endLine, 0))}; }
-	 */
-
+	
 }

@@ -18,9 +18,10 @@ public class TernCompletionItemTest {
 	@Test
 	public void on() throws Exception {
 		TernCompletionItem completion = new TernCompletionItem(
-				"on",
-				"fn(events: string, selector?: string, data?: ?, handler: fn(+jQuery.Event)) -> jQuery.fn",
-				"a doc", "an url", "jquery");
+				new TernCompletionProposalRec(
+						"on",
+						"fn(events: string, selector?: string, data?: ?, handler: fn(+jQuery.Event)) -> jQuery.fn",
+						"a doc", "an url", "jquery"));
 		Assert.assertEquals("on", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -74,9 +75,10 @@ public class TernCompletionItemTest {
 
 	@Test
 	public void addBack() throws Exception {
-		TernCompletionItem completion = new TernCompletionItem("addBack",
-				"fn(selector?: string) -> jQuery.fn", "a doc", "an url",
-				"jquery");
+		TernCompletionItem completion = new TernCompletionItem(
+				new TernCompletionProposalRec("addBack",
+						"fn(selector?: string) -> jQuery.fn", "a doc",
+						"an url", "jquery"));
 		Assert.assertEquals("addBack", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -105,9 +107,11 @@ public class TernCompletionItemTest {
 
 	@Test
 	public void jQuery() throws Exception {
-		TernCompletionItem completion = new TernCompletionItem("jQuery",
-				"fn(selector: string, context?: frameElement) -> jQuery.fn",
-				"a doc", "an url", "jquery");
+		TernCompletionItem completion = new TernCompletionItem(
+				new TernCompletionProposalRec(
+						"jQuery",
+						"fn(selector: string, context?: frameElement) -> jQuery.fn",
+						"a doc", "an url", "jquery"));
 		Assert.assertEquals("jQuery", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -142,9 +146,10 @@ public class TernCompletionItemTest {
 	@Test
 	public void animate() throws Exception {
 		TernCompletionItem completion = new TernCompletionItem(
-				"animate",
-				"fn(properties: ?, duration?: number, easing?: string, complete?: fn()) -> jQuery.fn",
-				"a doc", "an url", "jquery");
+				new TernCompletionProposalRec(
+						"animate",
+						"fn(properties: ?, duration?: number, easing?: string, complete?: fn()) -> jQuery.fn",
+						"a doc", "an url", "jquery"));
 		Assert.assertEquals("animate", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -204,8 +209,9 @@ public class TernCompletionItemTest {
 
 	@Test
 	public void uppercase() throws Exception {
-		TernCompletionItem completion = new TernCompletionItem("uppercase",
-				"fn(string) -> string", "a doc", "an url", "angular");
+		TernCompletionItem completion = new TernCompletionItem(
+				new TernCompletionProposalRec("uppercase",
+						"fn(string) -> string", "a doc", "an url", "angular"));
 		Assert.assertEquals("uppercase", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -233,9 +239,11 @@ public class TernCompletionItemTest {
 
 	@Test
 	public void map() throws Exception {
-		TernCompletionItem completion = new TernCompletionItem("map",
-				"fn(f: fn(elt: ?, i: number) -> ?, context?: ?) -> [!0.!ret]",
-				"a doc", "an url", "ecma5");
+		TernCompletionItem completion = new TernCompletionItem(
+				new TernCompletionProposalRec(
+						"map",
+						"fn(f: fn(elt: ?, i: number) -> ?, context?: ?) -> [!0.!ret]",
+						"a doc", "an url", "ecma5"));
 		Assert.assertEquals("map", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -273,9 +281,10 @@ public class TernCompletionItemTest {
 	@Test
 	public void mix() throws Exception {
 		TernCompletionItem completion = new TernCompletionItem(
-				"mix",
-				"fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string], mode?: number, merge?: bool) -> fn()",
-				"a doc", "an url", "yui");
+				new TernCompletionProposalRec(
+						"mix",
+						"fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string], mode?: number, merge?: bool) -> fn()",
+						"a doc", "an url", "yui"));
 		Assert.assertEquals("mix", completion.getName());
 		Assert.assertTrue(completion.isFunction());
 		Assert.assertFalse(completion.isArray());
@@ -364,5 +373,4 @@ public class TernCompletionItemTest {
 				"fn(receiver: fn(), supplier: fn(), whitelist?: [string], mode?: number, merge?: bool) -> fn()",
 				allTypes[12]);
 	}
-
 }

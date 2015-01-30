@@ -10,7 +10,7 @@
  */
 package tern.server.protocol.type;
 
-import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.type.ITernTypeCollector;
 
 public class MockTernTypeCollector implements ITernTypeCollector {
@@ -23,12 +23,12 @@ public class MockTernTypeCollector implements ITernTypeCollector {
 	private String url;
 	private String origin;
 	private Object item;
-	private ITernServer ternServer;
+	private IJSONObjectHelper objectHelper;
 
 	@Override
 	public void setType(String type, boolean guess, String name,
 			String exprName, String doc, String url, String origin,
-			Object item, ITernServer ternServer) {
+			Object item, IJSONObjectHelper objectHelper) {
 		this.type = type;
 		this.guess = guess;
 		this.name = name;
@@ -37,7 +37,7 @@ public class MockTernTypeCollector implements ITernTypeCollector {
 		this.url = url;
 		this.origin = origin;
 		this.item = item;
-		this.ternServer = ternServer;
+		this.objectHelper = objectHelper;
 	}
 
 	public String getType() {
@@ -72,7 +72,8 @@ public class MockTernTypeCollector implements ITernTypeCollector {
 		return item;
 	}
 
-	public ITernServer getTernServer() {
-		return ternServer;
+	public IJSONObjectHelper getObjectHelper() {
+		return objectHelper;
 	}
+	
 }

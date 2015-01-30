@@ -11,13 +11,14 @@
 package tern.eclipse.ide.ui.hover;
 
 import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
-import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.completions.TernCompletionItem;
+import tern.server.protocol.completions.TernCompletionProposalRec;
 import tern.server.protocol.type.ITernTypeCollector;
 
 /**
  * {@link ITernTypeCollector} implementation for HTML type collector.
- *
+ * 
  */
 public class HTMLTernTypeCollector implements ITernTypeCollector {
 
@@ -30,11 +31,11 @@ public class HTMLTernTypeCollector implements ITernTypeCollector {
 	@Override
 	public void setType(String type, boolean guess, String name,
 			String exprName, String doc, String url, String origin,
-			Object object, ITernServer server) {
+			Object object, IJSONObjectHelper objectHelper) {
 		if (type != null || name != null || exprName != null) {
 			String label = name != null ? name : exprName;
-			TernCompletionItem item = new TernCompletionItem(label, null, type,
-					doc, url, origin, false, false);
+			TernCompletionItem item = new TernCompletionItem(
+					new TernCompletionProposalRec(label, type, doc, url, origin));
 			this.info = HTMLTernPrinter.getAdditionalProposalInfo(item, guess);
 		}
 	}

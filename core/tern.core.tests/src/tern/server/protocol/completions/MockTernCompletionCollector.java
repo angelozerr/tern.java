@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.completions.TernCompletionItem;
 
@@ -21,12 +22,9 @@ public class MockTernCompletionCollector extends
 		HashMap<String, TernCompletionItem> implements ITernCompletionCollector {
 
 	@Override
-	public void addProposal(String name, String displayName, String type,
-			String doc, String url, String origin, int start, int end,
-			boolean isProperty, boolean isObjectKey, Object completion,
-			ITernServer ternServer) {
-		super.put(name, new TernCompletionItem(name, displayName, type, doc,
-				url, origin, isProperty, isObjectKey));
+	public void addProposal(TernCompletionProposalRec proposal,
+			Object completion, IJSONObjectHelper jsonObjectHelper) {
+		super.put(proposal.name, new TernCompletionItem(proposal));
 	}
 
 	public Collection<TernCompletionItem> getCompletions() {
