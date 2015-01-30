@@ -42,6 +42,8 @@ public final class TernUIMessages extends NLS {
 
 	// Preferences
 	public static String TernGlobalPreferencesPage_desc;
+
+	public static String TernGlobalPreferencesPage_disable_async_reqs;
 	public static String TernGlobalPreferencesPage_serverType;
 
 	// Commons Property preferences

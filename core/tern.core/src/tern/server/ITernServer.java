@@ -121,10 +121,9 @@ public interface ITernServer {
 	 */
 	boolean isLoadingLocalPlugins();
 
-	ITernServerAsyncRequestProcessor getAsyncRequestProcessor();
+	ITernServerRequestProcessor getRequestProcessor();
 
-	void setAsyncRequestProcessor(
-			ITernServerAsyncRequestProcessor asyncReqProcessor);
+	void setRequestProcessor(ITernServerRequestProcessor asyncReqProcessor);
 
 	IJSONObjectHelper getJSONObjectHelper();
 

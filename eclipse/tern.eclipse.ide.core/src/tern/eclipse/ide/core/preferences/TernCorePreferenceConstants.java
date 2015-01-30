@@ -24,6 +24,7 @@ public class TernCorePreferenceConstants {
 	 * Server preferences consttants.
 	 */
 	public static final String TERN_SERVER_TYPE = "ternServerType"; //$NON-NLS-1$
+	public static final String DISABLE_ASYNC_REQUESTS = "disableAsyncRequests"; //$NON-NLS-1$
 
 	/**
 	 * Tern development preferences constants.

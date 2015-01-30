@@ -18,14 +18,15 @@ import org.eclipse.core.runtime.jobs.Job;
 import tern.TernException;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.server.ITernServer;
-import tern.server.ITernServerAsyncRequestProcessor;
+import tern.server.ITernServerRequestProcessor;
 import tern.server.protocol.ITernResultsAsyncCollector;
+import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernResultsProcessorsFactory;
 import tern.server.protocol.ITernResultsAsyncCollector.TimeoutReason;
 import tern.server.protocol.TernDoc;
 
 public class IDETernServerAsyncReqProcessor extends Job implements
-		ITernServerAsyncRequestProcessor {
+		ITernServerRequestProcessor {
 
 	private static final long TIMEOUT = 750;
 
@@ -40,8 +41,21 @@ public class IDETernServerAsyncReqProcessor extends Job implements
 	}
 
 	@Override
-	public void processRequest(TernDoc doc, ITernResultsAsyncCollector collector)
+	public void processRequest(TernDoc doc, ITernResultsCollector c)
 			throws TernException {
+		if (!(c instanceof ITernResultsAsyncCollector)) {
+			// need to process request synchronously
+			try {
+				TernResultsProcessorsFactory.makeRequestAndProcess(doc, server,
+						c);
+				return;
+			} catch (TernException ex) {
+				throw ex;
+			} catch (Throwable t) {
+				throw new TernException(t);
+			}
+		}
+		ITernResultsAsyncCollector collector = (ITernResultsAsyncCollector) c;
 		long start = System.currentTimeMillis();
 		while (this.collector != null
 				&& (System.currentTimeMillis() - start) < TIMEOUT / 2) {
