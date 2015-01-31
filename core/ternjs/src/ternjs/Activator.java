@@ -8,18 +8,18 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern;
+package ternjs;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 /**
- * OSGi Activator for tern.core bundle.
+ * OSGi Activator for ternjs bundle.
  *
  */
 public class Activator implements BundleActivator {
 
-	public static final String PLUGIN_ID = "tern.core";
+	public static final String PLUGIN_ID = "ternjs";
 
 	private static BundleContext context;
 
