@@ -20,6 +20,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.UniqueTag;
 
 import tern.ITernFileSynchronizer;
 import tern.ITernProject;
@@ -260,9 +261,12 @@ public class RhinoTernServer extends AbstractTernServer {
 
 		@Override
 		public String getText(Object jsonObj, String property) {
-			NativeObject text = (NativeObject) ((NativeObject) jsonObj).get(
-					property, (NativeObject) jsonObj);
-			return text != null ? text.toString() : null;
+			Object text = ((Scriptable) jsonObj).get(property,
+					(Scriptable) jsonObj);
+			if (text == null || (text instanceof UniqueTag)) {
+				return null;
+			}
+			return text.toString();
 		}
 
 		@Override
