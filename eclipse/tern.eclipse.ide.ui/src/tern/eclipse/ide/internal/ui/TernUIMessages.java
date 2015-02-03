@@ -124,6 +124,10 @@ public final class TernUIMessages extends NLS {
 	// Tern Hover
 	public static String TernHover_openDeclaration;
 
+	// Timeout proposal
+	public static String TimeoutProposal_longCalculate;
+	public static String TimeoutProposal_serverProcessing;
+
 	private TernUIMessages() {
 	}
 
