@@ -96,11 +96,6 @@ public class NodejsTernHelper {
 								methodName, getElapsedTimeInMs(startTime));
 					}
 				}
-				// Update file synchronizer if needed.
-				ITernFileSynchronizer fileSynchronizer = server.getFileSynchronizer();
-				if (fileSynchronizer != null) {
-					fileSynchronizer.filesUploaded(doc);
-				}
 				return response;
 			} catch (ParseException e) {
 				throw new IOException(e);

@@ -47,6 +47,7 @@ import tern.eclipse.ide.internal.core.builder.TernBuilder;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.repository.ITernRepository;
+import tern.resources.TernFileSynchronizer;
 import tern.resources.TernProject;
 import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;
@@ -533,6 +534,10 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		synchronized (serverLock) {
 			if (!isServerDisposed()) {
 				if (ternServer != null) {
+					// notify uploader that we are going to dispose the server,
+					// so that it can finish gracefully
+					((IDETernFileUploader) ((TernFileSynchronizer) getFileSynchronizer())
+							.getTernFileUploader()).serverToBeDisposed();
 					ternServer.dispose();
 					ternServer = null;
 				}
