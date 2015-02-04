@@ -205,14 +205,6 @@ public class RhinoTernServer extends AbstractTernServer {
 			Object fObj = ternScope.get("request2", ternScope);
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
-
-			// Update file manager if needed.
-			ITernFileSynchronizer fileSynchronizer = super
-					.getFileSynchronizer();
-			if (fileSynchronizer != null) {
-				fileSynchronizer.filesUploaded(doc);
-			}
-
 		} finally {
 			// Exit from the context.
 			Context.exit();

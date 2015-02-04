@@ -159,11 +159,19 @@ public abstract class AbstractTernServer implements ITernServer {
 	@Override
 	public void request(TernDoc doc, ITernResultsCollector collector)
 			throws TernException {
-		if (reqProcessor == null) {
-			//always provide request processor
-			reqProcessor = new SynchronousRequestProcessor(this);
+		try {
+			if (reqProcessor == null) {
+				// always provide request processor
+				reqProcessor = new SynchronousRequestProcessor(this);
+			}
+			reqProcessor.processRequest(doc, collector);
+		} catch (Exception e) {
+			getFileSynchronizer().uploadFailed(doc);
+			if (e instanceof TernException) {
+				throw (TernException) e;
+			}
+			throw new TernException(e);
 		}
-		reqProcessor.processRequest(doc, collector);
 	}
 
 	@Override
@@ -172,8 +180,7 @@ public abstract class AbstractTernServer implements ITernServer {
 	}
 
 	@Override
-	public void setRequestProcessor(
-			ITernServerRequestProcessor reqProcessor) {
+	public void setRequestProcessor(ITernServerRequestProcessor reqProcessor) {
 		this.reqProcessor = reqProcessor;
 	}
 
