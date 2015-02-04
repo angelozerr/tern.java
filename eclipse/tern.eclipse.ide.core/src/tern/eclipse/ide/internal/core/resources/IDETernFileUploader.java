@@ -24,7 +24,6 @@ import com.eclipsesource.json.JsonValue;
 
 import tern.ITernProject;
 import tern.TernException;
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.resources.ITernFileUploader;
 import tern.server.IResponseHandler;
 import tern.server.ITernServer;
@@ -37,6 +36,7 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 
 	private LinkedHashMap<String, TernFile> files = new LinkedHashMap<String, TernFile>();
 	private ITernProject project;
+	private boolean serverToBeDisposed;
 
 	public IDETernFileUploader(ITernProject project) {
 		super("Synchronizing script resources with Tern server...");
@@ -78,9 +78,27 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 		}
 	}
 
+	public void serverToBeDisposed() {
+		cancel();
+		serverToBeDisposed = true;
+		try {
+			synchronized (files) {
+				files.clear();
+			}
+			join(2000);
+			if (getState() != NONE) {
+				project.handleException(new Exception(
+						"Upload job could not be finished in 2sec. Continuing...")); //$NON-NLS-1$
+			}
+		} finally {
+			serverToBeDisposed = false;
+		}
+	}
+
 	@Override
 	protected IStatus run(IProgressMonitor mon) {
 		SubMonitor monitor = SubMonitor.convert(mon, 100);
+		final ITernServer server = project.getTernServer();
 		do {
 			if (mon.isCanceled()) {
 				return Status.CANCEL_STATUS;
@@ -88,7 +106,7 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 			int i = 0;
 			final TernDoc doc = new TernDoc();
 			synchronized (files) {
-				monitor.setWorkRemaining(files.size());
+				monitor.setWorkRemaining(files.size() + 1);
 				Iterator<Entry<String, TernFile>> it = files.entrySet()
 						.iterator();
 				while (i < MAX_FILES && it.hasNext()) {
@@ -101,33 +119,48 @@ public class IDETernFileUploader extends Job implements ITernFileUploader {
 			if (!doc.hasFiles()) {
 				break;
 			}
-			final ITernServer server = project.getTernServer();
-			if (server != null && !server.isDisposed()) {
-				server.request(doc, new IResponseHandler() {
+			if (server != null) {
+				try {
+					server.request(doc, new IResponseHandler() {
 
-					@Override
-					public void onSuccess(Object data, String dataAsJsonString) {
-					}
-
-					@Override
-					public void onError(String error, Throwable t) {
-						// submit stuff again if server is disposed
-						if (server.isDisposed()) {
-							request(doc);
-							return;
+						@Override
+						public void onSuccess(Object data,
+								String dataAsJsonString) {
 						}
-						project.handleException(new TernException(error, t));
-					}
 
-					@Override
-					public boolean isDataAsJsonString() {
-						return false;
+						@Override
+						public void onError(String error, Throwable t) {
+							project.handleException(new TernException(error, t));
+							// mark that files have not been uploaded correctly
+							project.getFileSynchronizer().uploadFailed(doc);
+							throw new UploadFailed();
+						}
+
+						@Override
+						public boolean isDataAsJsonString() {
+							return false;
+						}
+					});
+					monitor.worked(i);
+				} catch (UploadFailed ex) {
+					synchronized (files) {
+						TernDoc doc2 = new TernDoc();
+						for (TernFile tf : files.values()) {
+							doc2.addFile(tf);
+						}
+						files.clear();
+						project.getFileSynchronizer().uploadFailed(doc2);
+						cancel();
 					}
-				});
-				monitor.worked(i);
+					return Status.CANCEL_STATUS;
+				}
 			}
-		} while (true);
+		} while (!serverToBeDisposed);
 		return Status.OK_STATUS;
+	}
+
+	private static final class UploadFailed extends RuntimeException {
+		private static final long serialVersionUID = 1L;
 	}
 
 }

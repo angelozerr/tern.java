@@ -72,14 +72,14 @@ public interface ITernFileSynchronizer {
 	public void synchronizeScriptPath(ITernScriptPath path, String... forced);
 
 	/**
-	 * Notifies cache manager that files has been successfully uploaded. This
-	 * method should be called by tern server if the tern response doesn't
-	 * throws error.
+	 * Notifies cache manager that files has not been successfully uploaded.
+	 * This method should be called by tern file uploader or tern server in case
+	 * upload fails.
 	 * 
 	 * @param doc
 	 *            the tern doc.
 	 */
-	public void filesUploaded(TernDoc doc);
+	public void uploadFailed(TernDoc doc);
 
 	/**
 	 * Cleans all cache information. Next call to ensureSynchronized will

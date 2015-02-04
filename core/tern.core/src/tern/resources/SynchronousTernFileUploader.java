@@ -17,16 +17,16 @@ import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 
 /**
- * Basic synchronous file uploader. * 
+ * Basic synchronous file uploader. *
  */
 public class SynchronousTernFileUploader implements ITernFileUploader {
-	
+
 	private ITernProject project;
-	
+
 	public SynchronousTernFileUploader(ITernProject project) {
 		this.project = project;
 	}
-	
+
 	@Override
 	public boolean cancel(String fileName) {
 		return false;
@@ -45,6 +45,7 @@ public class SynchronousTernFileUploader implements ITernFileUploader {
 				@Override
 				public void onError(String error, Throwable t) {
 					project.handleException(new TernException(error, t));
+					project.getFileSynchronizer().uploadFailed(doc);
 				}
 
 				@Override
@@ -54,11 +55,10 @@ public class SynchronousTernFileUploader implements ITernFileUploader {
 			});
 		}
 
-		
 	}
 
 	@Override
 	public void join(long timeout) {
-		//always up-to-date
+		// always up-to-date
 	}
 }
