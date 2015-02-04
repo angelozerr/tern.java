@@ -1,0 +1,26 @@
+{
+  "name": "tern-eslint",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "eslint.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding support for ESLint.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-eslint.git"
+  },
+  "scripts": {
+    "test": "node ./test/all.js"
+  },    
+  "dependencies": {
+    "tern": ">=0.8.0",
+    "acorn": ">=0.11.0"
+  }, 
+  "devDependencies": { 
+  	"test": ">=0.0.5" 
+  },  
+  "keywords": [
+    "tern",
+    "eslint"
+  ]
+}

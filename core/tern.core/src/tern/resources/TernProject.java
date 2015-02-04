@@ -17,6 +17,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,6 +44,8 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.lint.ITernLintPlugin;
+import tern.server.protocol.lint.TernLintPlugin;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.IOUtils;
 
@@ -85,6 +89,8 @@ public class TernProject extends JsonObject implements ITernProject {
 
 	private final File projectDir;
 	private File ternProjectFile;
+	
+	private ITernLintPlugin[] lintPlugins;
 
 	/**
 	 * tern file synchronizer.
@@ -318,6 +324,28 @@ public class TernProject extends JsonObject implements ITernProject {
 	@Override
 	public void clearPlugins() {
 		remove(PLUGINS_FIELD_NAME);
+		this.lintPlugins = null;
+	}
+	
+	@Override
+	public ITernLintPlugin[] getLintPlugins() {
+		if (lintPlugins == null) {
+			Collection<ITernLintPlugin> plugins = new ArrayList<ITernLintPlugin>();
+			ITernLintPlugin[] knownLintPlugins = getKnownLintPlugins();
+			ITernLintPlugin knownLintPlugin;
+			for (int i = 0; i < knownLintPlugins.length; i++) {
+				knownLintPlugin = knownLintPlugins[i];
+				if (hasPlugin(knownLintPlugin)) {
+					plugins.add(knownLintPlugin);
+				}
+			}
+			lintPlugins = plugins.toArray(ITernLintPlugin.EMPTY_PLUGIN);
+		}
+		return lintPlugins;
+	}
+	
+	private ITernLintPlugin[] getKnownLintPlugins() {
+		return TernLintPlugin.values();
 	}
 
 	public void addLoadEagerlyPattern(String pattern) {

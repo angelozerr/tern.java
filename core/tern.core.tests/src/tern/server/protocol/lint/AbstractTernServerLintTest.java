@@ -24,7 +24,7 @@ public abstract class AbstractTernServerLintTest extends AbstractTernServerTest 
 	@Override
 	protected ITernProject createProject() {
 		ITernProject project = super.createProject();
-		project.addPlugin(TernPlugin.lint);
+		project.addPlugin(TernLintPlugin.lint);
 		project.addLib(TernDef.browser);
 		return project;
 	}

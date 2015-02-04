@@ -35,7 +35,6 @@ public enum TernPlugin implements ITernPlugin {
 	grunt("tern/plugin/grunt"),
 	gas("tern/plugin/gas"), 
 	liferay("tern/plugin/liferay"), 
-	lint("tern/plugin/lint"), 
 	node_express("node-express", "node-express", null, null), 
 	node_mongodb_native("node-mongodb-native", "node-mongodb-native", null, null), 
 	node_mongoose("node-mongoose", "node-mongoose", null, null), 

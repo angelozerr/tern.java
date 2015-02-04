@@ -18,28 +18,18 @@ import tern.server.protocol.TernQuery;
  *
  * @see https://github.com/angelozerr/tern-lint
  */
-public class TernLintQuery extends TernQuery {
+public class TernLintQuery extends BaseTernLintQuery {
 
 	private static final String LINT_TYPE_QUERY = "lint";
 	private static final String LINT_FULL_TYPE_QUERY = "lint-full";
 
-	private static final String GROUP_BY_FILES_NAME = "groupByFiles";
+	public TernLintQuery() {
+		this(false);
+	}
 
 	public TernLintQuery(boolean full) {
-		super(full ? LINT_FULL_TYPE_QUERY : LINT_TYPE_QUERY);
-		setGroupByFiles(true);
-	}
-
-	public TernLintQuery() {
-		super(LINT_TYPE_QUERY);
-	}
-
-	public void setGroupByFiles(boolean groupByFiles) {
-		super.set(GROUP_BY_FILES_NAME, groupByFiles);
-	}
-
-	public boolean isGroupByFiles() {
-		return JsonHelper.getBoolean(this, GROUP_BY_FILES_NAME, false);
+		super(!full ? LINT_TYPE_QUERY : null, full ? LINT_FULL_TYPE_QUERY
+				: null);
 	}
 
 }
