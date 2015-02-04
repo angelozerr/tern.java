@@ -302,6 +302,10 @@
             icon="/icons/full/obj16/dojotoolkit.png" >
       </image>
       <image
+            id="eslint"
+            icon="/icons/full/obj16/eslint.png" >
+      </image>      
+      <image
             id="extjs"
             icon="/icons/full/obj16/extjs.png" >
       </image>
