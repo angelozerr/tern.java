@@ -44,6 +44,8 @@ import com.eclipsesource.json.JsonValue;
  */
 public class NodejsTernServer extends AbstractTernServer {
 
+	private static final String BASE_URL = "http://127.0.0.1:";
+
 	private String baseURL;
 
 	private List<IInterceptor> interceptors;
@@ -106,7 +108,7 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	private String computeBaseURL(Integer port) {
-		return new StringBuilder("http://localhost:").append(port).append("/")
+		return new StringBuilder(BASE_URL).append(port).append("/")
 				.toString();
 	}
 
