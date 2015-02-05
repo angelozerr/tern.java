@@ -20,7 +20,7 @@
     tern.registerLint("tabrisCreate_lint", function(node, addMessage, getRule) {
       var argNode = node.arguments[0];
       if (argNode) {
-        var cx = infer.cx(), types = cx.definitions.tabris["!types"], typeName = argNode.value;
+        var cx = infer.cx(), types = cx.definitions.tabris["types"], typeName = argNode.value;
         if (!types.hasProp(typeName)) addMessage(argNode, "Unknown tabris type '" + typeName + "'", defaultRules.UnknownTabrisType.severity);
       }
     });
@@ -50,7 +50,7 @@
   infer.registerFunction("tabris_create", function(_self, args, argNodes) {
     if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
       return infer.ANull;
-    var cx = infer.cx(), server = cx.parent, name = argNodes[0].value, locals = cx.definitions.tabris["!types"], tabrisType = locals.hasProp(name);
+    var cx = infer.cx(), server = cx.parent, name = argNodes[0].value, locals = cx.definitions.tabris["types"], tabrisType = locals.hasProp(name);
     argNodes[0]._tabris = {"type" : "tabris_create"};
     if (tabrisType) return new infer.Obj(tabrisType.getType().getProp("prototype").getType());    
     return infer.ANull;
@@ -60,8 +60,8 @@
   
   function getObjectProperties(proto) {
     var cx = infer.cx(), locals = cx.definitions.tabris;    
-    var objectName = proto.name, index = objectName.indexOf("!types.");
-    if (index == 0) objectName = objectName.substring("!types.".length, objectName.length);
+    var objectName = proto.name, index = objectName.indexOf("types.");
+    if (index == 0) objectName = objectName.substring("types.".length, objectName.length);
     objectName = objectName.substring(0, objectName.indexOf('.')) + 'Properties';
     return locals["!properties"].hasProp(objectName);
   }
@@ -94,8 +94,8 @@
   
   function getEventProperties(proto) {
     var cx = infer.cx(), locals = cx.definitions.tabris;    
-    var objectName = proto.name, index = objectName.indexOf("!types.");
-    if (index == 0) objectName = objectName.substring("!types.".length, objectName.length);
+    var objectName = proto.name, index = objectName.indexOf("types.");
+    if (index == 0) objectName = objectName.substring("types.".length, objectName.length);
     objectName = objectName.substring(0, objectName.indexOf('.')) + 'Events';
     return locals["!events"].hasProp(objectName);
   }
@@ -197,7 +197,7 @@
             }
             break;                        
           case "tabris_create":
-            var types = cx.definitions.tabris["!types"];
+            var types = cx.definitions.tabris["types"];
             overrideType = "string";
             infer.forAllPropertiesOf(types, gather);
             break;            
@@ -304,7 +304,7 @@
             "!url": "https://tabrisjs.com/documentation/layout#centery"
           },
           "baseline" : {
-            "!type": "+!types.Widget",
+            "!type": "+types.Widget",
             "!doc": "Defines the vertical position of the widget relative to another widget's text baseline.",
             "!url": "https://tabrisjs.com/documentation/layout#baseline"
           },
@@ -555,7 +555,7 @@
             "!doc" : "Enables swiping through tabs."
           },
           "selection" : {
-            "!type" : "!types.Tab",
+            "!type" : "types.Tab",
             "!doc" : "The selected tab object."
           },
           "tabBarLocation" : {
@@ -726,7 +726,7 @@
           }
         }
       },
-      "!types": {
+      "types": {
         "Action" : {
           "!type" : "fn()",
           "!url" : "https://tabrisjs.com/documentation/widget-types#action",
@@ -764,22 +764,22 @@
               "!url" : "https://tabrisjs.com/documentation/widgets#codeanimateproperties-optionscode"
             },
             "appendTo" : {
-              "!type" : "fn(parent: +!types.Widget) -> !this",
+              "!type" : "fn(parent: +types.Widget) -> !this",
               "!doc" : "Appends the widget to a parent. If the widget already has a parent, it is deregistered from the actual parent and registered with the new one. Returns the widget itself.",
               "!url" : "https://tabrisjs.com/documentation/widgets#codeappendtoparentcode"
             },
             "append" : {
-              "!type" : "fn(child: +!types.Widget) -> !this",
+              "!type" : "fn(child: +types.Widget) -> !this",
               "!doc" : "Appends one or more child widget to this widget. This method is equivalent to calling appendTo on every child, e.g. parent.append(child1, child2) is a short cut for calling child1.appendTo(parent) and child2.appendTo(parent). Returns the widget itself.",
               "!url" : "https://tabrisjs.com/documentation/widgets#codeappendchild-child-code"
             },
             "parent" : {
-              "!type" : "fn() -> +!types.Widget",
+              "!type" : "fn() -> +types.Widget",
               "!doc" : "Returns the widget's parent.",
               "!url" : "https://tabrisjs.com/documentation/widgets#codeparentcode"
             },
             "children" : {
-              "!type" : "fn() -> [+!types.Widget]",
+              "!type" : "fn() -> [+types.Widget]",
               "!doc" : "Returns the list of children of this widget. The returned array is a copy and can safely be manipulated.",
               "!url" : "https://tabrisjs.com/documentation/widgets#codechildrencode"
             },
@@ -822,7 +822,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#page",
           "!doc" : "Pages contain an application's UI. Top-level pages are included in the application's main menu.",
           "prototype" : {
-            "!proto" : "!types.Composite.prototype",
+            "!proto" : "types.Composite.prototype",
             "open" : {
               "!type" : "fn() -> !this",
               "!doc" : "Opens the page."
@@ -838,7 +838,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#button",
           "!doc" : "A push button. Can contain a text or an image.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Label" : {
@@ -846,7 +846,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#label",
           "!doc" : "A widget to display a text. For images, use ImageView.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "CheckBox" : {
@@ -854,7 +854,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#checkbox",
           "!doc" : "A check box widget.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "CollectionView" : {
@@ -862,7 +862,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#collectionview",
           "!doc" : "A scrollable list that displays data items in cells, one per row. Cells are created on demand and filled with widgets in the 'initializeCell' callback. When a data item is mapped to a cell, the cell receives a 'itemchange' event.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Combo" : {
@@ -870,7 +870,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#combo",
           "!doc" : "A widget with a drop-down list of items to choose from. Name is subject to change.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Composite" : {
@@ -878,7 +878,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#composite",
           "!doc" : "An empty widget that can contain other widgets.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Canvas" : {
@@ -886,7 +886,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#canvas",
           "!doc" : "An empty widget to draw graphics on. Can also contain other widgets.",
           "prototype" : {
-            "!proto" : "!types.Composite.prototype"
+            "!proto" : "types.Composite.prototype"
           }
         },
         "ImageView" : {
@@ -894,7 +894,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#imageview",
           "!doc" : "A widget to display an image.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "ProgressBar" : {
@@ -902,7 +902,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#progressbar",
           "!doc" : "A widget representing a numeric value as a horizontal bar with a growing indicator.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "RadioButton" : {
@@ -910,7 +910,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#radiobutton",
           "!doc" : "A radio button. Selecting a radio button deselects all its siblings (i.e. all radio buttons within the same parent). Known Issues: RadioButton is not automatically deselected on iOS",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Slider" : {
@@ -918,7 +918,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#slider",
           "!doc" : "A widget representing a numeric value as an movable indicator on a horizontal line. Known Issues: Selection event is only fired after indicator is released.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "TabFolder" : {
@@ -926,7 +926,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#tabfolder",
           "!doc" : "A widget that can switch between tabs.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Tab" : {
@@ -934,7 +934,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#tab",
           "!doc" : "A container representing a single tab of the TabFolder widget.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "Text" : {
@@ -942,7 +942,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#text",
           "!doc" : "A widget that allows to enter text. Known Issues: The cursor jumps to the beginning of the text in iOS.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "ToggleButton" : {
@@ -950,7 +950,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#togglebutton",
           "!doc" : "A push button that \"snaps in\", i.e. it is selected when pressed and deselected when pressed again.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "ScrollComposite" : {
@@ -958,7 +958,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#scrollcomposite",
           "!doc" : "A composite that allows its content to overflow either vertically (default) or horizontally.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         },
         "WebView" : {
@@ -966,7 +966,7 @@
           "!url": "https://tabrisjs.com/documentation/widget-types#webview",
           "!doc" : "A widget that can display a web page. Known Issues: Having multiple instances of this widget on screen may not work.",
           "prototype" : {
-            "!proto" : "!types.Widget.prototype"
+            "!proto" : "types.Widget.prototype"
           }
         }
       }      
