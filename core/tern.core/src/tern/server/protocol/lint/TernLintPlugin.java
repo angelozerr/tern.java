@@ -6,8 +6,9 @@ import tern.server.ModuleType;
 
 public enum TernLintPlugin implements ITernLintPlugin {
 
-	lint(ITernLintQueryFactory.LINT_FACTORY), eslint(
-			ITernLintQueryFactory.ESLINT_FACTORY);
+	lint(ITernLintQueryFactory.LINT_FACTORY), 
+	eslint(ITernLintQueryFactory.ESLINT_FACTORY),
+	jshint(ITernLintQueryFactory.JSHINT_FACTORY);
 
 	private final String name;
 	private final String type;

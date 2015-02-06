@@ -1,0 +1,14 @@
+{
+ "name": "jshint",
+ "label": "JSHint",  
+ "homepage": "https://github.com/angelozerr/tern-jshint",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "This plugin validate JS files with JSHint.",
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-jshint.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-jshint/issues"
+ }
+}
