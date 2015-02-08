@@ -15,63 +15,3562 @@
   var defs = {
  "!name": "aui2.0.x",
  "!define": {
+  "config": {
+   "A": {
+    "AceEditor": {
+     "AutoCompleteBaseConfig": {
+      "fillMode": {
+       "!type": "number",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_fillMode",
+       "!doc": "The mode in which the AutoComplete should operate. Can be one of these:\nINSERT - value 0 or OVERWRITE - value 1. In case of INSERT mode, when\nEditor adds a suggestion, it will be added next to the matched\nexpression. In case of OVERWRITE mode, the suggestion will overwrite the\nmatched expression."
+      },
+      "filters": {
+       "!type": "+yui.Array",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_filters",
+       "!doc": "Provides an array of filter functions which will filter the results. By\ndefault there is one function which provides phrase match filtering."
+      },
+      "processor": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_processor",
+       "!doc": "The default processor which will be used to process matches."
+      },
+      "showListKey": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_showListKey",
+       "!doc": "The keyboard combination which should be used to show the list with found\nresults."
+      },
+      "sorters": {
+       "!type": "+yui.Array",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_sorters",
+       "!doc": "Provides an array of sorter functions which will sort the results. By\ndefault there is one function which sorts the results in ascending order."
+      }
+     },
+     "AutoCompleteFreemarkerConfig": {
+      "directives": {
+       "!type": "+yui.Array",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_directives",
+       "!doc": "Contains the list of supported directives according to Freemarker\nspecification."
+      },
+      "directivesMatcher": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_directivesMatcher",
+       "!doc": "Contains the regular expression which checks for directive\npresence."
+      },
+      "host": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_host",
+       "!doc": "The Editor in which the current instance is plugged."
+      },
+      "variables": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_variables",
+       "!doc": "Contains the supported variables."
+      },
+      "variablesMatcher": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_variablesMatcher",
+       "!doc": "Contains the regular expression which will check for variable\nmatch."
+      }
+     },
+     "AutoCompleteListConfig": {
+      "host": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_host",
+       "!doc": "The Editor in which the current instance is plugged."
+      },
+      "listNode": {
+       "!type": "+node.Node",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_listNode",
+       "!doc": "A Node in which results will be shown."
+      },
+      "loadingMessage": {
+       "!type": "string",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_loadingMessage",
+       "!doc": "A string, representing the loading message."
+      },
+      "results": {
+       "!type": "+yui.Array",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_results",
+       "!doc": "Contains the current set of results in the list."
+      },
+      "selectedEntry": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_selectedEntry",
+       "!doc": "Provides the currently selected entry."
+      },
+      "strings": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_strings",
+       "!doc": "Collection of strings used to label elements of the UI."
+      }
+     },
+     "TemplateProcessorConfig": {
+      "directives": {
+       "!type": "+yui.Array",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_directives",
+       "!doc": "Contains an array of all possible directives for the\ncorresponding language."
+      },
+      "host": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_host",
+       "!doc": "The Editor in which the current instance is plugged."
+      },
+      "variables": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_variables",
+       "!doc": "Contains the supported variables for the corresponding language."
+      }
+     },
+     "AutoCompleteVelocityConfig": {
+      "directives": {
+       "!type": "+yui.Array",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_directives",
+       "!doc": "Contains the list of supported directives according to Velocity\nspecification."
+      },
+      "directivesMatcher": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_directivesMatcher",
+       "!doc": "Contains the regular expression which checks for directive."
+      },
+      "host": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_host",
+       "!doc": "The Editor in which the current instance is plugged."
+      },
+      "variables": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_variables",
+       "!doc": "Contains the supported variables."
+      },
+      "variablesMatcher": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_variablesMatcher",
+       "!doc": "Contains the regular expression which will check for variable\nmatch."
+      }
+     }
+    },
+    "AceEditorConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_height",
+      "!doc": "The height of ACE Editor."
+     },
+     "highlightActiveLine": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_highlightActiveLine",
+      "!doc": "Determine if the active line of code\nwill be highlighted or not."
+     },
+     "mode": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_mode",
+      "!doc": "Correspond to the language being typed."
+     },
+     "readOnly": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_readOnly",
+      "!doc": "Determine if the code will be\neditable or not."
+     },
+     "showPrintMargin": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_showPrintMargin",
+      "!doc": "Determine if print margin will\nbe visible or not."
+     },
+     "tabSize": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_tabSize",
+      "!doc": "The indentation size of tab key."
+     },
+     "useSoftTabs": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_useSoftTabs",
+      "!doc": "Determine if the tab key will act as\nspace characters or tab characters."
+     },
+     "useWrapMode": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_useWrapMode",
+      "!doc": "Determine if the line will break\nwhen it reaches the end of the line."
+     },
+     "value": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_value",
+      "!doc": "Some predefined value on the editor."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_width",
+      "!doc": "The width of ACE Editor."
+     }
+    },
+    "Plugin": {
+     "AriaConfig": {
+      "attributes": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_attributes",
+       "!doc": "The ARIA attributes collection."
+      },
+      "attributeValueFormat": {
+       "!type": "fn()",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_attributeValueFormat",
+       "!doc": "The ARIA attribute value format."
+      },
+      "attributeNode": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_attributeNode",
+       "!doc": "Node container for the ARIA attribute."
+      },
+      "roleName": {
+       "!type": "string",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_roleName",
+       "!doc": "The ARIA role name."
+      },
+      "roleNode": {
+       "!type": "?",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_roleNode",
+       "!doc": "Node container for the ARIA role."
+      },
+      "validateW3C": {
+       "!type": "bool",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_validateW3C",
+       "!doc": "Checks if the attribute is valid with W3C rules."
+      }
+     }
+    },
+    "AudioConfig": {
+     "url": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_url",
+      "!doc": "URL used by Audio to play."
+     },
+     "oggUrl": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_oggUrl",
+      "!doc": "URL (on .ogg format) used by Audio to play."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_type",
+      "!doc": "The type of audio."
+     },
+     "swfWidth": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_swfWidth",
+      "!doc": "The width of Audios fallback using Flash."
+     },
+     "swfHeight": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_swfHeight",
+      "!doc": "The height of Audios fallback using Flash."
+     },
+     "swfUrl": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_swfUrl",
+      "!doc": "URL (on .swf format) used by Audio to create\na fallback player with Flash."
+     },
+     "fixedAttributes": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_fixedAttributes",
+      "!doc": "An additional list of attributes."
+     },
+     "flashVars": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_flashVars",
+      "!doc": "Variables used by Flash player."
+     },
+     "render": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_render",
+      "!doc": "If `true` the render phase will be automatically invoked\npreventing the `.render()` manual call."
+     }
+    },
+    "AutosizeIframeConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#attribute_height",
+      "!doc": "The height of the iframe."
+     },
+     "monitorHeight": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#attribute_monitorHeight",
+      "!doc": "Indicates if the height should be monitored."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#attribute_width",
+      "!doc": "The width of the iframe."
+     }
+    },
+    "ButtonExtConfig": {
+     "domType": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_domType",
+      "!doc": "Defines the HTML type attribute of element e.g. `<input type=\"button\">`."
+     },
+     "icon": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_icon",
+      "!doc": "Contains a CSS class of the icon to use. A list of icons can be found\n[here](http://liferay.github.io/alloy-bootstrap/base-css.html#icons)."
+     },
+     "iconElement": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_iconElement",
+      "!doc": "Defines markup template for icon, passed in as a node e.g.\n`Y.Node.create(<i></i>)`."
+     },
+     "iconAlign": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_iconAlign",
+      "!doc": "Sets position of icon."
+     },
+     "primary": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_primary",
+      "!doc": "Sets button style to primary."
+     }
+    },
+    "ButtonSearchCancelConfig": {
+     "container": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_container",
+      "!doc": "Defines the event delegation container of `ButtonSearchCancel`\ninstance."
+     },
+     "gutter": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_gutter",
+      "!doc": "Defines the space surrounding the cancel icon rendered on the input.\nUseful when the user needs a different alignment. Gutter values are\nadded to the X and Y alignment values of the button search cancel."
+     },
+     "iconClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_iconClass",
+      "!doc": "Icon CSS class to be used on the search cancel button."
+     },
+     "trigger": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_trigger",
+      "!doc": "Defines the CSS selector for the input elements the button search\ncancel renders. Supports single or multiple node selector."
+     },
+     "zIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_zIndex",
+      "!doc": "Defines the z-index of the button search cancel."
+     }
+    },
+    "CarouselConfig": {
+     "activeIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_activeIndex",
+      "!doc": "Index of the first visible item of the carousel."
+     },
+     "animationTime": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_animationTime",
+      "!doc": "Duration of the animation in seconds when change index on\nCarousel."
+     },
+     "intervalTime": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_intervalTime",
+      "!doc": "Interval time in seconds between an item transition."
+     },
+     "itemSelector": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_itemSelector",
+      "!doc": "CSS Selector whitch determines the items to be loaded to the\nCarousel."
+     },
+     "nodeMenu": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_nodeMenu",
+      "!doc": "Node container of the navigation items."
+     },
+     "nodeMenuItemSelector": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_nodeMenuItemSelector",
+      "!doc": "CSS selector to match the navigation items."
+     },
+     "playing": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_playing",
+      "!doc": "Attributes that determines the status of transitions between\nitems."
+     }
+    },
+    "CharCounterConfig": {
+     "counter": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#attribute_counter",
+      "!doc": "Node or Selector to display the information of the counter."
+     },
+     "maxLength": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#attribute_maxLength",
+      "!doc": "Max number of characters the [input](A.CharCounter.html#attr_input)\ncan have."
+     },
+     "input": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#attribute_input",
+      "!doc": "Node or Selector for the input field. Required."
+     }
+    },
+    "ColorPaletteConfig": {
+     "items": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#attribute_items",
+      "!doc": "Colors available to the `ColorPalette`."
+     }
+    },
+    "ColorPickerBaseConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_bodyContent",
+      "!doc": "The content of body."
+     },
+     "color": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_color",
+      "!doc": "Currently selected color."
+     },
+     "colorPalette": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_colorPalette",
+      "!doc": "Default colors available to the color palette."
+     },
+     "currentTrigger": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_currentTrigger",
+      "!doc": "Current `trigger` node."
+     },
+     "defaultColor": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_defaultColor",
+      "!doc": "Provides the default color used for the `recentColors` palette."
+     },
+     "hsvPalette": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_hsvPalette",
+      "!doc": "`HSVPalette` used for selecting custom colors not present in\n`defualtColors`."
+     },
+     "recentColors": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_recentColors",
+      "!doc": "Colors that have been selected recently from the `HSVPalette`."
+     },
+     "renderColorPalette": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_renderColorPalette",
+      "!doc": "Determines if the color palette is rendered on load."
+     },
+     "renderHSVPalette": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_renderHSVPalette",
+      "!doc": "Determines if the `HSVPalette` is rendered on load."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "trigger": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_trigger",
+      "!doc": "Trigger node that opens the color palette."
+     },
+     "triggerEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_triggerEvent",
+      "!doc": "Trigger event that fires on `trigger` click."
+     }
+    },
+    "ColorPickerPopoverConfig": {
+     "align": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#attribute_align",
+      "!doc": "The alignment configuration for `ColorPickerPopover`."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#attribute_visible",
+      "!doc": "Determines if `ColorPickerPopover` is visible or not."
+     }
+    },
+    "HSVPaletteConfig": {
+     "controls": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_controls",
+      "!doc": "Determines if HSVA and RGB input `controls` are visible."
+     },
+     "fieldValidator": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_fieldValidator",
+      "!doc": "Collection of regular expressions used to validate field values."
+     },
+     "selected": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_selected",
+      "!doc": "Currently `selected` color value."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     }
+    },
+    "HSVAPaletteModalConfig": {
+     "hsv": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#attribute_hsv",
+      "!doc": "Configuration options for the `HSVPalette`."
+     },
+     "selected": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#attribute_selected",
+      "!doc": "Currently `selected` color value."
+     }
+    },
+    "ComponentConfig": {
+     "useARIA": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#attribute_useARIA",
+      "!doc": "Indicates if use of the WAI-ARIA Roles and States should be enabled\nfor the Widget."
+     },
+     "hideClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#attribute_hideClass",
+      "!doc": "CSS class added to hide the `boundingBox` when\n[visible](A.Component.html#attr_visible) is set to `false`."
+     },
+     "render": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#attribute_render",
+      "!doc": "If `true` the render phase will be autimatically invoked preventing\nthe `.render()` manual call."
+     }
+    },
+    "DataTable": {
+     "CellEditorSupportConfig": {
+      "editEvent": {
+       "!type": "string",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#attribute_editEvent",
+       "!doc": "TODO. Wanna help? Please send a Pull Request."
+      }
+     }
+    },
+    "BaseCellEditorConfig": {
+     "editable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_editable",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "elementName": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_elementName",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "footerContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_footerContent",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "hideOnSave": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_hideOnSave",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "inputFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_inputFormatter",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "outputFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_outputFormatter",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "showToolbar": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_showToolbar",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "tabIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_tabIndex",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "toolbar": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_toolbar",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "unescapeValue": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_unescapeValue",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "validator": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_validator",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "value": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_value",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_visible",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "BaseOptionsCellEditorConfig": {
+     "inputFormatter": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_inputFormatter",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "options": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_options",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "outputFormatter": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_outputFormatter",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "selectedAttrName": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_selectedAttrName",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     }
+    },
+    "DropDownCellEditorConfig": {
+     "multiple": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#attribute_multiple",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "CheckboxCellEditorConfig": {
+     "selectedAttrName": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#attribute_selectedAttrName",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "DateCellEditorConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_bodyContent",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "calendar": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_calendar",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "dateFormat": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_dateFormat",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "inputFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_inputFormatter",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "outputFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_outputFormatter",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "DataTableHighlightConfig": {
+     "activeBorderWidth": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_activeBorderWidth",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "overlayActiveNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_overlayActiveNode",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "overlayNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_overlayNode",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "highlightRange": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_highlightRange",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "rangeBorderWidth": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_rangeBorderWidth",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "type": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_type",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "PropertyListConfig": {
+     "columns": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_columns",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "scrollable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_scrollable",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "editEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_editEvent",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "width": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_width",
+      "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nDataTable scroll breaks when width value is a number\nSee http://yuilibrary.com/projects/yui3/ticket/2532600"
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_strings",
+      "!doc": "Colection of strings used to label elements of the UI."
+     }
+    },
+    "DataTableSelectionConfig": {
+     "activeCell": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeCell",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "activeCoord": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeCoord",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "activeRow": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeRow",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "selection": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_selection",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     },
+     "tabIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_tabIndex",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "DatePickerDelegateConfig": {
+     "activeInput": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_activeInput",
+      "!doc": "The active input element that holds the calendar instance."
+     },
+     "container": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_container",
+      "!doc": "Contains an element."
+     },
+     "dateSeparator": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_dateSeparator",
+      "!doc": "Character that separate dates."
+     },
+     "mask": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_mask",
+      "!doc": "Defines the date format."
+     },
+     "trigger": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_trigger",
+      "!doc": "Stores a trigger."
+     },
+     "valueExtractor": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_valueExtractor",
+      "!doc": "Extracts a value from a function."
+     },
+     "valueFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_valueFormatter",
+      "!doc": "Formats a value from a function."
+     }
+    },
+    "DatePickerNativeBaseConfig": {
+     "nativeMask": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#attribute_nativeMask",
+      "!doc": "Defines the native date mask."
+     },
+     "nativeType": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#attribute_nativeType",
+      "!doc": "Defines the type attribute in an HTML element."
+     }
+    },
+    "DatePickerPopoverConfig": {
+     "autoHide": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_autoHide",
+      "!doc": "Sets the initial visibility."
+     },
+     "popover": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_popover",
+      "!doc": "Stores the configuration of the `Popover` instance."
+     },
+     "popoverCssClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_popoverCssClass",
+      "!doc": "Defines the CSS classname of the `Popover`."
+     }
+    },
+    "DatePickerBaseConfig": {
+     "calendar": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#attribute_calendar",
+      "!doc": "Stores the configuration of the `Calendar` instance."
+     },
+     "autoHide": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#attribute_autoHide",
+      "!doc": "Sets the initial visibility."
+     },
+     "panes": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#attribute_panes",
+      "!doc": "Defines how many panes should be rendered."
+     }
+    },
+    "AvailableFieldConfig": {
+     "draggable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_draggable",
+      "!doc": "Defines if the field is draggable or not."
+     },
+     "label": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_label",
+      "!doc": "The descriptor of a field."
+     },
+     "iconClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_iconClass",
+      "!doc": "The CSS class name used in the icon."
+     },
+     "id": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_id",
+      "!doc": "The identifier of a field."
+     },
+     "node": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_node",
+      "!doc": "The node used in a field."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_type",
+      "!doc": "The type of a field."
+     }
+    },
+    "FieldSupportConfig": {
+     "fields": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#attribute_fields",
+      "!doc": "The collection of fields."
+     },
+     "maxFields": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#attribute_maxFields",
+      "!doc": "Defines the maximum number of fields."
+     }
+    },
+    "DiagramBuilderBaseConfig": {
+     "availableFields": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_availableFields",
+      "!doc": "List of available fields."
+     },
+     "availableFieldsDragConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_availableFieldsDragConfig",
+      "!doc": "The configuration object for draggable available fields."
+     },
+     "canvas": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_canvas",
+      "!doc": "A node created using the `CANVAS_TEMPLATE` template."
+     },
+     "dropConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_dropConfig",
+      "!doc": "The configuration object for drop container node."
+     },
+     "contentContainer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_contentContainer",
+      "!doc": "Host node for content created using the `CONTENT_CONTAINER_TEMPLATE`\ntemplate."
+     },
+     "dropContainer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_dropContainer",
+      "!doc": "Host node for drop created using the `DROP_CONTAINER_TEMPLATE`\ntemplate."
+     },
+     "fieldsContainer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_fieldsContainer",
+      "!doc": "Host node for fields created using the `FIELDS_CONTAINER_TEMPLATE`\ntemplate."
+     },
+     "propertyList": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_propertyList",
+      "!doc": "Stores an instance of `A.PropertyList`."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "tabView": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_tabView",
+      "!doc": "Stores an instance of `A.TabView`."
+     },
+     "toolbar": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_toolbar",
+      "!doc": "Stores an instance of `A.Toolbar`."
+     },
+     "toolbarContainer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_toolbarContainer",
+      "!doc": "Host node for toolbar created using the `TOOLBAR_CONTAINER_TEMPLATE`\ntemplate."
+     }
+    },
+    "ConnectorConfig": {
+     "coord": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_coord",
+      "!doc": "Converts a coordinate to X and Y positions."
+     },
+     "arrowPoints": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_arrowPoints",
+      "!doc": "Arrow points from `A.PolygonUtil` instance."
+     },
+     "builder": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_builder",
+      "!doc": "Stores an instance of `A.DiagramBuilder`."
+     },
+     "color": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_color",
+      "!doc": "The color used in the connector."
+     },
+     "graphic": {
+      "!type": "+graphics.Graphic",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_graphic",
+      "!doc": "Graphic used to represent the connector."
+     },
+     "lazyDraw": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_lazyDraw",
+      "!doc": "Determine if the draw should be delayed or not."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_name",
+      "!doc": "The name of the connector."
+     },
+     "nodeName": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_nodeName",
+      "!doc": "The connector node name."
+     },
+     "p1": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_p1",
+      "!doc": "Origin connector position."
+     },
+     "p2": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_p2",
+      "!doc": "Destination connector position."
+     },
+     "selected": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_selected",
+      "!doc": "Checks if a connector is selected or not."
+     },
+     "shape": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shape",
+      "!doc": "Graphic used to represent the connectors shape."
+     },
+     "shapeArrow": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrow",
+      "!doc": "Graphic used to represent the connectors shape arrow."
+     },
+     "shapeArrowHover": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrowHover",
+      "!doc": "Collection of styles applied when mouse is over the shape arrow."
+     },
+     "shapeArrowSelected": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrowSelected",
+      "!doc": "Collection of styles applied when shape arrow is selected."
+     },
+     "shapeHover": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeHover",
+      "!doc": "Collection of styles applied when mouse is over the shape."
+     },
+     "shapeSelected": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeSelected",
+      "!doc": "Collection of styles applied when shape is selected."
+     },
+     "showName": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_showName",
+      "!doc": "Sets the visibility of the connector name."
+     },
+     "transition": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_transition",
+      "!doc": "Stores the uid, source and target data from a connector."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_visible",
+      "!doc": "Indicates whether or not the connector is visible."
+     }
+    },
+    "DiagramBuilderConfig": {
+     "connector": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_connector",
+      "!doc": "Stores an instance of `A.Connector`."
+     },
+     "fieldsDragConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_fieldsDragConfig",
+      "!doc": "Configuration object for draggable fields."
+     },
+     "graphic": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_graphic",
+      "!doc": "Stores an instance of `A.Graphic`."
+     },
+     "highlightDropZones": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_highlightDropZones",
+      "!doc": "Checks if the drop zones should be highlighted or not."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "showSuggestConnector": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_showSuggestConnector",
+      "!doc": "Checks if a connector suggestion is visible or not."
+     },
+     "suggestConnectorOverlay": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_suggestConnectorOverlay",
+      "!doc": "Stores an instance of `A.Overlay` used in the connector suggestion."
+     }
+    },
+    "DiagramNodeConfig": {
+     "builder": {
+      "!type": "+DiagramBuilder",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_builder",
+      "!doc": "Stores an instance of `A.DiagramBuilderBase`."
+     },
+     "connectors": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_connectors",
+      "!doc": "A map of connectors."
+     },
+     "controlsToolbar": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_controlsToolbar",
+      "!doc": "A toolbar to represent controls."
+     },
+     "description": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_description",
+      "!doc": "The description of the node."
+     },
+     "graphic": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_graphic",
+      "!doc": "Stores an instance of `A.Graphic`."
+     },
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_height",
+      "!doc": "The height of the node."
+     },
+     "highlighted": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_highlighted",
+      "!doc": "Checks if a node is highlighted or not."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_name",
+      "!doc": "The name of the node."
+     },
+     "required": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_required",
+      "!doc": "Checks if a node is required or not."
+     },
+     "selected": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_selected",
+      "!doc": "Checks if a node is selected or not."
+     },
+     "shapeBoundary": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_shapeBoundary",
+      "!doc": "A graphic shape to represent a boundary."
+     },
+     "highlightBoundaryStroke": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_highlightBoundaryStroke",
+      "!doc": "Represents a stroke to highlight a boundary."
+     },
+     "shapeInvite": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_shapeInvite",
+      "!doc": "Configuration object to generate the shape invite graphic."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "tabIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_tabIndex",
+      "!doc": "Specify the tab order of elements."
+     },
+     "transitions": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_transitions",
+      "!doc": "Map of transitions that stores the uid, source and target data from\nconnectors."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_type",
+      "!doc": "The type of the node."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_width",
+      "!doc": "The width of the node."
+     },
+     "zIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_zIndex",
+      "!doc": "Specify the stack order of elements."
+     }
+    },
+    "DiagramNodeStateConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_height",
+      "!doc": "The height of the node."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_type",
+      "!doc": "The type of the node."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_width",
+      "!doc": "The width of the node."
+     }
+    },
+    "DiagramNodeConditionConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_height",
+      "!doc": "The height of the node."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_type",
+      "!doc": "The type of the node."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_width",
+      "!doc": "The width of the node."
+     }
+    },
+    "DiagramNodeStartConfig": {
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#attribute_type",
+      "!doc": "The type of the node."
+     }
+    },
+    "DiagramNodeEndConfig": {
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#attribute_type",
+      "!doc": "The type of the node."
+     }
+    },
+    "DiagramNodeJoinConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_height",
+      "!doc": "The height of the node."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_type",
+      "!doc": "The type of the node."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_width",
+      "!doc": "The width of the node."
+     }
+    },
+    "DiagramNodeForkConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_height",
+      "!doc": "The height of the node."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_type",
+      "!doc": "The type of the node."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_width",
+      "!doc": "The width of the node."
+     }
+    },
+    "DiagramNodeTaskConfig": {
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_height",
+      "!doc": "The height of the node."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_type",
+      "!doc": "The type of the node."
+     },
+     "width": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_width",
+      "!doc": "The width of the node."
+     }
+    },
+    "FormBuilderAvailableFieldConfig": {
+     "hiddenAttributes": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_hiddenAttributes",
+      "!doc": "List of hidden attributes."
+     },
+     "name": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_name",
+      "!doc": "The name of the input field."
+     },
+     "options": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_options",
+      "!doc": "Collection of options."
+     },
+     "predefinedValue": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_predefinedValue",
+      "!doc": "Specifies a predefined value for the input field."
+     },
+     "readOnlyAttributes": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_readOnlyAttributes",
+      "!doc": "List of read-only input fields."
+     },
+     "required": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_required",
+      "!doc": "Checks if an input field is required. In other words, it needs\ncontent to be valid."
+     },
+     "showLabel": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_showLabel",
+      "!doc": "If `true` the label is showed."
+     },
+     "tip": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_tip",
+      "!doc": "Hint to help the user to fill the input field."
+     },
+     "unique": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_unique",
+      "!doc": "Checks if the input field is unique or not."
+     },
+     "width": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_width",
+      "!doc": "The width of the input field."
+     }
+    },
+    "FormBuilderConfig": {
+     "allowRemoveRequiredFields": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_allowRemoveRequiredFields",
+      "!doc": "Checks if removing required fields is permitted or not."
+     },
+     "enableEditing": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_enableEditing",
+      "!doc": "Enables a field to be editable."
+     },
+     "fieldsSortableListConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_fieldsSortableListConfig",
+      "!doc": "Collection of sortable fields."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     }
+    },
+    "FormBuilderFieldConfig": {
+     "acceptChildren": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_acceptChildren",
+      "!doc": "If `true` children are accepted."
+     },
+     "builder": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_builder",
+      "!doc": "The `A.FormBuilder` instance."
+     },
+     "controlsToolbar": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_controlsToolbar",
+      "!doc": "Collection of toolbar controls."
+     },
+     "dataType": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_dataType",
+      "!doc": "Indicates which is the type of data for the input field."
+     },
+     "disabled": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_disabled",
+      "!doc": "Checks if the input field is disabled or not."
+     },
+     "selected": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_selected",
+      "!doc": "Checks if the input field is selected or not."
+     },
+     "hiddenAttributes": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_hiddenAttributes",
+      "!doc": "List of hidden attributes."
+     },
+     "id": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_id",
+      "!doc": "The id of the input field."
+     },
+     "label": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_label",
+      "!doc": "The label of the input field."
+     },
+     "localizationMap": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_localizationMap",
+      "!doc": "Collection for content localization."
+     },
+     "name": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_name",
+      "!doc": "The name of the input field."
+     },
+     "parent": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_parent",
+      "!doc": "Container for the field parent."
+     },
+     "predefinedValue": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_predefinedValue",
+      "!doc": "Specifies a predefined value for the input field."
+     },
+     "readOnly": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_readOnly",
+      "!doc": "Checks if an input field is read-only.\nIn other words, it cannot be modified."
+     },
+     "readOnlyAttributes": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_readOnlyAttributes",
+      "!doc": "List of read-only input fields."
+     },
+     "required": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_required",
+      "!doc": "Checks if an input field is required.\nIn other words, it needs content to be valid."
+     },
+     "showLabel": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_showLabel",
+      "!doc": "If `true` the label is showed."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "tabIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tabIndex",
+      "!doc": "Specify the tab order."
+     },
+     "template": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     },
+     "tip": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tip",
+      "!doc": "Hint to help the user to fill the input field."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_type",
+      "!doc": "Defines the type of field."
+     },
+     "unique": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_unique",
+      "!doc": "Checks if the input field is unique or not."
+     },
+     "zIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_zIndex",
+      "!doc": "Stack order of the field. An element with greater stack order is\nalways in front of an element with a lower stack order."
+     },
+     "dropZoneNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_dropZoneNode",
+      "!doc": "Node used to generate the drop zone."
+     },
+     "labelNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_labelNode",
+      "!doc": "Node used to generate a label."
+     },
+     "requiredFlagNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_requiredFlagNode",
+      "!doc": "Node used to generate the required flag."
+     },
+     "templateNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_templateNode",
+      "!doc": "Node used to generate a template."
+     },
+     "tipFlagNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tipFlagNode",
+      "!doc": "Node used to generate a tip."
+     }
+    },
+    "FormBuilderButtonFieldConfig": {
+     "acceptChildren": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_acceptChildren",
+      "!doc": "If `true` children are accepted."
+     },
+     "buttonType": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_buttonType",
+      "!doc": "Defines the button type attribute, e.g. `type=\"reset\"`."
+     },
+     "predefinedValue": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_predefinedValue",
+      "!doc": "Specifies a predefined value for the button field."
+     },
+     "showLabel": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_showLabel",
+      "!doc": "If `true` the label is showed."
+     },
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "FormBuilderCheckBoxFieldConfig": {
+     "dataType": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_dataType",
+      "!doc": "Indicates which is the type of data for the input field."
+     },
+     "predefinedValue": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_predefinedValue",
+      "!doc": "Specifies a predefined value for the checkbox field."
+     },
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "FormBuilderFieldsetFieldConfig": {
+     "acceptChildren": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_acceptChildren",
+      "!doc": "If `true` children are accepted."
+     },
+     "dataType": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_dataType",
+      "!doc": "Indicates which is the type of data for the input field."
+     },
+     "labelNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_labelNode",
+      "!doc": "Markup used to generate a label."
+     },
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "FormBuilderFileUploadFieldConfig": {
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "OptionsEditorConfig": {
+     "editable": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#attribute_editable",
+      "!doc": "Defines if a field is editable."
+     }
+    },
+    "FormBuilderMultipleChoiceFieldConfig": {
+     "acceptChildren": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_acceptChildren",
+      "!doc": "If `true` children are accepted."
+     },
+     "options": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_options",
+      "!doc": "Collection of options. Each option is made of a label and value."
+     },
+     "optionTemplate": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_optionTemplate",
+      "!doc": "Markup used to generate each item from `options` attribute."
+     },
+     "predefinedValue": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_predefinedValue",
+      "!doc": "Specifies a predefined value for the multiple choice field."
+     }
+    },
+    "FormBuilderRadioFieldConfig": {
+     "predefinedValue": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#attribute_predefinedValue",
+      "!doc": "Specifies a predefined value for the radio field."
+     },
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "FormBuilderSelectFieldConfig": {
+     "multiple": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#attribute_multiple",
+      "!doc": "Checks if the drop-down list allows multiple selections."
+     },
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "FormBuilderTextFieldConfig": {
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     },
+     "width": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#attribute_width",
+      "!doc": "The width of the input field."
+     }
+    },
+    "FormBuilderTextAreaFieldConfig": {
+     "template": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#attribute_template",
+      "!doc": "Reusable block of markup used to generate the field."
+     }
+    },
+    "FormValidatorConfig": {
+     "boundingBox": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_boundingBox",
+      "!doc": "The widgets outermost node, used for sizing and positioning."
+     },
+     "containerErrorClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_containerErrorClass",
+      "!doc": "Container for the CSS error class."
+     },
+     "containerValidClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_containerValidClass",
+      "!doc": "Container for the CSS valid class."
+     },
+     "errorClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_errorClass",
+      "!doc": "Defines the CSS error class."
+     },
+     "extractRules": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_extractRules",
+      "!doc": "If `true` the validation rules are extracted from the DOM."
+     },
+     "fieldContainer": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_fieldContainer",
+      "!doc": "Container for a field."
+     },
+     "fieldStrings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_fieldStrings",
+      "!doc": "Collection of strings used on a field."
+     },
+     "labelCssClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_labelCssClass",
+      "!doc": "The CSS class for `<label>`."
+     },
+     "messageContainer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_messageContainer",
+      "!doc": "Container for the form message."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     },
+     "rules": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_rules",
+      "!doc": "Collection of rules to validate fields."
+     },
+     "selectText": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_selectText",
+      "!doc": "Defines if the text will be selected or not after validation."
+     },
+     "showMessages": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_showMessages",
+      "!doc": "Defines if the validation messages will be showed or not."
+     },
+     "showAllMessages": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_showAllMessages",
+      "!doc": "Defines if all validation messages will be showed or not."
+     },
+     "stackErrorContainer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_stackErrorContainer",
+      "!doc": "Defines a container for the stack errors."
+     },
+     "validateOnBlur": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_validateOnBlur",
+      "!doc": "If `true` the field will be validated on blur event."
+     },
+     "validateOnInput": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_validateOnInput",
+      "!doc": "If `true` the field will be validated on input event."
+     },
+     "validClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_validClass",
+      "!doc": "Defines the CSS valid class."
+     }
+    },
+    "ImageCropperConfig": {
+     "cropHeight": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_cropHeight",
+      "!doc": "The height of a selected area to crop."
+     },
+     "cropWidth": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_cropWidth",
+      "!doc": "The width of a selected area to crop."
+     },
+     "minWidth": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_minWidth",
+      "!doc": "The minimum width of a selected area to crop."
+     },
+     "minHeight": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_minHeight",
+      "!doc": "The minimum height of a selected area to crop."
+     },
+     "movable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_movable",
+      "!doc": "Determine if the crop area should move or not."
+     },
+     "preserveRatio": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_preserveRatio",
+      "!doc": "Determine if the crop area should preserve the\naspect ratio or not."
+     },
+     "region": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_region",
+      "!doc": "Determine the region of a selected area to crop."
+     },
+     "resizable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_resizable",
+      "!doc": "Determine if the crop area should resize or not."
+     },
+     "x": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_x",
+      "!doc": "The X position of a selected area to crop."
+     },
+     "y": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_y",
+      "!doc": "The Y position of a selected area to crop."
+     }
+    },
+    "ImageViewerConfig": {
+     "anim": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_anim",
+      "!doc": "If `true` the navigation is animated."
+     },
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_bodyContent",
+      "!doc": "The content of body."
+     },
+     "caption": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_caption",
+      "!doc": "The caption of the displayed image."
+     },
+     "captionFromTitle": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_captionFromTitle",
+      "!doc": "If `true` the [caption](A.ImageViewer.html#attr_caption) will be\npulled from the title DOM attribute."
+     },
+     "centered": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_centered",
+      "!doc": "If `true` the Overlay with the image will be positioned\non the center of the viewport."
+     },
+     "currentIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_currentIndex",
+      "!doc": "Index of the current image."
+     },
+     "image": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_image",
+      "!doc": "Image node element used to load the images."
+     },
+     "imageAnim": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_imageAnim",
+      "!doc": "Configuration attributes passed to the [Anim](Anim.html) class."
+     },
+     "infoTemplate": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_infoTemplate",
+      "!doc": "String template used to display the information."
+     },
+     "links": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_links",
+      "!doc": "Selector or NodeList containing the links where the\n`A.ImageViewer` extracts the information to generate the\nthumbnails."
+     },
+     "loading": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loading",
+      "!doc": "Whether the image is during a loading state."
+     },
+     "modal": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_modal",
+      "!doc": "Displays the modal the viewport. Set to `false` to disable."
+     },
+     "preloadAllImages": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_preloadAllImages",
+      "!doc": "Preloads the neighbor image (i.e., the previous and next image\nbased on the current load one)."
+     },
+     "showClose": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_showClose",
+      "!doc": "Shows close icon control."
+     },
+     "showControls": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_showControls",
+      "!doc": "Shows the controls."
+     },
+     "tabIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_tabIndex",
+      "!doc": "Specify the tab order of elements."
+     },
+     "totalLinks": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_totalLinks",
+      "!doc": "Helper attribute to get the `size` of the\n[links](A.ImageViewer.html#attr_links) NodeList."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_visible",
+      "!doc": "Determines if the `A.ImageViewer` should be visible or not."
+     },
+     "zIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_zIndex",
+      "!doc": "Specify the stack order of elements."
+     },
+     "controlLeftEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_controlLeftEl",
+      "!doc": "The element to be used as left control."
+     },
+     "controlRightEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_controlRightEl",
+      "!doc": "The element to be used as right control."
+     },
+     "captionEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_captionEl",
+      "!doc": "The element to be used as caption."
+     },
+     "closeEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_closeEl",
+      "!doc": "The element to be used as close."
+     },
+     "infoEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_infoEl",
+      "!doc": "The element to be used as info."
+     },
+     "loader": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loader",
+      "!doc": "HTML element to contain the `img` which is being loaded."
+     },
+     "loadingEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loadingEl",
+      "!doc": "The element to be used as loading."
+     },
+     "maxHeight": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_maxHeight",
+      "!doc": "The maximum height of the element."
+     },
+     "maxWidth": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_maxWidth",
+      "!doc": "The maximum width of the element."
+     }
+    },
+    "ImageGalleryConfig": {
+     "autoPlay": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_autoPlay",
+      "!doc": "If `true` the slide show will be played when the\n`A.ImageGallery` is displayed."
+     },
+     "delay": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_delay",
+      "!doc": "Delay in milliseconds to change to the next image."
+     },
+     "pagination": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_pagination",
+      "!doc": "[A.Pagination](A.Pagination.html) configuration Object. The\n`A.Pagination` handles the thumbnails control."
+     },
+     "paginationEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paginationEl",
+      "!doc": "Element which contains the [A.Pagination](A.Pagination.html) with the\nthumbnails."
+     },
+     "paginationInstance": {
+      "!type": "+aui_pagination.A.Pagination",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paginationInstance",
+      "!doc": "Stores the [A.Pagination](A.Pagination.html) instance."
+     },
+     "paused": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paused",
+      "!doc": "If `true` the slide show is paused."
+     },
+     "pausedLabel": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_pausedLabel",
+      "!doc": "Label to display when the slide show is paused."
+     },
+     "playing": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_playing",
+      "!doc": "If `true` the slide show is playing."
+     },
+     "playingLabel": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_playingLabel",
+      "!doc": "Label to display when the slide show is playing."
+     },
+     "repeat": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_repeat",
+      "!doc": "Restart the navigation when reach the last element."
+     },
+     "showPlayer": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_showPlayer",
+      "!doc": "Shows the player controls (i.e., pause and show buttons)."
+     },
+     "toolbar": {
+      "!type": "+Toolbar constructor.",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_toolbar",
+      "!doc": "[A.Toolbar](A.Toolbar.html) with a play, and pause buttons."
+     },
+     "useOriginalImage": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_useOriginalImage",
+      "!doc": "If `true` will use the original image as thumbnails."
+     }
+    },
+    "MediaViewerPluginConfig": {
+     "providers": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.MediaViewerPlugin.html#attribute_providers",
+      "!doc": "Contains the templates, options and definitions for each provider\n(Flash, Youtube, Vimeo)."
+     }
+    },
+    "IORequestConfig": {
+     "autoLoad": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_autoLoad",
+      "!doc": "If `true` invoke the [start](A.IORequest.html#method_start) method\nautomatically, initializing the IO transaction."
+     },
+     "cache": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_cache",
+      "!doc": "If `false` the current timestamp will be appended to the\nurl, avoiding the url to be cached."
+     },
+     "dataType": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_dataType",
+      "!doc": "The type of the request (i.e., could be xml, json, javascript, text)."
+     },
+     "responseData": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_responseData",
+      "!doc": "This is a normalized attribute for the response data. Its useful to\nretrieve the correct type for the\n[dataType](A.IORequest.html#attr_dataType) (i.e., in json requests\nthe `responseData`) is a JSONObject."
+     },
+     "uri": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_uri",
+      "!doc": "URI to be requested using AJAX."
+     },
+     "active": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_active",
+      "!doc": "Whether the transaction is active or not."
+     },
+     "cfg": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_cfg",
+      "!doc": "Object containing all the [IO Configuration Attributes](A.io.html).\nThis Object is passed to the `A.io` internally."
+     },
+     "transaction": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_transaction",
+      "!doc": "Stores the IO Object of the current transaction."
+     },
+     "arguments": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_arguments",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "context": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_context",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "data": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_data",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "form": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_form",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "headers": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_headers",
+      "!doc": "Set the correct ACCEPT header based on the dataType."
+     },
+     "method": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_method",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "selector": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_selector",
+      "!doc": "A selector to be used to query against the response of the\nrequest. Only works if the response is XML or HTML."
+     },
+     "sync": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_sync",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "timeout": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_timeout",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     },
+     "xdr": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_xdr",
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+     }
+    },
+    "ModalConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_bodyContent",
+      "!doc": "Determine the content of Modals body section.\n\nTemporary fix for widget-stdmod bug when bodyContent initializes\nempty. this._currFillNode is never updated if _uiSetFillHeight is not\ncalled."
+     },
+     "destroyOnHide": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_destroyOnHide",
+      "!doc": "Determine if Modal should be destroyed when hidden."
+     },
+     "draggable": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_draggable",
+      "!doc": "Determine if Modal should be draggable or not."
+     },
+     "resizable": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_resizable",
+      "!doc": "Determine if Modal should be resizable or not."
+     },
+     "toolbars": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_toolbars",
+      "!doc": "Determine the content of Modals header section."
+     }
+    },
+    "PaginationConfig": {
+     "circular": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_circular",
+      "!doc": "When enabled this property allows the navigation to go back to the\nbeggining when it reaches the last page, the opposite behavior is\nalso true. Incremental page navigation could happen clicking the\ncontrol arrows or invoking `.next()` and `.prev()` methods."
+     },
+     "formatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_formatter",
+      "!doc": "A formatter function to format each pagination item."
+     },
+     "items": {
+      "!type": "+dom.NodeList",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_items",
+      "!doc": "Holds the page items as a `NodeList`. The list could be queried from\nthe DOM trough Widget `HTML_PARSER` or generated if\n[total](A.Pagination.html#attr_total) is specified."
+     },
+     "offset": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_offset",
+      "!doc": "Initial page offset."
+     },
+     "page": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_page",
+      "!doc": "Determines if pagination controls (Next and Prev) are rendered."
+     },
+     "total": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_total",
+      "!doc": "Total number of page links available. If set, the new\n[items](A.Pagination.html#attr_items) node list will be rendered."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI."
+     }
+    },
+    "PaletteConfig": {
+     "columns": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_columns",
+      "!doc": "Specifies how many columns should contain the Palette. If the\nvalue is a positive number, the Palette will generate as many\ncolumns as specified in this property and it will fit the\nprovided `items` in these columns."
+     },
+     "containerNode": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_containerNode",
+      "!doc": "Container node of the palette. If found, palette widget will not\ngenerate content."
+     },
+     "formatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_formatter",
+      "!doc": "Provides a function, which will be used to format the content\nduring Palette creation."
+     },
+     "items": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_items",
+      "!doc": "An array of Palette items. These items will be rendered in the\nPalette according to the specified `columns`."
+     },
+     "selected": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_selected",
+      "!doc": "Provides the index of currently selected item."
+     },
+     "toggleSelection": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_toggleSelection",
+      "!doc": "If true, on user interaction if the user clicks on an already\nselected element, it will be unselected."
+     }
+    },
+    "ParseContentConfig": {
+     "queue": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ParseContent.html#attribute_queue",
+      "!doc": "A queue of elements to be parsed."
+     }
+    },
+    "PopoverConfig": {
+     "triggerToggleEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Popover.html#attribute_triggerToggleEvent",
+      "!doc": "DOM event to hide the tooltip."
+     }
+    },
+    "ProgressBarConfig": {
+     "useARIA": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_useARIA",
+      "!doc": "Boolean indicating if use of the WAI-ARIA Roles and States\nshould be enabled."
+     },
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_height",
+      "!doc": "Display height of the progressbar."
+     },
+     "label": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_label",
+      "!doc": "Display label of the progressbar. If not specified try to query\nusing HTML_PARSER an element inside boundingBox which matches\n`aui-progressbar-text` and get its innerHTML to be\nused as label."
+     },
+     "max": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_max",
+      "!doc": "Represents the top value for the bar. The bar will be fully\nextended when reaching this value. Values higher than this will\nbe ignored."
+     },
+     "min": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_min",
+      "!doc": "Represents the lowest value for the bar. The bar will be\ntotally collapsed when reaching this value. Values lower than\nthis will be ignored."
+     },
+     "orientation": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_orientation",
+      "!doc": "Display orientation of the progressbar (i.e. vertical or\nhorizontal)."
+     },
+     "ratio": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_ratio",
+      "!doc": "Calculate the ratio based on `max` and `min` values."
+     },
+     "step": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_step",
+      "!doc": "Calculate the progressbar step based on `ratio` value."
+     },
+     "textNode": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_textNode",
+      "!doc": "DOM Node to display the text of the progressbar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches `aui-progressbar-text`."
+     },
+     "value": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_value",
+      "!doc": "The value for the bar. Valid values are in between the minValue\nand maxValue attributes."
+     }
+    },
+    "RatingConfig": {
+     "disabled": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_disabled",
+      "!doc": "Whether the Rating is disabled or not.\nDisabled Ratings dont allow hover or click,\njust display selected stars."
+     },
+     "canReset": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_canReset",
+      "!doc": "If `true` could be reseted\n(i.e., have no values selected)."
+     },
+     "cssClasses": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_cssClasses",
+      "!doc": "CSS classes applied on Rating."
+     },
+     "defaultSelected": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_defaultSelected",
+      "!doc": "The number of selected starts when the Rating render."
+     },
+     "elements": {
+      "!type": "+dom.NodeList",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_elements",
+      "!doc": "[NodeList](NodeList.html) of elements used on the\nRating. Each element is one Star."
+     },
+     "hiddenInput": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_hiddenInput",
+      "!doc": "Hidden input to handle the selected value. This hidden input\nreplace the radio elements and keep the same name."
+     },
+     "inputName": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_inputName",
+      "!doc": "Name of the [hiddenInput](A.Rating.html#attr_hiddenInput) element. If\nnot specified will use the name of the replaced radio."
+     },
+     "label": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_label",
+      "!doc": "Label to be displayed with the Rating elements."
+     },
+     "labelNode": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_labelNode",
+      "!doc": "DOM Node to display the text of the StarRating. If not\nspecified try to query using HTML_PARSER an element inside\nboundingBox which matches `aui-rating-label-element`."
+     },
+     "selectedIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_selectedIndex",
+      "!doc": "Stores the index of the selected element."
+     },
+     "showTitle": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_showTitle",
+      "!doc": "If `true` will extract the value of the\n`title` attribute on the radio, and use it on the\ngenerated Rating elements."
+     },
+     "size": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_size",
+      "!doc": "Number of Rating elements to be displayed."
+     },
+     "title": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_title",
+      "!doc": "If set, will be used when there is no DOM `title` on the\nradio elements."
+     },
+     "value": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_value",
+      "!doc": "Stores the value of the current selected Rating element."
+     }
+    },
+    "ThumbRatingConfig": {
+     "cssClasses": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html#attribute_cssClasses",
+      "!doc": "CSS classes applied on ThumbRating."
+     },
+     "size": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html#attribute_size",
+      "!doc": "The size on ThumbRating is always 2 (i.e., thumb up and thumb down)."
+     }
+    },
+    "SchedulerCalendarConfig": {
+     "color": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_color",
+      "!doc": "Contains the `color` of the scheduler calendar."
+     },
+     "disabled": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_disabled",
+      "!doc": "Determines if the calender is enabled."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_name",
+      "!doc": "Determines the name for this calendar."
+     },
+     "palette": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_palette",
+      "!doc": "Contains a list of colors for the calendar."
+     },
+     "scheduler": {
+      "!type": "+aui_scheduler.A.SchedulerBase",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_scheduler",
+      "!doc": "Contains this `SchedulerCalendar`s `SchedulerBase object."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_visible",
+      "!doc": "Indicates whether the calendar is visible."
+     }
+    },
+    "SchedulerEventConfig": {
+     "allDay": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_allDay",
+      "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs."
+     },
+     "content": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_content",
+      "!doc": "Contains the content of Scheduler events body section."
+     },
+     "color": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_color",
+      "!doc": "Contains the `color` of a calendar event."
+     },
+     "colorBrightnessFactor": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_colorBrightnessFactor",
+      "!doc": "Contains the color brightness factor is applied to the `color`\nattribute."
+     },
+     "colorSaturationFactor": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_colorSaturationFactor",
+      "!doc": "Contains the color saturation factor is applied to the `color`\nattribute."
+     },
+     "titleDateFormat": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_titleDateFormat",
+      "!doc": "Contains the formatted title date for this scheduler event, taking\ninto account ISO time. The value will not contain an `endDate` if\nthis event is `allDay`."
+     },
+     "endDate": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_endDate",
+      "!doc": "Contains the date corresponding to the current ending date of a\nscheduled event. By default, the value is one hour after the\n`startDate`."
+     },
+     "disabled": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_disabled",
+      "!doc": "Determines if the event is disabled."
+     },
+     "meeting": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_meeting",
+      "!doc": "Determines if the event is a meeting."
+     },
+     "node": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_node",
+      "!doc": "Contains the event `NodeList`."
+     },
+     "reminder": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_reminder",
+      "!doc": "Determines if the event is requires reminder."
+     },
+     "repeated": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_repeated",
+      "!doc": "Determines if the event is to be repeated."
+     },
+     "scheduler": {
+      "!type": "+aui_scheduler.A.SchedulerBase",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_scheduler",
+      "!doc": "Contains this `SchedulerEvent`s `SchedulerBase object."
+     },
+     "startDate": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_startDate",
+      "!doc": "Contains the date corresponding to the current starting date of a\nscheduled event. By default, the value is the date set on the users\ncomputer."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_visible",
+      "!doc": "Indicates whether the event is visible."
+     }
+    },
+    "SchedulerViewConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_bodyContent",
+      "!doc": "Determines the content of Scheduler views body section."
+     },
+     "filterFn": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_filterFn",
+      "!doc": "Applies a filter to `SchedulerEvent`s."
+     },
+     "height": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_height",
+      "!doc": "Contains the height of a `SchedulerView` in pixels."
+     },
+     "isoTime": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_isoTime",
+      "!doc": "Indicates whether this `SchedulerView` should use international\nstandard time."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_name",
+      "!doc": "Determines the name for this view."
+     },
+     "navigationDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_navigationDateFormatter",
+      "!doc": "Contains the function that formats the navigation date."
+     },
+     "nextDate": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_nextDate",
+      "!doc": "Contains the next `Date` in the `SchedulerView`."
+     },
+     "prevDate": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_prevDate",
+      "!doc": "Contains the previous `Date` in the `SchedulerView`."
+     },
+     "scheduler": {
+      "!type": "+aui_scheduler.A.SchedulerBase",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_scheduler",
+      "!doc": "Contains this `SchedulerView`s `SchedulerBase object."
+     },
+     "scrollable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_scrollable",
+      "!doc": "Indicates whether this `SchedulerView` is scrollable."
+     },
+     "triggerNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_triggerNode",
+      "!doc": "Contains the `Node` that triggers."
+     },
+     "visible": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_visible",
+      "!doc": "Indicates whether the calendar is visible."
+     }
+    },
+    "SchedulerBaseConfig": {
+     "activeView": {
+      "!type": "+aui_scheduler.A.SchedulerView",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_activeView",
+      "!doc": "Contains the active view."
+     },
+     "date": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_date",
+      "!doc": "Contains the date corresponding to the current date which is the\nvalue of the date set on the users computer."
+     },
+     "eventRecorder": {
+      "!type": "+aui_scheduler.A.SchedulerEventRecorder",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_eventRecorder",
+      "!doc": "Contains the `Scheduler`s `SchedulerEventRecorder` instance."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_strings",
+      "!doc": "Contains the collection of strings used to label elements of the UI."
+     },
+     "navigationDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_navigationDateFormatter",
+      "!doc": "Contains the function that formats the navigation date."
+     },
+     "views": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_views",
+      "!doc": "Contains the list of views belonging to this `Scheduler`."
+     },
+     "viewDate": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_viewDate",
+      "!doc": "Contains the `Scheduler`s current date. If there is an `activeView`,\nthis attribute will contain the `activeView`s current date."
+     },
+     "firstDayOfWeek": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_firstDayOfWeek",
+      "!doc": "First day of the week: Sunday is 0, Monday is 1."
+     },
+     "todayDate": {
+      "!type": "+datatype_date.Date",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_todayDate",
+      "!doc": "Today date representation. This option allows the developer to\nspecify the date he wants to be used as the today date."
+     }
+    },
+    "SchedulerEventRecorderConfig": {
+     "allDay": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_allDay",
+      "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs."
+     },
+     "content": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_content",
+      "!doc": "Determines the content of this Scheduler event recorders body\nsection."
+     },
+     "duration": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_duration",
+      "!doc": "Contains the duration of an `event` in minutes."
+     },
+     "dateFormat": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_dateFormat",
+      "!doc": "Contains the default date format for an `event`."
+     },
+     "event": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_event",
+      "!doc": "A scheduler `event` is the wrapper object that contains an `event`\ntitle, start and end times and a description."
+     },
+     "popover": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_popover",
+      "!doc": "Contains the scheduler event recorders `popover` instance."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_strings",
+      "!doc": "Collection of strings used to label elements of the UI.\nThis attribute defaults to `{}` unless the attribute is set.\nWhen this attribute is set, the passed value merges with a\npseudo-default collection of strings."
+     },
+     "bodyTemplate": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_bodyTemplate",
+      "!doc": "Contains the `SchedulerEventRecorder`s body template."
+     },
+     "headerTemplate": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_headerTemplate",
+      "!doc": "Contains the `SchedulerEventRecorder`s header template."
+     }
+    },
+    "SchedulerAgendaViewConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_bodyContent",
+      "!doc": "Determines the content of Scheduler view agendas body section."
+     },
+     "eventsDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_eventsDateFormatter",
+      "!doc": "Contains the function that formats the events date."
+     },
+     "headerDayDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_headerDayDateFormatter",
+      "!doc": "Contains the function that formats the header day date."
+     },
+     "headerExtraDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_headerExtraDateFormatter",
+      "!doc": "Contains the function that formats the header extra date."
+     },
+     "infoDayDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoDayDateFormatter",
+      "!doc": "Contains the function that formats the info day date."
+     },
+     "infoLabelBigDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoLabelBigDateFormatter",
+      "!doc": "Contains the function that formats the info label date."
+     },
+     "infoLabelSmallDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoLabelSmallDateFormatter",
+      "!doc": "Contains the function that formats the info label small date."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_name",
+      "!doc": "Determines the name for this agenda."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_strings",
+      "!doc": "Contains the collection of strings used to label elements of the UI."
+     }
+    },
+    "SchedulerDayViewConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_bodyContent",
+      "!doc": "Determines the content of Scheduler day views body section."
+     },
+     "days": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_days",
+      "!doc": "Contains the number of day columns this view displays."
+     },
+     "delegateConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_delegateConfig",
+      "!doc": "Configures this views `DD.Delegate`."
+     },
+     "eventWidth": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_eventWidth",
+      "!doc": "Contains the width of a `SchedulerView` in pixels."
+     },
+     "filterFn": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_filterFn",
+      "!doc": "Applies a filter to `SchedulerEvent`s."
+     },
+     "headerDateFormatter": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerDateFormatter",
+      "!doc": "Contains the function that formats the header date."
+     },
+     "headerView": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerView",
+      "!doc": "Contains the header view."
+     },
+     "headerViewConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerViewConfig",
+      "!doc": "Configures the header day view."
+     },
+     "hourHeight": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_hourHeight",
+      "!doc": "Contains the height of an hour in pixels."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_name",
+      "!doc": "Determines the name for this day view."
+     },
+     "navigationDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_navigationDateFormatter",
+      "!doc": "Contains the function that formats the navigation date."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_strings",
+      "!doc": "Contains the collection of strings used to label elements of the UI."
+     },
+     "headerTableNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerTableNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `headerTable` node."
+     },
+     "headerViewLabelNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerViewLabelNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `headerViewLabel` node."
+     },
+     "resizerNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_resizerNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `resizer` node."
+     },
+     "tableNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_tableNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `table` node."
+     },
+     "colDaysNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_colDaysNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `colDays` node."
+     },
+     "colHeaderDaysNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_colHeaderDaysNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `colHeaderDays` node."
+     },
+     "markercellsNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_markercellsNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `markercells` node."
+     },
+     "timesNode!~YUIDOC_LINE~!return": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_timesNode!~YUIDOC_LINE~!return",
+      "!doc": "Contains the function that returns the `times` node."
+     }
+    },
+    "SchedulerMonthViewConfig": {
+     "displayDaysInterval": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_displayDaysInterval",
+      "!doc": "Contains the number of Days to display in a month view."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_name",
+      "!doc": "Determines the name for this month view."
+     },
+     "navigationDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_navigationDateFormatter",
+      "!doc": "Contains the function that formats the navigation date."
+     }
+    },
+    "SchedulerTableViewDDConfig": {
+     "delegateConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#attribute_delegateConfig",
+      "!doc": "Configures this views `DD.Delegate`."
+     }
+    },
+    "SchedulerTableViewConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_bodyContent",
+      "!doc": "Determines the content of Scheduler table views body section."
+     },
+     "displayDaysInterval": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_displayDaysInterval",
+      "!doc": "Contains the number of days to display per interval in the\n`SchedulerTableView`."
+     },
+     "displayRows": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_displayRows",
+      "!doc": "Contains the number of rows to display in the `SchedulerTableView`."
+     },
+     "fixedHeight": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_fixedHeight",
+      "!doc": "Indicates whether the height of the `SchedulerTableView` is fixed."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_name",
+      "!doc": "Determines the name for this `SchedulerTableView`."
+     },
+     "headerDateFormatter": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_headerDateFormatter",
+      "!doc": "Contains the function that formats the header date."
+     },
+     "navigationDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_navigationDateFormatter",
+      "!doc": "Contains the function that formats the navigation date."
+     },
+     "scrollable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_scrollable",
+      "!doc": "Indicates whether the `SchedulerTableView` is scrollable."
+     },
+     "strings": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_strings",
+      "!doc": "Contains the collection of strings used to label elements of the UI."
+     },
+     "headerTableNode": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_headerTableNode",
+      "!doc": "Contains the function that returns the `headerTable` node."
+     },
+     "colHeaderDaysNode": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_colHeaderDaysNode",
+      "!doc": "Contains the function that returns the `colHeaderDays` node."
+     },
+     "rowsContainerNode": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_rowsContainerNode",
+      "!doc": "Contains the function that returns the `rowsContainer` node."
+     },
+     "tableGridNode": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_tableGridNode",
+      "!doc": "Contains the function that returns the `tableGrid` node."
+     }
+    },
+    "SchedulerWeekViewConfig": {
+     "bodyContent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_bodyContent",
+      "!doc": "Determines the content of Scheduler week views body section."
+     },
+     "days": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_days",
+      "!doc": "Contains the number of days in a week."
+     },
+     "headerViewConfig": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_headerViewConfig",
+      "!doc": "Configures the header week view."
+     },
+     "name": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_name",
+      "!doc": "Determines the name for this week view."
+     },
+     "navigationDateFormatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_navigationDateFormatter",
+      "!doc": "Contains the formatted navigation date formatter for this week view."
+     }
+    },
+    "TernarySearchNodeConfig": {
+     "character": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_character",
+      "!doc": "String formed by a single letter."
+     },
+     "child": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_child",
+      "!doc": "The child node in the tree."
+     },
+     "largerNode": {
+      "!type": "+aui_search.A.TernarySearchNode",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_largerNode",
+      "!doc": "The larger node in the tree."
+     },
+     "smallerNode": {
+      "!type": "+aui_search.A.TernarySearchNode",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_smallerNode",
+      "!doc": "The smaller node in the tree."
+     },
+     "word": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_word",
+      "!doc": "String formed by a group of letters."
+     }
+    },
+    "SortableLayoutConfig": {
+     "delegateConfig": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_delegateConfig",
+      "!doc": "Configuration object for delegate."
+     },
+     "proxyNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_proxyNode",
+      "!doc": "Proxy drag node used instead of dragging the original node."
+     },
+     "dragNodes": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_dragNodes",
+      "!doc": "The CSS class name used to define which nodes are draggable."
+     },
+     "dropContainer": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_dropContainer",
+      "!doc": "The container which serves to host dropped elements."
+     },
+     "dropNodes": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_dropNodes",
+      "!doc": "The CSS class name used to define which nodes serve as container to\nbe dropped."
+     },
+     "groups": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_groups",
+      "!doc": "List of elements to add this sortable layout into."
+     },
+     "lazyStart": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_lazyStart",
+      "!doc": "Specifies if the start should be delayed."
+     },
+     "placeholder": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_placeholder",
+      "!doc": "Simulates the position of the dragged element."
+     },
+     "proxy": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_proxy",
+      "!doc": "Proxy element to be used when dragging."
+     }
+    },
+    "SortableListConfig": {
+     "dd": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dd",
+      "!doc": "Drag & Drop plugin attached to the widget."
+     },
+     "dropCondition": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dropCondition",
+      "!doc": "Validates the condition for an element to be dropped."
+     },
+     "dropContainer": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dropContainer",
+      "!doc": "The container which serves to host dropped elements."
+     },
+     "dropOn": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dropOn",
+      "!doc": "The CSS class name used to define which nodes serve as container to\nbe dropped."
+     },
+     "helper": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_helper",
+      "!doc": "Indicates that the element is being dragged."
+     },
+     "nodes": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_nodes",
+      "!doc": "The CSS class name used to define which nodes are draggable."
+     },
+     "placeholder": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_placeholder",
+      "!doc": "Simulates the position of the dragged element."
+     },
+     "proxy": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_proxy",
+      "!doc": "Proxy element to be used when dragging."
+     },
+     "sortCondition": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_sortCondition",
+      "!doc": "Validates the condition for an element to be sorted."
+     }
+    },
+    "TabConfig": {
+     "disabled": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tab.html#attribute_disabled",
+      "!doc": "TODO. Wanna help? Please send a Pull Request."
+     }
+    },
+    "TabViewConfig": {
+     "stacked": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html#attribute_stacked",
+      "!doc": "Determine the orientation of tabs.\nCan be stacked (vertical) or not (horizontal)."
+     },
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html#attribute_type",
+      "!doc": "Determine the type of tabs."
+     }
+    },
+    "TimePickerBaseConfig": {
+     "autocomplete": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_autocomplete",
+      "!doc": "Default `AutoComplete` configuration options."
+     },
+     "dateSeparator": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_dateSeparator",
+      "!doc": "Value seperator for `queryDelimiter` attribute of `AutoComplete` class."
+     },
+     "mask": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_mask",
+      "!doc": "Format for displayed time."
+     },
+     "popoverCssClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_popoverCssClass",
+      "!doc": "CSS class for popover."
+     },
+     "values": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_values",
+      "!doc": "Time values available to `AutoComplete` instance."
+     }
+    },
+    "TogglerConfig": {
+     "animated": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_animated",
+      "!doc": "Determine if the Toggler transitions will animate."
+     },
+     "animating": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_animating",
+      "!doc": "Determine if the Toggler transitions are being animated in that\nmoment."
+     },
+     "bindDOMEvents": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_bindDOMEvents",
+      "!doc": "Determine if the Toggler should bind DOM events or not."
+     },
+     "content": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_content",
+      "!doc": "The content of a Toogler instance."
+     },
+     "expanded": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_expanded",
+      "!doc": "Determine if the content starts as toggled on/off on page load."
+     },
+     "header": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_header",
+      "!doc": "The header of a Toogler instance."
+     },
+     "transition": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_transition",
+      "!doc": "Transition definitions such as duration and type of easing effect."
+     }
+    },
+    "TogglerDelegateConfig": {
+     "animated": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_animated",
+      "!doc": "Determine if the Toggler Delegate transitions will animate."
+     },
+     "closeAllOnExpand": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_closeAllOnExpand",
+      "!doc": "Determine if the Toggler Delegate switches\nwill be set to off when one switch is toggled on."
+     },
+     "container": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_container",
+      "!doc": "The container of Toggler Delegate instance."
+     },
+     "content": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_content",
+      "!doc": "The content of a Toogler Delegate instance."
+     },
+     "expanded": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_expanded",
+      "!doc": "Determine if the content starts as toggled on/off on page load."
+     },
+     "header": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_header",
+      "!doc": "The header of a Toogler Delegate instance."
+     },
+     "transition": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_transition",
+      "!doc": "Transition definitions such as duration and type of easing effect."
+     }
+    },
+    "ToolbarConfig": {
+     "children": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html#attribute_children",
+      "!doc": "A list of child elements."
+     },
+     "toolbarRenderer": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html#attribute_toolbarRenderer",
+      "!doc": "Define a new `ToolbarRenderer`."
+     }
+    },
+    "TooltipConfig": {
+     "animated": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_animated",
+      "!doc": "Determine if the transitions will animate or not."
+     },
+     "constrain": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_constrain",
+      "!doc": "Determine the tooltip constrain node."
+     },
+     "formatter": {
+      "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_formatter",
+      "!doc": "Format the title attribute before set the content of the tooltip."
+     },
+     "opacity": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_opacity",
+      "!doc": "Determine the opacity."
+     },
+     "triggerShowEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_triggerShowEvent",
+      "!doc": "DOM event to show the tooltip."
+     }
+    },
+    "TooltipDelegateConfig": {
+     "align": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_align",
+      "!doc": "The alignment configuration for this widget."
+     },
+     "container": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_container",
+      "!doc": "The container of Toggler Delegate instance."
+     },
+     "duration": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_duration",
+      "!doc": "Determine the duration of the tooltip animation."
+     },
+     "opacity": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_opacity",
+      "!doc": "Determine the opacity of the tooltip."
+     },
+     "triggerHideEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_triggerHideEvent",
+      "!doc": "DOM event to hide the tooltip."
+     },
+     "triggerShowEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_triggerShowEvent",
+      "!doc": "DOM event to show the tooltip."
+     },
+     "zIndex": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_zIndex",
+      "!doc": "Specify the zIndex for the tooltips."
+     }
+    },
+    "TreeDataConfig": {
+     "container": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_container",
+      "!doc": "Container to nest children nodes. If it has a container its not a leaf."
+     },
+     "children": {
+      "!type": "+yui.Array",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_children",
+      "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode\ninstance)."
+     },
+     "index": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_index",
+      "!doc": "Index the nodes."
+     }
+    },
+    "TreeViewIOConfig": {
+     "io": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#attribute_io",
+      "!doc": "IO options for the current TreeNode load the children."
+     }
+    },
+    "TreeNodeConfig": {
+     "boundingBox": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_boundingBox",
+      "!doc": "The widgets outermost node, used for sizing and positioning."
+     },
+     "contentBox": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_contentBox",
+      "!doc": "The direct descendant of a widgets\nbounding box and houses its content."
+     },
+     "cssClasses": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_cssClasses",
+      "!doc": "CSS classes used on TreeNode."
+     },
+     "draggable": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_draggable",
+      "!doc": "If true the TreeNode is draggable."
+     },
+     "ownerTree": {
+      "!type": "+TreeView",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_ownerTree",
+      "!doc": "TreeView which contains the current TreeNode."
+     },
+     "label": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_label",
+      "!doc": "Label of the TreeNode."
+     },
+     "expanded": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_expanded",
+      "!doc": "Whether the TreeNode is expanded by default."
+     },
+     "id": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_id",
+      "!doc": "Id of the TreeNode."
+     },
+     "leaf": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_leaf",
+      "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
+     },
+     "nextSibling": {
+      "!type": "+aui_tree.TreeNode",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_nextSibling",
+      "!doc": "Next sibling of the current TreeNode."
+     },
+     "prevSibling": {
+      "!type": "+aui_tree.TreeNode",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_prevSibling",
+      "!doc": "Previous sibling of the current TreeNode."
+     },
+     "parentNode": {
+      "!type": "+aui_tree.TreeNode",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_parentNode",
+      "!doc": "Parent node of the current TreeNode."
+     },
+     "labelEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_labelEl",
+      "!doc": "Label element to house the `label` attribute."
+     },
+     "hitAreaEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_hitAreaEl",
+      "!doc": "Hitarea element."
+     },
+     "alwaysShowHitArea": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_alwaysShowHitArea",
+      "!doc": "Always show the hitarea icon."
+     },
+     "iconEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_iconEl",
+      "!doc": "Icon element."
+     },
+     "tabIndex": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_tabIndex",
+      "!doc": "Specify the tab order."
+     },
+     "rendered": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_rendered",
+      "!doc": "If true the TreeNode is rendered."
+     }
+    },
+    "TreeNodeIOConfig": {
+     "loading": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_loading",
+      "!doc": "Whether the current TreeNode IO transaction is loading."
+     },
+     "loaded": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_loaded",
+      "!doc": "Whether the current TreeNode has loaded the content."
+     },
+     "cache": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_cache",
+      "!doc": "Whether the current TreeNode should cache the loaded content or not."
+     },
+     "leaf": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_leaf",
+      "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
+     }
+    },
+    "TreeNodeCheckConfig": {
+     "checked": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checked",
+      "!doc": "Whether the TreeNode is checked or not."
+     },
+     "checkName": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkName",
+      "!doc": "Name of the checkbox element used on the current TreeNode."
+     },
+     "checkContainerEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkContainerEl",
+      "!doc": "Container element for the checkbox."
+     },
+     "checkEl": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkEl",
+      "!doc": "Checkbox element."
+     }
+    },
+    "TreeNodeRadioConfig": {
+     "cssClasses": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#attribute_cssClasses",
+      "!doc": "CSS classes used on TreeNodeRadio."
+     }
+    },
+    "TreeViewPaginatorConfig": {
+     "paginator": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewPaginator.html#attribute_paginator",
+      "!doc": "Paginator."
+     }
+    },
+    "TreeViewConfig": {
+     "type": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_type",
+      "!doc": "Type of the treeview (i.e. could be file or normal)."
+     },
+     "lastSelected": {
+      "!type": "+aui_tree.TreeNode",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_lastSelected",
+      "!doc": "Last selected TreeNode."
+     },
+     "lazyLoad": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_lazyLoad",
+      "!doc": "Determine if its going to be lazy loaded or not."
+     },
+     "selectOnToggle": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_selectOnToggle",
+      "!doc": "Determine if its going to be selected on toggle."
+     }
+    },
+    "TreeViewDDConfig": {
+     "helper": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_helper",
+      "!doc": "Dragdrop helper element."
+     },
+     "scrollDelay": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_scrollDelay",
+      "!doc": "Delay of the scroll while dragging the TreeNodes."
+     },
+     "dropAction": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_dropAction",
+      "!doc": "Drop action (i.e. could be append, below or above)."
+     },
+     "lastY": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_lastY",
+      "!doc": "Last Y."
+     },
+     "node": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_node",
+      "!doc": "Node."
+     },
+     "nodeContent": {
+      "!type": "+node.Node",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_nodeContent",
+      "!doc": "Reference for the current drop node."
+     }
+    },
+    "VideoConfig": {
+     "url": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_url",
+      "!doc": "URL used by Video to play."
+     },
+     "ogvUrl": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_ogvUrl",
+      "!doc": "URL (on .ogv format) used by Video to play."
+     },
+     "swfUrl": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_swfUrl",
+      "!doc": "URL (on .swf format) used by Video to create\na fallback player with Flash."
+     },
+     "poster": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_poster",
+      "!doc": "Image displayed before playback starts."
+     },
+     "fixedAttributes": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_fixedAttributes",
+      "!doc": "An additional list of attributes."
+     },
+     "flashVars": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_flashVars",
+      "!doc": "Variables used by Flash player."
+     },
+     "render": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_render",
+      "!doc": "If `true` the render phase will be automatically invoked\npreventing the `.render()` manual call."
+     }
+    },
+    "WidgetCssClassConfig": {
+     "cssClass": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetCssClass.html#attribute_cssClass",
+      "!doc": "CSS class to be automatically added to the `boundingBox`."
+     }
+    },
+    "WidgetPositionAlignSuggestionConfig": {
+     "position": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetPositionAlignSuggestion.html#attribute_position",
+      "!doc": "Determine the position of the tooltip."
+     },
+     "alignNode": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetPositionAlignSuggestion.html#attribute_alignNode",
+      "!doc": "Suggest alignment for the node based on the `position` suggestion."
+     }
+    },
+    "WidgetToolbarsConfig": {
+     "toolbars": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetToolbars.html#attribute_toolbars",
+      "!doc": "Collection of `A.Toolbar` instances."
+     },
+     "toolbarPosition": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetToolbars.html#attribute_toolbarPosition",
+      "!doc": "Collection of toolbars header, body, and footer positions."
+     }
+    },
+    "WidgetTransitionConfig": {
+     "animated": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_animated",
+      "!doc": "Determine if the transitions will animate or not."
+     },
+     "delay": {
+      "!type": "+yui.Object",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_delay",
+      "!doc": "Determine the delay (in milliseconds) after widgets transition\nanimation. By default theres no delay."
+     },
+     "duration": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_duration",
+      "!doc": "Determine the duration of the transition."
+     },
+     "opacity": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_opacity",
+      "!doc": "Determine the opacity."
+     },
+     "stickDuration": {
+      "!type": "number",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_stickDuration",
+      "!doc": "Determine the duration (in milliseconds) for the widget to stick\nvisibility after the trigger element. By default the stick duration is\nnot specified."
+     }
+    },
+    "WidgetTriggerConfig": {
+     "bindDOMEvents": {
+      "!type": "bool",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_bindDOMEvents",
+      "!doc": "Determine if the Toggler should bind DOM events or not."
+     },
+     "trigger": {
+      "!type": "?",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_trigger",
+      "!doc": "Trigger node to change widget visibility state."
+     },
+     "triggerHideEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_triggerHideEvent",
+      "!doc": "DOM event to hide the tooltip."
+     },
+     "triggerShowEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_triggerShowEvent",
+      "!doc": "DOM event to show the tooltip."
+     },
+     "triggerToggleEvent": {
+      "!type": "string",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_triggerToggleEvent",
+      "!doc": "DOM event to toggle the tooltip."
+     }
+    }
+   }
+  },
   "_yui": {
    "aui_ace_editor": {
     "A": {
      "AceEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.AceEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/AceEditor.html",
       "prototype": {
        "!proto": "widget.Widget.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_height",
-        "!doc": "The height of ACE Editor."
-       },
-       "highlightActiveLine": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_highlightActiveLine",
-        "!doc": "Determine if the active line of code\nwill be highlighted or not."
-       },
-       "mode": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_mode",
-        "!doc": "Correspond to the language being typed."
-       },
-       "readOnly": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_readOnly",
-        "!doc": "Determine if the code will be\neditable or not."
-       },
-       "showPrintMargin": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_showPrintMargin",
-        "!doc": "Determine if print margin will\nbe visible or not."
-       },
-       "tabSize": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_tabSize",
-        "!doc": "The indentation size of tab key."
-       },
-       "useSoftTabs": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_useSoftTabs",
-        "!doc": "Determine if the tab key will act as\nspace characters or tab characters."
-       },
-       "useWrapMode": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_useWrapMode",
-        "!doc": "Determine if the line will break\nwhen it reaches the end of the line."
-       },
-       "value": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_value",
-        "!doc": "Some predefined value on the editor."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#attribute_width",
-        "!doc": "The width of ACE Editor."
-       },
        "getEditor": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#method_getEditor",
@@ -98,9 +3597,8 @@
         "!doc": "Insert content into the editor."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/AceEditor.html",
       "AutoCompleteBase": {
-       "!type": "fn(config: +yui.Object)",
+       "!type": "fn(config: +config.A.AceEditor.AutoCompleteBaseConfig)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html",
        "FILL_MODE_INSERT": {
         "!type": "?",
@@ -126,71 +3624,19 @@
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#property_ATTRS",
         "!doc": "Static property used to define the default attribute\nconfiguration for AutoCompleteBase."
-       },
-       "prototype": {
-        "fillMode": {
-         "!type": "number",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_fillMode",
-         "!doc": "The mode in which the AutoComplete should operate. Can be one of these:\nINSERT - value 0 or OVERWRITE - value 1. In case of INSERT mode, when\nEditor adds a suggestion, it will be added next to the matched\nexpression. In case of OVERWRITE mode, the suggestion will overwrite the\nmatched expression."
-        },
-        "filters": {
-         "!type": "+yui.Array",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_filters",
-         "!doc": "Provides an array of filter functions which will filter the results. By\ndefault there is one function which provides phrase match filtering."
-        },
-        "processor": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_processor",
-         "!doc": "The default processor which will be used to process matches."
-        },
-        "showListKey": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_showListKey",
-         "!doc": "The keyboard combination which should be used to show the list with found\nresults."
-        },
-        "sorters": {
-         "!type": "+yui.Array",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_sorters",
-         "!doc": "Provides an array of sorter functions which will sort the results. By\ndefault there is one function which sorts the results in ascending order."
-        }
        }
       },
       "AutoCompleteFreemarker": {
-       "!type": "fn(config: +yui.Object)",
+       "!type": "fn(config: +config.A.AceEditor.AutoCompleteFreemarkerConfig)",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html",
        "prototype": {
         "!proto": "aui_ace_editor.A.AceEditor.TemplateProcessor.prototype",
         "getMatch": {
          "!type": "fn(content: string) -> +yui.Object",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#method_getMatch",
          "!doc": "Checks if the provided content contains directive or variable."
-        },
-        "directives": {
-         "!type": "+yui.Array",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_directives",
-         "!doc": "Contains the list of supported directives according to Freemarker\nspecification."
-        },
-        "directivesMatcher": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_directivesMatcher",
-         "!doc": "Contains the regular expression which checks for directive\npresence."
-        },
-        "host": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_host",
-         "!doc": "The Editor in which the current instance is plugged."
-        },
-        "variables": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_variables",
-         "!doc": "Contains the supported variables."
-        },
-        "variablesMatcher": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_variablesMatcher",
-         "!doc": "Contains the regular expression which will check for variable\nmatch."
         }
        },
-       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html",
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#property_NAME",
@@ -208,41 +3654,11 @@
        }
       },
       "AutoCompleteList": {
-       "!type": "fn(config: +yui.Object)",
-       "prototype": {
-        "!proto": "overlay.Overlay.prototype",
-        "host": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_host",
-         "!doc": "The Editor in which the current instance is plugged."
-        },
-        "listNode": {
-         "!type": "+node.Node",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_listNode",
-         "!doc": "A Node in which results will be shown."
-        },
-        "loadingMessage": {
-         "!type": "string",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_loadingMessage",
-         "!doc": "A string, representing the loading message."
-        },
-        "results": {
-         "!type": "+yui.Array",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_results",
-         "!doc": "Contains the current set of results in the list."
-        },
-        "selectedEntry": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_selectedEntry",
-         "!doc": "Provides the currently selected entry."
-        },
-        "strings": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_strings",
-         "!doc": "Collection of strings used to label elements of the UI."
-        }
-       },
+       "!type": "fn(config: +config.A.AceEditor.AutoCompleteListConfig)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html",
+       "prototype": {
+        "!proto": "overlay.Overlay.prototype"
+       },
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#property_NAME",
@@ -270,7 +3686,8 @@
        }
       },
       "TemplateProcessor": {
-       "!type": "fn(config: +yui.Object)",
+       "!type": "fn(config: +config.A.AceEditor.TemplateProcessorConfig)",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html",
        "prototype": {
         "!proto": "base.Base.prototype",
         "getResults": {
@@ -282,24 +3699,8 @@
          "!type": "fn(match: +yui.Object, selectedSuggestion: string) -> string",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#method_getSuggestion",
          "!doc": "Formats the selected suggestion depending on the match type and\ncurrently selected editor mode. The match type can be one of:\nMATCH_DIRECTOVES or MATCH_VARIABLES. The selected editor mode can be\none of the following: INSERT or OVERWRITE. See {{#crossLink\n\"AceEditor.AutoCompleteBase/fillMode:attribute\"}}{{/crossLink}}"
-        },
-        "directives": {
-         "!type": "+yui.Array",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_directives",
-         "!doc": "Contains an array of all possible directives for the\ncorresponding language."
-        },
-        "host": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_host",
-         "!doc": "The Editor in which the current instance is plugged."
-        },
-        "variables": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_variables",
-         "!doc": "Contains the supported variables for the corresponding language."
         }
        },
-       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html",
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#property_NAME",
@@ -317,41 +3718,16 @@
        }
       },
       "AutoCompleteVelocity": {
-       "!type": "fn(config: +yui.Object)",
+       "!type": "fn(config: +config.A.AceEditor.AutoCompleteVelocityConfig)",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html",
        "prototype": {
         "!proto": "aui_ace_editor.A.AceEditor.TemplateProcessor.prototype",
         "getMatch": {
          "!type": "fn(content: string) -> +yui.Object",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#method_getMatch",
          "!doc": "Checks if the provided content contains directive or variable."
-        },
-        "directives": {
-         "!type": "+yui.Array",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_directives",
-         "!doc": "Contains the list of supported directives according to Velocity\nspecification."
-        },
-        "directivesMatcher": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_directivesMatcher",
-         "!doc": "Contains the regular expression which checks for directive."
-        },
-        "host": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_host",
-         "!doc": "The Editor in which the current instance is plugged."
-        },
-        "variables": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_variables",
-         "!doc": "Contains the supported variables."
-        },
-        "variablesMatcher": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_variablesMatcher",
-         "!doc": "Contains the regular expression which will check for variable\nmatch."
         }
        },
-       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html",
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#property_NAME",
@@ -395,39 +3771,10 @@
     "A": {
      "Plugin": {
       "Aria": {
-       "!type": "fn(config: +yui.Object)",
+       "!type": "fn(config: +config.A.Plugin.AriaConfig)",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html",
        "prototype": {
         "!proto": "plugin.Plugin.Base.prototype",
-        "attributes": {
-         "!type": "+yui.Object",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_attributes",
-         "!doc": "The ARIA attributes collection."
-        },
-        "attributeValueFormat": {
-         "!type": "fn()",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_attributeValueFormat",
-         "!doc": "The ARIA attribute value format."
-        },
-        "attributeNode": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_attributeNode",
-         "!doc": "Node container for the ARIA attribute."
-        },
-        "roleName": {
-         "!type": "string",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_roleName",
-         "!doc": "The ARIA role name."
-        },
-        "roleNode": {
-         "!type": "?",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_roleNode",
-         "!doc": "Node container for the ARIA role."
-        },
-        "validateW3C": {
-         "!type": "bool",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#attribute_validateW3C",
-         "!doc": "Checks if the attribute is valid with W3C rules."
-        },
         "isValidAttribute": {
          "!type": "fn(attrName: ?) -> bool",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#method_isValidAttribute",
@@ -459,7 +3806,6 @@
          "!doc": "Set a list of ARIA roles."
         }
        },
-       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html",
        "W3C_ATTRIBUTES": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#property_W3C_ATTRIBUTES",
@@ -517,54 +3863,10 @@
    "aui_audio": {
     "A": {
      "Audio": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.AudioConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "url": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_url",
-        "!doc": "URL used by Audio to play."
-       },
-       "oggUrl": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_oggUrl",
-        "!doc": "URL (on .ogg format) used by Audio to play."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_type",
-        "!doc": "The type of audio."
-       },
-       "swfWidth": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_swfWidth",
-        "!doc": "The width of Audios fallback using Flash."
-       },
-       "swfHeight": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_swfHeight",
-        "!doc": "The height of Audios fallback using Flash."
-       },
-       "swfUrl": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_swfUrl",
-        "!doc": "URL (on .swf format) used by Audio to create\na fallback player with Flash."
-       },
-       "fixedAttributes": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_fixedAttributes",
-        "!doc": "An additional list of attributes."
-       },
-       "flashVars": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_flashVars",
-        "!doc": "Variables used by Flash player."
-       },
-       "render": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#attribute_render",
-        "!doc": "If `true` the render phase will be automatically invoked\npreventing the `.render()` manual call."
-       },
        "load": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#method_load",
@@ -581,7 +3883,6 @@
         "!doc": "Play audio track."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Audio.html#property_NAME",
@@ -608,24 +3909,10 @@
    "aui_autosize_iframe": {
     "A": {
      "AutosizeIframe": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.AutosizeIframeConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html",
       "prototype": {
        "!proto": "plugin.Plugin.Base.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#attribute_height",
-        "!doc": "The height of the iframe."
-       },
-       "monitorHeight": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#attribute_monitorHeight",
-        "!doc": "Indicates if the height should be monitored."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#attribute_width",
-        "!doc": "The width of the iframe."
-       },
        "pauseMonitor": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#method_pauseMonitor",
@@ -642,7 +3929,6 @@
         "!doc": "Returns the content height of a window."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AutosizeIframe.html#property_NAME",
@@ -669,44 +3955,12 @@
    "aui_button": {
     "A": {
      "ButtonExt": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ButtonExtConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#property_ATTRS",
        "!doc": "Defines the default attribute configuration for the `ButtonExt`."
-      },
-      "prototype": {
-       "domType": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_domType",
-        "!doc": "Defines the HTML type attribute of element e.g. `<input type=\"button\">`."
-       },
-       "icon": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_icon",
-        "!doc": "Contains a CSS class of the icon to use. A list of icons can be found\n[here](http://liferay.github.io/alloy-bootstrap/base-css.html#icons)."
-       },
-       "iconElement": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_iconElement",
-        "!doc": "Defines markup template for icon, passed in as a node e.g.\n`Y.Node.create(<i></i>)`."
-       },
-       "iconAlign": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_iconAlign",
-        "!doc": "Sets position of icon."
-       },
-       "primary": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#attribute_primary",
-        "!doc": "Sets button style to primary."
-       },
-       "syncButtonExtUI": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#method_syncButtonExtUI",
-        "!doc": "Updates icon image, icon alignment, and primary button style."
-       }
       },
       "HTML_PARSER": {
        "!type": "+yui.Object",
@@ -717,6 +3971,13 @@
        "!type": "fn(template: string, type: string) -> string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#method_getTypedButtonTemplate",
        "!doc": "Updates the HTML markup specified as the `template` argument with the\npassed `type`."
+      },
+      "prototype": {
+       "syncButtonExtUI": {
+        "!type": "fn()",
+        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonExt.html#method_syncButtonExtUI",
+        "!doc": "Updates icon image, icon alignment, and primary button style."
+       }
       }
      },
      "ButtonCore": {
@@ -730,6 +3991,7 @@
      },
      "Button": {
       "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Button.html",
       "prototype": {
        "!proto": "button.Button.prototype",
        "getWidgetLazyConstructorFromNodeData": {
@@ -743,7 +4005,7 @@
         "!doc": "Returns a boolean, true if node has widget constructor data."
        },
        "setWidgetLazyConstructorNodeData": {
-        "!type": "fn(node: +node.Node, config: +yui.Object)",
+        "!type": "fn(node: +node.Node, config: +config.setWidgetLazyConstructorNodeDataConfig)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Button.html#method_setWidgetLazyConstructorNodeData",
         "!doc": "Updates nodes widget constructor data attribute with config."
        },
@@ -753,7 +4015,6 @@
         "!doc": "Updates icon alignment in button."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Button.html",
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Button.html#property_CSS_PREFIX",
@@ -787,7 +4048,8 @@
       }
      },
      "ButtonSearchCancel": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ButtonSearchCancelConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html",
       "prototype": {
        "!proto": "base.Base.prototype",
        "initializer": {
@@ -804,34 +4066,8 @@
         "!type": "fn(element: +node.Node) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#method_getButtonForElement",
         "!doc": "Delegates events on the UI. Lifecycle."
-       },
-       "container": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_container",
-        "!doc": "Defines the event delegation container of `ButtonSearchCancel`\ninstance."
-       },
-       "gutter": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_gutter",
-        "!doc": "Defines the space surrounding the cancel icon rendered on the input.\nUseful when the user needs a different alignment. Gutter values are\nadded to the X and Y alignment values of the button search cancel."
-       },
-       "iconClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_iconClass",
-        "!doc": "Icon CSS class to be used on the search cancel button."
-       },
-       "trigger": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_trigger",
-        "!doc": "Defines the CSS selector for the input elements the button search\ncancel renders. Supports single or multiple node selector."
-       },
-       "zIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#attribute_zIndex",
-        "!doc": "Defines the z-index of the button search cancel."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ButtonSearchCancel.html#property_ATTRS",
@@ -843,44 +4079,10 @@
    "aui_carousel": {
     "A": {
      "Carousel": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.CarouselConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "activeIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_activeIndex",
-        "!doc": "Index of the first visible item of the carousel."
-       },
-       "animationTime": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_animationTime",
-        "!doc": "Duration of the animation in seconds when change index on\nCarousel."
-       },
-       "intervalTime": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_intervalTime",
-        "!doc": "Interval time in seconds between an item transition."
-       },
-       "itemSelector": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_itemSelector",
-        "!doc": "CSS Selector whitch determines the items to be loaded to the\nCarousel."
-       },
-       "nodeMenu": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_nodeMenu",
-        "!doc": "Node container of the navigation items."
-       },
-       "nodeMenuItemSelector": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_nodeMenuItemSelector",
-        "!doc": "CSS selector to match the navigation items."
-       },
-       "playing": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#attribute_playing",
-        "!doc": "Attributes that determines the status of transitions between\nitems."
-       },
        "item": {
         "!type": "fn(val: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#method_item",
@@ -907,7 +4109,6 @@
         "!doc": "Go to previous index."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Carousel.html#property_NAME",
@@ -924,31 +4125,16 @@
    "aui_char_counter": {
     "A": {
      "CharCounter": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.CharCounterConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "counter": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#attribute_counter",
-        "!doc": "Node or Selector to display the information of the counter."
-       },
-       "maxLength": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#attribute_maxLength",
-        "!doc": "Max number of characters the [input](A.CharCounter.html#attr_input)\ncan have."
-       },
-       "input": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#attribute_input",
-        "!doc": "Node or Selector for the input field. Required."
-       },
        "checkLength": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#method_checkLength",
         "!doc": "Check the current value of the\n[input](A.CharCounter.html#attr_input), truncate the data if needed,\nand re-sync the UI. Fired from\n[_onInputChange](A.CharCounter.html#method__onInputChange)."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CharCounter.html#property_NAME",
@@ -970,7 +4156,8 @@
    "aui_collection": {
     "A": {
      "LinkedSet": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.LinkedSetConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.LinkedSet.html",
       "prototype": {
        "!proto": "A.Set.prototype",
        "values": {
@@ -978,11 +4165,11 @@
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.LinkedSet.html#method_values",
         "!doc": "Gets a list view of the values contained in this linked set."
        }
-      },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.LinkedSet.html"
+      }
      },
      "HashMap": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.HashMapConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html",
       "prototype": {
        "!proto": "base.Base.prototype",
        "clear": {
@@ -1040,11 +4227,11 @@
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_values",
         "!doc": "Returns a collection of the values contained in this map."
        }
-      },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html"
+      }
      },
      "HashSet": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.HashSetConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html",
       "prototype": {
        "!proto": "base.Base.prototype",
        "add": {
@@ -1082,24 +4269,18 @@
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_values",
         "!doc": "Get the keys of the map."
        }
-      },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html"
+      }
      }
     }
    },
    "aui_color_picker": {
     "A": {
      "ColorPalette": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "widget.Widget.prototype",
-       "items": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#attribute_items",
-        "!doc": "Colors available to the `ColorPalette`."
-       }
-      },
+      "!type": "fn(config: +config.A.ColorPaletteConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html",
+      "prototype": {
+       "!proto": "widget.Widget.prototype"
+      },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#property_CSS_PREFIX",
@@ -1117,73 +4298,13 @@
       }
      },
      "ColorPickerBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ColorPickerBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html",
       "prototype": {
        "reset": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#method_reset",
         "!doc": "Resets the `ColorPickerBase` to its default state."
-       },
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_bodyContent",
-        "!doc": "The content of body."
-       },
-       "color": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_color",
-        "!doc": "Currently selected color."
-       },
-       "colorPalette": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_colorPalette",
-        "!doc": "Default colors available to the color palette."
-       },
-       "currentTrigger": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_currentTrigger",
-        "!doc": "Current `trigger` node."
-       },
-       "defaultColor": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_defaultColor",
-        "!doc": "Provides the default color used for the `recentColors` palette."
-       },
-       "hsvPalette": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_hsvPalette",
-        "!doc": "`HSVPalette` used for selecting custom colors not present in\n`defualtColors`."
-       },
-       "recentColors": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_recentColors",
-        "!doc": "Colors that have been selected recently from the `HSVPalette`."
-       },
-       "renderColorPalette": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_renderColorPalette",
-        "!doc": "Determines if the color palette is rendered on load."
-       },
-       "renderHSVPalette": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_renderHSVPalette",
-        "!doc": "Determines if the `HSVPalette` is rendered on load."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "trigger": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_trigger",
-        "!doc": "Trigger node that opens the color palette."
-       },
-       "triggerEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_triggerEvent",
-        "!doc": "Trigger event that fires on `trigger` click."
        }
       },
       "ATTRS": {
@@ -1203,21 +4324,11 @@
       }
      },
      "ColorPickerPopover": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_popover.A.Popover.prototype",
-       "align": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#attribute_align",
-        "!doc": "The alignment configuration for `ColorPickerPopover`."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#attribute_visible",
-        "!doc": "Determines if `ColorPickerPopover` is visible or not."
-       }
-      },
+      "!type": "fn(config: +config.A.ColorPickerPopoverConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html",
+      "prototype": {
+       "!proto": "aui_popover.A.Popover.prototype"
+      },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#property_ATTRS",
@@ -1235,31 +4346,11 @@
       }
      },
      "HSVPalette": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "widget.Widget.prototype",
-       "controls": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_controls",
-        "!doc": "Determines if HSVA and RGB input `controls` are visible."
-       },
-       "fieldValidator": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_fieldValidator",
-        "!doc": "Collection of regular expressions used to validate field values."
-       },
-       "selected": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_selected",
-        "!doc": "Currently `selected` color value."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       }
-      },
+      "!type": "fn(config: +config.A.HSVPaletteConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html",
+      "prototype": {
+       "!proto": "widget.Widget.prototype"
+      },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#property_CSS_PREFIX",
@@ -1282,21 +4373,11 @@
       }
      },
      "HSVAPaletteModal": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_modal.A.Modal.prototype",
-       "hsv": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#attribute_hsv",
-        "!doc": "Configuration options for the `HSVPalette`."
-       },
-       "selected": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#attribute_selected",
-        "!doc": "Currently `selected` color value."
-       }
-      },
+      "!type": "fn(config: +config.A.HSVAPaletteModalConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html",
+      "prototype": {
+       "!proto": "aui_modal.A.Modal.prototype"
+      },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#property_ATTRS",
@@ -1319,11 +4400,11 @@
       }
      },
      "HSVAPalette": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.HSVAPaletteConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPalette.html",
       "prototype": {
        "!proto": "aui_color_picker.A.HSVPalette.prototype"
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPalette.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPalette.html#property_NAME",
@@ -1340,28 +4421,14 @@
    "aui_component": {
     "A": {
      "Component": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ComponentConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html",
       "prototype": {
        "!proto": "widget.Widget.prototype",
        "clone": {
-        "!type": "fn(config: +yui.Object) -> +widget.Widget",
+        "!type": "fn(config: +config.cloneConfig) -> +widget.Widget",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#method_clone",
         "!doc": "Clone the current `A.Component`."
-       },
-       "useARIA": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#attribute_useARIA",
-        "!doc": "Indicates if use of the WAI-ARIA Roles and States should be enabled\nfor the Widget."
-       },
-       "hideClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#attribute_hideClass",
-        "!doc": "CSS class added to hide the `boundingBox` when\n[visible](A.Component.html#attr_visible) is set to `false`."
-       },
-       "render": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#attribute_render",
-        "!doc": "If `true` the render phase will be autimatically invoked preventing\nthe `.render()` manual call."
        },
        "getById": {
         "!type": "fn(id: ?)",
@@ -1379,7 +4446,6 @@
         "!doc": "Applies extensions to a class using the static `Base.build` method."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html#property_ATTRS",
@@ -1402,12 +4468,12 @@
     "A": {
      "DataTable": {
       "!type": "fn()",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/DataTable.html",
       "prototype": {
        "!proto": "datatable.DataTable.Base.prototype"
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/DataTable.html",
       "CellEditorSupport": {
-       "!type": "fn(config: +yui.Object)",
+       "!type": "fn(config: +config.A.DataTable.CellEditorSupportConfig)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html",
        "NAME": {
         "!type": "string",
@@ -1425,11 +4491,6 @@
         "!doc": "Static property used to define the default attribute\nconfiguration for the CellEditorSupport."
        },
        "prototype": {
-        "editEvent": {
-         "!type": "string",
-         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#attribute_editEvent",
-         "!doc": "TODO. Wanna help? Please send a Pull Request."
-        },
         "getEditor": {
          "!type": "fn(record: ?, column: ?)",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#method_getEditor",
@@ -1449,79 +4510,10 @@
       }
      },
      "BaseCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.BaseCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html",
       "prototype": {
        "!proto": "overlay.Overlay.prototype",
-       "editable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_editable",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "elementName": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_elementName",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "footerContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_footerContent",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "hideOnSave": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_hideOnSave",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "inputFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_inputFormatter",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "outputFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_outputFormatter",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "showToolbar": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_showToolbar",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "tabIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_tabIndex",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "toolbar": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_toolbar",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "unescapeValue": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_unescapeValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "validator": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_validator",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "value": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_value",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_visible",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
        "formatValue": {
         "!type": "fn(formatter: ?, val: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#method_formatValue",
@@ -1538,7 +4530,6 @@
         "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nNOTE FOR DEVELOPERS: Yoy *may* want to replace the methods from\nthis section on your implementation."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#property_NAME",
@@ -1561,34 +4552,10 @@
       }
      },
      "BaseOptionsCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.BaseOptionsCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.BaseCellEditor.prototype",
-       "inputFormatter": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_inputFormatter",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "options": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_options",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "outputFormatter": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_outputFormatter",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "selectedAttrName": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_selectedAttrName",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
        "addNewOption": {
         "!type": "fn(name: ?, value: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#method_addNewOption",
@@ -1610,7 +4577,6 @@
         "!doc": "TODO. Wanna help? Please send a Pull Request."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#property_NAME",
@@ -1633,11 +4599,11 @@
       }
      },
      "TextCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TextCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.BaseCellEditor.prototype"
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextCellEditor.html#property_NAME",
@@ -1650,11 +4616,11 @@
       }
      },
      "TextAreaCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TextAreaCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextAreaCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.BaseCellEditor.prototype"
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextAreaCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextAreaCellEditor.html#property_NAME",
@@ -1667,21 +4633,16 @@
       }
      },
      "DropDownCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DropDownCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.BaseOptionsCellEditor.prototype",
-       "multiple": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#attribute_multiple",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#method_getElementsValue",
         "!doc": "TODO. Wanna help? Please send a Pull Request."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#property_NAME",
@@ -1704,21 +4665,16 @@
       }
      },
      "CheckboxCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.CheckboxCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.BaseOptionsCellEditor.prototype",
-       "selectedAttrName": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#attribute_selectedAttrName",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#method_getElementsValue",
         "!doc": "TODO. Wanna help? Please send a Pull Request."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#property_NAME",
@@ -1736,7 +4692,8 @@
       }
      },
      "RadioCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.RadioCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.RadioCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.CheckboxCellEditor.prototype",
        "getElementsValue": {
@@ -1745,7 +4702,6 @@
         "!doc": "TODO. Wanna help? Please send a Pull Request."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.RadioCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.RadioCellEditor.html#property_NAME",
@@ -1758,34 +4714,10 @@
       }
      },
      "DateCellEditor": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DateCellEditorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html",
       "prototype": {
        "!proto": "aui_datatable.A.BaseCellEditor.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_bodyContent",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "calendar": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_calendar",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "dateFormat": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_dateFormat",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "inputFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_inputFormatter",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "outputFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_outputFormatter",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#method_getElementsValue",
@@ -1797,7 +4729,6 @@
         "!doc": "TODO. Wanna help? Please send a Pull Request."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#property_NAME",
@@ -1815,7 +4746,8 @@
       }
      },
      "DataTableHighlight": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DataTableHighlightConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html",
       "prototype": {
        "!proto": "plugin.Plugin.Base.prototype",
        "clear": {
@@ -1832,39 +4764,8 @@
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#method_getSelectionRegion",
         "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "activeBorderWidth": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_activeBorderWidth",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "overlayActiveNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_overlayActiveNode",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "overlayNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_overlayNode",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "highlightRange": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_highlightRange",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "rangeBorderWidth": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_rangeBorderWidth",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "type": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_type",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html",
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#property_NS",
@@ -1882,41 +4783,16 @@
       }
      },
      "PropertyList": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.PropertyListConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html",
       "prototype": {
        "!proto": "datatable.DataTable.prototype",
        "getDefaultEditor": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#method_getDefaultEditor",
         "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "columns": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_columns",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "scrollable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_scrollable",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "editEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_editEvent",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "width": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_width",
-        "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nDataTable scroll breaks when width value is a number\nSee http://yuilibrary.com/projects/yui3/ticket/2532600"
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_strings",
-        "!doc": "Colection of strings used to label elements of the UI."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html",
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#property_CSS_PREFIX",
@@ -1929,7 +4805,7 @@
       }
      },
      "DataTableSelection": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DataTableSelectionConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html",
       "ATTRS": {
        "!type": "+yui.Object",
@@ -1937,31 +4813,6 @@
        "!doc": "Static property used to define the default attribute\nconfiguration for the DataTableSelection."
       },
       "prototype": {
-       "activeCell": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeCell",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "activeCoord": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeCoord",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "activeRow": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeRow",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "selection": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_selection",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
-       "tabIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_tabIndex",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       },
        "captureSelection": {
         "!type": "fn(coords: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_captureSelection",
@@ -2374,7 +5225,7 @@
    "aui_datepicker": {
     "A": {
      "DatePickerDelegate": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DatePickerDelegateConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html",
       "prototype": {
        "getSelectedDates": {
@@ -2396,41 +5247,6 @@
         "!type": "fn(node: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#method_useInputNodeOnce",
         "!doc": "Triggers `useInputNode` method once."
-       },
-       "activeInput": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_activeInput",
-        "!doc": "The active input element that holds the calendar instance."
-       },
-       "container": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_container",
-        "!doc": "Contains an element."
-       },
-       "dateSeparator": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_dateSeparator",
-        "!doc": "Character that separate dates."
-       },
-       "mask": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_mask",
-        "!doc": "Defines the date format."
-       },
-       "trigger": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_trigger",
-        "!doc": "Stores a trigger."
-       },
-       "valueExtractor": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_valueExtractor",
-        "!doc": "Extracts a value from a function."
-       },
-       "valueFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_valueFormatter",
-        "!doc": "Formats a value from a function."
        }
       },
       "ATTRS": {
@@ -2440,7 +5256,7 @@
       }
      },
      "DatePickerNativeBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DatePickerNativeBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html",
       "ATTRS": {
        "!type": "+yui.Object",
@@ -2448,16 +5264,6 @@
        "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerNativeBase`."
       },
       "prototype": {
-       "nativeMask": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#attribute_nativeMask",
-        "!doc": "Defines the native date mask."
-       },
-       "nativeType": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#attribute_nativeType",
-        "!doc": "Defines the type attribute in an HTML element."
-       },
        "bindNativeUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_bindNativeUI",
@@ -2496,7 +5302,7 @@
       }
      },
      "DatePickerPopover": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DatePickerPopoverConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html",
       "ATTRS": {
        "!type": "+yui.Object",
@@ -2504,21 +5310,6 @@
        "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerPopover`."
       },
       "prototype": {
-       "autoHide": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_autoHide",
-        "!doc": "Sets the initial visibility."
-       },
-       "popover": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_popover",
-        "!doc": "Stores the configuration of the `Popover` instance."
-       },
-       "popoverCssClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_popoverCssClass",
-        "!doc": "Defines the CSS classname of the `Popover`."
-       },
        "alignTo": {
         "!type": "fn(node: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#method_alignTo",
@@ -2542,7 +5333,7 @@
       }
      },
      "DatePickerBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DatePickerBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html",
       "PANES": {
        "!type": "+yui.Array",
@@ -2555,21 +5346,6 @@
        "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerBase`."
       },
       "prototype": {
-       "calendar": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#attribute_calendar",
-        "!doc": "Stores the configuration of the `Calendar` instance."
-       },
-       "autoHide": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#attribute_autoHide",
-        "!doc": "Sets the initial visibility."
-       },
-       "panes": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#attribute_panes",
-        "!doc": "Defines how many panes should be rendered."
-       },
        "clearSelection": {
         "!type": "fn(silent: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerBase.html#method_clearSelection",
@@ -2602,41 +5378,11 @@
    "aui_diagram_builder": {
     "A": {
      "AvailableField": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "base.Base.prototype",
-       "draggable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_draggable",
-        "!doc": "Defines if the field is draggable or not."
-       },
-       "label": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_label",
-        "!doc": "The descriptor of a field."
-       },
-       "iconClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_iconClass",
-        "!doc": "The CSS class name used in the icon."
-       },
-       "id": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_id",
-        "!doc": "The identifier of a field."
-       },
-       "node": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_node",
-        "!doc": "The node used in a field."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_type",
-        "!doc": "The type of a field."
-       }
-      },
+      "!type": "fn(config: +config.A.AvailableFieldConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html",
+      "prototype": {
+       "!proto": "base.Base.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#property_NAME",
@@ -2662,16 +5408,6 @@
        "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FieldSupport`."
       },
       "prototype": {
-       "fields": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#attribute_fields",
-        "!doc": "The collection of fields."
-       },
-       "maxFields": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#attribute_maxFields",
-        "!doc": "Defines the maximum number of fields."
-       },
        "addField": {
         "!type": "fn(field: ?, index: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#method_addField",
@@ -2695,69 +5431,10 @@
       }
      },
      "DiagramBuilderBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramBuilderBaseConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "availableFields": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_availableFields",
-        "!doc": "List of available fields."
-       },
-       "availableFieldsDragConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_availableFieldsDragConfig",
-        "!doc": "The configuration object for draggable available fields."
-       },
-       "canvas": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_canvas",
-        "!doc": "A node created using the `CANVAS_TEMPLATE` template."
-       },
-       "dropConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_dropConfig",
-        "!doc": "The configuration object for drop container node."
-       },
-       "contentContainer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_contentContainer",
-        "!doc": "Host node for content created using the `CONTENT_CONTAINER_TEMPLATE`\ntemplate."
-       },
-       "dropContainer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_dropContainer",
-        "!doc": "Host node for drop created using the `DROP_CONTAINER_TEMPLATE`\ntemplate."
-       },
-       "fieldsContainer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_fieldsContainer",
-        "!doc": "Host node for fields created using the `FIELDS_CONTAINER_TEMPLATE`\ntemplate."
-       },
-       "propertyList": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_propertyList",
-        "!doc": "Stores an instance of `A.PropertyList`."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "tabView": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_tabView",
-        "!doc": "Stores an instance of `A.TabView`."
-       },
-       "toolbar": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_toolbar",
-        "!doc": "Stores an instance of `A.Toolbar`."
-       },
-       "toolbarContainer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_toolbarContainer",
-        "!doc": "Host node for toolbar created using the `TOOLBAR_CONTAINER_TEMPLATE`\ntemplate."
-       },
        "isAvailableFieldsDrag": {
         "!type": "fn(drag: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#method_isAvailableFieldsDrag",
@@ -2769,7 +5446,6 @@
         "!doc": "Plots a collection of fields."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#property_NAME",
@@ -2797,7 +5473,8 @@
       }
      },
      "Connector": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ConnectorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html",
       "prototype": {
        "!proto": "base.Base.prototype",
        "draw": {
@@ -2830,113 +5507,12 @@
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_show",
         "!doc": "Sets the visibility to `true`."
        },
-       "coord": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_coord",
-        "!doc": "Converts a coordinate to X and Y positions."
-       },
        "toJSON": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_toJSON",
         "!doc": "Converts serializable attributes to JSON format."
-       },
-       "arrowPoints": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_arrowPoints",
-        "!doc": "Arrow points from `A.PolygonUtil` instance."
-       },
-       "builder": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_builder",
-        "!doc": "Stores an instance of `A.DiagramBuilder`."
-       },
-       "color": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_color",
-        "!doc": "The color used in the connector."
-       },
-       "graphic": {
-        "!type": "+graphics.Graphic",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_graphic",
-        "!doc": "Graphic used to represent the connector."
-       },
-       "lazyDraw": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_lazyDraw",
-        "!doc": "Determine if the draw should be delayed or not."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_name",
-        "!doc": "The name of the connector."
-       },
-       "nodeName": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_nodeName",
-        "!doc": "The connector node name."
-       },
-       "p1": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_p1",
-        "!doc": "Origin connector position."
-       },
-       "p2": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_p2",
-        "!doc": "Destination connector position."
-       },
-       "selected": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_selected",
-        "!doc": "Checks if a connector is selected or not."
-       },
-       "shape": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shape",
-        "!doc": "Graphic used to represent the connectors shape."
-       },
-       "shapeArrow": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrow",
-        "!doc": "Graphic used to represent the connectors shape arrow."
-       },
-       "shapeArrowHover": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrowHover",
-        "!doc": "Collection of styles applied when mouse is over the shape arrow."
-       },
-       "shapeArrowSelected": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrowSelected",
-        "!doc": "Collection of styles applied when shape arrow is selected."
-       },
-       "shapeHover": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeHover",
-        "!doc": "Collection of styles applied when mouse is over the shape."
-       },
-       "shapeSelected": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeSelected",
-        "!doc": "Collection of styles applied when shape is selected."
-       },
-       "showName": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_showName",
-        "!doc": "Sets the visibility of the connector name."
-       },
-       "transition": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_transition",
-        "!doc": "Stores the uid, source and target data from a connector."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_visible",
-        "!doc": "Indicates whether or not the connector is visible."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#property_ATTRS",
@@ -2949,44 +5525,10 @@
       }
      },
      "DiagramBuilder": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramBuilderConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html",
       "prototype": {
        "!proto": "aui_diagram_builder.A.DiagramBuilderBase.prototype",
-       "connector": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_connector",
-        "!doc": "Stores an instance of `A.Connector`."
-       },
-       "fieldsDragConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_fieldsDragConfig",
-        "!doc": "Configuration object for draggable fields."
-       },
-       "graphic": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_graphic",
-        "!doc": "Stores an instance of `A.Graphic`."
-       },
-       "highlightDropZones": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_highlightDropZones",
-        "!doc": "Checks if the drop zones should be highlighted or not."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "showSuggestConnector": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_showSuggestConnector",
-        "!doc": "Checks if a connector suggestion is visible or not."
-       },
-       "suggestConnectorOverlay": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_suggestConnectorOverlay",
-        "!doc": "Stores an instance of `A.Overlay` used in the connector suggestion."
-       },
        "syncConnectionsUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_syncConnectionsUI",
@@ -3113,7 +5655,6 @@
         "!doc": "Clears nodes selection."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#property_NAME",
@@ -3141,11 +5682,11 @@
       }
      },
      "DiagramNodeManagerBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramNodeManagerBaseConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeManagerBase.html",
       "prototype": {
        "!proto": "base.Base.prototype"
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeManagerBase.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeManagerBase.html#property_NAME",
@@ -3158,104 +5699,10 @@
       }
      },
      "DiagramNode": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramNodeConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html",
       "prototype": {
        "!proto": "overlay.Overlay.prototype",
-       "builder": {
-        "!type": "+DiagramBuilder",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_builder",
-        "!doc": "Stores an instance of `A.DiagramBuilderBase`."
-       },
-       "connectors": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_connectors",
-        "!doc": "A map of connectors."
-       },
-       "controlsToolbar": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_controlsToolbar",
-        "!doc": "A toolbar to represent controls."
-       },
-       "description": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_description",
-        "!doc": "The description of the node."
-       },
-       "graphic": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_graphic",
-        "!doc": "Stores an instance of `A.Graphic`."
-       },
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_height",
-        "!doc": "The height of the node."
-       },
-       "highlighted": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_highlighted",
-        "!doc": "Checks if a node is highlighted or not."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_name",
-        "!doc": "The name of the node."
-       },
-       "required": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_required",
-        "!doc": "Checks if a node is required or not."
-       },
-       "selected": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_selected",
-        "!doc": "Checks if a node is selected or not."
-       },
-       "shapeBoundary": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_shapeBoundary",
-        "!doc": "A graphic shape to represent a boundary."
-       },
-       "highlightBoundaryStroke": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_highlightBoundaryStroke",
-        "!doc": "Represents a stroke to highlight a boundary."
-       },
-       "shapeInvite": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_shapeInvite",
-        "!doc": "Configuration object to generate the shape invite graphic."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "tabIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_tabIndex",
-        "!doc": "Specify the tab order of elements."
-       },
-       "transitions": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_transitions",
-        "!doc": "Map of transitions that stores the uid, source and target data from\nconnectors."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_type",
-        "!doc": "The type of the node."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_width",
-        "!doc": "The width of the node."
-       },
-       "zIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_zIndex",
-        "!doc": "Specify the stack order of elements."
-       },
        "addTransition": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_addTransition",
@@ -3387,7 +5834,6 @@
         "!doc": "Syncs the connections in the UI."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_NAME",
@@ -3425,31 +5871,16 @@
       }
      },
      "DiagramNodeState": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramNodeStateConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html",
       "prototype": {
        "!proto": "aui_diagram_builder.A.DiagramNode.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_height",
-        "!doc": "The height of the node."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_type",
-        "!doc": "The type of the node."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_width",
-        "!doc": "The width of the node."
-       },
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#method_renderShapeBoundary",
         "!doc": "Renders the shape boundary."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#property_NAME",
@@ -3467,31 +5898,16 @@
       }
      },
      "DiagramNodeCondition": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramNodeConditionConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html",
       "prototype": {
        "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_height",
-        "!doc": "The height of the node."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_type",
-        "!doc": "The type of the node."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_width",
-        "!doc": "The width of the node."
-       },
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#method_renderShapeBoundary",
         "!doc": "Renders the shape boundary."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#property_NAME",
@@ -3509,16 +5925,11 @@
       }
      },
      "DiagramNodeStart": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype",
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#attribute_type",
-        "!doc": "The type of the node."
-       }
-      },
+      "!type": "fn(config: +config.A.DiagramNodeStartConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html",
+      "prototype": {
+       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#property_NAME",
@@ -3536,16 +5947,11 @@
       }
      },
      "DiagramNodeEnd": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype",
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#attribute_type",
-        "!doc": "The type of the node."
-       }
-      },
+      "!type": "fn(config: +config.A.DiagramNodeEndConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html",
+      "prototype": {
+       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#property_NAME",
@@ -3563,26 +5969,11 @@
       }
      },
      "DiagramNodeJoin": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_height",
-        "!doc": "The height of the node."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_type",
-        "!doc": "The type of the node."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_width",
-        "!doc": "The width of the node."
-       }
-      },
+      "!type": "fn(config: +config.A.DiagramNodeJoinConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html",
+      "prototype": {
+       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#property_NAME",
@@ -3600,26 +5991,11 @@
       }
      },
      "DiagramNodeFork": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_height",
-        "!doc": "The height of the node."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_type",
-        "!doc": "The type of the node."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_width",
-        "!doc": "The width of the node."
-       }
-      },
+      "!type": "fn(config: +config.A.DiagramNodeForkConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html",
+      "prototype": {
+       "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#property_NAME",
@@ -3637,31 +6013,16 @@
       }
      },
      "DiagramNodeTask": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.DiagramNodeTaskConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html",
       "prototype": {
        "!proto": "aui_diagram_builder.A.DiagramNodeState.prototype",
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_height",
-        "!doc": "The height of the node."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_type",
-        "!doc": "The type of the node."
-       },
-       "width": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_width",
-        "!doc": "The width of the node."
-       },
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#method_renderShapeBoundary",
         "!doc": "Renders the shape boundary."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#property_NAME",
@@ -3683,7 +6044,8 @@
    "aui_form_builder": {
     "A": {
      "FormBuilderAvailableField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderAvailableFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html",
       "prototype": {
        "!proto": "aui_diagram_builder.A.AvailableField.prototype",
        "hasModifier": {
@@ -3740,59 +6102,8 @@
         "!type": "fn(node: ?, subscription: ?, notifier: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_on",
         "!doc": "Implementation logic for event subscription."
-       },
-       "hiddenAttributes": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_hiddenAttributes",
-        "!doc": "List of hidden attributes."
-       },
-       "name": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_name",
-        "!doc": "The name of the input field."
-       },
-       "options": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_options",
-        "!doc": "Collection of options."
-       },
-       "predefinedValue": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_predefinedValue",
-        "!doc": "Specifies a predefined value for the input field."
-       },
-       "readOnlyAttributes": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_readOnlyAttributes",
-        "!doc": "List of read-only input fields."
-       },
-       "required": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_required",
-        "!doc": "Checks if an input field is required. In other words, it needs\ncontent to be valid."
-       },
-       "showLabel": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_showLabel",
-        "!doc": "If `true` the label is showed."
-       },
-       "tip": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_tip",
-        "!doc": "Hint to help the user to fill the input field."
-       },
-       "unique": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_unique",
-        "!doc": "Checks if the input field is unique or not."
-       },
-       "width": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_width",
-        "!doc": "The width of the input field."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#property_NAME",
@@ -3810,29 +6121,10 @@
       }
      },
      "FormBuilder": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html",
       "prototype": {
        "!proto": "aui_diagram_builder.A.DiagramBuilderBase.prototype",
-       "allowRemoveRequiredFields": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_allowRemoveRequiredFields",
-        "!doc": "Checks if removing required fields is permitted or not."
-       },
-       "enableEditing": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_enableEditing",
-        "!doc": "Enables a field to be editable."
-       },
-       "fieldsSortableListConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_fieldsSortableListConfig",
-        "!doc": "Collection of sortable fields."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
        "closeEditProperties": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_closeEditProperties",
@@ -3899,7 +6191,6 @@
         "!doc": "Removes fields from the `A.LinkedSet` instance."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_NAME",
@@ -3932,11 +6223,11 @@
       }
      },
      "FormBuilderFieldBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderFieldBaseConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldBase.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype"
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldBase.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldBase.html#property_NAME",
@@ -3949,154 +6240,10 @@
       }
      },
      "FormBuilderField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderFieldBase.prototype",
-       "acceptChildren": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_acceptChildren",
-        "!doc": "If `true` children are accepted."
-       },
-       "builder": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_builder",
-        "!doc": "The `A.FormBuilder` instance."
-       },
-       "controlsToolbar": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_controlsToolbar",
-        "!doc": "Collection of toolbar controls."
-       },
-       "dataType": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_dataType",
-        "!doc": "Indicates which is the type of data for the input field."
-       },
-       "disabled": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_disabled",
-        "!doc": "Checks if the input field is disabled or not."
-       },
-       "selected": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_selected",
-        "!doc": "Checks if the input field is selected or not."
-       },
-       "hiddenAttributes": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_hiddenAttributes",
-        "!doc": "List of hidden attributes."
-       },
-       "id": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_id",
-        "!doc": "The id of the input field."
-       },
-       "label": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_label",
-        "!doc": "The label of the input field."
-       },
-       "localizationMap": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_localizationMap",
-        "!doc": "Collection for content localization."
-       },
-       "name": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_name",
-        "!doc": "The name of the input field."
-       },
-       "parent": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_parent",
-        "!doc": "Container for the field parent."
-       },
-       "predefinedValue": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_predefinedValue",
-        "!doc": "Specifies a predefined value for the input field."
-       },
-       "readOnly": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_readOnly",
-        "!doc": "Checks if an input field is read-only.\nIn other words, it cannot be modified."
-       },
-       "readOnlyAttributes": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_readOnlyAttributes",
-        "!doc": "List of read-only input fields."
-       },
-       "required": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_required",
-        "!doc": "Checks if an input field is required.\nIn other words, it needs content to be valid."
-       },
-       "showLabel": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_showLabel",
-        "!doc": "If `true` the label is showed."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "tabIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tabIndex",
-        "!doc": "Specify the tab order."
-       },
-       "template": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
-       "tip": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tip",
-        "!doc": "Hint to help the user to fill the input field."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_type",
-        "!doc": "Defines the type of field."
-       },
-       "unique": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_unique",
-        "!doc": "Checks if the input field is unique or not."
-       },
-       "zIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_zIndex",
-        "!doc": "Stack order of the field. An element with greater stack order is\nalways in front of an element with a lower stack order."
-       },
-       "dropZoneNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_dropZoneNode",
-        "!doc": "Node used to generate the drop zone."
-       },
-       "labelNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_labelNode",
-        "!doc": "Node used to generate a label."
-       },
-       "requiredFlagNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_requiredFlagNode",
-        "!doc": "Node used to generate the required flag."
-       },
-       "templateNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_templateNode",
-        "!doc": "Node used to generate a template."
-       },
-       "tipFlagNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tipFlagNode",
-        "!doc": "Node used to generate a tip."
-       },
        "createField": {
         "!type": "fn(val: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method_createField",
@@ -4128,7 +6275,6 @@
         "!doc": "Gets a list of toolbar items."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#property_NAME",
@@ -4156,34 +6302,10 @@
       }
      },
      "FormBuilderButtonField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderButtonFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderField.prototype",
-       "acceptChildren": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_acceptChildren",
-        "!doc": "If `true` children are accepted."
-       },
-       "buttonType": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_buttonType",
-        "!doc": "Defines the button type attribute, e.g. `type=\"reset\"`."
-       },
-       "predefinedValue": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_predefinedValue",
-        "!doc": "Specifies a predefined value for the button field."
-       },
-       "showLabel": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_showLabel",
-        "!doc": "If `true` the label is showed."
-       },
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#method_getHTML",
@@ -4195,7 +6317,6 @@
         "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#property_NAME",
@@ -4223,24 +6344,10 @@
       }
      },
      "FormBuilderCheckBoxField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderCheckBoxFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderField.prototype",
-       "dataType": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_dataType",
-        "!doc": "Indicates which is the type of data for the input field."
-       },
-       "predefinedValue": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_predefinedValue",
-        "!doc": "Specifies a predefined value for the checkbox field."
-       },
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#method_getPropertyModel",
@@ -4252,7 +6359,6 @@
         "!doc": "Injects data into the template and returns the HTML result."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#property_NAME",
@@ -4275,29 +6381,10 @@
       }
      },
      "FormBuilderFieldsetField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderFieldsetFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderField.prototype",
-       "acceptChildren": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_acceptChildren",
-        "!doc": "If `true` children are accepted."
-       },
-       "dataType": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_dataType",
-        "!doc": "Indicates which is the type of data for the input field."
-       },
-       "labelNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_labelNode",
-        "!doc": "Markup used to generate a label."
-       },
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#method_getHTML",
@@ -4309,7 +6396,6 @@
         "!doc": "Returns a list of property models including the `A.TextCellEditor()`\nand `A.RadioCellEditor` models."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#property_NAME",
@@ -4337,21 +6423,16 @@
       }
      },
      "FormBuilderFileUploadField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderFileUploadFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderField.prototype",
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#method_getHTML",
         "!doc": "Injects data into the template and returns the HTML result."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#property_NAME",
@@ -4374,16 +6455,11 @@
       }
      },
      "OptionsEditor": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_datatable.A.RadioCellEditor.prototype",
-       "editable": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#attribute_editable",
-        "!doc": "Defines if a field is editable."
-       }
-      },
+      "!type": "fn(config: +config.A.OptionsEditorConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html",
+      "prototype": {
+       "!proto": "aui_datatable.A.RadioCellEditor.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#property_NAME",
@@ -4401,36 +6477,16 @@
       }
      },
      "FormBuilderMultipleChoiceField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderMultipleChoiceFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderField.prototype",
-       "acceptChildren": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_acceptChildren",
-        "!doc": "If `true` children are accepted."
-       },
-       "options": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_options",
-        "!doc": "Collection of options. Each option is made of a label and value."
-       },
-       "optionTemplate": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_optionTemplate",
-        "!doc": "Markup used to generate each item from `options` attribute."
-       },
-       "predefinedValue": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_predefinedValue",
-        "!doc": "Specifies a predefined value for the multiple choice field."
-       },
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#method_getPropertyModel",
         "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#property_NAME",
@@ -4458,26 +6514,16 @@
       }
      },
      "FormBuilderRadioField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderRadioFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderMultipleChoiceField.prototype",
-       "predefinedValue": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#attribute_predefinedValue",
-        "!doc": "Specifies a predefined value for the radio field."
-       },
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#method_getHTML",
         "!doc": "Returns the HTML template."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#property_NAME",
@@ -4500,19 +6546,10 @@
       }
      },
      "FormBuilderSelectField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderSelectFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderMultipleChoiceField.prototype",
-       "multiple": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#attribute_multiple",
-        "!doc": "Checks if the drop-down list allows multiple selections."
-       },
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#method_getHTML",
@@ -4524,7 +6561,6 @@
         "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#property_NAME",
@@ -4552,19 +6588,10 @@
       }
      },
      "FormBuilderTextField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderTextFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderField.prototype",
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
-       "width": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#attribute_width",
-        "!doc": "The width of the input field."
-       },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#method_getHTML",
@@ -4576,7 +6603,6 @@
         "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#property_NAME",
@@ -4599,21 +6625,16 @@
       }
      },
      "FormBuilderTextAreaField": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormBuilderTextAreaFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html",
       "prototype": {
        "!proto": "aui_form_builder.A.FormBuilderTextField.prototype",
-       "template": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#attribute_template",
-        "!doc": "Reusable block of markup used to generate the field."
-       },
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#method_getPropertyModel",
         "!doc": "Returns a list of property models including the\n`A.TextAreaCellEditor` model."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#property_NAME",
@@ -4640,99 +6661,10 @@
    "aui_form_validator": {
     "A": {
      "FormValidator": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.FormValidatorConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "boundingBox": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_boundingBox",
-        "!doc": "The widgets outermost node, used for sizing and positioning."
-       },
-       "containerErrorClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_containerErrorClass",
-        "!doc": "Container for the CSS error class."
-       },
-       "containerValidClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_containerValidClass",
-        "!doc": "Container for the CSS valid class."
-       },
-       "errorClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_errorClass",
-        "!doc": "Defines the CSS error class."
-       },
-       "extractRules": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_extractRules",
-        "!doc": "If `true` the validation rules are extracted from the DOM."
-       },
-       "fieldContainer": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_fieldContainer",
-        "!doc": "Container for a field."
-       },
-       "fieldStrings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_fieldStrings",
-        "!doc": "Collection of strings used on a field."
-       },
-       "labelCssClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_labelCssClass",
-        "!doc": "The CSS class for `<label>`."
-       },
-       "messageContainer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_messageContainer",
-        "!doc": "Container for the form message."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
-       "rules": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_rules",
-        "!doc": "Collection of rules to validate fields."
-       },
-       "selectText": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_selectText",
-        "!doc": "Defines if the text will be selected or not after validation."
-       },
-       "showMessages": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_showMessages",
-        "!doc": "Defines if the validation messages will be showed or not."
-       },
-       "showAllMessages": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_showAllMessages",
-        "!doc": "Defines if all validation messages will be showed or not."
-       },
-       "stackErrorContainer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_stackErrorContainer",
-        "!doc": "Defines a container for the stack errors."
-       },
-       "validateOnBlur": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_validateOnBlur",
-        "!doc": "If `true` the field will be validated on blur event."
-       },
-       "validateOnInput": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_validateOnInput",
-        "!doc": "If `true` the field will be validated on input event."
-       },
-       "validClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#attribute_validClass",
-        "!doc": "Defines the CSS valid class."
-       },
        "addFieldError": {
         "!type": "fn(field: ?, ruleName: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#method_addFieldError",
@@ -4839,7 +6771,6 @@
         "!doc": "Validates a single field."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormValidator.html#property_NAME",
@@ -4861,66 +6792,16 @@
    "aui_image_cropper": {
     "A": {
      "ImageCropper": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ImageCropperConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "cropHeight": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_cropHeight",
-        "!doc": "The height of a selected area to crop."
-       },
-       "cropWidth": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_cropWidth",
-        "!doc": "The width of a selected area to crop."
-       },
-       "minWidth": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_minWidth",
-        "!doc": "The minimum width of a selected area to crop."
-       },
-       "minHeight": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_minHeight",
-        "!doc": "The minimum height of a selected area to crop."
-       },
-       "movable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_movable",
-        "!doc": "Determine if the crop area should move or not."
-       },
-       "preserveRatio": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_preserveRatio",
-        "!doc": "Determine if the crop area should preserve the\naspect ratio or not."
-       },
-       "region": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_region",
-        "!doc": "Determine the region of a selected area to crop."
-       },
-       "resizable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_resizable",
-        "!doc": "Determine if the crop area should resize or not."
-       },
-       "x": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_x",
-        "!doc": "The X position of a selected area to crop."
-       },
-       "y": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#attribute_y",
-        "!doc": "The Y position of a selected area to crop."
-       },
        "syncImageUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#method_syncImageUI",
         "!doc": "Sync the image on the UI."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageCropper.html#property_NAME",
@@ -4942,7 +6823,8 @@
    "aui_image_viewer": {
     "A": {
      "ImageViewer": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ImageViewerConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html",
       "prototype": {
        "!proto": "widget.Widget.prototype",
        "close": {
@@ -4991,9 +6873,9 @@
         "!doc": "Loads the previous image."
        },
        "preloadAllImages": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_preloadAllImages",
-        "!doc": "Preloads the neighbor image (i.e., the previous and next image\nbased on the current load one)."
+        "!type": "fn()",
+        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_preloadAllImages",
+        "!doc": "Preloads all images."
        },
        "preloadImage": {
         "!type": "fn(currentIndex: number)",
@@ -5009,144 +6891,8 @@
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_show",
         "!doc": "Shows the `A.ImageViewer` UI."
-       },
-       "anim": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_anim",
-        "!doc": "If `true` the navigation is animated."
-       },
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_bodyContent",
-        "!doc": "The content of body."
-       },
-       "caption": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_caption",
-        "!doc": "The caption of the displayed image."
-       },
-       "captionFromTitle": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_captionFromTitle",
-        "!doc": "If `true` the [caption](A.ImageViewer.html#attr_caption) will be\npulled from the title DOM attribute."
-       },
-       "centered": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_centered",
-        "!doc": "If `true` the Overlay with the image will be positioned\non the center of the viewport."
-       },
-       "currentIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_currentIndex",
-        "!doc": "Index of the current image."
-       },
-       "image": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_image",
-        "!doc": "Image node element used to load the images."
-       },
-       "imageAnim": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_imageAnim",
-        "!doc": "Configuration attributes passed to the [Anim](Anim.html) class."
-       },
-       "infoTemplate": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_infoTemplate",
-        "!doc": "String template used to display the information."
-       },
-       "links": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_links",
-        "!doc": "Selector or NodeList containing the links where the\n`A.ImageViewer` extracts the information to generate the\nthumbnails."
-       },
-       "loading": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loading",
-        "!doc": "Whether the image is during a loading state."
-       },
-       "modal": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_modal",
-        "!doc": "Displays the modal the viewport. Set to `false` to disable."
-       },
-       "showClose": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_showClose",
-        "!doc": "Shows close icon control."
-       },
-       "showControls": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_showControls",
-        "!doc": "Shows the controls."
-       },
-       "tabIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_tabIndex",
-        "!doc": "Specify the tab order of elements."
-       },
-       "totalLinks": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_totalLinks",
-        "!doc": "Helper attribute to get the `size` of the\n[links](A.ImageViewer.html#attr_links) NodeList."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_visible",
-        "!doc": "Determines if the `A.ImageViewer` should be visible or not."
-       },
-       "zIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_zIndex",
-        "!doc": "Specify the stack order of elements."
-       },
-       "controlLeftEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_controlLeftEl",
-        "!doc": "The element to be used as left control."
-       },
-       "controlRightEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_controlRightEl",
-        "!doc": "The element to be used as right control."
-       },
-       "captionEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_captionEl",
-        "!doc": "The element to be used as caption."
-       },
-       "closeEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_closeEl",
-        "!doc": "The element to be used as close."
-       },
-       "infoEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_infoEl",
-        "!doc": "The element to be used as info."
-       },
-       "loader": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loader",
-        "!doc": "HTML element to contain the `img` which is being loaded."
-       },
-       "loadingEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loadingEl",
-        "!doc": "The element to be used as loading."
-       },
-       "maxHeight": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_maxHeight",
-        "!doc": "The maximum height of the element."
-       },
-       "maxWidth": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_maxWidth",
-        "!doc": "The maximum width of the element."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#property_NAME",
@@ -5164,74 +6910,10 @@
       }
      },
      "ImageGallery": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ImageGalleryConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html",
       "prototype": {
        "!proto": "aui_image_viewer.A.ImageViewer.prototype",
-       "autoPlay": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_autoPlay",
-        "!doc": "If `true` the slide show will be played when the\n`A.ImageGallery` is displayed."
-       },
-       "delay": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_delay",
-        "!doc": "Delay in milliseconds to change to the next image."
-       },
-       "pagination": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_pagination",
-        "!doc": "[A.Pagination](A.Pagination.html) configuration Object. The\n`A.Pagination` handles the thumbnails control."
-       },
-       "paginationEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paginationEl",
-        "!doc": "Element which contains the [A.Pagination](A.Pagination.html) with the\nthumbnails."
-       },
-       "paginationInstance": {
-        "!type": "+aui_pagination.A.Pagination",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paginationInstance",
-        "!doc": "Stores the [A.Pagination](A.Pagination.html) instance."
-       },
-       "paused": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paused",
-        "!doc": "If `true` the slide show is paused."
-       },
-       "pausedLabel": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_pausedLabel",
-        "!doc": "Label to display when the slide show is paused."
-       },
-       "playing": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_playing",
-        "!doc": "If `true` the slide show is playing."
-       },
-       "playingLabel": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_playingLabel",
-        "!doc": "Label to display when the slide show is playing."
-       },
-       "repeat": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_repeat",
-        "!doc": "Restart the navigation when reach the last element."
-       },
-       "showPlayer": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_showPlayer",
-        "!doc": "Shows the player controls (i.e., pause and show buttons)."
-       },
-       "toolbar": {
-        "!type": "+Toolbar constructor.",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_toolbar",
-        "!doc": "[A.Toolbar](A.Toolbar.html) with a play, and pause buttons."
-       },
-       "useOriginalImage": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_useOriginalImage",
-        "!doc": "If `true` will use the original image as thumbnails."
-       },
        "hidePagination": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#method_hidePagination",
@@ -5258,7 +6940,6 @@
         "!doc": "Shows the [A.Pagination](A.Pagination.html) with the thumbnails list."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#property_NAME",
@@ -5280,14 +6961,10 @@
    "aui_media_viewer_plugin": {
     "A": {
      "MediaViewerPlugin": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.MediaViewerPluginConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.MediaViewerPlugin.html",
       "prototype": {
        "!proto": "plugin.Plugin.Base.prototype",
-       "providers": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.MediaViewerPlugin.html#attribute_providers",
-        "!doc": "Contains the templates, options and definitions for each provider\n(Flash, Youtube, Vimeo)."
-       },
        "close": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.MediaViewerPlugin.html#method_close",
@@ -5304,7 +6981,6 @@
         "!doc": "Preloads an image."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.MediaViewerPlugin.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.MediaViewerPlugin.html#property_NAME",
@@ -5331,99 +7007,10 @@
    "aui_io": {
     "A": {
      "IORequest": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.IORequestConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html",
       "prototype": {
        "!proto": "plugin.Plugin.Base.prototype",
-       "autoLoad": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_autoLoad",
-        "!doc": "If `true` invoke the [start](A.IORequest.html#method_start) method\nautomatically, initializing the IO transaction."
-       },
-       "cache": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_cache",
-        "!doc": "If `false` the current timestamp will be appended to the\nurl, avoiding the url to be cached."
-       },
-       "dataType": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_dataType",
-        "!doc": "The type of the request (i.e., could be xml, json, javascript, text)."
-       },
-       "responseData": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_responseData",
-        "!doc": "This is a normalized attribute for the response data. Its useful to\nretrieve the correct type for the\n[dataType](A.IORequest.html#attr_dataType) (i.e., in json requests\nthe `responseData`) is a JSONObject."
-       },
-       "uri": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_uri",
-        "!doc": "URI to be requested using AJAX."
-       },
-       "active": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_active",
-        "!doc": "Whether the transaction is active or not."
-       },
-       "cfg": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_cfg",
-        "!doc": "Object containing all the [IO Configuration Attributes](A.io.html).\nThis Object is passed to the `A.io` internally."
-       },
-       "transaction": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_transaction",
-        "!doc": "Stores the IO Object of the current transaction."
-       },
-       "arguments": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_arguments",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "context": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_context",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "data": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_data",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "form": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_form",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "headers": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_headers",
-        "!doc": "Set the correct ACCEPT header based on the dataType."
-       },
-       "method": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_method",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "selector": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_selector",
-        "!doc": "A selector to be used to query against the response of the\nrequest. Only works if the response is XML or HTML."
-       },
-       "sync": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_sync",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "timeout": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_timeout",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
-       "xdr": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_xdr",
-        "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
-       },
        "getFormattedData": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#method_getFormattedData",
@@ -5440,7 +7027,6 @@
         "!doc": "Stops the IO transaction."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#property_NAME",
@@ -5462,7 +7048,7 @@
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.io.html",
       "prototype": {
        "A.io.request": {
-        "!type": "fn(uri: string, config: +yui.Object) -> +IORequest",
+        "!type": "fn(uri: string, config: +config.A.io.requestConfig) -> +IORequest",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.io.html#method_A.io.request",
         "!doc": "Static method to invoke the [IORequest](A.IORequest.html).\nLikewise [IO](A.io.html)."
        }
@@ -5473,36 +7059,11 @@
    "aui_modal": {
     "A": {
      "Modal": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "widget.Widget.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_bodyContent",
-        "!doc": "Determine the content of Modals body section.\n\nTemporary fix for widget-stdmod bug when bodyContent initializes\nempty. this._currFillNode is never updated if _uiSetFillHeight is not\ncalled."
-       },
-       "destroyOnHide": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_destroyOnHide",
-        "!doc": "Determine if Modal should be destroyed when hidden."
-       },
-       "draggable": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_draggable",
-        "!doc": "Determine if Modal should be draggable or not."
-       },
-       "resizable": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_resizable",
-        "!doc": "Determine if Modal should be resizable or not."
-       },
-       "toolbars": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#attribute_toolbars",
-        "!doc": "Determine the content of Modals header section."
-       }
-      },
+      "!type": "fn(config: +config.A.ModalConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html",
+      "prototype": {
+       "!proto": "widget.Widget.prototype"
+      },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html#property_CSS_PREFIX",
@@ -5789,44 +7350,10 @@
    "aui_pagination": {
     "A": {
      "Pagination": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.PaginationConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "circular": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_circular",
-        "!doc": "When enabled this property allows the navigation to go back to the\nbeggining when it reaches the last page, the opposite behavior is\nalso true. Incremental page navigation could happen clicking the\ncontrol arrows or invoking `.next()` and `.prev()` methods."
-       },
-       "formatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_formatter",
-        "!doc": "A formatter function to format each pagination item."
-       },
-       "items": {
-        "!type": "+dom.NodeList",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_items",
-        "!doc": "Holds the page items as a `NodeList`. The list could be queried from\nthe DOM trough Widget `HTML_PARSER` or generated if\n[total](A.Pagination.html#attr_total) is specified."
-       },
-       "offset": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_offset",
-        "!doc": "Initial page offset."
-       },
-       "page": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_page",
-        "!doc": "Determines if pagination controls (Next and Prev) are rendered."
-       },
-       "total": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_total",
-        "!doc": "Total number of page links available. If set, the new\n[items](A.Pagination.html#attr_items) node list will be rendered."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI."
-       },
        "getItem": {
         "!type": "fn(i: +node.Node) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#method_getItem",
@@ -5863,7 +7390,6 @@
         "!doc": "Set the new pagination state. The state is a payload object\ncontaining the page number, e.g. `{page:1}`."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Pagination.html#property_NAME",
@@ -5895,7 +7421,8 @@
    "aui_palette": {
     "A": {
      "Palette": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.PaletteConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html",
       "prototype": {
        "!proto": "widget.Widget.prototype",
        "getItem": {
@@ -5919,42 +7446,16 @@
         "!doc": "Selects an item in the Palette."
        },
        "toggleSelection": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_toggleSelection",
-        "!doc": "If true, on user interaction if the user clicks on an already\nselected element, it will be unselected."
+        "!type": "fn(valueOrIndex: number, force: ?)",
+        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#method_toggleSelection",
+        "!doc": "Toggles the section of an item. The item must be specified by its\nvalue or index. A second param indicates if the selection should be\nforced."
        },
        "unselect": {
         "!type": "fn(valueOrIndex: number)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#method_unselect",
         "!doc": "Unselects an item. The item must be specified by its value or index."
-       },
-       "columns": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_columns",
-        "!doc": "Specifies how many columns should contain the Palette. If the\nvalue is a positive number, the Palette will generate as many\ncolumns as specified in this property and it will fit the\nprovided `items` in these columns."
-       },
-       "containerNode": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_containerNode",
-        "!doc": "Container node of the palette. If found, palette widget will not\ngenerate content."
-       },
-       "formatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_formatter",
-        "!doc": "Provides a function, which will be used to format the content\nduring Palette creation."
-       },
-       "items": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_items",
-        "!doc": "An array of Palette items. These items will be rendered in the\nPalette according to the specified `columns`."
-       },
-       "selected": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#attribute_selected",
-        "!doc": "Provides the index of currently selected item."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html",
       "HTML_PARSER": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Palette.html#property_HTML_PARSER",
@@ -5971,14 +7472,10 @@
    "aui_parse_content": {
     "A": {
      "ParseContent": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ParseContentConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ParseContent.html",
       "prototype": {
        "!proto": "plugin.Plugin.Base.prototype",
-       "queue": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ParseContent.html#attribute_queue",
-        "!doc": "A queue of elements to be parsed."
-       },
        "globalEval": {
         "!type": "fn(data: string)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ParseContent.html#method_globalEval",
@@ -5990,7 +7487,6 @@
         "!doc": "Extract the `script` tags from the string content and\nevaluate the chunks."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ParseContent.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ParseContent.html#property_NAME",
@@ -6017,16 +7513,11 @@
    "aui_popover": {
     "A": {
      "Popover": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "widget.Widget.prototype",
-       "triggerToggleEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Popover.html#attribute_triggerToggleEvent",
-        "!doc": "DOM event to hide the tooltip."
-       }
-      },
+      "!type": "fn(config: +config.A.PopoverConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Popover.html",
+      "prototype": {
+       "!proto": "widget.Widget.prototype"
+      },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Popover.html#property_CSS_PREFIX",
@@ -6048,61 +7539,11 @@
    "aui_progressbar": {
     "A": {
      "ProgressBar": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_component.A.Component.prototype",
-       "useARIA": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_useARIA",
-        "!doc": "Boolean indicating if use of the WAI-ARIA Roles and States\nshould be enabled."
-       },
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_height",
-        "!doc": "Display height of the progressbar."
-       },
-       "label": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_label",
-        "!doc": "Display label of the progressbar. If not specified try to query\nusing HTML_PARSER an element inside boundingBox which matches\n`aui-progressbar-text` and get its innerHTML to be\nused as label."
-       },
-       "max": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_max",
-        "!doc": "Represents the top value for the bar. The bar will be fully\nextended when reaching this value. Values higher than this will\nbe ignored."
-       },
-       "min": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_min",
-        "!doc": "Represents the lowest value for the bar. The bar will be\ntotally collapsed when reaching this value. Values lower than\nthis will be ignored."
-       },
-       "orientation": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_orientation",
-        "!doc": "Display orientation of the progressbar (i.e. vertical or\nhorizontal)."
-       },
-       "ratio": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_ratio",
-        "!doc": "Calculate the ratio based on `max` and `min` values."
-       },
-       "step": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_step",
-        "!doc": "Calculate the progressbar step based on `ratio` value."
-       },
-       "textNode": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_textNode",
-        "!doc": "DOM Node to display the text of the progressbar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches `aui-progressbar-text`."
-       },
-       "value": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#attribute_value",
-        "!doc": "The value for the bar. Valid values are in between the minValue\nand maxValue attributes."
-       }
-      },
+      "!type": "fn(config: +config.A.ProgressBarConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html",
+      "prototype": {
+       "!proto": "aui_component.A.Component.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ProgressBar.html#property_NAME",
@@ -6129,79 +7570,10 @@
    "aui_rating": {
     "A": {
      "Rating": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.RatingConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "disabled": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_disabled",
-        "!doc": "Whether the Rating is disabled or not.\nDisabled Ratings dont allow hover or click,\njust display selected stars."
-       },
-       "canReset": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_canReset",
-        "!doc": "If `true` could be reseted\n(i.e., have no values selected)."
-       },
-       "cssClasses": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_cssClasses",
-        "!doc": "CSS classes applied on Rating."
-       },
-       "defaultSelected": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_defaultSelected",
-        "!doc": "The number of selected starts when the Rating render."
-       },
-       "elements": {
-        "!type": "+dom.NodeList",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_elements",
-        "!doc": "[NodeList](NodeList.html) of elements used on the\nRating. Each element is one Star."
-       },
-       "hiddenInput": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_hiddenInput",
-        "!doc": "Hidden input to handle the selected value. This hidden input\nreplace the radio elements and keep the same name."
-       },
-       "inputName": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_inputName",
-        "!doc": "Name of the [hiddenInput](A.Rating.html#attr_hiddenInput) element. If\nnot specified will use the name of the replaced radio."
-       },
-       "label": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_label",
-        "!doc": "Label to be displayed with the Rating elements."
-       },
-       "labelNode": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_labelNode",
-        "!doc": "DOM Node to display the text of the StarRating. If not\nspecified try to query using HTML_PARSER an element inside\nboundingBox which matches `aui-rating-label-element`."
-       },
-       "selectedIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_selectedIndex",
-        "!doc": "Stores the index of the selected element."
-       },
-       "showTitle": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_showTitle",
-        "!doc": "If `true` will extract the value of the\n`title` attribute on the radio, and use it on the\ngenerated Rating elements."
-       },
-       "size": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_size",
-        "!doc": "Number of Rating elements to be displayed."
-       },
-       "title": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_title",
-        "!doc": "If set, will be used when there is no DOM `title` on the\nradio elements."
-       },
-       "value": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#attribute_value",
-        "!doc": "Stores the value of the current selected Rating element."
-       },
        "clearSelection": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#method_clearSelection",
@@ -6223,7 +7595,6 @@
         "!doc": "Find the index of the `elem`."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Rating.html#property_NAME",
@@ -6241,26 +7612,16 @@
       }
      },
      "ThumbRating": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ThumbRatingConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html",
       "prototype": {
        "!proto": "aui_rating.A.Rating.prototype",
-       "cssClasses": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html#attribute_cssClasses",
-        "!doc": "CSS classes applied on ThumbRating."
-       },
-       "size": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html#attribute_size",
-        "!doc": "The size on ThumbRating is always 2 (i.e., thumb up and thumb down)."
-       },
        "fillTo": {
         "!type": "fn(index: number, className: string)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html#method_fillTo",
         "!doc": "Add the `className` on the the `index` element\nand all the previous Rating elements."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ThumbRating.html#property_NAME",
@@ -6282,41 +7643,11 @@
    "aui_scheduler": {
     "A": {
      "SchedulerCalendar": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "app.ModelList.prototype",
-       "color": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_color",
-        "!doc": "Contains the `color` of the scheduler calendar."
-       },
-       "disabled": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_disabled",
-        "!doc": "Determines if the calender is enabled."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_name",
-        "!doc": "Determines the name for this calendar."
-       },
-       "palette": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_palette",
-        "!doc": "Contains a list of colors for the calendar."
-       },
-       "scheduler": {
-        "!type": "+aui_scheduler.A.SchedulerBase",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_scheduler",
-        "!doc": "Contains this `SchedulerCalendar`s `SchedulerBase object."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_visible",
-        "!doc": "Indicates whether the calendar is visible."
-       }
-      },
+      "!type": "fn(config: +config.A.SchedulerCalendarConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html",
+      "prototype": {
+       "!proto": "app.ModelList.prototype"
+      },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#property_ATTRS",
@@ -6324,84 +7655,10 @@
       }
      },
      "SchedulerEvent": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerEventConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html",
       "prototype": {
        "!proto": "app.Model.prototype",
-       "allDay": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_allDay",
-        "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs."
-       },
-       "content": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_content",
-        "!doc": "Contains the content of Scheduler events body section."
-       },
-       "color": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_color",
-        "!doc": "Contains the `color` of a calendar event."
-       },
-       "colorBrightnessFactor": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_colorBrightnessFactor",
-        "!doc": "Contains the color brightness factor is applied to the `color`\nattribute."
-       },
-       "colorSaturationFactor": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_colorSaturationFactor",
-        "!doc": "Contains the color saturation factor is applied to the `color`\nattribute."
-       },
-       "titleDateFormat": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_titleDateFormat",
-        "!doc": "Contains the formatted title date for this scheduler event, taking\ninto account ISO time. The value will not contain an `endDate` if\nthis event is `allDay`."
-       },
-       "endDate": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_endDate",
-        "!doc": "Contains the date corresponding to the current ending date of a\nscheduled event. By default, the value is one hour after the\n`startDate`."
-       },
-       "disabled": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_disabled",
-        "!doc": "Determines if the event is disabled."
-       },
-       "meeting": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_meeting",
-        "!doc": "Determines if the event is a meeting."
-       },
-       "node": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_node",
-        "!doc": "Contains the event `NodeList`."
-       },
-       "reminder": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_reminder",
-        "!doc": "Determines if the event is requires reminder."
-       },
-       "repeated": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_repeated",
-        "!doc": "Determines if the event is to be repeated."
-       },
-       "scheduler": {
-        "!type": "+aui_scheduler.A.SchedulerBase",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_scheduler",
-        "!doc": "Contains this `SchedulerEvent`s `SchedulerBase object."
-       },
-       "startDate": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_startDate",
-        "!doc": "Contains the date corresponding to the current starting date of a\nscheduled event. By default, the value is the date set on the users\ncomputer."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_visible",
-        "!doc": "Indicates whether the event is visible."
-       },
        "addPaddingNode": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_addPaddingNode",
@@ -6523,7 +7780,6 @@
         "!doc": "Splits an event into multiple days. Since an event can span across\nmultiple days in the week view, this event will be split into chunks\nfor each day column."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#property_NAME",
@@ -6546,69 +7802,10 @@
       }
      },
      "SchedulerView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_bodyContent",
-        "!doc": "Determines the content of Scheduler views body section."
-       },
-       "filterFn": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_filterFn",
-        "!doc": "Applies a filter to `SchedulerEvent`s."
-       },
-       "height": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_height",
-        "!doc": "Contains the height of a `SchedulerView` in pixels."
-       },
-       "isoTime": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_isoTime",
-        "!doc": "Indicates whether this `SchedulerView` should use international\nstandard time."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_name",
-        "!doc": "Determines the name for this view."
-       },
-       "navigationDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_navigationDateFormatter",
-        "!doc": "Contains the function that formats the navigation date."
-       },
-       "nextDate": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_nextDate",
-        "!doc": "Contains the next `Date` in the `SchedulerView`."
-       },
-       "prevDate": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_prevDate",
-        "!doc": "Contains the previous `Date` in the `SchedulerView`."
-       },
-       "scheduler": {
-        "!type": "+aui_scheduler.A.SchedulerBase",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_scheduler",
-        "!doc": "Contains this `SchedulerView`s `SchedulerBase object."
-       },
-       "scrollable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_scrollable",
-        "!doc": "Indicates whether this `SchedulerView` is scrollable."
-       },
-       "triggerNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_triggerNode",
-        "!doc": "Contains the `Node` that triggers."
-       },
-       "visible": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_visible",
-        "!doc": "Indicates whether the calendar is visible."
-       },
        "getAdjustedViewDate": {
         "!type": "fn(date: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_getAdjustedViewDate",
@@ -6655,7 +7852,6 @@
         "!doc": "Sync `event` on the UI."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#property_NAME",
@@ -6678,7 +7874,8 @@
       }
      },
      "SchedulerEvents": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerEventsConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvents.html",
       "prototype": {
        "!proto": "app.ModelList.prototype",
        "comparator": {
@@ -6687,7 +7884,6 @@
         "!doc": "Compares the inputs of a start and end date to see if adding `1` to the\nstart date time is larger than the difference between start and end date\ntimes."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvents.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvents.html#property_ATTRS",
@@ -6695,7 +7891,7 @@
       }
      },
      "SchedulerEventSupport": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerEventSupportConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html",
       "ATTRS": {
        "!type": "+yui.Object",
@@ -6751,54 +7947,10 @@
       }
      },
      "SchedulerBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerBaseConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "activeView": {
-        "!type": "+aui_scheduler.A.SchedulerView",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_activeView",
-        "!doc": "Contains the active view."
-       },
-       "date": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_date",
-        "!doc": "Contains the date corresponding to the current date which is the\nvalue of the date set on the users computer."
-       },
-       "eventRecorder": {
-        "!type": "+aui_scheduler.A.SchedulerEventRecorder",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_eventRecorder",
-        "!doc": "Contains the `Scheduler`s `SchedulerEventRecorder` instance."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_strings",
-        "!doc": "Contains the collection of strings used to label elements of the UI."
-       },
-       "navigationDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_navigationDateFormatter",
-        "!doc": "Contains the function that formats the navigation date."
-       },
-       "views": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_views",
-        "!doc": "Contains the list of views belonging to this `Scheduler`."
-       },
-       "viewDate": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_viewDate",
-        "!doc": "Contains the `Scheduler`s current date. If there is an `activeView`,\nthis attribute will contain the `activeView`s current date."
-       },
-       "firstDayOfWeek": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_firstDayOfWeek",
-        "!doc": "First day of the week: Sunday is 0, Monday is 1."
-       },
-       "todayDate": {
-        "!type": "+datatype_date.Date",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_todayDate",
-        "!doc": "Today date representation. This option allows the developer to\nspecify the date he wants to be used as the today date."
-       },
        "getViewByName": {
         "!type": "fn(name: string) -> +aui_scheduler.A.SchedulerView",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_getViewByName",
@@ -6840,7 +7992,6 @@
         "!doc": "Sync `SchedulerBase` StdContent."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#property_NAME",
@@ -6868,54 +8019,10 @@
       }
      },
      "SchedulerEventRecorder": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerEventRecorderConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html",
       "prototype": {
        "!proto": "aui_scheduler.A.SchedulerEvent.prototype",
-       "allDay": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_allDay",
-        "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs."
-       },
-       "content": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_content",
-        "!doc": "Determines the content of this Scheduler event recorders body\nsection."
-       },
-       "duration": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_duration",
-        "!doc": "Contains the duration of an `event` in minutes."
-       },
-       "dateFormat": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_dateFormat",
-        "!doc": "Contains the default date format for an `event`."
-       },
-       "event": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_event",
-        "!doc": "A scheduler `event` is the wrapper object that contains an `event`\ntitle, start and end times and a description."
-       },
-       "popover": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_popover",
-        "!doc": "Contains the scheduler event recorders `popover` instance."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_strings",
-        "!doc": "Collection of strings used to label elements of the UI.\nThis attribute defaults to `{}` unless the attribute is set.\nWhen this attribute is set, the passed value merges with a\npseudo-default collection of strings."
-       },
-       "bodyTemplate": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_bodyTemplate",
-        "!doc": "Contains the `SchedulerEventRecorder`s body template."
-       },
-       "headerTemplate": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_headerTemplate",
-        "!doc": "Contains the `SchedulerEventRecorder`s header template."
-       },
        "getContentNode": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_getContentNode",
@@ -6957,7 +8064,6 @@
         "!doc": "Hides this Scheduler event recorders `popover` component."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#property_NAME",
@@ -6975,54 +8081,10 @@
       }
      },
      "SchedulerAgendaView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerAgendaViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html",
       "prototype": {
        "!proto": "aui_scheduler.A.SchedulerView.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_bodyContent",
-        "!doc": "Determines the content of Scheduler view agendas body section."
-       },
-       "eventsDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_eventsDateFormatter",
-        "!doc": "Contains the function that formats the events date."
-       },
-       "headerDayDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_headerDayDateFormatter",
-        "!doc": "Contains the function that formats the header day date."
-       },
-       "headerExtraDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_headerExtraDateFormatter",
-        "!doc": "Contains the function that formats the header extra date."
-       },
-       "infoDayDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoDayDateFormatter",
-        "!doc": "Contains the function that formats the info day date."
-       },
-       "infoLabelBigDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoLabelBigDateFormatter",
-        "!doc": "Contains the function that formats the info label date."
-       },
-       "infoLabelSmallDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoLabelSmallDateFormatter",
-        "!doc": "Contains the function that formats the info label small date."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_name",
-        "!doc": "Determines the name for this agenda."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_strings",
-        "!doc": "Contains the collection of strings used to label elements of the UI."
-       },
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#method_getNextDate",
@@ -7039,7 +8101,6 @@
         "!doc": "Plots all events in the current view."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#property_NAME",
@@ -7057,109 +8118,10 @@
       }
      },
      "SchedulerDayView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerDayViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html",
       "prototype": {
        "!proto": "aui_scheduler.A.SchedulerView.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_bodyContent",
-        "!doc": "Determines the content of Scheduler day views body section."
-       },
-       "days": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_days",
-        "!doc": "Contains the number of day columns this view displays."
-       },
-       "delegateConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_delegateConfig",
-        "!doc": "Configures this views `DD.Delegate`."
-       },
-       "eventWidth": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_eventWidth",
-        "!doc": "Contains the width of a `SchedulerView` in pixels."
-       },
-       "filterFn": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_filterFn",
-        "!doc": "Applies a filter to `SchedulerEvent`s."
-       },
-       "headerDateFormatter": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerDateFormatter",
-        "!doc": "Contains the function that formats the header date."
-       },
-       "headerView": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerView",
-        "!doc": "Contains the header view."
-       },
-       "headerViewConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerViewConfig",
-        "!doc": "Configures the header day view."
-       },
-       "hourHeight": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_hourHeight",
-        "!doc": "Contains the height of an hour in pixels."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_name",
-        "!doc": "Determines the name for this day view."
-       },
-       "navigationDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_navigationDateFormatter",
-        "!doc": "Contains the function that formats the navigation date."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_strings",
-        "!doc": "Contains the collection of strings used to label elements of the UI."
-       },
-       "headerTableNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerTableNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `headerTable` node."
-       },
-       "headerViewLabelNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerViewLabelNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `headerViewLabel` node."
-       },
-       "resizerNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_resizerNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `resizer` node."
-       },
-       "tableNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_tableNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `table` node."
-       },
-       "colDaysNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_colDaysNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `colDays` node."
-       },
-       "colHeaderDaysNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_colHeaderDaysNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `colHeaderDays` node."
-       },
-       "markercellsNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_markercellsNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `markercells` node."
-       },
-       "timesNode!~YUIDOC_LINE~!return": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_timesNode!~YUIDOC_LINE~!return",
-        "!doc": "Contains the function that returns the `times` node."
-       },
        "syncStdContent": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncStdContent",
@@ -7276,7 +8238,6 @@
         "!doc": "Rounds a given `Date` to a given hour represented as time."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#property_NAME",
@@ -7299,24 +8260,10 @@
       }
      },
      "SchedulerMonthView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerMonthViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html",
       "prototype": {
        "!proto": "aui_scheduler.A.SchedulerTableView.prototype",
-       "displayDaysInterval": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_displayDaysInterval",
-        "!doc": "Contains the number of Days to display in a month view."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_name",
-        "!doc": "Determines the name for this month view."
-       },
-       "navigationDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_navigationDateFormatter",
-        "!doc": "Contains the function that formats the navigation date."
-       },
        "getAdjustedViewDate": {
         "!type": "fn(date: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#method_getAdjustedViewDate",
@@ -7338,7 +8285,6 @@
         "!doc": "Plots all events in the current view."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#property_NAME",
@@ -7356,7 +8302,7 @@
       }
      },
      "SchedulerTableViewDD": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerTableViewDDConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html",
       "ATTRS": {
        "!type": "+yui.Object",
@@ -7364,11 +8310,6 @@
        "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerTableViewDD`."
       },
       "prototype": {
-       "delegateConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#attribute_delegateConfig",
-        "!doc": "Configures this views `DD.Delegate`."
-       },
        "viewDDBindUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_viewDDBindUI",
@@ -7402,74 +8343,10 @@
       }
      },
      "SchedulerTableView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerTableViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html",
       "prototype": {
        "!proto": "aui_scheduler.A.SchedulerView.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_bodyContent",
-        "!doc": "Determines the content of Scheduler table views body section."
-       },
-       "displayDaysInterval": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_displayDaysInterval",
-        "!doc": "Contains the number of days to display per interval in the\n`SchedulerTableView`."
-       },
-       "displayRows": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_displayRows",
-        "!doc": "Contains the number of rows to display in the `SchedulerTableView`."
-       },
-       "fixedHeight": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_fixedHeight",
-        "!doc": "Indicates whether the height of the `SchedulerTableView` is fixed."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_name",
-        "!doc": "Determines the name for this `SchedulerTableView`."
-       },
-       "headerDateFormatter": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_headerDateFormatter",
-        "!doc": "Contains the function that formats the header date."
-       },
-       "navigationDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_navigationDateFormatter",
-        "!doc": "Contains the function that formats the navigation date."
-       },
-       "scrollable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_scrollable",
-        "!doc": "Indicates whether the `SchedulerTableView` is scrollable."
-       },
-       "strings": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_strings",
-        "!doc": "Contains the collection of strings used to label elements of the UI."
-       },
-       "headerTableNode": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_headerTableNode",
-        "!doc": "Contains the function that returns the `headerTable` node."
-       },
-       "colHeaderDaysNode": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_colHeaderDaysNode",
-        "!doc": "Contains the function that returns the `colHeaderDays` node."
-       },
-       "rowsContainerNode": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_rowsContainerNode",
-        "!doc": "Contains the function that returns the `rowsContainer` node."
-       },
-       "tableGridNode": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_tableGridNode",
-        "!doc": "Contains the function that returns the `tableGrid` node."
-       },
        "buildEventsRow": {
         "!type": "fn(rowStartDate: +datatype_date.Date, rowEndDate: +datatype_date.Date, rowDisplayIndex: number) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_buildEventsRow",
@@ -7541,7 +8418,6 @@
         "!doc": "Sync SchedulerView content."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#property_NAME",
@@ -7564,34 +8440,10 @@
       }
      },
      "SchedulerWeekView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SchedulerWeekViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html",
       "prototype": {
        "!proto": "aui_scheduler.A.SchedulerDayView.prototype",
-       "bodyContent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_bodyContent",
-        "!doc": "Determines the content of Scheduler week views body section."
-       },
-       "days": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_days",
-        "!doc": "Contains the number of days in a week."
-       },
-       "headerViewConfig": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_headerViewConfig",
-        "!doc": "Configures the header week view."
-       },
-       "name": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_name",
-        "!doc": "Determines the name for this week view."
-       },
-       "navigationDateFormatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_navigationDateFormatter",
-        "!doc": "Contains the formatted navigation date formatter for this week view."
-       },
        "getAdjustedViewDate": {
         "!type": "fn(date: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#method_getAdjustedViewDate",
@@ -7613,7 +8465,6 @@
         "!doc": "Returns the value of the week views current date."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#property_NAME",
@@ -7635,41 +8486,16 @@
    "aui_search": {
     "A": {
      "TernarySearchNode": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TernarySearchNodeConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "character": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_character",
-        "!doc": "String formed by a single letter."
-       },
-       "child": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_child",
-        "!doc": "The child node in the tree."
-       },
-       "largerNode": {
-        "!type": "+aui_search.A.TernarySearchNode",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_largerNode",
-        "!doc": "The larger node in the tree."
-       },
-       "smallerNode": {
-        "!type": "+aui_search.A.TernarySearchNode",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_smallerNode",
-        "!doc": "The smaller node in the tree."
-       },
-       "word": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_word",
-        "!doc": "String formed by a group of letters."
-       },
        "isEndOfWord": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#method_isEndOfWord",
         "!doc": "Converts the `word` attribute value to a `Boolean` and ensures a\n`Boolean` type."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#property_NAME",
@@ -7692,7 +8518,8 @@
       }
      },
      "TernarySearchTree": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TernarySearchTreeConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html",
       "prototype": {
        "!proto": "base.Base.prototype",
        "add": {
@@ -7721,7 +8548,6 @@
         "!doc": "Searches for a prefix in the tree."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#property_NAME",
@@ -7848,54 +8674,10 @@
    "aui_sortable_layout": {
     "A": {
      "SortableLayout": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SortableLayoutConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "delegateConfig": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_delegateConfig",
-        "!doc": "Configuration object for delegate."
-       },
-       "proxyNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_proxyNode",
-        "!doc": "Proxy drag node used instead of dragging the original node."
-       },
-       "dragNodes": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_dragNodes",
-        "!doc": "The CSS class name used to define which nodes are draggable."
-       },
-       "dropContainer": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_dropContainer",
-        "!doc": "The container which serves to host dropped elements."
-       },
-       "dropNodes": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_dropNodes",
-        "!doc": "The CSS class name used to define which nodes serve as container to\nbe dropped."
-       },
-       "groups": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_groups",
-        "!doc": "List of elements to add this sortable layout into."
-       },
-       "lazyStart": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_lazyStart",
-        "!doc": "Specifies if the start should be delayed."
-       },
-       "placeholder": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_placeholder",
-        "!doc": "Simulates the position of the dragged element."
-       },
-       "proxy": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#attribute_proxy",
-        "!doc": "Proxy element to be used when dragging."
-       },
        "addDropNode": {
         "!type": "fn(node: ?, config: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#method_addDropNode",
@@ -7932,7 +8714,6 @@
         "!doc": "Removes a Drop instance from group."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableLayout.html#property_NAME",
@@ -7954,54 +8735,10 @@
    "aui_sortable_list": {
     "A": {
      "SortableList": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.SortableListConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "dd": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dd",
-        "!doc": "Drag & Drop plugin attached to the widget."
-       },
-       "dropCondition": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dropCondition",
-        "!doc": "Validates the condition for an element to be dropped."
-       },
-       "dropContainer": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dropContainer",
-        "!doc": "The container which serves to host dropped elements."
-       },
-       "dropOn": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_dropOn",
-        "!doc": "The CSS class name used to define which nodes serve as container to\nbe dropped."
-       },
-       "helper": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_helper",
-        "!doc": "Indicates that the element is being dragged."
-       },
-       "nodes": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_nodes",
-        "!doc": "The CSS class name used to define which nodes are draggable."
-       },
-       "placeholder": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_placeholder",
-        "!doc": "Simulates the position of the dragged element."
-       },
-       "proxy": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_proxy",
-        "!doc": "Proxy element to be used when dragging."
-       },
-       "sortCondition": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#attribute_sortCondition",
-        "!doc": "Validates the condition for an element to be sorted."
-       },
        "add": {
         "!type": "fn(node: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#method_add",
@@ -8013,7 +8750,6 @@
         "!doc": "Creates drag instances from a list of nodes."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SortableList.html#property_NAME",
@@ -8035,16 +8771,11 @@
    "aui_tabview": {
     "A": {
      "Tab": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "swfdetect.Tab.prototype",
-       "disabled": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tab.html#attribute_disabled",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
-       }
-      },
+      "!type": "fn(config: +config.A.TabConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tab.html",
+      "prototype": {
+       "!proto": "swfdetect.Tab.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tab.html#property_NAME",
@@ -8067,19 +8798,10 @@
       }
      },
      "TabView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TabViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html",
       "prototype": {
        "!proto": "tabview.TabView.prototype",
-       "stacked": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html#attribute_stacked",
-        "!doc": "Determine the orientation of tabs.\nCan be stacked (vertical) or not (horizontal)."
-       },
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html#attribute_type",
-        "!doc": "Determine the type of tabs."
-       },
        "disableTab": {
         "!type": "fn(i: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html#method_disableTab",
@@ -8096,7 +8818,6 @@
         "!doc": "Get the tabs."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TabView.html#property_NAME",
@@ -8128,7 +8849,7 @@
    "aui_timepicker": {
     "A": {
      "TimePickerBase": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TimePickerBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html",
       "prototype": {
        "match": {
@@ -8140,31 +8861,6 @@
         "!type": "fn(str: string, group: string, flags: string)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#method_test",
         "!doc": "Tests a string against an Unicode pattern. Returns true or false."
-       },
-       "autocomplete": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_autocomplete",
-        "!doc": "Default `AutoComplete` configuration options."
-       },
-       "dateSeparator": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_dateSeparator",
-        "!doc": "Value seperator for `queryDelimiter` attribute of `AutoComplete` class."
-       },
-       "mask": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_mask",
-        "!doc": "Format for displayed time."
-       },
-       "popoverCssClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_popoverCssClass",
-        "!doc": "CSS class for popover."
-       },
-       "values": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#attribute_values",
-        "!doc": "Time values available to `AutoComplete` instance."
        },
        "clearSelection": {
         "!type": "fn()",
@@ -8273,44 +8969,10 @@
    "aui_toggler": {
     "A": {
      "Toggler": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TogglerConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "animated": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_animated",
-        "!doc": "Determine if the Toggler transitions will animate."
-       },
-       "animating": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_animating",
-        "!doc": "Determine if the Toggler transitions are being animated in that\nmoment."
-       },
-       "bindDOMEvents": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_bindDOMEvents",
-        "!doc": "Determine if the Toggler should bind DOM events or not."
-       },
-       "content": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_content",
-        "!doc": "The content of a Toogler instance."
-       },
-       "expanded": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_expanded",
-        "!doc": "Determine if the content starts as toggled on/off on page load."
-       },
-       "header": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_header",
-        "!doc": "The header of a Toogler instance."
-       },
-       "transition": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#attribute_transition",
-        "!doc": "Transition definitions such as duration and type of easing effect."
-       },
        "headerEventHandler": {
         "!type": "fn(event: ?, instance: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#method_headerEventHandler",
@@ -8342,7 +9004,6 @@
         "!doc": "Show or hide content."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toggler.html#property_NAME",
@@ -8360,44 +9021,10 @@
       }
      },
      "TogglerDelegate": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TogglerDelegateConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "animated": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_animated",
-        "!doc": "Determine if the Toggler Delegate transitions will animate."
-       },
-       "closeAllOnExpand": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_closeAllOnExpand",
-        "!doc": "Determine if the Toggler Delegate switches\nwill be set to off when one switch is toggled on."
-       },
-       "container": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_container",
-        "!doc": "The container of Toggler Delegate instance."
-       },
-       "content": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_content",
-        "!doc": "The content of a Toogler Delegate instance."
-       },
-       "expanded": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_expanded",
-        "!doc": "Determine if the content starts as toggled on/off on page load."
-       },
-       "header": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_header",
-        "!doc": "The header of a Toogler Delegate instance."
-       },
-       "transition": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#attribute_transition",
-        "!doc": "Transition definitions such as duration and type of easing effect."
-       },
        "collapseAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#method_collapseAll",
@@ -8414,7 +9041,6 @@
         "!doc": "Handle header events."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TogglerDelegate.html#property_NAME",
@@ -8436,19 +9062,10 @@
    "aui_toolbar": {
     "A": {
      "Toolbar": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ToolbarConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "children": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html#attribute_children",
-        "!doc": "A list of child elements."
-       },
-       "toolbarRenderer": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html#attribute_toolbarRenderer",
-        "!doc": "Define a new `ToolbarRenderer`."
-       },
        "add": {
         "!type": "fn(children: ?, where: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html#method_add",
@@ -8475,7 +9092,6 @@
         "!doc": "Remove children from Toolbar."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Toolbar.html#property_NAME",
@@ -8508,7 +9124,7 @@
       }
      },
      "ToolbarRenderer": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.ToolbarRendererConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ToolbarRenderer.html",
       "TEMPLATES": {
        "!type": "+yui.Object",
@@ -8548,36 +9164,11 @@
    "aui_tooltip": {
     "A": {
      "Tooltip": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "widget.Widget.prototype",
-       "animated": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_animated",
-        "!doc": "Determine if the transitions will animate or not."
-       },
-       "constrain": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_constrain",
-        "!doc": "Determine the tooltip constrain node."
-       },
-       "formatter": {
-        "!type": "fn()",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_formatter",
-        "!doc": "Format the title attribute before set the content of the tooltip."
-       },
-       "opacity": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_opacity",
-        "!doc": "Determine the opacity."
-       },
-       "triggerShowEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#attribute_triggerShowEvent",
-        "!doc": "DOM event to show the tooltip."
-       }
-      },
+      "!type": "fn(config: +config.A.TooltipConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html",
+      "prototype": {
+       "!proto": "widget.Widget.prototype"
+      },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html#property_CSS_PREFIX",
@@ -8595,7 +9186,8 @@
       }
      },
      "TooltipDelegate": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TooltipDelegateConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html",
       "prototype": {
        "!proto": "base.Base.prototype",
        "_onUserHideInteraction": {
@@ -8607,44 +9199,8 @@
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#method__onUserShowInteraction",
         "!doc": "Show tooltip on user interaction."
-       },
-       "align": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_align",
-        "!doc": "The alignment configuration for this widget."
-       },
-       "container": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_container",
-        "!doc": "The container of Toggler Delegate instance."
-       },
-       "duration": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_duration",
-        "!doc": "Determine the duration of the tooltip animation."
-       },
-       "opacity": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_opacity",
-        "!doc": "Determine the opacity of the tooltip."
-       },
-       "triggerHideEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_triggerHideEvent",
-        "!doc": "DOM event to hide the tooltip."
-       },
-       "triggerShowEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_triggerShowEvent",
-        "!doc": "DOM event to show the tooltip."
-       },
-       "zIndex": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#attribute_zIndex",
-        "!doc": "Specify the zIndex for the tooltips."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TooltipDelegate.html#property_ATTRS",
@@ -8656,24 +9212,10 @@
    "aui_tree": {
     "A": {
      "TreeData": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeDataConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "container": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_container",
-        "!doc": "Container to nest children nodes. If it has a container its not a leaf."
-       },
-       "children": {
-        "!type": "+yui.Array",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_children",
-        "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode\ninstance)."
-       },
-       "index": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_index",
-        "!doc": "Index the nodes."
-       },
        "getNodeById": {
         "!type": "fn(uid: string) -> +aui_tree.TreeNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_getNodeById",
@@ -8815,7 +9357,6 @@
         "!doc": "Get a TreeNode instance by a child DOM Node."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#property_ATTRS",
@@ -8823,7 +9364,7 @@
       }
      },
      "TreeViewIO": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeViewIOConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html",
       "ATTRS": {
        "!type": "+yui.Object",
@@ -8831,11 +9372,6 @@
        "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewIO."
       },
       "prototype": {
-       "io": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#attribute_io",
-        "!doc": "IO options for the current TreeNode load the children."
-       },
        "initIO": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#method_initIO",
@@ -8864,99 +9400,10 @@
       }
      },
      "TreeNode": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeNodeConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html",
       "prototype": {
        "!proto": "base.Base.prototype",
-       "boundingBox": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_boundingBox",
-        "!doc": "The widgets outermost node, used for sizing and positioning."
-       },
-       "contentBox": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_contentBox",
-        "!doc": "The direct descendant of a widgets\nbounding box and houses its content."
-       },
-       "cssClasses": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_cssClasses",
-        "!doc": "CSS classes used on TreeNode."
-       },
-       "draggable": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_draggable",
-        "!doc": "If true the TreeNode is draggable."
-       },
-       "ownerTree": {
-        "!type": "+TreeView",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_ownerTree",
-        "!doc": "TreeView which contains the current TreeNode."
-       },
-       "label": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_label",
-        "!doc": "Label of the TreeNode."
-       },
-       "expanded": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_expanded",
-        "!doc": "Whether the TreeNode is expanded by default."
-       },
-       "id": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_id",
-        "!doc": "Id of the TreeNode."
-       },
-       "leaf": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_leaf",
-        "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
-       },
-       "nextSibling": {
-        "!type": "+aui_tree.TreeNode",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_nextSibling",
-        "!doc": "Next sibling of the current TreeNode."
-       },
-       "prevSibling": {
-        "!type": "+aui_tree.TreeNode",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_prevSibling",
-        "!doc": "Previous sibling of the current TreeNode."
-       },
-       "parentNode": {
-        "!type": "+aui_tree.TreeNode",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_parentNode",
-        "!doc": "Parent node of the current TreeNode."
-       },
-       "labelEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_labelEl",
-        "!doc": "Label element to house the `label` attribute."
-       },
-       "hitAreaEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_hitAreaEl",
-        "!doc": "Hitarea element."
-       },
-       "alwaysShowHitArea": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_alwaysShowHitArea",
-        "!doc": "Always show the hitarea icon."
-       },
-       "iconEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_iconEl",
-        "!doc": "Icon element."
-       },
-       "tabIndex": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_tabIndex",
-        "!doc": "Specify the tab order."
-       },
-       "rendered": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_rendered",
-        "!doc": "If true the TreeNode is rendered."
-       },
        "render": {
         "!type": "fn(container: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_render",
@@ -9023,7 +9470,6 @@
         "!doc": "Toggle the current TreeNode, `collapsed` or `expanded`."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#property_NAME",
@@ -9036,29 +9482,10 @@
       }
      },
      "TreeNodeIO": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeNodeIOConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html",
       "prototype": {
        "!proto": "aui_tree.A.TreeNode.prototype",
-       "loading": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_loading",
-        "!doc": "Whether the current TreeNode IO transaction is loading."
-       },
-       "loaded": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_loaded",
-        "!doc": "Whether the current TreeNode has loaded the content."
-       },
-       "cache": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_cache",
-        "!doc": "Whether the current TreeNode should cache the loaded content or not."
-       },
-       "leaf": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_leaf",
-        "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
-       },
        "createNodes": {
         "!type": "fn(nodes: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#method_createNodes",
@@ -9075,7 +9502,6 @@
         "!doc": "Fire when IO success."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#property_NAME",
@@ -9088,29 +9514,10 @@
       }
      },
      "TreeNodeCheck": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeNodeCheckConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html",
       "prototype": {
        "!proto": "aui_tree.A.TreeNodeIO.prototype",
-       "checked": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checked",
-        "!doc": "Whether the TreeNode is checked or not."
-       },
-       "checkName": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkName",
-        "!doc": "Name of the checkbox element used on the current TreeNode."
-       },
-       "checkContainerEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkContainerEl",
-        "!doc": "Container element for the checkbox."
-       },
-       "checkEl": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkEl",
-        "!doc": "Checkbox element."
-       },
        "check": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#method_check",
@@ -9132,7 +9539,6 @@
         "!doc": "Whether the current TreeNodeCheck is checked."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#property_NAME",
@@ -9145,7 +9551,8 @@
       }
      },
      "TreeNodeTask": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeNodeTaskConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeTask.html",
       "prototype": {
        "!proto": "aui_tree.A.TreeNodeCheck.prototype",
        "check": {
@@ -9159,7 +9566,6 @@
         "!doc": "Uncheck the current TreeNodeTask."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeTask.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeTask.html#property_NAME",
@@ -9167,21 +9573,16 @@
       }
      },
      "TreeNodeRadio": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeNodeRadioConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html",
       "prototype": {
        "!proto": "aui_tree.A.TreeNodeTask.prototype",
-       "cssClasses": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#attribute_cssClasses",
-        "!doc": "CSS classes used on TreeNodeRadio."
-       },
        "check": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#method_check",
         "!doc": "Check the current TreeNodeRadio."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#property_NAME",
@@ -9194,52 +9595,25 @@
       }
      },
      "TreeViewPaginator": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeViewPaginatorConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewPaginator.html",
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewPaginator.html#property_ATTRS",
        "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView."
-      },
-      "prototype": {
-       "paginator": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewPaginator.html#attribute_paginator",
-        "!doc": "Paginator."
-       }
       }
      },
      "TreeView": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.TreeViewConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "type": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_type",
-        "!doc": "Type of the treeview (i.e. could be file or normal)."
-       },
-       "lastSelected": {
-        "!type": "+aui_tree.TreeNode",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_lastSelected",
-        "!doc": "Last selected TreeNode."
-       },
-       "lazyLoad": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_lazyLoad",
-        "!doc": "Determine if its going to be lazy loaded or not."
-       },
-       "selectOnToggle": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_selectOnToggle",
-        "!doc": "Determine if its going to be selected on toggle."
-       },
        "createNodes": {
         "!type": "fn(nodes: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#method_createNodes",
         "!doc": "Create Nodes."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#property_NAME",
@@ -9252,41 +9626,11 @@
       }
      },
      "TreeViewDD": {
-      "!type": "fn(config: +yui.Object)",
-      "prototype": {
-       "!proto": "aui_tree.A.TreeView.prototype",
-       "helper": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_helper",
-        "!doc": "Dragdrop helper element."
-       },
-       "scrollDelay": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_scrollDelay",
-        "!doc": "Delay of the scroll while dragging the TreeNodes."
-       },
-       "dropAction": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_dropAction",
-        "!doc": "Drop action (i.e. could be append, below or above)."
-       },
-       "lastY": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_lastY",
-        "!doc": "Last Y."
-       },
-       "node": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_node",
-        "!doc": "Node."
-       },
-       "nodeContent": {
-        "!type": "+node.Node",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_nodeContent",
-        "!doc": "Reference for the current drop node."
-       }
-      },
+      "!type": "fn(config: +config.A.TreeViewDDConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html",
+      "prototype": {
+       "!proto": "aui_tree.A.TreeView.prototype"
+      },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#property_NAME",
@@ -9314,7 +9658,7 @@
    "aui_url": {
     "A": {
      "Url": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.UrlConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Url.html",
       "prototype": {
        "addParameter": {
@@ -9509,44 +9853,10 @@
    "aui_video": {
     "A": {
      "Video": {
-      "!type": "fn(config: +yui.Object)",
+      "!type": "fn(config: +config.A.VideoConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html",
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
-       "url": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_url",
-        "!doc": "URL used by Video to play."
-       },
-       "ogvUrl": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_ogvUrl",
-        "!doc": "URL (on .ogv format) used by Video to play."
-       },
-       "swfUrl": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_swfUrl",
-        "!doc": "URL (on .swf format) used by Video to create\na fallback player with Flash."
-       },
-       "poster": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_poster",
-        "!doc": "Image displayed before playback starts."
-       },
-       "fixedAttributes": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_fixedAttributes",
-        "!doc": "An additional list of attributes."
-       },
-       "flashVars": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_flashVars",
-        "!doc": "Variables used by Flash player."
-       },
-       "render": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#attribute_render",
-        "!doc": "If `true` the render phase will be automatically invoked\npreventing the `.render()` manual call."
-       },
        "load": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#method_load",
@@ -9563,7 +9873,6 @@
         "!doc": "Play video track."
        }
       },
-      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html",
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Video.html#property_NAME",
@@ -9597,13 +9906,6 @@
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetCssClass.html#property_ATTRS",
        "!doc": "Static property used to define the default attribute\nconfiguration for the Component."
       },
-      "prototype": {
-       "cssClass": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetCssClass.html#attribute_cssClass",
-        "!doc": "CSS class to be automatically added to the `boundingBox`."
-       }
-      },
       "CSS_CLASS_CONTENT_SUFFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetCssClass.html#property_CSS_CLASS_CONTENT_SUFFIX",
@@ -9619,11 +9921,6 @@
        "!doc": "Static property used to define the default attribute\nconfiguration."
       },
       "prototype": {
-       "position": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetPositionAlignSuggestion.html#attribute_position",
-        "!doc": "Determine the position of the tooltip."
-       },
        "POSITION_ALIGN_SUGGESTION": {
         "!type": "?",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetPositionAlignSuggestion.html#property_POSITION_ALIGN_SUGGESTION",
@@ -9633,11 +9930,6 @@
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetPositionAlignSuggestion.html#method_initializer",
         "!doc": "Construction logic executed during WidgetPositionAlignSuggestion\ninstantiation. Lifecycle."
-       },
-       "alignNode": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetPositionAlignSuggestion.html#attribute_alignNode",
-        "!doc": "Suggest alignment for the node based on the `position` suggestion."
        }
       }
      }
@@ -9669,16 +9961,6 @@
        "!doc": "Static property used to define the default attribute configuration."
       },
       "prototype": {
-       "toolbars": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetToolbars.html#attribute_toolbars",
-        "!doc": "Collection of `A.Toolbar` instances."
-       },
-       "toolbarPosition": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetToolbars.html#attribute_toolbarPosition",
-        "!doc": "Collection of toolbars header, body, and footer positions."
-       },
        "addToolbar": {
         "!type": "fn(toolbar: ?, section: ?) -> +aui_toolbar.A.Toolbar",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetToolbars.html#method_addToolbar",
@@ -9712,33 +9994,6 @@
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#property_ATTRS",
        "!doc": "Static property used to define the default attribute configuration."
-      },
-      "prototype": {
-       "animated": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_animated",
-        "!doc": "Determine if the transitions will animate or not."
-       },
-       "delay": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_delay",
-        "!doc": "Determine the delay (in milliseconds) after widgets transition\nanimation. By default theres no delay."
-       },
-       "duration": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_duration",
-        "!doc": "Determine the duration of the transition."
-       },
-       "opacity": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_opacity",
-        "!doc": "Determine the opacity."
-       },
-       "stickDuration": {
-        "!type": "number",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTransition.html#attribute_stickDuration",
-        "!doc": "Determine the duration (in milliseconds) for the widget to stick\nvisibility after the trigger element. By default the stick duration is\nnot specified."
-       }
       }
      },
      "WidgetTrigger": {
@@ -9750,31 +10005,6 @@
        "!doc": "Static property used to define the default attribute\nconfiguration."
       },
       "prototype": {
-       "bindDOMEvents": {
-        "!type": "bool",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_bindDOMEvents",
-        "!doc": "Determine if the Toggler should bind DOM events or not."
-       },
-       "trigger": {
-        "!type": "?",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_trigger",
-        "!doc": "Trigger node to change widget visibility state."
-       },
-       "triggerHideEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_triggerHideEvent",
-        "!doc": "DOM event to hide the tooltip."
-       },
-       "triggerShowEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_triggerShowEvent",
-        "!doc": "DOM event to show the tooltip."
-       },
-       "triggerToggleEvent": {
-        "!type": "string",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#attribute_triggerToggleEvent",
-        "!doc": "DOM event to toggle the tooltip."
-       },
        "initializer": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.WidgetTrigger.html#method_initializer",
