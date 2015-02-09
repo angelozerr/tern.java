@@ -10,6 +10,8 @@
  */
 package tern.server;
 
+import tern.metadata.TernModuleMetadata;
+
 /**
  * Basic tern plugin.
  *
@@ -19,6 +21,12 @@ public class BasicTernPlugin extends AbstractBasicTernModule implements
 
 	public BasicTernPlugin(String name) {
 		super(name, ModuleType.Plugin);
+	}
+
+	@Override
+	public boolean isLinter() {
+		TernModuleMetadata metadata = getMetadata();
+		return metadata != null ? metadata.isLinter() : false;
 	}
 
 }

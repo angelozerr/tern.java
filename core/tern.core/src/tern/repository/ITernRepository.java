@@ -14,6 +14,7 @@ import java.io.File;
 
 import tern.TernException;
 import tern.server.ITernModule;
+import tern.server.ITernPlugin;
 
 /**
  * Tern repository is a local base dir which contains the tern.js JS files :
@@ -95,4 +96,11 @@ public interface ITernRepository {
 	 * @return the module by name and null otherwise.
 	 */
 	ITernModule getModule(String name);
+
+	/**
+	 * Returns the list fo tern plugin which are linter.
+	 * 
+	 * @return the list fo tern plugin which are linter.
+	 */
+	ITernPlugin[] getLinters();
 }

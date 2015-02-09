@@ -4,6 +4,7 @@
  "homepage": "https://github.com/angelozerr/tern-eslint",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "This plugin validate JS files with ESLint.",
+ "linter": true,
  "repository": {
   "type": "git",
   "url": "https://github.com/angelozerr/tern-eslint.git"

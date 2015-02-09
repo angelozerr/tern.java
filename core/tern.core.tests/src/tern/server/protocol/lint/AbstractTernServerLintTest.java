@@ -24,7 +24,7 @@ public abstract class AbstractTernServerLintTest extends AbstractTernServerTest 
 	@Override
 	protected ITernProject createProject() {
 		ITernProject project = super.createProject();
-		project.addPlugin(TernLintPlugin.lint);
+		project.addPlugin(TernPlugin.lint);
 		project.addLib(TernDef.browser);
 		return project;
 	}
@@ -37,14 +37,14 @@ public abstract class AbstractTernServerLintTest extends AbstractTernServerTest 
 
 	}
 
-	private TernDoc createDoc() {
+	private TernDoc createDoc() throws TernException {
 		String name = "myfile.js";
 		String text = "document.getElem";
 
 		TernDoc doc = new TernDoc();
 		doc.addFile(name, text, null, null);
 
-		TernLintQuery query = new TernLintQuery();
+		TernLintQuery query = TernLintQuery.create(TernPlugin.lint, false);
 		query.setFile(name);
 		doc.setQuery(query);
 

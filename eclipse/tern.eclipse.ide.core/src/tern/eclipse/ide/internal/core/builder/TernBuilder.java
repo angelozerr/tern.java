@@ -29,9 +29,11 @@ import tern.TernException;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
+import tern.server.ITernPlugin;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.lint.ITernLintPlugin;
+import tern.server.protocol.lint.TernLintQuery;
+import tern.utils.TernModuleHelper;
 
 /**
  * Tern builder.
@@ -67,7 +69,7 @@ public class TernBuilder extends IncrementalProjectBuilder {
 		}
 		final IIDETernProject ternProject = TernCorePlugin
 				.getTernProject(currentProject);
-		ITernLintPlugin[] lintPlugins = ternProject.getLintPlugins();
+		ITernPlugin[] lintPlugins = ternProject.getLinters();
 		if (lintPlugins.length > 0) {
 
 			ITernLintCollector collector = new ITernLintCollector() {
@@ -134,8 +136,8 @@ public class TernBuilder extends IncrementalProjectBuilder {
 			};
 
 			try {
-				for (ITernLintPlugin lintPlugin : lintPlugins) {
-					TernQuery query = lintPlugin.createQuery(true);
+				for (ITernPlugin linter : lintPlugins) {
+					TernQuery query = TernLintQuery.create(linter, true);
 					ternProject.request(query, collector);
 				}
 			} catch (IOException e) {

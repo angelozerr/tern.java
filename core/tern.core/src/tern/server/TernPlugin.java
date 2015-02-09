@@ -10,6 +10,9 @@
  */
 package tern.server;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataManager;
 
@@ -43,14 +46,35 @@ public enum TernPlugin implements ITernPlugin {
 	meteor("tern/plugin/meteor"), 
 	qooxdoo_4_1("qooxdoo", "4.1", true), 
 	requirejs("tern/plugin/requirejs"), 
-	yui3("yui", "3");
+	yui3("yui", "3"),
 
+	// tern linter
+	lint(null, null, null, null, true),
+	eslint(null, null, null, null, true),
+	jshint(null, null, null, null, true),
+	jscs(null, null, null, null, true);
+
+	private static final ITernPlugin[] linters = createLinters();
+	
+	private static ITernPlugin[] createLinters() {
+		Collection<ITernPlugin> linters = new ArrayList<ITernPlugin>();
+		TernPlugin[] plugins = values();
+		for (TernPlugin plugin : plugins) {
+			if (plugin.isLinter()) {
+				linters.add(plugin);
+			}
+		}
+		return linters.toArray(ITernPlugin.EMPTY_PLUGIN);
+	}
+	
 	private final String name;
 	private final String type;
 	private final String version;
 	private final String path;
+	private final boolean linter;
 	private TernModuleMetadata metadata;
 
+	
 	private TernPlugin(String path) {
 		this(null, null, null, path);
 	}
@@ -66,13 +90,19 @@ public enum TernPlugin implements ITernPlugin {
 	}
 
 	private TernPlugin(String name, String type, String version, String path) {
+		this(name, type, version, path, false);
+	}
+	
+
+	private TernPlugin(String name, String type, String version, String path, boolean linter) {
 		this.name = name != null ? name : name();
 		this.type = type != null ? type : name();
 		this.path = path;
 		this.version = version;
+		this.linter = linter;
 		this.metadata = null;
 	}
-
+	
 	@Override
 	public String getName() {
 		return name;
@@ -110,6 +140,10 @@ public enum TernPlugin implements ITernPlugin {
 		return null;
 	}
 
+	public static ITernPlugin[] getLinters() {
+		return linters;
+	}
+	
 	@Override
 	public TernModuleMetadata getMetadata() {
 		if (metadata == null) {
@@ -117,5 +151,10 @@ public enum TernPlugin implements ITernPlugin {
 					getType());
 		}
 		return metadata;
+	}
+	
+	@Override
+	public boolean isLinter() {
+		return linter;
 	}
 }

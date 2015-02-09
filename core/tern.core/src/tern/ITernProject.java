@@ -28,7 +28,6 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.lint.ITernLintPlugin;
 import tern.server.protocol.type.ITernTypeCollector;
 
 import com.eclipsesource.json.JsonArray;
@@ -166,7 +165,7 @@ public interface ITernProject extends ITernAdaptable {
 	 * 
 	 * @return list of tern lint plugins.
 	 */
-	ITernLintPlugin[] getLintPlugins();
+	ITernPlugin[] getLinters();
 	
 	// ---------------- Tern save
 

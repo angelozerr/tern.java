@@ -27,9 +27,10 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.server.ITernPlugin;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.lint.ITernLintPlugin;
+import tern.server.protocol.lint.TernLintQuery;
 
 /**
  * As-You-Type validation Java files
@@ -58,7 +59,7 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 		IDocument document = getDocument();
 
 		if (document != null) {
-			ITernLintPlugin[] lintPlugins = ternProject.getLintPlugins();
+			ITernPlugin[] lintPlugins = ternProject.getLinters();
 			if (lintPlugins.length > 0) {
 
 				// Clean old TernAnnotation
@@ -124,8 +125,8 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 
 				try {
 					ITernFile tf = new TernDocumentFile(file, document);
-					for (ITernLintPlugin lintPlugin : lintPlugins) {
-						TernQuery query = lintPlugin.createQuery(false);
+					for (ITernPlugin linter : lintPlugins) {
+						TernQuery query = TernLintQuery.create(linter, false);
 						ternProject.request(query, tf, collector);
 					}
 				} catch (Exception e) {

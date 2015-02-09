@@ -11,11 +11,15 @@
 package tern.repository;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import tern.TernException;
 import tern.server.ITernModule;
+import tern.server.ITernPlugin;
+import tern.server.ModuleType;
 import tern.utils.ExtensionUtils;
 import tern.utils.TernModuleHelper;
 
@@ -33,6 +37,7 @@ public class TernRepository implements ITernRepository {
 	private File ternBaseDir;
 	private final boolean defaultRepository;
 	private Map<String, ITernModule> modules;
+	private ITernPlugin[] linters;
 
 	public TernRepository(String name, File ternBaseDir) {
 		this(name, ternBaseDir, false);
@@ -69,7 +74,19 @@ public class TernRepository implements ITernRepository {
 	private void intializeIfNeeded() throws TernException {
 		if (modules == null) {
 			modules = loadModules();
+			linters = searchLinters(modules.values());
 		}
+	}
+
+	private ITernPlugin[] searchLinters(Collection<ITernModule> values) {
+		Collection<ITernPlugin> linters = new ArrayList<ITernPlugin>();
+		for (ITernModule module : values) {
+			if (module.getModuleType() == ModuleType.Plugin
+					&& ((ITernPlugin) module).isLinter()) {
+				linters.add((ITernPlugin) module);
+			}
+		}
+		return linters.toArray(ITernPlugin.EMPTY_PLUGIN);
 	}
 
 	private Map<String, ITernModule> loadModules() throws TernException {
@@ -152,5 +169,16 @@ public class TernRepository implements ITernRepository {
 			return moduleFile;
 		}
 		return null;
+	}
+
+	@Override
+	public ITernPlugin[] getLinters() {
+		try {
+			intializeIfNeeded();
+		} catch (TernException e) {
+			e.printStackTrace();
+			return ITernPlugin.EMPTY_PLUGIN;
+		}
+		return linters;
 	}
 }

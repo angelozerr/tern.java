@@ -35,7 +35,6 @@ import tern.server.ModuleType;
 import tern.server.TernDef;
 import tern.server.TernModuleConfigurable;
 import tern.server.TernPlugin;
-import tern.server.protocol.lint.TernLintPlugin;
 
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
@@ -249,13 +248,8 @@ public class TernModuleHelper {
 	 * @return
 	 */
 	private static ITernPlugin getPlugin(String name) {
-		// classic plugin
+		// tern plugin
 		ITernPlugin plugin = TernPlugin.getTernPlugin(name);
-		if (plugin != null) {
-			return plugin;
-		}
-		// lint plugin
-		plugin = TernLintPlugin.getTernPlugin(name);
 		if (plugin != null) {
 			return plugin;
 		}

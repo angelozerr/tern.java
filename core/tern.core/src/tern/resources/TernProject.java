@@ -36,6 +36,7 @@ import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.ITernServer;
+import tern.server.TernPlugin;
 import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
@@ -44,8 +45,6 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.lint.ITernLintPlugin;
-import tern.server.protocol.lint.TernLintPlugin;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.IOUtils;
 
@@ -90,7 +89,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	private final File projectDir;
 	private File ternProjectFile;
 	
-	private ITernLintPlugin[] lintPlugins;
+	private ITernPlugin[] linters;
 
 	/**
 	 * tern file synchronizer.
@@ -324,28 +323,36 @@ public class TernProject extends JsonObject implements ITernProject {
 	@Override
 	public void clearPlugins() {
 		remove(PLUGINS_FIELD_NAME);
-		this.lintPlugins = null;
+		this.linters = null;
 	}
 	
 	@Override
-	public ITernLintPlugin[] getLintPlugins() {
-		if (lintPlugins == null) {
-			Collection<ITernLintPlugin> plugins = new ArrayList<ITernLintPlugin>();
-			ITernLintPlugin[] knownLintPlugins = getKnownLintPlugins();
-			ITernLintPlugin knownLintPlugin;
-			for (int i = 0; i < knownLintPlugins.length; i++) {
-				knownLintPlugin = knownLintPlugins[i];
-				if (hasPlugin(knownLintPlugin)) {
-					plugins.add(knownLintPlugin);
-				}
+	public ITernPlugin[] getLinters() {
+		if (linters == null) {
+			Collection<ITernPlugin> plugins = new ArrayList<ITernPlugin>();
+			// dynamic linter coming from repository
+			ITernRepository repository = getRepository();
+			if (repository != null) {
+				addLinter(plugins, repository.getLinters());
+			} else {
+				// known linters
+				addLinter(plugins, TernPlugin.getLinters());
 			}
-			lintPlugins = plugins.toArray(ITernLintPlugin.EMPTY_PLUGIN);
+			linters = plugins.toArray(ITernPlugin.EMPTY_PLUGIN);
 		}
-		return lintPlugins;
+		return linters;
 	}
-	
-	private ITernLintPlugin[] getKnownLintPlugins() {
-		return TernLintPlugin.values();
+
+	private void addLinter(Collection<ITernPlugin> plugins,
+			ITernPlugin[] knownLintPlugins) {
+		ITernPlugin knownLintPlugin;
+		for (int i = 0; i < knownLintPlugins.length; i++) {
+			knownLintPlugin = knownLintPlugins[i];
+			if (hasPlugin(knownLintPlugin)
+					&& !plugins.contains(knownLintPlugin)) {
+				plugins.add(knownLintPlugin);
+			}
+		}
 	}
 
 	public void addLoadEagerlyPattern(String pattern) {

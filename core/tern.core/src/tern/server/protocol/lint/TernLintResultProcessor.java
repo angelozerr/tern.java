@@ -34,7 +34,7 @@ public class TernLintResultProcessor implements
 		JsonArray messages = (JsonArray) ((JsonObject) jsonObject)
 				.get("messages"); //$NON-NLS-1$
 		if (messages != null) {
-			BaseTernLintQuery query = (BaseTernLintQuery) doc.getQuery();
+			TernLintQuery query = (TernLintQuery) doc.getQuery();
 			if (query.isGroupByFiles()) {
 				JsonObject filesObject = null;
 				String file = null;

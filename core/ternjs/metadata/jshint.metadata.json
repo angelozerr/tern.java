@@ -4,6 +4,7 @@
  "homepage": "https://github.com/angelozerr/tern-jshint",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "This plugin validate JS files with JSHint.",
+ "linter": true,
  "repository": {
   "type": "git",
   "url": "https://github.com/angelozerr/tern-jshint.git"

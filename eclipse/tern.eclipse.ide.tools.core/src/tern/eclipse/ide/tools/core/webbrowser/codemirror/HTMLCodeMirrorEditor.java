@@ -79,7 +79,7 @@ public String generate(Object argument)
 		tern.server.ITernPlugin plugin = null;
 		for (int i = 0; i < ternPlugins.length; i++) {
 			plugin = ternPlugins[i];
-			if (plugin.getName().equals(tern.server.protocol.lint.TernLintPlugin.lint.name())) {
+			if (plugin.isLinter()) {
 				hasTernLint = true;
 			}
 	
