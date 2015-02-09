@@ -50,14 +50,14 @@ public class PathHelper {
 		// no "bin" subfolder for windows...
 		if ("win32".equals(os)) {
 			file = new File(
-					"../../eclipse/tern.eclipse.ide.server.nodejs.embed." + os
+					"../../eclipse/embed/tern.eclipse.ide.server.nodejs.embed." + os
 							+ "." + ws + "." + arch + "/node-v0.10.22-" + os
 							+ "-" + arch + "/node");
 
 		} else {
 			// Linux, mac...
 			file = new File(
-					"../../eclipse/tern.eclipse.ide.server.nodejs.embed." + os
+					"../../eclipse/embed/tern.eclipse.ide.server.nodejs.embed." + os
 							+ "." + ws + "." + arch + "/node-v0.10.22-" + os
 							+ "-" + arch + "/bin/node");
 		}
@@ -68,7 +68,7 @@ public class PathHelper {
 	}
 
 	private static void unZipIfNecessary(String os, String ws, String arch) {
-		String folderName = "../../eclipse/tern.eclipse.ide.server.nodejs.embed."
+		String folderName = "../../eclipse/embed/tern.eclipse.ide.server.nodejs.embed."
 				+ os + "." + ws + "." + arch + "/node-v0.10.22-" + os
 				+ "-" + arch;
 		File file = new File(folderName);
