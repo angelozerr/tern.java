@@ -14,7 +14,8 @@
     "UnknownTabrisEvent" : {"severity" : "error"}
   };
   
-  if (tern.registerLint) {
+  function registerLints() {
+    if (!tern.registerLint) return;
     
     // validate tabris.create(
     tern.registerLint("tabrisCreate_lint", function(node, addMessage, getRule) {
@@ -34,6 +35,15 @@
       }
     });
 
+    // validate widget.set(    
+    tern.registerLint("tabrisSet_lint", function(node, addMessage, getRule) {
+      var argNode = node.arguments[0];
+      if (argNode) {
+        var cx = infer.cx(), proxyType = argNode._tabris && argNode._tabris.proxyType, propertyName = argNode.value;
+        if (!getPropertyType(proxyType, propertyName)) addMessage(argNode, "Unknown tabris property '" + propertyName + "'", defaultRules.UnknownTabrisProperty.severity);
+      }
+    });
+    
     // validate on, off, trigger event(    
     tern.registerLint("tabrisEvent_lint", function(node, addMessage, getRule) {
       var argNode = node.arguments[0];
@@ -43,7 +53,7 @@
       }
     });
     
-  }     
+  }
   
   // tabris.create(
   
@@ -78,20 +88,34 @@
     return null;
   }
 
-  ["tabris_Proxy_get", "tabris_Proxy_set"].forEach(function(name) {
-    infer.registerFunction(name, function(_self, args, argNodes) {
-      if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
-        return infer.ANull;
-  	  
-      var widgetType = _self.getType(), propertyName = argNodes[0].value, propertyType = getPropertyType(widgetType, propertyName);
-      argNodes[0]._tabris = {"type" : "tabris_Proxy_get", "proxyType" : widgetType};
-      if (propertyType) return propertyType.getType();
+  // widget.get
+  infer.registerFunction("tabris_Proxy_get", function(_self, args, argNodes) {
+    if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
       return infer.ANull;
-    });
-  });
-
-  // widget.on(
   
+    var widgetType = _self.getType(), propertyName = argNodes[0].value, propertyType = getPropertyType(widgetType, propertyName);
+    argNodes[0]._tabris = {"type" : "tabris_Proxy_get", "proxyType" : widgetType};
+    if (propertyType) return propertyType.getType();
+      return infer.ANull;
+  });
+  
+  // widget.set
+  infer.registerFunction("tabris_Proxy_set", function(_self, args, argNodes) {
+    if (!argNodes || !argNodes.length || argNodes[0].type != "Literal" || typeof argNodes[0].value != "string")
+      return infer.ANull;
+  
+    var widgetType = _self.getType(), propertyName = argNodes[0].value, propertyType = getPropertyType(widgetType, propertyName);
+    argNodes[0]._tabris = {"type" : "tabris_Proxy_set", "proxyType" : widgetType};
+    
+   /* if (args[1] && propertyType && propertyType.getType()) {
+      var fn = _self.hasProp("set").getFunctionType();
+      var newArgs = [args[0], propertyType.getType()];
+      fn.propagate(new infer.IsCallee(infer.cx().topScope, newArgs, argNodes, infer.Null))	
+    }
+    return _self;*/
+  });
+  
+  // widget.on(  
   function getEventProperties(proto) {
     var cx = infer.cx(), locals = cx.definitions.tabris;    
     var objectName = proto.name, index = objectName.indexOf("types.");
@@ -120,7 +144,8 @@
     argNodes[0]._tabris = {"type" : "tabris_Proxy_eventtype", "proxyType" : proxyType};
   });
   
-  tern.registerPlugin("tabris", function(server, options) {    
+  tern.registerPlugin("tabris", function(server, options) {
+	registerLints();
     return {defs: defs,
       passes: {completion: completion}};
   });
@@ -753,10 +778,13 @@
               }
             },
             "set" : {
-              "!type" : "fn(name: string, value: string) -> !this",
+              "!type" : "fn(name: string, value: ?) -> !this",
               "!effects" : ["custom tabris_Proxy_set"],
               "!doc" : "Sets a widget property. Returns the widget itself.",
-              "!url" : "https://tabrisjs.com/documentation/widgets#codesetname-valuecode"
+              "!url" : "https://tabrisjs.com/documentation/widgets#codesetname-valuecode",
+              "!data": {
+                "!lint": "tabrisSet_lint"
+               }
             },
             "animate" : {
               "!type" : "fn(animationProperties: ?, options: ?)",
