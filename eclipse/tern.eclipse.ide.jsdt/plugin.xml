@@ -78,6 +78,12 @@
 	<extension
          point="org.eclipse.wst.jsdt.ui.javaEditorTextHovers">
       <hover
+            label="%problemTernHover"
+            description="%problemTernHoverDescription"
+            class="tern.eclipse.ide.jsdt.internal.hover.JSDTProblemTernHover"
+            id="tern.eclipse.ide.jsdt.internal.hover.JSDTProblemTernHover">
+      </hover>         
+      <hover
             label="%ternHover"
             description="%ternHoverDescription"
             class="tern.eclipse.ide.jsdt.internal.hover.JSDTTernHover"

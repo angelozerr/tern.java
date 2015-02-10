@@ -311,4 +311,18 @@ public class TernModuleHelper {
 		}
 		return s.toString();
 	}
+
+	/**
+	 * Returns the label of the given module.
+	 * 
+	 * @param module
+	 * @return the label of the given module.
+	 */
+	public static String getLabel(ITernModule module) {
+		TernModuleMetadata metadata = module.getMetadata();
+		if (metadata != null && !StringUtils.isEmpty(metadata.getLabel())) {
+			return metadata.getLabel();
+		}
+		return module.getName();
+	}
 }

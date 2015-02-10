@@ -77,56 +77,13 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				}
 
 				// validate full js content with Tern plugin lint.js
-				ITernLintCollector collector = new ITernLintCollector() {
-
-					@Override
-					public void startLint(String file) {
-
-					}
-
-					@Override
-					public void addMessage(String message, Long start,
-							Long end, String severity, String file) {
-						TernAnnotation existingAnnotation = getExistingAnnotation(
-								message, start.intValue(), end.intValue(),
-								severity, annotationsToRemove);
-						if (existingAnnotation != null) {
-							// tern annotation already exists, use it.
-							annotationsToRemove.remove(existingAnnotation);
-						} else {
-							// create new tern annotation.
-							TernAnnotation annotation = new TernAnnotation(
-									severity, message, start.intValue(),
-									end.intValue());
-							newModel.addAnnotation(annotation, new Position(
-									annotation.getStart(), annotation.getEnd()
-											- annotation.getStart()));
-						}
-					}
-
-					@Override
-					public void endLint(String file) {
-
-					}
-
-					private TernAnnotation getExistingAnnotation(
-							String message, int start, int end,
-							String severity,
-							List<TernAnnotation> annotationsToRemove) {
-						for (TernAnnotation annotation : annotationsToRemove) {
-							if (annotation.isEquals(severity, message, start,
-									end)) {
-								return annotation;
-							}
-						}
-						return null;
-					}
-				};
-
+				AnnotationsCollector collector = new AnnotationsCollector(
+						annotationsToRemove, newModel);
 				try {
 					ITernFile tf = new TernDocumentFile(file, document);
 					for (ITernPlugin linter : lintPlugins) {
 						TernQuery query = TernLintQuery.create(linter, false);
+						collector.setLinter(linter);
 						ternProject.request(query, tf, collector);
 					}
 				} catch (Exception e) {
@@ -140,4 +97,61 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 			}
 		}
 	}
+
+	private class AnnotationsCollector implements ITernLintCollector {
+
+		private final List<TernAnnotation> annotationsToRemove;
+		private final IAnnotationModel newModel;
+		private ITernPlugin linter;
+
+		public AnnotationsCollector(List<TernAnnotation> annotationsToRemove,
+				IAnnotationModel newModel) {
+			this.annotationsToRemove = annotationsToRemove;
+			this.newModel = newModel;
+		}
+
+		public void setLinter(ITernPlugin linter) {
+			this.linter = linter;
+		}
+
+		@Override
+		public void startLint(String file) {
+
+		}
+
+		@Override
+		public void addMessage(String message, Long start, Long end,
+				String severity, String file) {
+			TernAnnotation existingAnnotation = getExistingAnnotation(message,
+					start.intValue(), end.intValue(), severity,
+					annotationsToRemove);
+			if (existingAnnotation != null) {
+				// tern annotation already exists, use it.
+				annotationsToRemove.remove(existingAnnotation);
+			} else {
+				// create new tern annotation.
+				TernAnnotation annotation = new TernAnnotation(severity,
+						message, start.intValue(), end.intValue(), linter);
+				newModel.addAnnotation(annotation,
+						new Position(annotation.getStart(), annotation.getEnd()
+								- annotation.getStart()));
+			}
+		}
+
+		@Override
+		public void endLint(String file) {
+
+		}
+
+		private TernAnnotation getExistingAnnotation(String message, int start,
+				int end, String severity,
+				List<TernAnnotation> annotationsToRemove) {
+			for (TernAnnotation annotation : annotationsToRemove) {
+				if (annotation.isEquals(severity, message, start, end)) {
+					return annotation;
+				}
+			}
+			return null;
+		}
+	};
 }

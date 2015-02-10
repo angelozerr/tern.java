@@ -12,6 +12,9 @@ package tern.eclipse.ide.internal.ui.validation;
 
 import org.eclipse.jface.text.source.Annotation;
 
+import tern.server.ITernPlugin;
+import tern.utils.TernModuleHelper;
+
 /**
  * Tern annotation.
  *
@@ -19,24 +22,28 @@ import org.eclipse.jface.text.source.Annotation;
 public class TernAnnotation extends Annotation {
 
 	private final String severity;
-	private final String message;
 	private final int start;
 	private final int end;
+	private final ITernPlugin linter;
 
-	public TernAnnotation(String severity, String message, int start, int end) {
+	public TernAnnotation(String severity, String message, int start, int end,
+			ITernPlugin linter) {
 		super("org.eclipse.ui.workbench.texteditor." + severity, true, message);
 		this.severity = severity;
-		this.message = message;
 		this.start = start;
 		this.end = end;
+		this.linter = linter;
+		String text = message;
+		if (linter != null) {
+			text = new StringBuilder("[")
+					.append(TernModuleHelper.getLabel(linter)).append("]")
+					.append(": ").append(message).toString();
+		}
+		super.setText(text);
 	}
 
 	public String getSeverity() {
 		return severity;
-	}
-
-	public String getMessage() {
-		return message;
 	}
 
 	public int getStart() {
@@ -48,7 +55,7 @@ public class TernAnnotation extends Annotation {
 	}
 
 	public boolean isEquals(String severity, String message, int start, int end) {
-		return severity.equals(this.severity) && message.equals(this.message)
+		return severity.equals(this.severity) && message.equals(this.getText())
 				&& start == this.start && end == this.end;
 	}
 

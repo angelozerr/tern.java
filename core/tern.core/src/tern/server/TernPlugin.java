@@ -16,6 +16,10 @@ import java.util.Collection;
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataManager;
 
+/**
+ * Tern plugin.
+ *
+ */
 public enum TernPlugin implements ITernPlugin {
 
 	aui15("aui", "1.5.x"),

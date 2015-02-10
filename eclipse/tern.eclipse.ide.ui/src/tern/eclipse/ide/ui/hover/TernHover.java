@@ -35,11 +35,10 @@ import tern.server.protocol.type.TernTypeQuery;
  * Tern Hover.
  *
  */
-public class TernHover implements ITextHover, ITextHoverExtension,
-		ITextHoverExtension2, IInformationProviderExtension2,
-		ITernHoverInfoProvider {
+public class TernHover extends AbstractTernHover implements
+		ITextHoverExtension, ITextHoverExtension2,
+		IInformationProviderExtension2, ITernHoverInfoProvider {
 
-	private IEditorPart editor;
 	private IInformationControlCreator fHoverControlCreator;
 	private IInformationControlCreator fPresenterControlCreator;
 	private IIDETernProject ternProject;
@@ -90,20 +89,12 @@ public class TernHover implements ITextHover, ITextHoverExtension,
 	}
 
 	protected IFile getFile(ITextViewer textViewer) {
+		IEditorPart editor = getEditor();
 		if (editor != null) {
 			return EditorUtils.getFile(editor);
 		}
 
 		return EditorUtils.getFile(textViewer.getDocument());
-	}
-
-	@Override
-	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
-		return JavaWordFinder.findWord(textViewer.getDocument(), offset);
-	}
-
-	public void setEditor(IEditorPart editor) {
-		this.editor = editor;
 	}
 
 	@Override

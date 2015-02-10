@@ -21,6 +21,7 @@ import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.server.ITernPlugin;
 import tern.utils.StringUtils;
+import tern.utils.TernModuleHelper;
 
 /**
  * Label provider for {@link ITernPlugin} and {@link ITernModule}.
@@ -41,12 +42,7 @@ public class TernModuleLabelProvider extends LabelProvider implements
 			ITernModule module = (ITernModule) element;
 			switch (columnIndex) {
 			case 0:
-				TernModuleMetadata metadata = module.getMetadata();
-				if (metadata != null
-						&& !StringUtils.isEmpty(metadata.getLabel())) {
-					return metadata.getLabel();
-				}
-				return module.getType();
+				return TernModuleHelper.getLabel(module);
 			case 1:
 				String version = module.getVersion();
 				return version != null ? version : "";
