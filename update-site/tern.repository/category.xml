@@ -20,6 +20,7 @@
    <feature url="features/tern.eclipse.ide.tools.feature.source_0.0.0.jar" id="tern.eclipse.ide.tools.feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
    </feature>
+   <feature id="tern-linters-feature"><category name="Tern Linters"/></feature>
    <bundle id="minimal-json" >
       <category name="Tern IDE"/>
    </bundle>
@@ -29,6 +30,7 @@
       </description>
    </category-def>
    <category-def name="Tern IDE" label="Tern IDE"/>
+   <category-def name="Tern Linters" label="Tern Linters"/>
    <category-def name="Tern Tooling" label="Tern Tooling"/>
    <category-def name="Tern Tooling Development Resources" label="Tern Tooling Development Resources"/>
 </site>

@@ -37,8 +37,8 @@ import tern.eclipse.ide.ui.preferences.PropertyPreferencePage;
  */
 public class TernDevelopmentPreferencesPage extends PropertyPreferencePage {
 
-	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernDevelopmentPropertyPage";
-	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernDevelopmentPropertyPage";
+	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.development";
+	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.development";
 
 	private final IPreferencesService fPreferencesService;
 

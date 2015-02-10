@@ -34,8 +34,8 @@ import tern.eclipse.ide.ui.preferences.PropertyPreferencePage;
  */
 public class TernValidationPreferencesPage extends PropertyPreferencePage {
 
-	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernValidationPropertyPage";
-	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernValidationPropertyPage";
+	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.validation";
+	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.validation";
 
 	private final IPreferencesService fPreferencesService;
 

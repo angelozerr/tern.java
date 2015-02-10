@@ -41,8 +41,8 @@ import tern.repository.ITernRepository;
  */
 public class TernRepositoryPreferencesPage extends PropertyPreferencePage {
 
-	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.TernRepositoryPropertyPage";
-	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.TernRepositoryPropertyPage";
+	public static final String PROPERTY_PAGE_ID = "tern.eclipse.ide.ui.properties.repository";
+	public static final String PREFERENCE_PAGE_ID = "tern.eclipse.ide.ui.preferences.repository";
 
 	private TernRepositoryBlock repositoryBlock;
 	private Button removeButton;
