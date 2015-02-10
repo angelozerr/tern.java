@@ -7,7 +7,7 @@
          point="org.eclipse.ui.propertyPages">		                  
 	  <page
             name="%TernJSHintPropertyPage.name"
-            category="tern.eclipse.ide.ui.properties"        
+            category="tern.eclipse.ide.ui.properties.validation"        
             class="tern.eclipse.ide.linters.jshint.internal.ui.preferences.TernJSHintPreferencesPage"
             id="tern.eclipse.ide.ui.properties.validation.jshint">
          <enabledWhen>
