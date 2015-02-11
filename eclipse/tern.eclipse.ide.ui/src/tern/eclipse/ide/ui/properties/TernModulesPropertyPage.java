@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IResource;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -25,7 +26,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.Trace;
-import tern.eclipse.ide.internal.ui.properties.AbstractTernPropertyPage;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.controls.TernModulesBlock;
@@ -55,8 +55,9 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 	}
 
 	@Override
-	protected Control createContents(Composite parent) {
-		initializeDialogUnits(parent);
+	protected Control createContents(Composite ancestor) {
+		Composite parent = new Composite(ancestor, SWT.NONE);
+		parent.setLayoutData(new GridData(GridData.FILL_BOTH));
 
 		noDefaultAndApplyButton();
 

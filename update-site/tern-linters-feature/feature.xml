@@ -24,7 +24,28 @@
    </requires>
 
    <plugin
-         id="tern.eclipse.ide.linters.jshint.ui"
+         id="tern.eclipse.ide.linter.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="tern.eclipse.ide.linter.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="tern.eclipse.ide.linter.jshint.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="tern.eclipse.ide.linter.jshint.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

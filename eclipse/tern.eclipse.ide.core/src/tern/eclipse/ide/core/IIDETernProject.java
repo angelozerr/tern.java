@@ -29,11 +29,11 @@ import tern.server.ITernServerListener;
  *
  */
 public interface IIDETernProject extends ITernProject {
-	
+
 	// -------------- Utility
-	
+
 	IFile getIDEFile(String name);
-	
+
 	// -------------- Tern server.
 
 	void addServerListener(ITernServerListener listener);
@@ -61,9 +61,8 @@ public interface IIDETernProject extends ITernProject {
 			ScriptPathsType type, String external) throws IOException;
 
 	void removeExternalScriptPaths(String external);
-	
-	// -------------- misc
 
+	// -------------- misc
 
 	void configureConsole();
 

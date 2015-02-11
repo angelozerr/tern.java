@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+	      point="tern.eclipse.ide.linter.core.ternLinterConfigurations">
+	      <configuration
+             id="jshint"
+             factory="tern.eclipse.ide.linter.jshint.internal.core.JSHintLinterConfiguration">
+	      </configuration>
+	</extension>		 	
+</plugin>

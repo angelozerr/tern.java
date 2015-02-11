@@ -95,7 +95,8 @@ public class TernModuleDescriptorManager implements
 		return null;
 	}
 
-	private ImageDescriptor getImageDescriptor(String id) {
+	@Override
+	public ImageDescriptor getImageDescriptor(String id) {
 		ITernModuleImage descriptor = getTernModuleImage(id);
 		if (descriptor != null) {
 			return descriptor.getImageDescriptor();

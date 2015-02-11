@@ -60,6 +60,7 @@ import tern.server.ITernServerListener;
 import tern.server.TernServerAdapter;
 import tern.server.protocol.JsonHelper;
 import tern.utils.IOUtils;
+import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonArray;
@@ -95,6 +96,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	private final Map<String, Object> data;
 
 	private final List<ITernServerListener> listeners;
+
 
 	IDETernProject(IProject project) throws CoreException {
 		super(project.getLocation().toFile());
@@ -323,8 +325,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 				IFile file = project.getFile(TERN_PROJECT_FILE);
 				InputStream content = null;
 				try {
-					content = IOUtils.toInputStream(super.toString(),
-							file.exists() ? file.getCharset() : "UTF-8");
+					content = IOUtils.toInputStream(super.toString(), file
+							.exists() ? file.getCharset() : StringUtils.UTF_8);
 					if (!file.exists()) {
 						file.create(content, IResource.NONE, null);
 					} else {

@@ -54,7 +54,6 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.controls.DependenciesPanel;
 import tern.eclipse.ide.internal.ui.controls.DetailsPanel;
 import tern.eclipse.ide.internal.ui.controls.OptionsPanel;
-import tern.eclipse.ide.internal.ui.properties.AbstractTableBlock;
 import tern.eclipse.ide.internal.ui.viewers.TernModuleVersionEditingSupport;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernModuleLabelProvider;

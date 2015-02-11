@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.eclipse.ide.linter.core;singleton:=true
+Bundle-Version: 0.9.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.runtime,
+ tern.eclipse.ide.core,
+ tern.core
+Bundle-ActivationPolicy: lazy
+Export-Package: tern.eclipse.ide.linter.core
+Bundle-Activator: tern.eclipse.ide.linter.core.TernLinterCorePlugin
+Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"

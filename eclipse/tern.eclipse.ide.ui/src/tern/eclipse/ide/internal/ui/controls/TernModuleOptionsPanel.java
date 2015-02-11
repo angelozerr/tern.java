@@ -11,63 +11,28 @@
 package tern.eclipse.ide.internal.ui.controls;
 
 import java.util.Collection;
-import java.util.Iterator;
 
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.fieldassist.ControlDecoration;
-import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
-import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.dialogs.SelectionDialog;
-import org.eclipse.ui.model.WorkbenchContentProvider;
-import org.eclipse.ui.model.WorkbenchLabelProvider;
 
-import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.internal.ui.descriptors.TernModuleDescriptorManager;
-import tern.eclipse.ide.internal.ui.dialogs.FolderSelectionDialog;
-import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
-import tern.eclipse.ide.ui.viewers.JsonContentProvider;
-import tern.eclipse.ide.ui.viewers.JsonLabelProvider;
-import tern.eclipse.ide.ui.viewers.MemberWrapper;
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataOption;
-import tern.server.ModuleType;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
+import tern.server.ModuleType;
 import tern.server.protocol.JsonHelper;
 import tern.utils.StringUtils;
 
-import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
 /**
  * Display options of the given tern plugin.

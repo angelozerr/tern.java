@@ -1,0 +1,48 @@
+<linter id="JSHint">
+	<option id="Enforcing options" url="http://jshint.com/docs/options/#enforcing-options">
+		<doc><![CDATA[When set to true, these options will make JSHint produce more
+			warnings about your code.
+			]]>
+		</doc>
+		<option id="bitwise" type="boolean"
+			url="http://jshint.com/docs/options/#bitwise">
+			<doc>This option prohibits the use of bitwise operators such as .
+			</doc>
+		</option>
+		<option id="camelcase" type="boolean"
+			url="http://jshint.com/docs/options/#camelcase">
+			<doc>This option allows you to force all variable names to use either
+				camelCase style or UPPER_CASE with underscores.
+			</doc>
+		</option>
+	</option>
+	<option id="Relaxing options" url="http://jshint.com/docs/options/#relaxing-options">
+		<doc>When set to true, these options will make JSHint produce fewer
+			warnings about your code.
+		</doc>
+		<option id="asi" type="boolean" url="http://jshint.com/docs/options/#asi">
+			<doc>
+<![CDATA[<p>This option suppresses warnings about missing semicolons. There is a lot
+of FUD about semicolon spread by quite a few people in the community.
+The common myths are that semicolons are required all the time (they are
+not) and that they are unreliable. JavaScript has rules about semicolons
+which are followed by <em>all</em> browsers so it is up to you to decide
+whether you should or should not use semicolons in your code.</p><p>For more information about semicolons in JavaScript read <a href="http://blog.izs.me/post/2353458699/an-open-letter-to-javascript-leaders-regarding">An Open Letter
+to JavaScript Leaders Regarding
+Semicolons</a>
+by Isaac Schlueter and <a href="http://inimino.org/~inimino/blog/javascript_semicolons">JavaScript Semicolon
+Insertion</a>.</p>]]>
+			</doc>
+		</option>
+		<option id="boss" type="boolean" url="http://jshint.com/docs/options/#boss">
+			<doc>
+<![CDATA[<p>This option suppresses warnings about the use of assignments in cases
+where comparisons are expected. More often than not, code like <code>if (a =
+10) {}</code> is a typo. However, it can be useful in cases like this one:</p><pre><code>for (var i = 0, person; person = people[i]; i++) {}
+</code></pre><p>You can silence this error on a per-use basis by surrounding the assignment
+with parenthesis, such as:</p><pre><code>for (var i = 0, person; (person = people[i]); i++) {}
+</code></pre>]]>
+			</doc>
+		</option>
+	</option>
+</linter>
