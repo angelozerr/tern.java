@@ -25,7 +25,7 @@ import tern.eclipse.ide.linter.core.ITernLinterConfig;
 import tern.eclipse.ide.linter.core.ITernLinterOption;
 
 /**
- * SAX Module to load module with XML file.
+ * SAX handler to load {@link ITernLinterConfig} from a XML stream.
  * 
  */
 public class SAXLinterConfigHandler extends DefaultHandler {

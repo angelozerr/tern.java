@@ -19,6 +19,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 
 import tern.ITernProject;
+import tern.TernException;
 import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.server.ITernModule;
@@ -79,4 +80,20 @@ public interface IIDETernProject extends ITernProject {
 	 */
 	List<ITernModule> getProjectModules();
 
+	/**
+	 * Returns the list of tern modules of the repository and project modules.
+	 * 
+	 * @return
+	 * @throws TernException
+	 */
+	List<ITernModule> getAllModules() throws TernException;
+
+	/**
+	 * Returns the working copy of the tern project.
+	 * 
+	 * @param caller
+	 * @return
+	 * @throws TernException
+	 */
+	IWorkingCopy getWorkingCopy(Object caller) throws TernException;
 }

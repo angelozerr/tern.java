@@ -45,6 +45,7 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.ui.properties.TernModulesPropertyPage;
 import tern.server.ITernModule;
 import tern.utils.TernModuleHelper;
 
@@ -160,7 +161,10 @@ public abstract class AbstractConvertProjectCommandHandler extends
 							.createPropertyDialogOn(
 									finalShell,
 									project,
-									"tern.eclipse.ide.ui.properties.TernModulesPropertyPage", (String[]) pageIds.toArray(new String[pageIds.size()]), null); //$NON-NLS-1$
+									TernModulesPropertyPage.PAGE_ID,
+									(String[]) pageIds
+											.toArray(new String[pageIds.size()]),
+									null); //$NON-NLS-1$
 					if (dialog.open() == Window.CANCEL) {
 						doUninstall(project, monitor);
 					}

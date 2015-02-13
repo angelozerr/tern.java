@@ -52,6 +52,7 @@ public class TernLinterOptionsPanel extends Composite {
 	private final IProject project;
 	private Composite content;
 	private Button checkBoxValue;
+	private Browser descTextField;
 
 	public TernLinterOptionsPanel(Composite parent, IProject project) {
 		super(parent, SWT.NONE);
@@ -152,11 +153,11 @@ public class TernLinterOptionsPanel extends Composite {
 		layout.marginHeight = 0;
 		parent.setLayout(layout);
 		parent.setLayoutData(new GridData(GridData.FILL_BOTH));
-		
+
 		// description
 		String description = option.getDoc();
 		if (description != null) {
-			final Browser descTextField = new Browser(parent, SWT.NO_SCROLL);
+			descTextField = new Browser(parent, SWT.NO_SCROLL);
 			GridData data = new GridData(GridData.FILL_BOTH);
 			descTextField.setLayoutData(data);
 			descTextField.setText(getHTML(description));
@@ -175,6 +176,15 @@ public class TernLinterOptionsPanel extends Composite {
 		html.append(description);
 		html.append("</html>");
 		return html.toString();
+	}
+
+	public void updateEnabled(boolean enabled) {
+		if (checkBoxValue != null) {
+			checkBoxValue.setEnabled(enabled);
+		}
+		if (descTextField != null) {
+			descTextField.setEnabled(enabled);
+		}
 	}
 
 }

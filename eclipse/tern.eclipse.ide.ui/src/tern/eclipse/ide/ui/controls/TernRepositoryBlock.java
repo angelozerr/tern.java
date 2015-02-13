@@ -348,11 +348,8 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	}
 
 	private String getDefaultModules() {
-		Object[] checkedModules = modulesBlock.getCheckedModules();
-		ITernModule[] modules = new ITernModule[checkedModules.length];
-		for (int i = 0; i < checkedModules.length; i++) {
-			modules[i] = (ITernModule) checkedModules[i];
-		}
+		ITernModule[] modules = modulesBlock.getCheckedModules().toArray(
+				ITernModule.EMPTY_MODULE);
 		return TernModuleHelper.getModulesAsString(modules);
 	}
 

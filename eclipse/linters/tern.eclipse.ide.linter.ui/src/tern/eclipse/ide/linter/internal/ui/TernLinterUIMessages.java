@@ -25,8 +25,12 @@ public final class TernLinterUIMessages extends NLS {
 
 	private static ResourceBundle fResourceBundle;
 
+	// Buttons
+	public static String Button_browse;
+
 	// Preferences
-	public static String TernlLinterOptionsBlock_enable;
+	public static String TernLinterOptionsBlock_enable;
+	public static String TernLinterOptionsBlock_useConfig;
 
 	private TernLinterUIMessages() {
 	}

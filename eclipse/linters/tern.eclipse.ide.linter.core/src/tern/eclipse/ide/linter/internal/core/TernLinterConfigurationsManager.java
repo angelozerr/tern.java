@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -37,7 +37,7 @@ public class TernLinterConfigurationsManager implements
 
 	private static final TernLinterConfigurationsManager INSTANCE = new TernLinterConfigurationsManager();
 
-	private Map<String, ITernLinterConfigFactory> ternLinterConfigurations;
+	private Map<String, TernLinterConfiguration> ternLinterConfigurations;
 
 	private boolean registryListenerIntialized;
 
@@ -74,7 +74,7 @@ public class TernLinterConfigurationsManager implements
 		IConfigurationElement[] cf = registry.getConfigurationElementsFor(
 				TernLinterCorePlugin.PLUGIN_ID,
 				EXTENSION_TERN_LINTER_CONFIGURATIONS);
-		Map<String, ITernLinterConfigFactory> map = new HashMap<String, ITernLinterConfigFactory>(
+		Map<String, TernLinterConfiguration> map = new HashMap<String, TernLinterConfiguration>(
 				cf.length);
 		addTernLinterConfigurations(cf, map);
 		addRegistryListenerIfNeeded();
@@ -88,14 +88,16 @@ public class TernLinterConfigurationsManager implements
 	 * Load the tern linter configurations.
 	 */
 	private synchronized void addTernLinterConfigurations(
-			IConfigurationElement[] cf,
-			Map<String, ITernLinterConfigFactory> map) {
+			IConfigurationElement[] cf, Map<String, TernLinterConfiguration> map) {
 		for (IConfigurationElement ce : cf) {
 			try {
 				String linterId = ce.getAttribute("id");
+				String filename = ce.getAttribute("filename");
 				ITernLinterConfigFactory factory = (ITernLinterConfigFactory) ce
 						.createExecutableExtension("factory");
-				map.put(linterId, factory);
+				TernLinterConfiguration configuration = new TernLinterConfiguration(
+						factory, filename);
+				map.put(linterId, configuration);
 				Trace.trace(
 						Trace.EXTENSION_POINT,
 						"  Loaded console connectors: "
@@ -116,7 +118,7 @@ public class TernLinterConfigurationsManager implements
 		IConfigurationElement[] cf = delta.getExtension()
 				.getConfigurationElements();
 
-		Map<String, ITernLinterConfigFactory> map = new HashMap<String, ITernLinterConfigFactory>(
+		Map<String, TernLinterConfiguration> map = new HashMap<String, TernLinterConfiguration>(
 				ternLinterConfigurations);
 		if (delta.getKind() == IExtensionDelta.ADDED) {
 			addTernLinterConfigurations(cf, map);
@@ -159,7 +161,16 @@ public class TernLinterConfigurationsManager implements
 	public ITernLinterConfig createLinterConfig(String linterId)
 			throws IOException {
 		loadTernLinterConfigurations();
-		return ternLinterConfigurations.get(linterId).create();
+		TernLinterConfiguration configuration = ternLinterConfigurations
+				.get(linterId);
+		return configuration.create();
 	}
 
+	@Override
+	public String getFilename(String linterId) {
+		loadTernLinterConfigurations();
+		TernLinterConfiguration configuration = ternLinterConfigurations
+				.get(linterId);
+		return configuration.getFilename();
+	}
 }

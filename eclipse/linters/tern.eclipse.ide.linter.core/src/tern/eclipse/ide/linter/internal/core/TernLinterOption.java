@@ -1,3 +1,13 @@
+/**
+ *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
 package tern.eclipse.ide.linter.internal.core;
 
 import java.util.Collection;
@@ -7,6 +17,12 @@ import java.util.Map;
 import tern.eclipse.ide.linter.core.ITernLinterOption;
 import tern.utils.StringUtils;
 
+/**
+ * Tern linter implementation.
+ * 
+ * @author azerr
+ *
+ */
 public class TernLinterOption implements ITernLinterOption {
 
 	private final String id;
@@ -22,6 +38,7 @@ public class TernLinterOption implements ITernLinterOption {
 		this.options = new LinkedHashMap<String, ITernLinterOption>();
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
@@ -30,22 +47,27 @@ public class TernLinterOption implements ITernLinterOption {
 		return type;
 	}
 
+	@Override
 	public String getUrl() {
 		return url;
 	}
 
+	@Override
 	public Collection<ITernLinterOption> getOptions() {
 		return options.values();
 	}
 
+	@Override
 	public void addOption(ITernLinterOption option) {
 		this.options.put(option.getId(), option);
 	}
 
+	
 	public ITernLinterOption getOption(String id) {
 		return options.get(id);
 	}
 
+	@Override
 	public String getDoc() {
 		return doc;
 	}
@@ -54,13 +76,16 @@ public class TernLinterOption implements ITernLinterOption {
 		this.doc = doc;
 	}
 
+	@Override
 	public boolean isBooleanType() {
 		return "boolean".equals(getType());
 	}
 
+	@Override
 	public boolean isNumberType() {
 		return "number".equals(getType());
 	}
+
 
 	public boolean hasType() {
 		return !StringUtils.isEmpty(getType());

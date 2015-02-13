@@ -16,6 +16,8 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
@@ -67,14 +69,13 @@ public class TernModulesSelectionWizardPage extends
 		IProject project = resource != null ? resource.getProject() : null;
 		modulesBlock = new TernModulesBlock(project, null);
 		Control control = modulesBlock.createControl(container);
-		modulesBlock
-				.addSelectionChangedListener(new ISelectionChangedListener() {
+		modulesBlock.addCheckStateListener(new ICheckStateListener() {
 
-					@Override
-					public void selectionChanged(SelectionChangedEvent event) {
-						TernModulesSelectionWizardPage.this.dialogChanged();
-					}
-				});
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent arg0) {
+				TernModulesSelectionWizardPage.this.dialogChanged();
+			}
+		});
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;
 		control.setLayoutData(data);
@@ -96,15 +97,13 @@ public class TernModulesSelectionWizardPage extends
 	protected void updateModel(EditorOptions model) {
 		ITernRepository repository = TernCorePlugin.getTernRepositoryManager()
 				.getRepository(modulesBlock.getProject());
-		Object[] modules = modulesBlock.getCheckedModules();
+		Collection<ITernModule> modules = modulesBlock.getCheckedModules();
 		List<ITernDef> defs = new ArrayList<ITernDef>();
 		List<ITernPlugin> plugins = new ArrayList<ITernPlugin>();
-		ITernModule module = null;
 		ITernModule dependencyModule = null;
 		TernModuleMetadata metadata = null;
 		Collection<String> requiredDependencies = null;
-		for (int i = 0; i < modules.length; i++) {
-			module = (ITernModule) modules[i];
+		for (ITernModule module : modules) {
 			// add required dependencies (ex : if ecma6 is checked, ecma5 must
 			// be added too).
 			metadata = module.getMetadata();

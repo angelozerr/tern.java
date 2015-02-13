@@ -155,8 +155,8 @@ public class InstallTernModulesSelectionWizardPage extends
 								.getSelection()).getFirstElement();
 						repositoryPath.setText(repository
 								.getTernBaseDirAsString());
-						InstallTernModulesSelectionWizardPage.this
-								.getModel().setRepository(repository);
+						InstallTernModulesSelectionWizardPage.this.getModel()
+								.setRepository(repository);
 					}
 				});
 
@@ -282,8 +282,8 @@ public class InstallTernModulesSelectionWizardPage extends
 
 	@Override
 	protected String validate() {
-		Object[] objModules = modulesBlock.getCheckedModules();
-		if (objModules.length == 0) {
+		Collection<ITernModule> objModules = modulesBlock.getCheckedModules();
+		if (objModules.size() == 0) {
 			return TernToolsUIMessages.InstallTernModulesSelectionWizardPage_modules_selection_validation;
 		}
 		return null;
@@ -291,13 +291,8 @@ public class InstallTernModulesSelectionWizardPage extends
 
 	@Override
 	protected void updateModel(InstallTernModulesOptions model) {
-		Object[] objModules = modulesBlock.getCheckedModules();
-		ITernModule[] modules = new ITernModule[objModules.length];
-		ITernModule module = null;
-		for (int i = 0; i < objModules.length; i++) {
-			module = (ITernModule) objModules[i];
-			modules[i] = module;
-		}
+		ITernModule[] modules = modulesBlock.getCheckedModules().toArray(
+				ITernModule.EMPTY_MODULE);
 		model.setRepository((ITernRepository) ((IStructuredSelection) repositoryViewer
 				.getSelection()).getFirstElement());
 		model.setTernModules(modules);

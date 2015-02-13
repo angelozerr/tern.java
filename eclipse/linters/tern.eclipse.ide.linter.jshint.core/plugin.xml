@@ -5,7 +5,8 @@
 	      point="tern.eclipse.ide.linter.core.ternLinterConfigurations">
 	      <configuration
              id="jshint"
-             factory="tern.eclipse.ide.linter.jshint.internal.core.JSHintLinterConfiguration">
+             factory="tern.eclipse.ide.linter.jshint.internal.core.JSHintLinterConfiguration"
+             filename=".jshintrc" >
 	      </configuration>
 	</extension>		 	
 </plugin>

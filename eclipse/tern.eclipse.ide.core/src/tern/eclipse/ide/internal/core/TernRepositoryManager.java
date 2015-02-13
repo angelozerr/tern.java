@@ -230,16 +230,22 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 			List<ITernModule> allModules, List<ITernModule> checkedModules) {
 		if (module != null) {
 			if (!TernModuleHelper.isConfigurableModule(module)) {
-				checkedModules.add(module);
+				addModule(module, checkedModules);
 			} else {
 				try {
-					checkedModules.add(TernModuleHelper.findConfigurable(
-							module, options, allModules));
+					addModule(TernModuleHelper.findConfigurable(module,
+							options, allModules), checkedModules);
 				} catch (TernException e) {
 					Trace.trace(Trace.SEVERE,
 							"Error while finding configurable module.", e);
 				}
 			}
+		}
+	}
+
+	private void addModule(ITernModule module, List<ITernModule> checkedModules) {
+		if (!checkedModules.contains(module)) {
+			checkedModules.add(module);
 		}
 	}
 
@@ -278,7 +284,7 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		for (int i = 0; i < names.length; i++) {
 			module = findTernModule(names[i], ternProject);
 			if (module != null) {
-				modules.add(module);
+				addModule(module, modules);
 			}
 		}
 		return modules.toArray(ITernPlugin.EMPTY_MODULE);

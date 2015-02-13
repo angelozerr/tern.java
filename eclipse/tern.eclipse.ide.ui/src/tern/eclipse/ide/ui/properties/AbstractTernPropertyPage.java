@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-201 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -10,13 +10,18 @@
  */
 package tern.eclipse.ide.ui.properties;
 
+import java.io.IOException;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.ui.dialogs.PropertyPage;
 
+import tern.TernException;
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.IWorkingCopy;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.internal.ui.Trace;
 
 /**
  * 
@@ -24,6 +29,8 @@ import tern.eclipse.ide.core.TernCorePlugin;
  * 
  */
 public abstract class AbstractTernPropertyPage extends PropertyPage {
+
+	private IWorkingCopy workingCopy;
 
 	public IIDETernProject getTernProject() throws CoreException {
 		return TernCorePlugin.getTernProject(getResource().getProject());
@@ -41,6 +48,41 @@ public abstract class AbstractTernPropertyPage extends PropertyPage {
 			}
 		}
 		return resource;
+	}
+
+	/**
+	 * Returns the working copy of the tern project.
+	 * 
+	 * @return
+	 */
+	protected IWorkingCopy getWorkingCopy() {
+		if (workingCopy == null) {
+			try {
+				workingCopy = getTernProject().getWorkingCopy(this);
+			} catch (Throwable e) {
+				Trace.trace(Trace.SEVERE, "Error while getting working copy", e);
+			}
+		}
+		return workingCopy;
+	}
+
+	/**
+	 * Save the working copy.
+	 * 
+	 * @throws CoreException
+	 * @throws IOException
+	 * @throws TernException
+	 */
+	protected void saveWorkingCopy() throws CoreException, IOException,
+			TernException {
+		getWorkingCopy().commit(this);
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		// on close page, clear the working copy.
+		getWorkingCopy().clear();
 	}
 
 }

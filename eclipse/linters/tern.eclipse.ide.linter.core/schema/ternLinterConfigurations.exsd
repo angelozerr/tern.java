@@ -72,6 +72,13 @@
                </appInfo>
             </annotation>
          </attribute>
+         <attribute name="filename" type="string">
+            <annotation>
+               <documentation>
+                  File name used to configure the linter (ex : .jshintrc for JSHint).
+               </documentation>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

@@ -96,6 +96,9 @@ public class TernModulesBlock extends AbstractTableBlock {
 	private TabItem detailsTabItem;
 	private Button selectDependenciesCheckbox;
 
+	private Collection<ITernModule> checkedModules;
+	private boolean checkUpdating;
+
 	public TernModulesBlock(IProject project, String tableLabel) {
 		this.project = project;
 		this.tableLabel = tableLabel;
@@ -201,9 +204,7 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 		// when a module is checked and dependencies checkbox is checked, tern
 		// module dependencies must be selected too
-		tableViewer.addCheckStateListener(new ICheckStateListener() {
-
-			private boolean checkUpdating;
+		addCheckStateListener(new ICheckStateListener() {
 
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent e) {
@@ -212,8 +213,10 @@ public class TernModulesBlock extends AbstractTableBlock {
 				}
 				try {
 					checkUpdating = true;
+					ITernModule module = ((ITernModule) e.getElement());
+					// update checked modules list
+					updateCheckedModules(module, e.getChecked());
 					if (e.getChecked() && isSelectDependencies()) {
-						ITernModule module = ((ITernModule) e.getElement());
 						TernModuleMetadata metadata = module.getMetadata();
 						if (metadata != null) {
 							ITernModule dependencyModule = null;
@@ -228,6 +231,8 @@ public class TernModulesBlock extends AbstractTableBlock {
 										tableViewer.setChecked(
 												dependencyModule, true);
 									}
+									// update checked modules list
+									updateCheckedModules(dependencyModule, true);
 									if (dependencyModule instanceof ITernModuleConfigurable) {
 										ITernModuleConfigurable configurable = (ITernModuleConfigurable) dependencyModule;
 										if (configurable.hasVersion()) {
@@ -332,6 +337,14 @@ public class TernModulesBlock extends AbstractTableBlock {
 		tableViewer.removeSelectionChangedListener(listener);
 	}
 
+	public void addCheckStateListener(ICheckStateListener listener) {
+		tableViewer.addCheckStateListener(listener);
+	}
+
+	public void removeCheckStateListener(ICheckStateListener listener) {
+		tableViewer.removeCheckStateListener(listener);
+	}
+
 	/**
 	 * Sorts by name.
 	 */
@@ -384,12 +397,28 @@ public class TernModulesBlock extends AbstractTableBlock {
 		tableViewer.setInput(modules);
 	}
 
-	public Object[] getCheckedModules() {
-		return tableViewer.getCheckedElements();
+	public Collection<ITernModule> getCheckedModules() {
+		return checkedModules;
 	}
 
-	public void setCheckedModules(Object[] selectedModules) {
-		tableViewer.setCheckedElements(selectedModules);
+	public void setCheckedModules(Collection<ITernModule> checkedModules) {
+		this.checkedModules = checkedModules;
+		tableViewer.setCheckedElements(checkedModules.toArray());
+	}
+
+	public void setCheckedModule(ITernModule module, boolean selected) {
+		updateCheckedModules(module, selected);
+		tableViewer.setChecked(module, selected);
+	}
+
+	private void updateCheckedModules(ITernModule module, boolean checked) {
+		if (checked) {
+			if (!checkedModules.contains(module)) {
+				checkedModules.add(module);
+			}
+		} else {
+			checkedModules.remove(module);
+		}
 	}
 
 	@Override
@@ -424,28 +453,22 @@ public class TernModulesBlock extends AbstractTableBlock {
 	 * @param repository
 	 */
 	public void loadModules() {
-		List<ITernModule> allModules = null;
-		List<ITernModule> checkedModules = null;
 		try {
 
 			// load modules from the given tern project
 			IIDETernProject ternProject = getTernProject();
 			if (ternProject != null) {
 
-				// Add list of tern modules from the repository
-				allModules = new ArrayList<ITernModule>(
-						Arrays.asList(ternProject.getRepository().getModules()));
-				// Add local tern modules
-				List<ITernModule> projectModules = ternProject
-						.getProjectModules();
-				allModules.addAll(projectModules);
+				// Add list of tern modules from the repository and local
+				List<ITernModule> allModules = ternProject.getAllModules();
 				// Group by type
 				allModules = TernModuleHelper.groupByType(allModules);
 
 				// checked modules
-				checkedModules = TernCorePlugin.getTernRepositoryManager()
-						.getCheckedModules(ternProject, allModules);
-
+				List<ITernModule> checkedModules = TernCorePlugin
+						.getTernRepositoryManager().getCheckedModules(
+								ternProject, allModules);
+				refresh(allModules, checkedModules);
 				/*
 				 * if (checkedModules.size() > 0) { ITernModule firstModule =
 				 * checkedModules.get(0); tableViewer.setSelection(new
@@ -453,19 +476,22 @@ public class TernModulesBlock extends AbstractTableBlock {
 				 */
 			}
 
-			if (allModules != null) {
-				this.setTernModules(allModules
-						.toArray(ITernModule.EMPTY_MODULE));
-			}
-			if (checkedModules != null) {
-				this.setCheckedModules(checkedModules.toArray());
-			}
 		} catch (Throwable e) {
 			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
 		}
 	}
 
-	public void loadModules(ITernRepository repository, String[] moduleNames) {
+	/**
+	 * Load modules from the given tern repository and check the modules with
+	 * the given checked module names.
+	 * 
+	 * @param repository
+	 *            tern repository which hosts tern modules.
+	 * @param checkedModuleNames
+	 *            module names to check.
+	 */
+	public void loadModules(ITernRepository repository,
+			String[] checkedModuleNames) {
 		try {
 			// load modules from the given repository
 			List<ITernModule> allModules = new ArrayList<ITernModule>(
@@ -475,17 +501,18 @@ public class TernModulesBlock extends AbstractTableBlock {
 					.groupByType(allModules);
 			// checked modules
 			List<ITernModule> checkedModules = TernCorePlugin
-					.getTernRepositoryManager().getCheckedModules(moduleNames,
-							allModules, groupedModules);
-
-			this.setTernModules(groupedModules
-					.toArray(ITernModule.EMPTY_MODULE));
-			if (checkedModules != null) {
-				this.setCheckedModules(checkedModules.toArray());
-			}
+					.getTernRepositoryManager().getCheckedModules(
+							checkedModuleNames, allModules, groupedModules);
+			refresh(groupedModules, checkedModules);
 		} catch (Throwable e) {
 			Trace.trace(Trace.SEVERE, "Error while loading plugins.", e);
 		}
+	}
+
+	public void refresh(Collection<ITernModule> allModules,
+			Collection<ITernModule> checkedModules) {
+		this.setTernModules(allModules.toArray(ITernModule.EMPTY_MODULE));
+		this.setCheckedModules(checkedModules);
 	}
 
 	/**
@@ -522,6 +549,10 @@ public class TernModulesBlock extends AbstractTableBlock {
 
 	public void setEnabled(boolean enabled) {
 		getTable().setEnabled(enabled);
+	}
+
+	public boolean isCheckUpdating() {
+		return checkUpdating;
 	}
 
 }
