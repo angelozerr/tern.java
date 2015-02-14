@@ -90,7 +90,7 @@ public class TernModuleMetadata {
 		if (options != null && options instanceof JsonArray) {
 			this.options = parseOptions((JsonArray) options);
 		} else {
-			this.options = Collections.emptyList();
+			this.options = null;
 		}
 	}
 
@@ -305,5 +305,9 @@ public class TernModuleMetadata {
 
 	public boolean isLinter() {
 		return linter;
+	}
+
+	public boolean hasOptions() {
+		return options != null;
 	}
 }

@@ -1,24 +1,45 @@
 <linter id="JSHint">
-	<option id="Enforcing options" url="http://jshint.com/docs/options/#enforcing-options">
-		<doc><![CDATA[When set to true, these options will make JSHint produce more
-			warnings about your code.
-			]]>
+	<option id="Enforcing options" type="category"
+		url="http://jshint.com/docs/options/#enforcing-options">
+		<doc>
+<![CDATA[When set to true, these options will make JSHint produce more warnings about your code.
+]]>
 		</doc>
 		<option id="bitwise" type="boolean"
 			url="http://jshint.com/docs/options/#bitwise">
-			<doc>This option prohibits the use of bitwise operators such as .
+			<doc>
+<![CDATA[This option prohibits the use of bitwise operators such as <code>^</code> (XOR),
+<code>|</code> (OR) and others. Bitwise operators are very rare in JavaScript
+programs and quite often <code>&amp;</code> is simply a mistyped <code>&amp;&amp;</code>.
+]]>
 			</doc>
 		</option>
 		<option id="camelcase" type="boolean"
 			url="http://jshint.com/docs/options/#camelcase">
-			<doc>This option allows you to force all variable names to use either
-				camelCase style or UPPER_CASE with underscores.
+			<doc>
+<![CDATA[This option allows you to force all variable names to use either camelCase style or UPPER_CASE with underscores.]]>
+			</doc>
+		</option>
+		<option id="curly" type="boolean" url="http://jshint.com/docs/options/#curly">
+			<doc>
+<![CDATA[		
+<p>This option requires you to always put curly braces around blocks in
+loops and conditionals. JavaScript allows you to omit curly braces when
+the block consists of only one statement, for example:</p><pre><code>while (day)
+  shuffle();
+</code></pre><p>However, in some circumstances, it can lead to bugs (you'd think that
+<code>sleep()</code> is a part of the loop while in reality it is not):</p><pre><code>while (day)
+  shuffle();
+  sleep();
+</code></pre>
+]]>
 			</doc>
 		</option>
 	</option>
-	<option id="Relaxing options" url="http://jshint.com/docs/options/#relaxing-options">
-		<doc>When set to true, these options will make JSHint produce fewer
-			warnings about your code.
+	<option id="Relaxing options" type="category"
+		url="http://jshint.com/docs/options/#relaxing-options">
+		<doc>
+<![CDATA[When set to true, these options will make JSHint produce fewer	warnings about your code.]]>
 		</doc>
 		<option id="asi" type="boolean" url="http://jshint.com/docs/options/#asi">
 			<doc>
@@ -42,6 +63,36 @@ where comparisons are expected. More often than not, code like <code>if (a =
 </code></pre><p>You can silence this error on a per-use basis by surrounding the assignment
 with parenthesis, such as:</p><pre><code>for (var i = 0, person; (person = people[i]); i++) {}
 </code></pre>]]>
+			</doc>
+		</option>
+	</option>
+	<option id="Environments" type="category"
+		url="http://jshint.com/docs/options/#environments">
+		<doc>
+<![CDATA[These options let JSHint know about some pre-defined global variables.]]>
+		</doc>
+		<option id="browser" type="boolean"
+			url="http://jshint.com/docs/options/#browser">
+			<doc>
+<![CDATA[<p>This option defines globals exposed by modern browsers: all the way from
+good old <code>document</code> and <code>navigator</code> to the HTML5 <code>FileReader</code> and other
+new developments in the browser world.</p><p><strong>Note:</strong> This option doesn&#39;t expose variables like <code>alert</code> or
+<code>console</code>. See option <code>devel</code> for more information.]]>
+			</doc>
+		</option>
+		<option id="browserify" type="boolean"
+			url="http://jshint.com/docs/options/#browserify">
+			<doc>
+<![CDATA[<p>This option defines globals available when using <a href="http://browserify.org/">the Browserify
+tool</a> to build a project.</p>]]>
+			</doc>
+		</option>
+		<option id="couch" type="boolean" url="http://jshint.com/docs/options/#couch">
+			<doc>
+<![CDATA[<p>This option defines globals exposed by
+<a href="http://couchdb.apache.org/">CouchDB</a>. CouchDB is a document-oriented
+database that can be queried and indexed in a MapReduce fashion using
+JavaScript.]]>
 			</doc>
 		</option>
 	</option>

@@ -15,7 +15,8 @@ import java.io.IOException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -112,7 +113,8 @@ public class TernLinterOptionsPanel extends Composite {
 		return content;
 	}
 
-	private void createHeader(final Composite parent, ITernLinterOption option) {
+	private void createHeader(final Composite parent,
+			final ITernLinterOption option) {
 		Composite header = new Composite(parent, SWT.NONE);
 		GridLayout layout = new GridLayout(2, false);
 		header.setLayout(layout);
@@ -132,7 +134,13 @@ public class TernLinterOptionsPanel extends Composite {
 		}
 		if (option.isBooleanType()) {
 			checkBoxValue = new Button(header, SWT.CHECK);
-			checkBoxValue.setSelection(true);
+			checkBoxValue.setSelection(option.getBooleanValue());
+			checkBoxValue.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					option.setValue(checkBoxValue.getSelection());
+				}
+			});
 		} else if (option.isNumberType()) {
 
 		}

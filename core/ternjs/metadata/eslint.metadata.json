@@ -11,5 +11,10 @@
  },
  "bugs": {
   "url": "https://github.com/angelozerr/tern-eslint/issues"
- }
+ },
+ "options": [
+  {
+   
+  }
+ ]
 }

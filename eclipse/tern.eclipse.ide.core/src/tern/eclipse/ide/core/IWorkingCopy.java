@@ -74,8 +74,9 @@ public interface IWorkingCopy {
 	 * 
 	 * @param name
 	 * @return the tern module foudn by the given name.
+	 * @throws TernException
 	 */
-	ITernModule getTernModule(String name);
+	ITernModule getTernModule(String name) throws TernException;
 
 	/**
 	 * Returns true if the tern project have the given module name and false

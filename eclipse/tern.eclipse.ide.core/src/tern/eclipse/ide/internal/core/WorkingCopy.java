@@ -33,8 +33,8 @@ public class WorkingCopy implements IWorkingCopy {
 	private final IIDETernProject project;
 	private final List<IWorkingCopyListener> listeners;
 	private final List<Object> callers;
-	private List<ITernModule> allModules;
 	private List<ITernModule> checkedModules;
+	private List<ITernModule> workingCopyModules;
 
 	public WorkingCopy(IIDETernProject project) {
 		this.project = project;
@@ -46,8 +46,7 @@ public class WorkingCopy implements IWorkingCopy {
 		// Get local and global tern modules
 		List<ITernModule> allModules = project.getAllModules();
 		// Group by type
-		List<ITernModule> workingCopyModules = TernModuleHelper
-				.groupByType(allModules);
+		workingCopyModules = TernModuleHelper.groupByType(allModules);
 		// checked modules
 		List<ITernModule> checkedModules = new WorkingCopyModuleList(this,
 				TernCorePlugin.getTernRepositoryManager().getCheckedModules(
@@ -142,8 +141,8 @@ public class WorkingCopy implements IWorkingCopy {
 		return false;
 	}
 
-	public ITernModule getTernModule(String moduleName) {
-		for (ITernModule module : allModules) {
+	public ITernModule getTernModule(String moduleName) throws TernException {
+		for (ITernModule module : workingCopyModules) {
 			if (moduleName.equals(module.getName())) {
 				return module;
 			}

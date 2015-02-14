@@ -60,10 +60,12 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 
 			JsonObject jsonOptions = getOptions((ITernModuleConfigurable) module);
 
-			Collection<TernModuleMetadataOption> options = metadata
-					.getOptions();
-			for (TernModuleMetadataOption option : options) {
-				createUI(parent, jsonOptions, project, option);
+			if (metadata.hasOptions()) {
+				Collection<TernModuleMetadataOption> options = metadata
+						.getOptions();
+				for (TernModuleMetadataOption option : options) {
+					createUI(parent, jsonOptions, project, option);
+				}
 			}
 		}
 

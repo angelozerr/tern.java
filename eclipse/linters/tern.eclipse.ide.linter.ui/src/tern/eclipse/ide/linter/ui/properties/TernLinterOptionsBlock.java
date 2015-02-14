@@ -14,7 +14,9 @@ import java.util.Collection;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -33,6 +35,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 
+import tern.TernException;
 import tern.eclipse.ide.core.IWorkingCopy;
 import tern.eclipse.ide.core.IWorkingCopyListener;
 import tern.eclipse.ide.linter.core.ITernLinterConfig;
@@ -40,6 +43,7 @@ import tern.eclipse.ide.linter.core.ITernLinterOption;
 import tern.eclipse.ide.linter.core.TernLinterCorePlugin;
 import tern.eclipse.ide.linter.internal.ui.TernLinterUIMessages;
 import tern.eclipse.ide.linter.internal.ui.TernLinterUIPlugin;
+import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.linter.ui.viewers.LinterConfigContentProvider;
 import tern.eclipse.ide.linter.ui.viewers.LinterConfigLabelProvider;
 import tern.eclipse.ide.ui.controls.AbstractTreeBlock;
@@ -62,7 +66,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 
 	private final IWorkingCopy workingCopy;
 	private Composite fControl;
-	private TreeViewer treeViewer;
+	private CheckboxTreeViewer treeViewer;
 
 	private TernLinterOptionsPanel optionsPanel;
 	private Button enableCheckbox;
@@ -113,19 +117,25 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 				.setText(TernLinterUIMessages.TernLinterOptionsBlock_enable);
 		enableCheckbox.addSelectionListener(new SelectionAdapter() {
 			@Override
-			public void widgetSelected(SelectionEvent e) {
+			public void widgetSelected(SelectionEvent event) {
 				boolean checked = enableCheckbox.getSelection();
 				// Update UI
 				updateEnabled();
-				// update working copy
-				ITernModule module = workingCopy.getTernModule(linterId);
-				if (module != null) {
-					if (checked) {
-						workingCopy.getCheckedModules().add(module);
-					} else {
-						workingCopy.getCheckedModules().remove(module);
+				try {
+					// update working copy
+					ITernModule module = workingCopy.getTernModule(linterId);
+					if (module != null) {
+						if (checked) {
+							workingCopy.getCheckedModules().add(module);
+						} else {
+							workingCopy.getCheckedModules().remove(module);
+						}
 					}
+				} catch (TernException e) {
+					Trace.trace(Trace.SEVERE,
+							"Error while updating working copy", e);
 				}
+
 			}
 		});
 
@@ -229,8 +239,8 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		// }
 		// });
 
-		// Add tree selection listener to enable "Remove" button when a script
-		// path is selected.
+		// Add tree selection listener to refresh the detail information of teh
+		// selected option
 		treeViewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -244,7 +254,15 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 				}
 			}
 		});
+		treeViewer.addCheckStateListener(new ICheckStateListener() {
 
+			@Override
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				ITernLinterOption option = (ITernLinterOption) event
+						.getElement();
+				option.setEnabled(event.getChecked());
+			}
+		});
 		restoreColumnSettings();
 	}
 
@@ -297,20 +315,38 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		workingCopy.removeWorkingCopyListener(this);
 	}
 
-	public void saveOptions() {
+	/**
+	 * Update JSON options of the tern linter plugin.
+	 * 
+	 * @throws TernException
+	 */
+	public void updateOptions() throws TernException {
 		ITernLinterConfig config = (ITernLinterConfig) treeViewer.getInput();
-		JsonObject linter = new JsonObject();
-		/*toJSON(config.getOptions(), linter);
+		
+		JsonObject jsonOptions = new JsonObject();
+		JsonObject jsonConfig = new JsonObject();
+		jsonOptions.add("config", jsonConfig);
+		toJSON(config.getOptions(), jsonConfig);
 
 		ITernModuleConfigurable module = (ITernModuleConfigurable) workingCopy
 				.getTernModule(linterId);
-		module.setOptions(linter);
-		*/
+		module.setOptions(jsonOptions);
+
 	}
 
 	private void toJSON(Collection<ITernLinterOption> options, JsonObject json) {
 		for (ITernLinterOption option : options) {
-			//if (option.)
+			if (option.isCategoryType()) {
+				toJSON(option.getOptions(), json);
+			} else if (option.isEnabled()) {
+				if (option.isBooleanType()) {
+					json.add(option.getId(), option.getBooleanValue());
+				} else if (option.isNumberType()) {
+					json.add(option.getId(), option.getNumberValue());
+				} else {
+					json.add(option.getId(), option.getStringValue());
+				}
+			}
 		}
 	}
 }

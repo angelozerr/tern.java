@@ -79,9 +79,10 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
 	public boolean performOk() {
 		// save column settings
 		linterConfigBlock.saveColumnSettings();
-		// Create options and store it .tern-project or config file name.
-		linterConfigBlock.saveOptions();
 		try {
+			// create options and store it .tern-project or config file name.
+			linterConfigBlock.updateOptions();
+			// save working copy.
 			saveWorkingCopy();
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
