@@ -65,22 +65,22 @@ public class NodejsProcessTest {
 		}
 	}
 
-	@Test
-	public void badNodejsTernBaseDir() throws IOException,
-			InterruptedException, TernException {
-
-		File nodejsBaseDir = PathHelper.getNodejsBasedir();
-		File nodejsTernBaseDir = new File(".");
-		File projectDir = new File(".");
-
-		try {
-			NodejsProcessManager.getInstance().create(projectDir,
-					nodejsBaseDir, nodejsTernBaseDir);
-			Assert.assertTrue(false);
-		} catch (Exception e) {
-			Assert.assertTrue(e.getMessage(), true);
-		}
-	}
+//	@Test
+//	public void badNodejsTernBaseDir() throws IOException,
+//			InterruptedException, TernException {
+//
+//		File nodejsBaseDir = PathHelper.getNodejsBasedir();
+//		File nodejsTernBaseDir = new File(".");
+//		File projectDir = new File(".");
+//
+//		try {
+//			NodejsProcessManager.getInstance().create(projectDir,
+//					nodejsBaseDir, nodejsTernBaseDir);
+//			Assert.assertTrue(false);
+//		} catch (Exception e) {
+//			Assert.assertTrue(e.getMessage(), true);
+//		}
+//	}
 
 	@Test
 	public void ok() throws IOException, InterruptedException, TernException {
