@@ -99,7 +99,11 @@ public class IDETernFileSynchronizer extends TernFileSynchronizer implements
 				// "org.eclipse.core.internal.resources.ResourceException: The resource tree is locked for modifications"
 				// See https://github.com/angelozerr/tern.java/issues/161
 				Job configJob = new RefreshTernProjectJob(ternProject);
-				configJob.setRule(ternProject.getProject());
+				// We cannot use a project-based rule, because IProject.setDescription() uses a workspace-wide operation,
+				// so a workspace-based rule is to be used here
+				// See: https://github.com/angelozerr/tern.java/issues/251
+//					configJob.setRule(ternProject.getProject());
+				configJob.setRule(ternProject.getProject().getWorkspace().getRoot());
 				configJob.schedule();
 			} else {
 				// FIXME : manage delete + move file
