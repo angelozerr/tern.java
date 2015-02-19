@@ -12,6 +12,7 @@ package tern.eclipse.ide.internal.ui.preferences;
 
 import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -36,7 +37,8 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 	public TernGlobalPreferencesPage() {
 		super(GRID);
 		setDescription(TernUIMessages.TernGlobalPreferencesPage_desc);
-		setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_LOGO));
+		setImageDescriptor(ImageResource
+				.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	@Override
@@ -46,8 +48,8 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 		ITernServerType[] serverTypes = TernCorePlugin
 				.getTernServerTypeManager().getTernServerTypes();
 		String[][] types = new String[serverTypes.length + 1][2];
-		types[0][0] = " -- Choose your server type --";
-		types[0][1] = "";
+		types[0][0] = " -- Choose your server type --"; //$NON-NLS-1$
+		types[0][1] = ""; //$NON-NLS-1$
 
 		for (int i = 0; i < serverTypes.length; i++) {
 			types[i + 1][0] = serverTypes[i].getName();
@@ -59,6 +61,12 @@ public class TernGlobalPreferencesPage extends FieldEditorPreferencePage
 				TernUIMessages.TernGlobalPreferencesPage_serverType, types,
 				getFieldEditorParent());
 		addField(ternServerEditor);
+
+		BooleanFieldEditor asyncRequestsEditor = new BooleanFieldEditor(
+				TernCorePreferenceConstants.DISABLE_ASYNC_REQUESTS,
+				TernUIMessages.TernGlobalPreferencesPage_disable_async_reqs,
+				getFieldEditorParent());
+		addField(asyncRequestsEditor);
 	}
 
 	@Override

@@ -44,6 +44,7 @@ import tern.eclipse.jface.contentassist.TernCompletionProposal;
 import tern.server.TernPlugin;
 import tern.server.protocol.completions.FunctionInfo;
 import tern.server.protocol.completions.Parameter;
+import tern.server.protocol.completions.TernCompletionProposalRec;
 import tern.server.protocol.completions.TernTypeHelper;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.utils.StringUtils;
@@ -75,16 +76,8 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 	private ITernFile ternFile;
 	private IIDETernProject ternProject;
 
-	public JSTernCompletionProposal(String name, String type, String doc,
-			String url, String origin, int start, int end) {
-		this(name, null, type, doc, url, origin, start, end, false, false);
-	}
-
-	public JSTernCompletionProposal(String name, String displayName,
-			String type, String doc, String url, String origin, int start,
-			int end, boolean isProperty, boolean isObjectKey) {
-		super(name, displayName, type, doc, url, origin, start, end,
-				isProperty, isObjectKey);
+	public JSTernCompletionProposal(TernCompletionProposalRec proposal) {
+		super(proposal);
 		this.indentChars = TAB;
 	}
 

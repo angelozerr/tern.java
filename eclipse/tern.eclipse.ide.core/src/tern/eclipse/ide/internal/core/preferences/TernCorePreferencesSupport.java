@@ -13,7 +13,6 @@ package tern.eclipse.ide.internal.core.preferences;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.Preferences;
 
-import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
@@ -74,6 +73,20 @@ public class TernCorePreferencesSupport {
 	public boolean isLoadingLocalPlugins(IProject project) {
 		String result = preferencesSupport.getPreferencesValue(
 				TernCorePreferenceConstants.LOADING_LOCAL_PLUGINS, null,
+				project);
+		return StringUtils.asBoolean(result, false);
+	}
+
+	/**
+	 * Return false if Tern requests, like autocompletion should not be allowed
+	 * to run asynchronously and timeout.
+	 * 
+	 * @param project
+	 * @return true if asynchronous requests should not be allowed.
+	 */
+	public boolean isDisableAsynchronousReques(IProject project) {
+		String result = preferencesSupport.getPreferencesValue(
+				TernCorePreferenceConstants.DISABLE_ASYNC_REQUESTS, null,
 				project);
 		return StringUtils.asBoolean(result, false);
 	}

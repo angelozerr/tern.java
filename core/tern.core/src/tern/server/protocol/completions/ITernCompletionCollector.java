@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,43 +7,30 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - collectors API and code refactoring
  */
 package tern.server.protocol.completions;
 
-import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
+import tern.server.protocol.ITernResultsCollector;
 
 /**
  * Collector to collect result of completion.
- *
+ * 
  */
-public interface ITernCompletionCollector {
+public interface ITernCompletionCollector extends ITernResultsCollector {
 
 	/**
 	 * Collect an item completion.
 	 * 
-	 * @param name
-	 *            of the completion item.
-	 * @param displayName
-	 *            of the completion item.
-	 * @param type
-	 *            of the completion item.
-	 * @param doc
-	 *            of the completion item.
-	 * @param url
-	 *            of the completion item.
-	 * @param origin
-	 *            of the completion item.
-	 * @param start
-	 * @param end
-	 *            of the cursor.
-	 * @param isProperty
-	 * @param isObjectKey
+	 * @param proposal
+	 *            object containing all required information about the proposal
 	 * @param completion
 	 *            object of completion item (ex : JsonObject)
 	 * @param ternServer
 	 *            the tern server.
 	 */
-	void addProposal(String name, String displayName, String type, String doc,
-			String url, String origin, int start, int end, boolean isProperty,
-			boolean isObjectKey, Object completion, ITernServer ternServer);
+	void addProposal(TernCompletionProposalRec proposal, Object completion,
+			IJSONObjectHelper jsonManager);
+
 }

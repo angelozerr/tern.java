@@ -47,6 +47,7 @@ import tern.eclipse.ide.internal.core.builder.TernBuilder;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.repository.ITernRepository;
+import tern.resources.TernFileSynchronizer;
 import tern.resources.TernProject;
 import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;
@@ -87,6 +88,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	private final IProject project;
 
 	private ITernServer ternServer;
+	private Object serverLock = new Object();
 
 	private final List<ITernScriptPath> scriptPaths;
 
@@ -131,33 +133,45 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	 */
 	@Override
 	public ITernServer getTernServer() {
-		if (isServerDisposed()) {
-			try {
-				ITernServerType type = TernCorePreferencesSupport.getInstance()
-						.getServerType();
-				this.ternServer = type.createServer(this);
-				this.ternServer
-						.setLoadingLocalPlugins(TernCorePreferencesSupport
-								.getInstance().isLoadingLocalPlugins(project));
-				this.ternServer.addServerListener(new TernServerAdapter() {
-					@Override
-					public void onStop(ITernServer server) {
-						getFileSynchronizer().cleanIndexedFiles();
+		synchronized (serverLock) {
+			if (isServerDisposed()) {
+				try {
+					ITernServerType type = TernCorePreferencesSupport
+							.getInstance().getServerType();
+					this.ternServer = type.createServer(this);
+					this.ternServer
+							.setLoadingLocalPlugins(TernCorePreferencesSupport
+									.getInstance().isLoadingLocalPlugins(
+											project));
+					this.ternServer.addServerListener(new TernServerAdapter() {
+						@Override
+						public void onStop(ITernServer server) {
+							getFileSynchronizer().cleanIndexedFiles();
+						}
+					});
+					if (!TernCorePreferencesSupport.getInstance()
+							.isDisableAsynchronousReques(project)) {
+						this.ternServer
+								.setRequestProcessor(new IDETernServerAsyncReqProcessor(
+										ternServer));
 					}
-				});
-				copyListeners();
-				configureConsole();
-			} catch (Exception e) {
-				// should be improved?
-				Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
-			}
+					copyListeners();
+					configureConsole();
+				} catch (Exception e) {
+					// should be improved?
+					Trace.trace(Trace.SEVERE,
+							"Error while creating tern server", e);
+				}
 
+			}
+			return ternServer;
 		}
-		return ternServer;
 	}
 
 	public boolean isServerDisposed() {
-		return ternServer == null || ternServer.isDisposed();
+		synchronized (serverLock) {
+			return ternServer == null || ternServer.isDisposed();
+		}
 	}
 
 	/**
@@ -496,39 +510,52 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	 * Configure console to show/hide JSON request/response of the tern server.
 	 */
 	public void configureConsole() {
-		if (ternServer != null) {
-			// There is a tern server instance., Retrieve the well connector the
-			// the eclipse console.
-			ITernConsoleConnector connector = TernConsoleConnectorManager
-					.getManager().getConnector(ternServer);
-			if (connector != null) {
-				if (isTraceOnConsole()) {
-					// connect the tern server to the eclipse console.
-					connector.connectToConsole(ternServer, this);
-				} else {
-					// disconnect the tern server to the eclipse console.
-					connector.disconnectToConsole(ternServer, this);
+		synchronized (serverLock) {
+			if (ternServer != null) {
+				// There is a tern server instance., Retrieve the well connector
+				// the
+				// the eclipse console.
+				ITernConsoleConnector connector = TernConsoleConnectorManager
+						.getManager().getConnector(ternServer);
+				if (connector != null) {
+					if (isTraceOnConsole()) {
+						// connect the tern server to the eclipse console.
+						connector.connectToConsole(ternServer, this);
+					} else {
+						// disconnect the tern server to the eclipse console.
+						connector.disconnectToConsole(ternServer, this);
+					}
 				}
 			}
 		}
 	}
 
 	public void disposeServer() {
-		if (!isServerDisposed()) {
-			if (ternServer != null) {
-				ternServer.dispose();
-				ternServer = null;
+		synchronized (serverLock) {
+			if (!isServerDisposed()) {
+				if (ternServer != null) {
+					// notify uploader that we are going to dispose the server,
+					// so that it can finish gracefully
+					((IDETernFileUploader) ((TernFileSynchronizer) getFileSynchronizer())
+							.getTernFileUploader()).serverToBeDisposed();
+					ternServer.dispose();
+					ternServer = null;
+				}
 			}
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> T getData(String key) {
-		return (T) data.get(key);
+		synchronized (data) {
+			return (T) data.get(key);
+		}
 	}
 
 	public void setData(String key, Object value) {
-		data.put(key, value);
+		synchronized (data) {
+			data.put(key, value);
+		}
 	}
 
 	@Override
@@ -555,12 +582,19 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		synchronized (listeners) {
 			listeners.remove(listener);
 		}
+		synchronized (serverLock) {
+			if (ternServer != null) {
+				this.ternServer.removeServerListener(listener);
+			}
+		}
 	}
 
 	private void copyListeners() {
-		if (ternServer != null) {
-			for (ITernServerListener listener : listeners) {
-				this.ternServer.addServerListener(listener);
+		synchronized (serverLock) {
+			if (ternServer != null) {
+				for (ITernServerListener listener : listeners) {
+					this.ternServer.addServerListener(listener);
+				}
 			}
 		}
 	}
@@ -622,7 +656,6 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 					.fireTernProjectLifeCycleListenerChanged(this,
 							LifecycleEventType.onDisposeAfter);
 		}
-
 	}
 
 	protected static IDETernProject getTernProject(IProject project)

@@ -17,9 +17,9 @@ public class TernAngularCompletionItem extends TernCompletionItem {
 	private final String module;
 	private final String controller;
 
-	public TernAngularCompletionItem(String name, String type, String origin,
+	public TernAngularCompletionItem(AngularCompletionProposalRec proposal,
 			String module, String controller) {
-		super(name, type, null, null, origin);
+		super(proposal);
 		this.module = module;
 		this.controller = controller;
 	}

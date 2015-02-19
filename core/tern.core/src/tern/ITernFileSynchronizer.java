@@ -51,6 +51,17 @@ public interface ITernFileSynchronizer {
 	public void synchronizeFile(ITernFile file) throws IOException;
 
 	/**
+	 * Adds file to the doc object, if needed. Useful for e.g. content assist
+	 * query, because it ensures that the appropriate version of the file is
+	 * included along with the query.
+	 * 
+	 * @param doc
+	 * @param file
+	 * @throws IOException
+	 */
+	public void synchronizeFile(TernDoc doc, ITernFile file) throws IOException;
+
+	/**
 	 * Sends contents referred by the custom script path to Tern Server. Useful
 	 * when needed for example to synchronize files referred by an HTML file.
 	 * Files on the forced list will be always synchronized if present on the
@@ -61,14 +72,14 @@ public interface ITernFileSynchronizer {
 	public void synchronizeScriptPath(ITernScriptPath path, String... forced);
 
 	/**
-	 * Notifies cache manager that files has been successfully uploaded. This
-	 * method should be called by tern server if the tern response doesn't
-	 * throws error.
+	 * Notifies cache manager that files has not been successfully uploaded.
+	 * This method should be called by tern file uploader or tern server in case
+	 * upload fails.
 	 * 
 	 * @param doc
 	 *            the tern doc.
 	 */
-	public void filesUploaded(TernDoc doc);
+	public void uploadFailed(TernDoc doc);
 
 	/**
 	 * Cleans all cache information. Next call to ensureSynchronized will
@@ -80,5 +91,11 @@ public interface ITernFileSynchronizer {
 	 * Dispose the synchronizer.
 	 */
 	public void dispose();
+
+	/**
+	 * Forces file synchronizer to re-upload or remove the file next time
+	 * synchronization is happening.
+	 */
+	void refresh(Object file);
 
 }

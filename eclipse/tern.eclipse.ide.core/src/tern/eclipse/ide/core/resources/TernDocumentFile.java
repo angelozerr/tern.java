@@ -36,5 +36,13 @@ public class TernDocumentFile extends IDETernFile implements ITernFile {
 	public String toString() {
 		return super.toString() + " [DOCUMENT]"; //$NON-NLS-1$
 	}
+	
+	@Override
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
+		if (adapterClass == IDocument.class) {
+			return document;
+		}
+		return super.getAdapter(adapterClass);
+	}
 
 }

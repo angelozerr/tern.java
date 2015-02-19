@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *  Piotr Tomiak <piotr@genuitec.com> - refactoring of file management API
+ *  								  - asynchronous file upload
  */
 package tern.resources;
 
@@ -92,6 +93,8 @@ public class TernProject extends JsonObject implements ITernProject {
 
 	private String lastTernProjectFileContent;
 
+	private Object libLock = new Object();
+	
 	/**
 	 * Tern project constructor.
 	 * 
@@ -153,9 +156,11 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public void addLib(String lib) {
+	  synchronized(libLock) {
 		if (!hasLib(lib)) {
 			getLibs().add(lib);
 		}
+	  }
 	}
 
 	/**
@@ -166,6 +171,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public boolean hasLib(String lib) {
+	  synchronized(libLock) {
 		JsonArray libs = getLibs();
 		if (libs != null) {
 			for (JsonValue l : libs) {
@@ -174,6 +180,7 @@ public class TernProject extends JsonObject implements ITernProject {
 			}
 		}
 		return false;
+	  }
 	}
 
 	/**
@@ -203,12 +210,14 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public JsonArray getLibs() {
+	  synchronized(libLock) {
 		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
 		if (libs == null) {
 			libs = new JsonArray();
 			add(LIBS_FIELD_NAME, libs);
 		}
 		return libs;
+	  }
 	}
 
 	/**
@@ -216,7 +225,9 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public void clearLibs() {
+	  synchronized(libLock) {
 		remove(LIBS_FIELD_NAME);
+	  }
 	}
 
 	/**
@@ -434,11 +445,14 @@ public class TernProject extends JsonObject implements ITernProject {
 		return null;
 	}
 
-	protected void synchronize(TernQuery query, JsonArray names,
+	protected void synchronize(TernDoc doc, JsonArray names,
 			ITernScriptPath scriptPath, Node domNode, ITernFile file) {
 		ITernFileSynchronizer synchronizer = getFileSynchronizer();
 		synchronizer.ensureSynchronized();
 		if (file != null) {
+			if (doc.getQuery() != null) {
+				doc.getQuery().setFile(file.getFullName(this));
+			}
 			if (domNode != null) {
 				DOMElementsScriptPath domPath = createDOMElementsScriptPath(
 						domNode, file);
@@ -446,13 +460,10 @@ public class TernProject extends JsonObject implements ITernProject {
 						file.getFullName(this));
 			} else {
 				try {
-					synchronizer.synchronizeFile(file);
+					synchronizer.synchronizeFile(doc, file);
 				} catch (IOException e) {
 					handleException(e);
 				}
-			}
-			if (query != null) {
-				query.setFile(file.getFullName(this));
 			}
 		}
 		if (names != null) {
@@ -483,9 +494,9 @@ public class TernProject extends JsonObject implements ITernProject {
 			ITernScriptPath scriptPath, Node domNode, ITernFile file,
 			ITernCompletionCollector collector) throws IOException,
 			TernException {
-		synchronize(query, names, scriptPath, domNode, file);
-		ITernServer server = getTernServer();
 		TernDoc doc = new TernDoc(query);
+		synchronize(doc, names, scriptPath, domNode, file);
+		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 
@@ -501,9 +512,9 @@ public class TernProject extends JsonObject implements ITernProject {
 			ITernScriptPath scriptPath, Node domNode, ITernFile file,
 			ITernDefinitionCollector collector) throws IOException,
 			TernException {
-		synchronize(query, names, scriptPath, domNode, file);
-		ITernServer server = getTernServer();
 		TernDoc doc = new TernDoc(query);
+		synchronize(doc, names, scriptPath, domNode, file);
+		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 
@@ -517,18 +528,18 @@ public class TernProject extends JsonObject implements ITernProject {
 	public void request(TernQuery query, JsonArray names,
 			ITernScriptPath scriptPath, Node domNode, ITernFile file,
 			ITernTypeCollector collector) throws IOException, TernException {
-		synchronize(query, names, scriptPath, domNode, file);
-		ITernServer server = getTernServer();
 		TernDoc doc = new TernDoc(query);
+		synchronize(doc, names, scriptPath, domNode, file);
+		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 
 	@Override
 	public void request(TernQuery query, ITernFile file,
 			ITernLintCollector collector) throws IOException, TernException {
-		synchronize(query, null, null, null, file);
-		ITernServer server = getTernServer();
 		TernDoc doc = new TernDoc(query);
+		synchronize(doc, null, null, null, file);
+		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 
@@ -542,9 +553,9 @@ public class TernProject extends JsonObject implements ITernProject {
 	public void request(TernGuessTypesQuery query, ITernFile file,
 			ITernGuessTypesCollector collector) throws IOException,
 			TernException {
-		synchronize(query, null, null, null, file);
-		ITernServer server = getTernServer();
 		TernDoc doc = new TernDoc(query);
+		synchronize(doc, null, null, null, file);
+		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
 

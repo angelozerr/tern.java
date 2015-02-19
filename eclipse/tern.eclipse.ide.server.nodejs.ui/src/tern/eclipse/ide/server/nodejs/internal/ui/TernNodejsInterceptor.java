@@ -17,6 +17,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 
+import org.eclipse.swt.widgets.Display;
+
 import tern.ITernProject;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.ui.TernUIPlugin;
@@ -70,8 +72,17 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 	}
 
 	@Override
-	public void onCreate(NodejsProcess process, List<String> commands,
-			File projectDir) {
+	public void onCreate(final NodejsProcess process, final List<String> commands,
+			final File projectDir) {
+		if (Display.getDefault().getThread() != Thread.currentThread()) {
+			Display.getDefault().asyncExec(new Runnable() {
+				@Override
+				public void run() {
+					onCreate(process, commands, projectDir);
+				}
+			});
+			return;
+		}
 		ITernConsole console = getConsole();
 		if (console != null) {
 			StringBuilder commandsAsString = new StringBuilder();

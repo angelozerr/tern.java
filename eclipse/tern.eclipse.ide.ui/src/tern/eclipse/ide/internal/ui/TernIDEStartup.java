@@ -23,7 +23,7 @@ import tern.eclipse.ide.internal.ui.validation.JavaEditorTracker;
  * @author Victor Rubezhny
  */
 public class TernIDEStartup implements IStartup {
-	
+
 	@Override
 	public void earlyStartup() {
 		final IWorkbench workbench = PlatformUI.getWorkbench();
@@ -35,6 +35,8 @@ public class TernIDEStartup implements IStartup {
 				}
 			}
 		});
+		// EditorActivationTracker is thread-safe and registers asynchronously
+		EditorActivationTracker.getInstance();
 	}
 
 }

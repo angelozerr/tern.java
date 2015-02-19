@@ -25,7 +25,9 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.preferences.TernUIPreferenceConstants;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.ITernServer;
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.completions.ITernCompletionCollector;
+import tern.server.protocol.completions.TernCompletionProposalRec;
 
 /**
  * Tern collector which creates {@link JSTernCompletionProposal}.
@@ -33,7 +35,7 @@ import tern.server.protocol.completions.ITernCompletionCollector;
  */
 public class JSTernCompletionCollector implements ITernCompletionCollector {
 
-	private final List<ICompletionProposal> proposals;
+	protected final List<ICompletionProposal> proposals;
 	private boolean generateAnonymousFunction;
 	private boolean expandFunction;
 	private String indentChars;
@@ -86,17 +88,13 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	}
 
 	@Override
-	public void addProposal(String name, String displayName, String type,
-			String doc, String url, String origin, int start, int end,
-			boolean isProperty, boolean isObjectKey, Object completion,
-			ITernServer ternServer) {
-		JSTernCompletionProposal proposal = internalCreateProposal(name,
-				displayName, type, doc, url, origin, start, end, isProperty,
-				isObjectKey);
+	public void addProposal(TernCompletionProposalRec proposalItem,
+			Object completion, IJSONObjectHelper jsonObjectHelper) {
+		JSTernCompletionProposal proposal = internalCreateProposal(proposalItem);
 		if (proposal.isFunction()) {
 			// Add the function reference
-			proposals.add(internalCreateProposal(name, displayName, "fn", doc,
-					url, origin, start, end, isProperty, isObjectKey));
+			proposals
+					.add(internalCreateProposal(proposalItem.changeType("fn")));
 		}
 
 		proposals.add(proposal);
@@ -111,20 +109,16 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 			String[] functions = proposal.expand();
 			if (functions != null) {
 				for (int i = 0; i < functions.length; i++) {
-					proposals.add(internalCreateProposal(name, displayName,
-							functions[i], doc, url, origin, start, end,
-							isProperty, isObjectKey));
+					proposals.add(internalCreateProposal(proposalItem
+							.changeType(functions[i])));
 				}
 			}
 		}
 	}
 
-	private JSTernCompletionProposal internalCreateProposal(String name,
-			String displayName, String type, String doc, String url,
-			String origin, int start, int end, boolean isProperty,
-			boolean isObjectKey) {
-		JSTernCompletionProposal proposal = createProposal(name, displayName,
-				type, doc, url, origin, start, end, isProperty, isObjectKey);
+	private JSTernCompletionProposal internalCreateProposal(
+			TernCompletionProposalRec proposalItem) {
+		JSTernCompletionProposal proposal = createProposal(proposalItem);
 		proposal.setGenerateAnonymousFunction(generateAnonymousFunction);
 		proposal.setIndentChars(indentChars);
 		// TODO manage that with preferences
@@ -138,22 +132,12 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 	/**
 	 * Completion proposal factory.
 	 * 
-	 * @param name
-	 * @param type
-	 * @param doc
-	 * @param url
-	 * @param origin
-	 * @param isObjectKey
-	 * @param isProperty
-	 * @param pos
-	 * @param startOffset
+	 * @param proposalItem
+	 * 
 	 * @return
 	 */
-	protected JSTernCompletionProposal createProposal(String name,
-			String displayName, String type, String doc, String url,
-			String origin, int start, int end, boolean isProperty,
-			boolean isObjectKey) {
-		return new JSTernCompletionProposal(name, displayName, type, doc, url,
-				origin, start, end, isProperty, isObjectKey);
+	protected JSTernCompletionProposal createProposal(
+			TernCompletionProposalRec proposalItem) {
+		return new JSTernCompletionProposal(proposalItem);
 	}
 }
