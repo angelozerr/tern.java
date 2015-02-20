@@ -3,7 +3,7 @@
   <parent>
     <groupId>fr.opensagres.js</groupId>
     <artifactId>update-site</artifactId>
-    <version>0.8.3-SNAPSHOT</version>
+    <version>0.8.2-SNAPSHOT</version>
   </parent>
   <artifactId>tern-server-rhino-feature</artifactId>
   <packaging>eclipse-feature</packaging>
