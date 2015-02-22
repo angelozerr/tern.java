@@ -17,6 +17,7 @@
  "!define": {
   "config": {
    "AutoCompleteConfig": {
+    "!proto": "config.ComponentConfig",
     "alwaysShowContainer": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#attribute_alwaysShowContainer",
@@ -134,6 +135,7 @@
     }
    },
    "ButtonItemConfig": {
+    "!proto": "config.ComponentConfig",
     "activeState": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html#attribute_activeState",
@@ -191,6 +193,7 @@
     }
    },
    "CalendarConfig": {
+    "!proto": "config.CalendarBaseConfig",
     "allowNone": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_allowNone",
@@ -323,6 +326,7 @@
     }
    },
    "CharCounterConfig": {
+    "!proto": "config.BaseConfig",
     "counter": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CharCounter.html#attribute_counter",
@@ -340,6 +344,7 @@
     }
    },
    "ComponentConfig": {
+    "!proto": "config.WidgetConfig",
     "useARIA": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Component.html#attribute_useARIA",
@@ -362,6 +367,7 @@
     }
    },
    "CellEditorSupportConfig": {
+    "!proto": "config.BaseConfig",
     "dataSource": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#attribute_dataSource",
@@ -459,6 +465,7 @@
     }
    },
    "DatepickerManagerConfig": {
+    "!proto": "config.OverlayManagerConfig",
     "calendar": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatepickerManager.html#attribute_calendar",
@@ -486,6 +493,7 @@
     }
    },
    "DatePickerSelectConfig": {
+    "!proto": "config.ComponentConfig",
     "appendOrder": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_appendOrder",
@@ -578,6 +586,7 @@
     }
    },
    "DialogConfig": {
+    "!proto": "config.PanelConfig",
     "bodyContent": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html#attribute_bodyContent",
@@ -650,6 +659,7 @@
     }
    },
    "EditableConfig": {
+    "!proto": "config.ComponentConfig",
     "cancelButton": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Editable.html#attribute_cancelButton",
@@ -702,6 +712,7 @@
     }
    },
    "ImageViewerConfig": {
+    "!proto": "config.OverlayBaseConfig",
     "anim": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_anim",
@@ -824,6 +835,7 @@
     }
    },
    "ImageGalleryConfig": {
+    "!proto": "config.ImageViewerConfig",
     "autoPlay": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_autoPlay",
@@ -893,6 +905,7 @@
    "A": {
     "Plugin": {
      "IOConfig": {
+      "!proto": "config.IORequestConfig",
       "node": {
        "!type": "+node.Node",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_node",
@@ -937,6 +950,7 @@
     }
    },
    "IORequestConfig": {
+    "!proto": "config.Plugin.BaseConfig",
     "autoLoad": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_autoLoad",
@@ -1029,6 +1043,7 @@
     }
    },
    "LiveSearchConfig": {
+    "!proto": "config.BaseConfig",
     "data": {
      "!type": "fn()",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#attribute_data",
@@ -1076,6 +1091,7 @@
     }
    },
    "LoadingMaskConfig": {
+    "!proto": "config.Plugin.BaseConfig",
     "messageEl": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LoadingMask.html#attribute_messageEl",
@@ -1093,6 +1109,7 @@
     }
    },
    "OverlayContextPanelConfig": {
+    "!proto": "config.OverlayContextConfig",
     "anim": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_anim",
@@ -1125,6 +1142,7 @@
     }
    },
    "OverlayContextConfig": {
+    "!proto": "config.OverlayBaseConfig",
     "align": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_align",
@@ -1182,6 +1200,7 @@
     }
    },
    "OverlayManagerConfig": {
+    "!proto": "config.BaseConfig",
     "zIndexBase": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#attribute_zIndexBase",
@@ -1189,6 +1208,7 @@
     }
    },
    "OverlayMaskConfig": {
+    "!proto": "config.OverlayBaseConfig",
     "alignPoints": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_alignPoints",
@@ -1226,6 +1246,7 @@
     }
    },
    "PaginatorConfig": {
+    "!proto": "config.BaseConfig",
     "alwaysVisible": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_alwaysVisible",
@@ -1358,6 +1379,7 @@
     }
    },
    "PanelConfig": {
+    "!proto": "config.WidgetConfig",
     "collapsed": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html#attribute_collapsed",
@@ -1390,6 +1412,7 @@
     }
    },
    "ProgressBarConfig": {
+    "!proto": "config.ComponentConfig",
     "height": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ProgressBar.html#attribute_height",
@@ -1442,6 +1465,7 @@
     }
    },
    "RatingConfig": {
+    "!proto": "config.ComponentConfig",
     "disabled": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Rating.html#attribute_disabled",
@@ -1509,6 +1533,7 @@
     }
    },
    "ThumbRatingConfig": {
+    "!proto": "config.RatingConfig",
     "size": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ThumbRating.html#attribute_size",
@@ -1516,6 +1541,7 @@
     }
    },
    "ResizeConfig": {
+    "!proto": "config.BaseConfig",
     "autoHide": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#attribute_autoHide",
@@ -1563,6 +1589,7 @@
     }
    },
    "TextboxlistConfig": {
+    "!proto": "config.AutoCompleteConfig",
     "constrain": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#attribute_constrain",
@@ -1615,6 +1642,7 @@
     }
    },
    "ToolbarConfig": {
+    "!proto": "config.ComponentConfig",
     "activeState": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Toolbar.html#attribute_activeState",
@@ -1647,6 +1675,7 @@
     }
    },
    "TooltipConfig": {
+    "!proto": "config.OverlayContextPanelConfig",
     "anim": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Tooltip.html#attribute_anim",
@@ -1679,6 +1708,7 @@
     }
    },
    "TreeDataConfig": {
+    "!proto": "config.BaseConfig",
     "container": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_container",
@@ -1696,6 +1726,7 @@
     }
    },
    "TreeNodeConfig": {
+    "!proto": "config.TreeDataConfig",
     "draggable": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_draggable",
@@ -1763,6 +1794,7 @@
     }
    },
    "TreeNodeIOConfig": {
+    "!proto": "config.TreeNodeConfig",
     "io": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#attribute_io",
@@ -1785,6 +1817,7 @@
     }
    },
    "TreeNodeCheckConfig": {
+    "!proto": "config.TreeNodeIOConfig",
     "checked": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checked",
@@ -1807,6 +1840,7 @@
     }
    },
    "TreeViewConfig": {
+    "!proto": "config.TreeDataConfig",
     "type": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#attribute_type",
@@ -1824,6 +1858,7 @@
     }
    },
    "TreeViewDDConfig": {
+    "!proto": "config.TreeViewConfig",
     "helper": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_helper",
