@@ -20,7 +20,6 @@ import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -50,9 +49,9 @@ import tern.eclipse.ide.ui.controls.AbstractTreeBlock;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.utils.StringUtils;
-import tern.utils.TernModuleHelper;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Block which hosts the Tree of the Tern linter options.
@@ -278,9 +277,34 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		return fControl;
 	}
 
-	public void setLinterConfig(ITernLinterConfig config) {
+	public void setLinterConfig(ITernLinterConfig config) throws TernException {
+		// load value for each option from the .tern-project
+		if (workingCopy.hasCheckedTernModule(linterId)) {
+			ITernModuleConfigurable module = (ITernModuleConfigurable) workingCopy
+					.getTernModule(linterId);
+			JsonObject jsonOptions = module.getOptions();
+			if (jsonOptions != null && jsonOptions.get("config") != null) {
+				updateConfig((JsonObject) jsonOptions.get("config"),
+						config.getOptions());
+			}
+		}
 		treeViewer.setInput(config);
 		treeViewer.expandAll();
+	}
+
+	private void updateConfig(JsonObject jsonOptions,
+			Collection<ITernLinterOption> options) {
+		for (ITernLinterOption option : options) {
+			if (option.isCategoryType()) {
+				updateConfig(jsonOptions, option.getOptions());
+			} else {
+				String name = option.getId();
+				JsonValue jsonValue = jsonOptions.get(name);
+				if (jsonValue != null) {
+					option.setValue(jsonValue);
+				}
+			}
+		}
 	}
 
 	@Override
@@ -322,11 +346,11 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	 */
 	public void updateOptions() throws TernException {
 		ITernLinterConfig config = (ITernLinterConfig) treeViewer.getInput();
-		
+
 		JsonObject jsonOptions = new JsonObject();
 		JsonObject jsonConfig = new JsonObject();
 		jsonOptions.add("config", jsonConfig);
-		toJSON(config.getOptions(), jsonConfig);
+		updateJSONOptions(config.getOptions(), jsonConfig);
 
 		ITernModuleConfigurable module = (ITernModuleConfigurable) workingCopy
 				.getTernModule(linterId);
@@ -334,10 +358,11 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 
 	}
 
-	private void toJSON(Collection<ITernLinterOption> options, JsonObject json) {
+	private void updateJSONOptions(Collection<ITernLinterOption> options,
+			JsonObject json) {
 		for (ITernLinterOption option : options) {
 			if (option.isCategoryType()) {
-				toJSON(option.getOptions(), json);
+				updateJSONOptions(option.getOptions(), json);
 			} else if (option.isEnabled()) {
 				if (option.isBooleanType()) {
 					json.add(option.getId(), option.getBooleanValue());

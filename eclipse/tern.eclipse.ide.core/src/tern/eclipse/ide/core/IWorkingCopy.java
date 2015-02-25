@@ -12,6 +12,7 @@ package tern.eclipse.ide.core;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 import tern.TernException;
 import tern.server.ITernModule;
@@ -101,4 +102,6 @@ public interface IWorkingCopy {
 	 * @param listener
 	 */
 	void removeWorkingCopyListener(IWorkingCopyListener listener);
+	
+	List<ITernModule> getAllModules();
 }

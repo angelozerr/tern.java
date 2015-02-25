@@ -84,7 +84,7 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		try {
 			IWorkingCopy workingCopy = getWorkingCopy();
 			workingCopy.addWorkingCopyListener(this);
-			modulesBlock.refresh(getTernProject().getAllModules(),
+			modulesBlock.refresh(workingCopy.getAllModules(),
 					workingCopy.getCheckedModules());
 		} catch (Throwable e) {
 			Trace.trace(Trace.SEVERE, "Error while loading tern project", e);

@@ -18,6 +18,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import com.eclipsesource.json.JsonObject;
+
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.IWorkingCopy;
 import tern.eclipse.ide.linter.core.ITernLinterConfig;
@@ -25,6 +27,7 @@ import tern.eclipse.ide.linter.core.TernLinterCorePlugin;
 import tern.eclipse.ide.linter.internal.ui.TernLinterUIPlugin;
 import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.ui.properties.AbstractTernPropertyPage;
+import tern.server.ITernModuleConfigurable;
 
 /**
  * Abstract class for Linter property page.
@@ -80,10 +83,14 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
 		// save column settings
 		linterConfigBlock.saveColumnSettings();
 		try {
-			// create options and store it .tern-project or config file name.
-			linterConfigBlock.updateOptions();
-			// save working copy.
-			saveWorkingCopy();
+			IWorkingCopy workingCopy = getWorkingCopy();
+			if (workingCopy.hasCheckedTernModule(linterId)) {
+				// create options and store it .tern-project or config file
+				// name.
+				linterConfigBlock.updateOptions();
+				// save working copy.
+				saveWorkingCopy();
+			}
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
 		}
@@ -95,13 +102,18 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
 	 */
 	private void loadLinterConfig() {
 		try {
-			IIDETernProject ternProject = getTernProject();
+			// Create instance of linter config
 			ITernLinterConfig config = TernLinterCorePlugin.getDefault()
 					.getTernLinterConfigurationsManager()
-					.createLinterConfig(linterId);
+					.createLinterConfig(linterId);			
+			// refresh the tree options
 			linterConfigBlock.setLinterConfig(config);
 		} catch (Throwable e) {
 			Trace.trace(Trace.SEVERE, "Error while loading linter config.", e);
 		}
+	}
+
+	private void updateConfig(JsonObject jsonOptions, ITernLinterConfig config) {
+		
 	}
 }

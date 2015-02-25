@@ -172,4 +172,7 @@ public class WorkingCopy implements IWorkingCopy {
 		}
 	}
 
+	public List<ITernModule> getAllModules() {
+		return workingCopyModules;
+	}
 }
