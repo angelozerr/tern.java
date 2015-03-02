@@ -542,7 +542,7 @@
     "prototype": {
       "add": {
         "!type": "fn(value: ?) -> !this",
-        "!doc": "The add() method appends a new element with a specifiedï¿½value to the end of a Set object.",
+        "!doc": "The add() method appends a new element with a specified�value to the end of a Set object.",
         "!url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/add"
       },
       "clear": {

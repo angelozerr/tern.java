@@ -91,12 +91,13 @@
       return infer.ANull;
     var cx = infer.cx(), server = cx.parent, data = server._node, name = argNodes[0].value;
     var locals = cx.definitions.node;
-    if (locals[name] && /^[a-z_]*$/.test(name)) return locals[name];
-
-    if (name in data.modules) return data.modules[name];
-
     var result;
-    if (data.options.modules && data.options.modules.hasOwnProperty(name)) {
+
+    if (locals[name] && /^[a-z_]*$/.test(name)) {
+      result = locals[name];
+    } else if (name in data.modules) {
+      result = data.modules[name];
+    } else if (data.options.modules && data.options.modules.hasOwnProperty(name)) {
       var scope = buildWrappingScope(cx.topScope, name);
       infer.def.load(data.options.modules[name], scope);
       result = data.modules[name] = scope.exports;
@@ -138,7 +139,7 @@
     }
   }
 
-  function findTypeAt(file, pos, expr, type) {
+  function findTypeAt(_file, _pos, expr, type) {
     var isStringLiteral = expr.node.type === "Literal" &&
        typeof expr.node.value === "string";
     var isRequireArg = !!expr.node.required;
@@ -150,9 +151,11 @@
       type = Object.create(type);
 
       // Provide a custom origin location pointing to the require()d file
-      var exportedType = expr.node.required.types[0];
-      type.origin = exportedType.origin;
-      type.originNode = exportedType.originNode;
+      var exportedType;
+      if (expr.node.required && (exportedType = expr.node.required.getType())) {
+        type.origin = exportedType.origin;
+        type.originNode = exportedType.originNode;
+      }
     }
 
     return type;
@@ -312,7 +315,7 @@
     run: function(server, query, file) {
       function describe(aval) {
         var target = {}, type = aval.getType(false);
-        target.type = infer.toString(type, 3);
+        target.type = infer.toString(aval, 3);
         var doc = aval.doc || (type && type.doc), url = aval.url || (type && type.url);
         if (doc) target.doc = doc;
         if (url) target.url = url;
@@ -323,7 +326,7 @@
 
       var known = server._node.modules[resolveProjectPath(server, file.name)];
       if (!known) return {};
-      var type = known.getType(false);
+      var type = known.getObjType(false);
       var resp = describe(known);
       if (type instanceof infer.Obj) {
         var props = resp.props = {};
