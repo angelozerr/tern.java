@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="tern.eclipse.ide.set.ternide.feature"
+      label="%featureName"
+      version="0.9.0.qualifier"
+      provider-name="%featureProvider"
+      license-feature="org.eclipse.license"
+      license-feature-version="1.0.0.qualifier">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import feature="tern.eclipse.ide.server.nodejs.embed" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="tern-feature" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="tern-jsdt-feature" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="tern-server-nodejs-feature" version="0.9.0" match="greaterOrEqual"/>
+   </requires>
+
+</feature>
