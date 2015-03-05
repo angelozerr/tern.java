@@ -1,4 +1,4 @@
-.settings
-/bin
-/.project
+bin
 target
+.settings
+/.project

@@ -2,38 +2,47 @@
 <site>
    <feature id="tern.eclipse.ide.server.nodejs.embed"><category name="Tern - Embed Node.js"/></feature>
    <feature url="features/tern.eclipse.ide.server.nodejs.embed.source_0.0.0.jar" id="tern.eclipse.ide.server.nodejs.embed.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
+      <category name="ternjavadev"/>
    </feature>
    
    <feature id="tern-feature"><category name="Tern IDE"/></feature>
    <feature url="features/tern-feature.source_0.0.0.jar" id="tern-feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
+      <category name="ternjavadev"/>
    </feature>
    
    <feature id="tern-jsdt-feature"><category name="Tern IDE"/></feature>
    <feature url="features/tern-jsdt-feature.source_0.0.0.jar" id="tern-jsdt-feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
+      <category name="ternjavadev"/>
    </feature>
    
    <feature id="tern-server-nodejs-feature"><category name="Tern IDE"/></feature>
    <feature url="features/tern-server-nodejs-feature.source_0.0.0.jar" id="tern-server-nodejs-feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
+      <category name="ternjavadev"/>
    </feature>
    
    <feature id="tern.eclipse.ide.tools.feature"><category name="Tern Tooling"/></feature>
    <feature url="features/tern.eclipse.ide.tools.feature.source_0.0.0.jar" id="tern.eclipse.ide.tools.feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
+      <category name="ternjavadev"/>
    </feature>
    
    <feature id="tern-linters-feature"><category name="Tern Linters"/></feature>
    <feature url="features/tern-linters-feature.source_0.0.0.jar" id="tern-linters-feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
+      <category name="ternjavadev"/>
    </feature>
+   
+   <feature id="tern.eclipse.ide.set.ternide.feature"><category name=".Features Sets"/></feature>
+   <feature id="tern.eclipse.ide.set.terntooling.feature"><category name=".Features Sets"/></feature>
+   <feature id="tern.eclipse.ide.set.ternjavadev.feature"><category name=".Features Sets"/></feature>
       
    <bundle id="minimal-json" >
       <category name="Tern IDE"/>
    </bundle>
    
+   <category-def name=".Features Sets" label=".Features Sets">
+      <description>
+        Grouping of related features
+      </description>
+   </category-def>
    <category-def name="Tern - Embed Node.js" label="Tern - Embed Node.js">
       <description>
          Embed Node.js switch OS
@@ -42,5 +51,5 @@
    <category-def name="Tern IDE" label="Tern IDE"/>
    <category-def name="Tern Linters" label="Tern Linters"/>
    <category-def name="Tern Tooling" label="Tern Tooling"/>
-   <category-def name="Tern Tooling Development Resources" label="Tern Tooling Development Resources"/>
+   <category-def name="ternjavadev" label="Tern.java Development Resources"/>
 </site>

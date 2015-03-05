@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="tern.eclipse.ide.tools.feature"
+      id="tern.eclipse.ide.set.terntooling.feature"
       label="%featureName"
       version="0.9.0.qualifier"
       provider-name="%featureProvider"
@@ -19,18 +19,9 @@
       %license
    </license>
 
-   <plugin
-         id="tern.eclipse.ide.tools.core"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="tern.eclipse.ide.tools.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+   <requires>
+      <import feature="tern.eclipse.ide.set.ternide.feature" version="0.9.0" match="greaterOrEqual"/>
+      <import feature="tern-linters-feature" version="0.9.0" match="greaterOrEqual"/>
+   </requires>
 
 </feature>

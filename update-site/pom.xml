@@ -15,6 +15,9 @@
 		<module>tern-server-nodejs-feature</module>
 		<module>tern.eclipse.ide.tools.feature</module>
 		<module>tern-linters-feature</module>
+		<module>tern.eclipse.ide.set.ternide.feature</module>
+		<module>tern.eclipse.ide.set.terntooling.feature</module>
+		<module>tern.eclipse.ide.set.ternjavadev.feature</module>
 		<module>tern.repository</module>
 	</modules>
 </project>
