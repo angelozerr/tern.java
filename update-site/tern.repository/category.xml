@@ -29,11 +29,19 @@
    <feature url="features/tern-linters-feature.source_0.0.0.jar" id="tern-linters-feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
    </feature>
+   
+   <feature id="tern.eclipse.ide.set.ternide.feature"><category name=".Features Sets"/></feature>
+   <feature id="tern.eclipse.ide.set.terntooling.feature"><category name=".Features Sets"/></feature>
       
    <bundle id="minimal-json" >
       <category name="Tern IDE"/>
    </bundle>
    
+   <category-def name=".Features Sets" label=".Features Sets">
+      <description>
+        Grouping of related features
+      </description>
+   </category-def>
    <category-def name="Tern - Embed Node.js" label="Tern - Embed Node.js">
       <description>
          Embed Node.js switch OS
