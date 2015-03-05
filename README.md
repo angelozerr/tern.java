@@ -28,7 +28,7 @@ you will see contentassist available for JavaScript :
 
 ![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
 
-## Eclipse IDE
+## Tern (Eclipse) IDE
 
 On top of `core` module
 Tern.java provides an Eclipse IDE integration with Tern. For more information please read [Tern Eclipse IDE](https://github.com/angelozerr/tern.java/wiki/Tern-Eclipse-IDE).
@@ -43,6 +43,10 @@ There are also advanced tools for creators of tern plugins,
 see wiki pages [Tern-Toolings](https://github.com/angelozerr/tern.java/wiki/Tern-Toolings),
 [Tern-Console](https://github.com/angelozerr/tern.java/wiki/Tern-Console) and 
 [Debugging](https://github.com/angelozerr/tern.java/wiki/Debugging-tern.js-with-Nodeclipse).
+
+## Tern.java Development Resources
+
+Currently only bundled sources on all tern.java modules, see [#215](https://github.com/angelozerr/tern.java/pull/215).  
 
 # Who is using tern.java?
 
