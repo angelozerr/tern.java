@@ -23,7 +23,7 @@ Once that Tern Server is created with Java using `core` module,
 you can use it in any Java context (Eclipse, Netbeans, etc). 
 tern.java provides the capability to use Tern Server with SWT : 
 
- * contentassist which uses tern.java. If you start the SWT [TernEditor](https://github.com/angelozerr/tern.java/blob/master/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/rhino/RhinoTernEditor.java) demo, 
+ * contentassist which uses tern.java. If you start the SWT [TernEditor](https://github.com/angelozerr/tern.java/blob/master/eclipse/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/rhino/RhinoTernEditor.java) demo, 
 you will see contentassist available for JavaScript : 
 
 ![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
