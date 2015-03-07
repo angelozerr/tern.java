@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!--
+###############################################################################
+# Copyright (c) 2013 Angelo Zerr and others.
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#     Angelo Zerr <angelo.zerr@gmail.com> - Initial API and implementation 
+###############################################################################
+ -->
+<plugin>
+     		 
+  	<!-- ====================================================== -->
+	<!-- Register the Tern validator with the validation 		-->
+	<!-- framework. 										    -->
+	<!-- ====================================================== -->
+
+ <!--<extension
+         id="validationMarker"
+         name="%ternValidationMarker.name"
+         point="org.eclipse.core.resources.markers">
+      <super type="org.eclipse.wst.validation.problemmarker"/>
+      <persistent value="true"/>
+ </extension>
+
+   <extension id="tern" name="%Tern_Validator.name" point="org.eclipse.wst.validation.validatorV2">
+      <validator
+            build="true"
+            class="tern.eclipse.ide.jsdt.core.internal.validation.eclipse.Validator"
+            manual="true"
+            sourceid="tern.eclipse.ide.jsdt.ui.internal.validation.DelegatingSourceValidatorForTern"
+            version="3"
+            markerId="org.eclipse.wst.tern.core.validationMarker">
+         <include>
+            <rules>            
+              <contentType id="org.eclipse.wst.jsdt.core.jsSource"></contentType>
+               <contentType id="org.eclipse.wst.html.core.htmlsource"></contentType>
+               <contentType id="org.eclipse.jst.jsp.core.jspsource"></contentType>
+               <fileext
+                     caseSensitive="false"
+                     ext="js">
+               </fileext>
+               <fileext
+                     caseSensitive="false"
+                     ext="html">
+               </fileext>
+               <fileext
+                     caseSensitive="false"
+                     ext="htm">
+               </fileext>
+               <fileext
+                     caseSensitive="false"
+                     ext="jsp">
+               </fileext>
+               <fileext
+                     caseSensitive="false"
+                     ext="php">
+               </fileext>
+            </rules>
+         </include>
+      </validator>
+   </extension>
+     -->
+</plugin>        
