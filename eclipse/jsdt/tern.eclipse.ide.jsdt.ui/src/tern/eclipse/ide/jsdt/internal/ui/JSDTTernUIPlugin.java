@@ -22,7 +22,7 @@ import tern.internal.resources.InternalTernResourcesManager;
 public class JSDTTernUIPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "tern.eclipse.ide.jsdt"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "tern.eclipse.ide.jsdt.ui"; //$NON-NLS-1$
 
 	// The shared instance
 	private static JSDTTernUIPlugin plugin;
