@@ -13,12 +13,9 @@ package tern.eclipse.ide.jsdt.internal.ui;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import tern.internal.resources.InternalTernResourcesManager;
-
 /**
  * The activator class controls the plug-in life cycle
  */
-@SuppressWarnings("restriction")
 public class JSDTTernUIPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
