@@ -28,7 +28,6 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.server.ITernPlugin;
-import tern.server.protocol.TernQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.lint.TernLintQuery;
 
@@ -82,7 +81,8 @@ final public class JavaDirtyRegionProcessor extends DirtyRegionProcessor {
 				try {
 					ITernFile tf = new TernDocumentFile(file, document);
 					for (ITernPlugin linter : lintPlugins) {
-						TernQuery query = TernLintQuery.create(linter, false);
+						TernLintQuery query = TernLintQuery.create(linter,
+								false);
 						collector.setLinter(linter);
 						ternProject.request(query, tf, collector);
 					}

@@ -11,13 +11,13 @@
  */
 package tern.server.protocol.lint;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
-
 import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.ITernResultProcessor;
 import tern.server.protocol.TernDoc;
+
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 public class TernLintResultProcessor implements
 		ITernResultProcessor<ITernLintCollector> {
@@ -41,30 +41,43 @@ public class TernLintResultProcessor implements
 				for (JsonValue files : messages) {
 					filesObject = (JsonObject) files;
 					file = jsonObjectHelper.getText(filesObject.get("file")); //$NON-NLS-1$
-					collector.startLint(file);
 
-					JsonArray messagesFile = (JsonArray) filesObject
-							.get("messages"); //$NON-NLS-1$
-					if (messagesFile != null) {
-						addMessages(jsonObjectHelper, messagesFile, collector);
+					try {
+						collector.startLint(file);
+
+						JsonArray messagesFile = (JsonArray) filesObject
+								.get("messages"); //$NON-NLS-1$
+						if (messagesFile != null) {
+							addMessages(jsonObjectHelper, messagesFile, query,
+									collector);
+						}
+					} finally {
+						collector.endLint(file);
 					}
-					collector.endLint(file);
 				}
 			} else {
-				addMessages(jsonObjectHelper, messages, collector);
+				String file = doc.getQuery().getFile();
+				try {
+					collector.startLint(file);
+					addMessages(jsonObjectHelper, messages, query, collector);
+				} finally {
+					collector.endLint(file);
+				}
 			}
 		}
 	}
 
 	protected void addMessages(IJSONObjectHelper jsonObjectHelper,
-			JsonArray messages, ITernLintCollector collector) {
+			JsonArray messages, TernLintQuery query,
+			ITernLintCollector collector) {
 		String message = null;
 		String severity = null;
 		String file = null;
 		JsonObject messageObject = null;
 		for (JsonValue value : messages) {
 			messageObject = (JsonObject) value;
-			message = jsonObjectHelper.getText(messageObject.get("message")); //$NON-NLS-1$
+			message = query.formatMessage(
+					jsonObjectHelper.getText(messageObject.get("message"))); //$NON-NLS-1$
 			severity = jsonObjectHelper.getText(messageObject.get("severity")); //$NON-NLS-1$
 			Long startCh = jsonObjectHelper.getCh(messageObject, "from"); //$NON-NLS-1$
 			Long endCh = jsonObjectHelper.getCh(messageObject, "to"); //$NON-NLS-1$

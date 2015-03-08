@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -13,7 +13,6 @@ package tern.eclipse.ide.internal.ui.validation;
 import org.eclipse.jface.text.source.Annotation;
 
 import tern.server.ITernPlugin;
-import tern.utils.TernModuleHelper;
 
 /**
  * Tern annotation.
@@ -21,35 +20,43 @@ import tern.utils.TernModuleHelper;
  */
 public class TernAnnotation extends Annotation {
 
+	private static final String ORG_ECLIPSE_UI_WORKBENCH_TEXTEDITOR = "org.eclipse.ui.workbench.texteditor.";
+
 	private final String severity;
 	private final int start;
 	private final int end;
-	private final ITernPlugin linter;
 
 	public TernAnnotation(String severity, String message, int start, int end,
 			ITernPlugin linter) {
-		super("org.eclipse.ui.workbench.texteditor." + severity, true, message);
+		super(ORG_ECLIPSE_UI_WORKBENCH_TEXTEDITOR + severity, true, message);
 		this.severity = severity;
 		this.start = start;
 		this.end = end;
-		this.linter = linter;
-		String text = message;
-		if (linter != null) {
-			text = new StringBuilder("[")
-					.append(TernModuleHelper.getLabel(linter)).append("]")
-					.append(": ").append(message).toString();
-		}
-		super.setText(text);
 	}
 
+	/**
+	 * Returns the tern severity as string 'error', 'warning'.
+	 * 
+	 * @return the tern severity as string 'error', 'warning'.
+	 */
 	public String getSeverity() {
 		return severity;
 	}
 
+	/**
+	 * Returns the start offset of the tern annotation.
+	 * 
+	 * @return the start offset of the tern annotation.
+	 */
 	public int getStart() {
 		return start;
 	}
 
+	/**
+	 * Returns the end offset of the tern annotation.
+	 * 
+	 * @return the end offset of the tern annotation.
+	 */
 	public int getEnd() {
 		return end;
 	}

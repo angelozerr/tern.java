@@ -37,6 +37,10 @@ public class TernQuery extends JsonObject {
 		super.add(FILE_FIELD_NAME, file);
 	}
 
+	public String getFile() {
+		return JsonHelper.getString(super.get(FILE_FIELD_NAME));
+	}
+
 	public void setEnd(Integer pos) {
 		if (pos == null) {
 			super.remove(END_FIELD_NAME);
