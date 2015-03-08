@@ -10,10 +10,10 @@
  */
 package tern.eclipse.ide.ui;
 
-import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -109,6 +109,9 @@ public class TernUIPlugin extends AbstractUIPlugin {
 
 	public ITernConsole getConsole(IIDETernProject project) {
 		if (project.isServerDisposed()) {
+			return null;
+		}
+		if (!PlatformUI.isWorkbenchRunning()) {
 			return null;
 		}
 		TernConsole console = TernConsole.getOrCreateConsole(project);

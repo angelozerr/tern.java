@@ -72,8 +72,8 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 	}
 
 	@Override
-	public void onCreate(final NodejsProcess process, final List<String> commands,
-			final File projectDir) {
+	public void onCreate(final NodejsProcess process,
+			final List<String> commands, final File projectDir) {
 		if (Display.getDefault().getThread() != Thread.currentThread()) {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
