@@ -8,7 +8,9 @@ Bundle-Version: 0.9.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  tern.eclipse.ide.core,
- tern.core
+ tern.core,
+ org.eclipse.wst.validation,
+ org.eclipse.core.resources
 Bundle-ActivationPolicy: lazy
 Export-Package: tern.eclipse.ide.linter.core
 Bundle-Activator: tern.eclipse.ide.linter.core.TernLinterCorePlugin
