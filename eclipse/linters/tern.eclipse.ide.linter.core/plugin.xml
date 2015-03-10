@@ -37,7 +37,7 @@
             build="true"
             class="tern.eclipse.ide.linter.core.internal.validation.TernValidator"
             manual="true"
-            sourceid="tern.eclipse.ide.linter.ui.internal.validation.DelegatingSourceValidatorForTern"            
+            sourceid="tern.eclipse.ide.linter.internal.ui.validation.TernSourceValidator"            
             version="3"
             markerId="tern.eclipse.ide.linter.core.validationMarker">
 		<include>

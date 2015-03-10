@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-			
+
+	<extension point="org.eclipse.wst.sse.ui.sourcevalidation">
+		<validator
+			scope="total"
+			class="tern.eclipse.ide.linter.internal.ui.validation.TernSourceValidator"
+			id="tern.eclipse.ide.linter.internal.ui.validation.TernSourceValidator">
+			<contentTypeIdentifier id="org.eclipse.wst.jsdt.core.jsSource">
+				<partitionType id="___java_partitioning"/>
+				<partitionType id="__java_singleline_comment"/>
+				<partitionType id="__java_multiline_comment"/>
+				<partitionType id="__java_javadoc"/>
+				<partitionType id="__java_string"/>
+				<partitionType id="__java_character"/>				
+			    <partitionType id="__dftl_partition_content_type"/>
+			</contentTypeIdentifier>
+			<contentTypeIdentifier id="org.eclipse.wst.html.core.htmlsource">
+			    <partitionType id="org.eclipse.wst.html.SCRIPT"/>
+			</contentTypeIdentifier>
+			<contentTypeIdentifier id="org.eclipse.jst.jsp.core.jspsource">
+			    <partitionType id="org.eclipse.wst.html.SCRIPT"/>
+			</contentTypeIdentifier>			
+		</validator>
+	</extension>
+
 </plugin>
