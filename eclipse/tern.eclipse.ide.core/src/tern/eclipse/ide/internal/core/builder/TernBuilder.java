@@ -63,6 +63,9 @@ public class TernBuilder extends IncrementalProjectBuilder {
 				currentProject)) {
 			return EMPTY_PROJECT;
 		}
+		if (true) {
+			return EMPTY_PROJECT;
+		}
 
 		// Check if the tern project has linters.
 		IIDETernProject ternProject = TernCorePlugin

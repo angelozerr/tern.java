@@ -13,13 +13,40 @@ package tern.server.protocol.lint;
 
 import tern.server.protocol.ITernResultsCollector;
 
+/**
+ * Tern lint collector API.
+ *
+ */
 public interface ITernLintCollector extends ITernResultsCollector {
 
+	/**
+	 * This method is call when lint start for the given file before calling the
+	 * first {@link ITernLintCollector}
+	 * {@link #addMessage(String, Long, Long, String, String)}.
+	 * 
+	 * @param file
+	 */
 	void startLint(String file);
 
+	/**
+	 * Add message.
+	 * 
+	 * @param message
+	 * @param start
+	 * @param end
+	 * @param severity
+	 * @param file
+	 */
 	void addMessage(String message, Long start, Long end, String severity,
 			String file);
 
+	/**
+	 * This method is call when lint end for the given file after calling the
+	 * last {@link ITernLintCollector}
+	 * {@link #addMessage(String, Long, Long, String, String)}.
+	 * 
+	 * @param file
+	 */
 	void endLint(String file);
 
 }
