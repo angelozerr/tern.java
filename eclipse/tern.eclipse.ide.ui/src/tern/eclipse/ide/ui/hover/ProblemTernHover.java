@@ -1,3 +1,13 @@
+/**
+ *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
 package tern.eclipse.ide.ui.hover;
 
 import java.util.Iterator;
@@ -20,8 +30,12 @@ import org.eclipse.ui.texteditor.AnnotationPreference;
 import org.eclipse.ui.texteditor.DefaultMarkerAnnotationAccess;
 
 import tern.eclipse.ide.internal.ui.Trace;
-import tern.eclipse.ide.internal.ui.validation.TernAnnotation;
 
+/**
+ * Problem Hover used to display errors when mouse over a JS content which have
+ * a tern error.
+ *
+ */
 public class ProblemTernHover extends AbstractTernHover {
 
 	private DefaultMarkerAnnotationAccess fAnnotationAccess = new DefaultMarkerAnnotationAccess();
@@ -46,32 +60,32 @@ public class ProblemTernHover extends AbstractTernHover {
 			String message = null;
 			while (e.hasNext()) {
 				Annotation a = (Annotation) e.next();
-				if (!(a instanceof TernAnnotation)) {
+				if (!("org.eclipse.wst.sse.ui.temp.error".equals(a.getType()))) {
 					continue;
 				}
 				AnnotationPreference preference = getAnnotationPreference(a);
-//				if (preference == null
-//						|| !(preference.getTextPreferenceKey() != null
-//						/*
-//						 * && fStore.getBoolean(preference
-//						 * .getTextPreferenceKey()
-//						 */)
-//						|| (preference.getHighlightPreferenceKey() != null /*
-//																			 * &&
-//																			 * fStore
-//																			 * .
-//																			 * getBoolean
-//																			 * (
-//																			 * preference
-//																			 * .
-//																			 * getHighlightPreferenceKey
-//																			 * (
-//																			 * )
-//																			 * )
-//																			 * )
-//																			 */)) {
-//					continue;
-//				}
+				// if (preference == null
+				// || !(preference.getTextPreferenceKey() != null
+				// /*
+				// * && fStore.getBoolean(preference
+				// * .getTextPreferenceKey()
+				// */)
+				// || (preference.getHighlightPreferenceKey() != null /*
+				// * &&
+				// * fStore
+				// * .
+				// * getBoolean
+				// * (
+				// * preference
+				// * .
+				// * getHighlightPreferenceKey
+				// * (
+				// * )
+				// * )
+				// * )
+				// */)) {
+				// continue;
+				// }
 
 				Position p = model.getPosition(a);
 
@@ -107,7 +121,6 @@ public class ProblemTernHover extends AbstractTernHover {
 	}
 
 	private String formatMessage(String message) {
-		// TODO Auto-generated method stub
 		return message;
 	}
 
