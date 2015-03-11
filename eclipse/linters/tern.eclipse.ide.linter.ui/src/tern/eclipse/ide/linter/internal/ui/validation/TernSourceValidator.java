@@ -25,11 +25,11 @@ import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
+import tern.eclipse.ide.linter.core.validation.TernValidationHelper;
 import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.ITernPlugin;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.lint.TernLintQuery;
 
 /**
  * WTP Tern Validator "as-you-type" to validate JavaScript (HTML, JSP, JS etc
@@ -66,28 +66,15 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 		try {
 			IIDETernProject ternProject = TernCorePlugin.getTernProject(file
 					.getProject());
-			ITernLintCollector collector = getCollector(ternProject, reporter);
 			ITernPlugin[] lintPlugins = ternProject.getLinters();
 			if (lintPlugins.length > 0) {
-				try {
-					ITernFile tf = new TernDocumentFile(file, document);
-					for (ITernPlugin linter : lintPlugins) {
-						TernLintQuery query = TernLintQuery.create(linter,
-								false);
-						ternProject.request(query, tf, collector);
-					}
-				} catch (Exception e) {
-					Trace.trace(Trace.SEVERE, "Error while tern validation.", e);
-				}
+				ITernFile ternFile = new TernDocumentFile(file, document);
+				TernValidationHelper.validate(ternFile, ternProject, reporter,
+						this);
 			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while tern validation.", e);
 		}
-	}
-
-	private ITernLintCollector getCollector(IIDETernProject ternProject,
-			IReporter reporter) {
-		return new TernReporterCollector(ternProject, reporter, this);
 	}
 
 	@Override

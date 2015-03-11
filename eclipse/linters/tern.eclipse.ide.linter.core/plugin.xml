@@ -24,7 +24,7 @@
 
    <extension
          id="validationMarker"
-         name="%ternValidationMarker.name"
+         name="%validationMarker.name"
          point="org.eclipse.core.resources.markers">
       <super type="org.eclipse.wst.validation.problemmarker"/>
       <persistent value="true"/>
@@ -35,9 +35,9 @@
    			  point="org.eclipse.wst.validation.validatorV2">
       <validator
             build="true"
-            class="tern.eclipse.ide.linter.core.internal.validation.TernValidator"
+            class="tern.eclipse.ide.linter.internal.core.validation.TernValidator"
             manual="true"
-            sourceid="tern.eclipse.ide.linter.internal.ui.validation.TernSourceValidator"            
+            sourceid="tern.eclipse.ide.linter.ui.validation.TernSourceValidator"            
             version="3"
             markerId="tern.eclipse.ide.linter.core.validationMarker">
 		<include>

@@ -53,11 +53,6 @@ public class TernValidationPreferencesPage extends PropertyPreferencePage {
 		page.setLayout(new GridLayout());
 
 		IScopeContext[] preferenceScopes = createPreferenceScopes();
-		availableTernBuilderCheckbox = createCheckbox(
-				page,
-				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER,
-				preferenceScopes,
-				TernUIMessages.TernValidationPreferencesPage_availableTernBuilder_label);
 
 		return page;
 	}
@@ -93,9 +88,7 @@ public class TernValidationPreferencesPage extends PropertyPreferencePage {
 		super.performDefaults();
 		IEclipsePreferences defaultPreferences = createPreferenceScopes()[1]
 				.getNode(getPreferenceNodeQualifier());
-		updateCheckbox(availableTernBuilderCheckbox,
-				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER,
-				defaultPreferences);
+
 	}
 
 	@Override
@@ -104,9 +97,6 @@ public class TernValidationPreferencesPage extends PropertyPreferencePage {
 		IScopeContext[] contexts = createPreferenceScopes();
 		// remove project-specific information if it's not enabled
 		boolean remove = getProject() != null && !isElementSettingsEnabled();
-		updateContexts(availableTernBuilderCheckbox,
-				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER, contexts,
-				remove);
 		flushContexts(contexts);
 		return ok;
 	}

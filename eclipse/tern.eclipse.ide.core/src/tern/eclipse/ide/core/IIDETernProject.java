@@ -96,4 +96,6 @@ public interface IIDETernProject extends ITernProject {
 	 * @throws TernException
 	 */
 	IWorkingCopy getWorkingCopy(Object caller) throws TernException;
+
+	boolean isInScope(IResource resource);
 }

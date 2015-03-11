@@ -44,7 +44,6 @@ public class TernCorePreferenceConstants {
 	 * Tern validation preferences constants.
 	 */
 	public static final String VALIDATION_USE_PROJECT_SETTINGS = "validation-use-project-settings";//$NON-NLS-1$
-	public static final String AVAILABLE_TERN_BUILDER = "availableTernBuilder"; //$NON-NLS-1$
 
 	/**
 	 * Default tern modules to add to .tern-project when project is converted to

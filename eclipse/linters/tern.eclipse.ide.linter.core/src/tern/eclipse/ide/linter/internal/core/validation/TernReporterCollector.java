@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.linter.internal.ui.validation;
+package tern.eclipse.ide.linter.internal.core.validation;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -47,13 +47,12 @@ public class TernReporterCollector implements ITernLintCollector {
 	@Override
 	public void addMessage(String messageText, Long start, Long end,
 			String severity, String file) {
-		LocalizedMessage message = new LocalizedMessage(getSeverity(severity),
-				messageText);
-		message.setOffset(start.intValue());
-		message.setLength(end.intValue() - start.intValue());
 		IResource resource = (IResource) ternProject.getFile(file).getAdapter(
 				IFile.class);
-		message.setTargetObject(resource);
+		LocalizedMessage message = new LocalizedMessage(getSeverity(severity),
+				messageText, resource);
+		message.setOffset(start.intValue());
+		message.setLength(end.intValue() - start.intValue());
 		reporter.addMessage(validator, message);
 	}
 

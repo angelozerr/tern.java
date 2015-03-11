@@ -6,7 +6,7 @@
 		<validator
 			scope="total"
 			class="tern.eclipse.ide.linter.internal.ui.validation.TernSourceValidator"
-			id="tern.eclipse.ide.linter.internal.ui.validation.TernSourceValidator">
+			id="tern.eclipse.ide.linter.ui.validation.TernSourceValidator">
 			<contentTypeIdentifier id="org.eclipse.wst.jsdt.core.jsSource">
 				<partitionType id="___java_partitioning"/>
 				<partitionType id="__java_singleline_comment"/>

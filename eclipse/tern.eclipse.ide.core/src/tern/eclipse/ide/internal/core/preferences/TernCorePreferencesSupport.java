@@ -105,19 +105,4 @@ public class TernCorePreferencesSupport {
 
 	}
 
-	/**
-	 * Returns true if tern builder (used for validation) must be executed and
-	 * false otherwise.
-	 * 
-	 * @param project
-	 * @return true if tern builder (used for validation) must be executed and
-	 *         false otherwise.
-	 */
-	public boolean isAvailableTernBuilder(IProject project) {
-		String result = preferencesSupport.getPreferencesValue(
-				TernCorePreferenceConstants.AVAILABLE_TERN_BUILDER, null,
-				project);
-		return StringUtils.asBoolean(result, false);
-	}
-
 }
