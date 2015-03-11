@@ -76,8 +76,7 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 				}
 			}
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Trace.trace(Trace.SEVERE, "Error while tern validation.", e);
 		}
 	}
 
@@ -104,12 +103,9 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 	@Override
 	public void validate(IRegion dirtyRegion, IValidationContext helper,
 			IReporter reporter) {
-		if (document != null) {
-			System.err
-					.println("DelegatingSourceValidatorForTern#validateDirtyRegion => "
-							+ document.get());
-
-		}
+		// Never called, because TernSourceValidator is declared as "total" (and
+		// not "partial") in the plugin.xml
+		// "org.eclipse.wst.sse.ui.sourcevalidation" extension point.
 	}
 
 }
