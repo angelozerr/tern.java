@@ -38,6 +38,8 @@ import tern.eclipse.ide.internal.ui.Trace;
  */
 public class ProblemTernHover extends AbstractTernHover {
 
+	private static final String ORG_ECLIPSE_WST_SSE_UI_TEMP = "org.eclipse.wst.sse.ui.temp.";
+	
 	private DefaultMarkerAnnotationAccess fAnnotationAccess = new DefaultMarkerAnnotationAccess();
 
 	@Override
@@ -60,7 +62,7 @@ public class ProblemTernHover extends AbstractTernHover {
 			String message = null;
 			while (e.hasNext()) {
 				Annotation a = (Annotation) e.next();
-				if (!("org.eclipse.wst.sse.ui.temp.error".equals(a.getType()))) {
+				if (!isTernAnnotation(a)) {
 					continue;
 				}
 				AnnotationPreference preference = getAnnotationPreference(a);
@@ -118,6 +120,22 @@ public class ProblemTernHover extends AbstractTernHover {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Returns true if the given annotation is a Tern Annotation and false
+	 * otherwise.
+	 * 
+	 * @param a
+	 *            annotation to check
+	 * @return true if the given annotation is a Tern Annotation and false
+	 *         otherwise.
+	 */
+	protected boolean isTernAnnotation(Annotation a) {
+		String type = a.getType();
+		// Annotation coming from WTP TernSourceValidator
+		return ((type != null && type
+				.startsWith(ORG_ECLIPSE_WST_SSE_UI_TEMP)));
 	}
 
 	private String formatMessage(String message) {
