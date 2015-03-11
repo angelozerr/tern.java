@@ -45,8 +45,9 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 	public void validate(IValidationContext helper, IReporter reporter)
 			throws ValidationException {
 
-		if (helper == null || document == null)
+		if (helper == null || document == null) {
 			return;
+		}
 
 		if ((reporter != null) && (reporter.isCancelled() == true)) {
 			throw new OperationCanceledException();
@@ -58,6 +59,10 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 		// ReconcileStepForValidator#getFile())
 		// and JSDT JavaScript Editor doesn't manage IStructuredModel
 		IFile file = EditorUtils.getFile(document);
+		if (file == null || !TernCorePlugin.hasTernNature(file.getProject())) {
+			return;
+		}
+
 		try {
 			IIDETernProject ternProject = TernCorePlugin.getTernProject(file
 					.getProject());
