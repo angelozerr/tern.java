@@ -69,7 +69,7 @@
 	function loadConfig(file) {
 	  var filepath = normPath(server.options.projectDir) + "/" + normPath(file);
 	  var config = cli.loadConfig(filepath);
-	  if (config) delete[config.dirname];
+	  if (config) delete config.dirname;
 	  return config;
 	}
 	
