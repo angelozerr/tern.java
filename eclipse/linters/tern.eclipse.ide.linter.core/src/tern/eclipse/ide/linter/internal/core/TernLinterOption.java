@@ -109,6 +109,7 @@ public class TernLinterOption implements ITernLinterOption {
 	@Override
 	public void setValue(Object value) {
 		this.value = value;
+		setEnabled(value != null);
 	}
 
 	@Override
@@ -118,17 +119,26 @@ public class TernLinterOption implements ITernLinterOption {
 
 	@Override
 	public boolean getBooleanValue() {
-		return (value != null) ? (Boolean) value : false;
+		return hasValue() ? (Boolean) value : false;
+	}
+
+	private boolean hasValue() {
+		return value != null;
 	}
 
 	@Override
 	public Integer getNumberValue() {
-		return (value != null) ? (Integer) value : null;
+		return hasValue() ? (Integer) value : null;
 	}
 
 	@Override
 	public String getStringValue() {
-		return (value != null) ? (String) value : null;
+		return hasValue() ? (String) value : null;
+	}
+
+	@Override
+	public String toString() {
+		return hasValue() ? value.toString() : "";
 	}
 
 }

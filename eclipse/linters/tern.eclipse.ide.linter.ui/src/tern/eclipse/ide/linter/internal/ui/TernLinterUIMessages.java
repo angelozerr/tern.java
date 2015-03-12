@@ -30,7 +30,7 @@ public final class TernLinterUIMessages extends NLS {
 
 	// Preferences
 	public static String TernLinterOptionsBlock_enable;
-	public static String TernLinterOptionsBlock_useConfig;
+	public static String TernLinterOptionsBlock_useConfigFiles;
 
 	private TernLinterUIMessages() {
 	}

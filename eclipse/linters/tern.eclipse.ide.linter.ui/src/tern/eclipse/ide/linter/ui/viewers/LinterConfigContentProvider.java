@@ -50,7 +50,6 @@ public class LinterConfigContentProvider implements ITreeContentProvider {
 
 	@Override
 	public Object getParent(Object paramObject) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

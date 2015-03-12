@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.dialogs;
+package tern.eclipse.ide.ui.dialogs;
 
 /*******************************************************************************
  * Copyright (c) 2000, 2011 IBM Corporation and others.

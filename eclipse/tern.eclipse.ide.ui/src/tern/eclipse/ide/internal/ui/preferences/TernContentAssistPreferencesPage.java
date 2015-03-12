@@ -110,7 +110,7 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		insertionGroup.setLayout(new GridLayout());
 		insertionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-		createIndentatContent(insertionGroup, preferenceScopes);
+		createIndentContent(insertionGroup, preferenceScopes);
 
 		// Function Insertion
 		createFunctionInsertionContents(insertionGroup, preferenceScopes);
@@ -118,7 +118,7 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		createObjLitInsertionContents(insertionGroup, preferenceScopes);
 	}
 
-	private void createIndentatContent(Composite ancestor,
+	private void createIndentContent(Composite ancestor,
 			IScopeContext[] preferenceScopes) {
 
 		Composite parent = new Composite(ancestor, SWT.NONE);

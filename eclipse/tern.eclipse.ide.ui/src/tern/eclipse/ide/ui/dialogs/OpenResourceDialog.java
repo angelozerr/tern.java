@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.dialogs;
+package tern.eclipse.ide.ui.dialogs;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.swt.widgets.Shell;

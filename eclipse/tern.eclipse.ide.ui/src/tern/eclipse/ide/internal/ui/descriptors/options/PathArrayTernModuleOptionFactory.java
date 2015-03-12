@@ -33,10 +33,10 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.dialogs.OpenResourceDialog;
 import tern.eclipse.ide.internal.ui.viewers.FilenameEditingSupport;
 import tern.eclipse.ide.internal.ui.viewers.PathEditingSupport;
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
+import tern.eclipse.ide.ui.dialogs.OpenResourceDialog;
 import tern.eclipse.ide.ui.viewers.JsonContentProvider;
 import tern.eclipse.ide.ui.viewers.JsonLabelProvider;
 import tern.eclipse.ide.ui.viewers.MemberWrapper;

@@ -175,4 +175,9 @@ public class WorkingCopy implements IWorkingCopy {
 	public List<ITernModule> getAllModules() {
 		return workingCopyModules;
 	}
+	
+	@Override
+	public IIDETernProject getProject() {
+		return project;
+	}
 }

@@ -12,16 +12,21 @@ package tern.eclipse.ide.linter.ui.properties;
 
 import java.util.Collection;
 
+import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -46,6 +51,7 @@ import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.linter.ui.viewers.LinterConfigContentProvider;
 import tern.eclipse.ide.linter.ui.viewers.LinterConfigLabelProvider;
 import tern.eclipse.ide.ui.controls.AbstractTreeBlock;
+import tern.eclipse.ide.ui.dialogs.OpenResourceDialog;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.utils.StringUtils;
@@ -60,22 +66,27 @@ import com.eclipsesource.json.JsonValue;
 public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		IWorkingCopyListener {
 
+	private static final String CONFIG_FILE_FIELD = "configFile";
+	private static final String CONFIG_FIELD = "config";
 	private final String linterId;
 	private String linterConfigFilename;
 
 	private final IWorkingCopy workingCopy;
-	private Composite fControl;
+	private Composite control;
 	private CheckboxTreeViewer treeViewer;
 
 	private TernLinterOptionsPanel optionsPanel;
 	private Button enableCheckbox;
+	private Button useConfigFilesCheckbox;
 
 	// Use config
-	private Button useTernProjectCheckbox;
-	private Button linterConfigFileCheckbox;
 	private Text linterConfigFileText;
 	private Button linterConfigFileButton;
-	private Label useConfigLabel;
+
+	// Composite panel stack.
+	private Composite contentPanel;
+	private Composite configPage;
+	private Composite configFilePage;
 
 	public TernLinterOptionsBlock(String linterId, IWorkingCopy workingCopy) {
 		this.linterId = linterId;
@@ -97,10 +108,19 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		parent.setFont(font);
 
 		createHeader(parent);
-		createBody(parent);
+		createSeparator(parent);
+		this.contentPanel = createBody(parent);
+
+		// Display page
+		displayPage();
 
 		Dialog.applyDialogFont(parent);
 		return parent;
+	}
+
+	protected void createSeparator(Composite parent) {
+		Label line = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
+		line.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
 	}
 
 	private void createHeader(Composite parent) {
@@ -138,56 +158,74 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 			}
 		});
 
-		createUseConfig(header);
+		if (canUseConfigFiles()) {
+			// Create "Use config files" checkbox
+			useConfigFilesCheckbox = new Button(header, SWT.CHECK);
+			useConfigFilesCheckbox
+					.setText(TernLinterUIMessages.TernLinterOptionsBlock_useConfigFiles);
+			useConfigFilesCheckbox.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent e) {
+					displayPage();
+				}
+			});
+		}
 
 		// Update "Enable" checkbox according if the linter exists in the
 		// .tern-project.
 		enableCheckbox.setSelection(hasLinter());
+
 	}
 
-	private void createUseConfig(Composite parent) {
-		// Create "use configuration" panels
-		useConfigLabel = new Label(parent, SWT.NONE);
-		useConfigLabel
-				.setText(TernLinterUIMessages.TernLinterOptionsBlock_useConfig);
+	protected boolean canUseConfigFiles() {
+		return !StringUtils.isEmpty(linterConfigFilename);
+	}
 
-		// .tern-project radio
-		useTernProjectCheckbox = new Button(parent, SWT.RADIO);
-		useTernProjectCheckbox.setText(".tern-project");
-
-		// config file (ex : .jshintrc)
-		if (!StringUtils.isEmpty(linterConfigFilename)) {
-			linterConfigFileCheckbox = new Button(parent, SWT.RADIO);
-			linterConfigFileCheckbox.setText(linterConfigFilename);
-			linterConfigFileText = new Text(parent, SWT.BORDER);
-			linterConfigFileText.setLayoutData(new GridData(
-					GridData.FILL_HORIZONTAL));
-			linterConfigFileButton = new Button(parent, SWT.NONE);
-			linterConfigFileButton.setText(TernLinterUIMessages.Button_browse);
-		}
-		useTernProjectCheckbox.setSelection(true);
+	private void displayPage() {
+		((StackLayout) contentPanel.getLayout()).topControl = isUseConfigFiles() ? configFilePage
+				: configPage;
+		contentPanel.layout();
 	}
 
 	private void updateEnabled() {
 		Boolean checked = enableCheckbox.getSelection();
-		useConfigLabel.setEnabled(checked);
-		useTernProjectCheckbox.setEnabled(checked);
-		linterConfigFileCheckbox.setEnabled(checked);
-		linterConfigFileText.setEnabled(checked);
-		linterConfigFileButton.setEnabled(checked);
+		useConfigFilesCheckbox.setEnabled(checked);
+		if (linterConfigFileText != null) {
+			linterConfigFileText.setEnabled(checked);
+			linterConfigFileButton.setEnabled(checked);
+		}
 		if (optionsPanel != null) {
 			optionsPanel.updateEnabled(checked);
 		}
 		treeViewer.getTree().setEnabled(checked);
 	}
 
-	protected void createBody(Composite parent) {
+	protected Composite createBody(Composite parent) {
+		Composite contentPanel = new Composite(parent, SWT.NONE);
+		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+		contentPanel.setLayoutData(data);
+		StackLayout layout = new StackLayout();
+		contentPanel.setLayout(layout);
+		this.configPage = createConfigPage(contentPanel);
+		if (canUseConfigFiles()) {
+			this.configFilePage = createConfigFilePage(contentPanel);
+		}
+		return contentPanel;
+	}
+
+	// -------------------- Config Page
+
+	/**
+	 * 
+	 * @param parent
+	 */
+	protected Composite createConfigPage(Composite parent) {
 		SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL | SWT.SMOOTH);
 		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
 		sashForm.setLayoutData(data);
-
 		createOptionsMaster(sashForm);
 		createOptionsDetails(sashForm);
+		return sashForm;
 	}
 
 	/**
@@ -205,7 +243,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		parent.setLayout(layout);
 		Font font = ancestor.getFont();
 		parent.setFont(font);
-		fControl = parent;
+		control = parent;
 
 		// Tree
 		Tree tree = new Tree(parent, SWT.CHECK | SWT.BORDER
@@ -220,21 +258,44 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		tree.setLinesVisible(false);
 
 		treeViewer = new CheckboxTreeViewer(tree);
-		treeViewer.setLabelProvider(LinterConfigLabelProvider.getInstance());
-		treeViewer
-				.setContentProvider(LinterConfigContentProvider.getInstance());
+		treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(LinterConfigLabelProvider.getInstance()));
+		treeViewer.setContentProvider(LinterConfigContentProvider.getInstance());
+		treeViewer.setCheckStateProvider(new ICheckStateProvider() {
 
-		// TreeViewerColumn column = new TreeViewerColumn(treeViewer, SWT.NONE);
-		// column.getColumn().setText("Column name");
+			@Override
+			public boolean isGrayed(Object element) {
+				if (element instanceof ITernLinterOption) {
+					return ((ITernLinterOption) element).isCategoryType();
+				}
+				return false;
+			}
+
+			@Override
+			public boolean isChecked(Object element) {
+				if (element instanceof ITernLinterOption) {
+					return ((ITernLinterOption) element).isEnabled();
+				}
+				return false;
+			}
+		});
+		// TreeViewerColumn column = new TreeViewerColumn(treeViewer,
+		// SWT.READ_ONLY);
+		// column.getColumn().setWidth(300);
 		// column.setLabelProvider(new ColumnLabelProvider() {
 		// @Override
 		// public String getText(Object element) {
-		// return element.toString();
+		// return LinterConfigLabelProvider.getInstance().getColumnText(
+		// element, 0);
 		// }
 		//
 		// @Override
 		// public Color getBackground(Object element) {
-		// return new Color(Display.getCurrent(), 255, 255, 0);
+		// if (element instanceof ITernLinterOption
+		// && ((ITernLinterOption) element).isCategoryType()) {
+		// return treeViewer.getTree().getDisplay()
+		// .getSystemColor(SWT.COLOR_GRAY);
+		// }
+		// return super.getBackground(element);
 		// }
 		// });
 
@@ -273,8 +334,48 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		this.optionsPanel = new TernLinterOptionsPanel(parent, null);
 	}
 
+	// -------------------- Config File Page
+
+	/**
+	 * 
+	 * @param parent
+	 */
+	protected Composite createConfigFilePage(Composite parent) {
+		Composite page = new Composite(parent, SWT.NONE);
+		page.setLayoutData(new GridData(GridData.FILL_BOTH));
+		page.setLayout(new GridLayout(3, false));
+
+		Label linterConfigFileLabel = new Label(page, SWT.NONE);
+		linterConfigFileLabel.setText(new StringBuilder(linterConfigFilename)
+				.append(":").toString());
+		linterConfigFileText = new Text(page, SWT.BORDER);
+		linterConfigFileText.setLayoutData(new GridData(
+				GridData.FILL_HORIZONTAL));
+		linterConfigFileButton = new Button(page, SWT.NONE);
+		linterConfigFileButton.setText(TernLinterUIMessages.Button_browse);
+		linterConfigFileButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				OpenResourceDialog dialog = new OpenResourceDialog(
+						linterConfigFileButton.getShell(), false, workingCopy
+								.getProject().getProject(), IResource.FILE);
+				dialog.setInitialPattern(linterConfigFilename);
+				if (dialog.open() != Window.OK) {
+					return;
+				}
+				IResource result = (IResource) dialog.getFirstResult();
+				if (result != null
+						&& linterConfigFilename.equals(result.getName())) {
+					linterConfigFileText.setText(result
+							.getProjectRelativePath().toString());
+				}
+			}
+		});
+		return page;
+	}
+
 	public Control getControl() {
-		return fControl;
+		return control;
 	}
 
 	public void setLinterConfig(ITernLinterConfig config) throws TernException {
@@ -283,13 +384,32 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 			ITernModuleConfigurable module = (ITernModuleConfigurable) workingCopy
 					.getTernModule(linterId);
 			JsonObject jsonOptions = module.getOptions();
-			if (jsonOptions != null && jsonOptions.get("config") != null) {
-				updateConfig((JsonObject) jsonOptions.get("config"),
-						config.getOptions());
+			if (jsonOptions != null) {
+				JsonValue jsonConfig = jsonOptions.get(CONFIG_FIELD);
+				if (jsonConfig != null && jsonConfig.isObject()) {
+					// It's a config options
+					updateConfig((JsonObject) jsonOptions.get(CONFIG_FIELD),
+							config.getOptions());
+				} else {
+					JsonValue jsonConfigFile = jsonOptions
+							.get(CONFIG_FILE_FIELD);
+					if (canUseConfigFiles() && jsonConfigFile != null
+							&& jsonConfigFile.isString()) {
+						// it's a config file
+						setConfigFile(jsonConfigFile.asString());
+					}
+				}
 			}
 		}
 		treeViewer.setInput(config);
 		treeViewer.expandAll();
+		updateEnabled();
+	}
+
+	private void setConfigFile(String confiFile) {
+		linterConfigFileText.setText(confiFile);
+		useConfigFilesCheckbox.setSelection(true);
+		displayPage();
 	}
 
 	private void updateConfig(JsonObject jsonOptions,
@@ -301,7 +421,13 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 				String name = option.getId();
 				JsonValue jsonValue = jsonOptions.get(name);
 				if (jsonValue != null) {
-					option.setValue(jsonValue);
+					if (jsonValue.isBoolean()) {
+						option.setValue(jsonValue.asBoolean());
+					} else if (jsonValue.isNumber()) {
+						option.setValue(jsonValue.asLong());
+					} else if (jsonValue.isString()) {
+						option.setValue(jsonValue.asString());
+					}
 				}
 			}
 		}
@@ -340,22 +466,41 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	}
 
 	/**
-	 * Update JSON options of the tern linter plugin.
+	 * Update the .tern-project :
+	 * 
+	 * <ul>
+	 * <li>add tern linter in the .tern-project by updating JSON options.</li>
+	 * <li>or remove the tern linter</li>
+	 * </ul>
 	 * 
 	 * @throws TernException
 	 */
-	public void updateOptions() throws TernException {
-		ITernLinterConfig config = (ITernLinterConfig) treeViewer.getInput();
-
-		JsonObject jsonOptions = new JsonObject();
-		JsonObject jsonConfig = new JsonObject();
-		jsonOptions.add("config", jsonConfig);
-		updateJSONOptions(config.getOptions(), jsonConfig);
-
+	public void updateTenProject() throws TernException {
+		// To be sure that update of checked modules doesn't fire event.
+		workingCopy.removeWorkingCopyListener(this);
 		ITernModuleConfigurable module = (ITernModuleConfigurable) workingCopy
 				.getTernModule(linterId);
-		module.setOptions(jsonOptions);
-
+		if (enableCheckbox.getSelection()) {
+			// add tern linter + options in the .tern-project
+			ITernLinterConfig config = (ITernLinterConfig) treeViewer
+					.getInput();
+			JsonObject jsonOptions = new JsonObject();
+			if (isUseConfigFiles()) {
+				// configFile : save the referenced file path linter config (eg
+				// : .jshintrc, eslint.json) in the .tern-project.
+				String configFile = linterConfigFileText.getText();
+				jsonOptions.add(CONFIG_FILE_FIELD, configFile);
+			} else {
+				// config : save the linter options inside the .tern-project
+				JsonObject jsonConfig = new JsonObject();
+				jsonOptions.add(CONFIG_FIELD, jsonConfig);
+				updateJSONOptions(config.getOptions(), jsonConfig);
+			}
+			module.setOptions(jsonOptions);
+		} else {
+			// remove the tern linter from the .tern-project.
+			workingCopy.getCheckedModules().remove(module);
+		}
 	}
 
 	private void updateJSONOptions(Collection<ITernLinterOption> options,
@@ -373,5 +518,10 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 				}
 			}
 		}
+	}
+
+	private boolean isUseConfigFiles() {
+		return useConfigFilesCheckbox != null
+				&& useConfigFilesCheckbox.getSelection();
 	}
 }

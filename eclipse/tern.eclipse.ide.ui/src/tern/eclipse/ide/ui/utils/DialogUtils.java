@@ -26,7 +26,7 @@ import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.eclipse.ui.model.WorkbenchLabelProvider;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.dialogs.FolderSelectionDialog;
+import tern.eclipse.ide.ui.dialogs.FolderSelectionDialog;
 import tern.utils.StringUtils;
 
 public class DialogUtils {

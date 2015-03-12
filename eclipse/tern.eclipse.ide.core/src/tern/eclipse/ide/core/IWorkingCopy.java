@@ -71,7 +71,7 @@ public interface IWorkingCopy {
 	Collection<ITernModule> getCheckedModules();
 
 	/**
-	 * Returns the tern module foudn by the given name.
+	 * Returns the tern module found by the given name.
 	 * 
 	 * @param name
 	 * @return the tern module foudn by the given name.
@@ -102,6 +102,18 @@ public interface IWorkingCopy {
 	 * @param listener
 	 */
 	void removeWorkingCopyListener(IWorkingCopyListener listener);
-	
+
+	/**
+	 * Return the all modules.
+	 * 
+	 * @return the all modules.
+	 */
 	List<ITernModule> getAllModules();
+
+	/**
+	 * Returns the owner tern project.
+	 * 
+	 * @return the owner tern project.
+	 */
+	IIDETernProject getProject();
 }
