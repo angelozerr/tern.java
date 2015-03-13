@@ -23,6 +23,7 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 import tern.eclipse.ide.linter.core.ITernLinterConfig;
 import tern.eclipse.ide.linter.core.ITernLinterOption;
+import tern.utils.StringUtils;
 
 /**
  * SAX handler to load {@link ITernLinterConfig} from a XML stream.
@@ -58,7 +59,20 @@ public class SAXLinterConfigHandler extends DefaultHandler {
 			String id = attributes.getValue("id");
 			String type = attributes.getValue("type");
 			String url = attributes.getValue("url");
+			String defaultValue = attributes.getValue("default");
 			option = new TernLinterOption(id, type, url);
+			if (!StringUtils.isEmpty(defaultValue)) {
+				if (option.isBooleanType()) {
+					option.setValue(Boolean.valueOf(defaultValue));
+				} else if (option.isNumberType()) {
+					option.setValue(Long.valueOf(defaultValue));
+				} else if (option.isStringType()) {
+					option.setValue(defaultValue);
+				}
+			} 
+//			else if (option.isBooleanType()) {
+//				option.setValue(false);
+//			}
 			options.peek().addOption(option);
 			options.push(option);
 		} else if ("doc".equals(name)) {

@@ -67,6 +67,15 @@ public interface ITernLinterOption {
 	boolean isNumberType();
 
 	/**
+	 * Returns true if value of the options is a string type and false
+	 * otherwise.
+	 * 
+	 * @return true if value of the options is a string type and false
+	 *         otherwise.
+	 */
+	boolean isStringType();
+
+	/**
 	 * Returns true if value of the options is a category type and false
 	 * otherwise.
 	 * 
@@ -74,20 +83,6 @@ public interface ITernLinterOption {
 	 *         otherwise.
 	 */
 	boolean isCategoryType();
-
-	/**
-	 * Enable/Disable the option.
-	 * 
-	 * @param enabled
-	 */
-	void setEnabled(boolean enabled);
-
-	/**
-	 * Returns true if the option is enabled and false otherwise.
-	 * 
-	 * @return true if the option is enabled and false otherwise.
-	 */
-	boolean isEnabled();
 
 	/**
 	 * Returns the value of the option
@@ -104,6 +99,13 @@ public interface ITernLinterOption {
 	void setValue(Object value);
 
 	/**
+	 * Returns true if the option has value and false otherwise.
+	 * 
+	 * @return true if the option has value and false otherwise.
+	 */
+	boolean hasValue();
+
+	/**
 	 * Returns the boolean value.
 	 * 
 	 * @return the boolean value.
@@ -115,7 +117,7 @@ public interface ITernLinterOption {
 	 * 
 	 * @return the int value.
 	 */
-	Integer getNumberValue();
+	Long getNumberValue();
 
 	/**
 	 * Returns the String value.

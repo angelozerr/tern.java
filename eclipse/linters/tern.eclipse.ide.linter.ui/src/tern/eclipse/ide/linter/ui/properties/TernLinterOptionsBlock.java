@@ -15,14 +15,14 @@ import java.util.Collection;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
-import org.eclipse.jface.viewers.CheckboxTreeViewer;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
-import org.eclipse.jface.viewers.ICheckStateListener;
-import org.eclipse.jface.viewers.ICheckStateProvider;
+import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.TreeColumnViewerLabelProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -50,6 +50,7 @@ import tern.eclipse.ide.linter.internal.ui.TernLinterUIPlugin;
 import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.linter.ui.viewers.LinterConfigContentProvider;
 import tern.eclipse.ide.linter.ui.viewers.LinterConfigLabelProvider;
+import tern.eclipse.ide.linter.ui.viewers.LinterOptionEditingSupport;
 import tern.eclipse.ide.ui.controls.AbstractTreeBlock;
 import tern.eclipse.ide.ui.dialogs.OpenResourceDialog;
 import tern.server.ITernModule;
@@ -72,8 +73,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	private String linterConfigFilename;
 
 	private final IWorkingCopy workingCopy;
-	private Composite control;
-	private CheckboxTreeViewer treeViewer;
+	private TreeViewer treeViewer;
 
 	private TernLinterOptionsPanel optionsPanel;
 	private Button enableCheckbox;
@@ -202,7 +202,8 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 
 	protected Composite createBody(Composite parent) {
 		Composite contentPanel = new Composite(parent, SWT.NONE);
-		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		data.heightHint = 400;
 		contentPanel.setLayoutData(data);
 		StackLayout layout = new StackLayout();
 		contentPanel.setLayout(layout);
@@ -221,7 +222,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	 */
 	protected Composite createConfigPage(Composite parent) {
 		SashForm sashForm = new SashForm(parent, SWT.HORIZONTAL | SWT.SMOOTH);
-		GridData data = new GridData(SWT.FILL, SWT.FILL, true, true);
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
 		sashForm.setLayoutData(data);
 		createOptionsMaster(sashForm);
 		createOptionsDetails(sashForm);
@@ -234,70 +235,44 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	 * @param ancestor
 	 */
 	private void createOptionsMaster(Composite ancestor) {
-
 		Composite parent = new Composite(ancestor, SWT.NONE);
-		GridLayout layout = new GridLayout();
-		layout.numColumns = 2;
-		layout.marginHeight = 0;
-		layout.marginWidth = 0;
+		TreeColumnLayout layout = new TreeColumnLayout();
 		parent.setLayout(layout);
 		Font font = ancestor.getFont();
 		parent.setFont(font);
-		control = parent;
 
-		// Tree
-		Tree tree = new Tree(parent, SWT.CHECK | SWT.BORDER
-				| SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.MULTI);
-
-		GridData data = new GridData(GridData.FILL_BOTH);
-		data.widthHint = 300;
-		tree.setLayoutData(data);
-		tree.setFont(font);
-
+		// Create Tree
+		treeViewer = new TreeViewer(parent, SWT.BORDER | SWT.FULL_SELECTION
+				| SWT.V_SCROLL | SWT.MULTI);
+		Tree tree = treeViewer.getTree();
 		tree.setHeaderVisible(false);
-		tree.setLinesVisible(false);
+		tree.setLinesVisible(true);
+		
+		GridData data = new GridData(GridData.FILL_BOTH);		
+		data.heightHint = 400;
+		tree.setLayoutData(data);
+		//tree.setFont(parent.getFont());
+		
+		treeViewer
+				.setContentProvider(LinterConfigContentProvider.getInstance());
 
-		treeViewer = new CheckboxTreeViewer(tree);
-		treeViewer.setLabelProvider(new DelegatingStyledCellLabelProvider(LinterConfigLabelProvider.getInstance()));
-		treeViewer.setContentProvider(LinterConfigContentProvider.getInstance());
-		treeViewer.setCheckStateProvider(new ICheckStateProvider() {
+		// Create label column
+		TreeViewerColumn labelColumnViewer = new TreeViewerColumn(treeViewer,
+				SWT.LEFT);
+		labelColumnViewer.setLabelProvider(new TreeColumnViewerLabelProvider(
+				LinterConfigLabelProvider.getInstance()));
+		layout.setColumnData(labelColumnViewer.getColumn(),
+				new ColumnWeightData(1, 150));
 
-			@Override
-			public boolean isGrayed(Object element) {
-				if (element instanceof ITernLinterOption) {
-					return ((ITernLinterOption) element).isCategoryType();
-				}
-				return false;
-			}
-
-			@Override
-			public boolean isChecked(Object element) {
-				if (element instanceof ITernLinterOption) {
-					return ((ITernLinterOption) element).isEnabled();
-				}
-				return false;
-			}
-		});
-		// TreeViewerColumn column = new TreeViewerColumn(treeViewer,
-		// SWT.READ_ONLY);
-		// column.getColumn().setWidth(300);
-		// column.setLabelProvider(new ColumnLabelProvider() {
-		// @Override
-		// public String getText(Object element) {
-		// return LinterConfigLabelProvider.getInstance().getColumnText(
-		// element, 0);
-		// }
-		//
-		// @Override
-		// public Color getBackground(Object element) {
-		// if (element instanceof ITernLinterOption
-		// && ((ITernLinterOption) element).isCategoryType()) {
-		// return treeViewer.getTree().getDisplay()
-		// .getSystemColor(SWT.COLOR_GRAY);
-		// }
-		// return super.getBackground(element);
-		// }
-		// });
+		// Create value column
+		TreeViewerColumn valueColumnViewer = new TreeViewerColumn(treeViewer,
+				SWT.LEFT);
+		valueColumnViewer.setLabelProvider(new TreeColumnViewerLabelProvider(
+				LinterConfigLabelProvider.getInstance()));
+		valueColumnViewer.setEditingSupport(new LinterOptionEditingSupport(
+				valueColumnViewer.getViewer()));
+		layout.setColumnData(valueColumnViewer.getColumn(),
+				new ColumnWeightData(1, 100));
 
 		// Add tree selection listener to refresh the detail information of teh
 		// selected option
@@ -312,15 +287,6 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 				} else {
 					refreshOption(null);
 				}
-			}
-		});
-		treeViewer.addCheckStateListener(new ICheckStateListener() {
-
-			@Override
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				ITernLinterOption option = (ITernLinterOption) event
-						.getElement();
-				option.setEnabled(event.getChecked());
 			}
 		});
 		restoreColumnSettings();
@@ -372,10 +338,6 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 			}
 		});
 		return page;
-	}
-
-	public Control getControl() {
-		return control;
 	}
 
 	public void setLinterConfig(ITernLinterConfig config) throws TernException {
@@ -508,7 +470,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		for (ITernLinterOption option : options) {
 			if (option.isCategoryType()) {
 				updateJSONOptions(option.getOptions(), json);
-			} else if (option.isEnabled()) {
+			} else if (option.hasValue()) {
 				if (option.isBooleanType()) {
 					json.add(option.getId(), option.getBooleanValue());
 				} else if (option.isNumberType()) {

@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -15,11 +15,8 @@ import java.io.IOException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
@@ -52,7 +49,6 @@ public class TernLinterOptionsPanel extends Composite {
 
 	private final IProject project;
 	private Composite content;
-	private Button checkBoxValue;
 	private Browser descTextField;
 
 	public TernLinterOptionsPanel(Composite parent, IProject project) {
@@ -132,18 +128,6 @@ public class TernLinterOptionsPanel extends Composite {
 			textField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 			textField.setText(id != null ? id : "");
 		}
-		if (option.isBooleanType()) {
-			checkBoxValue = new Button(header, SWT.CHECK);
-			checkBoxValue.setSelection(option.getBooleanValue());
-			checkBoxValue.addSelectionListener(new SelectionAdapter() {
-				@Override
-				public void widgetSelected(SelectionEvent e) {
-					option.setValue(checkBoxValue.getSelection());
-				}
-			});
-		} else if (option.isNumberType()) {
-
-		}
 	}
 
 	private void createSeparator(Composite parent) {
@@ -153,7 +137,6 @@ public class TernLinterOptionsPanel extends Composite {
 	}
 
 	private void createBody(Composite ancestor, ITernLinterOption option) {
-
 		Composite parent = new Composite(ancestor, SWT.BORDER);
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginLeft = 0;
@@ -170,7 +153,6 @@ public class TernLinterOptionsPanel extends Composite {
 			descTextField.setLayoutData(data);
 			descTextField.setText(getHTML(description));
 		}
-		// Type value
 	}
 
 	private String getHTML(String description) {
@@ -187,9 +169,6 @@ public class TernLinterOptionsPanel extends Composite {
 	}
 
 	public void updateEnabled(boolean enabled) {
-		if (checkBoxValue != null) {
-			checkBoxValue.setEnabled(enabled);
-		}
 		if (descTextField != null) {
 			descTextField.setEnabled(enabled);
 		}

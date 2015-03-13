@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -13,8 +13,14 @@ package tern.eclipse.ide.linter.ui.viewers;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
+import tern.eclipse.ide.linter.core.ITernLinterConfig;
 import tern.eclipse.ide.linter.core.ITernLinterOption;
 
+/**
+ * Tree content provider used to display option of {@link ITernLinterConfig} in a
+ * tree.
+ *
+ */
 public class LinterConfigContentProvider implements ITreeContentProvider {
 
 	private static final LinterConfigContentProvider INSTANCE = new LinterConfigContentProvider();
@@ -25,13 +31,11 @@ public class LinterConfigContentProvider implements ITreeContentProvider {
 
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void inputChanged(Viewer arg0, Object arg1, Object arg2) {
-		// TODO Auto-generated method stub
+	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 
 	}
 
@@ -49,7 +53,7 @@ public class LinterConfigContentProvider implements ITreeContentProvider {
 	}
 
 	@Override
-	public Object getParent(Object paramObject) {
+	public Object getParent(Object element) {
 		return null;
 	}
 

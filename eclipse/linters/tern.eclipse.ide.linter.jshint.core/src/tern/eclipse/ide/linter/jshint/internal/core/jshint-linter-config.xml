@@ -35,6 +35,430 @@ the block consists of only one statement, for example:</p><pre><code>while (day)
 ]]>
 			</doc>
 		</option>
+		<option id="enforceall" type="boolean" url="http://jshint.com/docs/options/#enforceall">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>The option automatically opts users in to new features which             can lead to unexpected warnings/errors in when upgrading
+            between minor versions of JSHint.</p></div><p>This option is a short hand for the most strict JSHint configuration. It
+enables all enforcing options and disables all relaxing options.</p>
+]]>
+			</doc>
+		</option>
+		<option id="eqeqeq" type="boolean" url="http://jshint.com/docs/options/#eqeqeq">
+			<doc>
+<![CDATA[		
+<p>This options prohibits the use of <code>==</code> and <code>!=</code> in favor of <code>===</code> and
+<code>!==</code>. The former try to coerce values before comparing them which can
+lead to some unexpected results. The latter don&#39;t do any coercion so
+they are generally safer. If you would like to learn more about type
+coercion in JavaScript, we recommend <a href="http://javascriptweblog.wordpress.com/2011/02/07/truth-equality-and-javascript/">Truth, Equality and
+JavaScript</a>
+by Angus Croll.</p>
+]]>
+			</doc>
+		</option>
+		<option id="es3" type="boolean" url="http://jshint.com/docs/options/#es3">
+			<doc>
+<![CDATA[		
+<p>This option tells JSHint that your code needs to adhere to ECMAScript 3
+specification. Use this option if you need your program to be executable
+in older browsers—such as Internet Explorer 6/7/8/9—and other legacy
+JavaScript environments.</p>
+]]>
+			</doc>
+		</option>
+		<option id="es5" type="boolean" url="http://jshint.com/docs/options/#es5">
+			<doc>
+<![CDATA[		
+<p>This option enables syntax first defined in <a href="http://es5.github.io/">the ECMAScript 5.1
+specification</a>. This includes allowing reserved
+keywords as object properties.</p>
+]]>
+			</doc>
+		</option>
+		<option id="forin" type="boolean" url="http://jshint.com/docs/options/#forin">
+			<doc>
+<![CDATA[		
+<p>This option requires all <code>for in</code> loops to filter object&#39;s items. The
+for in statement allows for looping through the names of all of the
+properties of an object including those inherited through the prototype
+chain. This behavior can lead to unexpected items in your object so it
+is generally safer to always filter inherited properties out as shown in
+the example:</p><pre><code>for (key in obj) {
+  if (obj.hasOwnProperty(key)) {
+    // We are sure that obj[key] belongs to the object and was not inherited.
+  }
+}
+</code></pre><p>For more in-depth understanding of <code>for in</code> loops in JavaScript, read
+<a href="http://javascriptweblog.wordpress.com/2011/01/04/exploring-javascript-for-in-loops/">Exploring JavaScript for-in
+loops</a>
+by Angus Croll.</p>
+]]>
+			</doc>
+		</option>
+		<option id="freeze" type="boolean" url="http://jshint.com/docs/options/#freeze">
+			<doc>
+<![CDATA[		
+<p>This options prohibits overwriting prototypes of native objects such as
+<code>Array</code>, <code>Date</code> and so on.</p><pre><code>// jshint freeze:true
+Array.prototype.count = function (value) { return 4; };
+// -&gt; Warning: Extending prototype of native object: &#39;Array&#39;.
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="funcscope" type="boolean" url="http://jshint.com/docs/options/#funcscope">
+			<doc>
+<![CDATA[		
+<p>This option suppresses warnings about declaring variables inside of
+control
+structures while accessing them later from the outside. Even though
+JavaScript has only two real scopes—global and function—such practice
+leads to confusion among people new to the language and hard-to-debug
+bugs. This is why, by default, JSHint warns about variables that are
+used outside of their intended scope.</p><pre><code>function test() {
+  if (true) {
+    var x = 0;
+  }
+
+  x += 1; // Default: &#39;x&#39; used out of scope.
+            // No warning when funcscope:true
+}
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="futurehostile" type="boolean" url="http://jshint.com/docs/options/#futurehostile">
+			<doc>
+<![CDATA[		
+<p>This option enables warnings about the use of identifiers which are
+defined in future versions of JavaScript. Although overwriting them has
+no effect in contexts where they are not implemented, this practice can
+cause issues when migrating codebases to newer versions of the language.</p>
+]]>
+			</doc>
+		</option>	
+		<option id="globals" type="boolean" url="http://jshint.com/docs/options/#globals">
+			<doc>
+<![CDATA[		
+<p>This option can be used to specify a white list of global variables that
+are not formally defined in the source code. This is most useful when
+combined with the <code>undef</code> option in order to suppress warnings for
+project-specific global variables.</p><p>Setting an entry to <code>true</code> enables reading and writing to that variable.
+Setting it to <code>false</code> will trigger JSHint to consider that variable
+read-only.</p><p>See also the &quot;environment&quot; options: a set of options to be used as short
+hand for enabling global variables defined in common JavaScript
+environments.</p>
+]]>
+			</doc>
+		</option>
+		<option id="globalstrict" type="boolean" url="http://jshint.com/docs/options/#globalstrict">
+			<doc>
+<![CDATA[		
+<p>This option suppresses warnings about the use of global strict mode.
+Global strict mode can break third-party widgets so it is not
+recommended.</p><p>For more info about strict mode see the <code>strict</code> option.</p>
+]]>
+			</doc>
+		</option>
+		<option id="immed" type="boolean" url="http://jshint.com/docs/options/#immed">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option prohibits the use of immediate function invocations without
+wrapping them in parentheses. Wrapping parentheses assists readers of
+your code in understanding that the expression is the result of a
+function, and not the function itself.</p>
+]]>
+			</doc>
+		</option>
+		<option id="indent" type="boolean" url="http://jshint.com/docs/options/#indent">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness. If             you would like to enforce rules relating to code style, check
+            out <a href="https://github.com/jscs-dev/node-jscs">the JSCS project</a>.</p></div><p>This option sets a specific tab width for your code.</p>
+]]>
+			</doc>
+		</option>
+		<option id="iterator" type="boolean" url="http://jshint.com/docs/options/#iterator">
+			<doc>
+<![CDATA[		
+<p>This option suppresses warnings about the <code>__iterator__</code> property. This
+property is not supported by all browsers so use it carefully.</p>
+]]>
+			</doc>
+		</option>
+		<option id="latedef" type="boolean" url="http://jshint.com/docs/options/#latedef">
+			<doc>
+<![CDATA[		
+<p>This option prohibits the use of a variable before it was defined.
+JavaScript has function scope only and, in addition to that, all variables
+are always moved—or hoisted— to the top of the function. This behavior can
+lead to some very nasty bugs and that&#39;s why it is safer to always use
+variable only after they have been explicitly defined.</p><p>Setting this option to &quot;nofunc&quot; will allow function declarations to be
+ignored.</p><p>For more in-depth understanding of scoping and hoisting in JavaScript,
+read <a href="http://www.adequatelygood.com/2010/2/JavaScript-Scoping-and-Hoisting">JavaScript Scoping and
+Hoisting</a>
+by Ben Cherry.</p>
+]]>
+			</doc>
+		</option>	
+		<option id="maxcomplexity" type="number" url="http://jshint.com/docs/options/#maxcomplexity">
+			<doc>
+<![CDATA[		
+<p>This option lets you control cyclomatic complexity throughout your code.
+Cyclomatic complexity measures the number of linearly independent paths
+through a program&#39;s source code. Read more about <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity">cyclomatic complexity on
+Wikipedia</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="maxdepth" type="number" url="http://jshint.com/docs/options/#maxdepth">
+			<doc>
+<![CDATA[		
+<p>This option lets you control how nested do you want your blocks to be:</p><pre><code>// jshint maxdepth:2
+
+function main(meaning) {
+  var day = true;
+
+  if (meaning === 42) {
+    while (day) {
+      shuffle();
+
+      if (tired) { // JSHint: Blocks are nested too deeply (3).
+          sleep();
+      }
+    }
+  }
+}
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="maxerr" type="number" default="50" url="http://jshint.com/docs/options/#maxerr">
+			<doc>
+<![CDATA[		
+<p>This options allows you to set the maximum amount of warnings JSHint will
+produce before giving up. Default is 50.</p>
+]]>
+			</doc>
+		</option>
+		<option id="maxlen" type="number" url="http://jshint.com/docs/options/#maxlen">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness. If             you would like to enforce rules relating to code style, check
+            out <a href="https://github.com/jscs-dev/node-jscs">the JSCS project</a>.</p></div><p>This option lets you set the maximum length of a line.</p>
+]]>
+			</doc>
+		</option>				
+		<option id="maxparams" type="number" url="http://jshint.com/docs/options/#maxlen">
+			<doc>
+<![CDATA[		
+<p>This option lets you set the max number of formal parameters allowed per
+function:</p><pre><code>// jshint maxparams:3
+
+function login(request, onSuccess) {
+  // ...
+}
+
+// JSHint: Too many parameters per function (4).
+function logout(request, isManual, whereAmI, onSuccess) {
+  // ...
+}
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="maxstatements" type="number" url="http://jshint.com/docs/options/#maxstatements">
+			<doc>
+<![CDATA[		
+<p>This option lets you set the max number of statements allowed per function:</p><pre><code>// jshint maxstatements:4
+
+function main() {
+  var i = 0;
+  var j = 0;
+
+  // Function declarations count as one statement. Their bodies
+  // don&#39;t get taken into account for the outer function.
+  function inner() {
+    var i2 = 1;
+    var j2 = 1;
+
+    return i2 + j2;
+  }
+
+  j = i + j;
+  return j; // JSHint: Too many statements per function. (5)
+}
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="newcap" type="boolean" url="http://jshint.com/docs/options/#newcap">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option requires you to capitalize names of constructor functions.
+Capitalizing functions that are intended to be used with <code>new</code> operator
+is just a convention that helps programmers to visually distinguish
+constructor functions from other types of functions to help spot
+mistakes when using <code>this</code>.</p><p>Not doing so won&#39;t break your code in any browsers or environments but
+it will be a bit harder to figure out—by reading the code—if the
+function was supposed to be used with or without new. And this is
+important because when the function that was intended to be used with
+<code>new</code> is used without it, <code>this</code> will point to the global object instead
+of a new object.</p>
+]]>
+			</doc>
+		</option>
+		<option id="noarg" type="boolean" url="http://jshint.com/docs/options/#noarg">
+			<doc>
+<![CDATA[		
+<p>This option prohibits the use of <code>arguments.caller</code> and
+<code>arguments.callee</code>.  Both <code>.caller</code> and <code>.callee</code> make quite a few
+optimizations impossible so they were deprecated in future versions of
+JavaScript. In fact, ECMAScript 5 forbids the use of <code>arguments.callee</code>
+in strict mode.</p>
+]]>
+			</doc>
+		</option>
+		<option id="nocomma" type="boolean" url="http://jshint.com/docs/options/#nocomma">
+			<doc>
+<![CDATA[		
+<p>This option prohibits the use of the comma operator. When misused, the
+comma operator can obscure the value of a statement and promote
+incorrect code.</p>
+]]>
+			</doc>
+		</option>
+		<option id="noempty" type="boolean" url="http://jshint.com/docs/options/#noempty">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option warns when you have an empty block in your code. JSLint was
+originally warning for all empty blocks and we simply made it optional.
+There were no studies reporting that empty blocks in JavaScript break
+your code in any way.</p>
+]]>
+			</doc>
+		</option>
+		<option id="nonbsp" type="boolean" url="http://jshint.com/docs/options/#nonbsp">
+			<doc>
+<![CDATA[		
+<p>This option warns about &quot;non-breaking whitespace&quot; characters. These
+characters can be entered with option-space on Mac computers and have a
+potential of breaking non-UTF8 web pages.</p>
+]]>
+			</doc>
+		</option>
+		<option id="nonew" type="boolean" url="http://jshint.com/docs/options/#nonew">
+			<doc>
+<![CDATA[		
+<p>This option prohibits the use of constructor functions for side-effects.
+Some people like to call constructor functions without assigning its
+result to any variable:</p><pre><code>new MyConstructor();
+</code></pre><p>There is no advantage in this approach over simply calling
+<code>MyConstructor</code> since the object that the operator <code>new</code> creates isn&#39;t
+used anywhere so you should generally avoid constructors like this one.</p>
+]]>
+			</doc>
+		</option>
+		<option id="notypeof" type="boolean" url="http://jshint.com/docs/options/#notypeof">
+			<doc>
+<![CDATA[		
+<p>This option suppresses warnings about invalid <code>typeof</code> operator values.
+This operator has only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">a limited set of possible return
+values</a>.
+By default, JSHint warns when you compare its result with an invalid
+value which often can be a typo.</p><pre><code>// &#39;fuction&#39; instead of &#39;function&#39;
+if (typeof a == &quot;fuction&quot;) { // Invalid typeof value &#39;fuction&#39;
+  // ...
+}
+</code></pre><p>Do not use this option unless you&#39;re absolutely sure you don&#39;t want
+these checks.</p>
+]]>
+			</doc>
+		</option>
+		<option id="quotmark" type="boolean" url="http://jshint.com/docs/options/#quotmark">
+			<doc>
+<![CDATA[		
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness. If             you would like to enforce rules relating to code style, check
+            out <a href="https://github.com/jscs-dev/node-jscs">the JSCS project</a>.</p></div><p>This option enforces the consistency of quotation marks used throughout
+your code. It accepts three values: <code>true</code> if you don&#39;t want to enforce
+one particular style but want some consistency, <code>&quot;single&quot;</code> if you want to
+allow only single quotes and <code>&quot;double&quot;</code> if you want to allow only double
+quotes.</p>
+]]>
+			</doc>
+		</option>
+		<option id="shadow" type="boolean" url="http://jshint.com/docs/options/#shadow">
+			<doc>
+<![CDATA[		
+<p>This option suppresses warnings about variable shadowing i.e. declaring a
+variable that had been already declared somewhere in the outer scope.</p><ul>
+<li>&quot;inner&quot;  - check for variables defined in the same scope only</li>
+<li>&quot;outer&quot;  - check for variables defined in outer scopes as well</li>
+<li>false    - same as inner</li>
+<li>true     - allow variable shadowing</li>
+</ul>
+]]>
+			</doc>
+		</option>
+		<option id="singleGroups" type="boolean" url="http://jshint.com/docs/options/#singleGroups">
+			<doc>
+<![CDATA[		
+<p>This option prohibits the use of the grouping operator when it is not
+strictly required. Such usage commonly reflects a misunderstanding of
+unary operators, for example:</p><pre><code>// jshint singleGroups: true
+
+delete(obj.attr); // Warning: Unnecessary grouping operator.
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="undef" type="boolean" url="http://jshint.com/docs/options/#undef">
+			<doc>
+<![CDATA[		
+<p>This option prohibits the use of explicitly undeclared variables. This
+option is very useful for spotting leaking and mistyped variables.</p><pre><code>// jshint undef:true
+
+function test() {
+  var myVar = &#39;Hello, World&#39;;
+  console.log(myvar); // Oops, typoed here. JSHint with undef will complain
+}
+</code></pre><p>If your variable is defined in another file, you can use the <code>global</code>
+directive to tell JSHint about it.</p>
+]]>
+			</doc>
+		</option>
+		<option id="unused" type="boolean" url="http://jshint.com/docs/options/#unused">
+			<doc>
+<![CDATA[		
+<p>This option warns when you define and never use your variables. It is very
+useful for general code cleanup, especially when used in addition to
+<code>undef</code>.</p><pre><code>// jshint unused:true
+
+function test(a, b) {
+  var c, d = 2;
+
+  return a + d;
+}
+
+test(1, 2);
+
+// Line 3: &#39;b&#39; was defined but never used.
+// Line 4: &#39;c&#39; was defined but never used.
+</code></pre><p>In addition to that, this option will warn you about unused global
+variables declared via the <code>global</code> directive.</p><p>This can be set to <code>vars</code> to only check for variables, not function
+parameters, or <code>strict</code> to check all variables and parameters.  The
+default (true) behavior is to allow unused parameters that are followed by
+a used parameter.</p>
+]]>
+			</doc>
+		</option>
 	</option>
 	<option id="Relaxing options" type="category"
 		url="http://jshint.com/docs/options/#relaxing-options">
@@ -65,6 +489,270 @@ with parenthesis, such as:</p><pre><code>for (var i = 0, person; (person = peopl
 </code></pre>]]>
 			</doc>
 		</option>
+		<option id="debug" type="boolean" url="http://jshint.com/docs/options/#debug">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about the <code>debugger</code> statements in your
+code.</p>
+]]>
+			</doc>
+		</option>
+		<option id="elision" type="boolean" url="http://jshint.com/docs/options/#elision">
+			<doc>
+<![CDATA[
+<p>This option tells JSHint that your code uses ES3 array elision elements,
+or empty elements (for example, <code>[1, , , 4, , , 7]</code>).</p>
+]]>
+			</doc>
+		</option>
+		<option id="eqnull" type="boolean" url="http://jshint.com/docs/options/#eqnull">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about <code>== null</code> comparisons. Such
+comparisons are often useful when you want to check if a variable is
+<code>null</code> or <code>undefined</code>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="esnext" type="boolean" url="http://jshint.com/docs/options/#esnext">
+			<doc>
+<![CDATA[
+<p>This option tells JSHint that your code uses ECMAScript 6 specific
+syntax. Note that these features are not finalized yet and not all
+browsers implement them.</p><p>More info:</p><ul>
+<li><a href="http://wiki.ecmascript.org/doku.php?id=harmony:specification_drafts">Draft Specification for ES.next (ECMA-262 Ed.
+6)</a></li>
+</ul>
+]]>
+			</doc>
+		</option>
+		<option id="evil" type="boolean" url="http://jshint.com/docs/options/#evil">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about the use of <code>eval</code>. The use of
+<code>eval</code> is discouraged because it can make your code vulnerable to
+various injection attacks and it makes it hard for JavaScript
+interpreter to do certain optimizations.</p>
+]]>
+			</doc>
+		</option>
+		<option id="expr" type="boolean" url="http://jshint.com/docs/options/#expr">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about the use of expressions where
+normally you would expect to see assignments or function calls. Most of
+the time, such code is a typo. However, it is not forbidden by the spec
+and that&#39;s why this warning is optional.</p>
+]]>
+			</doc>
+		</option>
+		<option id="lastsemic" type="boolean" url="http://jshint.com/docs/options/#lastsemic">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about missing semicolons, but only when
+the semicolon is omitted for the last statement in a one-line block:</p><pre><code>var name = (function() { return &#39;Anton&#39; }());
+</code></pre><p>This is a very niche use case that is useful only when you use automatic
+JavaScript code generators.</p>
+]]>
+			</doc>
+		</option>
+		<option id="laxbreak" type="boolean" url="http://jshint.com/docs/options/#laxbreak">
+			<doc>
+<![CDATA[
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option suppresses most of the warnings about possibly unsafe line
+breakings in your code. It doesn&#39;t suppress warnings about comma-first
+coding style. To suppress those you have to use <code>laxcomma</code> (see below).</p>
+]]>
+			</doc>
+		</option>
+		<option id="laxcomma" type="boolean" url="http://jshint.com/docs/options/#laxcomma">
+			<doc>
+<![CDATA[
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option suppresses warnings about comma-first coding style:</p><pre><code>var obj = {
+    name: &#39;Anton&#39;
+  , handle: &#39;valueof&#39;
+  , role: &#39;SW Engineer&#39;
+};
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="loopfunc" type="boolean" url="http://jshint.com/docs/options/#loopfunc">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about functions inside of loops.
+Defining functions inside of loops can lead to bugs such as this one:</p><pre><code>var nums = [];
+
+for (var i = 0; i &lt; 10; i++) {
+  nums[i] = function (j) {
+    return i + j;
+  };
+}
+
+nums[0](2); // Prints 12 instead of 2
+</code></pre><p>To fix the code above you need to copy the value of <code>i</code>:</p><pre><code>var nums = [];
+
+for (var i = 0; i &lt; 10; i++) {
+  (function (i) {
+    nums[i] = function (j) {
+        return i + j;
+    };
+  }(i));
+}
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="moz" type="boolean" url="http://jshint.com/docs/options/#moz">
+			<doc>
+<![CDATA[
+<p>This options tells JSHint that your code uses Mozilla JavaScript
+extensions. Unless you develop specifically for the Firefox web browser
+you don&#39;t need this option.</p><p>More info:</p><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/JavaScript/New_in_JavaScript/1.7">New in JavaScript
+1.7</a></li>
+</ul>
+]]>
+			</doc>
+		</option>
+		<option id="multistr" type="boolean" url="http://jshint.com/docs/options/#multistr">
+			<doc>
+<![CDATA[
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option suppresses warnings about multi-line strings. Multi-line
+strings can be dangerous in JavaScript because all hell breaks loose if
+you accidentally put a whitespace in between the escape character (<code>\</code>)
+and a new line.</p><p>Note that even though this option allows correct multi-line strings, it
+still warns about multi-line strings without escape characters or with
+anything in between the escape character and a whitespace.</p><pre><code>// jshint multistr:true
+
+var text = &quot;Hello\
+World&quot;; // All good.
+
+text = &quot;Hello
+World&quot;; // Warning, no escape character.
+
+text = &quot;Hello\
+World&quot;; // Warning, there is a space after \
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="noyield" type="boolean" url="http://jshint.com/docs/options/#noyield">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about generator functions with no
+<code>yield</code> statement in them.</p>
+]]>
+			</doc>
+		</option>
+		<option id="phantom" type="boolean" url="http://jshint.com/docs/options/#phantom">
+			<doc>
+<![CDATA[
+<p>This option defines globals available when your core is running inside
+of the PhantomJS runtime environment. <a href="http://phantomjs.org/">PhantomJS</a>
+is a headless WebKit scriptable with a JavaScript API. It has fast and
+native support for various web standards: DOM handling, CSS selector,
+JSON, Canvas, and SVG.</p>
+]]>
+			</doc>
+		</option>
+		<option id="plusplus" type="boolean" url="http://jshint.com/docs/options/#plusplus">
+			<doc>
+<![CDATA[
+<p>This option prohibits the use of unary increment and decrement
+operators.  Some people think that <code>++</code> and <code>--</code> reduces the quality of
+their coding styles and there are programming languages—such as
+Python—that go completely without these operators.</p>
+]]>
+			</doc>
+		</option>
+		<option id="proto" type="boolean" url="http://jshint.com/docs/options/#proto">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about the <code>__proto__</code> property.</p>
+]]>
+			</doc>
+		</option>
+		<option id="scripturl" type="boolean" url="http://jshint.com/docs/options/#scripturl">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about the use of script-targeted
+URLs—such as <code>javascript:...</code>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="strict" type="boolean" url="http://jshint.com/docs/options/#strict">
+			<doc>
+<![CDATA[
+<p>This option requires all functions to run in ECMAScript 5&#39;s strict mode.
+<a href="https://developer.mozilla.org/en/JavaScript/Strict_mode">Strict mode</a>
+is a way to opt in to a restricted variant of JavaScript. Strict mode
+eliminates some JavaScript pitfalls that didn&#39;t cause errors by changing
+them to produce errors.  It also fixes mistakes that made it difficult
+for the JavaScript engines to perform certain optimizations.</p><p><em>Note:</em> This option enables strict mode for function scope only. It
+<em>prohibits</em> the global scoped strict mode because it might break
+third-party widgets on your page. If you really want to use global
+strict mode, see the <em>globalstrict</em> option.</p>
+]]>
+			</doc>
+		</option>
+		<option id="sub" type="boolean" url="http://jshint.com/docs/options/#sub">
+			<doc>
+<![CDATA[
+<div class='deprecation-msg'><strong>Warning</strong> This option has been deprecated and will be removed in the next major release of JSHint. <p>JSHint is limiting its scope to issues of code correctness.             If you would like to enforce rules relating to code style,
+            check out <a href="https://github.com/jscs-dev/node-jscs">the JSCS
+            project</a>.</p></div><p>This option suppresses warnings about using <code>[]</code> notation when it can be
+expressed in dot notation: <code>person[&#39;name&#39;]</code> vs. <code>person.name</code>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="supernew" type="boolean" url="http://jshint.com/docs/options/#supernew">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about &quot;weird&quot; constructions like
+<code>new function () { ... }</code> and <code>new Object;</code>. Such constructions are
+sometimes used to produce singletons in JavaScript:</p><pre><code>var singleton = new function() {
+  var privateVar;
+
+  this.publicMethod  = function () {}
+  this.publicMethod2 = function () {}
+};
+</code></pre>
+]]>
+			</doc>
+		</option>
+		<option id="validthis" type="boolean" url="http://jshint.com/docs/options/#validthis">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about possible strict violations when
+the code is running in strict mode and you use <code>this</code> in a
+non-constructor function. You should use this option—in a function scope
+only—when you are positive that your use of <code>this</code> is valid in the
+strict mode (for example, if you call your function using
+<code>Function.call</code>).</p><p><strong>Note:</strong> This option can be used only inside of a function scope.
+JSHint will fail with an error if you will try to set this option
+globally.</p>
+]]>
+			</doc>
+		</option>
+		<option id="withstmt" type="boolean" url="http://jshint.com/docs/options/#withstmt">
+			<doc>
+<![CDATA[
+<p>This option suppresses warnings about the use of the <code>with</code> statement.
+The semantics of the <code>with</code> statement can cause confusion among
+developers and accidental definition of global variables.</p><p>More info:</p><ul>
+<li><a href="http://yuiblog.com/blog/2006/04/11/with-statement-considered-harmful/">with Statement Considered
+Harmful</a></li>
+</ul>
+]]>
+			</doc>
+		</option>					
 	</option>
 	<option id="Environments" type="category"
 		url="http://jshint.com/docs/options/#environments">
@@ -95,5 +783,155 @@ database that can be queried and indexed in a MapReduce fashion using
 JavaScript.]]>
 			</doc>
 		</option>
+		<option id="devel" type="boolean" url="http://jshint.com/docs/options/#devel">
+			<doc>
+<![CDATA[
+<p>This option defines globals that are usually used for logging poor-man&#39;s
+debugging: <code>console</code>, <code>alert</code>, etc. It is usually a good idea to not
+ship them in production because, for example, <code>console.log</code> breaks in
+legacy versions of Internet Explorer.</p>
+]]>
+			</doc>
+		</option>
+		<option id="dojo" type="boolean" url="http://jshint.com/docs/options/#dojo">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by the <a href="http://dojotoolkit.org/">Dojo
+Toolkit</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="jasmine" type="boolean" url="http://jshint.com/docs/options/#jasmine">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by <a href="https://jasmine.github.io/">the Jasmine unit testing
+framework</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="jquery" type="boolean" url="http://jshint.com/docs/options/#jquery">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by the <a href="http://jquery.com/">jQuery</a>
+JavaScript library.</p>
+]]>
+			</doc>
+		</option>
+		<option id="mocha" type="boolean" url="http://jshint.com/docs/options/#mocha">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by the &quot;BDD&quot; and &quot;TDD&quot; UIs of the
+<a href="http://mochajs.org/">Mocha unit testing framework</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="mootools" type="boolean" url="http://jshint.com/docs/options/#mootools">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by the
+<a href="http://mootools.net/">MooTools</a> JavaScript framework.</p>
+]]>
+			</doc>
+		</option>
+		<option id="node" type="boolean" url="http://jshint.com/docs/options/#node">
+			<doc>
+<![CDATA[
+<p>This option defines globals available when your code is running inside
+of the Node runtime environment. <a href="http://nodejs.org/">Node.js</a> is a
+server-side JavaScript environment that uses an asynchronous
+event-driven model. This option also skips some warnings that make sense
+in the browser environments but don&#39;t make sense in Node such as
+file-level <code>use strict</code> pragmas and <code>console.log</code> statements.</p>
+]]>
+			</doc>
+		</option>
+		<option id="nonstandard" type="boolean" url="http://jshint.com/docs/options/#nonstandard">
+			<doc>
+<![CDATA[
+<p>This option defines non-standard but widely adopted globals such as
+<code>escape</code> and <code>unescape</code>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="prototypejs" type="boolean" url="http://jshint.com/docs/options/#prototypejs">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by the
+<a href="http://www.prototypejs.org/">Prototype</a> JavaScript framework.</p>
+]]>
+			</doc>
+		</option>
+		<option id="qunit" type="boolean" url="http://jshint.com/docs/options/#qunit">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by <a href="http://qunitjs.com/">the QUnit unit testing
+framework</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="rhino" type="boolean" url="http://jshint.com/docs/options/#rhino">
+			<doc>
+<![CDATA[
+<p>This option defines globals available when your code is running inside
+of the Rhino runtime environment. <a href="http://www.mozilla.org/rhino/">Rhino</a>
+is an open-source implementation of JavaScript written entirely in Java.</p>
+]]>
+			</doc>
+		</option>
+		<option id="shelljs" type="boolean" url="http://jshint.com/docs/options/#shelljs">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by <a href="http://documentup.com/arturadib/shelljs">the ShellJS
+library</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="typed" type="boolean" url="http://jshint.com/docs/options/#typed">
+			<doc>
+<![CDATA[
+<p>This option defines globals for typed array constructors.</p><p>More info:</p><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays">JavaScript typed
+arrays</a></li>
+</ul>
+]]>
+			</doc>
+		</option>
+		<option id="worker" type="boolean" url="http://jshint.com/docs/options/#worker">
+			<doc>
+<![CDATA[
+<p>This option defines globals available when your code is running inside
+of a Web Worker. <a href="https://developer.mozilla.org/en/Using_web_workers">Web
+Workers</a> provide a
+simple means for web content to run scripts in background threads.</p>
+]]>
+			</doc>
+		</option>
+		<option id="devel" type="boolean" url="http://jshint.com/docs/options/#devel">
+			<doc>
+<![CDATA[
+<p>This option defines globals that are usually used for logging poor-man&#39;s
+debugging: <code>console</code>, <code>alert</code>, etc. It is usually a good idea to not
+ship them in production because, for example, <code>console.log</code> breaks in
+legacy versions of Internet Explorer.</p>
+]]>
+			</doc>
+		</option>
+		<option id="wsh" type="boolean" url="http://jshint.com/docs/options/#wsh">
+			<doc>
+<![CDATA[
+<p>This option defines globals available when your code is running as a
+script for the <a href="http://en.wikipedia.org/wiki/Windows_Script_Host">Windows Script
+Host</a>.</p>
+]]>
+			</doc>
+		</option>
+		<option id="yui" type="boolean" url="http://jshint.com/docs/options/#yui">
+			<doc>
+<![CDATA[
+<p>This option defines globals exposed by the <a href="http://yuilibrary.com/">YUI</a>
+JavaScript framework.</p>
+]]>
+			</doc>
+		</option>		
 	</option>
 </linter>
