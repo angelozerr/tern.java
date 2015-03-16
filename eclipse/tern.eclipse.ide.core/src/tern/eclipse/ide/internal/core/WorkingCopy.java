@@ -43,6 +43,7 @@ public class WorkingCopy implements IWorkingCopy {
 	}
 
 	public void initialize() throws TernException {
+		clear();
 		// Get local and global tern modules
 		List<ITernModule> allModules = project.getAllModules();
 		// Group by type
@@ -124,8 +125,11 @@ public class WorkingCopy implements IWorkingCopy {
 
 	@Override
 	public void clear() {
-		callers.clear();
-		getCheckedModules().clear();
+		this.callers.clear();
+		this.listeners.clear();
+		if (checkedModules != null) {
+			checkedModules.clear();
+		}
 	}
 
 	private void removeCaller(Object caller) {
@@ -175,7 +179,7 @@ public class WorkingCopy implements IWorkingCopy {
 	public List<ITernModule> getAllModules() {
 		return workingCopyModules;
 	}
-	
+
 	@Override
 	public IIDETernProject getProject() {
 		return project;
