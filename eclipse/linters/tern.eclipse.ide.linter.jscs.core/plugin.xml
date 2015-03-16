@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+	<extension
+	      point="tern.eclipse.ide.linter.core.ternLinterConfigurations">
+	      <configuration
+             id="jscs"
+             factory="tern.eclipse.ide.linter.jscs.internal.core.JSCSLinterConfiguration"
+             filename=".jscsrc" >
+	      </configuration>
+	</extension>		 	
+</plugin>
