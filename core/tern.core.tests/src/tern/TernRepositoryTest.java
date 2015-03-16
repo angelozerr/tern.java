@@ -45,6 +45,9 @@ public class TernRepositoryTest {
 		assertHasModule(repository, "jasmine");
 		assertHasModule(repository, "liferay");
 		assertHasModule(repository, "lint");
+		assertHasModule(repository, "eslint");
+		assertHasModule(repository, "jshint");
+		assertHasModule(repository, "jscs");
 		assertHasModule(repository, "node-express");
 		assertHasModule(repository, "node-mongodb-native");
 		assertHasModule(repository, "node-mongoose");

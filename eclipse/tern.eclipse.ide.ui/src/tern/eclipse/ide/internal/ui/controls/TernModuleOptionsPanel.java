@@ -58,9 +58,8 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 			// get the options of the given module and display UI field for
 			// each option.
 
-			JsonObject jsonOptions = getOptions((ITernModuleConfigurable) module);
-
 			if (metadata.hasOptions()) {
+				JsonObject jsonOptions = getOptions((ITernModuleConfigurable) module);
 				Collection<TernModuleMetadataOption> options = metadata
 						.getOptions();
 				for (TernModuleMetadataOption option : options) {

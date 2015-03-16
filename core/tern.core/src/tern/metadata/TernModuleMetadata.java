@@ -308,6 +308,6 @@ public class TernModuleMetadata {
 	}
 
 	public boolean hasOptions() {
-		return options != null;
+		return options != null && options.size() > 0;
 	}
 }

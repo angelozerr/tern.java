@@ -86,7 +86,8 @@ public class TernModuleHelper {
 	public static boolean isConfigurableModule(ITernModule module) {
 		TernModuleMetadata metadata = module.getMetadata();
 		return !StringUtils.isEmpty(module.getVersion())
-				|| (metadata != null && metadata.hasOptions());
+				|| (metadata != null && (metadata.hasOptions() || metadata
+						.isLinter()));
 	}
 
 	/**
