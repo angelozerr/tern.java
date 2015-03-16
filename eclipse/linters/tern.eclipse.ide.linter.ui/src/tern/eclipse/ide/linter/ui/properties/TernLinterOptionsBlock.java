@@ -189,7 +189,9 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 
 	private void updateEnabled() {
 		Boolean checked = enableCheckbox.getSelection();
-		useConfigFilesCheckbox.setEnabled(checked);
+		if (useConfigFilesCheckbox != null) {
+			useConfigFilesCheckbox.setEnabled(checked);
+		}
 		if (linterConfigFileText != null) {
 			linterConfigFileText.setEnabled(checked);
 			linterConfigFileButton.setEnabled(checked);
@@ -247,12 +249,12 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		Tree tree = treeViewer.getTree();
 		tree.setHeaderVisible(false);
 		tree.setLinesVisible(true);
-		
-		GridData data = new GridData(GridData.FILL_BOTH);		
+
+		GridData data = new GridData(GridData.FILL_BOTH);
 		data.heightHint = 400;
 		tree.setLayoutData(data);
-		//tree.setFont(parent.getFont());
-		
+		// tree.setFont(parent.getFont());
+
 		treeViewer
 				.setContentProvider(LinterConfigContentProvider.getInstance());
 
@@ -418,6 +420,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	public void moduleSelectionChanged(ITernModule module, boolean selected) {
 		if (linterId.equals(module.getName())) {
 			enableCheckbox.setSelection(selected);
+			updateEnabled();
 		}
 	}
 

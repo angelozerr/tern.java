@@ -91,7 +91,7 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
 		}
 		return super.performOk();
 	}
-
+	
 	/**
 	 * Load linter config.
 	 */

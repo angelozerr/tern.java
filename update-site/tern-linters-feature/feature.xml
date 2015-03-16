@@ -38,6 +38,34 @@
          unpack="false"/>
 
    <plugin
+         id="tern.eclipse.ide.linter.eslint.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="tern.eclipse.ide.linter.eslint.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="tern.eclipse.ide.linter.jscs.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+         
+   <plugin
+         id="tern.eclipse.ide.linter.jscs.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+                  
+   <plugin
          id="tern.eclipse.ide.linter.jshint.core"
          download-size="0"
          install-size="0"
@@ -52,14 +80,14 @@
          unpack="false"/>
 
    <plugin
-         id="tern.eclipse.ide.linter.eslint.core"
+         id="tern.eclipse.ide.linter.lint.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
          
    <plugin
-         id="tern.eclipse.ide.linter.eslint.ui"
+         id="tern.eclipse.ide.linter.lint.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

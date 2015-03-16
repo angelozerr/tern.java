@@ -10,9 +10,13 @@
   <modules>
 	<module>tern.eclipse.ide.linter.core</module>
   	<module>tern.eclipse.ide.linter.ui</module>
-  	<module>tern.eclipse.ide.linter.jshint.core</module>  
-  	<module>tern.eclipse.ide.linter.jshint.ui</module>
   	<module>tern.eclipse.ide.linter.eslint.core</module>  
   	<module>tern.eclipse.ide.linter.eslint.ui</module>
+  	<module>tern.eclipse.ide.linter.jscs.core</module>  
+  	<module>tern.eclipse.ide.linter.jscs.ui</module>  	  	
+  	<module>tern.eclipse.ide.linter.jshint.core</module>  
+  	<module>tern.eclipse.ide.linter.jshint.ui</module>
+  	<module>tern.eclipse.ide.linter.lint.core</module>  
+  	<module>tern.eclipse.ide.linter.lint.ui</module>  	
   </modules>
 </project>
