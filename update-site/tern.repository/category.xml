@@ -25,7 +25,7 @@
       <category name="Tern Tooling Development Resources"/>
    </feature>
    
-   <feature id="tern-linters-feature"><category name="Tern Linters"/></feature>
+   <feature id="tern-linters-feature"><category name="Tern IDE"/></feature>
    <feature url="features/tern-linters-feature.source_0.0.0.jar" id="tern-linters-feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
    </feature>
@@ -40,7 +40,6 @@
       </description>
    </category-def>
    <category-def name="Tern IDE" label="Tern IDE"/>
-   <category-def name="Tern Linters" label="Tern Linters"/>
    <category-def name="Tern Tooling" label="Tern Tooling"/>
    <category-def name="Tern Tooling Development Resources" label="Tern Tooling Development Resources"/>
 </site>
