@@ -12,5 +12,7 @@
   	<module>tern.eclipse.ide.linter.ui</module>
   	<module>tern.eclipse.ide.linter.jshint.core</module>  
   	<module>tern.eclipse.ide.linter.jshint.ui</module>
+  	<module>tern.eclipse.ide.linter.eslint.core</module>  
+  	<module>tern.eclipse.ide.linter.eslint.ui</module>
   </modules>
 </project>

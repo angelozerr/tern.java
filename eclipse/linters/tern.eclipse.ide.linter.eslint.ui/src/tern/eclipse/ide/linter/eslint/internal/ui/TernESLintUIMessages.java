@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.linter.jshint.internal.ui;
+package tern.eclipse.ide.linter.eslint.internal.ui;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -16,16 +16,18 @@ import java.util.ResourceBundle;
 import org.eclipse.osgi.util.NLS;
 
 /**
- * Tern JSHint UI messages.
+ * Tern ESLint UI messages.
  * 
  */
-public final class TernJSHintUIMessages extends NLS {
+public final class TernESLintUIMessages extends NLS {
 
-	private static final String BUNDLE_NAME = "tern.eclipse.ide.linter.jshint.internal.ui.TernJSHintUIMessages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "tern.eclipse.ide.linter.eslint.internal.ui.TernESLintUIMessages"; //$NON-NLS-1$
 
 	private static ResourceBundle fResourceBundle;
 
-	private TernJSHintUIMessages() {
+	// Preferences
+
+	private TernESLintUIMessages() {
 	}
 
 	public static ResourceBundle getResourceBundle() {
@@ -39,6 +41,6 @@ public final class TernJSHintUIMessages extends NLS {
 	}
 
 	static {
-		NLS.initializeMessages(BUNDLE_NAME, TernJSHintUIMessages.class);
+		NLS.initializeMessages(BUNDLE_NAME, TernESLintUIMessages.class);
 	}
 }

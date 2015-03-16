@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+		
+	<!--Preferences:-->
+	<extension
+         point="org.eclipse.ui.propertyPages">		                  
+	  <page
+            name="%TernESLintPropertyPage.name"
+            category="tern.eclipse.ide.ui.properties.validation"        
+            class="tern.eclipse.ide.linter.eslint.internal.ui.properties.TernESLintPropertyPage"
+            id="tern.eclipse.ide.ui.properties.validation.eslint">
+         <enabledWhen>
+		     <adapt type="org.eclipse.core.resources.IProject">
+                  <test property="tern.eclipse.ide.ui.isTernProject" />
+		     </adapt>         
+         </enabledWhen>
+      </page>
+	</extension>
+			
+</plugin>
