@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>tern.eclipse.ide.server.nodejs.core</name>
+	<name>tern.eclipse.ide.linter.jshint.core</name>
 	<comment></comment>
 	<projects>
 	</projects>
