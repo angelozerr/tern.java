@@ -1,8 +1,8 @@
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    return mod(require("tern/lib/infer"), require("tern/lib/tern"), require("acorn/acorn"));
+    return mod(require("tern/lib/infer"), require("tern/lib/tern"), require("acorn/dist/acorn"));
   if (typeof define == "function" && define.amd) // AMD
-    return define(["tern/lib/infer", "tern/lib/tern", "acorn/acorn"], mod);
+    return define(["tern/lib/infer", "tern/lib/tern", "acorn/dist/acorn"], mod);
   mod(tern, tern, acorn);
 })(function(infer, tern, acorn) {
   "use strict";

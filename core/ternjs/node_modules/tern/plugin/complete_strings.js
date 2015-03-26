@@ -1,12 +1,14 @@
-// Parses comments above variable declarations, function declarations,
-// and object properties as docstrings and JSDoc-style type
-// annotations.
+// When enabled, this plugin will gather (short) strings in your code,
+// and completing when inside a string will try to complete to
+// previously seen strings. Takes a single option, maxLength, which
+// controls the maximum length of string values to gather, and
+// defaults to 15.
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
-    return mod(require("../lib/infer"), require("../lib/tern"), require("acorn/util/walk"));
+    return mod(require("../lib/infer"), require("../lib/tern"), require("acorn/dist/walk"));
   if (typeof define == "function" && define.amd) // AMD
-    return define(["../lib/infer", "../lib/tern", "acorn/util/walk"], mod);
+    return define(["../lib/infer", "../lib/tern", "acorn/dist/walk"], mod);
   mod(tern, tern, acorn.walk);
 })(function(infer, tern, walk) {
   "use strict";
