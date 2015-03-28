@@ -1,19 +1,19 @@
 {
  "name": "grunt",
  "label": "Grunt",  
- "homepage": "http://dojotoolkit.org/",
+ "homepage": "http://gruntjs.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add Grunt support. Grunt is the JavaScript Task Runner",
  "dependencies": [
   "ecma5",
-  "browser"
+  "node"
  ],
  "repository": {
   "type": "git",
-  "url": "https://github.com/angelozerr/tern.java.git"
+  "url": "https://github.com/angelozerr/tern-grunt.git"
  },
  "bugs": {
-  "url": "https://github.com/angelozerr/tern.java/issues"
+  "url": "https://github.com/angelozerr/tern-grunt/issues"
  },
  "help": {
   "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Grunt-support"
