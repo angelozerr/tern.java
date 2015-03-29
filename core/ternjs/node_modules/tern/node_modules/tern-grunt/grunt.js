@@ -41,6 +41,20 @@
     if (isGrunfile(filename)) infer.cx().parent._grunt.tasks =  Object.create(null);
   }
   
+  tern.defineQueryType("grunt-task", {
+    takesFile: true,
+    run: function(server, query, file) {
+      try {
+        var name = query.name, tasks = infer.cx().parent._grunt.tasks, node = tasks[name];
+        if (node && node.sourceFile) return {file: node.sourceFile.name, start: node.start, end: node.end};
+        return {}
+      } catch(err) {
+        console.error(err.stack);
+        return {};
+      }        
+    }
+  });
+  
   tern.defineQueryType("grunt-tasks", {
     takesFile: true,
     run: function(server, query, file) {
