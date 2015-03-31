@@ -12,11 +12,41 @@
     return filename === "[doc]" || filename === "Gruntfile.js";
   }
   
+  function getTasks(filename) {
+    var server = infer.cx().parent, data = server && server._grunt, gruntFile = filename && data[filename];
+    return gruntFile ? gruntFile.tasks : null;
+  }
+  
+  infer.registerFunction("grunt_registerTask", function(self, args, argNodes) {
+    var name = argNodes && argNodes[0] && argNodes[0].type == "Literal" && argNodes[0].value;
+    if (typeof name == "string")
+      getTasks(argNodes[0].sourceFile.name)[name] = {"node": argNodes[0]};
+    return infer.ANull;
+  });
+  
+  infer.registerFunction("grunt_initConfig", function(self, args, argNodes) {
+    var server = infer.cx().parent, data = server && server._grunt;
+    if (argNodes && argNodes.length && argNodes[0].type == "ObjectExpression") {
+      var filename = argNodes[0].sourceFile.name, tasks = getTasks(filename);
+      if (tasks) {
+        argNodes[0].properties.forEach(function(prop) {
+          var key = prop.key.name || prop.key.value, value = prop.value, targets = {};
+          if (value && value.type == "ObjectExpression") {
+            value.properties.forEach(function(prop) {
+              var key = prop.key.name || prop.key.value;
+              if (key != "options") targets[key] = {"node": prop.key};
+            });
+          }
+          tasks[key] = {"node": prop.key, "targets": targets};
+        });
+      }
+    }
+    return infer.ANull;
+  });
+  
   tern.registerPlugin("grunt", function(server, options) {
     
-    server._grunt = {
-      tasks: Object.create(null),
-    };
+    server._grunt = Object.create(null);
     
     server.on("afterLoad", function(file) {
       if (isGrunfile(file.name)) {
@@ -38,15 +68,24 @@
 
   function preInfer(ast, scope) {
     var filename = ast.sourceFile.name;
-    if (isGrunfile(filename)) infer.cx().parent._grunt.tasks =  Object.create(null);
+    if (isGrunfile(filename)) infer.cx().parent._grunt[filename] = {tasks: Object.create(null)};
   }
   
   tern.defineQueryType("grunt-task", {
     takesFile: true,
     run: function(server, query, file) {
       try {
-        var name = query.name, tasks = infer.cx().parent._grunt.tasks, node = tasks[name];
-        if (node && node.sourceFile) return {file: node.sourceFile.name, start: node.start, end: node.end};
+        var name = query.name, taskName = name, targetName = null, index = name.indexOf(":");
+        if (index != -1) {
+          taskName = taskName.substring(0, index); 
+          targetName = name.substring(index+1, name.length);
+        }
+        var filename = file.name, tasks = getTasks(filename), task = tasks[taskName];
+        if (task) {
+          if (targetName && task.targets) task = task.targets[targetName];
+          var node = task && task.node;                    
+          if (node && node.sourceFile) return {file: node.sourceFile.name, start: node.start, end: node.end};
+        }
         return {}
       } catch(err) {
         console.error(err.stack);
@@ -59,9 +98,17 @@
     takesFile: true,
     run: function(server, query, file) {
       try {
-        var result = [], tasks = infer.cx().parent._grunt.tasks;
-        for (var name in tasks) {
-          result.push({"name": name});
+        var result = [], filename = file.name, tasks = getTasks(filename);
+        if (tasks) {
+          for(var name in tasks) {
+            var task = tasks[name], targets = [];
+            if (task.targets) {
+              for(var targetName in task.targets) {
+                targets.push({"name": targetName});
+              }
+            }
+            result.push({"name": name, "targets": targets});
+          }
         }
         return {"completions": result};
       } catch(err) {
@@ -69,12 +116,6 @@
         return {};
       }        
     }
-  });
-  
-  infer.registerFunction("grunt_registerTask", function(self, args, argNodes) {
-    var name = argNodes && argNodes[0] && argNodes[0].type == "Literal" && argNodes[0].value;
-    if (typeof name == "string")
-      infer.cx().parent._grunt.tasks[name] = argNodes[0];
   });
 
   var defs = {
@@ -87,7 +128,8 @@
           init : {
             "!type" : "fn(configObject: ?)",
             "!doc" : "Initialize a configuration object for the current project.\nThe specified configObject is used by tasks and can be accessed using the grunt.config method.\nNearly every project's Gruntfile will call this method.",
-            "!url" : "http://gruntjs.com/api/grunt.config#grunt.config.init"
+            "!url" : "http://gruntjs.com/api/grunt.config#grunt.config.init",
+            "!effects": ["custom grunt_initConfig"]
           },
           get : {
             "!type" : "fn(prop?: ?) -> ?",
