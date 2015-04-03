@@ -1,0 +1,26 @@
+{
+  "name": "tern-gulp",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "gulp.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding Gulp support.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-gulp.git"
+  },
+  "scripts": {
+    "test": "node ./test/all.js"
+  },  
+  "dependencies": {
+    "tern": ">=0.10.0",
+    "acorn": ">=1.0.0"
+  },
+  "devDependencies": { 
+    "test": ">=0.0.5" 
+  },
+  "keywords": [
+    "tern",
+    "gulp"
+  ]
+}

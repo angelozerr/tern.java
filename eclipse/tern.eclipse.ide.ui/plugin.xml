@@ -322,6 +322,10 @@
             id="grunt"
             icon="/icons/full/obj16/grunt.png" >
       </image>
+  	  <image
+            id="gulp"
+            icon="/icons/full/obj16/gulp.png" >
+      </image>      
       <image
             id="guess-types"
             icon="/icons/full/obj16/completion.png" >

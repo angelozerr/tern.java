@@ -1,0 +1,21 @@
+{
+ "name": "gulp",
+ "label": "Gulp",  
+ "homepage": "http://gulpjs.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Gulp support. The streaming build system.",
+ "dependencies": [
+  "ecma5",
+  "node"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-gulp.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-gulp/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Gulp-support"
+ }
+}
