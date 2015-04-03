@@ -40,6 +40,7 @@ public enum TernPlugin implements ITernPlugin {
 	gmaps_3_16("gmaps", "3.16", true), 
 	gmaps_3_17("gmaps", "3.17", true), 
 	grunt("tern/plugin/grunt"),
+	gulp("tern/plugin/gulp"),
 	gas("tern/plugin/gas"), 
 	liferay("tern/plugin/liferay"), 
 	node_express("node-express", "node-express", null, null), 
