@@ -33,9 +33,12 @@ you will see contentassist available for JavaScript :
 On top of `core` module
 Tern.java provides an Eclipse IDE integration with Tern. For more information please read [Tern Eclipse IDE](https://github.com/angelozerr/tern.java/wiki/Tern-Eclipse-IDE).
 
-You can see [AngularJS Eclipse](https://github.com/angelozerr/angularjs-eclipse) which is based on tern.java.
-
 To install Tern IDE, please read [Installation - Update site](https://github.com/angelozerr/tern.java/wiki/Installation-Update-Site) section.
+
+### Plugins based on Tern IDE
+
+ * [AngularJS Eclipse](https://github.com/angelozerr/angularjs-eclipse) to give support for [AngularJS](https://angularjs.org/).
+ * [JavaScript Build Eclipse](https://github.com/angelozerr/jsbuild-eclipse) to give support for [Grunt](http://gruntjs.com/) and [Gulp](http://gulpjs.com/).
 
 ## Tern Tooling
 
