@@ -42,7 +42,10 @@ public class Arguments extends ArrayList<Arg> implements
 
 	@Override
 	public void addProposal(int paramIndex, String name) {
-		parameters.get(paramIndex).addProposal(name);
+		Arg arg = parameters.get(paramIndex);
+		if (arg != null) {
+			arg.addProposal(name);
+		}
 	}
 
 	public void setBaseOffset(int baseOffset) {
