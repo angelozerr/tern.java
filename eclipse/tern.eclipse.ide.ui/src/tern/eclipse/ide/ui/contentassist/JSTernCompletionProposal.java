@@ -41,6 +41,7 @@ import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.eclipse.jface.contentassist.TernCompletionProposal;
+import tern.server.ITernModule;
 import tern.server.TernPlugin;
 import tern.server.protocol.completions.FunctionInfo;
 import tern.server.protocol.completions.Parameter;
@@ -625,4 +626,16 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		return "JSTernCompletionProposal_" + toString(); //$NON-NLS-1$
 	}
 
+	/**
+	 * Use tern repository to retrieve the real module type (ex : yui for yui3).
+	 */
+	@Override
+	public String getOriginType() {
+		String origin = getOrigin();
+		if (origin == null) {
+			return null;
+		}
+		ITernModule module = this.ternProject.getRepository().getModule(origin);
+		return module != null ? module.getType() : null;
+	}
 }

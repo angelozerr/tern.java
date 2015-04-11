@@ -33,8 +33,8 @@ import org.eclipse.swt.widgets.Composite;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.controls.TernModuleOptionsPanel;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.descriptors.ITernModuleImage;
 import tern.eclipse.ide.ui.descriptors.ITernModuleDescriptorManager;
+import tern.eclipse.ide.ui.descriptors.ITernModuleImage;
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
 import tern.eclipse.jface.TernImagesRegistry;
 import tern.server.ITernModule;
@@ -232,7 +232,8 @@ public class TernModuleDescriptorManager implements
 		if (image != null) {
 			return image;
 		}
-		String origin = item.getOrigin();
+		// use origin name (ex : yui instead of using yui3)
+		String origin = item.getOriginType();
 		if (!StringUtils.isEmpty(origin)) {
 			image = getImage(origin);
 		}
@@ -247,7 +248,8 @@ public class TernModuleDescriptorManager implements
 		if (descriptor != null) {
 			return descriptor;
 		}
-		String origin = item.getOrigin();
+		// use origin name (ex : yui instead of using yui3)
+		String origin = item.getOriginType();
 		if (!StringUtils.isEmpty(origin)) {
 			descriptor = getImageDescriptor(origin);
 		}
