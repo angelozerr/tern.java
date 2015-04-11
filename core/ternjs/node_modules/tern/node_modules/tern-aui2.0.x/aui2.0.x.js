@@ -3655,6 +3655,9 @@
   },
   "_yui": {
    "aui_ace_editor": {
+    "!data": {
+     "module": "aui-ace-editor"
+    },
     "A": {
      "AceEditor": {
       "!type": "fn(config: +config.A.AceEditorConfig)",
@@ -3858,6 +3861,9 @@
     }
    },
    "aui_aria": {
+    "!data": {
+     "module": "aui-aria"
+    },
     "A": {
      "Plugin": {
       "Aria": {
@@ -3931,6 +3937,9 @@
     }
    },
    "aui_arraysort": {
+    "!data": {
+     "module": "aui-arraysort"
+    },
     "A": {
      "ArraySort": {
       "!type": "fn()",
@@ -3951,6 +3960,9 @@
     }
    },
    "aui_audio": {
+    "!data": {
+     "module": "aui-audio"
+    },
     "A": {
      "Audio": {
       "!type": "fn(config: +config.A.AudioConfig)",
@@ -3997,6 +4009,9 @@
     }
    },
    "aui_autosize_iframe": {
+    "!data": {
+     "module": "aui-autosize-iframe"
+    },
     "A": {
      "AutosizeIframe": {
       "!type": "fn(config: +config.A.AutosizeIframeConfig)",
@@ -4043,6 +4058,9 @@
     }
    },
    "aui_button": {
+    "!data": {
+     "module": "aui-button"
+    },
     "A": {
      "ButtonExt": {
       "!type": "fn(config: +config.A.ButtonExtConfig)",
@@ -4167,6 +4185,9 @@
     }
    },
    "aui_carousel": {
+    "!data": {
+     "module": "aui-carousel"
+    },
     "A": {
      "Carousel": {
       "!type": "fn(config: +config.A.CarouselConfig)",
@@ -4213,6 +4234,9 @@
     }
    },
    "aui_char_counter": {
+    "!data": {
+     "module": "aui-char-counter"
+    },
     "A": {
      "CharCounter": {
       "!type": "fn(config: +config.A.CharCounterConfig)",
@@ -4244,6 +4268,9 @@
     }
    },
    "aui_collection": {
+    "!data": {
+     "module": "aui-collection"
+    },
     "A": {
      "LinkedSet": {
       "!type": "fn(config: +config.A.LinkedSetConfig)",
@@ -4364,6 +4391,9 @@
     }
    },
    "aui_color_picker": {
+    "!data": {
+     "module": "aui-color-picker"
+    },
     "A": {
      "ColorPalette": {
       "!type": "fn(config: +config.A.ColorPaletteConfig)",
@@ -4509,6 +4539,9 @@
     }
    },
    "aui_component": {
+    "!data": {
+     "module": "aui-component"
+    },
     "A": {
      "Component": {
       "!type": "fn(config: +config.A.ComponentConfig)",
@@ -4555,6 +4588,9 @@
     }
    },
    "aui_datatable": {
+    "!data": {
+     "module": "aui-datatable"
+    },
     "A": {
      "DataTable": {
       "!type": "fn()",
@@ -4938,6 +4974,9 @@
     }
    },
    "aui_datatype_date_parse": {
+    "!data": {
+     "module": "aui-datatype-date-parse"
+    },
     "A": {
      "DateParser": {
       "!type": "fn(opt_pattern: string)",
@@ -5018,6 +5057,9 @@
     }
    },
    "datatype_date": {
+    "!data": {
+     "module": "datatype-date"
+    },
     "Date": {
      "!type": "fn()",
      "!url": "http://alloyui.com/versions/2.0.x/api/classes/Date.html",
@@ -5029,6 +5071,9 @@
     }
    },
    "aui_datatype": {
+    "!data": {
+     "module": "aui-datatype"
+    },
     "A": {
      "DataType": {
       "Boolean": {
@@ -5313,6 +5358,9 @@
     }
    },
    "aui_datepicker": {
+    "!data": {
+     "module": "aui-datepicker"
+    },
     "A": {
      "DatePickerDelegate": {
       "!type": "fn(config: +config.A.DatePickerDelegateConfig)",
@@ -5466,6 +5514,9 @@
     }
    },
    "aui_diagram_builder": {
+    "!data": {
+     "module": "aui-diagram-builder"
+    },
     "A": {
      "AvailableField": {
       "!type": "fn(config: +config.A.AvailableFieldConfig)",
@@ -6132,6 +6183,9 @@
     }
    },
    "aui_form_builder": {
+    "!data": {
+     "module": "aui-form-builder"
+    },
     "A": {
      "FormBuilderAvailableField": {
       "!type": "fn(config: +config.A.FormBuilderAvailableFieldConfig)",
@@ -6749,6 +6803,9 @@
     }
    },
    "aui_form_validator": {
+    "!data": {
+     "module": "aui-form-validator"
+    },
     "A": {
      "FormValidator": {
       "!type": "fn(config: +config.A.FormValidatorConfig)",
@@ -6880,6 +6937,9 @@
     }
    },
    "aui_image_cropper": {
+    "!data": {
+     "module": "aui-image-cropper"
+    },
     "A": {
      "ImageCropper": {
       "!type": "fn(config: +config.A.ImageCropperConfig)",
@@ -6911,6 +6971,9 @@
     }
    },
    "aui_image_viewer": {
+    "!data": {
+     "module": "aui-image-viewer"
+    },
     "A": {
      "ImageViewer": {
       "!type": "fn(config: +config.A.ImageViewerConfig)",
@@ -7049,6 +7112,9 @@
     }
    },
    "aui_media_viewer_plugin": {
+    "!data": {
+     "module": "aui-media-viewer-plugin"
+    },
     "A": {
      "MediaViewerPlugin": {
       "!type": "fn(config: +config.A.MediaViewerPluginConfig)",
@@ -7095,6 +7161,9 @@
     }
    },
    "aui_io": {
+    "!data": {
+     "module": "aui-io"
+    },
     "A": {
      "IORequest": {
       "!type": "fn(config: +config.A.IORequestConfig)",
@@ -7147,6 +7216,9 @@
     }
    },
    "aui_modal": {
+    "!data": {
+     "module": "aui-modal"
+    },
     "A": {
      "Modal": {
       "!type": "fn(config: +config.A.ModalConfig)",
@@ -7173,6 +7245,9 @@
     }
    },
    "aui_node": {
+    "!data": {
+     "module": "aui-node"
+    },
     "A": {
      "Node": {
       "!type": "fn()",
@@ -7438,6 +7513,9 @@
     }
    },
    "aui_pagination": {
+    "!data": {
+     "module": "aui-pagination"
+    },
     "A": {
      "Pagination": {
       "!type": "fn(config: +config.A.PaginationConfig)",
@@ -7509,6 +7587,9 @@
     }
    },
    "aui_palette": {
+    "!data": {
+     "module": "aui-palette"
+    },
     "A": {
      "Palette": {
       "!type": "fn(config: +config.A.PaletteConfig)",
@@ -7560,6 +7641,9 @@
     }
    },
    "aui_parse_content": {
+    "!data": {
+     "module": "aui-parse-content"
+    },
     "A": {
      "ParseContent": {
       "!type": "fn(config: +config.A.ParseContentConfig)",
@@ -7601,6 +7685,9 @@
     }
    },
    "aui_popover": {
+    "!data": {
+     "module": "aui-popover"
+    },
     "A": {
      "Popover": {
       "!type": "fn(config: +config.A.PopoverConfig)",
@@ -7627,6 +7714,9 @@
     }
    },
    "aui_progressbar": {
+    "!data": {
+     "module": "aui-progressbar"
+    },
     "A": {
      "ProgressBar": {
       "!type": "fn(config: +config.A.ProgressBarConfig)",
@@ -7658,6 +7748,9 @@
     }
    },
    "aui_rating": {
+    "!data": {
+     "module": "aui-rating"
+    },
     "A": {
      "Rating": {
       "!type": "fn(config: +config.A.RatingConfig)",
@@ -7731,6 +7824,9 @@
     }
    },
    "aui_scheduler": {
+    "!data": {
+     "module": "aui-scheduler"
+    },
     "A": {
      "SchedulerCalendar": {
       "!type": "fn(config: +config.A.SchedulerCalendarConfig)",
@@ -8574,6 +8670,9 @@
     }
    },
    "aui_search": {
+    "!data": {
+     "module": "aui-search"
+    },
     "A": {
      "TernarySearchNode": {
       "!type": "fn(config: +config.A.TernarySearchNodeConfig)",
@@ -8657,6 +8756,9 @@
     }
    },
    "aui_selector": {
+    "!data": {
+     "module": "aui-selector"
+    },
     "A": {
      "Selector": {
       "!type": "fn()",
@@ -8762,6 +8864,9 @@
     }
    },
    "aui_sortable_layout": {
+    "!data": {
+     "module": "aui-sortable-layout"
+    },
     "A": {
      "SortableLayout": {
       "!type": "fn(config: +config.A.SortableLayoutConfig)",
@@ -8823,6 +8928,9 @@
     }
    },
    "aui_sortable_list": {
+    "!data": {
+     "module": "aui-sortable-list"
+    },
     "A": {
      "SortableList": {
       "!type": "fn(config: +config.A.SortableListConfig)",
@@ -8859,6 +8967,9 @@
     }
    },
    "aui_tabview": {
+    "!data": {
+     "module": "aui-tabview"
+    },
     "A": {
      "Tab": {
       "!type": "fn(config: +config.A.TabConfig)",
@@ -8937,6 +9048,9 @@
     }
    },
    "aui_timepicker": {
+    "!data": {
+     "module": "aui-timepicker"
+    },
     "A": {
      "TimePickerBase": {
       "!type": "fn(config: +config.A.TimePickerBaseConfig)",
@@ -8982,6 +9096,9 @@
     }
    },
    "aui_timer": {
+    "!data": {
+     "module": "aui-timer"
+    },
     "A": {
      "Timer": {
       "!type": "fn()",
@@ -9057,6 +9174,9 @@
     }
    },
    "aui_toggler": {
+    "!data": {
+     "module": "aui-toggler"
+    },
     "A": {
      "Toggler": {
       "!type": "fn(config: +config.A.TogglerConfig)",
@@ -9150,6 +9270,9 @@
     }
    },
    "aui_toolbar": {
+    "!data": {
+     "module": "aui-toolbar"
+    },
     "A": {
      "Toolbar": {
       "!type": "fn(config: +config.A.ToolbarConfig)",
@@ -9252,6 +9375,9 @@
     }
    },
    "aui_tooltip": {
+    "!data": {
+     "module": "aui-tooltip"
+    },
     "A": {
      "Tooltip": {
       "!type": "fn(config: +config.A.TooltipConfig)",
@@ -9300,6 +9426,9 @@
     }
    },
    "aui_tree": {
+    "!data": {
+     "module": "aui-tree"
+    },
     "A": {
      "TreeData": {
       "!type": "fn(config: +config.A.TreeDataConfig)",
@@ -9746,6 +9875,9 @@
     }
    },
    "aui_url": {
+    "!data": {
+     "module": "aui-url"
+    },
     "A": {
      "Url": {
       "!type": "fn(config: +config.A.UrlConfig)",
@@ -9941,6 +10073,9 @@
     }
    },
    "aui_video": {
+    "!data": {
+     "module": "aui-video"
+    },
     "A": {
      "Video": {
       "!type": "fn(config: +config.A.VideoConfig)",
@@ -9987,6 +10122,9 @@
     }
    },
    "aui_widget_cssclass": {
+    "!data": {
+     "module": "aui-widget-cssclass"
+    },
     "A": {
      "WidgetCssClass": {
       "!type": "fn(The: +yui.Object)",
@@ -10026,6 +10164,9 @@
     }
    },
    "aui_widget_toggle": {
+    "!data": {
+     "module": "aui-widget-toggle"
+    },
     "A": {
      "WidgetToggle": {
       "!type": "fn(The: +yui.Object)",
@@ -10041,6 +10182,9 @@
     }
    },
    "aui_widget_toolbars": {
+    "!data": {
+     "module": "aui-widget-toolbars"
+    },
     "A": {
      "WidgetToolbars": {
       "!type": "fn()",
@@ -10076,6 +10220,9 @@
     }
    },
    "aui_widget_transition": {
+    "!data": {
+     "module": "aui-widget-transition"
+    },
     "A": {
      "WidgetTransition": {
       "!type": "fn()",

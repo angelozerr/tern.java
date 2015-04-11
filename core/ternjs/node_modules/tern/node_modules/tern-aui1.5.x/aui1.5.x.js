@@ -1888,6 +1888,9 @@
   },
   "_yui": {
    "aui_autocomplete": {
+    "!data": {
+     "module": "aui-autocomplete"
+    },
     "AutoComplete": {
      "!type": "fn(config: +config.AutoCompleteConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html",
@@ -1942,6 +1945,9 @@
     }
    },
    "aui_button_item": {
+    "!data": {
+     "module": "aui-button-item"
+    },
     "ButtonItem": {
      "!type": "fn(config: +config.ButtonItemConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html",
@@ -1976,6 +1982,9 @@
     }
    },
    "aui_calendar": {
+    "!data": {
+     "module": "aui-calendar"
+    },
     "Calendar": {
      "!type": "fn(config: +config.CalendarConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html",
@@ -2112,6 +2121,9 @@
     }
    },
    "aui_char_counter": {
+    "!data": {
+     "module": "aui-char-counter"
+    },
     "CharCounter": {
      "!type": "fn(config: +config.CharCounterConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CharCounter.html",
@@ -2136,6 +2148,9 @@
     }
    },
    "aui_color_picker": {
+    "!data": {
+     "module": "aui-color-picker"
+    },
     "ColorPicker": {
      "!type": "fn(config: +config.ColorPickerConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ColorPicker.html",
@@ -2155,6 +2170,9 @@
     }
    },
    "aui_component": {
+    "!data": {
+     "module": "aui-component"
+    },
     "Component": {
      "!type": "fn(config: +config.ComponentConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Component.html",
@@ -2216,6 +2234,9 @@
     }
    },
    "aui_datatype": {
+    "!data": {
+     "module": "aui-datatype"
+    },
     "DataType": {
      "Boolean": {
       "!type": "fn()",
@@ -2472,6 +2493,9 @@
     }
    },
    "aui_delayed_task": {
+    "!data": {
+     "module": "aui-delayed-task"
+    },
     "DelayedTask": {
      "!type": "fn(config: +config.DelayedTaskConfig, fn: fn(), scope: +yui.Object, args: ?)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DelayedTask.html",
@@ -2490,6 +2514,9 @@
     }
    },
    "aui_dialog": {
+    "!data": {
+     "module": "aui-dialog"
+    },
     "Dialog": {
      "!type": "fn(config: +config.DialogConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html",
@@ -2541,6 +2568,9 @@
     }
    },
    "aui_editable": {
+    "!data": {
+     "module": "aui-editable"
+    },
     "Editable": {
      "!type": "fn(config: +config.EditableConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Editable.html",
@@ -2570,6 +2600,9 @@
     }
    },
    "aui_event": {
+    "!data": {
+     "module": "aui-event"
+    },
     "AUI~event~input": {
      "!type": "fn()",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AUI~event~input.html",
@@ -2587,6 +2620,9 @@
     }
    },
    "aui_image_viewer": {
+    "!data": {
+     "module": "aui-image-viewer"
+    },
     "ImageViewer": {
      "!type": "fn(config: +config.ImageViewerConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html",
@@ -2723,6 +2759,9 @@
     }
    },
    "aui_io": {
+    "!data": {
+     "module": "aui-io"
+    },
     "A": {
      "Plugin": {
       "IO": {
@@ -2809,6 +2848,9 @@
     }
    },
    "aui_live_search": {
+    "!data": {
+     "module": "aui-live-search"
+    },
     "LiveSearch": {
      "!type": "fn(config: +config.LiveSearchConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html",
@@ -2843,6 +2885,9 @@
     }
    },
    "aui_loading_mask": {
+    "!data": {
+     "module": "aui-loading-mask"
+    },
     "LoadingMask": {
      "!type": "fn(config: +config.LoadingMaskConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LoadingMask.html",
@@ -2892,6 +2937,9 @@
     }
    },
    "aui_nested_list": {
+    "!data": {
+     "module": "aui-nested-list"
+    },
     "NestedList": {
      "!type": "fn(config: +config.NestedListConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/NestedList.html",
@@ -2911,6 +2959,9 @@
     }
    },
    "aui_node": {
+    "!data": {
+     "module": "aui-node"
+    },
     "A": {
      "Node": {
       "!type": "fn()",
@@ -3166,6 +3217,9 @@
     }
    },
    "aui_overlay": {
+    "!data": {
+     "module": "aui-overlay"
+    },
     "OverlayContextPanel": {
      "!type": "fn(config: +config.OverlayContextPanelConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html",
@@ -3326,6 +3380,9 @@
     }
    },
    "aui_paginator": {
+    "!data": {
+     "module": "aui-paginator"
+    },
     "Paginator": {
      "!type": "fn(config: +config.PaginatorConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html",
@@ -3380,6 +3437,9 @@
     }
    },
    "aui_panel": {
+    "!data": {
+     "module": "aui-panel"
+    },
     "Panel": {
      "!type": "fn(object: +yui.Object)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html",
@@ -3414,6 +3474,9 @@
     }
    },
    "aui_parse_content": {
+    "!data": {
+     "module": "aui-parse-content"
+    },
     "ParseContent": {
      "!type": "fn(config: +config.ParseContentConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ParseContent.html",
@@ -3448,6 +3511,9 @@
     }
    },
    "aui_portal_layout": {
+    "!data": {
+     "module": "aui-portal-layout"
+    },
     "PortalLayout": {
      "!type": "fn(config: +config.PortalLayoutConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/PortalLayout.html",
@@ -3467,6 +3533,9 @@
     }
    },
    "aui_progressbar": {
+    "!data": {
+     "module": "aui-progressbar"
+    },
     "ProgressBar": {
      "!type": "fn(config: +config.ProgressBarConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ProgressBar.html",
@@ -3491,6 +3560,9 @@
     }
    },
    "aui_rating": {
+    "!data": {
+     "module": "aui-rating"
+    },
     "Rating": {
      "!type": "fn(config: +config.RatingConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Rating.html",
@@ -3557,6 +3629,9 @@
     }
    },
    "aui_resize": {
+    "!data": {
+     "module": "aui-resize"
+    },
     "Resize": {
      "!type": "fn(config: +config.ResizeConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html",
@@ -3606,6 +3681,9 @@
     }
    },
    "aui_textboxlist": {
+    "!data": {
+     "module": "aui-textboxlist"
+    },
     "Textboxlist": {
      "!type": "fn(config: +config.TextboxlistConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
@@ -3644,8 +3722,15 @@
      }
     }
    },
-   "aui_toolbar": {},
+   "aui_toolbar": {
+    "!data": {
+     "module": "aui-toolbar"
+    }
+   },
    "aui_tooltip": {
+    "!data": {
+     "module": "aui-tooltip"
+    },
     "Tooltip": {
      "!type": "fn(config: +config.TooltipConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Tooltip.html",
@@ -3675,6 +3760,9 @@
     }
    },
    "aui_tree": {
+    "!data": {
+     "module": "aui-tree"
+    },
     "TreeData": {
      "!type": "fn(config: +config.TreeDataConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html",
