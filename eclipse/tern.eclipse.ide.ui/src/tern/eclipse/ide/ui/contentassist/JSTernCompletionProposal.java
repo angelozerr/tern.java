@@ -636,6 +636,6 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 			return null;
 		}
 		ITernModule module = this.ternProject.getRepository().getModule(origin);
-		return module != null ? module.getType() : null;
+		return module != null ? module.getType() : origin;
 	}
 }
