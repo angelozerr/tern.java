@@ -37,8 +37,6 @@ public enum TernPlugin implements ITernPlugin {
 	extjs_4_2_1("extjs", "4.2.1", true), 
 	extjs_5_0_0("extjs", "5.0.0", true), 
 	guess_types("guess-types", "guess-types", null, null), 
-	gmaps_3_16("gmaps", "3.16", true), 
-	gmaps_3_17("gmaps", "3.17", true), 
 	grunt("tern/plugin/grunt"),
 	gulp("tern/plugin/gulp"),
 	gas("tern/plugin/gas"), 

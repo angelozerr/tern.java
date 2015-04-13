@@ -49,6 +49,6 @@ public abstract class AbstractBasicTernModule extends TernModuleInfo implements
 
 	@Override
 	public String toString() {
-		return getType();
+		return getName();
 	}
 }

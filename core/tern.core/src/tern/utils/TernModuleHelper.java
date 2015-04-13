@@ -185,7 +185,7 @@ public class TernModuleHelper {
 		String version = module.getVersion();
 		for (ITernModule f : allModules) {
 			if (f.getModuleType() == ModuleType.Configurable
-					&& f.getType() == module.getType()) {
+					&& f.getType().equals(module.getType())) {
 				if (!StringUtils.isEmpty(version)) {
 					((ITernModuleConfigurable) f).setVersion(version);
 				}
