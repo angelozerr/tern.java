@@ -11,6 +11,7 @@
  */
 package tern.eclipse.ide.core.utils;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.Platform;
@@ -18,6 +19,22 @@ import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
 public class FileUtils {
+
+	private static ILineOfOffsetProvider provider;
+
+	/**
+	 * Set the line offset provider singleton.
+	 */
+	public static void setProvider(ILineOfOffsetProvider provider) {
+		FileUtils.provider = provider;
+	}
+
+	/**
+	 * returns the the line offset provider singleton.
+	 */
+	public static ILineOfOffsetProvider getProvider() {
+		return provider;
+	}
 
 	/**
 	 * Returns the preferences of line seperator.
@@ -48,6 +65,17 @@ public class FileUtils {
 				return lineSeparator;
 		}
 		return System.getProperty("line.separator"); //$NON-NLS-1$
+	}
+
+	/**
+	 * Returns the line of offset of the given file with the given start offset
+	 * and null otherwise.
+	 */
+	public static Integer getLineOfOffset(int start, IFile file) {
+		if (getProvider() != null) {
+			return getProvider().getLineOfOffset(start, file);
+		}
+		return null;
 	}
 
 }

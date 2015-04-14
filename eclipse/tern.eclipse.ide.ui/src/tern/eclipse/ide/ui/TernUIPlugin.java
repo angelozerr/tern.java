@@ -18,11 +18,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.ui.console.TernConsole;
 import tern.eclipse.ide.internal.ui.console.TernConsoleHelper;
 import tern.eclipse.ide.internal.ui.descriptors.TernModuleDescriptorManager;
 import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.descriptors.ITernModuleDescriptorManager;
+import tern.eclipse.ide.ui.utils.LineOfOffsetProvider;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -50,20 +52,9 @@ public class TernUIPlugin extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+		// Initialize line offset provider which uses IDocument#getLineOfOffset.
+		FileUtils.setProvider(LineOfOffsetProvider.getInstance());
 		plugin = this;
-
-		/*
-		 * Display.getDefault().asyncExec(new Runnable() {
-		 * 
-		 * public void run() { try { console = new TernConsole(); /* if
-		 * (prefStoreHelper.isOpenIvyConsoleOnStartup()) {
-		 * IvyConsoleFactory.showConsole(); }
-		 */
-		/*
-		 * } catch (RuntimeException e) { // Don't let the console bring down
-		 * the IvyDE UI // logError("Errors occurred starting the Ivy console",
-		 * e); } } });
-		 */
 	}
 
 	/*

@@ -32,13 +32,21 @@ public interface ITernLintCollector extends ITernResultsCollector {
 	 * Add message.
 	 * 
 	 * @param message
+	 *            the description of the message.
 	 * @param start
+	 *            offset.
 	 * @param end
+	 *            offset.
+	 * @param lineNumber
+	 *            the line number and null if the linter cannot support this
+	 *            feature.
 	 * @param severity
+	 *            the severity of the message.
 	 * @param file
+	 *            the owner file name.
 	 */
-	void addMessage(String message, Long start, Long end, String severity,
-			String file);
+	void addMessage(String message, Long start, Long end, Long lineNumber,
+			String severity, String file);
 
 	/**
 	 * This method is call when lint end for the given file after calling the

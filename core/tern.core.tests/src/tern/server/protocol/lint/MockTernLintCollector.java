@@ -20,7 +20,7 @@ public class MockTernLintCollector implements ITernLintCollector {
 	}
 
 	@Override
-	public void addMessage(String message, Long start, Long end,
+	public void addMessage(String message, Long start, Long end, Long lineNumber,
 			String severity, String file) {
 
 	}

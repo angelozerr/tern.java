@@ -22,6 +22,12 @@ import com.eclipsesource.json.JsonValue;
 public class TernLintResultProcessor implements
 		ITernResultProcessor<ITernLintCollector> {
 
+	private static final String FILE_FIELD = "file";
+	private static final String LINE_NUMBER_FIELD = "lineNumber";
+	private static final String TO_FIELD = "to";
+	private static final String FROM_FIELD = "from";
+	private static final String SEVERITY_FIELD = "severity";
+	private static final String MESSAGE_FIELD = "message";
 	public static final TernLintResultProcessor INSTANCE = new TernLintResultProcessor();
 
 	@Override
@@ -40,7 +46,7 @@ public class TernLintResultProcessor implements
 				String file = null;
 				for (JsonValue files : messages) {
 					filesObject = (JsonObject) files;
-					file = jsonObjectHelper.getText(filesObject.get("file")); //$NON-NLS-1$
+					file = jsonObjectHelper.getText(filesObject.get(FILE_FIELD)); //$NON-NLS-1$
 
 					try {
 						collector.startLint(file);
@@ -77,12 +83,13 @@ public class TernLintResultProcessor implements
 		for (JsonValue value : messages) {
 			messageObject = (JsonObject) value;
 			message = query.formatMessage(
-					jsonObjectHelper.getText(messageObject.get("message"))); //$NON-NLS-1$
-			severity = jsonObjectHelper.getText(messageObject.get("severity")); //$NON-NLS-1$
-			Long startCh = jsonObjectHelper.getCh(messageObject, "from"); //$NON-NLS-1$
-			Long endCh = jsonObjectHelper.getCh(messageObject, "to"); //$NON-NLS-1$
-			file = jsonObjectHelper.getText(messageObject.get("file")); //$NON-NLS-1$
-			collector.addMessage(message, startCh, endCh, severity, file);
+					jsonObjectHelper.getText(messageObject.get(MESSAGE_FIELD))); //$NON-NLS-1$
+			severity = jsonObjectHelper.getText(messageObject.get(SEVERITY_FIELD)); //$NON-NLS-1$
+			Long startCh = jsonObjectHelper.getCh(messageObject, FROM_FIELD); //$NON-NLS-1$
+			Long endCh = jsonObjectHelper.getCh(messageObject, TO_FIELD); //$NON-NLS-1$
+			Long line = jsonObjectHelper.getCh(messageObject, LINE_NUMBER_FIELD); //$NON-NLS-1$
+			file = jsonObjectHelper.getText(messageObject.get(FILE_FIELD)); //$NON-NLS-1$
+			collector.addMessage(message, startCh, endCh, line, severity, file);
 		}
 	}
 

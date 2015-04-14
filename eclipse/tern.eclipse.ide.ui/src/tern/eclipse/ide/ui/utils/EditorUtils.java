@@ -10,8 +10,12 @@
  */
 package tern.eclipse.ide.ui.utils;
 
+import java.io.File;
+
 import org.eclipse.core.filebuffers.FileBuffers;
+import org.eclipse.core.filebuffers.ITextFileBuffer;
 import org.eclipse.core.filebuffers.ITextFileBufferManager;
+import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
@@ -19,6 +23,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -29,6 +35,7 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
 
 /**
@@ -118,12 +125,55 @@ public class EditorUtils {
 		return viewer;
 	}
 
+	/**
+	 * Returns the file from the given {@link IDocument}.
+	 */
 	public static IFile getFile(IDocument document) {
 		ITextFileBufferManager bufferManager = FileBuffers
 				.getTextFileBufferManager(); // get the buffer manager
 		IPath location = bufferManager.getTextFileBuffer(document)
 				.getLocation();
 		return ResourcesPlugin.getWorkspace().getRoot().getFile(location);
+	}
+
+	/**
+	 * Returns the {@link IDocument} from the given file and null if it's not
+	 * possible.
+	 */
+	public static IDocument getDocument(IFile file) {
+		ITextFileBufferManager manager = FileBuffers.getTextFileBufferManager();
+		IPath location = file.getLocation();
+		boolean connected = false;
+		try {
+			ITextFileBuffer buffer = manager.getTextFileBuffer(location,
+					LocationKind.NORMALIZE);
+			if (buffer == null) {
+				// no existing file buffer..create one
+				manager.connect(location, LocationKind.NORMALIZE,
+						new NullProgressMonitor());
+				connected = true;
+				buffer = manager.getTextFileBuffer(location,
+						LocationKind.NORMALIZE);
+				if (buffer == null) {
+					return null;
+				}
+			}
+
+			return buffer.getDocument();
+		} catch (CoreException ce) {
+			Trace.trace(Trace.SEVERE, "Error while get document from file", ce);
+			return null;
+		} finally {
+			if (connected) {
+				try {
+					manager.disconnect(location, LocationKind.NORMALIZE,
+							new NullProgressMonitor());
+				} catch (CoreException e) {
+					Trace.trace(Trace.SEVERE,
+							"Error while get document from file", e);
+				}
+			}
+		}
 	}
 
 }

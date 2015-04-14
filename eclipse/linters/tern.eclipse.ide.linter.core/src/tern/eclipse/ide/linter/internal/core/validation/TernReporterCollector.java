@@ -18,6 +18,7 @@ import org.eclipse.wst.validation.internal.provisional.core.IReporter;
 import org.eclipse.wst.validation.internal.provisional.core.IValidator;
 
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.utils.FileUtils;
 import tern.server.protocol.lint.ITernLintCollector;
 
 /**
@@ -27,6 +28,8 @@ import tern.server.protocol.lint.ITernLintCollector;
  */
 public class TernReporterCollector implements ITernLintCollector {
 
+	private static final String CHAR_END = "charEnd";
+	private static final String CHAR_START = "charStart";
 	private static final String WARNING_SEVERITY = "warning";
 	private final IIDETernProject ternProject;
 	private final IReporter reporter;
@@ -45,7 +48,7 @@ public class TernReporterCollector implements ITernLintCollector {
 	}
 
 	@Override
-	public void addMessage(String messageText, Long start, Long end,
+	public void addMessage(String messageText, Long start, Long end, Long line,
 			String severity, String file) {
 		IResource resource = (IResource) ternProject.getFile(file).getAdapter(
 				IFile.class);
@@ -53,7 +56,21 @@ public class TernReporterCollector implements ITernLintCollector {
 				messageText, resource);
 		message.setOffset(start.intValue());
 		message.setLength(end.intValue() - start.intValue());
+		message.setAttribute(CHAR_START, start.intValue());
+		message.setAttribute(CHAR_END, end.intValue());
+		Integer lineNumber = getLineNumber(line, start.intValue(), resource);
+		if (lineNumber != null) {
+			message.setLineNo(lineNumber);
+		}
 		reporter.addMessage(validator, message);
+	}
+
+	/**
+	 * Try to retrieve the line number.
+	 */
+	private Integer getLineNumber(Long line, int start, IResource resource) {
+		return line != null ? line.intValue() : FileUtils.getLineOfOffset(
+				start, (IFile) resource);
 	}
 
 	private int getSeverity(String severity) {
