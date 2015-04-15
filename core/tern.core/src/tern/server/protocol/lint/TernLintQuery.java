@@ -28,6 +28,7 @@ public class TernLintQuery extends TernQuery {
 
 	private static final String FULL_EXTENSION = "-full";
 	private static final String GROUP_BY_FILES_NAME = "groupByFiles";
+	private static final String LINE_NUMBER_NAME = "lineNumber";
 	private final ITernPlugin linter;
 	private boolean useLinterAsSuffix;
 
@@ -56,6 +57,14 @@ public class TernLintQuery extends TernQuery {
 
 	public boolean isGroupByFiles() {
 		return JsonHelper.getBoolean(this, GROUP_BY_FILES_NAME, false);
+	}
+
+	public void setLineNumber(boolean lineNumber) {
+		super.set(LINE_NUMBER_NAME, lineNumber);
+	}
+
+	public boolean isLineNumber() {
+		return JsonHelper.getBoolean(this, LINE_NUMBER_NAME, false);
 	}
 
 	/**

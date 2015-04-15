@@ -53,8 +53,8 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 			IIDETernProject ternProject = context.getTernProject();
 			if (ternProject.isInScope(resource)) {
 				IReporter reporter = result.getReporter(monitor);
-				TernValidationHelper.validate(resource, ternProject, reporter,
-						this);
+				TernValidationHelper.validate(resource, ternProject, true,
+						reporter, this);
 			}
 		}
 		return result;

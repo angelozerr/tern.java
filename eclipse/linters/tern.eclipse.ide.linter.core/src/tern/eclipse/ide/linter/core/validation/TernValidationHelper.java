@@ -15,24 +15,28 @@ import tern.server.protocol.lint.TernLintQuery;
 public class TernValidationHelper {
 
 	public static void validate(IResource resource,
-			IIDETernProject ternProject, IReporter reporter,
-			IValidator validator) {
+			IIDETernProject ternProject, boolean needsLineNumber,
+			IReporter reporter, IValidator validator) {
 		ITernPlugin[] lintPlugins = ternProject.getLinters();
 		if (lintPlugins.length > 0) {
 			ITernFile ternFile = ternProject.getFile(resource);
-			validate(ternFile, ternProject, reporter, validator);
+			validate(ternFile, ternProject, needsLineNumber, reporter,
+					validator);
 		}
 	}
 
 	public static void validate(ITernFile ternFile,
-			IIDETernProject ternProject, IReporter reporter,
-			IValidator validator) {
+			IIDETernProject ternProject, boolean needsLineNumber,
+			IReporter reporter, IValidator validator) {
 		ITernPlugin[] lintPlugins = ternProject.getLinters();
 		try {
 			ITernLintCollector collector = new TernReporterCollector(
 					ternProject, reporter, validator);
 			for (ITernPlugin linter : lintPlugins) {
 				TernLintQuery query = TernLintQuery.create(linter, false);
+				if (needsLineNumber) {
+					query.setLineNumber(true);
+				}
 				ternProject.request(query, ternFile, collector);
 			}
 		} catch (Exception e) {
