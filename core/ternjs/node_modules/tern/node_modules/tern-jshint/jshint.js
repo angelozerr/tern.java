@@ -101,6 +101,7 @@
 	    from: tern.outputPos(query, file, from),
 	    to: tern.outputPos(query, file, to)	      
 	  }
+  	  if (query.lineNumber) error.lineNumber = message.line;
 	  if (!query.groupByFiles) error.file = file.name;
 	  return error;
     }
