@@ -3,7 +3,7 @@
   <parent>
     <groupId>fr.opensagres.js</groupId>
     <artifactId>update-site</artifactId>
-    <version>0.9.0-SNAPSHOT</version>
+    <version>0.9.0</version>
   </parent>
   <artifactId>tern-linters-feature</artifactId>
   <packaging>eclipse-feature</packaging>

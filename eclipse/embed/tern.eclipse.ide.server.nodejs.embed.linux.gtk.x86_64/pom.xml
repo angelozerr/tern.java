@@ -3,7 +3,7 @@
   <parent>
     <groupId>fr.opensagres.js</groupId>
     <artifactId>embed</artifactId>
-    <version>0.9.0-SNAPSHOT</version>
+    <version>0.9.0</version>
   </parent>
   <artifactId>tern.eclipse.ide.server.nodejs.embed.linux.gtk.x86_64</artifactId>
   <packaging>eclipse-plugin</packaging>
