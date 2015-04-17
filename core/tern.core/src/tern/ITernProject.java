@@ -166,7 +166,7 @@ public interface ITernProject extends ITernAdaptable {
 	 * @return list of tern lint plugins.
 	 */
 	ITernPlugin[] getLinters();
-	
+
 	// ---------------- Tern save
 
 	/**
@@ -281,4 +281,11 @@ public interface ITernProject extends ITernAdaptable {
 	 * @return the tern repository used by the tern project.
 	 */
 	ITernRepository getRepository();
+
+	/**
+	 * Set the tern repository used by the tern project.
+	 * 
+	 * @param repository
+	 */
+	void setRepository(ITernRepository repository);
 }

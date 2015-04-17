@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.server.j2v8;singleton:=true
+Bundle-Version: 0.10.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: tern.core
+Bundle-ClassPath: .
+Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)",
+ com.eclipsesource.v8,
+ com.eclipsesource.v8.utils,
+ org.osgi.framework
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: tern.server.j2v8.Activator
+Export-Package: tern.server.j2v8

@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Vendor: %Bundle-Vendor.0
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: j2v8_win32_x86_64
+Bundle-Version: 1.7.4.qualifier
+Export-Package: com.eclipsesource.v8,
+ com.eclipsesource.v8.utils
+Bundle-ClassPath: lib/j2v8_win32_x86_64-2.2.0.jar

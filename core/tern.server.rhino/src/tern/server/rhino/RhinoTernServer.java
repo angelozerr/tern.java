@@ -22,7 +22,6 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.UniqueTag;
 
-import tern.ITernFileSynchronizer;
 import tern.ITernProject;
 import tern.TernException;
 import tern.server.AbstractTernServer;

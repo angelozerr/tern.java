@@ -88,6 +88,7 @@ public class TernProject extends JsonObject implements ITernProject {
 
 	private final File projectDir;
 	private File ternProjectFile;
+	private ITernRepository repository;
 	
 	private ITernPlugin[] linters;
 
@@ -596,9 +597,14 @@ public class TernProject extends JsonObject implements ITernProject {
 
 	@Override
 	public ITernRepository getRepository() {
-		return null;
+		return repository;
 	}
 
+	@Override
+	public void setRepository(ITernRepository repository) {
+		this.repository = repository;
+	}
+	
 	public boolean isDirty() {
 		return !toString().equals(lastTernProjectFileContent);
 	}
