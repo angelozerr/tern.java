@@ -1,4 +1,46 @@
 tern.server.j2v8
 =========
 
-This project is a tern server implementation based on [J2V8](https://github.com/eclipsesource/J2V8).
+[tern.server.j2v8](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.j2v8) is a tern server implementation based on [J2V8](https://github.com/eclipsesource/J2V8).
+
+# How to use it?
+
+## Prerequisite
+
+ * **J2V8 jar** : as [J2V8](https://github.com/eclipsesource/J2V8) depends on the OS, you need to use the well J2V8 according your OS. See [Bundled Native Libraries](http://eclipsesource.com/blogs/2015/02/25/announcing-j2v8-2-0/) article. Note it exists now **j2v8_win32_x86_64.jar** for Windows 64 bits.
+
+ * **OSGify J2V8** : as J2V8 is not today an OSGi bundle (see [issue 37 of J2V8](https://github.com/eclipsesource/J2V8/issues/37)), you need to create yourself an OSGi bundle. I have done that at hand in [thirdparties/j2v8](https://github.com/angelozerr/tern.java/tree/master/thirdparties/j2v8/) (just for my need). The MANIFEST.MF **export the package** : 
+ ```
+ Export-Package: com.eclipsesource.v8,
+ com.eclipsesource.v8.utils
+ ```
+ 
+ and **Eclipse-PlatformFilter** (which will be usefull for update site (see [issue 36 of J2V8](https://github.com/eclipsesource/J2V8/issues/36):
+ 
+ ```
+ Eclipse-PlatformFilter: (& (osgi.ws=win32)(osgi.os=win32)(osgi.arch=x86_64))
+ ```
+ 
+  * have Java7 installed, because J2V8 depends on Java7. Hope it will change that. See [issue 38 of J2V8](https://github.com/eclipsesource/J2V8/issues/38)
+ 
+## Sample with SWT
+ 
+[tern.eclipse.swt.samples](https://github.com/angelozerr/tern.java/tree/master/eclipse/tern.eclipse.swt.samples) provides a sample with a simple SWT Text & the J2V8 tern server implementation. To use it : 
+
+* import the following projects in your workspace :
+ 
+ * the J2V8 bundle according your OS. If you have Windows 64 bits you can use https://github.com/angelozerr/tern.java/tree/master/thirdparties/j2v8/j2v8_win32_x86_64
+ * minimal-json. You can find it at https://github.com/angelozerr/tern.java/tree/master/thirdparties/minimal-json
+ * tern.core
+ * tern.eclipse
+ * tern.eclipse.swt.samples
+ * tern.server.j2v8
+ * ternjs
+ 
+* Run the main https://github.com/angelozerr/tern.java/blob/master/eclipse/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/j2v8/J2V8TernEditor.java
+
+You can play with Ctrl+Space to open tern completion :
+
+![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
+ 
+
