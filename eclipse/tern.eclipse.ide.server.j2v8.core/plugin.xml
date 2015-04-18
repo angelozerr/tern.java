@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<!-- Tern J2V8 server type -->
+	<extension
+		      point="tern.eclipse.ide.core.ternServerTypes">
+     <serverType
+           id="tern.eclipse.ide.server.j2v8"
+           name="%TernNodeJS.name"
+           factory="tern.eclipse.ide.server.j2v8.internal.core.TernJ2V8ServerFactory">
+     </serverType>
+	</extension>
+	
+	<!-- Preferences initialization -->
+	<extension
+		point="org.eclipse.core.runtime.preferences">
+		<initializer
+			class="tern.eclipse.ide.server.j2v8.internal.core.preferences.TernNodejsCorePreferenceInitializer" />
+	</extension>
+		 	
+</plugin>
