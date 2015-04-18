@@ -7,9 +7,9 @@ tern.server.j2v8
 
 ## Prerequisite
 
- * **J2V8 jar** : as [J2V8](https://github.com/eclipsesource/J2V8) depends on the OS, you need to use the well J2V8 according your OS. See [Bundled Native Libraries](http://eclipsesource.com/blogs/2015/02/25/announcing-j2v8-2-0/) article. Note it exists now **j2v8_win32_x86_64.jar** for Windows 64 bits.
+* **J2V8 jar** : as [J2V8](https://github.com/eclipsesource/J2V8) depends on the OS, you need to use the well J2V8 according your OS. See [Bundled Native Libraries](http://eclipsesource.com/blogs/2015/02/25/announcing-j2v8-2-0/) article. Note it exists now **j2v8_win32_x86_64.jar** for Windows 64 bits.
 
- * **OSGify J2V8** : as J2V8 is not today an OSGi bundle (see [issue 37 of J2V8](https://github.com/eclipsesource/J2V8/issues/37)), you need to create yourself an OSGi bundle. I have done that at hand in [thirdparties/j2v8](https://github.com/angelozerr/tern.java/tree/master/thirdparties/j2v8/) (just for my need). The MANIFEST.MF **export the package** : 
+* **OSGify J2V8** : as J2V8 is not today an OSGi bundle (see [issue 37 of J2V8](https://github.com/eclipsesource/J2V8/issues/37)), you need to create yourself an OSGi bundle. I have done that at hand in [thirdparties/j2v8](https://github.com/angelozerr/tern.java/tree/master/thirdparties/j2v8/) (just for my need). The MANIFEST.MF **export the package** : 
  ```
  Export-Package: com.eclipsesource.v8,
  com.eclipsesource.v8.utils
@@ -21,7 +21,7 @@ tern.server.j2v8
  Eclipse-PlatformFilter: (& (osgi.ws=win32)(osgi.os=win32)(osgi.arch=x86_64))
  ```
  
-  * have Java7 installed, because J2V8 depends on Java7. Hope it will change that. See [issue 38 of J2V8](https://github.com/eclipsesource/J2V8/issues/38)
+* have Java7 installed, because J2V8 depends on Java7. Hope it will change that. See [issue 38 of J2V8](https://github.com/eclipsesource/J2V8/issues/38)
  
 ## Sample with SWT
  
@@ -44,3 +44,24 @@ You can play with Ctrl+Space to open tern completion :
 ![SWT Tern Editor](https://github.com/angelozerr/tern.java/wiki/images/SWTTernEditor.png)
  
 
+# J2V8 Integration
+
+* no need to implement require AMD function, because ternjs is able to execute without node.js inside Web Browser. The J2V8 tern server implementation works like if ternjs was executed in a Web Browser.
+ 
+* don't use V80bject because we need every time release it. I have just use String (which follows JSON format) for tern request/response.   
+
+* implement basic console.log. I think J2V8 should provide that.
+ 
+# Limitation
+
+* not tested, but is it working if there are several J2V8 tern server (several v8 instances)? Because in Eclipse IDE, there are a tern server per Eclipse project.
+* some tern plugin requires **require** node function to support their features like : 
+
+ * the **node** tern plugin which uses require to retrieve list of node module by completion inside require.
+* tern-closure which works only in node.js context
+* I will implement soon angular completion for templateUrl which will use require('fs') to retrieve list of HTML files.
+
+# TODO
+
+* clean code!
+* integrate the thern server J2v8 inside Eclipse IDE 
