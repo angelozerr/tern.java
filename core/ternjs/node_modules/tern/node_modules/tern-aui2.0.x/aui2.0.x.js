@@ -22,27 +22,42 @@
       "fillMode": {
        "!type": "number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_fillMode",
-       "!doc": "The mode in which the AutoComplete should operate. Can be one of these:\nINSERT - value 0 or OVERWRITE - value 1. In case of INSERT mode, when\nEditor adds a suggestion, it will be added next to the matched\nexpression. In case of OVERWRITE mode, the suggestion will overwrite the\nmatched expression."
+       "!doc": "The mode in which the AutoComplete should operate. Can be one of these:\nINSERT - value 0 or OVERWRITE - value 1. In case of INSERT mode, when\nEditor adds a suggestion, it will be added next to the matched\nexpression. In case of OVERWRITE mode, the suggestion will overwrite the\nmatched expression.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-base"
+       }
       },
       "filters": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_filters",
-       "!doc": "Provides an array of filter functions which will filter the results. By\ndefault there is one function which provides phrase match filtering."
+       "!doc": "Provides an array of filter functions which will filter the results. By\ndefault there is one function which provides phrase match filtering.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-base"
+       }
       },
       "processor": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_processor",
-       "!doc": "The default processor which will be used to process matches."
+       "!doc": "The default processor which will be used to process matches.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-base"
+       }
       },
       "showListKey": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_showListKey",
-       "!doc": "The keyboard combination which should be used to show the list with found\nresults."
+       "!doc": "The keyboard combination which should be used to show the list with found\nresults.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-base"
+       }
       },
       "sorters": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#attribute_sorters",
-       "!doc": "Provides an array of sorter functions which will sort the results. By\ndefault there is one function which sorts the results in ascending order."
+       "!doc": "Provides an array of sorter functions which will sort the results. By\ndefault there is one function which sorts the results in ascending order.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-base"
+       }
       }
      },
      "AutoCompleteFreemarkerConfig": {
@@ -50,27 +65,42 @@
       "directives": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_directives",
-       "!doc": "Contains the list of supported directives according to Freemarker\nspecification."
+       "!doc": "Contains the list of supported directives according to Freemarker\nspecification.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-freemarker"
+       }
       },
       "directivesMatcher": {
        "!type": "?",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_directivesMatcher",
-       "!doc": "Contains the regular expression which checks for directive\npresence."
+       "!doc": "Contains the regular expression which checks for directive\npresence.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-freemarker"
+       }
       },
       "host": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_host",
-       "!doc": "The Editor in which the current instance is plugged."
+       "!doc": "The Editor in which the current instance is plugged.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-freemarker"
+       }
       },
       "variables": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_variables",
-       "!doc": "Contains the supported variables."
+       "!doc": "Contains the supported variables.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-freemarker"
+       }
       },
       "variablesMatcher": {
        "!type": "?",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#attribute_variablesMatcher",
-       "!doc": "Contains the regular expression which will check for variable\nmatch."
+       "!doc": "Contains the regular expression which will check for variable\nmatch.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-freemarker"
+       }
       }
      },
      "AutoCompleteListConfig": {
@@ -78,32 +108,50 @@
       "host": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_host",
-       "!doc": "The Editor in which the current instance is plugged."
+       "!doc": "The Editor in which the current instance is plugged.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-list"
+       }
       },
       "listNode": {
        "!type": "+node.Node",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_listNode",
-       "!doc": "A Node in which results will be shown."
+       "!doc": "A Node in which results will be shown.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-list"
+       }
       },
       "loadingMessage": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_loadingMessage",
-       "!doc": "A string, representing the loading message."
+       "!doc": "A string, representing the loading message.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-list"
+       }
       },
       "results": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_results",
-       "!doc": "Contains the current set of results in the list."
+       "!doc": "Contains the current set of results in the list.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-list"
+       }
       },
       "selectedEntry": {
        "!type": "?",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_selectedEntry",
-       "!doc": "Provides the currently selected entry."
+       "!doc": "Provides the currently selected entry.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-list"
+       }
       },
       "strings": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#attribute_strings",
-       "!doc": "Collection of strings used to label elements of the UI."
+       "!doc": "Collection of strings used to label elements of the UI.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-list"
+       }
       }
      },
      "TemplateProcessorConfig": {
@@ -111,17 +159,26 @@
       "directives": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_directives",
-       "!doc": "Contains an array of all possible directives for the\ncorresponding language."
+       "!doc": "Contains an array of all possible directives for the\ncorresponding language.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-templateprocessor"
+       }
       },
       "host": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_host",
-       "!doc": "The Editor in which the current instance is plugged."
+       "!doc": "The Editor in which the current instance is plugged.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-templateprocessor"
+       }
       },
       "variables": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#attribute_variables",
-       "!doc": "Contains the supported variables for the corresponding language."
+       "!doc": "Contains the supported variables for the corresponding language.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-templateprocessor"
+       }
       }
      },
      "AutoCompleteVelocityConfig": {
@@ -129,27 +186,42 @@
       "directives": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_directives",
-       "!doc": "Contains the list of supported directives according to Velocity\nspecification."
+       "!doc": "Contains the list of supported directives according to Velocity\nspecification.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-velocity"
+       }
       },
       "directivesMatcher": {
        "!type": "?",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_directivesMatcher",
-       "!doc": "Contains the regular expression which checks for directive."
+       "!doc": "Contains the regular expression which checks for directive.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-velocity"
+       }
       },
       "host": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_host",
-       "!doc": "The Editor in which the current instance is plugged."
+       "!doc": "The Editor in which the current instance is plugged.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-velocity"
+       }
       },
       "variables": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_variables",
-       "!doc": "Contains the supported variables."
+       "!doc": "Contains the supported variables.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-velocity"
+       }
       },
       "variablesMatcher": {
        "!type": "?",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#attribute_variablesMatcher",
-       "!doc": "Contains the regular expression which will check for variable\nmatch."
+       "!doc": "Contains the regular expression which will check for variable\nmatch.",
+       "!data": {
+        "submodule": "aui-ace-autocomplete-velocity"
+       }
       }
      }
     },
@@ -423,69 +495,108 @@
      "items": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#attribute_items",
-      "!doc": "Colors available to the `ColorPalette`."
+      "!doc": "Colors available to the `ColorPalette`.",
+      "!data": {
+       "submodule": "aui-color-palette"
+      }
      }
     },
     "ColorPickerBaseConfig": {
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_bodyContent",
-      "!doc": "The content of body."
+      "!doc": "The content of body.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "color": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_color",
-      "!doc": "Currently selected color."
+      "!doc": "Currently selected color.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "colorPalette": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_colorPalette",
-      "!doc": "Default colors available to the color palette."
+      "!doc": "Default colors available to the color palette.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "currentTrigger": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_currentTrigger",
-      "!doc": "Current `trigger` node."
+      "!doc": "Current `trigger` node.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "defaultColor": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_defaultColor",
-      "!doc": "Provides the default color used for the `recentColors` palette."
+      "!doc": "Provides the default color used for the `recentColors` palette.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "hsvPalette": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_hsvPalette",
-      "!doc": "`HSVPalette` used for selecting custom colors not present in\n`defualtColors`."
+      "!doc": "`HSVPalette` used for selecting custom colors not present in\n`defualtColors`.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "recentColors": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_recentColors",
-      "!doc": "Colors that have been selected recently from the `HSVPalette`."
+      "!doc": "Colors that have been selected recently from the `HSVPalette`.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "renderColorPalette": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_renderColorPalette",
-      "!doc": "Determines if the color palette is rendered on load."
+      "!doc": "Determines if the color palette is rendered on load.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "renderHSVPalette": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_renderHSVPalette",
-      "!doc": "Determines if the `HSVPalette` is rendered on load."
+      "!doc": "Determines if the `HSVPalette` is rendered on load.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "trigger": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_trigger",
-      "!doc": "Trigger node that opens the color palette."
+      "!doc": "Trigger node that opens the color palette.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      },
      "triggerEvent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#attribute_triggerEvent",
-      "!doc": "Trigger event that fires on `trigger` click."
+      "!doc": "Trigger event that fires on `trigger` click.",
+      "!data": {
+       "submodule": "aui-color-picker-base"
+      }
      }
     },
     "ColorPickerPopoverConfig": {
@@ -493,12 +604,18 @@
      "align": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#attribute_align",
-      "!doc": "The alignment configuration for `ColorPickerPopover`."
+      "!doc": "The alignment configuration for `ColorPickerPopover`.",
+      "!data": {
+       "submodule": "aui-color-picker-popover"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#attribute_visible",
-      "!doc": "Determines if `ColorPickerPopover` is visible or not."
+      "!doc": "Determines if `ColorPickerPopover` is visible or not.",
+      "!data": {
+       "submodule": "aui-color-picker-popover"
+      }
      }
     },
     "HSVPaletteConfig": {
@@ -506,22 +623,34 @@
      "controls": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_controls",
-      "!doc": "Determines if HSVA and RGB input `controls` are visible."
+      "!doc": "Determines if HSVA and RGB input `controls` are visible.",
+      "!data": {
+       "submodule": "aui-hsv-palette"
+      }
      },
      "fieldValidator": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_fieldValidator",
-      "!doc": "Collection of regular expressions used to validate field values."
+      "!doc": "Collection of regular expressions used to validate field values.",
+      "!data": {
+       "submodule": "aui-hsv-palette"
+      }
      },
      "selected": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_selected",
-      "!doc": "Currently `selected` color value."
+      "!doc": "Currently `selected` color value.",
+      "!data": {
+       "submodule": "aui-hsv-palette"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-hsv-palette"
+      }
      }
     },
     "HSVAPaletteModalConfig": {
@@ -529,12 +658,18 @@
      "hsv": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#attribute_hsv",
-      "!doc": "Configuration options for the `HSVPalette`."
+      "!doc": "Configuration options for the `HSVPalette`.",
+      "!data": {
+       "submodule": "aui-hsv-palette-modal"
+      }
      },
      "selected": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#attribute_selected",
-      "!doc": "Currently `selected` color value."
+      "!doc": "Currently `selected` color value.",
+      "!data": {
+       "submodule": "aui-hsv-palette-modal"
+      }
      }
     },
     "ComponentConfig": {
@@ -560,7 +695,10 @@
       "editEvent": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#attribute_editEvent",
-       "!doc": "TODO. Wanna help? Please send a Pull Request."
+       "!doc": "TODO. Wanna help? Please send a Pull Request.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      }
     },
@@ -569,72 +707,114 @@
      "editable": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_editable",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "elementName": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_elementName",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "footerContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_footerContent",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "hideOnSave": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_hideOnSave",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "inputFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_inputFormatter",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "outputFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_outputFormatter",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "showToolbar": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_showToolbar",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "tabIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_tabIndex",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "toolbar": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_toolbar",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "unescapeValue": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_unescapeValue",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "validator": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_validator",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "value": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_value",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#attribute_visible",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      }
     },
     "BaseOptionsCellEditorConfig": {
@@ -642,27 +822,42 @@
      "inputFormatter": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_inputFormatter",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "options": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_options",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "outputFormatter": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_outputFormatter",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "selectedAttrName": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_selectedAttrName",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      }
     },
     "DropDownCellEditorConfig": {
@@ -670,7 +865,10 @@
      "multiple": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#attribute_multiple",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      }
     },
     "CheckboxCellEditorConfig": {
@@ -678,7 +876,10 @@
      "selectedAttrName": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#attribute_selectedAttrName",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      }
     },
     "DateCellEditorConfig": {
@@ -686,27 +887,42 @@
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_bodyContent",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "calendar": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_calendar",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "dateFormat": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_dateFormat",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "inputFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_inputFormatter",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      },
      "outputFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#attribute_outputFormatter",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-edit"
+      }
      }
     },
     "DataTableHighlightConfig": {
@@ -714,32 +930,50 @@
      "activeBorderWidth": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_activeBorderWidth",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-highlight"
+      }
      },
      "overlayActiveNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_overlayActiveNode",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-highlight"
+      }
      },
      "overlayNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_overlayNode",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-highlight"
+      }
      },
      "highlightRange": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_highlightRange",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-highlight"
+      }
      },
      "rangeBorderWidth": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_rangeBorderWidth",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-highlight"
+      }
      },
      "type": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#attribute_type",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-highlight"
+      }
      }
     },
     "PropertyListConfig": {
@@ -747,120 +981,186 @@
      "columns": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_columns",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-property-list"
+      }
      },
      "scrollable": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_scrollable",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-property-list"
+      }
      },
      "editEvent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_editEvent",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-property-list"
+      }
      },
      "width": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_width",
-      "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nDataTable scroll breaks when width value is a number\nSee http://yuilibrary.com/projects/yui3/ticket/2532600"
+      "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nDataTable scroll breaks when width value is a number\nSee http://yuilibrary.com/projects/yui3/ticket/2532600",
+      "!data": {
+       "submodule": "aui-datatable-property-list"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#attribute_strings",
-      "!doc": "Colection of strings used to label elements of the UI."
+      "!doc": "Colection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-datatable-property-list"
+      }
      }
     },
     "DataTableSelectionConfig": {
      "activeCell": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeCell",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-selection"
+      }
      },
      "activeCoord": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeCoord",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-selection"
+      }
      },
      "activeRow": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_activeRow",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-selection"
+      }
      },
      "selection": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_selection",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-selection"
+      }
      },
      "tabIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#attribute_tabIndex",
-      "!doc": "TODO. Wanna help? Please send a Pull Request."
+      "!doc": "TODO. Wanna help? Please send a Pull Request.",
+      "!data": {
+       "submodule": "aui-datatable-selection"
+      }
      }
     },
     "DatePickerDelegateConfig": {
      "activeInput": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_activeInput",
-      "!doc": "The active input element that holds the calendar instance."
+      "!doc": "The active input element that holds the calendar instance.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      },
      "container": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_container",
-      "!doc": "Contains an element."
+      "!doc": "Contains an element.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      },
      "dateSeparator": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_dateSeparator",
-      "!doc": "Character that separate dates."
+      "!doc": "Character that separate dates.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      },
      "mask": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_mask",
-      "!doc": "Defines the date format."
+      "!doc": "Defines the date format.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      },
      "trigger": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_trigger",
-      "!doc": "Stores a trigger."
+      "!doc": "Stores a trigger.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      },
      "valueExtractor": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_valueExtractor",
-      "!doc": "Extracts a value from a function."
+      "!doc": "Extracts a value from a function.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      },
      "valueFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#attribute_valueFormatter",
-      "!doc": "Formats a value from a function."
+      "!doc": "Formats a value from a function.",
+      "!data": {
+       "submodule": "aui-datepicker-delegate"
+      }
      }
     },
     "DatePickerNativeBaseConfig": {
      "nativeMask": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#attribute_nativeMask",
-      "!doc": "Defines the native date mask."
+      "!doc": "Defines the native date mask.",
+      "!data": {
+       "submodule": "aui-datepicker-native"
+      }
      },
      "nativeType": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#attribute_nativeType",
-      "!doc": "Defines the type attribute in an HTML element."
+      "!doc": "Defines the type attribute in an HTML element.",
+      "!data": {
+       "submodule": "aui-datepicker-native"
+      }
      }
     },
     "DatePickerPopoverConfig": {
      "autoHide": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_autoHide",
-      "!doc": "Sets the initial visibility."
+      "!doc": "Sets the initial visibility.",
+      "!data": {
+       "submodule": "aui-datepicker-popover"
+      }
      },
      "popover": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_popover",
-      "!doc": "Stores the configuration of the `Popover` instance."
+      "!doc": "Stores the configuration of the `Popover` instance.",
+      "!data": {
+       "submodule": "aui-datepicker-popover"
+      }
      },
      "popoverCssClass": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#attribute_popoverCssClass",
-      "!doc": "Defines the CSS classname of the `Popover`."
+      "!doc": "Defines the CSS classname of the `Popover`.",
+      "!data": {
+       "submodule": "aui-datepicker-popover"
+      }
      }
     },
     "DatePickerBaseConfig": {
@@ -885,44 +1185,68 @@
      "draggable": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_draggable",
-      "!doc": "Defines if the field is draggable or not."
+      "!doc": "Defines if the field is draggable or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "label": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_label",
-      "!doc": "The descriptor of a field."
+      "!doc": "The descriptor of a field.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "iconClass": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_iconClass",
-      "!doc": "The CSS class name used in the icon."
+      "!doc": "The CSS class name used in the icon.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "id": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_id",
-      "!doc": "The identifier of a field."
+      "!doc": "The identifier of a field.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "node": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_node",
-      "!doc": "The node used in a field."
+      "!doc": "The node used in a field.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#attribute_type",
-      "!doc": "The type of a field."
+      "!doc": "The type of a field.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      }
     },
     "FieldSupportConfig": {
      "fields": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#attribute_fields",
-      "!doc": "The collection of fields."
+      "!doc": "The collection of fields.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "maxFields": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#attribute_maxFields",
-      "!doc": "Defines the maximum number of fields."
+      "!doc": "Defines the maximum number of fields.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      }
     },
     "DiagramBuilderBaseConfig": {
@@ -930,62 +1254,98 @@
      "availableFields": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_availableFields",
-      "!doc": "List of available fields."
+      "!doc": "List of available fields.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "availableFieldsDragConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_availableFieldsDragConfig",
-      "!doc": "The configuration object for draggable available fields."
+      "!doc": "The configuration object for draggable available fields.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "canvas": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_canvas",
-      "!doc": "A node created using the `CANVAS_TEMPLATE` template."
+      "!doc": "A node created using the `CANVAS_TEMPLATE` template.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "dropConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_dropConfig",
-      "!doc": "The configuration object for drop container node."
+      "!doc": "The configuration object for drop container node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "contentContainer": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_contentContainer",
-      "!doc": "Host node for content created using the `CONTENT_CONTAINER_TEMPLATE`\ntemplate."
+      "!doc": "Host node for content created using the `CONTENT_CONTAINER_TEMPLATE`\ntemplate.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "dropContainer": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_dropContainer",
-      "!doc": "Host node for drop created using the `DROP_CONTAINER_TEMPLATE`\ntemplate."
+      "!doc": "Host node for drop created using the `DROP_CONTAINER_TEMPLATE`\ntemplate.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "fieldsContainer": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_fieldsContainer",
-      "!doc": "Host node for fields created using the `FIELDS_CONTAINER_TEMPLATE`\ntemplate."
+      "!doc": "Host node for fields created using the `FIELDS_CONTAINER_TEMPLATE`\ntemplate.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "propertyList": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_propertyList",
-      "!doc": "Stores an instance of `A.PropertyList`."
+      "!doc": "Stores an instance of `A.PropertyList`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "tabView": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_tabView",
-      "!doc": "Stores an instance of `A.TabView`."
+      "!doc": "Stores an instance of `A.TabView`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "toolbar": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_toolbar",
-      "!doc": "Stores an instance of `A.Toolbar`."
+      "!doc": "Stores an instance of `A.Toolbar`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      },
      "toolbarContainer": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#attribute_toolbarContainer",
-      "!doc": "Host node for toolbar created using the `TOOLBAR_CONTAINER_TEMPLATE`\ntemplate."
+      "!doc": "Host node for toolbar created using the `TOOLBAR_CONTAINER_TEMPLATE`\ntemplate.",
+      "!data": {
+       "submodule": "aui-diagram-builder-base"
+      }
      }
     },
     "ConnectorConfig": {
@@ -993,102 +1353,162 @@
      "coord": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_coord",
-      "!doc": "Converts a coordinate to X and Y positions."
+      "!doc": "Converts a coordinate to X and Y positions.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "arrowPoints": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_arrowPoints",
-      "!doc": "Arrow points from `A.PolygonUtil` instance."
+      "!doc": "Arrow points from `A.PolygonUtil` instance.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "builder": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_builder",
-      "!doc": "Stores an instance of `A.DiagramBuilder`."
+      "!doc": "Stores an instance of `A.DiagramBuilder`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "color": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_color",
-      "!doc": "The color used in the connector."
+      "!doc": "The color used in the connector.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "graphic": {
       "!type": "+graphics.Graphic",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_graphic",
-      "!doc": "Graphic used to represent the connector."
+      "!doc": "Graphic used to represent the connector.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "lazyDraw": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_lazyDraw",
-      "!doc": "Determine if the draw should be delayed or not."
+      "!doc": "Determine if the draw should be delayed or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_name",
-      "!doc": "The name of the connector."
+      "!doc": "The name of the connector.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "nodeName": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_nodeName",
-      "!doc": "The connector node name."
+      "!doc": "The connector node name.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "p1": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_p1",
-      "!doc": "Origin connector position."
+      "!doc": "Origin connector position.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "p2": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_p2",
-      "!doc": "Destination connector position."
+      "!doc": "Destination connector position.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "selected": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_selected",
-      "!doc": "Checks if a connector is selected or not."
+      "!doc": "Checks if a connector is selected or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "shape": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shape",
-      "!doc": "Graphic used to represent the connectors shape."
+      "!doc": "Graphic used to represent the connectors shape.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "shapeArrow": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrow",
-      "!doc": "Graphic used to represent the connectors shape arrow."
+      "!doc": "Graphic used to represent the connectors shape arrow.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "shapeArrowHover": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrowHover",
-      "!doc": "Collection of styles applied when mouse is over the shape arrow."
+      "!doc": "Collection of styles applied when mouse is over the shape arrow.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "shapeArrowSelected": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeArrowSelected",
-      "!doc": "Collection of styles applied when shape arrow is selected."
+      "!doc": "Collection of styles applied when shape arrow is selected.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "shapeHover": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeHover",
-      "!doc": "Collection of styles applied when mouse is over the shape."
+      "!doc": "Collection of styles applied when mouse is over the shape.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "shapeSelected": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_shapeSelected",
-      "!doc": "Collection of styles applied when shape is selected."
+      "!doc": "Collection of styles applied when shape is selected.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "showName": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_showName",
-      "!doc": "Sets the visibility of the connector name."
+      "!doc": "Sets the visibility of the connector name.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "transition": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_transition",
-      "!doc": "Stores the uid, source and target data from a connector."
+      "!doc": "Stores the uid, source and target data from a connector.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#attribute_visible",
-      "!doc": "Indicates whether or not the connector is visible."
+      "!doc": "Indicates whether or not the connector is visible.",
+      "!data": {
+       "submodule": "aui-diagram-builder-connector"
+      }
      }
     },
     "DiagramBuilderConfig": {
@@ -1096,37 +1516,58 @@
      "connector": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_connector",
-      "!doc": "Stores an instance of `A.Connector`."
+      "!doc": "Stores an instance of `A.Connector`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "fieldsDragConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_fieldsDragConfig",
-      "!doc": "Configuration object for draggable fields."
+      "!doc": "Configuration object for draggable fields.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "graphic": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_graphic",
-      "!doc": "Stores an instance of `A.Graphic`."
+      "!doc": "Stores an instance of `A.Graphic`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "highlightDropZones": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_highlightDropZones",
-      "!doc": "Checks if the drop zones should be highlighted or not."
+      "!doc": "Checks if the drop zones should be highlighted or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "showSuggestConnector": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_showSuggestConnector",
-      "!doc": "Checks if a connector suggestion is visible or not."
+      "!doc": "Checks if a connector suggestion is visible or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "suggestConnectorOverlay": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#attribute_suggestConnectorOverlay",
-      "!doc": "Stores an instance of `A.Overlay` used in the connector suggestion."
+      "!doc": "Stores an instance of `A.Overlay` used in the connector suggestion.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeConfig": {
@@ -1134,97 +1575,154 @@
      "builder": {
       "!type": "+DiagramBuilder",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_builder",
-      "!doc": "Stores an instance of `A.DiagramBuilderBase`."
+      "!doc": "Stores an instance of `A.DiagramBuilderBase`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "connectors": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_connectors",
-      "!doc": "A map of connectors."
+      "!doc": "A map of connectors.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "controlsToolbar": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_controlsToolbar",
-      "!doc": "A toolbar to represent controls."
+      "!doc": "A toolbar to represent controls.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "description": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_description",
-      "!doc": "The description of the node."
+      "!doc": "The description of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "graphic": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_graphic",
-      "!doc": "Stores an instance of `A.Graphic`."
+      "!doc": "Stores an instance of `A.Graphic`.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_height",
-      "!doc": "The height of the node."
+      "!doc": "The height of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "highlighted": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_highlighted",
-      "!doc": "Checks if a node is highlighted or not."
+      "!doc": "Checks if a node is highlighted or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_name",
-      "!doc": "The name of the node."
+      "!doc": "The name of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "required": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_required",
-      "!doc": "Checks if a node is required or not."
+      "!doc": "Checks if a node is required or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "selected": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_selected",
-      "!doc": "Checks if a node is selected or not."
+      "!doc": "Checks if a node is selected or not.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "shapeBoundary": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_shapeBoundary",
-      "!doc": "A graphic shape to represent a boundary."
+      "!doc": "A graphic shape to represent a boundary.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "highlightBoundaryStroke": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_highlightBoundaryStroke",
-      "!doc": "Represents a stroke to highlight a boundary."
+      "!doc": "Represents a stroke to highlight a boundary.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "shapeInvite": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_shapeInvite",
-      "!doc": "Configuration object to generate the shape invite graphic."
+      "!doc": "Configuration object to generate the shape invite graphic.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "tabIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_tabIndex",
-      "!doc": "Specify the tab order of elements."
+      "!doc": "Specify the tab order of elements.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "transitions": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_transitions",
-      "!doc": "Map of transitions that stores the uid, source and target data from\nconnectors."
+      "!doc": "Map of transitions that stores the uid, source and target data from\nconnectors.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "width": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_width",
-      "!doc": "The width of the node."
+      "!doc": "The width of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "zIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#attribute_zIndex",
-      "!doc": "Specify the stack order of elements."
+      "!doc": "Specify the stack order of elements.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeStateConfig": {
@@ -1232,17 +1730,26 @@
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_height",
-      "!doc": "The height of the node."
+      "!doc": "The height of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "width": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#attribute_width",
-      "!doc": "The width of the node."
+      "!doc": "The width of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeConditionConfig": {
@@ -1250,17 +1757,26 @@
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_height",
-      "!doc": "The height of the node."
+      "!doc": "The height of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "width": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#attribute_width",
-      "!doc": "The width of the node."
+      "!doc": "The width of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeStartConfig": {
@@ -1268,7 +1784,10 @@
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeEndConfig": {
@@ -1276,7 +1795,10 @@
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeJoinConfig": {
@@ -1284,17 +1806,26 @@
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_height",
-      "!doc": "The height of the node."
+      "!doc": "The height of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "width": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#attribute_width",
-      "!doc": "The width of the node."
+      "!doc": "The width of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeForkConfig": {
@@ -1302,17 +1833,26 @@
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_height",
-      "!doc": "The height of the node."
+      "!doc": "The height of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "width": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#attribute_width",
-      "!doc": "The width of the node."
+      "!doc": "The width of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "DiagramNodeTaskConfig": {
@@ -1320,17 +1860,26 @@
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_height",
-      "!doc": "The height of the node."
+      "!doc": "The height of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_type",
-      "!doc": "The type of the node."
+      "!doc": "The type of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      },
      "width": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#attribute_width",
-      "!doc": "The width of the node."
+      "!doc": "The width of the node.",
+      "!data": {
+       "submodule": "aui-diagram-builder-impl"
+      }
      }
     },
     "FormBuilderAvailableFieldConfig": {
@@ -1338,52 +1887,82 @@
      "hiddenAttributes": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_hiddenAttributes",
-      "!doc": "List of hidden attributes."
+      "!doc": "List of hidden attributes.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "name": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_name",
-      "!doc": "The name of the input field."
+      "!doc": "The name of the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "options": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_options",
-      "!doc": "Collection of options."
+      "!doc": "Collection of options.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "predefinedValue": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_predefinedValue",
-      "!doc": "Specifies a predefined value for the input field."
+      "!doc": "Specifies a predefined value for the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "readOnlyAttributes": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_readOnlyAttributes",
-      "!doc": "List of read-only input fields."
+      "!doc": "List of read-only input fields.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "required": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_required",
-      "!doc": "Checks if an input field is required. In other words, it needs\ncontent to be valid."
+      "!doc": "Checks if an input field is required. In other words, it needs\ncontent to be valid.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "showLabel": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_showLabel",
-      "!doc": "If `true` the label is showed."
+      "!doc": "If `true` the label is showed.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "tip": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_tip",
-      "!doc": "Hint to help the user to fill the input field."
+      "!doc": "Hint to help the user to fill the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "unique": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_unique",
-      "!doc": "Checks if the input field is unique or not."
+      "!doc": "Checks if the input field is unique or not.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "width": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#attribute_width",
-      "!doc": "The width of the input field."
+      "!doc": "The width of the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      }
     },
     "FormBuilderConfig": {
@@ -1391,22 +1970,34 @@
      "allowRemoveRequiredFields": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_allowRemoveRequiredFields",
-      "!doc": "Checks if removing required fields is permitted or not."
+      "!doc": "Checks if removing required fields is permitted or not.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "enableEditing": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_enableEditing",
-      "!doc": "Enables a field to be editable."
+      "!doc": "Enables a field to be editable.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "fieldsSortableListConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_fieldsSortableListConfig",
-      "!doc": "Collection of sortable fields."
+      "!doc": "Collection of sortable fields.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-form-builder-base"
+      }
      }
     },
     "FormBuilderFieldConfig": {
@@ -1414,147 +2005,234 @@
      "acceptChildren": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_acceptChildren",
-      "!doc": "If `true` children are accepted."
+      "!doc": "If `true` children are accepted.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "builder": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_builder",
-      "!doc": "The `A.FormBuilder` instance."
+      "!doc": "The `A.FormBuilder` instance.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "controlsToolbar": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_controlsToolbar",
-      "!doc": "Collection of toolbar controls."
+      "!doc": "Collection of toolbar controls.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "dataType": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_dataType",
-      "!doc": "Indicates which is the type of data for the input field."
+      "!doc": "Indicates which is the type of data for the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "disabled": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_disabled",
-      "!doc": "Checks if the input field is disabled or not."
+      "!doc": "Checks if the input field is disabled or not.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "selected": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_selected",
-      "!doc": "Checks if the input field is selected or not."
+      "!doc": "Checks if the input field is selected or not.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "hiddenAttributes": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_hiddenAttributes",
-      "!doc": "List of hidden attributes."
+      "!doc": "List of hidden attributes.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "id": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_id",
-      "!doc": "The id of the input field."
+      "!doc": "The id of the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "label": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_label",
-      "!doc": "The label of the input field."
+      "!doc": "The label of the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "localizationMap": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_localizationMap",
-      "!doc": "Collection for content localization."
+      "!doc": "Collection for content localization.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "name": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_name",
-      "!doc": "The name of the input field."
+      "!doc": "The name of the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "parent": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_parent",
-      "!doc": "Container for the field parent."
+      "!doc": "Container for the field parent.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "predefinedValue": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_predefinedValue",
-      "!doc": "Specifies a predefined value for the input field."
+      "!doc": "Specifies a predefined value for the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "readOnly": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_readOnly",
-      "!doc": "Checks if an input field is read-only.\nIn other words, it cannot be modified."
+      "!doc": "Checks if an input field is read-only.\nIn other words, it cannot be modified.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "readOnlyAttributes": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_readOnlyAttributes",
-      "!doc": "List of read-only input fields."
+      "!doc": "List of read-only input fields.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "required": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_required",
-      "!doc": "Checks if an input field is required.\nIn other words, it needs content to be valid."
+      "!doc": "Checks if an input field is required.\nIn other words, it needs content to be valid.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "showLabel": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_showLabel",
-      "!doc": "If `true` the label is showed."
+      "!doc": "If `true` the label is showed.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI."
+      "!doc": "Collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "tabIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tabIndex",
-      "!doc": "Specify the tab order."
+      "!doc": "Specify the tab order.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "template": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "tip": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tip",
-      "!doc": "Hint to help the user to fill the input field."
+      "!doc": "Hint to help the user to fill the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_type",
-      "!doc": "Defines the type of field."
+      "!doc": "Defines the type of field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "unique": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_unique",
-      "!doc": "Checks if the input field is unique or not."
+      "!doc": "Checks if the input field is unique or not.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "zIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_zIndex",
-      "!doc": "Stack order of the field. An element with greater stack order is\nalways in front of an element with a lower stack order."
+      "!doc": "Stack order of the field. An element with greater stack order is\nalways in front of an element with a lower stack order.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "dropZoneNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_dropZoneNode",
-      "!doc": "Node used to generate the drop zone."
+      "!doc": "Node used to generate the drop zone.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "labelNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_labelNode",
-      "!doc": "Node used to generate a label."
+      "!doc": "Node used to generate a label.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "requiredFlagNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_requiredFlagNode",
-      "!doc": "Node used to generate the required flag."
+      "!doc": "Node used to generate the required flag.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "templateNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_templateNode",
-      "!doc": "Node used to generate a template."
+      "!doc": "Node used to generate a template.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      },
      "tipFlagNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#attribute_tipFlagNode",
-      "!doc": "Node used to generate a tip."
+      "!doc": "Node used to generate a tip.",
+      "!data": {
+       "submodule": "aui-form-builder-field-base"
+      }
      }
     },
     "FormBuilderButtonFieldConfig": {
@@ -1562,27 +2240,42 @@
      "acceptChildren": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_acceptChildren",
-      "!doc": "If `true` children are accepted."
+      "!doc": "If `true` children are accepted.",
+      "!data": {
+       "submodule": "aui-form-builder-field-button"
+      }
      },
      "buttonType": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_buttonType",
-      "!doc": "Defines the button type attribute, e.g. `type=\"reset\"`."
+      "!doc": "Defines the button type attribute, e.g. `type=\"reset\"`.",
+      "!data": {
+       "submodule": "aui-form-builder-field-button"
+      }
      },
      "predefinedValue": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_predefinedValue",
-      "!doc": "Specifies a predefined value for the button field."
+      "!doc": "Specifies a predefined value for the button field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-button"
+      }
      },
      "showLabel": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_showLabel",
-      "!doc": "If `true` the label is showed."
+      "!doc": "If `true` the label is showed.",
+      "!data": {
+       "submodule": "aui-form-builder-field-button"
+      }
      },
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-button"
+      }
      }
     },
     "FormBuilderCheckBoxFieldConfig": {
@@ -1590,17 +2283,26 @@
      "dataType": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_dataType",
-      "!doc": "Indicates which is the type of data for the input field."
+      "!doc": "Indicates which is the type of data for the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-checkbox"
+      }
      },
      "predefinedValue": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_predefinedValue",
-      "!doc": "Specifies a predefined value for the checkbox field."
+      "!doc": "Specifies a predefined value for the checkbox field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-checkbox"
+      }
      },
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-checkbox"
+      }
      }
     },
     "FormBuilderFieldsetFieldConfig": {
@@ -1608,22 +2310,34 @@
      "acceptChildren": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_acceptChildren",
-      "!doc": "If `true` children are accepted."
+      "!doc": "If `true` children are accepted.",
+      "!data": {
+       "submodule": "aui-form-builder-field-fieldset"
+      }
      },
      "dataType": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_dataType",
-      "!doc": "Indicates which is the type of data for the input field."
+      "!doc": "Indicates which is the type of data for the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-fieldset"
+      }
      },
      "labelNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_labelNode",
-      "!doc": "Markup used to generate a label."
+      "!doc": "Markup used to generate a label.",
+      "!data": {
+       "submodule": "aui-form-builder-field-fieldset"
+      }
      },
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-fieldset"
+      }
      }
     },
     "FormBuilderFileUploadFieldConfig": {
@@ -1631,7 +2345,10 @@
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-upload"
+      }
      }
     },
     "OptionsEditorConfig": {
@@ -1639,7 +2356,10 @@
      "editable": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#attribute_editable",
-      "!doc": "Defines if a field is editable."
+      "!doc": "Defines if a field is editable.",
+      "!data": {
+       "submodule": "aui-form-builder-field-multiple-choice"
+      }
      }
     },
     "FormBuilderMultipleChoiceFieldConfig": {
@@ -1647,22 +2367,34 @@
      "acceptChildren": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_acceptChildren",
-      "!doc": "If `true` children are accepted."
+      "!doc": "If `true` children are accepted.",
+      "!data": {
+       "submodule": "aui-form-builder-field-multiple-choice"
+      }
      },
      "options": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_options",
-      "!doc": "Collection of options. Each option is made of a label and value."
+      "!doc": "Collection of options. Each option is made of a label and value.",
+      "!data": {
+       "submodule": "aui-form-builder-field-multiple-choice"
+      }
      },
      "optionTemplate": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_optionTemplate",
-      "!doc": "Markup used to generate each item from `options` attribute."
+      "!doc": "Markup used to generate each item from `options` attribute.",
+      "!data": {
+       "submodule": "aui-form-builder-field-multiple-choice"
+      }
      },
      "predefinedValue": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#attribute_predefinedValue",
-      "!doc": "Specifies a predefined value for the multiple choice field."
+      "!doc": "Specifies a predefined value for the multiple choice field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-multiple-choice"
+      }
      }
     },
     "FormBuilderRadioFieldConfig": {
@@ -1670,12 +2402,18 @@
      "predefinedValue": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#attribute_predefinedValue",
-      "!doc": "Specifies a predefined value for the radio field."
+      "!doc": "Specifies a predefined value for the radio field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-radio"
+      }
      },
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-radio"
+      }
      }
     },
     "FormBuilderSelectFieldConfig": {
@@ -1683,12 +2421,18 @@
      "multiple": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#attribute_multiple",
-      "!doc": "Checks if the drop-down list allows multiple selections."
+      "!doc": "Checks if the drop-down list allows multiple selections.",
+      "!data": {
+       "submodule": "aui-form-builder-field-select"
+      }
      },
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-select"
+      }
      }
     },
     "FormBuilderTextFieldConfig": {
@@ -1696,12 +2440,18 @@
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-text"
+      }
      },
      "width": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#attribute_width",
-      "!doc": "The width of the input field."
+      "!doc": "The width of the input field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-text"
+      }
      }
     },
     "FormBuilderTextAreaFieldConfig": {
@@ -1709,7 +2459,10 @@
      "template": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#attribute_template",
-      "!doc": "Reusable block of markup used to generate the field."
+      "!doc": "Reusable block of markup used to generate the field.",
+      "!data": {
+       "submodule": "aui-form-builder-field-textarea"
+      }
      }
     },
     "FormValidatorConfig": {
@@ -1863,142 +2616,226 @@
      "anim": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_anim",
-      "!doc": "If `true` the navigation is animated."
+      "!doc": "If `true` the navigation is animated.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_bodyContent",
-      "!doc": "The content of body."
+      "!doc": "The content of body.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "caption": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_caption",
-      "!doc": "The caption of the displayed image."
+      "!doc": "The caption of the displayed image.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "captionFromTitle": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_captionFromTitle",
-      "!doc": "If `true` the [caption](A.ImageViewer.html#attr_caption) will be\npulled from the title DOM attribute."
+      "!doc": "If `true` the [caption](A.ImageViewer.html#attr_caption) will be\npulled from the title DOM attribute.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "centered": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_centered",
-      "!doc": "If `true` the Overlay with the image will be positioned\non the center of the viewport."
+      "!doc": "If `true` the Overlay with the image will be positioned\non the center of the viewport.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "currentIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_currentIndex",
-      "!doc": "Index of the current image."
+      "!doc": "Index of the current image.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "image": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_image",
-      "!doc": "Image node element used to load the images."
+      "!doc": "Image node element used to load the images.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "imageAnim": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_imageAnim",
-      "!doc": "Configuration attributes passed to the [Anim](Anim.html) class."
+      "!doc": "Configuration attributes passed to the [Anim](Anim.html) class.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "infoTemplate": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_infoTemplate",
-      "!doc": "String template used to display the information."
+      "!doc": "String template used to display the information.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "links": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_links",
-      "!doc": "Selector or NodeList containing the links where the\n`A.ImageViewer` extracts the information to generate the\nthumbnails."
+      "!doc": "Selector or NodeList containing the links where the\n`A.ImageViewer` extracts the information to generate the\nthumbnails.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "loading": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loading",
-      "!doc": "Whether the image is during a loading state."
+      "!doc": "Whether the image is during a loading state.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "modal": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_modal",
-      "!doc": "Displays the modal the viewport. Set to `false` to disable."
+      "!doc": "Displays the modal the viewport. Set to `false` to disable.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "preloadAllImages": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_preloadAllImages",
-      "!doc": "Preloads the neighbor image (i.e., the previous and next image\nbased on the current load one)."
+      "!doc": "Preloads the neighbor image (i.e., the previous and next image\nbased on the current load one).",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "showClose": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_showClose",
-      "!doc": "Shows close icon control."
+      "!doc": "Shows close icon control.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "showControls": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_showControls",
-      "!doc": "Shows the controls."
+      "!doc": "Shows the controls.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "tabIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_tabIndex",
-      "!doc": "Specify the tab order of elements."
+      "!doc": "Specify the tab order of elements.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "totalLinks": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_totalLinks",
-      "!doc": "Helper attribute to get the `size` of the\n[links](A.ImageViewer.html#attr_links) NodeList."
+      "!doc": "Helper attribute to get the `size` of the\n[links](A.ImageViewer.html#attr_links) NodeList.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_visible",
-      "!doc": "Determines if the `A.ImageViewer` should be visible or not."
+      "!doc": "Determines if the `A.ImageViewer` should be visible or not.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "zIndex": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_zIndex",
-      "!doc": "Specify the stack order of elements."
+      "!doc": "Specify the stack order of elements.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "controlLeftEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_controlLeftEl",
-      "!doc": "The element to be used as left control."
+      "!doc": "The element to be used as left control.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "controlRightEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_controlRightEl",
-      "!doc": "The element to be used as right control."
+      "!doc": "The element to be used as right control.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "captionEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_captionEl",
-      "!doc": "The element to be used as caption."
+      "!doc": "The element to be used as caption.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "closeEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_closeEl",
-      "!doc": "The element to be used as close."
+      "!doc": "The element to be used as close.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "infoEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_infoEl",
-      "!doc": "The element to be used as info."
+      "!doc": "The element to be used as info.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "loader": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loader",
-      "!doc": "HTML element to contain the `img` which is being loaded."
+      "!doc": "HTML element to contain the `img` which is being loaded.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "loadingEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_loadingEl",
-      "!doc": "The element to be used as loading."
+      "!doc": "The element to be used as loading.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "maxHeight": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_maxHeight",
-      "!doc": "The maximum height of the element."
+      "!doc": "The maximum height of the element.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "maxWidth": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#attribute_maxWidth",
-      "!doc": "The maximum width of the element."
+      "!doc": "The maximum width of the element.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      }
     },
     "ImageGalleryConfig": {
@@ -2006,67 +2843,106 @@
      "autoPlay": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_autoPlay",
-      "!doc": "If `true` the slide show will be played when the\n`A.ImageGallery` is displayed."
+      "!doc": "If `true` the slide show will be played when the\n`A.ImageGallery` is displayed.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "delay": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_delay",
-      "!doc": "Delay in milliseconds to change to the next image."
+      "!doc": "Delay in milliseconds to change to the next image.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "pagination": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_pagination",
-      "!doc": "[A.Pagination](A.Pagination.html) configuration Object. The\n`A.Pagination` handles the thumbnails control."
+      "!doc": "[A.Pagination](A.Pagination.html) configuration Object. The\n`A.Pagination` handles the thumbnails control.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "paginationEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paginationEl",
-      "!doc": "Element which contains the [A.Pagination](A.Pagination.html) with the\nthumbnails."
+      "!doc": "Element which contains the [A.Pagination](A.Pagination.html) with the\nthumbnails.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "paginationInstance": {
       "!type": "+aui_pagination.A.Pagination",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paginationInstance",
-      "!doc": "Stores the [A.Pagination](A.Pagination.html) instance."
+      "!doc": "Stores the [A.Pagination](A.Pagination.html) instance.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "paused": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_paused",
-      "!doc": "If `true` the slide show is paused."
+      "!doc": "If `true` the slide show is paused.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "pausedLabel": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_pausedLabel",
-      "!doc": "Label to display when the slide show is paused."
+      "!doc": "Label to display when the slide show is paused.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "playing": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_playing",
-      "!doc": "If `true` the slide show is playing."
+      "!doc": "If `true` the slide show is playing.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "playingLabel": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_playingLabel",
-      "!doc": "Label to display when the slide show is playing."
+      "!doc": "Label to display when the slide show is playing.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "repeat": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_repeat",
-      "!doc": "Restart the navigation when reach the last element."
+      "!doc": "Restart the navigation when reach the last element.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "showPlayer": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_showPlayer",
-      "!doc": "Shows the player controls (i.e., pause and show buttons)."
+      "!doc": "Shows the player controls (i.e., pause and show buttons).",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "toolbar": {
       "!type": "+Toolbar constructor.",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_toolbar",
-      "!doc": "[A.Toolbar](A.Toolbar.html) with a play, and pause buttons."
+      "!doc": "[A.Toolbar](A.Toolbar.html) with a play, and pause buttons.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "useOriginalImage": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#attribute_useOriginalImage",
-      "!doc": "If `true` will use the original image as thumbnails."
+      "!doc": "If `true` will use the original image as thumbnails.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      }
     },
     "MediaViewerPluginConfig": {
@@ -2082,92 +2958,146 @@
      "autoLoad": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_autoLoad",
-      "!doc": "If `true` invoke the [start](A.IORequest.html#method_start) method\nautomatically, initializing the IO transaction."
+      "!doc": "If `true` invoke the [start](A.IORequest.html#method_start) method\nautomatically, initializing the IO transaction.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "cache": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_cache",
-      "!doc": "If `false` the current timestamp will be appended to the\nurl, avoiding the url to be cached."
+      "!doc": "If `false` the current timestamp will be appended to the\nurl, avoiding the url to be cached.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "dataType": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_dataType",
-      "!doc": "The type of the request (i.e., could be xml, json, javascript, text)."
+      "!doc": "The type of the request (i.e., could be xml, json, javascript, text).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "responseData": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_responseData",
-      "!doc": "This is a normalized attribute for the response data. Its useful to\nretrieve the correct type for the\n[dataType](A.IORequest.html#attr_dataType) (i.e., in json requests\nthe `responseData`) is a JSONObject."
+      "!doc": "This is a normalized attribute for the response data. Its useful to\nretrieve the correct type for the\n[dataType](A.IORequest.html#attr_dataType) (i.e., in json requests\nthe `responseData`) is a JSONObject.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "uri": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_uri",
-      "!doc": "URI to be requested using AJAX."
+      "!doc": "URI to be requested using AJAX.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "active": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_active",
-      "!doc": "Whether the transaction is active or not."
+      "!doc": "Whether the transaction is active or not.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "cfg": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_cfg",
-      "!doc": "Object containing all the [IO Configuration Attributes](A.io.html).\nThis Object is passed to the `A.io` internally."
+      "!doc": "Object containing all the [IO Configuration Attributes](A.io.html).\nThis Object is passed to the `A.io` internally.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "transaction": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_transaction",
-      "!doc": "Stores the IO Object of the current transaction."
+      "!doc": "Stores the IO Object of the current transaction.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "arguments": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_arguments",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "context": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_context",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "data": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_data",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "form": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_form",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "headers": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_headers",
-      "!doc": "Set the correct ACCEPT header based on the dataType."
+      "!doc": "Set the correct ACCEPT header based on the dataType.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "method": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_method",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "selector": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_selector",
-      "!doc": "A selector to be used to query against the response of the\nrequest. Only works if the response is XML or HTML."
+      "!doc": "A selector to be used to query against the response of the\nrequest. Only works if the response is XML or HTML.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "sync": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_sync",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "timeout": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_timeout",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "xdr": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#attribute_xdr",
-      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration)."
+      "!doc": "See [IO\nConfiguration](http://developer.yahoo.com/yui/3/io/#configuration).",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      }
     },
     "ModalConfig": {
@@ -2429,32 +3359,50 @@
      "color": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_color",
-      "!doc": "Contains the `color` of the scheduler calendar."
+      "!doc": "Contains the `color` of the scheduler calendar.",
+      "!data": {
+       "submodule": "aui-scheduler-base-calendar"
+      }
      },
      "disabled": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_disabled",
-      "!doc": "Determines if the calender is enabled."
+      "!doc": "Determines if the calender is enabled.",
+      "!data": {
+       "submodule": "aui-scheduler-base-calendar"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_name",
-      "!doc": "Determines the name for this calendar."
+      "!doc": "Determines the name for this calendar.",
+      "!data": {
+       "submodule": "aui-scheduler-base-calendar"
+      }
      },
      "palette": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_palette",
-      "!doc": "Contains a list of colors for the calendar."
+      "!doc": "Contains a list of colors for the calendar.",
+      "!data": {
+       "submodule": "aui-scheduler-base-calendar"
+      }
      },
      "scheduler": {
       "!type": "+aui_scheduler.A.SchedulerBase",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_scheduler",
-      "!doc": "Contains this `SchedulerCalendar`s `SchedulerBase object."
+      "!doc": "Contains this `SchedulerCalendar`s `SchedulerBase object.",
+      "!data": {
+       "submodule": "aui-scheduler-base-calendar"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#attribute_visible",
-      "!doc": "Indicates whether the calendar is visible."
+      "!doc": "Indicates whether the calendar is visible.",
+      "!data": {
+       "submodule": "aui-scheduler-base-calendar"
+      }
      }
     },
     "SchedulerEventConfig": {
@@ -2462,77 +3410,122 @@
      "allDay": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_allDay",
-      "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs."
+      "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "content": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_content",
-      "!doc": "Contains the content of Scheduler events body section."
+      "!doc": "Contains the content of Scheduler events body section.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "color": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_color",
-      "!doc": "Contains the `color` of a calendar event."
+      "!doc": "Contains the `color` of a calendar event.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "colorBrightnessFactor": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_colorBrightnessFactor",
-      "!doc": "Contains the color brightness factor is applied to the `color`\nattribute."
+      "!doc": "Contains the color brightness factor is applied to the `color`\nattribute.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "colorSaturationFactor": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_colorSaturationFactor",
-      "!doc": "Contains the color saturation factor is applied to the `color`\nattribute."
+      "!doc": "Contains the color saturation factor is applied to the `color`\nattribute.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "titleDateFormat": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_titleDateFormat",
-      "!doc": "Contains the formatted title date for this scheduler event, taking\ninto account ISO time. The value will not contain an `endDate` if\nthis event is `allDay`."
+      "!doc": "Contains the formatted title date for this scheduler event, taking\ninto account ISO time. The value will not contain an `endDate` if\nthis event is `allDay`.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "endDate": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_endDate",
-      "!doc": "Contains the date corresponding to the current ending date of a\nscheduled event. By default, the value is one hour after the\n`startDate`."
+      "!doc": "Contains the date corresponding to the current ending date of a\nscheduled event. By default, the value is one hour after the\n`startDate`.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "disabled": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_disabled",
-      "!doc": "Determines if the event is disabled."
+      "!doc": "Determines if the event is disabled.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "meeting": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_meeting",
-      "!doc": "Determines if the event is a meeting."
+      "!doc": "Determines if the event is a meeting.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "node": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_node",
-      "!doc": "Contains the event `NodeList`."
+      "!doc": "Contains the event `NodeList`.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "reminder": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_reminder",
-      "!doc": "Determines if the event is requires reminder."
+      "!doc": "Determines if the event is requires reminder.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "repeated": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_repeated",
-      "!doc": "Determines if the event is to be repeated."
+      "!doc": "Determines if the event is to be repeated.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "scheduler": {
       "!type": "+aui_scheduler.A.SchedulerBase",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_scheduler",
-      "!doc": "Contains this `SchedulerEvent`s `SchedulerBase object."
+      "!doc": "Contains this `SchedulerEvent`s `SchedulerBase object.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "startDate": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_startDate",
-      "!doc": "Contains the date corresponding to the current starting date of a\nscheduled event. By default, the value is the date set on the users\ncomputer."
+      "!doc": "Contains the date corresponding to the current starting date of a\nscheduled event. By default, the value is the date set on the users\ncomputer.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#attribute_visible",
-      "!doc": "Indicates whether the event is visible."
+      "!doc": "Indicates whether the event is visible.",
+      "!data": {
+       "submodule": "aui-scheduler-base-event"
+      }
      }
     },
     "SchedulerViewConfig": {
@@ -2540,62 +3533,98 @@
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_bodyContent",
-      "!doc": "Determines the content of Scheduler views body section."
+      "!doc": "Determines the content of Scheduler views body section.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "filterFn": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_filterFn",
-      "!doc": "Applies a filter to `SchedulerEvent`s."
+      "!doc": "Applies a filter to `SchedulerEvent`s.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "height": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_height",
-      "!doc": "Contains the height of a `SchedulerView` in pixels."
+      "!doc": "Contains the height of a `SchedulerView` in pixels.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "isoTime": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_isoTime",
-      "!doc": "Indicates whether this `SchedulerView` should use international\nstandard time."
+      "!doc": "Indicates whether this `SchedulerView` should use international\nstandard time.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_name",
-      "!doc": "Determines the name for this view."
+      "!doc": "Determines the name for this view.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "navigationDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_navigationDateFormatter",
-      "!doc": "Contains the function that formats the navigation date."
+      "!doc": "Contains the function that formats the navigation date.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "nextDate": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_nextDate",
-      "!doc": "Contains the next `Date` in the `SchedulerView`."
+      "!doc": "Contains the next `Date` in the `SchedulerView`.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "prevDate": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_prevDate",
-      "!doc": "Contains the previous `Date` in the `SchedulerView`."
+      "!doc": "Contains the previous `Date` in the `SchedulerView`.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "scheduler": {
       "!type": "+aui_scheduler.A.SchedulerBase",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_scheduler",
-      "!doc": "Contains this `SchedulerView`s `SchedulerBase object."
+      "!doc": "Contains this `SchedulerView`s `SchedulerBase object.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "scrollable": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_scrollable",
-      "!doc": "Indicates whether this `SchedulerView` is scrollable."
+      "!doc": "Indicates whether this `SchedulerView` is scrollable.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "triggerNode": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_triggerNode",
-      "!doc": "Contains the `Node` that triggers."
+      "!doc": "Contains the `Node` that triggers.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      },
      "visible": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#attribute_visible",
-      "!doc": "Indicates whether the calendar is visible."
+      "!doc": "Indicates whether the calendar is visible.",
+      "!data": {
+       "submodule": "aui-scheduler-base-view"
+      }
      }
     },
     "SchedulerBaseConfig": {
@@ -2603,47 +3632,74 @@
      "activeView": {
       "!type": "+aui_scheduler.A.SchedulerView",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_activeView",
-      "!doc": "Contains the active view."
+      "!doc": "Contains the active view.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "date": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_date",
-      "!doc": "Contains the date corresponding to the current date which is the\nvalue of the date set on the users computer."
+      "!doc": "Contains the date corresponding to the current date which is the\nvalue of the date set on the users computer.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "eventRecorder": {
       "!type": "+aui_scheduler.A.SchedulerEventRecorder",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_eventRecorder",
-      "!doc": "Contains the `Scheduler`s `SchedulerEventRecorder` instance."
+      "!doc": "Contains the `Scheduler`s `SchedulerEventRecorder` instance.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_strings",
-      "!doc": "Contains the collection of strings used to label elements of the UI."
+      "!doc": "Contains the collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "navigationDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_navigationDateFormatter",
-      "!doc": "Contains the function that formats the navigation date."
+      "!doc": "Contains the function that formats the navigation date.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "views": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_views",
-      "!doc": "Contains the list of views belonging to this `Scheduler`."
+      "!doc": "Contains the list of views belonging to this `Scheduler`.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "viewDate": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_viewDate",
-      "!doc": "Contains the `Scheduler`s current date. If there is an `activeView`,\nthis attribute will contain the `activeView`s current date."
+      "!doc": "Contains the `Scheduler`s current date. If there is an `activeView`,\nthis attribute will contain the `activeView`s current date.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "firstDayOfWeek": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_firstDayOfWeek",
-      "!doc": "First day of the week: Sunday is 0, Monday is 1."
+      "!doc": "First day of the week: Sunday is 0, Monday is 1.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      },
      "todayDate": {
       "!type": "+datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#attribute_todayDate",
-      "!doc": "Today date representation. This option allows the developer to\nspecify the date he wants to be used as the today date."
+      "!doc": "Today date representation. This option allows the developer to\nspecify the date he wants to be used as the today date.",
+      "!data": {
+       "submodule": "aui-scheduler-base"
+      }
      }
     },
     "SchedulerEventRecorderConfig": {
@@ -2651,47 +3707,74 @@
      "allDay": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_allDay",
-      "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs."
+      "!doc": "Determines whether a new event will take place all day. When enabled,\nthe event will not contain 24-hour clock date inputs.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "content": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_content",
-      "!doc": "Determines the content of this Scheduler event recorders body\nsection."
+      "!doc": "Determines the content of this Scheduler event recorders body\nsection.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "duration": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_duration",
-      "!doc": "Contains the duration of an `event` in minutes."
+      "!doc": "Contains the duration of an `event` in minutes.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "dateFormat": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_dateFormat",
-      "!doc": "Contains the default date format for an `event`."
+      "!doc": "Contains the default date format for an `event`.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "event": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_event",
-      "!doc": "A scheduler `event` is the wrapper object that contains an `event`\ntitle, start and end times and a description."
+      "!doc": "A scheduler `event` is the wrapper object that contains an `event`\ntitle, start and end times and a description.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "popover": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_popover",
-      "!doc": "Contains the scheduler event recorders `popover` instance."
+      "!doc": "Contains the scheduler event recorders `popover` instance.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_strings",
-      "!doc": "Collection of strings used to label elements of the UI.\nThis attribute defaults to `{}` unless the attribute is set.\nWhen this attribute is set, the passed value merges with a\npseudo-default collection of strings."
+      "!doc": "Collection of strings used to label elements of the UI.\nThis attribute defaults to `{}` unless the attribute is set.\nWhen this attribute is set, the passed value merges with a\npseudo-default collection of strings.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "bodyTemplate": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_bodyTemplate",
-      "!doc": "Contains the `SchedulerEventRecorder`s body template."
+      "!doc": "Contains the `SchedulerEventRecorder`s body template.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      },
      "headerTemplate": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#attribute_headerTemplate",
-      "!doc": "Contains the `SchedulerEventRecorder`s header template."
+      "!doc": "Contains the `SchedulerEventRecorder`s header template.",
+      "!data": {
+       "submodule": "aui-scheduler-event-recorder"
+      }
      }
     },
     "SchedulerAgendaViewConfig": {
@@ -2699,47 +3782,74 @@
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_bodyContent",
-      "!doc": "Determines the content of Scheduler view agendas body section."
+      "!doc": "Determines the content of Scheduler view agendas body section.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "eventsDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_eventsDateFormatter",
-      "!doc": "Contains the function that formats the events date."
+      "!doc": "Contains the function that formats the events date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "headerDayDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_headerDayDateFormatter",
-      "!doc": "Contains the function that formats the header day date."
+      "!doc": "Contains the function that formats the header day date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "headerExtraDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_headerExtraDateFormatter",
-      "!doc": "Contains the function that formats the header extra date."
+      "!doc": "Contains the function that formats the header extra date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "infoDayDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoDayDateFormatter",
-      "!doc": "Contains the function that formats the info day date."
+      "!doc": "Contains the function that formats the info day date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "infoLabelBigDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoLabelBigDateFormatter",
-      "!doc": "Contains the function that formats the info label date."
+      "!doc": "Contains the function that formats the info label date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "infoLabelSmallDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_infoLabelSmallDateFormatter",
-      "!doc": "Contains the function that formats the info label small date."
+      "!doc": "Contains the function that formats the info label small date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_name",
-      "!doc": "Determines the name for this agenda."
+      "!doc": "Determines the name for this agenda.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#attribute_strings",
-      "!doc": "Contains the collection of strings used to label elements of the UI."
+      "!doc": "Contains the collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-scheduler-view-agenda"
+      }
      }
     },
     "SchedulerDayViewConfig": {
@@ -2747,102 +3857,162 @@
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_bodyContent",
-      "!doc": "Determines the content of Scheduler day views body section."
+      "!doc": "Determines the content of Scheduler day views body section.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "days": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_days",
-      "!doc": "Contains the number of day columns this view displays."
+      "!doc": "Contains the number of day columns this view displays.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "delegateConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_delegateConfig",
-      "!doc": "Configures this views `DD.Delegate`."
+      "!doc": "Configures this views `DD.Delegate`.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "eventWidth": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_eventWidth",
-      "!doc": "Contains the width of a `SchedulerView` in pixels."
+      "!doc": "Contains the width of a `SchedulerView` in pixels.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "filterFn": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_filterFn",
-      "!doc": "Applies a filter to `SchedulerEvent`s."
+      "!doc": "Applies a filter to `SchedulerEvent`s.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "headerDateFormatter": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerDateFormatter",
-      "!doc": "Contains the function that formats the header date."
+      "!doc": "Contains the function that formats the header date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "headerView": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerView",
-      "!doc": "Contains the header view."
+      "!doc": "Contains the header view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "headerViewConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerViewConfig",
-      "!doc": "Configures the header day view."
+      "!doc": "Configures the header day view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "hourHeight": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_hourHeight",
-      "!doc": "Contains the height of an hour in pixels."
+      "!doc": "Contains the height of an hour in pixels.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_name",
-      "!doc": "Determines the name for this day view."
+      "!doc": "Determines the name for this day view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "navigationDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_navigationDateFormatter",
-      "!doc": "Contains the function that formats the navigation date."
+      "!doc": "Contains the function that formats the navigation date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_strings",
-      "!doc": "Contains the collection of strings used to label elements of the UI."
+      "!doc": "Contains the collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "headerTableNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerTableNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `headerTable` node."
+      "!doc": "Contains the function that returns the `headerTable` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "headerViewLabelNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_headerViewLabelNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `headerViewLabel` node."
+      "!doc": "Contains the function that returns the `headerViewLabel` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "resizerNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_resizerNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `resizer` node."
+      "!doc": "Contains the function that returns the `resizer` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "tableNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_tableNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `table` node."
+      "!doc": "Contains the function that returns the `table` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "colDaysNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_colDaysNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `colDays` node."
+      "!doc": "Contains the function that returns the `colDays` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "colHeaderDaysNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_colHeaderDaysNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `colHeaderDays` node."
+      "!doc": "Contains the function that returns the `colHeaderDays` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "markercellsNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_markercellsNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `markercells` node."
+      "!doc": "Contains the function that returns the `markercells` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      },
      "timesNode!~YUIDOC_LINE~!return": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#attribute_timesNode!~YUIDOC_LINE~!return",
-      "!doc": "Contains the function that returns the `times` node."
+      "!doc": "Contains the function that returns the `times` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-day"
+      }
      }
     },
     "SchedulerMonthViewConfig": {
@@ -2850,24 +4020,36 @@
      "displayDaysInterval": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_displayDaysInterval",
-      "!doc": "Contains the number of Days to display in a month view."
+      "!doc": "Contains the number of Days to display in a month view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-month"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_name",
-      "!doc": "Determines the name for this month view."
+      "!doc": "Determines the name for this month view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-month"
+      }
      },
      "navigationDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#attribute_navigationDateFormatter",
-      "!doc": "Contains the function that formats the navigation date."
+      "!doc": "Contains the function that formats the navigation date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-month"
+      }
      }
     },
     "SchedulerTableViewDDConfig": {
      "delegateConfig": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#attribute_delegateConfig",
-      "!doc": "Configures this views `DD.Delegate`."
+      "!doc": "Configures this views `DD.Delegate`.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table-dd"
+      }
      }
     },
     "SchedulerTableViewConfig": {
@@ -2875,67 +4057,106 @@
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_bodyContent",
-      "!doc": "Determines the content of Scheduler table views body section."
+      "!doc": "Determines the content of Scheduler table views body section.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "displayDaysInterval": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_displayDaysInterval",
-      "!doc": "Contains the number of days to display per interval in the\n`SchedulerTableView`."
+      "!doc": "Contains the number of days to display per interval in the\n`SchedulerTableView`.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "displayRows": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_displayRows",
-      "!doc": "Contains the number of rows to display in the `SchedulerTableView`."
+      "!doc": "Contains the number of rows to display in the `SchedulerTableView`.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "fixedHeight": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_fixedHeight",
-      "!doc": "Indicates whether the height of the `SchedulerTableView` is fixed."
+      "!doc": "Indicates whether the height of the `SchedulerTableView` is fixed.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_name",
-      "!doc": "Determines the name for this `SchedulerTableView`."
+      "!doc": "Determines the name for this `SchedulerTableView`.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "headerDateFormatter": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_headerDateFormatter",
-      "!doc": "Contains the function that formats the header date."
+      "!doc": "Contains the function that formats the header date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "navigationDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_navigationDateFormatter",
-      "!doc": "Contains the function that formats the navigation date."
+      "!doc": "Contains the function that formats the navigation date.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "scrollable": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_scrollable",
-      "!doc": "Indicates whether the `SchedulerTableView` is scrollable."
+      "!doc": "Indicates whether the `SchedulerTableView` is scrollable.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "strings": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_strings",
-      "!doc": "Contains the collection of strings used to label elements of the UI."
+      "!doc": "Contains the collection of strings used to label elements of the UI.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "headerTableNode": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_headerTableNode",
-      "!doc": "Contains the function that returns the `headerTable` node."
+      "!doc": "Contains the function that returns the `headerTable` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "colHeaderDaysNode": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_colHeaderDaysNode",
-      "!doc": "Contains the function that returns the `colHeaderDays` node."
+      "!doc": "Contains the function that returns the `colHeaderDays` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "rowsContainerNode": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_rowsContainerNode",
-      "!doc": "Contains the function that returns the `rowsContainer` node."
+      "!doc": "Contains the function that returns the `rowsContainer` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      },
      "tableGridNode": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#attribute_tableGridNode",
-      "!doc": "Contains the function that returns the `tableGrid` node."
+      "!doc": "Contains the function that returns the `tableGrid` node.",
+      "!data": {
+       "submodule": "aui-scheduler-view-table"
+      }
      }
     },
     "SchedulerWeekViewConfig": {
@@ -2943,27 +4164,42 @@
      "bodyContent": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_bodyContent",
-      "!doc": "Determines the content of Scheduler week views body section."
+      "!doc": "Determines the content of Scheduler week views body section.",
+      "!data": {
+       "submodule": "aui-scheduler-view-week"
+      }
      },
      "days": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_days",
-      "!doc": "Contains the number of days in a week."
+      "!doc": "Contains the number of days in a week.",
+      "!data": {
+       "submodule": "aui-scheduler-view-week"
+      }
      },
      "headerViewConfig": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_headerViewConfig",
-      "!doc": "Configures the header week view."
+      "!doc": "Configures the header week view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-week"
+      }
      },
      "name": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_name",
-      "!doc": "Determines the name for this week view."
+      "!doc": "Determines the name for this week view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-week"
+      }
      },
      "navigationDateFormatter": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#attribute_navigationDateFormatter",
-      "!doc": "Contains the formatted navigation date formatter for this week view."
+      "!doc": "Contains the formatted navigation date formatter for this week view.",
+      "!data": {
+       "submodule": "aui-scheduler-view-week"
+      }
      }
     },
     "TernarySearchNodeConfig": {
@@ -2971,27 +4207,42 @@
      "character": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_character",
-      "!doc": "String formed by a single letter."
+      "!doc": "String formed by a single letter.",
+      "!data": {
+       "submodule": "aui-search-ternary-search-node"
+      }
      },
      "child": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_child",
-      "!doc": "The child node in the tree."
+      "!doc": "The child node in the tree.",
+      "!data": {
+       "submodule": "aui-search-ternary-search-node"
+      }
      },
      "largerNode": {
       "!type": "+aui_search.A.TernarySearchNode",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_largerNode",
-      "!doc": "The larger node in the tree."
+      "!doc": "The larger node in the tree.",
+      "!data": {
+       "submodule": "aui-search-ternary-search-node"
+      }
      },
      "smallerNode": {
       "!type": "+aui_search.A.TernarySearchNode",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_smallerNode",
-      "!doc": "The smaller node in the tree."
+      "!doc": "The smaller node in the tree.",
+      "!data": {
+       "submodule": "aui-search-ternary-search-node"
+      }
      },
      "word": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#attribute_word",
-      "!doc": "String formed by a group of letters."
+      "!doc": "String formed by a group of letters.",
+      "!data": {
+       "submodule": "aui-search-ternary-search-node"
+      }
      }
     },
     "SortableLayoutConfig": {
@@ -3298,24 +4549,36 @@
      "container": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_container",
-      "!doc": "Container to nest children nodes. If it has a container its not a leaf."
+      "!doc": "Container to nest children nodes. If it has a container its not a leaf.",
+      "!data": {
+       "submodule": "aui-tree-data"
+      }
      },
      "children": {
       "!type": "+yui.Array",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_children",
-      "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode\ninstance)."
+      "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode\ninstance).",
+      "!data": {
+       "submodule": "aui-tree-data"
+      }
      },
      "index": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#attribute_index",
-      "!doc": "Index the nodes."
+      "!doc": "Index the nodes.",
+      "!data": {
+       "submodule": "aui-tree-data"
+      }
      }
     },
     "TreeViewIOConfig": {
      "io": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#attribute_io",
-      "!doc": "IO options for the current TreeNode load the children."
+      "!doc": "IO options for the current TreeNode load the children.",
+      "!data": {
+       "submodule": "aui-tree-io"
+      }
      }
     },
     "TreeNodeConfig": {
@@ -3323,92 +4586,146 @@
      "boundingBox": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_boundingBox",
-      "!doc": "The widgets outermost node, used for sizing and positioning."
+      "!doc": "The widgets outermost node, used for sizing and positioning.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "contentBox": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_contentBox",
-      "!doc": "The direct descendant of a widgets\nbounding box and houses its content."
+      "!doc": "The direct descendant of a widgets\nbounding box and houses its content.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "cssClasses": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_cssClasses",
-      "!doc": "CSS classes used on TreeNode."
+      "!doc": "CSS classes used on TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "draggable": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_draggable",
-      "!doc": "If true the TreeNode is draggable."
+      "!doc": "If true the TreeNode is draggable.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "ownerTree": {
       "!type": "+TreeView",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_ownerTree",
-      "!doc": "TreeView which contains the current TreeNode."
+      "!doc": "TreeView which contains the current TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "label": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_label",
-      "!doc": "Label of the TreeNode."
+      "!doc": "Label of the TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "expanded": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_expanded",
-      "!doc": "Whether the TreeNode is expanded by default."
+      "!doc": "Whether the TreeNode is expanded by default.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "id": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_id",
-      "!doc": "Id of the TreeNode."
+      "!doc": "Id of the TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "leaf": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_leaf",
-      "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
+      "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf).",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "nextSibling": {
       "!type": "+aui_tree.TreeNode",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_nextSibling",
-      "!doc": "Next sibling of the current TreeNode."
+      "!doc": "Next sibling of the current TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "prevSibling": {
       "!type": "+aui_tree.TreeNode",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_prevSibling",
-      "!doc": "Previous sibling of the current TreeNode."
+      "!doc": "Previous sibling of the current TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "parentNode": {
       "!type": "+aui_tree.TreeNode",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_parentNode",
-      "!doc": "Parent node of the current TreeNode."
+      "!doc": "Parent node of the current TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "labelEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_labelEl",
-      "!doc": "Label element to house the `label` attribute."
+      "!doc": "Label element to house the `label` attribute.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "hitAreaEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_hitAreaEl",
-      "!doc": "Hitarea element."
+      "!doc": "Hitarea element.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "alwaysShowHitArea": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_alwaysShowHitArea",
-      "!doc": "Always show the hitarea icon."
+      "!doc": "Always show the hitarea icon.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "iconEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_iconEl",
-      "!doc": "Icon element."
+      "!doc": "Icon element.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "tabIndex": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_tabIndex",
-      "!doc": "Specify the tab order."
+      "!doc": "Specify the tab order.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "rendered": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#attribute_rendered",
-      "!doc": "If true the TreeNode is rendered."
+      "!doc": "If true the TreeNode is rendered.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeIOConfig": {
@@ -3416,22 +4733,34 @@
      "loading": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_loading",
-      "!doc": "Whether the current TreeNode IO transaction is loading."
+      "!doc": "Whether the current TreeNode IO transaction is loading.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "loaded": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_loaded",
-      "!doc": "Whether the current TreeNode has loaded the content."
+      "!doc": "Whether the current TreeNode has loaded the content.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "cache": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_cache",
-      "!doc": "Whether the current TreeNode should cache the loaded content or not."
+      "!doc": "Whether the current TreeNode should cache the loaded content or not.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "leaf": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#attribute_leaf",
-      "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
+      "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf).",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeCheckConfig": {
@@ -3439,22 +4768,34 @@
      "checked": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checked",
-      "!doc": "Whether the TreeNode is checked or not."
+      "!doc": "Whether the TreeNode is checked or not.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "checkName": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkName",
-      "!doc": "Name of the checkbox element used on the current TreeNode."
+      "!doc": "Name of the checkbox element used on the current TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "checkContainerEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkContainerEl",
-      "!doc": "Container element for the checkbox."
+      "!doc": "Container element for the checkbox.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "checkEl": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#attribute_checkEl",
-      "!doc": "Checkbox element."
+      "!doc": "Checkbox element.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeRadioConfig": {
@@ -3462,14 +4803,20 @@
      "cssClasses": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#attribute_cssClasses",
-      "!doc": "CSS classes used on TreeNodeRadio."
+      "!doc": "CSS classes used on TreeNodeRadio.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeViewPaginatorConfig": {
      "paginator": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewPaginator.html#attribute_paginator",
-      "!doc": "Paginator."
+      "!doc": "Paginator.",
+      "!data": {
+       "submodule": "aui-tree-paginator"
+      }
      }
     },
     "TreeViewConfig": {
@@ -3477,22 +4824,34 @@
      "type": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_type",
-      "!doc": "Type of the treeview (i.e. could be file or normal)."
+      "!doc": "Type of the treeview (i.e. could be file or normal).",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "lastSelected": {
       "!type": "+aui_tree.TreeNode",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_lastSelected",
-      "!doc": "Last selected TreeNode."
+      "!doc": "Last selected TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "lazyLoad": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_lazyLoad",
-      "!doc": "Determine if its going to be lazy loaded or not."
+      "!doc": "Determine if its going to be lazy loaded or not.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "selectOnToggle": {
       "!type": "bool",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#attribute_selectOnToggle",
-      "!doc": "Determine if its going to be selected on toggle."
+      "!doc": "Determine if its going to be selected on toggle.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      }
     },
     "TreeViewDDConfig": {
@@ -3500,32 +4859,50 @@
      "helper": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_helper",
-      "!doc": "Dragdrop helper element."
+      "!doc": "Dragdrop helper element.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "scrollDelay": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_scrollDelay",
-      "!doc": "Delay of the scroll while dragging the TreeNodes."
+      "!doc": "Delay of the scroll while dragging the TreeNodes.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "dropAction": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_dropAction",
-      "!doc": "Drop action (i.e. could be append, below or above)."
+      "!doc": "Drop action (i.e. could be append, below or above).",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "lastY": {
       "!type": "number",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_lastY",
-      "!doc": "Last Y."
+      "!doc": "Last Y.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "node": {
       "!type": "?",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_node",
-      "!doc": "Node."
+      "!doc": "Node.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "nodeContent": {
       "!type": "+node.Node",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#attribute_nodeContent",
-      "!doc": "Reference for the current drop node."
+      "!doc": "Reference for the current drop node.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      }
     },
     "VideoConfig": {
@@ -3656,7 +5033,15 @@
   "_yui": {
    "aui_ace_editor": {
     "!data": {
-     "module": "aui-ace-editor"
+     "module": "aui-ace-editor",
+     "submodules": {
+      "aui-ace-autocomplete-base": {},
+      "aui-ace-autocomplete-freemarker": {},
+      "aui-ace-autocomplete-list": {},
+      "aui-ace-autocomplete-plugin": {},
+      "aui-ace-autocomplete-templateprocessor": {},
+      "aui-ace-autocomplete-velocity": {}
+     }
     },
     "A": {
      "AceEditor": {
@@ -3696,27 +5081,42 @@
        "FILL_MODE_INSERT": {
         "!type": "?",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#property_FILL_MODE_INSERT",
-        "!doc": "Exposes a constant for insert fill mode. See `fillMode` for more information."
+        "!doc": "Exposes a constant for insert fill mode. See `fillMode` for more information.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-base"
+        }
        },
        "FILL_MODE_OVERWRITE": {
         "!type": "?",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#property_FILL_MODE_OVERWRITE",
-        "!doc": "Exposes a constant for overwrite fill mode. See `fillMode` for more\ninformation."
+        "!doc": "Exposes a constant for overwrite fill mode. See `fillMode` for more\ninformation.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-base"
+        }
        },
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#property_NAME",
-        "!doc": "Static property which provides a string to identify the class."
+        "!doc": "Static property which provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-base"
+        }
        },
        "NS": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#property_NS",
-        "!doc": "Static property which provides a string to identify the namespace."
+        "!doc": "Static property which provides a string to identify the namespace.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-base"
+        }
        },
        "ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteBase.html#property_ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for AutoCompleteBase."
+        "!doc": "Static property used to define the default attribute\nconfiguration for AutoCompleteBase.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-base"
+        }
        }
       },
       "AutoCompleteFreemarker": {
@@ -3727,23 +5127,35 @@
         "getMatch": {
          "!type": "fn(content: string) -> +yui.Object",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#method_getMatch",
-         "!doc": "Checks if the provided content contains directive or variable."
+         "!doc": "Checks if the provided content contains directive or variable.",
+         "!data": {
+          "submodule": "aui-ace-autocomplete-freemarker"
+         }
         }
        },
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#property_NAME",
-        "!doc": "Static property which provides a string to identify the class."
+        "!doc": "Static property which provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-freemarker"
+        }
        },
        "NS": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#property_NS",
-        "!doc": "Static property provides a string to identify the namespace."
+        "!doc": "Static property provides a string to identify the namespace.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-freemarker"
+        }
        },
        "ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteFreemarker.html#property_ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for the Freemarker."
+        "!doc": "Static property used to define the default attribute\nconfiguration for the Freemarker.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-freemarker"
+        }
        }
       },
       "AutoCompleteList": {
@@ -3755,27 +5167,42 @@
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#property_NAME",
-        "!doc": "Static property which provides a string to identify the class."
+        "!doc": "Static property which provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-list"
+        }
        },
        "NS": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#property_NS",
-        "!doc": "Static property provides a string to identify the namespace."
+        "!doc": "Static property provides a string to identify the namespace.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-list"
+        }
        },
        "ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#property_ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for the AutoCompleteList."
+        "!doc": "Static property used to define the default attribute\nconfiguration for the AutoCompleteList.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-list"
+        }
        },
        "CSS_PREFIX": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#property_CSS_PREFIX",
-        "!doc": "The prefix of all CSS Classes."
+        "!doc": "The prefix of all CSS Classes.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-list"
+        }
        },
        "HTML_PARSER": {
         "!type": "?",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html#property_HTML_PARSER",
-        "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box."
+        "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-list"
+        }
        }
       },
       "TemplateProcessor": {
@@ -3786,28 +5213,43 @@
         "getResults": {
          "!type": "fn(match: +yui.Object, callbackSuccess: fn(), callbackError: fn())",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#method_getResults",
-         "!doc": "Accepts match and depending on its type processes directives or\nvariables. In case of success, calls the provided success callback,\nor the error callback otherwise."
+         "!doc": "Accepts match and depending on its type processes directives or\nvariables. In case of success, calls the provided success callback,\nor the error callback otherwise.",
+         "!data": {
+          "submodule": "aui-ace-autocomplete-templateprocessor"
+         }
         },
         "getSuggestion": {
          "!type": "fn(match: +yui.Object, selectedSuggestion: string) -> string",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#method_getSuggestion",
-         "!doc": "Formats the selected suggestion depending on the match type and\ncurrently selected editor mode. The match type can be one of:\nMATCH_DIRECTOVES or MATCH_VARIABLES. The selected editor mode can be\none of the following: INSERT or OVERWRITE. See {{#crossLink\n\"AceEditor.AutoCompleteBase/fillMode:attribute\"}}{{/crossLink}}"
+         "!doc": "Formats the selected suggestion depending on the match type and\ncurrently selected editor mode. The match type can be one of:\nMATCH_DIRECTOVES or MATCH_VARIABLES. The selected editor mode can be\none of the following: INSERT or OVERWRITE. See {{#crossLink\n\"AceEditor.AutoCompleteBase/fillMode:attribute\"}}{{/crossLink}}",
+         "!data": {
+          "submodule": "aui-ace-autocomplete-templateprocessor"
+         }
         }
        },
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#property_NAME",
-        "!doc": "Static property which provides a string to identify the class."
+        "!doc": "Static property which provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-templateprocessor"
+        }
        },
        "NS": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#property_NS",
-        "!doc": "Static property provides a string to identify the namespace."
+        "!doc": "Static property provides a string to identify the namespace.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-templateprocessor"
+        }
        },
        "ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.TemplateProcessor.html#property_ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for the TemplateProcessor."
+        "!doc": "Static property used to define the default attribute\nconfiguration for the TemplateProcessor.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-templateprocessor"
+        }
        }
       },
       "AutoCompleteVelocity": {
@@ -3818,23 +5260,35 @@
         "getMatch": {
          "!type": "fn(content: string) -> +yui.Object",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#method_getMatch",
-         "!doc": "Checks if the provided content contains directive or variable."
+         "!doc": "Checks if the provided content contains directive or variable.",
+         "!data": {
+          "submodule": "aui-ace-autocomplete-velocity"
+         }
         }
        },
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#property_NAME",
-        "!doc": "Static property which provides a string to identify the class."
+        "!doc": "Static property which provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-velocity"
+        }
        },
        "NS": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#property_NS",
-        "!doc": "Static property provides a string to identify the namespace."
+        "!doc": "Static property provides a string to identify the namespace.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-velocity"
+        }
        },
        "ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteVelocity.html#property_ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for the Velocity."
+        "!doc": "Static property used to define the default attribute\nconfiguration for the Velocity.",
+        "!data": {
+         "submodule": "aui-ace-autocomplete-velocity"
+        }
        }
       },
       "NAME": {
@@ -4269,7 +5723,12 @@
    },
    "aui_collection": {
     "!data": {
-     "module": "aui-collection"
+     "module": "aui-collection",
+     "submodules": {
+      "aui-linkedset": {},
+      "aui-map": {},
+      "aui-set": {}
+     }
     },
     "A": {
      "LinkedSet": {
@@ -4280,7 +5739,10 @@
        "values": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.LinkedSet.html#method_values",
-        "!doc": "Gets a list view of the values contained in this linked set."
+        "!doc": "Gets a list view of the values contained in this linked set.",
+        "!data": {
+         "submodule": "aui-linkedset"
+        }
        }
       }
      },
@@ -4292,57 +5754,90 @@
        "clear": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_clear",
-        "!doc": "Fires the `clear` custom event."
+        "!doc": "Fires the `clear` custom event.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "getValue": {
         "!type": "fn(key: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_getValue",
-        "!doc": "Returns the value from a key in this map."
+        "!doc": "Returns the value from a key in this map.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "has": {
         "!type": "fn(key: ?, opt_hash: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_has",
-        "!doc": "Checks if this map has the specified key."
+        "!doc": "Checks if this map has the specified key.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "hasValue": {
         "!type": "fn(value: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_hasValue",
-        "!doc": "Returns `true` if this map contains a certain value."
+        "!doc": "Returns `true` if this map contains a certain value.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "keys": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_keys",
-        "!doc": "Returns a collection of the keys contained in this map."
+        "!doc": "Returns a collection of the keys contained in this map.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "isEmpty": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_isEmpty",
-        "!doc": "Returns `true` if this map contains no key-value mappings."
+        "!doc": "Returns `true` if this map contains no key-value mappings.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "put": {
         "!type": "fn(key: ?, value: ?, opt_hash: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_put",
-        "!doc": "Fires the `put` custom event."
+        "!doc": "Fires the `put` custom event.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "putAll": {
         "!type": "fn(map: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_putAll",
-        "!doc": "Copies all of the mappings from the specified map to this map."
+        "!doc": "Copies all of the mappings from the specified map to this map.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "remove": {
         "!type": "fn(key: ?, opt_hash: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_remove",
-        "!doc": "Fires the `remove` custom event."
+        "!doc": "Fires the `remove` custom event.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "size": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_size",
-        "!doc": "Returns the number of key-value mappings in this map."
+        "!doc": "Returns the number of key-value mappings in this map.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        },
        "values": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashMap.html#method_values",
-        "!doc": "Returns a collection of the values contained in this map."
+        "!doc": "Returns a collection of the values contained in this map.",
+        "!data": {
+         "submodule": "aui-map"
+        }
        }
       }
      },
@@ -4354,37 +5849,58 @@
        "add": {
         "!type": "fn(value: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_add",
-        "!doc": "Fires the `add` custom event."
+        "!doc": "Fires the `add` custom event.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        },
        "clear": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_clear",
-        "!doc": "Fires the `clear` custom event."
+        "!doc": "Fires the `clear` custom event.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        },
        "has": {
         "!type": "fn(value: ?, opt_hash: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_has",
-        "!doc": "Checks if this set has the specified key."
+        "!doc": "Checks if this set has the specified key.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        },
        "isEmpty": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_isEmpty",
-        "!doc": "Returns `true` if this set contains no elements."
+        "!doc": "Returns `true` if this set contains no elements.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        },
        "remove": {
         "!type": "fn(value: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_remove",
-        "!doc": "Fires the `remove` custom event with an argument."
+        "!doc": "Fires the `remove` custom event with an argument.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        },
        "size": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_size",
-        "!doc": "Get the size of the map."
+        "!doc": "Get the size of the map.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        },
        "values": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HashSet.html#method_values",
-        "!doc": "Get the keys of the map."
+        "!doc": "Get the keys of the map.",
+        "!data": {
+         "submodule": "aui-set"
+        }
        }
       }
      }
@@ -4392,7 +5908,15 @@
    },
    "aui_color_picker": {
     "!data": {
-     "module": "aui-color-picker"
+     "module": "aui-color-picker",
+     "submodules": {
+      "aui-color-palette": {},
+      "aui-color-picker-base": {},
+      "aui-color-picker-popover": {},
+      "aui-hsv-palette": {},
+      "aui-hsv-palette-modal": {},
+      "aui-hsva-palette": {}
+     }
     },
     "A": {
      "ColorPalette": {
@@ -4404,17 +5928,26 @@
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-color-palette"
+       }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-color-palette"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `ColorPalette`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `ColorPalette`.",
+       "!data": {
+        "submodule": "aui-color-palette"
+       }
       }
      },
      "ColorPickerBase": {
@@ -4424,23 +5957,35 @@
        "reset": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#method_reset",
-        "!doc": "Resets the `ColorPickerBase` to its default state."
+        "!doc": "Resets the `ColorPickerBase` to its default state.",
+        "!data": {
+         "submodule": "aui-color-picker-base"
+        }
        }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `ColorPickerBase`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `ColorPickerBase`.",
+       "!data": {
+        "submodule": "aui-color-picker-base"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-color-picker-base"
+       }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerBase.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-color-picker-base"
+       }
       }
      },
      "ColorPickerPopover": {
@@ -4452,17 +5997,26 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `ColorPickerPopover`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `ColorPickerPopover`.",
+       "!data": {
+        "submodule": "aui-color-picker-popover"
+       }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-color-picker-popover"
+       }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html#property_NS",
-       "!doc": "Static property provides a string to identify the namespace."
+       "!doc": "Static property provides a string to identify the namespace.",
+       "!data": {
+        "submodule": "aui-color-picker-popover"
+       }
       }
      },
      "HSVPalette": {
@@ -4474,22 +6028,34 @@
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-hsv-palette"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `HSVPalette`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `HSVPalette`.",
+       "!data": {
+        "submodule": "aui-hsv-palette"
+       }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-hsv-palette"
+       }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html#property_NS",
-       "!doc": "Static property provides a string to identify the namespace."
+       "!doc": "Static property provides a string to identify the namespace.",
+       "!data": {
+        "submodule": "aui-hsv-palette"
+       }
       }
      },
      "HSVAPaletteModal": {
@@ -4501,22 +6067,34 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `HSVAPaletteModal`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `HSVAPaletteModal`.",
+       "!data": {
+        "submodule": "aui-hsv-palette-modal"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-hsv-palette-modal"
+       }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-hsv-palette-modal"
+       }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPaletteModal.html#property_NS",
-       "!doc": "Static property provides a string to identify the namespace."
+       "!doc": "Static property provides a string to identify the namespace.",
+       "!data": {
+        "submodule": "aui-hsv-palette-modal"
+       }
       }
      },
      "HSVAPalette": {
@@ -4528,12 +6106,18 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPalette.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-hsva-palette"
+       }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVAPalette.html#property_NS",
-       "!doc": "Static property provides a string to identify the namespace."
+       "!doc": "Static property provides a string to identify the namespace.",
+       "!data": {
+        "submodule": "aui-hsva-palette"
+       }
       }
      }
     }
@@ -4589,7 +6173,13 @@
    },
    "aui_datatable": {
     "!data": {
-     "module": "aui-datatable"
+     "module": "aui-datatable",
+     "submodules": {
+      "aui-datatable-edit": {},
+      "aui-datatable-highlight": {},
+      "aui-datatable-property-list": {},
+      "aui-datatable-selection": {}
+     }
     },
     "A": {
      "DataTable": {
@@ -4604,33 +6194,51 @@
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#property_NAME",
-        "!doc": "Static property provides a string to identify the class."
+        "!doc": "Static property provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "EDITOR_ZINDEX": {
         "!type": "number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#property_EDITOR_ZINDEX",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#property_ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for the CellEditorSupport."
+        "!doc": "Static property used to define the default attribute\nconfiguration for the CellEditorSupport.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "prototype": {
         "getEditor": {
          "!type": "fn(record: ?, column: ?)",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#method_getEditor",
-         "!doc": "TODO. Wanna help? Please send a Pull Request."
+         "!doc": "TODO. Wanna help? Please send a Pull Request.",
+         "!data": {
+          "submodule": "aui-datatable-edit"
+         }
         },
         "getCellEditor": {
          "!type": "fn()",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#method_getCellEditor",
-         "!doc": "TODO. Wanna help? Please send a Pull Request."
+         "!doc": "TODO. Wanna help? Please send a Pull Request.",
+         "!data": {
+          "submodule": "aui-datatable-edit"
+         }
         },
         "getRecordColumnValue": {
          "!type": "fn(record: ?, column: ?)",
          "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTable.CellEditorSupport.html#method_getRecordColumnValue",
-         "!doc": "TODO. Wanna help? Please send a Pull Request."
+         "!doc": "TODO. Wanna help? Please send a Pull Request.",
+         "!data": {
+          "submodule": "aui-datatable-edit"
+         }
         }
        }
       }
@@ -4643,38 +6251,59 @@
        "formatValue": {
         "!type": "fn(formatter: ?, val: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#method_formatValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "getValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#method_getValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#method_getElementsValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nNOTE FOR DEVELOPERS: Yoy *may* want to replace the methods from\nthis section on your implementation."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nNOTE FOR DEVELOPERS: Yoy *may* want to replace the methods from\nthis section on your implementation.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the BaseCellEditor."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the BaseCellEditor.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseCellEditor.html#property_UI_ATTRS",
-       "!doc": "TODO. Wanna help? Please send a Pull Request."
+       "!doc": "TODO. Wanna help? Please send a Pull Request.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "BaseOptionsCellEditor": {
@@ -4685,43 +6314,67 @@
        "addNewOption": {
         "!type": "fn(name: ?, value: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#method_addNewOption",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "removeOption": {
         "!type": "fn(optionRow: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#method_removeOption",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "saveOptions": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#method_saveOptions",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "toggleEdit": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#method_toggleEdit",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the BaseOptionsCellEditor."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the BaseOptionsCellEditor.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.BaseOptionsCellEditor.html#property_UI_ATTRS",
-       "!doc": "TODO. Wanna help? Please send a Pull Request."
+       "!doc": "TODO. Wanna help? Please send a Pull Request.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "TextCellEditor": {
@@ -4733,12 +6386,18 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "TextAreaCellEditor": {
@@ -4750,12 +6409,18 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextAreaCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TextAreaCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "DropDownCellEditor": {
@@ -4766,28 +6431,43 @@
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#method_getElementsValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the DropDownCellEditor."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the DropDownCellEditor.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DropDownCellEditor.html#property_UI_ATTRS",
-       "!doc": "TODO. Wanna help? Please send a Pull Request."
+       "!doc": "TODO. Wanna help? Please send a Pull Request.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "CheckboxCellEditor": {
@@ -4798,23 +6478,35 @@
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#method_getElementsValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the CheckboxCellEditor."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the CheckboxCellEditor.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.CheckboxCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "RadioCellEditor": {
@@ -4825,18 +6517,27 @@
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.RadioCellEditor.html#method_getElementsValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.RadioCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.RadioCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "DateCellEditor": {
@@ -4847,28 +6548,43 @@
        "getElementsValue": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#method_getElementsValue",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        },
        "formatDate": {
         "!type": "fn(date: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#method_formatDate",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-edit"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DateCellEditor.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the DateCellEditor."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the DateCellEditor.",
+       "!data": {
+        "submodule": "aui-datatable-edit"
+       }
       }
      },
      "DataTableHighlight": {
@@ -4879,33 +6595,51 @@
        "clear": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#method_clear",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-highlight"
+        }
        },
        "getActiveRegion": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#method_getActiveRegion",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-highlight"
+        }
        },
        "getSelectionRegion": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#method_getSelectionRegion",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-highlight"
+        }
        }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#property_NS",
-       "!doc": "TODO. Wanna help? Please send a Pull Request."
+       "!doc": "TODO. Wanna help? Please send a Pull Request.",
+       "!data": {
+        "submodule": "aui-datatable-highlight"
+       }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-datatable-highlight"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableHighlight.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the DataTableHighlight."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the DataTableHighlight.",
+       "!data": {
+        "submodule": "aui-datatable-highlight"
+       }
       }
      },
      "PropertyList": {
@@ -4916,18 +6650,27 @@
        "getDefaultEditor": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#method_getDefaultEditor",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-property-list"
+        }
        }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#property_CSS_PREFIX",
-       "!doc": "TODO. Wanna help? Please send a Pull Request."
+       "!doc": "TODO. Wanna help? Please send a Pull Request.",
+       "!data": {
+        "submodule": "aui-datatable-property-list"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the PropertyList."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the PropertyList.",
+       "!data": {
+        "submodule": "aui-datatable-property-list"
+       }
       }
      },
      "DataTableSelection": {
@@ -4936,38 +6679,59 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the DataTableSelection."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the DataTableSelection.",
+       "!data": {
+        "submodule": "aui-datatable-selection"
+       }
       },
       "prototype": {
        "captureSelection": {
         "!type": "fn(coords: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_captureSelection",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-selection"
+        }
        },
        "getActiveColumn": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_getActiveColumn",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-selection"
+        }
        },
        "getActiveRecord": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_getActiveRecord",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-selection"
+        }
        },
        "getCoord": {
         "!type": "fn(seed: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_getCoord",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-selection"
+        }
        },
        "getColumn": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_getColumn",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-datatable-selection"
+        }
        },
        "getRow": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DataTableSelection.html#method_getRow",
-        "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nAdd support to get a row by seed on DataTable getRow\nSee http://yuilibrary.com/projects/yui3/ticket/2532605"
+        "!doc": "TODO. Wanna help? Please send a Pull Request.\n\nAdd support to get a row by seed on DataTable getRow\nSee http://yuilibrary.com/projects/yui3/ticket/2532605",
+        "!data": {
+         "submodule": "aui-datatable-selection"
+        }
        }
       }
      }
@@ -5058,7 +6822,12 @@
    },
    "datatype_date": {
     "!data": {
-     "module": "datatype-date"
+     "module": "datatype-date",
+     "submodules": {
+      "datatype-date-format": {},
+      "datatype-date-math": {},
+      "datatype-date-parse": {}
+     }
     },
     "Date": {
      "!type": "fn()",
@@ -5359,7 +7128,12 @@
    },
    "aui_datepicker": {
     "!data": {
-     "module": "aui-datepicker"
+     "module": "aui-datepicker",
+     "submodules": {
+      "aui-datepicker-delegate": {},
+      "aui-datepicker-native": {},
+      "aui-datepicker-popover": {}
+     }
     },
     "A": {
      "DatePickerDelegate": {
@@ -5369,28 +7143,43 @@
        "getSelectedDates": {
         "!type": "fn(node: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#method_getSelectedDates",
-        "!doc": "Gets the selected dates."
+        "!doc": "Gets the selected dates.",
+        "!data": {
+         "submodule": "aui-datepicker-delegate"
+        }
        },
        "getParsedDatesFromInputValue": {
         "!type": "fn(opt_value: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#method_getParsedDatesFromInputValue",
-        "!doc": "Gets parsed dates from input value."
+        "!doc": "Gets parsed dates from input value.",
+        "!data": {
+         "submodule": "aui-datepicker-delegate"
+        }
        },
        "useInputNode": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#method_useInputNode",
-        "!doc": "Method not implemented."
+        "!doc": "Method not implemented.",
+        "!data": {
+         "submodule": "aui-datepicker-delegate"
+        }
        },
        "useInputNodeOnce": {
         "!type": "fn(node: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#method_useInputNodeOnce",
-        "!doc": "Triggers `useInputNode` method once."
+        "!doc": "Triggers `useInputNode` method once.",
+        "!data": {
+         "submodule": "aui-datepicker-delegate"
+        }
        }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerDelegate.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerDelegate`."
+       "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerDelegate`.",
+       "!data": {
+        "submodule": "aui-datepicker-delegate"
+       }
       }
      },
      "DatePickerNativeBase": {
@@ -5399,43 +7188,67 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerNativeBase`."
+       "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerNativeBase`.",
+       "!data": {
+        "submodule": "aui-datepicker-native"
+       }
       },
       "prototype": {
        "bindNativeUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_bindNativeUI",
-        "!doc": "Bind the events on the `DatePickerNativeBase` UI. Lifecycle."
+        "!doc": "Bind the events on the `DatePickerNativeBase` UI. Lifecycle.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        },
        "clearSelection": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_clearSelection",
-        "!doc": "Clears selected dates in the native calendar."
+        "!doc": "Clears selected dates in the native calendar.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        },
        "deselectDates": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_deselectDates",
-        "!doc": "Deselects dates in the native calendar."
+        "!doc": "Deselects dates in the native calendar.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        },
        "hide": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_hide",
-        "!doc": "Blurs native calendar."
+        "!doc": "Blurs native calendar.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        },
        "show": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_show",
-        "!doc": "Focus native calendar."
+        "!doc": "Focus native calendar.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        },
        "selectDates": {
         "!type": "fn(dates: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_selectDates",
-        "!doc": "Selects a date in the native calendar."
+        "!doc": "Selects a date in the native calendar.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        },
        "useInputNode": {
         "!type": "fn(node: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerNativeBase.html#method_useInputNode",
-        "!doc": "Renders the widget in an `<input>` node."
+        "!doc": "Renders the widget in an `<input>` node.",
+        "!data": {
+         "submodule": "aui-datepicker-native"
+        }
        }
       }
      },
@@ -5445,28 +7258,43 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerPopover`."
+       "!doc": "Static property used to define the default attribute configuration for the\n`DatePickerPopover`.",
+       "!data": {
+        "submodule": "aui-datepicker-popover"
+       }
       },
       "prototype": {
        "alignTo": {
         "!type": "fn(node: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#method_alignTo",
-        "!doc": "Sets the `Popover` alignment."
+        "!doc": "Sets the `Popover` alignment.",
+        "!data": {
+         "submodule": "aui-datepicker-popover"
+        }
        },
        "getPopover": {
         "!type": "fn() -> +Popover",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#method_getPopover",
-        "!doc": "Returns an existent `Popover` instance or creates a new one if it\ndoesnt exists."
+        "!doc": "Returns an existent `Popover` instance or creates a new one if it\ndoesnt exists.",
+        "!data": {
+         "submodule": "aui-datepicker-popover"
+        }
        },
        "hide": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#method_hide",
-        "!doc": "Hides the `Popover`."
+        "!doc": "Hides the `Popover`.",
+        "!data": {
+         "submodule": "aui-datepicker-popover"
+        }
        },
        "show": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DatePickerPopover.html#method_show",
-        "!doc": "Shows the `Popover`."
+        "!doc": "Shows the `Popover`.",
+        "!data": {
+         "submodule": "aui-datepicker-popover"
+        }
        }
       }
      },
@@ -5515,7 +7343,12 @@
    },
    "aui_diagram_builder": {
     "!data": {
-     "module": "aui-diagram-builder"
+     "module": "aui-diagram-builder",
+     "submodules": {
+      "aui-diagram-builder-base": {},
+      "aui-diagram-builder-connector": {},
+      "aui-diagram-builder-impl": {}
+     }
     },
     "A": {
      "AvailableField": {
@@ -5527,17 +7360,26 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.AvailableField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.AvailableField`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AvailableField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       }
      },
      "FieldSupport": {
@@ -5546,28 +7388,43 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FieldSupport`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FieldSupport`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "prototype": {
        "addField": {
         "!type": "fn(field: ?, index: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#method_addField",
-        "!doc": "Adds a single field in the field list."
+        "!doc": "Adds a single field in the field list.",
+        "!data": {
+         "submodule": "aui-diagram-builder-base"
+        }
        },
        "createFields": {
         "!type": "fn(val: ?) -> +A.ArrayList",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#method_createFields",
-        "!doc": "Creates a collection of fields."
+        "!doc": "Creates a collection of fields.",
+        "!data": {
+         "submodule": "aui-diagram-builder-base"
+        }
        },
        "removeField": {
         "!type": "fn(field: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#method_removeField",
-        "!doc": "Removes a single field from the field list."
+        "!doc": "Removes a single field from the field list.",
+        "!data": {
+         "submodule": "aui-diagram-builder-base"
+        }
        },
        "createField": {
         "!type": "fn(val: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FieldSupport.html#method_createField",
-        "!doc": "Creates a single field.\n\nNOTE FOR DEVELOPERS: Yoy *may* want to replace the\nmethods from this section on your implementation."
+        "!doc": "Creates a single field.\n\nNOTE FOR DEVELOPERS: Yoy *may* want to replace the\nmethods from this section on your implementation.",
+        "!data": {
+         "submodule": "aui-diagram-builder-base"
+        }
        }
       }
      },
@@ -5579,38 +7436,59 @@
        "isAvailableFieldsDrag": {
         "!type": "fn(drag: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#method_isAvailableFieldsDrag",
-        "!doc": "Checks if the `availableFields` are draggable."
+        "!doc": "Checks if the `availableFields` are draggable.",
+        "!data": {
+         "submodule": "aui-diagram-builder-base"
+        }
        },
        "plotFields": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#method_plotFields",
-        "!doc": "Plots a collection of fields."
+        "!doc": "Plots a collection of fields.",
+        "!data": {
+         "submodule": "aui-diagram-builder-base"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramBuilderBase`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramBuilderBase`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "HTML_PARSER": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#property_HTML_PARSER",
-       "!doc": "Object hash, defining how attribute values have to be parsed from markup."
+       "!doc": "Object hash, defining how attribute values have to be parsed from markup.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       },
       "AUGMENTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html#property_AUGMENTS",
-       "!doc": "Static property used to define the augmented classes."
+       "!doc": "Static property used to define the augmented classes.",
+       "!data": {
+        "submodule": "aui-diagram-builder-base"
+       }
       }
      },
      "Connector": {
@@ -5621,48 +7499,75 @@
        "draw": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_draw",
-        "!doc": "Responsible for drawing the connectors."
+        "!doc": "Responsible for drawing the connectors.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        },
        "getProperties": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_getProperties",
-        "!doc": "Gets the list of properties from the property model."
+        "!doc": "Gets the list of properties from the property model.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        },
        "getPropertyModel": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_getPropertyModel",
-        "!doc": "Gets the model defition of a property."
+        "!doc": "Gets the model defition of a property.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        },
        "getStrings": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_getStrings",
-        "!doc": "Gets the collection of strings used to label elements of the UI."
+        "!doc": "Gets the collection of strings used to label elements of the UI.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        },
        "hide": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_hide",
-        "!doc": "Sets the visibility to `false`."
+        "!doc": "Sets the visibility to `false`.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        },
        "show": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_show",
-        "!doc": "Sets the visibility to `true`."
+        "!doc": "Sets the visibility to `true`.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        },
        "toJSON": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#method_toJSON",
-        "!doc": "Converts serializable attributes to JSON format."
+        "!doc": "Converts serializable attributes to JSON format.",
+        "!data": {
+         "submodule": "aui-diagram-builder-connector"
+        }
        }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.Connector`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.Connector`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-connector"
+       }
       },
       "STRINGS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Connector.html#property_STRINGS",
-       "!doc": "Collection of strings used to label elements of the UI."
+       "!doc": "Collection of strings used to label elements of the UI.",
+       "!data": {
+        "submodule": "aui-diagram-builder-connector"
+       }
       }
      },
      "DiagramBuilder": {
@@ -5673,153 +7578,243 @@
        "syncConnectionsUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_syncConnectionsUI",
-        "!doc": "Syncs the connections in the UI."
+        "!doc": "Syncs the connections in the UI.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "clearFields": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_clearFields",
-        "!doc": "Fetches all fields and destroys each instance of it."
+        "!doc": "Fetches all fields and destroys each instance of it.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "closeEditProperties": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_closeEditProperties",
-        "!doc": "Disables the settings tab and selects the field tab."
+        "!doc": "Disables the settings tab and selects the field tab.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connect": {
         "!type": "fn(diagramNode1: ?, diagramNode2: ?, optConnector: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_connect",
-        "!doc": "Gets two `A.DiagramNode` instances and connect them."
+        "!doc": "Gets two `A.DiagramNode` instances and connect them.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectAll": {
         "!type": "fn(nodes: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_connectAll",
-        "!doc": "Creates a connector for each node that has source and target\nproperties."
+        "!doc": "Creates a connector for each node that has source and target\nproperties.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "createField": {
         "!type": "fn(val: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_createField",
-        "!doc": "Creates a new field based on the field class type."
+        "!doc": "Creates a new field based on the field class type.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "deleteSelectedConnectors": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_deleteSelectedConnectors",
-        "!doc": "Fetches all selected connectors and disconnect them."
+        "!doc": "Fetches all selected connectors and disconnect them.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "deleteSelectedNode": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_deleteSelectedNode",
-        "!doc": "Fetches the selected node and delete it."
+        "!doc": "Fetches the selected node and delete it.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "eachConnector": {
         "!type": "fn(fn: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_eachConnector",
-        "!doc": "An utility function to loop through all connectors."
+        "!doc": "An utility function to loop through all connectors.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "editConnector": {
         "!type": "fn(connector: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_editConnector",
-        "!doc": "Enables the settings tab, sets the connector properties in the\nproperty list, and stores the connector in the `editingConnector` and\n`selectedConnector` attributes."
+        "!doc": "Enables the settings tab, sets the connector properties in the\nproperty list, and stores the connector in the `editingConnector` and\n`selectedConnector` attributes.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "editNode": {
         "!type": "fn(diagramNode: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_editNode",
-        "!doc": "Enables the settings tab, sets the node properties in the property\nlist, and stores the node in the `editingNode` and `selectedNode`\nattributes."
+        "!doc": "Enables the settings tab, sets the node properties in the property\nlist, and stores the node in the `editingNode` and `selectedNode`\nattributes.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getFieldClass": {
         "!type": "fn(type: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_getFieldClass",
-        "!doc": "Gets the field class based on the `A.DiagramBuilder` type. If the type\ndoesnt exist, logs an error message."
+        "!doc": "Gets the field class based on the `A.DiagramBuilder` type. If the type\ndoesnt exist, logs an error message.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getNodesByTransitionProperty": {
         "!type": "fn(property: ?, value: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_getNodesByTransitionProperty",
-        "!doc": "Returns a collection of nodes by its transition property."
+        "!doc": "Returns a collection of nodes by its transition property.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getSelectedConnectors": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_getSelectedConnectors",
-        "!doc": "Returns a collection of selected connectors."
+        "!doc": "Returns a collection of selected connectors.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getSourceNodes": {
         "!type": "fn(diagramNode: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_getSourceNodes",
-        "!doc": "Returns a collection of source nodes."
+        "!doc": "Returns a collection of source nodes.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "hideSuggestConnectorOverlay": {
         "!type": "fn(diagramNode: ?, drag: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_hideSuggestConnectorOverlay",
-        "!doc": "Hides the suggest connector overlay."
+        "!doc": "Hides the suggest connector overlay.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "isAbleToConnect": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_isAbleToConnect",
-        "!doc": "Checks if a node is able to connect with another."
+        "!doc": "Checks if a node is able to connect with another.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "isFieldsDrag": {
         "!type": "fn(drag: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_isFieldsDrag",
-        "!doc": "Checks if the field is draggable."
+        "!doc": "Checks if the field is draggable.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "plotField": {
         "!type": "fn(field: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_plotField",
-        "!doc": "Renders a field in the `dropContainer`."
+        "!doc": "Renders a field in the `dropContainer`.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "select": {
         "!type": "fn(diagramNode: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_select",
-        "!doc": "Selects and focus a certain node."
+        "!doc": "Selects and focus a certain node.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "showSuggestConnectorOverlay": {
         "!type": "fn(xy: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_showSuggestConnectorOverlay",
-        "!doc": "Shows the suggest connector overlay in a certain X and Y position."
+        "!doc": "Shows the suggest connector overlay in a certain X and Y position.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "stopEditing": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_stopEditing",
-        "!doc": "Clears node/connectors selections and close edit properties."
+        "!doc": "Clears node/connectors selections and close edit properties.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "toJSON": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_toJSON",
-        "!doc": "Converts fields to JSON format."
+        "!doc": "Converts fields to JSON format.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "unselectConnectors": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_unselectConnectors",
-        "!doc": "Clears connectors selection."
+        "!doc": "Clears connectors selection.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "unselectNodes": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#method_unselectNodes",
-        "!doc": "Clears nodes selection."
+        "!doc": "Clears nodes selection.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramBuilder`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramBuilder`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "FIELDS_TAB": {
        "!type": "number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#property_FIELDS_TAB",
-       "!doc": "The index of the fields tab."
+       "!doc": "The index of the fields tab.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "SETTINGS_TAB": {
        "!type": "number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilder.html#property_SETTINGS_TAB",
-       "!doc": "The index of the settings tab."
+       "!doc": "The index of the settings tab.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeManagerBase": {
@@ -5831,12 +7826,18 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeManagerBase.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeManagerBase.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNode": {
@@ -5847,168 +7848,267 @@
        "addTransition": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_addTransition",
-        "!doc": "Adds a transition into the node."
+        "!doc": "Adds a transition into the node.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "alignTransition": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_alignTransition",
-        "!doc": "Aligns a single transition."
+        "!doc": "Aligns a single transition.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "alignTransitions": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_alignTransitions",
-        "!doc": "Aligns a collection of transitions."
+        "!doc": "Aligns a collection of transitions.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "close": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_close",
-        "!doc": "Destroys this instance."
+        "!doc": "Destroys this instance.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connect": {
         "!type": "fn(transition: ?, optConnector: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connect",
-        "!doc": "Checks if a transition is connected, if not creates a new\n`A.Connector` instance."
+        "!doc": "Checks if a transition is connected, if not creates a new\n`A.Connector` instance.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectDrop": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectDrop",
-        "!doc": "Calls the `connectNode` method with `publishedTarget` parameter."
+        "!doc": "Calls the `connectNode` method with `publishedTarget` parameter.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectEnd": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectEnd",
-        "!doc": "Handles the `connectEnd` event."
+        "!doc": "Handles the `connectEnd` event.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectMove": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectMove",
-        "!doc": "Sets the connector position based on the mouse X and Y positions."
+        "!doc": "Sets the connector position based on the mouse X and Y positions.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectNode": {
         "!type": "fn(diagramNode: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectNode",
-        "!doc": "Prepares the transition and connects a node."
+        "!doc": "Prepares the transition and connects a node.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectOutTarget": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectOutTarget",
-        "!doc": "Sets the `publishedTarget` attribute to null and hiddes the\n`publishedSource`s invite."
+        "!doc": "Sets the `publishedTarget` attribute to null and hiddes the\n`publishedSource`s invite.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectOverTarget": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectOverTarget",
-        "!doc": "If `publishedSource` is different from the current instance, sets the\n`publishedTarget` to the current instance."
+        "!doc": "If `publishedSource` is different from the current instance, sets the\n`publishedTarget` to the current instance.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "connectStart": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_connectStart",
-        "!doc": "Highlights each diagram node and fires a `publishedSource` event."
+        "!doc": "Highlights each diagram node and fires a `publishedSource` event.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "disconnect": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_disconnect",
-        "!doc": "Checks if a transition is connected, if yes removes the transition."
+        "!doc": "Checks if a transition is connected, if yes removes the transition.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "eachConnector": {
         "!type": "fn(fn: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_eachConnector",
-        "!doc": "An utility function to loop through all connectors."
+        "!doc": "An utility function to loop through all connectors.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getConnector": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_getConnector",
-        "!doc": "Returns a connector based on the transition uid."
+        "!doc": "Returns a connector based on the transition uid.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getContainer": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_getContainer",
-        "!doc": "Returns the `dropContainer` or bounding boxs parent node."
+        "!doc": "Returns the `dropContainer` or bounding boxs parent node.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getLeftTop": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_getLeftTop",
-        "!doc": "Returns the left and top positions of a node based in its container."
+        "!doc": "Returns the left and top positions of a node based in its container.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getProperties": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_getProperties",
-        "!doc": "Gets the list of properties from the property model."
+        "!doc": "Gets the list of properties from the property model.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "getPropertyModel": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_getPropertyModel",
-        "!doc": "Gets the model defition of a property."
+        "!doc": "Gets the model defition of a property.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "isBoundaryDrag": {
         "!type": "fn(drag: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_isBoundaryDrag",
-        "!doc": "Checks if boundary is draggable."
+        "!doc": "Checks if boundary is draggable.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "isTransitionConnected": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_isTransitionConnected",
-        "!doc": "Checks if a connector has an transition uid property."
+        "!doc": "Checks if a connector has an transition uid property.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "prepareTransition": {
         "!type": "fn(val: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_prepareTransition",
-        "!doc": "Builds the transition configuration object."
+        "!doc": "Builds the transition configuration object.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "removeTransition": {
         "!type": "fn(transition: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_removeTransition",
-        "!doc": "Removes the transition uid from a transition."
+        "!doc": "Removes the transition uid from a transition.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_renderShapeBoundary",
-        "!doc": "Renders the `shapeBoundary` attribute."
+        "!doc": "Renders the `shapeBoundary` attribute.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "renderShapeInvite": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_renderShapeInvite",
-        "!doc": "Renders the `shapeInvite` attribute."
+        "!doc": "Renders the `shapeInvite` attribute.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        },
        "syncConnectionsUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#method_syncConnectionsUI",
-        "!doc": "Syncs the connections in the UI."
+        "!doc": "Syncs the connections in the UI.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNode`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNode`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "CIRCLE_POINTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_CIRCLE_POINTS",
-       "!doc": "Coordinates to generate a circle graphic."
+       "!doc": "Coordinates to generate a circle graphic.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "DIAMOND_POINTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_DIAMOND_POINTS",
-       "!doc": "Coordinates to generate a diamond graphic."
+       "!doc": "Coordinates to generate a diamond graphic.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "SQUARE_POINTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNode.html#property_SQUARE_POINTS",
-       "!doc": "Coordinates to generate a square graphic."
+       "!doc": "Coordinates to generate a square graphic.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeState": {
@@ -6019,23 +8119,35 @@
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#method_renderShapeBoundary",
-        "!doc": "Renders the shape boundary."
+        "!doc": "Renders the shape boundary.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeState`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeState`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeState.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeCondition": {
@@ -6046,23 +8158,35 @@
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#method_renderShapeBoundary",
-        "!doc": "Renders the shape boundary."
+        "!doc": "Renders the shape boundary.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeCondition`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeCondition`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeCondition.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeStart": {
@@ -6074,17 +8198,26 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeStart`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeStart`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeStart.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeEnd": {
@@ -6096,17 +8229,26 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeEnd`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeEnd`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeEnd.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeJoin": {
@@ -6118,17 +8260,26 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeJoin`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeJoin`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeJoin.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeFork": {
@@ -6140,17 +8291,26 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeFork`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeFork`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeFork.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      },
      "DiagramNodeTask": {
@@ -6161,30 +8321,55 @@
        "renderShapeBoundary": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#method_renderShapeBoundary",
-        "!doc": "Renders the shape boundary."
+        "!doc": "Renders the shape boundary.",
+        "!data": {
+         "submodule": "aui-diagram-builder-impl"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeTask`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.DiagramNodeTask`.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramNodeTask.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-diagram-builder-impl"
+       }
       }
      }
     }
    },
    "aui_form_builder": {
     "!data": {
-     "module": "aui-form-builder"
+     "module": "aui-form-builder",
+     "submodules": {
+      "aui-form-builder-base": {},
+      "aui-form-builder-field-base": {},
+      "aui-form-builder-field-button": {},
+      "aui-form-builder-field-checkbox": {},
+      "aui-form-builder-field-fieldset": {},
+      "aui-form-builder-field-upload": {},
+      "aui-form-builder-field-multiple-choice": {},
+      "aui-form-builder-field-radio": {},
+      "aui-form-builder-field-select": {},
+      "aui-form-builder-field-text": {},
+      "aui-form-builder-field-textarea": {}
+     }
     },
     "A": {
      "FormBuilderAvailableField": {
@@ -6195,73 +8380,115 @@
        "hasModifier": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_hasModifier",
-        "!doc": "Checks if an event is triggered by a keyboard key like `CTRL`, `ALT`\nor `SHIFT`."
+        "!doc": "Checks if an event is triggered by a keyboard key like `CTRL`, `ALT`\nor `SHIFT`.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "isKey": {
         "!type": "fn(name: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_isKey",
-        "!doc": "Checks if an event is triggered by a keyboard key."
+        "!doc": "Checks if an event is triggered by a keyboard key.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "isKeyInRange": {
         "!type": "fn(start: ?, end: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_isKeyInRange",
-        "!doc": "Checks if an event is triggered by a keyboard key located between two\nother keys."
+        "!doc": "Checks if an event is triggered by a keyboard key located between two\nother keys.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "isKeyInSet": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_isKeyInSet",
-        "!doc": "Checks if an event is triggered by a keyboard key contained in the\nkey set."
+        "!doc": "Checks if an event is triggered by a keyboard key contained in the\nkey set.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "isModifyingKey": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_isModifyingKey",
-        "!doc": "Checks if an event is triggered by `ENTER`, `TAB`, `ESC` keyboard\nkeys or by a key located between `PAGE UP` and `DOWN`."
+        "!doc": "Checks if an event is triggered by `ENTER`, `TAB`, `ESC` keyboard\nkeys or by a key located between `PAGE UP` and `DOWN`.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "isNavKey": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_isNavKey",
-        "!doc": "TODO. Wanna help? Please send a Pull Request."
+        "!doc": "TODO. Wanna help? Please send a Pull Request.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "isSpecialKey": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_isSpecialKey",
-        "!doc": "Checks if an event is triggered by a special keyboard key like\n`SHIFT`, `CAPS LOCK`, etc."
+        "!doc": "Checks if an event is triggered by a special keyboard key like\n`SHIFT`, `CAPS LOCK`, etc.",
+        "!data": {
+         "submodule": "aui-event-base"
+        }
        },
        "delegate": {
         "!type": "fn(node: ?, subscription: ?, notifier: ?, filter: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_delegate",
-        "!doc": "Implementation logic for subscription via `node.delegate`."
+        "!doc": "Implementation logic for subscription via `node.delegate`.",
+        "!data": {
+         "submodule": "aui-event-input"
+        }
        },
        "detach": {
         "!type": "fn(node: ?, subscription: ?, notifier: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_detach",
-        "!doc": "Implementation logic for cleaning up a detached subscription."
+        "!doc": "Implementation logic for cleaning up a detached subscription.",
+        "!data": {
+         "submodule": "aui-event-input"
+        }
        },
        "detachDelegate": {
         "!type": "fn(node: ?, subscription: ?, notifier: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_detachDelegate",
-        "!doc": "Implementation logic for cleaning up a detached delegate subscription."
+        "!doc": "Implementation logic for cleaning up a detached delegate subscription.",
+        "!data": {
+         "submodule": "aui-event-input"
+        }
        },
        "on": {
         "!type": "fn(node: ?, subscription: ?, notifier: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#method_on",
-        "!doc": "Implementation logic for event subscription."
+        "!doc": "Implementation logic for event subscription.",
+        "!data": {
+         "submodule": "aui-event-input"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderAvailableField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderAvailableField`.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       }
      },
      "FormBuilder": {
@@ -6272,98 +8499,155 @@
        "closeEditProperties": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_closeEditProperties",
-        "!doc": "Selects the field tab and disables the setting tabs."
+        "!doc": "Selects the field tab and disables the setting tabs.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "createField": {
         "!type": "fn(config: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_createField",
-        "!doc": "Creates a field and returns its configuration."
+        "!doc": "Creates a field and returns its configuration.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "duplicateField": {
         "!type": "fn(field: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_duplicateField",
-        "!doc": "Gets the current field index and then clones the field. Inserts the\nnew one after the current field index, inside of the current field\nparent."
+        "!doc": "Gets the current field index and then clones the field. Inserts the\nnew one after the current field index, inside of the current field\nparent.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "editField": {
         "!type": "fn(field: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_editField",
-        "!doc": "Checks if the current field is a `A.FormBuilderField` instance and\nselects it."
+        "!doc": "Checks if the current field is a `A.FormBuilderField` instance and\nselects it.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "getFieldClass": {
         "!type": "fn(type: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_getFieldClass",
-        "!doc": "Gets the field class based on the `A.FormBuilder` type. If the type\ndoesnt exist, logs an error message."
+        "!doc": "Gets the field class based on the `A.FormBuilder` type. If the type\ndoesnt exist, logs an error message.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "getFieldProperties": {
         "!type": "fn(field: ?) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_getFieldProperties",
-        "!doc": "Gets a list of properties from the field."
+        "!doc": "Gets a list of properties from the field.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "insertField": {
         "!type": "fn(field: ?, index: ?, parent: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_insertField",
-        "!doc": "Removes field from previous parent and inserts into the new parent."
+        "!doc": "Removes field from previous parent and inserts into the new parent.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "openEditProperties": {
         "!type": "fn(field: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_openEditProperties",
-        "!doc": "Enables the settings tab."
+        "!doc": "Enables the settings tab.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "plotField": {
         "!type": "fn(field: ?, container: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_plotField",
-        "!doc": "Renders a field in the container."
+        "!doc": "Renders a field in the container.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "plotFields": {
         "!type": "fn(fields: ?, container: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_plotFields",
-        "!doc": "Renders a list of fields in the container."
+        "!doc": "Renders a list of fields in the container.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "selectFields": {
         "!type": "fn(fields: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_selectFields",
-        "!doc": "Adds fields to a `A.LinkedSet` instance."
+        "!doc": "Adds fields to a `A.LinkedSet` instance.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "simulateFocusField": {
         "!type": "fn(field: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_simulateFocusField",
-        "!doc": "Triggers a focus event in the current field and a blur event in the\nlast focused field."
+        "!doc": "Triggers a focus event in the current field and a blur event in the\nlast focused field.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        },
        "unselectFields": {
         "!type": "fn(fields: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#method_unselectFields",
-        "!doc": "Removes fields from the `A.LinkedSet` instance."
+        "!doc": "Removes fields from the `A.LinkedSet` instance.",
+        "!data": {
+         "submodule": "aui-form-builder-base"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilder`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilder`.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "EXTENDS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "FIELDS_TAB": {
        "!type": "number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_FIELDS_TAB",
-       "!doc": "Static property used to define the fields tab."
+       "!doc": "Static property used to define the fields tab.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       },
       "SETTINGS_TAB": {
        "!type": "number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilder.html#property_SETTINGS_TAB",
-       "!doc": "Static property used to define the settings tab."
+       "!doc": "Static property used to define the settings tab.",
+       "!data": {
+        "submodule": "aui-form-builder-base"
+       }
       }
      },
      "FormBuilderFieldBase": {
@@ -6375,12 +8659,18 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldBase.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       },
       "AUGMENTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldBase.html#property_AUGMENTS",
-       "!doc": "Static property used to define the augmented classes."
+       "!doc": "Static property used to define the augmented classes.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       }
      },
      "FormBuilderField": {
@@ -6391,58 +8681,91 @@
        "createField": {
         "!type": "fn(val: ?) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method_createField",
-        "!doc": "Creates the field using the `createField` method from\n`A.FormBuilder`."
+        "!doc": "Creates the field using the `createField` method from\n`A.FormBuilder`.",
+        "!data": {
+         "submodule": "aui-form-builder-field-base"
+        }
        },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method_getHTML",
-        "!doc": "Gets the field markup.\n\nTo developer: Implement this"
+        "!doc": "Gets the field markup.\n\nTo developer: Implement this",
+        "!data": {
+         "submodule": "aui-form-builder-field-base"
+        }
        },
        "getNode": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method_getNode",
-        "!doc": "Creates a `Node` from the HTML string."
+        "!doc": "Creates a `Node` from the HTML string.",
+        "!data": {
+         "submodule": "aui-form-builder-field-base"
+        }
        },
        "getProperties": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method_getProperties",
-        "!doc": "Gets properties from the property model."
+        "!doc": "Gets properties from the property model.",
+        "!data": {
+         "submodule": "aui-form-builder-field-base"
+        }
        },
        "getPropertyModel": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models. Each property model is made of a\nname, attribute, editor, and formatter."
+        "!doc": "Returns a list of property models. Each property model is made of a\nname, attribute, editor, and formatter.",
+        "!data": {
+         "submodule": "aui-form-builder-field-base"
+        }
        },
        "_getToolbarItems": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#method__getToolbarItems",
-        "!doc": "Gets a list of toolbar items."
+        "!doc": "Gets a list of toolbar items.",
+        "!data": {
+         "submodule": "aui-form-builder-field-base"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       },
       "HTML_PARSER": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderField.html#property_HTML_PARSER",
-       "!doc": "Object hash, defining how attribute values have to be parsed from markup."
+       "!doc": "Object hash, defining how attribute values have to be parsed from markup.",
+       "!data": {
+        "submodule": "aui-form-builder-field-base"
+       }
       }
      },
      "FormBuilderButtonField": {
@@ -6453,38 +8776,59 @@
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#method_getHTML",
-        "!doc": "Injects data into the template and returns the HTML result."
+        "!doc": "Injects data into the template and returns the HTML result.",
+        "!data": {
+         "submodule": "aui-form-builder-field-button"
+        }
        },
        "getPropertyModel": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
+        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel.",
+        "!data": {
+         "submodule": "aui-form-builder-field-button"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-button"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderButtonField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderButtonField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-button"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-form-builder-field-button"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-button"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderButtonField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-button"
+       }
       }
      },
      "FormBuilderCheckBoxField": {
@@ -6495,33 +8839,51 @@
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
+        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel.",
+        "!data": {
+         "submodule": "aui-form-builder-field-checkbox"
+        }
        },
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#method_getHTML",
-        "!doc": "Injects data into the template and returns the HTML result."
+        "!doc": "Injects data into the template and returns the HTML result.",
+        "!data": {
+         "submodule": "aui-form-builder-field-checkbox"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-checkbox"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderCheckBoxField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderCheckBoxField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-checkbox"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-checkbox"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderCheckBoxField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-checkbox"
+       }
       }
      },
      "FormBuilderFieldsetField": {
@@ -6532,38 +8894,59 @@
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#method_getHTML",
-        "!doc": "Injects data into the template and returns the HTML result."
+        "!doc": "Injects data into the template and returns the HTML result.",
+        "!data": {
+         "submodule": "aui-form-builder-field-fieldset"
+        }
        },
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the `A.TextCellEditor()`\nand `A.RadioCellEditor` models."
+        "!doc": "Returns a list of property models including the `A.TextCellEditor()`\nand `A.RadioCellEditor` models.",
+        "!data": {
+         "submodule": "aui-form-builder-field-fieldset"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-fieldset"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderFieldsetField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderFieldsetField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-fieldset"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-form-builder-field-fieldset"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-fieldset"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldsetField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-fieldset"
+       }
       }
      },
      "FormBuilderFileUploadField": {
@@ -6574,28 +8957,43 @@
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#method_getHTML",
-        "!doc": "Injects data into the template and returns the HTML result."
+        "!doc": "Injects data into the template and returns the HTML result.",
+        "!data": {
+         "submodule": "aui-form-builder-field-upload"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-upload"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderFileUploadField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderFileUploadField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-upload"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-upload"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFileUploadField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-upload"
+       }
       }
      },
      "OptionsEditor": {
@@ -6607,17 +9005,26 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.OptionsEditor`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.OptionsEditor`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.OptionsEditor.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       }
      },
      "FormBuilderMultipleChoiceField": {
@@ -6628,33 +9035,51 @@
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
+        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel.",
+        "!data": {
+         "submodule": "aui-form-builder-field-multiple-choice"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderMultipleChoiceField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderMultipleChoiceField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderMultipleChoiceField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-multiple-choice"
+       }
       }
      },
      "FormBuilderRadioField": {
@@ -6665,28 +9090,43 @@
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#method_getHTML",
-        "!doc": "Returns the HTML template."
+        "!doc": "Returns the HTML template.",
+        "!data": {
+         "submodule": "aui-form-builder-field-radio"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-radio"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderRadioField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderRadioField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-radio"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-radio"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderRadioField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-radio"
+       }
       }
      },
      "FormBuilderSelectField": {
@@ -6697,38 +9137,59 @@
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#method_getHTML",
-        "!doc": "Injects data into the template and returns the HTML result."
+        "!doc": "Injects data into the template and returns the HTML result.",
+        "!data": {
+         "submodule": "aui-form-builder-field-select"
+        }
        },
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
+        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel.",
+        "!data": {
+         "submodule": "aui-form-builder-field-select"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-select"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderSelectField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderSelectField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-select"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-form-builder-field-select"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-select"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderSelectField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-select"
+       }
       }
      },
      "FormBuilderTextField": {
@@ -6739,33 +9200,51 @@
        "getHTML": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#method_getHTML",
-        "!doc": "Injects data into the template and returns the HTML result."
+        "!doc": "Injects data into the template and returns the HTML result.",
+        "!data": {
+         "submodule": "aui-form-builder-field-text"
+        }
        },
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel."
+        "!doc": "Returns a list of property models including the `A.RadioCellEditor`\nmodel.",
+        "!data": {
+         "submodule": "aui-form-builder-field-text"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-text"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderTextField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderTextField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-text"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-text"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-text"
+       }
       }
      },
      "FormBuilderTextAreaField": {
@@ -6776,28 +9255,43 @@
        "getPropertyModel": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#method_getPropertyModel",
-        "!doc": "Returns a list of property models including the\n`A.TextAreaCellEditor` model."
+        "!doc": "Returns a list of property models including the\n`A.TextAreaCellEditor` model.",
+        "!data": {
+         "submodule": "aui-form-builder-field-textarea"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-form-builder-field-textarea"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderTextAreaField`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.FormBuilderTextAreaField`.",
+       "!data": {
+        "submodule": "aui-form-builder-field-textarea"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-form-builder-field-textarea"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderTextAreaField.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-form-builder-field-textarea"
+       }
       }
      }
     }
@@ -6972,7 +9466,11 @@
    },
    "aui_image_viewer": {
     "!data": {
-     "module": "aui-image-viewer"
+     "module": "aui-image-viewer",
+     "submodules": {
+      "aui-image-viewer-base": {},
+      "aui-image-viewer-gallery": {}
+     }
     },
     "A": {
      "ImageViewer": {
@@ -6983,83 +9481,131 @@
        "close": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_close",
-        "!doc": "Hides the `A.ImageViewer` instance."
+        "!doc": "Hides the `A.ImageViewer` instance.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "getLink": {
         "!type": "fn(currentIndex: number) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_getLink",
-        "!doc": "Gets the `Node` reference to the `currentIndex` element from\nthe [links](A.ImageViewer.html#attr_links)."
+        "!doc": "Gets the `Node` reference to the `currentIndex` element from\nthe [links](A.ImageViewer.html#attr_links).",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "getCurrentLink": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_getCurrentLink",
-        "!doc": "Gets the current loaded node link reference."
+        "!doc": "Gets the current loaded node link reference.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "loadImage": {
         "!type": "fn(src: string)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_loadImage",
-        "!doc": "Loads an image `src` on the `A.ImageViewer`."
+        "!doc": "Loads an image `src` on the `A.ImageViewer`.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "hasLink": {
         "!type": "fn(currentIndex: number) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_hasLink",
-        "!doc": "Checks if there is a node reference for the `currentIndex`."
+        "!doc": "Checks if there is a node reference for the `currentIndex`.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "hasNext": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_hasNext",
-        "!doc": "Checks if there is a next element to navigate."
+        "!doc": "Checks if there is a next element to navigate.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "hasPrev": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_hasPrev",
-        "!doc": "Checks if there is a previous element to navigate."
+        "!doc": "Checks if there is a previous element to navigate.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "hideControls": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_hideControls",
-        "!doc": "Hide all UI controls (i.e., arrows, close icon etc)."
+        "!doc": "Hide all UI controls (i.e., arrows, close icon etc).",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "next": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_next",
-        "!doc": "Loads the previous image."
+        "!doc": "Loads the previous image.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "preloadAllImages": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_preloadAllImages",
-        "!doc": "Preloads all images."
+        "!doc": "Preloads all images.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "preloadImage": {
         "!type": "fn(currentIndex: number)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_preloadImage",
-        "!doc": "Preloads an image based on its `index`."
+        "!doc": "Preloads an image based on its `index`.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "showLoading": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_showLoading",
-        "!doc": "Shows the loading icon."
+        "!doc": "Shows the loading icon.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        },
        "show": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#method_show",
-        "!doc": "Shows the `A.ImageViewer` UI."
+        "!doc": "Shows the `A.ImageViewer` UI.",
+        "!data": {
+         "submodule": "aui-image-viewer-base"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "CSS_PREFIX": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#property_CSS_PREFIX",
-       "!doc": "Static property provides a string to identify the CSS prefix."
+       "!doc": "Static property provides a string to identify the CSS prefix.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.ImageViewer`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.ImageViewer`.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       }
      },
      "ImageGallery": {
@@ -7070,43 +9616,67 @@
        "hidePagination": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#method_hidePagination",
-        "!doc": "Hides the [A.Pagination](A.Pagination.html) with the thumbnails list."
+        "!doc": "Hides the [A.Pagination](A.Pagination.html) with the thumbnails list.",
+        "!data": {
+         "submodule": "aui-image-viewer-gallery"
+        }
        },
        "pause": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#method_pause",
-        "!doc": "Pauses the slide show."
+        "!doc": "Pauses the slide show.",
+        "!data": {
+         "submodule": "aui-image-viewer-gallery"
+        }
        },
        "play": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#method_play",
-        "!doc": "Plays the slide show."
+        "!doc": "Plays the slide show.",
+        "!data": {
+         "submodule": "aui-image-viewer-gallery"
+        }
        },
        "show": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#method_show",
-        "!doc": "Shows the `A.ImageGallery`.\n\n**NOTE:**Overloads the [ImageViewer](A.ImageViewer.html) show method\nto not loadImage, the changeRequest now is responsible to do that if\nwe invoke the superclass show method its loading the image, and the\nchangeRequest loads again, avoiding double request."
+        "!doc": "Shows the `A.ImageGallery`.\n\n**NOTE:**Overloads the [ImageViewer](A.ImageViewer.html) show method\nto not loadImage, the changeRequest now is responsible to do that if\nwe invoke the superclass show method its loading the image, and the\nchangeRequest loads again, avoiding double request.",
+        "!data": {
+         "submodule": "aui-image-viewer-gallery"
+        }
        },
        "showPagination": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#method_showPagination",
-        "!doc": "Shows the [A.Pagination](A.Pagination.html) with the thumbnails list."
+        "!doc": "Shows the [A.Pagination](A.Pagination.html) with the thumbnails list.",
+        "!data": {
+         "submodule": "aui-image-viewer-gallery"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.ImageGallery`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.ImageGallery`.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageGallery.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       }
      }
     }
@@ -7162,7 +9732,10 @@
    },
    "aui_io": {
     "!data": {
-     "module": "aui-io"
+     "module": "aui-io",
+     "submodules": {
+      "aui-io-request": {}
+     }
     },
     "A": {
      "IORequest": {
@@ -7173,33 +9746,51 @@
        "getFormattedData": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#method_getFormattedData",
-        "!doc": "Applies the `YUI.AUI.defaults.io.dataFormatter` if\ndefined and return the formatted data."
+        "!doc": "Applies the `YUI.AUI.defaults.io.dataFormatter` if\ndefined and return the formatted data.",
+        "!data": {
+         "submodule": "aui-io-request"
+        }
        },
        "start": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#method_start",
-        "!doc": "Starts the IO transaction. Used to refresh the content also."
+        "!doc": "Starts the IO transaction. Used to refresh the content also.",
+        "!data": {
+         "submodule": "aui-io-request"
+        }
        },
        "stop": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#method_stop",
-        "!doc": "Stops the IO transaction."
+        "!doc": "Stops the IO transaction.",
+        "!data": {
+         "submodule": "aui-io-request"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-io-request"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the IORequest."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the IORequest.",
+       "!data": {
+        "submodule": "aui-io-request"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-io-request"
+       }
       }
      },
      "io": {
@@ -7209,7 +9800,10 @@
        "A.io.request": {
         "!type": "fn(uri: string, config: +config.A.io.requestConfig) -> +IORequest",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.io.html#method_A.io.request",
-        "!doc": "Static method to invoke the [IORequest](A.IORequest.html).\nLikewise [IO](A.io.html)."
+        "!doc": "Static method to invoke the [IORequest](A.IORequest.html).\nLikewise [IO](A.io.html).",
+        "!data": {
+         "submodule": "aui-io-request"
+        }
        }
       }
      }
@@ -7246,7 +9840,12 @@
    },
    "aui_node": {
     "!data": {
-     "module": "aui-node"
+     "module": "aui-node",
+     "submodules": {
+      "aui-node-base": {},
+      "aui-node-html5-print": {},
+      "aui-node-html5": {}
+     }
     },
     "A": {
      "Node": {
@@ -7256,42 +9855,66 @@
        "ancestors": {
         "!type": "fn(selector: string) -> +dom.NodeList",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_ancestors",
-        "!doc": "Returns the current ancestors of the node element. If a selector is\nspecified, the ancestors are filtered to match the selector.\n\nExample:\n\n```\nA.one(#nodeId).ancestors(div);\n```"
+        "!doc": "Returns the current ancestors of the node element. If a selector is\nspecified, the ancestors are filtered to match the selector.\n\nExample:\n\n```\nA.one(#nodeId).ancestors(div);\n```",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "ancestorsByClassName": {
         "!type": "fn(className: string) -> +dom.NodeList",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_ancestorsByClassName",
-        "!doc": "Returns the current ancestors of the node element filtered by a\nclassName. This is an optimized method for finding ancestors by a\nspecific CSS class name.\n\nExample:\n\n```\nA.one(#nodeId).ancestorsByClassName(aui-hide);\n```"
+        "!doc": "Returns the current ancestors of the node element filtered by a\nclassName. This is an optimized method for finding ancestors by a\nspecific CSS class name.\n\nExample:\n\n```\nA.one(#nodeId).ancestorsByClassName(aui-hide);\n```",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "attr": {
         "!type": "fn(name: string, value: string) -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_attr",
-        "!doc": "Gets or sets the value of an attribute for the first element in the set\nof matched elements. If only the `name` is passed it works as a getter.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.attr(title, Setting a new title attribute);\n// Alert the value of the title attribute: Setting a new title attribute\nalert( node.attr(title) );\n```"
+        "!doc": "Gets or sets the value of an attribute for the first element in the set\nof matched elements. If only the `name` is passed it works as a getter.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.attr(title, Setting a new title attribute);\n// Alert the value of the title attribute: Setting a new title attribute\nalert( node.attr(title) );\n```",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "clone": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_clone",
-        "!doc": "Normalizes the behavior of cloning a node, which by default should not\nclone the events that are attached to it.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.clone().appendTo(body);\n```"
+        "!doc": "Normalizes the behavior of cloning a node, which by default should not\nclone the events that are attached to it.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.clone().appendTo(body);\n```",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "center": {
         "!type": "fn(val: +yui.Array) -> !this",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_center",
-        "!doc": "Centralizes the current Node instance with the passed `val` Array, Node,\nString, or Region, if not specified, the body will be used.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\n// Center the `node` with the `#container`.\nnode.center(#container);\n```"
+        "!doc": "Centralizes the current Node instance with the passed `val` Array, Node,\nString, or Region, if not specified, the body will be used.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\n// Center the `node` with the `#container`.\nnode.center(#container);\n```",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "empty": {
         "!type": "fn() -> !this",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_empty",
-        "!doc": "Removes not only child (and other descendant) elements, but also any text\nwithin the set of matched elements. This is because, according to the DOM\nspecification, any string of text within an element is considered a child\nnode of that element.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.empty();\n```"
+        "!doc": "Removes not only child (and other descendant) elements, but also any text\nwithin the set of matched elements. This is because, according to the DOM\nspecification, any string of text within an element is considered a child\nnode of that element.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.empty();\n```",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getDOM": {
         "!type": "fn() -> +HTMLNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_getDOM",
-        "!doc": "Retrieves the DOM node bound to a Node instance. See\n[getDOMNode](Node.html#method_getDOMNode)."
+        "!doc": "Retrieves the DOM node bound to a Node instance. See\n[getDOMNode](Node.html#method_getDOMNode).",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getBorderWidth": {
         "!type": "fn(sides: string) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_getBorderWidth",
-        "!doc": "Returns the combined width of the border for the specified sides."
+        "!doc": "Returns the combined width of the border for the specified sides.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        }
       }
      },
@@ -7302,42 +9925,66 @@
        "all": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_all",
-        "!doc": "See [Node all](Node.html#method_all)."
+        "!doc": "See [Node all](Node.html#method_all).",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "first": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_first",
-        "!doc": "Returns the first element in the node list collection."
+        "!doc": "Returns the first element in the node list collection.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getDOM": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_getDOM",
-        "!doc": "See [Node getDOMNode](Node.html#method_getDOMNode)."
+        "!doc": "See [Node getDOMNode](Node.html#method_getDOMNode).",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "last": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_last",
-        "!doc": "Returns the last element in the node list collection."
+        "!doc": "Returns the last element in the node list collection.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "one": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_one",
-        "!doc": "See [Node one](Node.html#method_one)."
+        "!doc": "See [Node one](Node.html#method_one).",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getBody": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_getBody",
-        "!doc": "Gets the body node. Shortcut to `A.one(body)`."
+        "!doc": "Gets the body node. Shortcut to `A.one(body)`.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getDoc": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_getDoc",
-        "!doc": "Gets the document node. Shortcut to `A.one(document)`."
+        "!doc": "Gets the document node. Shortcut to `A.one(document)`.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getWin": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html#method_getWin",
-        "!doc": "Gets the window node. Shortcut to `A.one(window)`."
+        "!doc": "Gets the window node. Shortcut to `A.one(window)`.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        }
       }
      },
@@ -7348,38 +9995,70 @@
        "onAfterPrint": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HTML5.html#method_onAfterPrint",
-        "!doc": "Fires after a print."
+        "!doc": "Fires after a print.",
+        "!data": {
+         "submodule": "aui-node-html5-print"
+        }
        },
        "onBeforePrint": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HTML5.html#method_onBeforePrint",
-        "!doc": "Fires before a print."
+        "!doc": "Fires before a print.",
+        "!data": {
+         "submodule": "aui-node-html5-print"
+        }
        },
        "parseCSS": {
         "!type": "fn(cssText: ?) -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HTML5.html#method_parseCSS",
-        "!doc": "Navigates through the CSS joining rules and replacing content."
+        "!doc": "Navigates through the CSS joining rules and replacing content.",
+        "!data": {
+         "submodule": "aui-node-html5-print"
+        }
        },
        "restoreHTML": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HTML5.html#method_restoreHTML",
-        "!doc": "Restores the HTML from the `bodyClone` and `bodyEl` attributes."
+        "!doc": "Restores the HTML from the `bodyClone` and `bodyEl` attributes.",
+        "!data": {
+         "submodule": "aui-node-html5-print"
+        }
        },
        "writeHTML": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HTML5.html#method_writeHTML",
-        "!doc": "Generates the HTML for print."
+        "!doc": "Generates the HTML for print.",
+        "!data": {
+         "submodule": "aui-node-html5-print"
+        }
        },
        "IECreateFix": {
         "!type": "fn(frag: +node.Node, content: string) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HTML5.html#method_IECreateFix",
-        "!doc": "Receives a `frag` and a HTML content. This method shivs the HTML5\nnodes appended to a Node or fragment which is not on the document\nyet."
+        "!doc": "Receives a `frag` and a HTML content. This method shivs the HTML5\nnodes appended to a Node or fragment which is not on the document\nyet.",
+        "!data": {
+         "submodule": "aui-node-html5"
+        }
        }
       }
      }
     }
    },
    "node": {
+    "!data": {
+     "submodules": {
+      "event-custom-base": {},
+      "event-base": {},
+      "node-base": {},
+      "node-core": {},
+      "node-data": {},
+      "node-event-html5": {},
+      "node-event-simulate": {},
+      "node-load": {},
+      "node-pluginhost": {},
+      "node-style": {}
+     }
+    },
     "Node": {
      "!type": "fn(node: +DOMNode)",
      "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html",
@@ -7387,127 +10066,202 @@
       "getCenterXY": {
        "!type": "fn() -> +yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_getCenterXY",
-       "!doc": "Gets the current center position of the node in page coordinates."
+       "!doc": "Gets the current center position of the node in page coordinates.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "getMargin": {
        "!type": "fn(sides: string) -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_getMargin",
-       "!doc": "Returns the combined size of the margin for the specified sides."
+       "!doc": "Returns the combined size of the margin for the specified sides.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "getPadding": {
        "!type": "fn(sides: string) -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_getPadding",
-       "!doc": "Returns the combined width of the border for the specified sides."
+       "!doc": "Returns the combined width of the border for the specified sides.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "guid": {
        "!type": "fn() -> string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_guid",
-       "!doc": "Sets the id of the Node instance if the object does not have one. The\ngenerated id is based on a guid created by the\n[stamp](YUI.html#method_stamp) method."
+       "!doc": "Sets the id of the Node instance if the object does not have one. The\ngenerated id is based on a guid created by the\n[stamp](YUI.html#method_stamp) method.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "hover": {
        "!type": "fn(overFn: string, outFn: string) -> +node.Node",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_hover",
-       "!doc": "Creates a hover interaction."
+       "!doc": "Creates a hover interaction.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "html": {
        "!type": "fn(value: string)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_html",
-       "!doc": "Gets or sets the HTML contents of the node. If the `value` is passed its\nset the content of the element, otherwise it works as a getter for the\ncurrent content.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.html(Setting new HTML);\n// Alert the value of the current content\nalert( node.html() );\n```"
+       "!doc": "Gets or sets the HTML contents of the node. If the `value` is passed its\nset the content of the element, otherwise it works as a getter for the\ncurrent content.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.html(Setting new HTML);\n// Alert the value of the current content\nalert( node.html() );\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "outerHTML": {
        "!type": "fn() -> string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_outerHTML",
-       "!doc": "Gets the outerHTML of a node, which islike innerHTML, except that it\nactually contains the HTML of the node itself."
+       "!doc": "Gets the outerHTML of a node, which islike innerHTML, except that it\nactually contains the HTML of the node itself.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "placeAfter": {
        "!type": "fn(newNode: +node.Node) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_placeAfter",
-       "!doc": "Inserts a `newNode` after the node instance (i.e., as the next sibling).\nIf the reference node has no parent, then does nothing.\n\nExample:\n\n```\nvar titleNode = A.one(#titleNode);\nvar descriptionNode = A.one(#descriptionNode);\n// the description is usually shown after the title\ntitleNode.placeAfter(descriptionNode);\n```"
+       "!doc": "Inserts a `newNode` after the node instance (i.e., as the next sibling).\nIf the reference node has no parent, then does nothing.\n\nExample:\n\n```\nvar titleNode = A.one(#titleNode);\nvar descriptionNode = A.one(#descriptionNode);\n// the description is usually shown after the title\ntitleNode.placeAfter(descriptionNode);\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "placeBefore": {
        "!type": "fn(newNode: +node.Node) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_placeBefore",
-       "!doc": "Inserts a `newNode` before the node instance (i.e., as the previous\nsibling). If the reference node has no parent, then does nothing.\n\nExample:\n\n```\nvar descriptionNode = A.one(#descriptionNode);\nvar titleNode = A.one(#titleNode);\n// the title is usually shown before the description\ndescriptionNode.placeBefore(titleNode);\n```"
+       "!doc": "Inserts a `newNode` before the node instance (i.e., as the previous\nsibling). If the reference node has no parent, then does nothing.\n\nExample:\n\n```\nvar descriptionNode = A.one(#descriptionNode);\nvar titleNode = A.one(#titleNode);\n// the title is usually shown before the description\ndescriptionNode.placeBefore(titleNode);\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "prependTo": {
        "!type": "fn(selector: +node.Node) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_prependTo",
-       "!doc": "Inserts the node instance to the begining of the `selector` node (i.e.,\ninsert before the `firstChild` of the `selector`).\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.prependTo(body);\n```"
+       "!doc": "Inserts the node instance to the begining of the `selector` node (i.e.,\ninsert before the `firstChild` of the `selector`).\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.prependTo(body);\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "radioClass": {
        "!type": "fn(cssClass: string) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_radioClass",
-       "!doc": "Adds one or more CSS classes to an element and remove the class(es) from\nthe siblings of the element."
+       "!doc": "Adds one or more CSS classes to an element and remove the class(es) from\nthe siblings of the element.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "resetId": {
        "!type": "fn(prefix: string) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_resetId",
-       "!doc": "Generates an unique identifier and reset the id attribute of the node\ninstance using the new value. Invokes the [guid](Node.html#method_guid)."
+       "!doc": "Generates an unique identifier and reset the id attribute of the node\ninstance using the new value. Invokes the [guid](Node.html#method_guid).",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "selectText": {
        "!type": "fn(start: number, end: number)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_selectText",
-       "!doc": "Selects a substring of text inside of the input element."
+       "!doc": "Selects a substring of text inside of the input element.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "selectable": {
        "!type": "fn(noRecurse: ?) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_selectable",
-       "!doc": "Enables text selection for this element (normalized across browsers)."
+       "!doc": "Enables text selection for this element (normalized across browsers).",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "swallowEvent": {
        "!type": "fn(eventName: string, preventDefault: bool) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_swallowEvent",
-       "!doc": "Stops the specified event(s) from bubbling and optionally prevents the\ndefault action.\n\nExample:\n\n```\nvar anchor = A.one(a#anchorId);\nanchor.swallowEvent(click);\n```"
+       "!doc": "Stops the specified event(s) from bubbling and optionally prevents the\ndefault action.\n\nExample:\n\n```\nvar anchor = A.one(a#anchorId);\nanchor.swallowEvent(click);\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "text": {
        "!type": "fn(text: string)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_text",
-       "!doc": "Gets or sets the combined text contents of the node instance, including\nits descendants. If the `text` is passed its set the content of the\nelement, otherwise it works as a getter for the current content.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.text(Setting new text content);\n// Alert the value of the current content\nalert( node.text() );\n```"
+       "!doc": "Gets or sets the combined text contents of the node instance, including\nits descendants. If the `text` is passed its set the content of the\nelement, otherwise it works as a getter for the current content.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.text(Setting new text content);\n// Alert the value of the current content\nalert( node.text() );\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "toggle": {
        "!type": "fn(on: bool, callback: fn()) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_toggle",
-       "!doc": "Displays or hide the node instance.\n\nNOTE: This method assume that your node were hidden because of the\naui-hide css class were being used. This wont manipulate the inline\n`style.display` property."
+       "!doc": "Displays or hide the node instance.\n\nNOTE: This method assume that your node were hidden because of the\naui-hide css class were being used. This wont manipulate the inline\n`style.display` property.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "unselectable": {
        "!type": "fn(noRecurse: ?) -> !this",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_unselectable",
-       "!doc": "Disables text selection for this element (normalized across browsers)."
+       "!doc": "Disables text selection for this element (normalized across browsers).",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "val": {
        "!type": "fn(value: string)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_val",
-       "!doc": "Gets or sets the value attribute of the node instance. If the `value` is\npassed its set the value of the element, otherwise it works as a getter\nfor the current value.\n\nExample:\n\n```\nvar input = A.one(#inputId);\ninput.val(Setting new input value);\n// Alert the value of the input\nalert( input.val() );\n```"
+       "!doc": "Gets or sets the value attribute of the node instance. If the `value` is\npassed its set the value of the element, otherwise it works as a getter\nfor the current value.\n\nExample:\n\n```\nvar input = A.one(#inputId);\ninput.val(Setting new input value);\n// Alert the value of the input\nalert( input.val() );\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "width": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_width",
-       "!doc": "Returns the width of the content, not including the padding, border or\nmargin. If a width is passed, the nodes overall width is set to that size.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.width(); //return content width\nnode.width(100); // sets box width\n```"
+       "!doc": "Returns the width of the content, not including the padding, border or\nmargin. If a width is passed, the nodes overall width is set to that size.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.width(); //return content width\nnode.width(100); // sets box width\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "height": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_height",
-       "!doc": "Returns the height of the content, not including the padding, border or\nmargin. If a height is passed, the nodes overall height is set to that size.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.height(); //return content height\nnode.height(100); // sets box height\n```"
+       "!doc": "Returns the height of the content, not including the padding, border or\nmargin. If a height is passed, the nodes overall height is set to that size.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.height(); //return content height\nnode.height(100); // sets box height\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "innerWidth": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_innerWidth",
-       "!doc": "Returns the size of the box from inside of the border, which is the\n`offsetWidth` plus the padding on the left and right.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.innerWidth();\n```"
+       "!doc": "Returns the size of the box from inside of the border, which is the\n`offsetWidth` plus the padding on the left and right.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.innerWidth();\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "innerHeight": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_innerHeight",
-       "!doc": "Returns the size of the box from inside of the border, which is offsetHeight\nplus the padding on the top and bottom.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.innerHeight();\n```"
+       "!doc": "Returns the size of the box from inside of the border, which is offsetHeight\nplus the padding on the top and bottom.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.innerHeight();\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "outerWidth": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_outerWidth",
-       "!doc": "Returns the outer width of the box including the border, if true is passed as\nthe first argument, the margin is included.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.outerWidth();\nnode.outerWidth(true); // includes margin\n```"
+       "!doc": "Returns the outer width of the box including the border, if true is passed as\nthe first argument, the margin is included.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.outerWidth();\nnode.outerWidth(true); // includes margin\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "outerHeight": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html#method_outerHeight",
-       "!doc": "Returns the outer height of the box including the border, if true is passed\nas the first argument, the margin is included.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.outerHeight();\nnode.outerHeight(true); // includes margin\n```"
+       "!doc": "Returns the outer height of the box including the border, if true is passed\nas the first argument, the margin is included.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.outerHeight();\nnode.outerHeight(true); // includes margin\n```",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       }
      }
     }
@@ -7825,7 +10579,20 @@
    },
    "aui_scheduler": {
     "!data": {
-     "module": "aui-scheduler"
+     "module": "aui-scheduler",
+     "submodules": {
+      "aui-scheduler-base-calendar": {},
+      "aui-scheduler-base-event": {},
+      "aui-scheduler-base-view": {},
+      "aui-scheduler-base": {},
+      "aui-scheduler-event-recorder": {},
+      "aui-scheduler-view-agenda": {},
+      "aui-scheduler-view-day": {},
+      "aui-scheduler-view-month": {},
+      "aui-scheduler-view-table-dd": {},
+      "aui-scheduler-view-table": {},
+      "aui-scheduler-view-week": {}
+     }
     },
     "A": {
      "SchedulerCalendar": {
@@ -7837,7 +10604,10 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerCalendar.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerCalendar`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerCalendar`.",
+       "!data": {
+        "submodule": "aui-scheduler-base-calendar"
+       }
       }
      },
      "SchedulerEvent": {
@@ -7848,143 +10618,227 @@
        "addPaddingNode": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_addPaddingNode",
-        "!doc": "Sometimes an event will require a padding node that mimics the\nbehavior of the scheduler `event`s `node`. This can occur in the\nweek view when an event spans multiple days.\n\nFor example, an event beginning at 10pm on January 1 and ending on\n3am January 2nd would require a padding node. The `event`s `node`\nappears from January 1 from 10:00pm to 11:59pm and the `paddingNode`\nis rendered on the table from January 2 from 12:00am to 3:00am."
+        "!doc": "Sometimes an event will require a padding node that mimics the\nbehavior of the scheduler `event`s `node`. This can occur in the\nweek view when an event spans multiple days.\n\nFor example, an event beginning at 10pm on January 1 and ending on\n3am January 2nd would require a padding node. The `event`s `node`\nappears from January 1 from 10:00pm to 11:59pm and the `paddingNode`\nis rendered on the table from January 2 from 12:00am to 3:00am.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "clone": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_clone",
-        "!doc": "Clones the scheduler `event`."
+        "!doc": "Clones the scheduler `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "copyDates": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent, options: +yui.Object)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_copyDates",
-        "!doc": "Copies the dates from the `event` parameter to the instance `event`."
+        "!doc": "Copies the dates from the `event` parameter to the instance `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "copyPropagateAttrValues": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent, dontCopyMap: bool, options: +yui.Object)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_copyPropagateAttrValues",
-        "!doc": "Copies the propagate attribute vales from an `event` to this `event`."
+        "!doc": "Copies the propagate attribute vales from an `event` to this `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "getDaysDuration": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_getDaysDuration",
-        "!doc": "Gets the number of days an `event` is scheduled to take place."
+        "!doc": "Gets the number of days an `event` is scheduled to take place.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "getHoursDuration": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_getHoursDuration",
-        "!doc": "Gets the number of hours an `event` is scheduled to take place."
+        "!doc": "Gets the number of hours an `event` is scheduled to take place.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "getMinutesDuration": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_getMinutesDuration",
-        "!doc": "Gets the number of minutes an `event` is scheduled to take place."
+        "!doc": "Gets the number of minutes an `event` is scheduled to take place.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "getSecondsDuration": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_getSecondsDuration",
-        "!doc": "Gets the number of seconds an `event` is scheduled to take place."
+        "!doc": "Gets the number of seconds an `event` is scheduled to take place.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "sameEndDate": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_sameEndDate",
-        "!doc": "Determines if an `event`s end date is this same as this `event`."
+        "!doc": "Determines if an `event`s end date is this same as this `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "sameStartDate": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_sameStartDate",
-        "!doc": "Determines if an `event`s start date is this same as this `event`."
+        "!doc": "Determines if an `event`s start date is this same as this `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "isAfter": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_isAfter",
-        "!doc": "Determines if an `event` is after this `event`."
+        "!doc": "Determines if an `event` is after this `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "isBefore": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_isBefore",
-        "!doc": "Determines if an `event` is before this `event`."
+        "!doc": "Determines if an `event` is before this `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "intersects": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_intersects",
-        "!doc": "Determines if an `event` interescts with this `event`."
+        "!doc": "Determines if an `event` interescts with this `event`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "intersectHours": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_intersectHours",
-        "!doc": "Determines if an `event`s hours interescts with this `event`s\nhours."
+        "!doc": "Determines if an `event`s hours interescts with this `event`s\nhours.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "isDayBoundaryEvent": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_isDayBoundaryEvent",
-        "!doc": "Determines if a this `event` starts or ends at the beginning or end\nof a day."
+        "!doc": "Determines if a this `event` starts or ends at the beginning or end\nof a day.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "isDayOverlapEvent": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_isDayOverlapEvent",
-        "!doc": "Checks if the passed date is between `startDate` and `endDate`."
+        "!doc": "Checks if the passed date is between `startDate` and `endDate`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "getClearEndDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_getClearEndDate",
-        "!doc": "Clears the time fields from the `endDate`, effectively setting the\ntime to 12 noon."
+        "!doc": "Clears the time fields from the `endDate`, effectively setting the\ntime to 12 noon.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "getClearStartDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_getClearStartDate",
-        "!doc": "Clears the time fields from the `startDate`, effectively setting the\ntime to 12 noon."
+        "!doc": "Clears the time fields from the `startDate`, effectively setting the\ntime to 12 noon.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "move": {
         "!type": "fn(date: +datatype_date.Date, options: +yui.Object)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_move",
-        "!doc": "Moves this Scheduler event to a new date specified by the date\nparameter."
+        "!doc": "Moves this Scheduler event to a new date specified by the date\nparameter.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "setContent": {
         "!type": "fn(content: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_setContent",
-        "!doc": "Replaces each nodes current content with the `content`."
+        "!doc": "Replaces each nodes current content with the `content`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "setTitle": {
         "!type": "fn(content: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_setTitle",
-        "!doc": "Replaces each nodes current title with the `content`."
+        "!doc": "Replaces each nodes current title with the `content`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "syncNodeContentUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_syncNodeContentUI",
-        "!doc": "Sets the content of the Scheduler event to the content attribute\nvalue."
+        "!doc": "Sets the content of the Scheduler event to the content attribute\nvalue.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "syncNodeTitleUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_syncNodeTitleUI",
-        "!doc": "Sets the title of the Scheduler event to the a formated date."
+        "!doc": "Sets the title of the Scheduler event to the a formated date.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        },
        "split": {
         "!type": "fn() -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#method_split",
-        "!doc": "Splits an event into multiple days. Since an event can span across\nmultiple days in the week view, this event will be split into chunks\nfor each day column."
+        "!doc": "Splits an event into multiple days. Since an event can span across\nmultiple days in the week view, this event will be split into chunks\nfor each day column.",
+        "!data": {
+         "submodule": "aui-scheduler-base-event"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-base-event"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEvent`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEvent`.",
+       "!data": {
+        "submodule": "aui-scheduler-base-event"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-base-event"
+       }
       },
       "PROPAGATE_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvent.html#property_PROPAGATE_ATTRS",
-       "!doc": "Defines the propegate attribute keys for `Scheduler` events."
+       "!doc": "Defines the propegate attribute keys for `Scheduler` events.",
+       "!data": {
+        "submodule": "aui-scheduler-base-event"
+       }
       }
      },
      "SchedulerView": {
@@ -7995,68 +10849,107 @@
        "getAdjustedViewDate": {
         "!type": "fn(date: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_getAdjustedViewDate",
-        "!doc": "Returns a date value of the date with its time adjusted\nto midnight."
+        "!doc": "Returns a date value of the date with its time adjusted\nto midnight.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "flushViewCache": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_flushViewCache",
-        "!doc": "Removes all data from `evtDateStack`, `evtRenderedStack` and\n`rowDateTableStack`."
+        "!doc": "Removes all data from `evtDateStack`, `evtRenderedStack` and\n`rowDateTableStack`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_getNextDate",
-        "!doc": "Returns the value of the date that follows the views current\ndate."
+        "!doc": "Returns the value of the date that follows the views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "getPrevDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_getPrevDate",
-        "!doc": "Returns the value of the date that preceeds the views current\ndate."
+        "!doc": "Returns the value of the date that preceeds the views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "getToday": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_getToday",
-        "!doc": "Returns the value of the current date."
+        "!doc": "Returns the value of the current date.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "limitDate": {
         "!type": "fn(date: +datatype_date.Date, maxDate: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_limitDate",
-        "!doc": "Returns a clone of a given `date` that will adjust to the `maxDate`\nif it occurs after `maxDate`."
+        "!doc": "Returns a clone of a given `date` that will adjust to the `maxDate`\nif it occurs after `maxDate`.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "plotEvents": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_plotEvents",
-        "!doc": "Plots all events in the current view."
+        "!doc": "Plots all events in the current view.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "syncStdContent": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_syncStdContent",
-        "!doc": "Sync `SchedulerView` StdContent."
+        "!doc": "Sync `SchedulerView` StdContent.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        },
        "syncEventUI": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#method_syncEventUI",
-        "!doc": "Sync `event` on the UI."
+        "!doc": "Sync `event` on the UI.",
+        "!data": {
+         "submodule": "aui-scheduler-base-view"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-base-view"
+       }
       },
       "AUGMENTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#property_AUGMENTS",
-       "!doc": "Static property used to define the augmented classes."
+       "!doc": "Static property used to define the augmented classes.",
+       "!data": {
+        "submodule": "aui-scheduler-base-view"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerView`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerView`.",
+       "!data": {
+        "submodule": "aui-scheduler-base-view"
+       }
       },
       "BIND_UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html#property_BIND_UI_ATTRS",
-       "!doc": "Static property used to define the attributes\nfor the bindUI lifecycle phase."
+       "!doc": "Static property used to define the attributes\nfor the bindUI lifecycle phase.",
+       "!data": {
+        "submodule": "aui-scheduler-base-view"
+       }
       }
      },
      "SchedulerEvents": {
@@ -8067,13 +10960,19 @@
        "comparator": {
         "!type": "fn(model: +yui.Object) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvents.html#method_comparator",
-        "!doc": "Compares the inputs of a start and end date to see if adding `1` to the\nstart date time is larger than the difference between start and end date\ntimes."
+        "!doc": "Compares the inputs of a start and end date to see if adding `1` to the\nstart date time is larger than the difference between start and end date\ntimes.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEvents.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEvents`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEvents`.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       }
      },
      "SchedulerEventSupport": {
@@ -8082,53 +10981,83 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEventSupport`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEventSupport`.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       },
       "prototype": {
        "addEvents": {
         "!type": "fn(models: +yui.Array) -> +aui_scheduler.A.SchedulerEvents",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_addEvents",
-        "!doc": "Adds and returns the collection of events for this `Scheduler`."
+        "!doc": "Adds and returns the collection of events for this `Scheduler`.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "eachEvent": {
         "!type": "fn(fn: fn()) -> +aui_scheduler.A.SchedulerEvents",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_eachEvent",
-        "!doc": "Applies a `function` to the collection of `Scheduler` events."
+        "!doc": "Applies a `function` to the collection of `Scheduler` events.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "flushEvents": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_flushEvents",
-        "!doc": "Deletes each event in the collection of `Scheduler` events."
+        "!doc": "Deletes each event in the collection of `Scheduler` events.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "getEventByClientId": {
         "!type": "fn(clientId: string) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_getEventByClientId",
-        "!doc": "Returns the event by matching its `clientId`."
+        "!doc": "Returns the event by matching its `clientId`.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "getEvents": {
         "!type": "fn(filterFn: fn()) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_getEvents",
-        "!doc": "Gets a collection of events."
+        "!doc": "Gets a collection of events.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "getEventsByDay": {
         "!type": "fn(date: +datatype_date.Date, includeOverlap: bool) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_getEventsByDay",
-        "!doc": "Gets a collection of events within a given day. It will filter\noverlapping events by default unless `includeOverlap` is true."
+        "!doc": "Gets a collection of events within a given day. It will filter\noverlapping events by default unless `includeOverlap` is true.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "getIntersectEvents": {
         "!type": "fn(date: +datatype_date.Date) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_getIntersectEvents",
-        "!doc": "Returns the list of all events that intersect with a given date. Events\nthat are not visible are not included in this list."
+        "!doc": "Returns the list of all events that intersect with a given date. Events\nthat are not visible are not included in this list.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "removeEvents": {
         "!type": "fn(models: +yui.Array) -> +aui_scheduler.A.SchedulerEvents",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_removeEvents",
-        "!doc": "Removes given `SchedulerEvents` from the scheduler."
+        "!doc": "Removes given `SchedulerEvents` from the scheduler.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "resetEvents": {
         "!type": "fn(models: +yui.Array) -> +aui_scheduler.A.SchedulerEvents",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventSupport.html#method_resetEvents",
-        "!doc": "Completely replaces all `SchedulerEvents` in the list with the given\n`SchedulerEvents`."
+        "!doc": "Completely replaces all `SchedulerEvents` in the list with the given\n`SchedulerEvents`.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        }
       }
      },
@@ -8140,68 +11069,107 @@
        "getViewByName": {
         "!type": "fn(name: string) -> +aui_scheduler.A.SchedulerView",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_getViewByName",
-        "!doc": "Returns the `SchedulerView` that belongs to a given name."
+        "!doc": "Returns the `SchedulerView` that belongs to a given name.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "getStrings": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_getStrings",
-        "!doc": "Returns this `Scheduler`s `strings` attribute value."
+        "!doc": "Returns this `Scheduler`s `strings` attribute value.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "getString": {
         "!type": "fn(key: string) -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_getString",
-        "!doc": "Returns the string that matches the `key` type."
+        "!doc": "Returns the string that matches the `key` type.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "renderView": {
         "!type": "fn(view: +aui_scheduler.A.SchedulerView)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_renderView",
-        "!doc": "Renders the `SchedulerView` based on the given `view` parameter\nunder `instance.bodyNode`."
+        "!doc": "Renders the `SchedulerView` based on the given `view` parameter\nunder `instance.bodyNode`.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "plotViewEvents": {
         "!type": "fn(view: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_plotViewEvents",
-        "!doc": "Plots all events for the current view."
+        "!doc": "Plots all events for the current view.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "syncEventsUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_syncEventsUI",
-        "!doc": "Plots the `activeView` events value."
+        "!doc": "Plots the `activeView` events value.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "renderButtonGroup": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_renderButtonGroup",
-        "!doc": "Renders a new `ButtonGroup` and attaches it to the `Scheduler`\ninstances as a property `instance.buttonGroup`. It is rendered under\nthe `Scheduler` instances `viewsNode`."
+        "!doc": "Renders a new `ButtonGroup` and attaches it to the `Scheduler`\ninstances as a property `instance.buttonGroup`. It is rendered under\nthe `Scheduler` instances `viewsNode`.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        },
        "syncStdContent": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#method_syncStdContent",
-        "!doc": "Sync `SchedulerBase` StdContent."
+        "!doc": "Sync `SchedulerBase` StdContent.",
+        "!data": {
+         "submodule": "aui-scheduler-base"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerBase`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerBase`.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       },
       "HTML_PARSER": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#property_HTML_PARSER",
-       "!doc": "Contains an object hash, defining how attribute values are to be parsed\nfrom markup contained in the widgets bounding box."
+       "!doc": "Contains an object hash, defining how attribute values are to be parsed\nfrom markup contained in the widgets bounding box.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       },
       "UI_ATTRS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#property_UI_ATTRS",
-       "!doc": "Static property used to define the UI attributes."
+       "!doc": "Static property used to define the UI attributes.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       },
       "AUGMENTS": {
        "!type": "+yui.Array",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html#property_AUGMENTS",
-       "!doc": "Static property used to define the augmented classes."
+       "!doc": "Static property used to define the augmented classes.",
+       "!data": {
+        "submodule": "aui-scheduler-base"
+       }
       }
      },
      "SchedulerEventRecorder": {
@@ -8212,58 +11180,91 @@
        "getContentNode": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_getContentNode",
-        "!doc": "Gets the content node belonging to the `popover`."
+        "!doc": "Gets the content node belonging to the `popover`.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "getFormattedDate": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_getFormattedDate",
-        "!doc": "Returns the formatted date including start and end hours if the event\nis not `allDay`."
+        "!doc": "Returns the formatted date including start and end hours if the event\nis not `allDay`.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "getTemplateData": {
         "!type": "fn() -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_getTemplateData",
-        "!doc": "Returns this Scheduler event recorders `content`, and dates."
+        "!doc": "Returns this Scheduler event recorders `content`, and dates.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "getUpdatedSchedulerEvent": {
         "!type": "fn(optAttrMap: +yui.Object) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_getUpdatedSchedulerEvent",
-        "!doc": "Returns an updated event and also merges in any additional attributes\npassed in as `optAttrMap`."
+        "!doc": "Returns an updated event and also merges in any additional attributes\npassed in as `optAttrMap`.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "hidePopover": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_hidePopover",
-        "!doc": "Hides this Scheduler event recorders `popover` component."
+        "!doc": "Hides this Scheduler event recorders `popover` component.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "populateForm": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_populateForm",
-        "!doc": "Loads template data into the Scheduler event recorders form."
+        "!doc": "Loads template data into the Scheduler event recorders form.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "serializeForm": {
         "!type": "fn() -> string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_serializeForm",
-        "!doc": "Converts this event recorders form node object to a string."
+        "!doc": "Converts this event recorders form node object to a string.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        },
        "showPopover": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#method_showPopover",
-        "!doc": "Hides this Scheduler event recorders `popover` component."
+        "!doc": "Hides this Scheduler event recorders `popover` component.",
+        "!data": {
+         "submodule": "aui-scheduler-event-recorder"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-event-recorder"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEventRecorder`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerEventRecorder`.",
+       "!data": {
+        "submodule": "aui-scheduler-event-recorder"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerEventRecorder.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-event-recorder"
+       }
       }
      },
      "SchedulerAgendaView": {
@@ -8274,33 +11275,51 @@
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#method_getNextDate",
-        "!doc": "Returns the value of the date that follows the agenda views current\ndate."
+        "!doc": "Returns the value of the date that follows the agenda views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-agenda"
+        }
        },
        "getPrevDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#method_getPrevDate",
-        "!doc": "Returns the value of the date that preceeds the agenda views current\ndate."
+        "!doc": "Returns the value of the date that preceeds the agenda views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-agenda"
+        }
        },
        "plotEvents": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#method_plotEvents",
-        "!doc": "Plots all events in the current view."
+        "!doc": "Plots all events in the current view.",
+        "!data": {
+         "submodule": "aui-scheduler-view-agenda"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-view-agenda"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerAgendaView`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerAgendaView`.",
+       "!data": {
+        "submodule": "aui-scheduler-view-agenda"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerAgendaView.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-view-agenda"
+       }
       }
      },
      "SchedulerDayView": {
@@ -8311,138 +11330,219 @@
        "syncStdContent": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncStdContent",
-        "!doc": "Sync SchedulerView StdContent."
+        "!doc": "Sync SchedulerView StdContent.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "calculateEventHeight": {
         "!type": "fn(duration: number) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_calculateEventHeight",
-        "!doc": "Calculates and returns the height of an event based on a given\n`duration`."
+        "!doc": "Calculates and returns the height of an event based on a given\n`duration`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "calculateTop": {
         "!type": "fn(date: +datatype_date.Date) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_calculateTop",
-        "!doc": "Calculates and returns the value needed to get the `top` property\ngive a `date`."
+        "!doc": "Calculates and returns the value needed to get the `top` property\ngive a `date`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getNextDate",
-        "!doc": "Returns the value of the date that follows the day views current\ndate."
+        "!doc": "Returns the value of the date that follows the day views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getPrevDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getPrevDate",
-        "!doc": "Returns the value of the date that preceeds the day views current\ndate."
+        "!doc": "Returns the value of the date that preceeds the day views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getColumnByDate": {
         "!type": "fn(date: +datatype_date.Date) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getColumnByDate",
-        "!doc": "Returns the column `Node` determined by a given `Date`."
+        "!doc": "Returns the column `Node` determined by a given `Date`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getColumnShimByDate": {
         "!type": "fn(date: +datatype_date.Date) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getColumnShimByDate",
-        "!doc": "Returns the column shim `Node` determined by a given `Date`."
+        "!doc": "Returns the column shim `Node` determined by a given `Date`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getDateByColumn": {
         "!type": "fn(colNumber: ?) -> ?",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getDateByColumn",
-        "!doc": "Returns the `Date` determined by a given column `Node`."
+        "!doc": "Returns the `Date` determined by a given column `Node`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getDateDaysOffset": {
         "!type": "fn(date: +datatype_date.Date) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getDateDaysOffset",
-        "!doc": "Returns the number of offset days."
+        "!doc": "Returns the number of offset days.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getYCoordTime": {
         "!type": "fn(top: number) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getYCoordTime",
-        "!doc": "Returns the time at the Y coordinate from a given top position."
+        "!doc": "Returns the time at the Y coordinate from a given top position.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "plotEvent": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_plotEvent",
-        "!doc": "Plots a given event for the day view."
+        "!doc": "Plots a given event for the day view.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "plotEvents": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_plotEvents",
-        "!doc": "Plots all events in the current view."
+        "!doc": "Plots all events in the current view.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "syncColumnsUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncColumnsUI",
-        "!doc": "Syncs the `SchedulerView` `columns` instance. Lifecycle."
+        "!doc": "Syncs the `SchedulerView` `columns` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "syncDaysHeaderUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncDaysHeaderUI",
-        "!doc": "Syncs the `SchedulerView` `daysHeader` instance. Lifecycle."
+        "!doc": "Syncs the `SchedulerView` `daysHeader` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "syncEventsIntersectionUI": {
         "!type": "fn(columnEvents: +yui.Array)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncEventsIntersectionUI",
-        "!doc": "Syncs the `SchedulerView` `eventsIntersection` instance. Lifecycle."
+        "!doc": "Syncs the `SchedulerView` `eventsIntersection` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "syncEventHeightUI": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncEventHeightUI",
-        "!doc": "Syncs the `SchedulerView` `eventHeight` instance. Lifecycle."
+        "!doc": "Syncs the `SchedulerView` `eventHeight` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "syncEventTopUI": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncEventTopUI",
-        "!doc": "Syncs the `SchedulerView` `eventTop` instance. Lifecycle."
+        "!doc": "Syncs the `SchedulerView` `eventTop` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "syncHeaderViewUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_syncHeaderViewUI",
-        "!doc": "Syncs the `SchedulerView` `headerView` instance. Lifecycle."
+        "!doc": "Syncs the `SchedulerView` `headerView` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "calculateYDelta": {
         "!type": "fn(startXY: +yui.Array, xy: +yui.Array)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_calculateYDelta",
-        "!doc": "Calculates the Y delta between two XY coordinates."
+        "!doc": "Calculates the Y delta between two XY coordinates.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "findEventIntersections": {
         "!type": "fn(evt: +aui_scheduler.A.SchedulerEvent, Array: +yui.Array) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_findEventIntersections",
-        "!doc": "Returns a collection of `SchedulerEvents` as the parameter `events`\nthat intersect with `evt`."
+        "!doc": "Returns a collection of `SchedulerEvents` as the parameter `events`\nthat intersect with `evt`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getXYDelta": {
         "!type": "fn(event: +event_custom.EventFacade)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getXYDelta",
-        "!doc": "Calculates the XY delta between the `event.currentTarget` XY\ncoordinates as well as the XY coordinates from the event page."
+        "!doc": "Calculates the XY delta between the `event.currentTarget` XY\ncoordinates as well as the XY coordinates from the event page.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "getTickY": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_getTickY",
-        "!doc": "Returns the nearest multiple of 10 to half the height of this\n`SchedulerView`."
+        "!doc": "Returns the nearest multiple of 10 to half the height of this\n`SchedulerView`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        },
        "roundToNearestHour": {
         "!type": "fn(date: +datatype_date.Date, time: +yui.Array)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#method_roundToNearestHour",
-        "!doc": "Rounds a given `Date` to a given hour represented as time."
+        "!doc": "Rounds a given `Date` to a given hour represented as time.",
+        "!data": {
+         "submodule": "aui-scheduler-view-day"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-view-day"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerDayView`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerDayView`.",
+       "!data": {
+        "submodule": "aui-scheduler-view-day"
+       }
       },
       "HTML_PARSER": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#property_HTML_PARSER",
-       "!doc": "Contains an object hash, defining how attribute values are to be parsed\nfrom markup contained in the widgets bounding box."
+       "!doc": "Contains an object hash, defining how attribute values are to be parsed\nfrom markup contained in the widgets bounding box.",
+       "!data": {
+        "submodule": "aui-scheduler-view-day"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerDayView.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-view-day"
+       }
       }
      },
      "SchedulerMonthView": {
@@ -8453,38 +11553,59 @@
        "getAdjustedViewDate": {
         "!type": "fn(date: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#method_getAdjustedViewDate",
-        "!doc": "Returns a date value of the first day of the month with its time\nadjusted to midnight."
+        "!doc": "Returns a date value of the first day of the month with its time\nadjusted to midnight.",
+        "!data": {
+         "submodule": "aui-scheduler-view-month"
+        }
        },
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#method_getNextDate",
-        "!doc": "Returns the value of the date that follows the month views current\ndate."
+        "!doc": "Returns the value of the date that follows the month views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-month"
+        }
        },
        "getPrevDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#method_getPrevDate",
-        "!doc": "Returns the value of the date that preceeds the month views current\ndate."
+        "!doc": "Returns the value of the date that preceeds the month views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-month"
+        }
        },
        "plotEvents": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#method_plotEvents",
-        "!doc": "Plots all events in the current view."
+        "!doc": "Plots all events in the current view.",
+        "!data": {
+         "submodule": "aui-scheduler-view-month"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-view-month"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerMonthView`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerMonthView`.",
+       "!data": {
+        "submodule": "aui-scheduler-view-month"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerMonthView.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-view-month"
+       }
       }
      },
      "SchedulerTableViewDD": {
@@ -8493,38 +11614,59 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerTableViewDD`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerTableViewDD`.",
+       "!data": {
+        "submodule": "aui-scheduler-view-table-dd"
+       }
       },
       "prototype": {
        "viewDDBindUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_viewDDBindUI",
-        "!doc": "Binds the scheduler view `DD.Delegate` events on the UI. Lifecycle."
+        "!doc": "Binds the scheduler view `DD.Delegate` events on the UI. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table-dd"
+        }
        },
        "viewDDRenderUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_viewDDRenderUI",
-        "!doc": "Renders the scheduler view `DD.Delegate` instance. Lifecycle."
+        "!doc": "Renders the scheduler view `DD.Delegate` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table-dd"
+        }
        },
        "viewDDSyncUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_viewDDSyncUI",
-        "!doc": "Syncs the scheduler view `DD.Delegate` instance. Lifecycle."
+        "!doc": "Syncs the scheduler view `DD.Delegate` instance. Lifecycle.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table-dd"
+        }
        },
        "removeLasso": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_removeLasso",
-        "!doc": "Removes the table view lasso."
+        "!doc": "Removes the table view lasso.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table-dd"
+        }
        },
        "removeProxy": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_removeProxy",
-        "!doc": "Removes the table view proxy node."
+        "!doc": "Removes the table view proxy node.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table-dd"
+        }
        },
        "renderLasso": {
         "!type": "fn(startPos: +yui.Array, endPos: +yui.Array)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableViewDD.html#method_renderLasso",
-        "!doc": "Renders the table view lasso at the given `ij` coordinates for the table\nmatrix. It represents the selection for the table view, e.g. `j`\nrepresents a row and `i` a column, for `startPos` being `[0,0]` and\n`endPos` being `[0,3]`, this method will render three nodes representing\nthe selected lasso."
+        "!doc": "Renders the table view lasso at the given `ij` coordinates for the table\nmatrix. It represents the selection for the table view, e.g. `j`\nrepresents a row and `i` a column, for `startPos` being `[0,0]` and\n`endPos` being `[0,3]`, this method will render three nodes representing\nthe selected lasso.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table-dd"
+        }
        }
       }
      },
@@ -8536,93 +11678,147 @@
        "buildEventsRow": {
         "!type": "fn(rowStartDate: +datatype_date.Date, rowEndDate: +datatype_date.Date, rowDisplayIndex: number) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_buildEventsRow",
-        "!doc": "Builds a row of events."
+        "!doc": "Builds a row of events.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "buildEventsTable": {
         "!type": "fn(rowStartDate: +datatype_date.Date, rowEndDate: +datatype_date.Date) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_buildEventsTable",
-        "!doc": "Builds a table of events."
+        "!doc": "Builds a table of events.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "buildEventsTitleRow": {
         "!type": "fn(tableNode: +node.Node, rowStartDate: +datatype_date.Date, rowEndDate: +datatype_date.Date) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_buildEventsTitleRow",
-        "!doc": "Builds a row with the title and todays date."
+        "!doc": "Builds a row with the title and todays date.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "buildGridRowNode": {
         "!type": "fn(rowIndex: number) -> +node.Node",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_buildGridRowNode",
-        "!doc": "Builds a new row `Node` and appends a table grid `Node`. Returns the\nrow `Node`."
+        "!doc": "Builds a new row `Node` and appends a table grid `Node`. Returns the\nrow `Node`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "flushViewCache": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_flushViewCache",
-        "!doc": "Removes all data from `evtDateStack`, `evtRenderedStack` and\n`rowDateTableStack`."
+        "!doc": "Removes all data from `evtDateStack`, `evtRenderedStack` and\n`rowDateTableStack`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "getIntersectEvents": {
         "!type": "fn(date: +datatype_date.Date) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_getIntersectEvents",
-        "!doc": "Returns the list of all events that intersect with a given date."
+        "!doc": "Returns the list of all events that intersect with a given date.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_getNextDate",
-        "!doc": "Returns the value of the date that follows the `SchedulerTableView`s\n        current date."
+        "!doc": "Returns the value of the date that follows the `SchedulerTableView`s\n        current date.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "getPrevDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_getPrevDate",
-        "!doc": "Returns the value of the date that preceeds the\n`SchedulerTableView`s current date."
+        "!doc": "Returns the value of the date that preceeds the\n`SchedulerTableView`s current date.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "hideEventsOverlay": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_hideEventsOverlay",
-        "!doc": "Hides this `SchedulerViewTable` events `overlay` component."
+        "!doc": "Hides this `SchedulerViewTable` events `overlay` component.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "loopDates": {
         "!type": "fn(startDate: +datatype_date.Date, endDate: +datatype_date.Date, fn: fn(), incrementBy: string, factor: number)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_loopDates",
-        "!doc": "Applies a given function to each date between `startDate` and\n`endDate`."
+        "!doc": "Applies a given function to each date between `startDate` and\n`endDate`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "plotEvents": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_plotEvents",
-        "!doc": "Plots all events in the current view."
+        "!doc": "Plots all events in the current view.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "syncDaysHeaderUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_syncDaysHeaderUI",
-        "!doc": "Updates the `SchedulerTableView`s `colHeaderDaysNode` to reflect\nany changes made to the instance attributes."
+        "!doc": "Updates the `SchedulerTableView`s `colHeaderDaysNode` to reflect\nany changes made to the instance attributes.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "syncGridUI": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_syncGridUI",
-        "!doc": "Updates the `SchedulerTableView`s column grid by moving styling to\nthe current day cell `Node`."
+        "!doc": "Updates the `SchedulerTableView`s column grid by moving styling to\nthe current day cell `Node`.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        },
        "syncStdContent": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#method_syncStdContent",
-        "!doc": "Sync SchedulerView content."
+        "!doc": "Sync SchedulerView content.",
+        "!data": {
+         "submodule": "aui-scheduler-view-table"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-view-table"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerTableView`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerTableView`.",
+       "!data": {
+        "submodule": "aui-scheduler-view-table"
+       }
       },
       "HTML_PARSER": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#property_HTML_PARSER",
-       "!doc": "Contains an object hash, defining how attribute values are to be parsed\nfrom markup contained in the widgets bounding box."
+       "!doc": "Contains an object hash, defining how attribute values are to be parsed\nfrom markup contained in the widgets bounding box.",
+       "!data": {
+        "submodule": "aui-scheduler-view-table"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerTableView.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-view-table"
+       }
       }
      },
      "SchedulerWeekView": {
@@ -8633,45 +11829,70 @@
        "getAdjustedViewDate": {
         "!type": "fn(date: +datatype_date.Date) -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#method_getAdjustedViewDate",
-        "!doc": "Returns a date value of the first day of the week with its time\nadjusted to midnight."
+        "!doc": "Returns a date value of the first day of the week with its time\nadjusted to midnight.",
+        "!data": {
+         "submodule": "aui-scheduler-view-week"
+        }
        },
        "getNextDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#method_getNextDate",
-        "!doc": "Returns the value of the date that follows the week views current\ndate."
+        "!doc": "Returns the value of the date that follows the week views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-week"
+        }
        },
        "getPrevDate": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#method_getPrevDate",
-        "!doc": "Returns the value of the date that preceeds the week views current\ndate."
+        "!doc": "Returns the value of the date that preceeds the week views current\ndate.",
+        "!data": {
+         "submodule": "aui-scheduler-view-week"
+        }
        },
        "getToday": {
         "!type": "fn() -> +datatype_date.Date",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#method_getToday",
-        "!doc": "Returns the value of the week views current date."
+        "!doc": "Returns the value of the week views current date.",
+        "!data": {
+         "submodule": "aui-scheduler-view-week"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-scheduler-view-week"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerWeekView`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `SchedulerWeekView`.",
+       "!data": {
+        "submodule": "aui-scheduler-view-week"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerWeekView.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-scheduler-view-week"
+       }
       }
      }
     }
    },
    "aui_search": {
     "!data": {
-     "module": "aui-search"
+     "module": "aui-search",
+     "submodules": {
+      "aui-search-ternary-search-node": {},
+      "aui-search-ternary-search-tree": {}
+     }
     },
     "A": {
      "TernarySearchNode": {
@@ -8682,28 +11903,43 @@
        "isEndOfWord": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#method_isEndOfWord",
-        "!doc": "Converts the `word` attribute value to a `Boolean` and ensures a\n`Boolean` type."
+        "!doc": "Converts the `word` attribute value to a `Boolean` and ensures a\n`Boolean` type.",
+        "!data": {
+         "submodule": "aui-search-ternary-search-node"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-node"
+       }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#property_NS",
-       "!doc": "Static property provides a string to identify the namespace."
+       "!doc": "Static property provides a string to identify the namespace.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-node"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.TernarySearchNode`."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the `A.TernarySearchNode`.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-node"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchNode.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-node"
+       }
       }
      },
      "TernarySearchTree": {
@@ -8714,43 +11950,67 @@
        "add": {
         "!type": "fn(word: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#method_add",
-        "!doc": "Adds a word in the tree."
+        "!doc": "Adds a word in the tree.",
+        "!data": {
+         "submodule": "aui-search-ternary-search-tree"
+        }
        },
        "contains": {
         "!type": "fn(word: ?) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#method_contains",
-        "!doc": "Checks if the argument is part of the tree."
+        "!doc": "Checks if the argument is part of the tree.",
+        "!data": {
+         "submodule": "aui-search-ternary-search-tree"
+        }
        },
        "empty": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#method_empty",
-        "!doc": "Set trees root to `null`."
+        "!doc": "Set trees root to `null`.",
+        "!data": {
+         "submodule": "aui-search-ternary-search-tree"
+        }
        },
        "patternMatch": {
         "!type": "fn(pattern: ?) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#method_patternMatch",
-        "!doc": "Checks if a pattern match."
+        "!doc": "Checks if a pattern match.",
+        "!data": {
+         "submodule": "aui-search-ternary-search-tree"
+        }
        },
        "prefixSearch": {
         "!type": "fn(prefix: ?) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#method_prefixSearch",
-        "!doc": "Searches for a prefix in the tree."
+        "!doc": "Searches for a prefix in the tree.",
+        "!data": {
+         "submodule": "aui-search-ternary-search-tree"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-tree"
+       }
       },
       "NS": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#property_NS",
-       "!doc": "Static property provides a string to identify the namespace."
+       "!doc": "Static property provides a string to identify the namespace.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-tree"
+       }
       },
       "EXTENDS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TernarySearchTree.html#property_EXTENDS",
-       "!doc": "Static property used to define which component it extends."
+       "!doc": "Static property used to define which component it extends.",
+       "!data": {
+        "submodule": "aui-search-ternary-search-tree"
+       }
       }
      }
     }
@@ -9427,7 +12687,14 @@
    },
    "aui_tree": {
     "!data": {
-     "module": "aui-tree"
+     "module": "aui-tree",
+     "submodules": {
+      "aui-tree-data": {},
+      "aui-tree-io": {},
+      "aui-tree-node": {},
+      "aui-tree-paginator": {},
+      "aui-tree-view": {}
+     }
     },
     "A": {
      "TreeData": {
@@ -9438,148 +12705,235 @@
        "getNodeById": {
         "!type": "fn(uid: string) -> +aui_tree.TreeNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_getNodeById",
-        "!doc": "Get a TreeNode by id."
+        "!doc": "Get a TreeNode by id.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "isRegistered": {
         "!type": "fn(node: +aui_tree.TreeNode) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_isRegistered",
-        "!doc": "Whether the TreeNode is registered on this TreeData."
+        "!doc": "Whether the TreeNode is registered on this TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "updateReferences": {
         "!type": "fn(node: +aui_tree.TreeNode, parentNode: +aui_tree.TreeNode, ownerTree: +TreeView)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_updateReferences",
-        "!doc": "Update the references of the passed TreeNode."
+        "!doc": "Update the references of the passed TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "refreshIndex": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_refreshIndex",
-        "!doc": "Refresh the index (i.e. re-index all nodes)."
+        "!doc": "Refresh the index (i.e. re-index all nodes).",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "registerNode": {
         "!type": "fn(node: +aui_tree.TreeNode)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_registerNode",
-        "!doc": "Register the passed TreeNode on this TreeData."
+        "!doc": "Register the passed TreeNode on this TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "updateIndex": {
         "!type": "fn(index: +yui.Object)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_updateIndex",
-        "!doc": "Update the [index](A.TreeData.html#attr_index) attribute value."
+        "!doc": "Update the [index](A.TreeData.html#attr_index) attribute value.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "unregisterNode": {
         "!type": "fn(node: +aui_tree.TreeNode)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_unregisterNode",
-        "!doc": "Unregister the passed TreeNode from this TreeData."
+        "!doc": "Unregister the passed TreeNode from this TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "collapseAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_collapseAll",
-        "!doc": "Collapse all children of the TreeData."
+        "!doc": "Collapse all children of the TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "expandAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_expandAll",
-        "!doc": "Expand all children of the TreeData."
+        "!doc": "Expand all children of the TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "selectAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_selectAll",
-        "!doc": "Select all children of the TreeData."
+        "!doc": "Select all children of the TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "unselectAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_unselectAll",
-        "!doc": "Unselect all children of the TreeData."
+        "!doc": "Unselect all children of the TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "eachChildren": {
         "!type": "fn(fn: fn(), deep: bool)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_eachChildren",
-        "!doc": "Loop each children and execute the `fn` callback."
+        "!doc": "Loop each children and execute the `fn` callback.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "eachParent": {
         "!type": "fn(fn: fn())",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_eachParent",
-        "!doc": "Loop each parent node and execute the `fn` callback."
+        "!doc": "Loop each parent node and execute the `fn` callback.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "bubbleEvent": {
         "!type": "fn(eventType: string, args: +yui.Array, cancelBubbling: bool, stopActionPropagation: bool)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_bubbleEvent",
-        "!doc": "Bubble event to all parent nodes."
+        "!doc": "Bubble event to all parent nodes.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "createNode": {
         "!type": "fn(options: +yui.Object) -> +aui_tree.TreeNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_createNode",
-        "!doc": "Create a TreeNode instance."
+        "!doc": "Create a TreeNode instance.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "appendChild": {
         "!type": "fn(node: +aui_tree.TreeNode, cancelBubbling: bool)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_appendChild",
-        "!doc": "Append a child node to the TreeData."
+        "!doc": "Append a child node to the TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "item": {
         "!type": "fn(index: number) -> +aui_tree.TreeNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_item",
-        "!doc": "Get a TreeNode children by index."
+        "!doc": "Get a TreeNode children by index.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "indexOf": {
         "!type": "fn(node: +aui_tree.TreeNode) -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_indexOf",
-        "!doc": "Index of the passed TreeNode on the\n[children](A.TreeData.html#attr_children) attribute."
+        "!doc": "Index of the passed TreeNode on the\n[children](A.TreeData.html#attr_children) attribute.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "hasChildNodes": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_hasChildNodes",
-        "!doc": "Whether the TreeData contains children or not."
+        "!doc": "Whether the TreeData contains children or not.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "getChildren": {
         "!type": "fn(deep: bool) -> +yui.Array",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_getChildren",
-        "!doc": "Get an Array of the children nodes of the current TreeData."
+        "!doc": "Get an Array of the children nodes of the current TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "getEventOutputMap": {
         "!type": "fn(node: +TreeData) -> +yui.Object",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_getEventOutputMap",
-        "!doc": "Get an object containing metadata for the custom events."
+        "!doc": "Get an object containing metadata for the custom events.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "removeChild": {
         "!type": "fn(node: +TreeData)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_removeChild",
-        "!doc": "Remove the passed `node` from the current TreeData."
+        "!doc": "Remove the passed `node` from the current TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "_removeChild": {
         "!type": "fn(node: +TreeData)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method__removeChild",
-        "!doc": "Remove the passed `node` from the current TreeData."
+        "!doc": "Remove the passed `node` from the current TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "empty": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_empty",
-        "!doc": "Delete all children of the current TreeData."
+        "!doc": "Delete all children of the current TreeData.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "insert": {
         "!type": "fn(treeNode: +aui_tree.TreeNode, refTreeNode: +aui_tree.TreeNode, where: +aui_tree.TreeNode)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_insert",
-        "!doc": "Insert `treeNode` before or after the `refTreeNode`."
+        "!doc": "Insert `treeNode` before or after the `refTreeNode`.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "insertAfter": {
         "!type": "fn(treeNode: +aui_tree.TreeNode, refTreeNode: +aui_tree.TreeNode)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_insertAfter",
-        "!doc": "Insert `treeNode` after the `refTreeNode`."
+        "!doc": "Insert `treeNode` after the `refTreeNode`.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "insertBefore": {
         "!type": "fn(treeNode: +aui_tree.TreeNode, refTreeNode: +aui_tree.TreeNode)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_insertBefore",
-        "!doc": "Insert `treeNode` before the `refTreeNode`."
+        "!doc": "Insert `treeNode` before the `refTreeNode`.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        },
        "getNodeByChild": {
         "!type": "fn(child: +node.Node) -> +aui_tree.TreeNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#method_getNodeByChild",
-        "!doc": "Get a TreeNode instance by a child DOM Node."
+        "!doc": "Get a TreeNode instance by a child DOM Node.",
+        "!data": {
+         "submodule": "aui-tree-data"
+        }
        }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeData.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeData."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       }
      },
      "TreeViewIO": {
@@ -9588,33 +12942,51 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewIO."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewIO.",
+       "!data": {
+        "submodule": "aui-tree-io"
+       }
       },
       "prototype": {
        "initIO": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#method_initIO",
-        "!doc": "Initialize the IO transaction setup on the\n[io](A.TreeViewIO.html#attr_io) attribute."
+        "!doc": "Initialize the IO transaction setup on the\n[io](A.TreeViewIO.html#attr_io) attribute.",
+        "!data": {
+         "submodule": "aui-tree-io"
+        }
        },
        "ioStartHandler": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#method_ioStartHandler",
-        "!doc": "IO Start handler."
+        "!doc": "IO Start handler.",
+        "!data": {
+         "submodule": "aui-tree-io"
+        }
        },
        "ioCompleteHandler": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#method_ioCompleteHandler",
-        "!doc": "IO Complete handler."
+        "!doc": "IO Complete handler.",
+        "!data": {
+         "submodule": "aui-tree-io"
+        }
        },
        "ioSuccessHandler": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#method_ioSuccessHandler",
-        "!doc": "IO Success handler."
+        "!doc": "IO Success handler.",
+        "!data": {
+         "submodule": "aui-tree-io"
+        }
        },
        "ioFailureHandler": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewIO.html#method_ioFailureHandler",
-        "!doc": "IO Failure handler."
+        "!doc": "IO Failure handler.",
+        "!data": {
+         "submodule": "aui-tree-io"
+        }
        }
       }
      },
@@ -9626,78 +12998,123 @@
        "render": {
         "!type": "fn(container: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_render",
-        "!doc": "Render TreeNode."
+        "!doc": "Render TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "appendChild": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_appendChild",
-        "!doc": "Append child on TreeNode."
+        "!doc": "Append child on TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "collapse": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_collapse",
-        "!doc": "Collapse the current TreeNode."
+        "!doc": "Collapse the current TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "collapseAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_collapseAll",
-        "!doc": "Collapse all TreeNodes."
+        "!doc": "Collapse all TreeNodes.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "contains": {
         "!type": "fn(node: +aui_tree.TreeNode) -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_contains",
-        "!doc": "Check if the current TreeNode contains the passed `node`."
+        "!doc": "Check if the current TreeNode contains the passed `node`.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "createNodes": {
         "!type": "fn(nodes: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_createNodes",
-        "!doc": "Create nodes."
+        "!doc": "Create nodes.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "expand": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_expand",
-        "!doc": "Expand the current TreeNode."
+        "!doc": "Expand the current TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "expandAll": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_expandAll",
-        "!doc": "Expand all TreeNodes."
+        "!doc": "Expand all TreeNodes.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "getDepth": {
         "!type": "fn() -> number",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_getDepth",
-        "!doc": "Get the depth of the current TreeNode."
+        "!doc": "Get the depth of the current TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "hasChildNodes": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_hasChildNodes",
-        "!doc": "Check if it has child nodes."
+        "!doc": "Check if it has child nodes.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "isSelected": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_isSelected",
-        "!doc": "Whether the current TreeNode is selected or not."
+        "!doc": "Whether the current TreeNode is selected or not.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "isLeaf": {
         "!type": "fn() -> bool",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_isLeaf",
-        "!doc": "Whether the current TreeNode is ancestor of the passed `node` or not."
+        "!doc": "Whether the current TreeNode is ancestor of the passed `node` or not.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "toggle": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#method_toggle",
-        "!doc": "Toggle the current TreeNode, `collapsed` or `expanded`."
+        "!doc": "Toggle the current TreeNode, `collapsed` or `expanded`.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNodeIO": {
@@ -9708,28 +13125,43 @@
        "createNodes": {
         "!type": "fn(nodes: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#method_createNodes",
-        "!doc": "Create nodes."
+        "!doc": "Create nodes.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "expand": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#method_expand",
-        "!doc": "Expand the current TreeNodeIO."
+        "!doc": "Expand the current TreeNodeIO.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "_onIOSuccess": {
         "!type": "fn(event: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#method__onIOSuccess",
-        "!doc": "Fire when IO success."
+        "!doc": "Fire when IO success.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNodeCheck": {
@@ -9740,33 +13172,51 @@
        "check": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#method_check",
-        "!doc": "Check the current TreeNode."
+        "!doc": "Check the current TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "uncheck": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#method_uncheck",
-        "!doc": "Uncheck the current TreeNode."
+        "!doc": "Uncheck the current TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "toggleCheck": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#method_toggleCheck",
-        "!doc": "Toggle the check status of the current TreeNode."
+        "!doc": "Toggle the check status of the current TreeNode.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "isChecked": {
         "!type": "fn() -> ?",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#method_isChecked",
-        "!doc": "Whether the current TreeNodeCheck is checked."
+        "!doc": "Whether the current TreeNodeCheck is checked.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeCheck.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNodeTask": {
@@ -9777,18 +13227,27 @@
        "check": {
         "!type": "fn(originalTarget: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeTask.html#method_check",
-        "!doc": "Check the current TreeNodeTask."
+        "!doc": "Check the current TreeNodeTask.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        },
        "uncheck": {
         "!type": "fn(originalTarget: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeTask.html#method_uncheck",
-        "!doc": "Uncheck the current TreeNodeTask."
+        "!doc": "Uncheck the current TreeNodeTask.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeTask.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNodeRadio": {
@@ -9799,18 +13258,27 @@
        "check": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#method_check",
-        "!doc": "Check the current TreeNodeRadio."
+        "!doc": "Check the current TreeNodeRadio.",
+        "!data": {
+         "submodule": "aui-tree-node"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeRadio.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNodeRadio."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNodeRadio.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeViewPaginator": {
@@ -9819,7 +13287,10 @@
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewPaginator.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView.",
+       "!data": {
+        "submodule": "aui-tree-paginator"
+       }
       }
      },
      "TreeView": {
@@ -9830,18 +13301,27 @@
        "createNodes": {
         "!type": "fn(nodes: ?)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#method_createNodes",
-        "!doc": "Create Nodes."
+        "!doc": "Create Nodes.",
+        "!data": {
+         "submodule": "aui-tree-view"
+        }
        }
       },
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-view"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView.",
+       "!data": {
+        "submodule": "aui-tree-view"
+       }
       }
      },
      "TreeViewDD": {
@@ -9853,12 +13333,18 @@
       "NAME": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#property_NAME",
-       "!doc": "Static property provides a string to identify the class."
+       "!doc": "Static property provides a string to identify the class.",
+       "!data": {
+        "submodule": "aui-tree-view"
+       }
       },
       "ATTRS": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeViewDD.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewDD."
+       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewDD.",
+       "!data": {
+        "submodule": "aui-tree-view"
+       }
       }
      }
     },
@@ -9869,7 +13355,10 @@
       "nodeTypes": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/TreeNode.html#property_nodeTypes",
-       "!doc": "TreeNode types hash map.\n\n```\nA.TreeNode.nodeTypes = {\n radio: A.TreeNodeRadio,\n task: A.TreeNodeTask,\n check: A.TreeNodeCheck,\n node: A.TreeNode,\n io: A.TreeNodeIO\n};\n```"
+       "!doc": "TreeNode types hash map.\n\n```\nA.TreeNode.nodeTypes = {\n radio: A.TreeNodeRadio,\n task: A.TreeNodeTask,\n check: A.TreeNodeCheck,\n node: A.TreeNode,\n io: A.TreeNodeIO\n};\n```",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      }
     }

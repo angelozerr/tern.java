@@ -197,132 +197,210 @@
     "allowNone": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_allowNone",
-     "!doc": "Wheather displays the \"none\" link on the Calendar footer."
+     "!doc": "Wheather displays the \"none\" link on the Calendar footer.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "blankDays": {
      "!type": "+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_blankDays",
-     "!doc": "NodeList containing all the DOM elements for\neach blank day. If not specified try to query using HTML_PARSER\nan element inside contentBox which matches\n<code>aui-calendar-day-blank</code>."
+     "!doc": "NodeList containing all the DOM elements for\neach blank day. If not specified try to query using HTML_PARSER\nan element inside contentBox which matches\n<code>aui-calendar-day-blank</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "currentDay": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_currentDay",
-     "!doc": "Current day number."
+     "!doc": "Current day number.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "currentMonth": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_currentMonth",
-     "!doc": "Current month number."
+     "!doc": "Current month number.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "currentYear": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_currentYear",
-     "!doc": "Current year number."
+     "!doc": "Current year number.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "dateFormat": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_dateFormat",
-     "!doc": "The default date format string which can be overriden for\nlocalization support. The format must be valid according to\n<a href=\"DataType.Date.html\">A.DataType.Date.format</a>."
+     "!doc": "The default date format string which can be overriden for\nlocalization support. The format must be valid according to\n<a href=\"DataType.Date.html\">A.DataType.Date.format</a>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "dates": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_dates",
-     "!doc": "Dates which the calendar will show as selected by default."
+     "!doc": "Dates which the calendar will show as selected by default.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "firstDayOfWeek": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_firstDayOfWeek",
-     "!doc": "First day of the week: Sunday is 0, Monday is 1."
+     "!doc": "First day of the week: Sunday is 0, Monday is 1.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "headerContentNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_headerContentNode",
-     "!doc": "DOM node reference to be the header of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-hd</code>."
+     "!doc": "DOM node reference to be the header of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-hd</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "headerTitleNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_headerTitleNode",
-     "!doc": "DOM node reference to be the title of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-title</code>."
+     "!doc": "DOM node reference to be the title of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-title</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "iconNextNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_iconNextNode",
-     "!doc": "DOM node reference to be the icon next of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-prev</code>."
+     "!doc": "DOM node reference to be the icon next of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-prev</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "iconPrevNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_iconPrevNode",
-     "!doc": "DOM node reference to be the icon prev of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-prev</code>."
+     "!doc": "DOM node reference to be the icon prev of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-prev</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "maxDate": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_maxDate",
-     "!doc": "Maximum allowable date. Values supported by the Date\nconstructor are supported."
+     "!doc": "Maximum allowable date. Values supported by the Date\nconstructor are supported.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "minDate": {
      "!type": "+Date",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_minDate",
-     "!doc": "Minimum allowable date. Values supported by the Date\nconstructor are supported."
+     "!doc": "Minimum allowable date. Values supported by the Date\nconstructor are supported.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "monthDays": {
      "!type": "+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_monthDays",
-     "!doc": "NodeList reference containing the days of the month of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-day</code>."
+     "!doc": "NodeList reference containing the days of the month of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-day</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "monthDaysNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_monthDaysNode",
-     "!doc": "DOM node reference which contains all month days nodes of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-monthdays</code>."
+     "!doc": "DOM node reference which contains all month days nodes of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-monthdays</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "noneLinkNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_noneLinkNode",
-     "!doc": "DOM node reference to be the \"none\" link of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-title</code>."
+     "!doc": "DOM node reference to be the \"none\" link of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-title</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "paddingDaysEnd": {
      "!type": "+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_paddingDaysEnd",
-     "!doc": "NodeList containing all the DOM elements for\neach blank day. If not specified try to query using HTML_PARSER\nan element inside contentBox which matches\n<code>aui-calendar-day-blank</code>."
+     "!doc": "NodeList containing all the DOM elements for\neach blank day. If not specified try to query using HTML_PARSER\nan element inside contentBox which matches\n<code>aui-calendar-day-blank</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "paddingDaysStart": {
      "!type": "+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_paddingDaysStart",
-     "!doc": "NodeList containing all the DOM elements for\neach blank day. If not specified try to query using HTML_PARSER\nan element inside contentBox which matches\n<code>aui-calendar-day-blank</code>."
+     "!doc": "NodeList containing all the DOM elements for\neach blank day. If not specified try to query using HTML_PARSER\nan element inside contentBox which matches\n<code>aui-calendar-day-blank</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "selectMultipleDates": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_selectMultipleDates",
-     "!doc": "Wether accepts to select multiple dates."
+     "!doc": "Wether accepts to select multiple dates.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "setValue": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_setValue",
-     "!doc": "If true set the selected date with the correct\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a> to the\nvalue of the input field which is hosting the Calendar."
+     "!doc": "If true set the selected date with the correct\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a> to the\nvalue of the input field which is hosting the Calendar.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "showOtherMonth": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_showOtherMonth",
-     "!doc": "Wheather displays the days for the other months."
+     "!doc": "Wheather displays the days for the other months.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "showToday": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_showToday",
-     "!doc": "Wheather displays the \"today\" link on the Calendar footer."
+     "!doc": "Wheather displays the \"today\" link on the Calendar footer.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "todayLinkNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_todayLinkNode",
-     "!doc": "DOM node reference to be the \"today\" link of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-title</code>."
+     "!doc": "DOM node reference to be the \"today\" link of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-title</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "weekDays": {
      "!type": "+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_weekDays",
-     "!doc": "NodeList reference containing the days of the week of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-week</code>."
+     "!doc": "NodeList reference containing the days of the week of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-week</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     },
     "weekDaysNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_weekDaysNode",
-     "!doc": "DOM node reference which contains all week days nodes of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-weekdays</code>."
+     "!doc": "DOM node reference which contains all week days nodes of the Calendar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-calendar-weekdays</code>.",
+     "!data": {
+      "submodule": "aui-calendar-base"
+     }
     }
    },
    "CharCounterConfig": {
@@ -497,92 +575,146 @@
     "appendOrder": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_appendOrder",
-     "!doc": "The order the selects elements are appended to the\n<a href=\"DatePickerSelect.html#config_srcNode\">srcNode</a>."
+     "!doc": "The order the selects elements are appended to the\n<a href=\"DatePickerSelect.html#config_srcNode\">srcNode</a>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "buttonNode": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_buttonNode",
-     "!doc": "DOM Node to display the button of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-buttonitem</code>."
+     "!doc": "DOM Node to display the button of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-buttonitem</code>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "calendar": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_calendar",
-     "!doc": "<a href=\"Calendar.html\">Calendar</a> configuration Object.</a>"
+     "!doc": "<a href=\"Calendar.html\">Calendar</a> configuration Object.</a>",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "dayNode": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_dayNode",
-     "!doc": "DOM Node to display the day of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>."
+     "!doc": "DOM Node to display the day of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "dayNodeName": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_dayNodeName",
-     "!doc": "Name attribute used on the\n<a href=\"DatePickerSelect.html#config_dayNode\">dayNode</a>."
+     "!doc": "Name attribute used on the\n<a href=\"DatePickerSelect.html#config_dayNode\">dayNode</a>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "monthNode": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_monthNode",
-     "!doc": "DOM Node to display the month of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>."
+     "!doc": "DOM Node to display the month of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "monthNodeName": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_monthNodeName",
-     "!doc": "Name attribute used on the\n<a href=\"DatePickerSelect.html#config_monthNode\">monthNode</a>."
+     "!doc": "Name attribute used on the\n<a href=\"DatePickerSelect.html#config_monthNode\">monthNode</a>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "nullableDay": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_nullableDay",
-     "!doc": "If true the select element for the day will be nullable"
+     "!doc": "If true the select element for the day will be nullable",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "nullableMonth": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_nullableMonth",
-     "!doc": "If true the select element for the month will be nullable"
+     "!doc": "If true the select element for the month will be nullable",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "nullableYear": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_nullableYear",
-     "!doc": "If true the select element for the year will be nullable"
+     "!doc": "If true the select element for the year will be nullable",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "populateDay": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_populateDay",
-     "!doc": "If true the select element for the days will be automatic\npopulated."
+     "!doc": "If true the select element for the days will be automatic\npopulated.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "populateMonth": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_populateMonth",
-     "!doc": "If true the select element for the month will be automatic\npopulated."
+     "!doc": "If true the select element for the month will be automatic\npopulated.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "populateYear": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_populateYear",
-     "!doc": "If true the select element for the year will be automatic\npopulated."
+     "!doc": "If true the select element for the year will be automatic\npopulated.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "selectWrapperNode": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_selectWrapperNode",
-     "!doc": "DOM Node to display the selects of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-select-wrapper</code>."
+     "!doc": "DOM Node to display the selects of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-select-wrapper</code>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "trigger": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_trigger",
-     "!doc": "Trigger element to open the calendar. Inherited from\n<a href=\"OverlayContext.html#config_trigger\">OverlayContext</a>."
+     "!doc": "Trigger element to open the calendar. Inherited from\n<a href=\"OverlayContext.html#config_trigger\">OverlayContext</a>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "yearNode": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_yearNode",
-     "!doc": "DOM Node to display the year of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>."
+     "!doc": "DOM Node to display the year of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "yearNodeName": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_yearNodeName",
-     "!doc": "Name attribute used on the\n<a href=\"DatePickerSelect.html#config_yearNode\">yearNode</a>."
+     "!doc": "Name attribute used on the\n<a href=\"DatePickerSelect.html#config_yearNode\">yearNode</a>.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     },
     "yearRange": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_yearRange",
-     "!doc": "Year range to be displayed on the year select element. By default\nit displays from -10 to +10 years from the current year."
+     "!doc": "Year range to be displayed on the year select element. By default\nit displays from -10 to +10 years from the current year.",
+     "!data": {
+      "submodule": "aui-calendar-datepicker-select"
+     }
     }
    },
    "DialogConfig": {
@@ -716,122 +848,194 @@
     "anim": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_anim",
-     "!doc": "If <code>true</code> the navigation is animated."
+     "!doc": "If <code>true</code> the navigation is animated.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "caption": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_caption",
-     "!doc": "The caption of the displayed image."
+     "!doc": "The caption of the displayed image.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "captionFromTitle": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_captionFromTitle",
-     "!doc": "If <code>true</code> the <a\nhref=\"ImageViewer.html#config_caption\">caption</a> will be pulled\nfrom the title DOM attribute."
+     "!doc": "If <code>true</code> the <a\nhref=\"ImageViewer.html#config_caption\">caption</a> will be pulled\nfrom the title DOM attribute.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "centered": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_centered",
-     "!doc": "If <code>true</code> the Overlay with the image will be positioned\non the center of the viewport."
+     "!doc": "If <code>true</code> the Overlay with the image will be positioned\non the center of the viewport.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "currentIndex": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_currentIndex",
-     "!doc": "Index of the current image."
+     "!doc": "Index of the current image.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "image": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_image",
-     "!doc": "Image node element used to load the images."
+     "!doc": "Image node element used to load the images.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "imageAnim": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_imageAnim",
-     "!doc": "Configuration attributes passed to the <a href=\"Anim.html\">Anim</a>\nclass."
+     "!doc": "Configuration attributes passed to the <a href=\"Anim.html\">Anim</a>\nclass.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "infoTemplate": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_infoTemplate",
-     "!doc": "String template used to display the information."
+     "!doc": "String template used to display the information.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "links": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_links",
-     "!doc": "Selector or NodeList containing the links where the ImageViewer\nextracts the information to generate the thumbnails."
+     "!doc": "Selector or NodeList containing the links where the ImageViewer\nextracts the information to generate the thumbnails.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "loading": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_loading",
-     "!doc": "Whether the image is during a loading state."
+     "!doc": "Whether the image is during a loading state.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "modal": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_modal",
-     "!doc": "Displays the modal <a href=\"OverlayMask.html\">OverlayMask</a> on\nthe viewport. Set to <code>false</code> to disable."
+     "!doc": "Displays the modal <a href=\"OverlayMask.html\">OverlayMask</a> on\nthe viewport. Set to <code>false</code> to disable.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "preloadAllImages": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_preloadAllImages",
-     "!doc": "Preload the neighbor image (i.e., the previous and next image based\non the current load one)."
+     "!doc": "Preload the neighbor image (i.e., the previous and next image based\non the current load one).",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "showClose": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_showClose",
-     "!doc": "Show close icon control."
+     "!doc": "Show close icon control.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "showArrows": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_showArrows",
-     "!doc": "Show the arrow controls."
+     "!doc": "Show the arrow controls.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "totalLinks": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_totalLinks",
-     "!doc": "Helper attribute to get the <code>size</code> of the <a\nhref=\"ImageViewer.html#config_links\">links</a> NodeList."
+     "!doc": "Helper attribute to get the <code>size</code> of the <a\nhref=\"ImageViewer.html#config_links\">links</a> NodeList.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "arrowLeftEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_arrowLeftEl",
-     "!doc": "The element to be used as arrow left."
+     "!doc": "The element to be used as arrow left.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "arrowRightEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_arrowRightEl",
-     "!doc": "The element to be used as arrow right."
+     "!doc": "The element to be used as arrow right.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "captionEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_captionEl",
-     "!doc": "The element to be used as caption."
+     "!doc": "The element to be used as caption.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "closeEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_closeEl",
-     "!doc": "The element to be used as close."
+     "!doc": "The element to be used as close.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "infoEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_infoEl",
-     "!doc": "The element to be used as info."
+     "!doc": "The element to be used as info.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "loader": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_loader",
-     "!doc": "HTML element to house the <code>img</code> which is being loaded."
+     "!doc": "HTML element to house the <code>img</code> which is being loaded.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "loadingEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_loadingEl",
-     "!doc": "The element to be used as loading."
+     "!doc": "The element to be used as loading.",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "maxHeight": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_maxHeight",
-     "!doc": "The maximum height of the element"
+     "!doc": "The maximum height of the element",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     },
     "maxWidth": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_maxWidth",
-     "!doc": "The maximum width of the element"
+     "!doc": "The maximum width of the element",
+     "!data": {
+      "submodule": "aui-image-viewer-base"
+     }
     }
    },
    "ImageGalleryConfig": {
@@ -839,67 +1043,106 @@
     "autoPlay": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_autoPlay",
-     "!doc": "If <code>true</code> the slide show will be played when the\nImageGallery is displayed."
+     "!doc": "If <code>true</code> the slide show will be played when the\nImageGallery is displayed.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "delay": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_delay",
-     "!doc": "Delay in milliseconds to change to the next image."
+     "!doc": "Delay in milliseconds to change to the next image.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "paginator": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_paginator",
-     "!doc": "<a href=\"Paginator.html\">Paginator</a> configuration Object. The\n<code>Paginator</code> handles the thumbnails control."
+     "!doc": "<a href=\"Paginator.html\">Paginator</a> configuration Object. The\n<code>Paginator</code> handles the thumbnails control.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "paginatorEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_paginatorEl",
-     "!doc": "Element which contains the <a href=\"Paginator.html\">Paginator</a>\nwith the thumbnails."
+     "!doc": "Element which contains the <a href=\"Paginator.html\">Paginator</a>\nwith the thumbnails.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "paginatorInstance": {
      "!type": "+aui_paginator.Paginator",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_paginatorInstance",
-     "!doc": "Stores the <a href=\"Paginator.html\">Paginator</a> instance."
+     "!doc": "Stores the <a href=\"Paginator.html\">Paginator</a> instance.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "paused": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_paused",
-     "!doc": "If <code>true</code> the slide show is paused."
+     "!doc": "If <code>true</code> the slide show is paused.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "pausedLabel": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_pausedLabel",
-     "!doc": "Label to display when the slide show is paused."
+     "!doc": "Label to display when the slide show is paused.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "playing": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_playing",
-     "!doc": "If <code>true</code> the slide show is playing."
+     "!doc": "If <code>true</code> the slide show is playing.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "playingLabel": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_playingLabel",
-     "!doc": "Label to display when the slide show is playing."
+     "!doc": "Label to display when the slide show is playing.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "repeat": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_repeat",
-     "!doc": "Restart the navigation when reach the last element."
+     "!doc": "Restart the navigation when reach the last element.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "showPlayer": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_showPlayer",
-     "!doc": "Show the player controls (i.e., pause and show buttons)."
+     "!doc": "Show the player controls (i.e., pause and show buttons).",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "toolbar": {
      "!type": "+Toolbar constructor.",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_toolbar",
-     "!doc": "<a href=\"Toolbar.html\">Toolbar</a> with a play, and pause buttons."
+     "!doc": "<a href=\"Toolbar.html\">Toolbar</a> with a play, and pause buttons.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     },
     "useOriginalImage": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_useOriginalImage",
-     "!doc": "If <code>true</code> will use the original image as thumbnails."
+     "!doc": "If <code>true</code> will use the original image as thumbnails.",
+     "!data": {
+      "submodule": "aui-image-viewer-gallery"
+     }
     }
    },
    "A": {
@@ -909,42 +1152,66 @@
       "node": {
        "!type": "+node.Node",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_node",
-       "!doc": "Plug IO in any object we want, the setContent will use the node to\nset the content."
+       "!doc": "Plug IO in any object we want, the setContent will use the node to\nset the content.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "failureMessage": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_failureMessage",
-       "!doc": "Message to be set on the content when the transaction fails."
+       "!doc": "Message to be set on the content when the transaction fails.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "loadingMask": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_loadingMask",
-       "!doc": "Options passed to the <a href=\"LoadingMask.html\">LoadingMask</a>."
+       "!doc": "Options passed to the <a href=\"LoadingMask.html\">LoadingMask</a>.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "parseContent": {
        "!type": "bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_parseContent",
-       "!doc": "If true the <a href=\"ParseContent.html\">ParseContent</a> plugin\nwill be plugged to the <a href=\"A.Plugin.IO.html#config_node\">node</a>."
+       "!doc": "If true the <a href=\"ParseContent.html\">ParseContent</a> plugin\nwill be plugged to the <a href=\"A.Plugin.IO.html#config_node\">node</a>.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "showLoading": {
        "!type": "bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_showLoading",
-       "!doc": "Show the <a href=\"LoadingMask.html\">LoadingMask</a> covering the <a\nhref=\"A.Plugin.IO.html#config_node\">node</a> while loading."
+       "!doc": "Show the <a href=\"LoadingMask.html\">LoadingMask</a> covering the <a\nhref=\"A.Plugin.IO.html#config_node\">node</a> while loading.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "section": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_section",
-       "!doc": "Section where the content will be set in case you are plugging it\non a instace of <a href=\"WidgetStdMod.html\">WidgetStdMod</a>."
+       "!doc": "Section where the content will be set in case you are plugging it\non a instace of <a href=\"WidgetStdMod.html\">WidgetStdMod</a>.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "type": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_type",
-       "!doc": "Type of the <code>instance</code> we are pluggin the A.Plugin.IO.\nCould be a Node, or a Widget."
+       "!doc": "Type of the <code>instance</code> we are pluggin the A.Plugin.IO.\nCould be a Node, or a Widget.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       },
       "where": {
        "!type": "string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_where",
-       "!doc": "Where to insert the content, AFTER, BEFORE or REPLACE. If youre plugging a Node, there is a fourth option called OUTER that will not only replace the entire node itself. This is different from REPLACE, in that REPLACE will replace the *contents* of the node, OUTER will replace the entire Node itself."
+       "!doc": "Where to insert the content, AFTER, BEFORE or REPLACE. If youre plugging a Node, there is a fourth option called OUTER that will not only replace the entire node itself. This is different from REPLACE, in that REPLACE will replace the *contents* of the node, OUTER will replace the entire Node itself.",
+       "!data": {
+        "submodule": "aui-io-plugin"
+       }
       }
      }
     }
@@ -954,92 +1221,146 @@
     "autoLoad": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_autoLoad",
-     "!doc": "If <code>true</code> invoke the\n<a href=\"IORequest.html#method_start\">start</a> method automatically,\ninitializing the IO transaction."
+     "!doc": "If <code>true</code> invoke the\n<a href=\"IORequest.html#method_start\">start</a> method automatically,\ninitializing the IO transaction.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "cache": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_cache",
-     "!doc": "If <code>false</code> the current timestamp will be appended to the\nurl, avoiding the url to be cached."
+     "!doc": "If <code>false</code> the current timestamp will be appended to the\nurl, avoiding the url to be cached.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "dataType": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_dataType",
-     "!doc": "The type of the request (i.e., could be xml, json, javascript, text)."
+     "!doc": "The type of the request (i.e., could be xml, json, javascript, text).",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "responseData": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_responseData",
-     "!doc": "This is a normalized attribute for the response data. Its useful\nto retrieve the correct type for the\n<a href=\"IORequest.html#config_dataType\">dataType</a> (i.e., in json\nrequests the <code>responseData</code>) is a JSONObject."
+     "!doc": "This is a normalized attribute for the response data. Its useful\nto retrieve the correct type for the\n<a href=\"IORequest.html#config_dataType\">dataType</a> (i.e., in json\nrequests the <code>responseData</code>) is a JSONObject.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "uri": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_uri",
-     "!doc": "URI to be requested using AJAX."
+     "!doc": "URI to be requested using AJAX.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "active": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_active",
-     "!doc": "Whether the transaction is active or not."
+     "!doc": "Whether the transaction is active or not.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "cfg": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_cfg",
-     "!doc": "Object containing all the\n<a href=\"io.html#configattributes\">IO Configuration Attributes</a>.\nThis Object is passed to the <code>A.io</code> internally."
+     "!doc": "Object containing all the\n<a href=\"io.html#configattributes\">IO Configuration Attributes</a>.\nThis Object is passed to the <code>A.io</code> internally.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "transaction": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_transaction",
-     "!doc": "Stores the IO Object of the current transaction."
+     "!doc": "Stores the IO Object of the current transaction.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "arguments": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_arguments",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "context": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_context",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "data": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_data",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "form": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_form",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "headers": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_headers",
-     "!doc": "Set the correct ACCEPT header based on the dataType."
+     "!doc": "Set the correct ACCEPT header based on the dataType.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "method": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_method",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "selector": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_selector",
-     "!doc": "A selector to be used to query against the response of the\nrequest. Only works if the response is XML or HTML."
+     "!doc": "A selector to be used to query against the response of the\nrequest. Only works if the response is XML or HTML.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "sync": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_sync",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "timeout": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_timeout",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     },
     "xdr": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_xdr",
-     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>."
+     "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
+     "!data": {
+      "submodule": "aui-io-request"
+     }
     }
    },
    "LiveSearchConfig": {
@@ -1113,32 +1434,50 @@
     "anim": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_anim",
-     "!doc": "Enable or disable the animation for hide and show. Used as the\n<a href=\"Anim.html\">Anim</a> configuration attributes.\n\n<pre><code>anim: {\n show: {\n \tduration: .9\n },\n hide: {\n \tduration: .2\n }\n}\n</code></pre>"
+     "!doc": "Enable or disable the animation for hide and show. Used as the\n<a href=\"Anim.html\">Anim</a> configuration attributes.\n\n<pre><code>anim: {\n show: {\n \tduration: .9\n },\n hide: {\n \tduration: .2\n }\n}\n</code></pre>",
+     "!data": {
+      "submodule": "aui-overlay-context-panel"
+     }
     },
     "arrow": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_arrow",
-     "!doc": "Position where the arrow will be placed. See\n<a href=\"OverlayContextPanel.html#config_showArrow\">showArrow</a>. If its\nnot set, it will get the value set on the\n<a href=\"OverlayContext.html#config_align\">align</a> point. Here is a\nlist of valid arrows bc, bl, br, cc, lb, lc, lt, rb,\nrc, rl."
+     "!doc": "Position where the arrow will be placed. See\n<a href=\"OverlayContextPanel.html#config_showArrow\">showArrow</a>. If its\nnot set, it will get the value set on the\n<a href=\"OverlayContext.html#config_align\">align</a> point. Here is a\nlist of valid arrows bc, bl, br, cc, lb, lc, lt, rb,\nrc, rl.",
+     "!data": {
+      "submodule": "aui-overlay-context-panel"
+     }
     },
     "hideOn": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_hideOn",
-     "!doc": "See <a href=\"OverlayContext.html#config_hideOn\">hideOn</a>."
+     "!doc": "See <a href=\"OverlayContext.html#config_hideOn\">hideOn</a>.",
+     "!data": {
+      "submodule": "aui-overlay-context-panel"
+     }
     },
     "showOn": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_showOn",
-     "!doc": "See <a href=\"OverlayContext.html#config_showOn\">showOn</a>."
+     "!doc": "See <a href=\"OverlayContext.html#config_showOn\">showOn</a>.",
+     "!data": {
+      "submodule": "aui-overlay-context-panel"
+     }
     },
     "showArrow": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_showArrow",
-     "!doc": "If true the OverlayContextPanel will show an arrow positioned on the\n<a href=\"OverlayContextPanel.html#config_arrow\">arrow</a> point."
+     "!doc": "If true the OverlayContextPanel will show an arrow positioned on the\n<a href=\"OverlayContextPanel.html#config_arrow\">arrow</a> point.",
+     "!data": {
+      "submodule": "aui-overlay-context-panel"
+     }
     },
     "stack": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_stack",
-     "!doc": "Gives stacking habilities to the OverlayContextPanel."
+     "!doc": "Gives stacking habilities to the OverlayContextPanel.",
+     "!data": {
+      "submodule": "aui-overlay-context-panel"
+     }
     }
    },
    "OverlayContextConfig": {
@@ -1146,57 +1485,90 @@
     "align": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_align",
-     "!doc": "Inherited from <a href=\"Overlay.html#config_align\">Overlay</a>."
+     "!doc": "Inherited from <a href=\"Overlay.html#config_align\">Overlay</a>.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "cancellableHide": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_cancellableHide",
-     "!doc": "Cancel auto hide delay if the user interact with the Overlay\n(focus, click, mouseover)"
+     "!doc": "Cancel auto hide delay if the user interact with the Overlay\n(focus, click, mouseover)",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "currentNode": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_currentNode",
-     "!doc": "OverlayContext allow multiple elements to be the\n<a href=\"OverlayContext.html#config_trigger\">trigger</a>, the\ncurrentNode stores the current active one."
+     "!doc": "OverlayContext allow multiple elements to be the\n<a href=\"OverlayContext.html#config_trigger\">trigger</a>, the\ncurrentNode stores the current active one.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "hideOn": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_hideOn",
-     "!doc": "The event which is responsible to hide the OverlayContext."
+     "!doc": "The event which is responsible to hide the OverlayContext.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "hideOnDocumentClick": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_hideOnDocumentClick",
-     "!doc": "If true the instance is registered on the\n<a href=\"OverlayContextManager.html\">OverlayContextManager</a> static\nclass and will be hide when the user click on document."
+     "!doc": "If true the instance is registered on the\n<a href=\"OverlayContextManager.html\">OverlayContextManager</a> static\nclass and will be hide when the user click on document.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "hideDelay": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_hideDelay",
-     "!doc": "Number of milliseconds after the hide method is invoked to hide the\nOverlayContext."
+     "!doc": "Number of milliseconds after the hide method is invoked to hide the\nOverlayContext.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "showOn": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_showOn",
-     "!doc": "The event which is responsible to show the OverlayContext."
+     "!doc": "The event which is responsible to show the OverlayContext.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "showDelay": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_showDelay",
-     "!doc": "Number of milliseconds after the show method is invoked to show the\nOverlayContext."
+     "!doc": "Number of milliseconds after the show method is invoked to show the\nOverlayContext.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "trigger": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_trigger",
-     "!doc": "Node, NodeList or Selector which will be used as trigger elements\nto show or hide the OverlayContext."
+     "!doc": "Node, NodeList or Selector which will be used as trigger elements\nto show or hide the OverlayContext.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "useARIA": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_useARIA",
-     "!doc": "True if Overlay should use ARIA plugin"
+     "!doc": "True if Overlay should use ARIA plugin",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     },
     "visible": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_visible",
-     "!doc": "If true the OverlayContext is visible by default after the render phase.\nInherited from <a href=\"Overlay.html\">Overlay</a>."
+     "!doc": "If true the OverlayContext is visible by default after the render phase.\nInherited from <a href=\"Overlay.html\">Overlay</a>.",
+     "!data": {
+      "submodule": "aui-overlay-context"
+     }
     }
    },
    "OverlayManagerConfig": {
@@ -1204,7 +1576,10 @@
     "zIndexBase": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#attribute_zIndexBase",
-     "!doc": "The zIndex base to be used on the stacking for all overlays\nregistered on the OverlayManager."
+     "!doc": "The zIndex base to be used on the stacking for all overlays\nregistered on the OverlayManager.",
+     "!data": {
+      "submodule": "aui-overlay-manager"
+     }
     }
    },
    "OverlayMaskConfig": {
@@ -1212,37 +1587,58 @@
     "alignPoints": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_alignPoints",
-     "!doc": "Points to align the <a href=\"Overlay.html\">Overlay</a> used as\nmask."
+     "!doc": "Points to align the <a href=\"Overlay.html\">Overlay</a> used as\nmask.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     },
     "background": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_background",
-     "!doc": "Background color of the mask."
+     "!doc": "Background color of the mask.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     },
     "target": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_target",
-     "!doc": "Node where the mask will be positioned and re-dimensioned. The\ndefault is the document, which means that if not specified the mask\ntakes the full screen."
+     "!doc": "Node where the mask will be positioned and re-dimensioned. The\ndefault is the document, which means that if not specified the mask\ntakes the full screen.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     },
     "opacity": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_opacity",
-     "!doc": "CSS opacity of the mask."
+     "!doc": "CSS opacity of the mask.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     },
     "shim": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_shim",
-     "!doc": "Use shim option."
+     "!doc": "Use shim option.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     },
     "visible": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_visible",
-     "!doc": "If true the Overlay is visible by default after the render phase.\nInherited from <a href=\"Overlay.html\">Overlay</a>."
+     "!doc": "If true the Overlay is visible by default after the render phase.\nInherited from <a href=\"Overlay.html\">Overlay</a>.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     },
     "zIndex": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_zIndex",
-     "!doc": "zIndex of the OverlayMask."
+     "!doc": "zIndex of the OverlayMask.",
+     "!data": {
+      "submodule": "aui-overlay-mask"
+     }
     }
    },
    "PaginatorConfig": {
@@ -1712,17 +2108,26 @@
     "container": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_container",
-     "!doc": "Container to nest children nodes. If has cntainer its not a leaf."
+     "!doc": "Container to nest children nodes. If has cntainer its not a leaf.",
+     "!data": {
+      "submodule": "aui-tree-data"
+     }
     },
     "children": {
      "!type": "+yui.Array",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_children",
-     "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode instance)."
+     "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode instance).",
+     "!data": {
+      "submodule": "aui-tree-data"
+     }
     },
     "index": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_index",
-     "!doc": "Index the nodes."
+     "!doc": "Index the nodes.",
+     "!data": {
+      "submodule": "aui-tree-data"
+     }
     }
    },
    "TreeNodeConfig": {
@@ -1730,67 +2135,106 @@
     "draggable": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_draggable",
-     "!doc": "If true the TreeNode is draggable."
+     "!doc": "If true the TreeNode is draggable.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "ownerTree": {
      "!type": "+aui_tree.TreeView",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_ownerTree",
-     "!doc": "TreeView which contains the current TreeNode."
+     "!doc": "TreeView which contains the current TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "label": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_label",
-     "!doc": "Label of the TreeNode."
+     "!doc": "Label of the TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "expanded": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_expanded",
-     "!doc": "Whether the TreeNode is expanded by default."
+     "!doc": "Whether the TreeNode is expanded by default.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "id": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_id",
-     "!doc": "Id of the TreeNode."
+     "!doc": "Id of the TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "leaf": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_leaf",
-     "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf)."
+     "!doc": "Whether the TreeNode could have children or not (i.e. if any\nchildren is present the TreeNode is a leaf).",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "nextSibling": {
      "!type": "+aui_tree.TreeNode",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_nextSibling",
-     "!doc": "Next sibling of the current TreeNode."
+     "!doc": "Next sibling of the current TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "prevSibling": {
      "!type": "+aui_tree.TreeNode",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_prevSibling",
-     "!doc": "Previous sibling of the current TreeNode."
+     "!doc": "Previous sibling of the current TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "parentNode": {
      "!type": "+aui_tree.TreeNode",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_parentNode",
-     "!doc": "Parent node of the current TreeNode."
+     "!doc": "Parent node of the current TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "labelEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_labelEl",
-     "!doc": "Label element to house the <code>label</code> attribute."
+     "!doc": "Label element to house the <code>label</code> attribute.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "hitAreaEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_hitAreaEl",
-     "!doc": "Hitarea element."
+     "!doc": "Hitarea element.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "alwaysShowHitArea": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_alwaysShowHitArea",
-     "!doc": "Always show the hitarea icon."
+     "!doc": "Always show the hitarea icon.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "iconEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_iconEl",
-     "!doc": "Icon element."
+     "!doc": "Icon element.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     }
    },
    "TreeNodeIOConfig": {
@@ -1798,22 +2242,34 @@
     "io": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#attribute_io",
-     "!doc": "IO options for the current TreeNode load the children."
+     "!doc": "IO options for the current TreeNode load the children.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "loading": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#attribute_loading",
-     "!doc": "Whether the current TreeNode IO transaction is loading."
+     "!doc": "Whether the current TreeNode IO transaction is loading.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "loaded": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#attribute_loaded",
-     "!doc": "Whether the current TreeNode has loaded the content."
+     "!doc": "Whether the current TreeNode has loaded the content.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "cache": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#attribute_cache",
-     "!doc": "Whether the current TreeNode should cache the loaded content or not."
+     "!doc": "Whether the current TreeNode should cache the loaded content or not.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     }
    },
    "TreeNodeCheckConfig": {
@@ -1821,22 +2277,34 @@
     "checked": {
      "!type": "bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checked",
-     "!doc": "Whether the TreeNode is checked or not."
+     "!doc": "Whether the TreeNode is checked or not.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "checkName": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checkName",
-     "!doc": "Name of the checkbox element used on the current TreeNode."
+     "!doc": "Name of the checkbox element used on the current TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "checkContainerEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checkContainerEl",
-     "!doc": "Container element for the checkbox."
+     "!doc": "Container element for the checkbox.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     },
     "checkEl": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checkEl",
-     "!doc": "Checkbox element."
+     "!doc": "Checkbox element.",
+     "!data": {
+      "submodule": "aui-tree-node"
+     }
     }
    },
    "TreeViewConfig": {
@@ -1844,17 +2312,26 @@
     "type": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#attribute_type",
-     "!doc": "Type of the treeview (i.e. could be file or normal)."
+     "!doc": "Type of the treeview (i.e. could be file or normal).",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     },
     "lastSelected": {
      "!type": "+aui_tree.TreeNode",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#attribute_lastSelected",
-     "!doc": "Last selected TreeNode."
+     "!doc": "Last selected TreeNode.",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     },
     "io": {
      "!type": "+yui.Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#attribute_io",
-     "!doc": "IO metadata for loading the children using ajax."
+     "!doc": "IO metadata for loading the children using ajax.",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     }
    },
    "TreeViewDDConfig": {
@@ -1862,27 +2339,42 @@
     "helper": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_helper",
-     "!doc": "Dragdrop helper element."
+     "!doc": "Dragdrop helper element.",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     },
     "scrollDelay": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_scrollDelay",
-     "!doc": "Delay of the scroll while dragging the TreeNodes."
+     "!doc": "Delay of the scroll while dragging the TreeNodes.",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     },
     "dropAction": {
      "!type": "string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_dropAction",
-     "!doc": "Drop action (i.e. could be append, below or above)."
+     "!doc": "Drop action (i.e. could be append, below or above).",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     },
     "lastY": {
      "!type": "number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_lastY",
-     "!doc": "Last Y."
+     "!doc": "Last Y.",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     },
     "nodeContent": {
      "!type": "+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_nodeContent",
-     "!doc": "Reference for the current drop node."
+     "!doc": "Reference for the current drop node.",
+     "!data": {
+      "submodule": "aui-tree-view"
+     }
     }
    }
   },
@@ -1983,7 +2475,11 @@
    },
    "aui_calendar": {
     "!data": {
-     "module": "aui-calendar"
+     "module": "aui-calendar",
+     "submodules": {
+      "aui-calendar-base": {},
+      "aui-calendar-datepicker-select": {}
+     }
     },
     "Calendar": {
      "!type": "fn(config: +config.CalendarConfig)",
@@ -1993,108 +2489,171 @@
       "clear": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_clear",
-       "!doc": "Clear all selected dates on the Calendar."
+       "!doc": "Clear all selected dates on the Calendar.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "eachSelectedDate": {
        "!type": "fn(fn: fn(), dates: +Dates)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_eachSelectedDate",
-       "!doc": "Loop each date from <a href=\"Calendar.html#config_dates\">dates</a> and\nexecutes a callback."
+       "!doc": "Loop each date from <a href=\"Calendar.html#config_dates\">dates</a> and\nexecutes a callback.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "findMonthStart": {
        "!type": "fn(year: number, month: number) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_findMonthStart",
-       "!doc": "Get the first day of the month of the passed year."
+       "!doc": "Get the first day of the month of the passed year.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "formatDate": {
        "!type": "fn(date: +Date, mask: string) -> string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_formatDate",
-       "!doc": "Format a date with the passed mask. Used on\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a>."
+       "!doc": "Format a date with the passed mask. Used on\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a>.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "getCurrentDate": {
        "!type": "fn() -> +Date",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getCurrentDate",
-       "!doc": "Get current date."
+       "!doc": "Get current date.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "getDaysInMonth": {
        "!type": "fn(year: number, month: number) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getDaysInMonth",
-       "!doc": "Get the number of days in the passed year and month."
+       "!doc": "Get the number of days in the passed year and month.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "getDetailedSelectedDates": {
        "!type": "fn() -> +yui.Array",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getDetailedSelectedDates",
-       "!doc": "Get an Array with selected dates with detailed information (day, month, year).\n<pre><code>[{\n   year: date.getFullYear(),\n   month: date.getMonth(),\n   day: date.getDate()\n}]</code></pre>"
+       "!doc": "Get an Array with selected dates with detailed information (day, month, year).\n<pre><code>[{\n   year: date.getFullYear(),\n   month: date.getMonth(),\n   day: date.getDate()\n}]</code></pre>",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "getFirstDayOfWeek": {
        "!type": "fn(year: number, month: number) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getFirstDayOfWeek",
-       "!doc": "Get the first day of week of the passed year and month."
+       "!doc": "Get the first day of week of the passed year and month.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "getFormattedSelectedDates": {
        "!type": "fn() -> +yui.Array",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getFormattedSelectedDates",
-       "!doc": "Get the selected dates formatted by the\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a>."
+       "!doc": "Get the selected dates formatted by the\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a>.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "getSelectedDates": {
        "!type": "fn() -> +yui.Array",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getSelectedDates",
-       "!doc": "Get the selected dates."
+       "!doc": "Get the selected dates.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "isAlreadySelected": {
        "!type": "fn(date: +Date) -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_isAlreadySelected",
-       "!doc": "Check if a date is already selected."
+       "!doc": "Check if a date is already selected.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "isOutOfRangeDate": {
        "!type": "fn(date: +Date)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_isOutOfRangeDate",
-       "!doc": "Check if the passed date is out of range. Compared with the\n<a href=\"Calendar.html#config_minDate\">minDate</a> and\n<a href=\"Calendar.html#config_maxDate\">maxDate</a>."
+       "!doc": "Check if the passed date is out of range. Compared with the\n<a href=\"Calendar.html#config_minDate\">minDate</a> and\n<a href=\"Calendar.html#config_maxDate\">maxDate</a>.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "navigateMonth": {
        "!type": "fn(offset: number)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_navigateMonth",
-       "!doc": "Navigate through months and re-sync the UI."
+       "!doc": "Navigate through months and re-sync the UI.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "removeDate": {
        "!type": "fn(date: +Date)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_removeDate",
-       "!doc": "Remove the passed date from\n<a href=\"Calendar.html#config_dates\">dates</a>."
+       "!doc": "Remove the passed date from\n<a href=\"Calendar.html#config_dates\">dates</a>.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "selectNextMonth": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_selectNextMonth",
-       "!doc": "Navigate to the next month. Fired from the next icon on the Calendar\nheader."
+       "!doc": "Navigate to the next month. Fired from the next icon on the Calendar\nheader.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "selectPrevMonth": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_selectPrevMonth",
-       "!doc": "Navigate to the previous month. Fired from the previous icon on the\nCalendar header."
+       "!doc": "Navigate to the previous month. Fired from the previous icon on the\nCalendar header.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "selectToday": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_selectToday",
-       "!doc": "Select today date on the Calendar."
+       "!doc": "Select today date on the Calendar.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       },
       "setCurrentDate": {
        "!type": "fn(date: +Date)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_setCurrentDate",
-       "!doc": "Update the currentDay, currentMonth and currentYear values."
+       "!doc": "Update the currentDay, currentMonth and currentYear values.",
+       "!data": {
+        "submodule": "aui-calendar-base"
+       }
       }
      },
      "Calendar.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#property_Calendar.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-calendar-base"
+      }
      },
      "Calendar.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#property_Calendar.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the Calendar."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the Calendar.",
+      "!data": {
+       "submodule": "aui-calendar-base"
+      }
      },
      "ProgressBar.HTML_PARSER": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#property_ProgressBar.HTML_PARSER",
-      "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box."
+      "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box.",
+      "!data": {
+       "submodule": "aui-calendar-base"
+      }
      }
     },
     "DatePickerSelect": {
@@ -2106,17 +2665,26 @@
      "DatePickerSelect.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#property_DatePickerSelect.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-calendar-datepicker-select"
+      }
      },
      "DatePickerSelect.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#property_DatePickerSelect.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the DatePickerSelect."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the DatePickerSelect.",
+      "!data": {
+       "submodule": "aui-calendar-datepicker-select"
+      }
      },
      "DatePickerSelect.HTML_PARSER": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#property_DatePickerSelect.HTML_PARSER",
-      "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box."
+      "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box.",
+      "!data": {
+       "submodule": "aui-calendar-datepicker-select"
+      }
      }
     }
    },
@@ -2601,7 +3169,10 @@
    },
    "aui_event": {
     "!data": {
-     "module": "aui-event"
+     "module": "aui-event",
+     "submodules": {
+      "aui-event-input": {}
+     }
     },
     "AUI~event~input": {
      "!type": "fn()",
@@ -2609,19 +3180,29 @@
      "A.Node.DOM_EVENTS.input": {
       "!type": "+Event.Handle",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/AUI~event~input.html#property_A.Node.DOM_EVENTS.input",
-      "!doc": "A.Node.DOM_EVENTS.input event."
+      "!doc": "A.Node.DOM_EVENTS.input event.",
+      "!data": {
+       "submodule": "aui-event-input"
+      }
      },
      "prototype": {
       "void();": {
        "!type": "fn()",
-       "!url": "http://alloyui.com/versions/1.5.x/api/classes/AUI~event~input.html#method_void();"
+       "!url": "http://alloyui.com/versions/1.5.x/api/classes/AUI~event~input.html#method_void();",
+       "!data": {
+        "submodule": "aui-event-input"
+       }
       }
      }
     }
    },
    "aui_image_viewer": {
     "!data": {
-     "module": "aui-image-viewer"
+     "module": "aui-image-viewer",
+     "submodules": {
+      "aui-image-viewer-base": {},
+      "aui-image-viewer-gallery": {}
+     }
     },
     "ImageViewer": {
      "!type": "fn(config: +config.ImageViewerConfig)",
@@ -2631,88 +3212,139 @@
       "close": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_close",
-       "!doc": "Close the ImageViewer."
+       "!doc": "Close the ImageViewer.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "getLink": {
        "!type": "fn(currentIndex: number) -> +node.Node",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_getLink",
-       "!doc": "Get the Node reference to the <code>currentIndex</code> element from\nthe <a href=\"ImageViewer.html#config_links\">links</a>."
+       "!doc": "Get the Node reference to the <code>currentIndex</code> element from\nthe <a href=\"ImageViewer.html#config_links\">links</a>.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "getCurrentLink": {
        "!type": "fn() -> +node.Node",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_getCurrentLink",
-       "!doc": "Get the current loaded node link reference."
+       "!doc": "Get the current loaded node link reference.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "loadImage": {
        "!type": "fn(src: string)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_loadImage",
-       "!doc": "Load an image <code>src</code> on the ImageViewer."
+       "!doc": "Load an image <code>src</code> on the ImageViewer.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "hasLink": {
        "!type": "fn(currentIndex: number) -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_hasLink",
-       "!doc": "Check if there is a node reference for the <code>currentIndex</code>."
+       "!doc": "Check if there is a node reference for the <code>currentIndex</code>.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "hasNext": {
        "!type": "fn() -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_hasNext",
-       "!doc": "Check if there is a next element to navigate."
+       "!doc": "Check if there is a next element to navigate.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "hasPrev": {
        "!type": "fn() -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_hasPrev",
-       "!doc": "Check if there is a previous element to navigate."
+       "!doc": "Check if there is a previous element to navigate.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "hideControls": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_hideControls",
-       "!doc": "Hide all UI controls (i.e., arrows, close icon etc)."
+       "!doc": "Hide all UI controls (i.e., arrows, close icon etc).",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "hideMask": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_hideMask",
-       "!doc": "Hide the <a href=\"OverlayMask.html\">OverlayMask</a> used when <a\nhref=\"ImageViewer.html#config_modal\">modal</a> is <code>true</code>."
+       "!doc": "Hide the <a href=\"OverlayMask.html\">OverlayMask</a> used when <a\nhref=\"ImageViewer.html#config_modal\">modal</a> is <code>true</code>.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "next": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_next",
-       "!doc": "Load the previous image."
+       "!doc": "Load the previous image.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "preloadAllImages": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_preloadAllImages",
-       "!doc": "Preload all images."
+       "!doc": "Preload all images.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "preloadImage": {
        "!type": "fn(currentIndex: number)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_preloadImage",
-       "!doc": "Preload an image based on its <code>index</code>."
+       "!doc": "Preload an image based on its <code>index</code>.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "showLoading": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_showLoading",
-       "!doc": "Show the loading icon."
+       "!doc": "Show the loading icon.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "showMask": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_showMask",
-       "!doc": "Show the the OverlayMask used on the <a\nhref=\"ImageViewer.html#config_modal\">modal</a>."
+       "!doc": "Show the the OverlayMask used on the <a\nhref=\"ImageViewer.html#config_modal\">modal</a>.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       },
       "show": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#method_show",
-       "!doc": "Show the ImageViewer UI."
+       "!doc": "Show the ImageViewer UI.",
+       "!data": {
+        "submodule": "aui-image-viewer-base"
+       }
       }
      },
      "ImageViewer.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#property_ImageViewer.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      },
      "ImageViewer.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#property_ImageViewer.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the ImageViewer."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the ImageViewer.",
+      "!data": {
+       "submodule": "aui-image-viewer-base"
+      }
      }
     },
     "ImageGallery": {
@@ -2723,44 +3355,69 @@
       "hidePaginator": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#method_hidePaginator",
-       "!doc": "Hide the <a href=\"Paginator.html\">Paginator</a> with the thumbnails\nlist."
+       "!doc": "Hide the <a href=\"Paginator.html\">Paginator</a> with the thumbnails\nlist.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       },
       "pause": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#method_pause",
-       "!doc": "Pause the slide show."
+       "!doc": "Pause the slide show.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       },
       "play": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#method_play",
-       "!doc": "Play the slide show."
+       "!doc": "Play the slide show.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       },
       "show": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#method_show",
-       "!doc": "<p>Show the ImageGallery.</p>\n\n<p><strong>NOTE:</strong>Overloads the <a\nhref=\"ImageViewer.html\">ImageViewer</a> show method to not loadImage, the\nchangeRequest now is responsible to do that if we invoke the superclass\nshow method its loading the image, and the changeRequest loads again,\navoiding double request.</p>"
+       "!doc": "<p>Show the ImageGallery.</p>\n\n<p><strong>NOTE:</strong>Overloads the <a\nhref=\"ImageViewer.html\">ImageViewer</a> show method to not loadImage, the\nchangeRequest now is responsible to do that if we invoke the superclass\nshow method its loading the image, and the changeRequest loads again,\navoiding double request.</p>",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       },
       "showPaginator": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#method_showPaginator",
-       "!doc": "Show the <a href=\"Paginator.html\">Paginator</a> with the thumbnails\nlist."
+       "!doc": "Show the <a href=\"Paginator.html\">Paginator</a> with the thumbnails\nlist.",
+       "!data": {
+        "submodule": "aui-image-viewer-gallery"
+       }
       }
      },
      "ImageGallery.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#property_ImageGallery.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      },
      "ImageGallery.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#property_ImageGallery.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the ImageGallery."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the ImageGallery.",
+      "!data": {
+       "submodule": "aui-image-viewer-gallery"
+      }
      }
     }
    },
    "aui_io": {
     "!data": {
-     "module": "aui-io"
+     "module": "aui-io",
+     "submodules": {
+      "aui-io-plugin": {},
+      "aui-io-request": {}
+     }
     },
     "A": {
      "Plugin": {
@@ -2772,38 +3429,59 @@
         "hideLoading": {
          "!type": "fn()",
          "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#method_hideLoading",
-         "!doc": "Invoke the <a href=\"OverlayMask.html#method_hide\">OverlayMask hide</a> method."
+         "!doc": "Invoke the <a href=\"OverlayMask.html#method_hide\">OverlayMask hide</a> method.",
+         "!data": {
+          "submodule": "aui-io-plugin"
+         }
         },
         "setContent": {
          "!type": "fn()",
          "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#method_setContent",
-         "!doc": "Set the content of the <a href=\"A.Plugin.IO.html#config_node\">node</a>."
+         "!doc": "Set the content of the <a href=\"A.Plugin.IO.html#config_node\">node</a>.",
+         "!data": {
+          "submodule": "aui-io-plugin"
+         }
         },
         "showLoading": {
          "!type": "fn()",
          "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#method_showLoading",
-         "!doc": "Invoke the <a href=\"OverlayMask.html#method_show\">OverlayMask show</a> method."
+         "!doc": "Invoke the <a href=\"OverlayMask.html#method_show\">OverlayMask show</a> method.",
+         "!data": {
+          "submodule": "aui-io-plugin"
+         }
         },
         "start": {
          "!type": "fn()",
          "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#method_start",
-         "!doc": "Overload to the <a href=\"IORequest.html#method_start\">IORequest\nstart</a> method. Check if the <code>host</code> is already rendered,\notherwise wait to after render phase and to show the LoadingMask."
+         "!doc": "Overload to the <a href=\"IORequest.html#method_start\">IORequest\nstart</a> method. Check if the <code>host</code> is already rendered,\notherwise wait to after render phase and to show the LoadingMask.",
+         "!data": {
+          "submodule": "aui-io-plugin"
+         }
         }
        },
        "A.Plugin.IO.NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#property_A.Plugin.IO.NAME",
-        "!doc": "Static property provides a string to identify the class."
+        "!doc": "Static property provides a string to identify the class.",
+        "!data": {
+         "submodule": "aui-io-plugin"
+        }
        },
        "A.Plugin.IO.NS": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#property_A.Plugin.IO.NS",
-        "!doc": "Static property provides a string to identify the namespace."
+        "!doc": "Static property provides a string to identify the namespace.",
+        "!data": {
+         "submodule": "aui-io-plugin"
+        }
        },
        "A.Plugin.IO.ATTRS": {
         "!type": "+yui.Object",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#property_A.Plugin.IO.ATTRS",
-        "!doc": "Static property used to define the default attribute\nconfiguration for the A.Plugin.IO."
+        "!doc": "Static property used to define the default attribute\nconfiguration for the A.Plugin.IO.",
+        "!data": {
+         "submodule": "aui-io-plugin"
+        }
        }
       }
      },
@@ -2814,7 +3492,10 @@
        "A.io.request": {
         "!type": "fn(uri: string, config: +config.A.io.requestConfig) -> +aui_io.IORequest",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.io.html#method_A.io.request",
-        "!doc": "Static method to invoke the <a href=\"IORequest.html\">IORequest</a>. Likewise <a href=\"io.html#method_io\">io</a>."
+        "!doc": "Static method to invoke the <a href=\"IORequest.html\">IORequest</a>. Likewise <a href=\"io.html#method_io\">io</a>.",
+        "!data": {
+         "submodule": "aui-io-request"
+        }
        }
       }
      }
@@ -2827,23 +3508,35 @@
       "start": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#method_start",
-       "!doc": "Starts the IO transaction. Used to refresh the content also."
+       "!doc": "Starts the IO transaction. Used to refresh the content also.",
+       "!data": {
+        "submodule": "aui-io-request"
+       }
       },
       "stop": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#method_stop",
-       "!doc": "Stops the IO transaction."
+       "!doc": "Stops the IO transaction.",
+       "!data": {
+        "submodule": "aui-io-request"
+       }
       }
      },
      "IORequest.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#property_IORequest.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      },
      "IORequest.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#property_IORequest.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the IORequest."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the IORequest.",
+      "!data": {
+       "submodule": "aui-io-request"
+      }
      }
     }
    },
@@ -2960,7 +3653,11 @@
    },
    "aui_node": {
     "!data": {
-     "module": "aui-node"
+     "module": "aui-node",
+     "submodules": {
+      "aui-node-base": {},
+      "aui-node-html5": {}
+     }
     },
     "A": {
      "Node": {
@@ -2970,42 +3667,66 @@
        "ancestors": {
         "!type": "fn(selector: string) -> +dom.NodeList",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_ancestors",
-        "!doc": "<p>Returns the current ancestors of the node element filtered by a className.\nThis is an optimized method for finding ancestors by a specific CSS class name.</p>\n\nExample:\n\n<pre><code>\nA.one(#nodeId).ancestorsByClassName(aui-helper-hidden);\n</code></pre>"
+        "!doc": "<p>Returns the current ancestors of the node element filtered by a className.\nThis is an optimized method for finding ancestors by a specific CSS class name.</p>\n\nExample:\n\n<pre><code>\nA.one(#nodeId).ancestorsByClassName(aui-helper-hidden);\n</code></pre>",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "appendTo": {
         "!type": "fn(selector: +node.Node) -> !this",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_appendTo",
-        "!doc": "<p>Insert the node instance to the end of the <code>selector</code>\nelement.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// using another Node instance\nvar body = A.one(body);\nnode.appendTo(body);\n// using a CSS selector\nnode.appendTo(#container);\n</code></pre>"
+        "!doc": "<p>Insert the node instance to the end of the <code>selector</code>\nelement.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// using another Node instance\nvar body = A.one(body);\nnode.appendTo(body);\n// using a CSS selector\nnode.appendTo(#container);\n</code></pre>",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "attr": {
         "!type": "fn(name: string, value: string) -> string",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_attr",
-        "!doc": "<p>Get or Set the value of an attribute for the first element in the\nset of matched elements. If only the <code>name</code> is passed it\nworks as a getter.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.attr(title, Setting a new title attribute);\n// Alert the value of the title attribute: Setting a new title attribute\nalert( node.attr(title) );\n</code></pre>"
+        "!doc": "<p>Get or Set the value of an attribute for the first element in the\nset of matched elements. If only the <code>name</code> is passed it\nworks as a getter.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.attr(title, Setting a new title attribute);\n// Alert the value of the title attribute: Setting a new title attribute\nalert( node.attr(title) );\n</code></pre>",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "clone": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_clone",
-        "!doc": "Normalizes the behavior of cloning a node, which by default should not clone\nthe events that are attached to it.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.clone().appendTo(body);\n</code></pre>"
+        "!doc": "Normalizes the behavior of cloning a node, which by default should not clone\nthe events that are attached to it.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.clone().appendTo(body);\n</code></pre>",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "center": {
         "!type": "fn(val: +yui.Array) -> !this",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_center",
-        "!doc": "<p>Centralize the current Node instance with the passed\n<code>val</code> Array, Node, String, or Region, if not specified, the body will be\nused.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// Center the <code>node</code> with the <code>#container</code>.\nnode.center(#container);\n</code></pre>"
+        "!doc": "<p>Centralize the current Node instance with the passed\n<code>val</code> Array, Node, String, or Region, if not specified, the body will be\nused.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// Center the <code>node</code> with the <code>#container</code>.\nnode.center(#container);\n</code></pre>",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "empty": {
         "!type": "fn() -> !this",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_empty",
-        "!doc": "<p>This method removes not only child (and other descendant) elements,\nbut also any text within the set of matched elements. This is because,\naccording to the DOM specification, any string of text within an element\nis considered a child node of that element.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.empty();\n</code></pre>"
+        "!doc": "<p>This method removes not only child (and other descendant) elements,\nbut also any text within the set of matched elements. This is because,\naccording to the DOM specification, any string of text within an element\nis considered a child node of that element.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.empty();\n</code></pre>",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getDOM": {
         "!type": "fn() -> +HTMLNode",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_getDOM",
-        "!doc": "Retrieves the DOM node bound to a Node instance. See\n<a href=\"Node.html#method_getDOMNode\">getDOMNode</a>."
+        "!doc": "Retrieves the DOM node bound to a Node instance. See\n<a href=\"Node.html#method_getDOMNode\">getDOMNode</a>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getBorderWidth": {
         "!type": "fn(sides: string) -> number",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_getBorderWidth",
-        "!doc": "Return the combined width of the border for the specified sides."
+        "!doc": "Return the combined width of the border for the specified sides.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        }
       }
      },
@@ -3016,42 +3737,66 @@
        "all": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_all",
-        "!doc": "See <a href=\"Node.html#method_all\">Node all</a>."
+        "!doc": "See <a href=\"Node.html#method_all\">Node all</a>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "first": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_first",
-        "!doc": "Returns the first element in the node list collection."
+        "!doc": "Returns the first element in the node list collection.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getDOM": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_getDOM",
-        "!doc": "See <a href=\"Node.html#method_getDOM\">Node getDOM</a>."
+        "!doc": "See <a href=\"Node.html#method_getDOM\">Node getDOM</a>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "last": {
         "!type": "fn() -> +node.Node",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_last",
-        "!doc": "Returns the last element in the node list collection."
+        "!doc": "Returns the last element in the node list collection.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "one": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_one",
-        "!doc": "See <a href=\"Node.html#method_one\">Node one</a>."
+        "!doc": "See <a href=\"Node.html#method_one\">Node one</a>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getBody": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_getBody",
-        "!doc": "Get the body node. Shortcut to <code>A.one(body)</code>."
+        "!doc": "Get the body node. Shortcut to <code>A.one(body)</code>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getDoc": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_getDoc",
-        "!doc": "Get the document node. Shortcut to <code>A.one(document)</code>."
+        "!doc": "Get the document node. Shortcut to <code>A.one(document)</code>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        },
        "getWin": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html#method_getWin",
-        "!doc": "Get the window node. Shortcut to <code>A.one(window)</code>."
+        "!doc": "Get the window node. Shortcut to <code>A.one(window)</code>.",
+        "!data": {
+         "submodule": "aui-node-base"
+        }
        }
       }
      },
@@ -3062,13 +3807,29 @@
        "IECreateFix": {
         "!type": "fn(frag: +node.Node, content: string) -> +node.Node",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.HTML5.html#method_IECreateFix",
-        "!doc": "Receives a <code>frag</code> and a HTML content. This method\nshivs the HTML5 nodes appended to a Node or fragment which is not\non the document yet."
+        "!doc": "Receives a <code>frag</code> and a HTML content. This method\nshivs the HTML5 nodes appended to a Node or fragment which is not\non the document yet.",
+        "!data": {
+         "submodule": "aui-node-html5"
+        }
        }
       }
      }
     }
    },
    "node": {
+    "!data": {
+     "submodules": {
+      "event-custom-base": {},
+      "event-base": {},
+      "node-core": {},
+      "node-deprecated": {},
+      "node-event-simulate": {},
+      "node-load": {},
+      "node-pluginhost": {},
+      "node-screen": {},
+      "node-style": {}
+     }
+    },
     "Node": {
      "!type": "fn(node: +DOMNode)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html",
@@ -3076,149 +3837,240 @@
       "getCenterXY": {
        "!type": "fn() -> +yui.Array",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_getCenterXY",
-       "!doc": "Gets the current center position of the node in page coordinates."
+       "!doc": "Gets the current center position of the node in page coordinates.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "getMargin": {
        "!type": "fn(sides: string) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_getMargin",
-       "!doc": "Return the combined size of the margin for the specified sides."
+       "!doc": "Return the combined size of the margin for the specified sides.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "getPadding": {
        "!type": "fn(sides: string) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_getPadding",
-       "!doc": "Return the combined width of the border for the specified sides."
+       "!doc": "Return the combined width of the border for the specified sides.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "guid": {
        "!type": "fn(prefix: string) -> string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_guid",
-       "!doc": "Set the id of the Node instance if the object does not have one. The\ngenerated id is based on a guid created by the\n<a href=\"YUI.html#method_stamp\">stamp</a> method."
+       "!doc": "Set the id of the Node instance if the object does not have one. The\ngenerated id is based on a guid created by the\n<a href=\"YUI.html#method_stamp\">stamp</a> method.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "hover": {
        "!type": "fn(overFn: string, outFn: string) -> +node.Node",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_hover",
-       "!doc": "Create a hover interaction."
+       "!doc": "Create a hover interaction.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "html": {
        "!type": "fn(value: string)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_html",
-       "!doc": "<p>Get or Set the HTML contents of the node. If the <code>value</code>\nis passed its set the content of the element, otherwise it works as a\ngetter for the current content.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.html(Setting new HTML);\n// Alert the value of the current content\nalert( node.html() );\n</code></pre>"
+       "!doc": "<p>Get or Set the HTML contents of the node. If the <code>value</code>\nis passed its set the content of the element, otherwise it works as a\ngetter for the current content.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.html(Setting new HTML);\n// Alert the value of the current content\nalert( node.html() );\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "undefined": {
        "!type": "fn() -> string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html",
-       "!doc": "Gets the outerHTML of a node, which islike innerHTML, except that it\nactually contains the HTML of the node itself."
+       "!doc": "Gets the outerHTML of a node, which islike innerHTML, except that it\nactually contains the HTML of the node itself.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "placeAfter": {
        "!type": "fn(newNode: +node.Node) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_placeAfter",
-       "!doc": "<p>Inserts a <code>newNode</code> after the node instance (i.e., as the next\nsibling). If the reference node has no parent, then does nothing.</p>\n\nExample:\n\n<pre><code>var titleNode = A.one(#titleNode);\nvar descriptionNode = A.one(#descriptionNode);\n// the description is usually shown after the title\ntitleNode.placeAfter(descriptionNode);\n</code></pre>"
+       "!doc": "<p>Inserts a <code>newNode</code> after the node instance (i.e., as the next\nsibling). If the reference node has no parent, then does nothing.</p>\n\nExample:\n\n<pre><code>var titleNode = A.one(#titleNode);\nvar descriptionNode = A.one(#descriptionNode);\n// the description is usually shown after the title\ntitleNode.placeAfter(descriptionNode);\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "placeBefore": {
        "!type": "fn(newNode: +node.Node) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_placeBefore",
-       "!doc": "<p>Inserts a <code>newNode</code> before the node instance (i.e., as the previous\nsibling). If the reference node has no parent, then does nothing.</p>\n\nExample:\n\n<pre><code>var descriptionNode = A.one(#descriptionNode);\nvar titleNode = A.one(#titleNode);\n// the title is usually shown before the description\ndescriptionNode.placeBefore(titleNode);\n</code></pre>"
+       "!doc": "<p>Inserts a <code>newNode</code> before the node instance (i.e., as the previous\nsibling). If the reference node has no parent, then does nothing.</p>\n\nExample:\n\n<pre><code>var descriptionNode = A.one(#descriptionNode);\nvar titleNode = A.one(#titleNode);\n// the title is usually shown before the description\ndescriptionNode.placeBefore(titleNode);\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "prependTo": {
        "!type": "fn(selector: +node.Node) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_prependTo",
-       "!doc": "<p>Inserts the node instance to the begining of the <code>selector</code>\nnode (i.e., insert before the <code>firstChild</code> of the\n<code>selector</code>).</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.prependTo(body);\n</code></pre>"
+       "!doc": "<p>Inserts the node instance to the begining of the <code>selector</code>\nnode (i.e., insert before the <code>firstChild</code> of the\n<code>selector</code>).</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.prependTo(body);\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "radioClass": {
        "!type": "fn(cssClass: string) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_radioClass",
-       "!doc": "Add one or more CSS classes to an element and remove the class(es)\nfrom the siblings of the element."
+       "!doc": "Add one or more CSS classes to an element and remove the class(es)\nfrom the siblings of the element.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "resetId": {
        "!type": "fn(prefix: string) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_resetId",
-       "!doc": "Generate an unique identifier and reset the id attribute of the node\ninstance using the new value. Invokes the\n<a href=\"Node.html#method_guid\">guid</a>."
+       "!doc": "Generate an unique identifier and reset the id attribute of the node\ninstance using the new value. Invokes the\n<a href=\"Node.html#method_guid\">guid</a>.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "selectText": {
        "!type": "fn(start: number, end: number)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_selectText",
-       "!doc": "Selects a substring of text inside of the input element."
+       "!doc": "Selects a substring of text inside of the input element.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "selectable": {
        "!type": "fn() -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_selectable",
-       "!doc": "Enables text selection for this element (normalized across browsers)."
+       "!doc": "Enables text selection for this element (normalized across browsers).",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "swallowEvent": {
        "!type": "fn(eventName: string, preventDefault: bool) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_swallowEvent",
-       "!doc": "<p>Stops the specified event(s) from bubbling and optionally prevents the\ndefault action.</p>\n\nExample:\n\n<pre><code>var anchor = A.one(a#anchorId);\nanchor.swallowEvent(click);\n</code></pre>"
+       "!doc": "<p>Stops the specified event(s) from bubbling and optionally prevents the\ndefault action.</p>\n\nExample:\n\n<pre><code>var anchor = A.one(a#anchorId);\nanchor.swallowEvent(click);\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "text": {
        "!type": "fn(text: string)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_text",
-       "!doc": "<p>Get or Set the combined text contents of the node instance,\nincluding its descendants. If the <code>text</code>\nis passed its set the content of the element, otherwise it works as a\ngetter for the current content.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.text(Setting new text content);\n// Alert the value of the current content\nalert( node.text() );\n</code></pre>"
+       "!doc": "<p>Get or Set the combined text contents of the node instance,\nincluding its descendants. If the <code>text</code>\nis passed its set the content of the element, otherwise it works as a\ngetter for the current content.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.text(Setting new text content);\n// Alert the value of the current content\nalert( node.text() );\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "toggle": {
        "!type": "fn(on: bool, callback: fn()) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_toggle",
-       "!doc": "<p>Displays or hide the node instance.</p>\n\n<p><string>NOTE:</string> This method assume that your node were hidden\nbecause of the aui-helper-hidden css class were being used. This wont\nmanipulate the inline <code>style.display</code> property.</p>"
+       "!doc": "<p>Displays or hide the node instance.</p>\n\n<p><string>NOTE:</string> This method assume that your node were hidden\nbecause of the aui-helper-hidden css class were being used. This wont\nmanipulate the inline <code>style.display</code> property.</p>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "unselectable": {
        "!type": "fn() -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_unselectable",
-       "!doc": "Disables text selection for this element (normalized across browsers)."
+       "!doc": "Disables text selection for this element (normalized across browsers).",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "val": {
        "!type": "fn(value: string)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_val",
-       "!doc": "<p>Get or Set the value attribute of the node instance. If the\n<code>value</code> is passed its set the value of the element,\notherwise it works as a getter for the current value.</p>\n\nExample:\n\n<pre><code>var input = A.one(#inputId);\ninput.val(Setting new input value);\n// Alert the value of the input\nalert( input.val() );\n</code></pre>"
+       "!doc": "<p>Get or Set the value attribute of the node instance. If the\n<code>value</code> is passed its set the value of the element,\notherwise it works as a getter for the current value.</p>\n\nExample:\n\n<pre><code>var input = A.one(#inputId);\ninput.val(Setting new input value);\n// Alert the value of the input\nalert( input.val() );\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "_getBoxStyleAsNumber": {
        "!type": "fn(sides: string, map: string) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method__getBoxStyleAsNumber",
-       "!doc": "Return the combined size of the box style for the specified sides."
+       "!doc": "Return the combined size of the box style for the specified sides.",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "hide": {
        "!type": "fn(cssClass: string) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_hide",
-       "!doc": "<p>Hide the node adding a css class on it. If <code>cssClass</code> is not\npassed as argument, the className aui-helper-hidden will be used by\ndefault.</p>\n\n<p><string>NOTE:</string> This method assume that your node were visible\nbecause the absence of aui-helper-hidden css class. This wont\nmanipulate the inline <code>style.display</code> property.</p>"
+       "!doc": "<p>Hide the node adding a css class on it. If <code>cssClass</code> is not\npassed as argument, the className aui-helper-hidden will be used by\ndefault.</p>\n\n<p><string>NOTE:</string> This method assume that your node were visible\nbecause the absence of aui-helper-hidden css class. This wont\nmanipulate the inline <code>style.display</code> property.</p>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "show": {
        "!type": "fn(cssClass: string) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_show",
-       "!doc": "<p>Show the node removing a css class used to hide it. Use the same\nclassName added using the <a href=\"A.Node.html#method_hide\">hide</a>\nmethod. If <code>cssClass</code> is not passed as argument, the\nclassName aui-helper-hidden will be used by default.</p>\n\n<p><string>NOTE:</string> This method assume that your node were hidden\nbecause of the aui-helper-hidden css class were being used. This wont\nmanipulate the inline <code>style.display</code> property.</p>"
+       "!doc": "<p>Show the node removing a css class used to hide it. Use the same\nclassName added using the <a href=\"A.Node.html#method_hide\">hide</a>\nmethod. If <code>cssClass</code> is not passed as argument, the\nclassName aui-helper-hidden will be used by default.</p>\n\n<p><string>NOTE:</string> This method assume that your node were hidden\nbecause of the aui-helper-hidden css class were being used. This wont\nmanipulate the inline <code>style.display</code> property.</p>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "width": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_width",
-       "!doc": "Returns the width of the content, not including\nthe padding, border or margin. If a width is passed,\nthe nodes overall width is set to that size.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.width(); //returns content width\nnode.width(100); // sets box width\n</code></pre>"
+       "!doc": "Returns the width of the content, not including\nthe padding, border or margin. If a width is passed,\nthe nodes overall width is set to that size.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.width(); //returns content width\nnode.width(100); // sets box width\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "height": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_height",
-       "!doc": "Returns the height of the content, not including\nthe padding, border or margin. If a height is passed,\nthe nodes overall height is set to that size.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.height(); //returns content height\nnode.height(100); // sets box height\n</code></pre>"
+       "!doc": "Returns the height of the content, not including\nthe padding, border or margin. If a height is passed,\nthe nodes overall height is set to that size.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.height(); //returns content height\nnode.height(100); // sets box height\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "innerWidth": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_innerWidth",
-       "!doc": "Returns the size of the box from inside of the border,\nwhich is the offsetWidth plus the padding on the left and right.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.innerWidth();\n</code></pre>"
+       "!doc": "Returns the size of the box from inside of the border,\nwhich is the offsetWidth plus the padding on the left and right.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.innerWidth();\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "innerHeight": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_innerHeight",
-       "!doc": "Returns the size of the box from inside of the border,\nwhich is offsetHeight plus the padding on the top and bottom.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.innerHeight();\n</code></pre>"
+       "!doc": "Returns the size of the box from inside of the border,\nwhich is offsetHeight plus the padding on the top and bottom.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.innerHeight();\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "outerWidth": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_outerWidth",
-       "!doc": "Returns the outer width of the box including the border,\nif true is passed as the first argument, the margin is included.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.outerWidth();\nnode.outerWidth(true); // includes margin\n</code></pre>"
+       "!doc": "Returns the outer width of the box including the border,\nif true is passed as the first argument, the margin is included.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.outerWidth();\nnode.outerWidth(true); // includes margin\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       },
       "outerHeight": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_outerHeight",
-       "!doc": "Returns the outer height of the box including the border,\nif true is passed as the first argument, the margin is included.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.outerHeight();\nnode.outerHeight(true); // includes margin\n</code></pre>"
+       "!doc": "Returns the outer height of the box including the border,\nif true is passed as the first argument, the margin is included.\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.outerHeight();\nnode.outerHeight(true); // includes margin\n</code></pre>",
+       "!data": {
+        "submodule": "aui-node-base"
+       }
       }
      }
     }
    },
    "aui_overlay": {
     "!data": {
-     "module": "aui-overlay"
+     "module": "aui-overlay",
+     "submodules": {
+      "aui-overlay-base": {},
+      "aui-overlay-context-panel": {},
+      "aui-overlay-context": {},
+      "aui-overlay-manager": {},
+      "aui-overlay-mask": {}
+     }
     },
     "OverlayContextPanel": {
      "!type": "fn(config: +config.OverlayContextPanelConfig)",
@@ -3228,33 +4080,51 @@
       "align": {
        "!type": "fn(node: +node.Node, points: [+yui.Array])",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#method_align",
-       "!doc": "Aligns the OverlayContextPanel to the provided node (or viewport) using the\nprovided points. Inherited from\n<a href=\"Overlay.html#method_align\">Overlay</a>."
+       "!doc": "Aligns the OverlayContextPanel to the provided node (or viewport) using the\nprovided points. Inherited from\n<a href=\"Overlay.html#method_align\">Overlay</a>.",
+       "!data": {
+        "submodule": "aui-overlay-context-panel"
+       }
       },
       "fixPointerColor": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#method_fixPointerColor",
-       "!doc": "OverlayContextPanel uses a imageless arrow, which involves some CSS technics.\nThis method is meant to fix the color of the borders of the arrow."
+       "!doc": "OverlayContextPanel uses a imageless arrow, which involves some CSS technics.\nThis method is meant to fix the color of the borders of the arrow.",
+       "!data": {
+        "submodule": "aui-overlay-context-panel"
+       }
       },
       "getAlignPoint": {
        "!type": "fn() -> string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#method_getAlignPoint",
-       "!doc": "Normalize the align point value. The align point cc is not a valid\nposition for the arrow and then its normalized to the bc point."
+       "!doc": "Normalize the align point value. The align point cc is not a valid\nposition for the arrow and then its normalized to the bc point.",
+       "!data": {
+        "submodule": "aui-overlay-context-panel"
+       }
       },
       "hide": {
        "!type": "fn(event: +event_custom.EventFacade)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#method_hide",
-       "!doc": "Hides the OverlayContextPanel."
+       "!doc": "Hides the OverlayContextPanel.",
+       "!data": {
+        "submodule": "aui-overlay-context-panel"
+       }
       }
      },
      "OverlayContextPanel.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#property_OverlayContextPanel.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-overlay-context-panel"
+      }
      },
      "OverlayContextPanel.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#property_OverlayContextPanel.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayContextPanel."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayContextPanel.",
+      "!data": {
+       "submodule": "aui-overlay-context-panel"
+      }
      }
     },
     "OverlayContext": {
@@ -3265,38 +4135,59 @@
       "hide": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#method_hide",
-       "!doc": "Shows the OverlayContext."
+       "!doc": "Shows the OverlayContext.",
+       "!data": {
+        "submodule": "aui-overlay-context"
+       }
       },
       "toggle": {
        "!type": "fn(event: +event_custom.EventFacade)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#method_toggle",
-       "!doc": "Toggles visibility of the OverlayContext."
+       "!doc": "Toggles visibility of the OverlayContext.",
+       "!data": {
+        "submodule": "aui-overlay-context"
+       }
       },
       "clearIntervals": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#method_clearIntervals",
-       "!doc": "Clear the intervals to show or hide the OverlayContext. See\n<a href=\"OverlayContext.html#config_hideDelay\">hideDelay</a> and\n<a href=\"OverlayContext.html#config_showDelay\">showDelay</a>."
+       "!doc": "Clear the intervals to show or hide the OverlayContext. See\n<a href=\"OverlayContext.html#config_hideDelay\">hideDelay</a> and\n<a href=\"OverlayContext.html#config_showDelay\">showDelay</a>.",
+       "!data": {
+        "submodule": "aui-overlay-context"
+       }
       },
       "refreshAlign": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#method_refreshAlign",
-       "!doc": "Refreshes the alignment of the OverlayContext with the\n<a href=\"OverlayContext.html#config_currentNode\">currentNode</a>. See\nalso <a href=\"OverlayContext.html#config_align\">align</a>."
+       "!doc": "Refreshes the alignment of the OverlayContext with the\n<a href=\"OverlayContext.html#config_currentNode\">currentNode</a>. See\nalso <a href=\"OverlayContext.html#config_align\">align</a>.",
+       "!data": {
+        "submodule": "aui-overlay-context"
+       }
       },
       "updateCurrentNode": {
        "!type": "fn(event: +event_custom.EventFacade)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#method_updateCurrentNode",
-       "!doc": "Update the\n<a href=\"OverlayContext.html#config_currentNode\">currentNode</a> with the\n<a href=\"OverlayContext.html#config_align\">align</a> node or the\nevent.currentTarget and in last case with the first item of the\n<a href=\"OverlayContext.html#config_trigger\">trigger</a>."
+       "!doc": "Update the\n<a href=\"OverlayContext.html#config_currentNode\">currentNode</a> with the\n<a href=\"OverlayContext.html#config_align\">align</a> node or the\nevent.currentTarget and in last case with the first item of the\n<a href=\"OverlayContext.html#config_trigger\">trigger</a>.",
+       "!data": {
+        "submodule": "aui-overlay-context"
+       }
       }
      },
      "OverlayContext.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#property_OverlayContext.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-overlay-context"
+      }
      },
      "OverlayContext.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#property_OverlayContext.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayContext."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayContext.",
+      "!data": {
+       "submodule": "aui-overlay-context"
+      }
      }
     },
     "OverlayManager": {
@@ -3307,48 +4198,75 @@
       "bringToTop": {
        "!type": "fn(overlay: +overlay.Overlay)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_bringToTop",
-       "!doc": "Set the passed overlay zIndex to the highest value."
+       "!doc": "Set the passed overlay zIndex to the highest value.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       },
       "register": {
        "!type": "fn(overlay: +overlay.Overlay) -> +yui.Array",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_register",
-       "!doc": "Register the passed <a href=\"Overlay.html\">Overlay</a> to this\nOverlayManager."
+       "!doc": "Register the passed <a href=\"Overlay.html\">Overlay</a> to this\nOverlayManager.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       },
       "remove": {
        "!type": "fn(overlay: +overlay.Overlay) -> +Null",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_remove",
-       "!doc": "Remove the passed <a href=\"Overlay.html\">Overlay</a> from this\nOverlayManager."
+       "!doc": "Remove the passed <a href=\"Overlay.html\">Overlay</a> from this\nOverlayManager.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       },
       "each": {
        "!type": "fn(fn: fn()) -> +Null",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_each",
-       "!doc": "Loop through all registered <a href=\"Overlay.html\">Overlay</a> and\nexecute a callback."
+       "!doc": "Loop through all registered <a href=\"Overlay.html\">Overlay</a> and\nexecute a callback.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       },
       "showAll": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_showAll",
-       "!doc": "Invoke the <a href=\"Overlay.html#method_show\">show</a> method from\nall registered Overlays."
+       "!doc": "Invoke the <a href=\"Overlay.html#method_show\">show</a> method from\nall registered Overlays.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       },
       "hideAll": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_hideAll",
-       "!doc": "Invoke the <a href=\"Overlay.html#method_hide\">hide</a> method from\nall registered Overlays."
+       "!doc": "Invoke the <a href=\"Overlay.html#method_hide\">hide</a> method from\nall registered Overlays.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       },
       "sortByZIndexDesc": {
        "!type": "fn(a: +overlay.Overlay, b: +overlay.Overlay) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_sortByZIndexDesc",
-       "!doc": "zIndex comparator. Used on Array.sort."
+       "!doc": "zIndex comparator. Used on Array.sort.",
+       "!data": {
+        "submodule": "aui-overlay-manager"
+       }
       }
      },
      "OverlayManager.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#property_OverlayManager.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-overlay-manager"
+      }
      },
      "OverlayManager.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#property_OverlayManager.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayManager."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayManager.",
+      "!data": {
+       "submodule": "aui-overlay-manager"
+      }
      }
     },
     "OverlayMask": {
@@ -3359,23 +4277,35 @@
       "getTargetSize": {
        "!type": "fn() -> +yui.Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#method_getTargetSize",
-       "!doc": "Get the size of the\n<a href=\"OverlayMask.html#config_target\">target</a>. Used to dimension\nthe mask node."
+       "!doc": "Get the size of the\n<a href=\"OverlayMask.html#config_target\">target</a>. Used to dimension\nthe mask node.",
+       "!data": {
+        "submodule": "aui-overlay-mask"
+       }
       },
       "refreshMask": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#method_refreshMask",
-       "!doc": "Repaint the OverlayMask UI, respecting the\n<a href=\"OverlayMask.html#config_target\">target</a> size and the\n<a href=\"OverlayMask.html#config_alignPoints\">alignPoints</a>."
+       "!doc": "Repaint the OverlayMask UI, respecting the\n<a href=\"OverlayMask.html#config_target\">target</a> size and the\n<a href=\"OverlayMask.html#config_alignPoints\">alignPoints</a>.",
+       "!data": {
+        "submodule": "aui-overlay-mask"
+       }
       }
      },
      "OverlayMask.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#property_OverlayMask.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-overlay-mask"
+      }
      },
      "OverlayMask.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#property_OverlayMask.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayMask."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayMask.",
+      "!data": {
+       "submodule": "aui-overlay-mask"
+      }
      }
     }
    },
@@ -3761,7 +4691,12 @@
    },
    "aui_tree": {
     "!data": {
-     "module": "aui-tree"
+     "module": "aui-tree",
+     "submodules": {
+      "aui-tree-data": {},
+      "aui-tree-node": {},
+      "aui-tree-view": {}
+     }
     },
     "TreeData": {
      "!type": "fn(config: +config.TreeDataConfig)",
@@ -3771,143 +4706,227 @@
       "getNodeById": {
        "!type": "fn(uid: string) -> +aui_tree.TreeNode",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_getNodeById",
-       "!doc": "Get a TreeNode by id."
+       "!doc": "Get a TreeNode by id.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "isRegistered": {
        "!type": "fn(node: +aui_tree.TreeNode) -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_isRegistered",
-       "!doc": "Whether the TreeNode is registered on this TreeData."
+       "!doc": "Whether the TreeNode is registered on this TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "updateReferences": {
        "!type": "fn(TreeNode: +node.Node, TreeNode: +ParentNode, TreeView: +OwnerTree)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_updateReferences",
-       "!doc": "Update the references of the passed TreeNode."
+       "!doc": "Update the references of the passed TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "refreshIndex": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_refreshIndex",
-       "!doc": "Refresh the index (i.e. re-index all nodes)."
+       "!doc": "Refresh the index (i.e. re-index all nodes).",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "registerNode": {
        "!type": "fn(node: +aui_tree.TreeNode)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_registerNode",
-       "!doc": "Register the passed TreeNode on this TreeData."
+       "!doc": "Register the passed TreeNode on this TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "updateIndex": {
        "!type": "fn(index: +yui.Object)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_updateIndex",
-       "!doc": "Update the <a href=\"TreeData.html#config_index\">index</a> attribute value."
+       "!doc": "Update the <a href=\"TreeData.html#config_index\">index</a> attribute value.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "unregisterNode": {
        "!type": "fn(node: +aui_tree.TreeNode)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_unregisterNode",
-       "!doc": "Unregister the passed TreeNode from this TreeData."
+       "!doc": "Unregister the passed TreeNode from this TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "collapseAll": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_collapseAll",
-       "!doc": "Collapse all children of the TreeData."
+       "!doc": "Collapse all children of the TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "expandAll": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_expandAll",
-       "!doc": "Expand all children of the TreeData."
+       "!doc": "Expand all children of the TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "selectAll": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_selectAll",
-       "!doc": "Unselect all children of the TreeData."
+       "!doc": "Unselect all children of the TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "eachChildren": {
        "!type": "fn(fn: fn())",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_eachChildren",
-       "!doc": "Loop each parent node and execute the <code>fn</code> callback."
+       "!doc": "Loop each parent node and execute the <code>fn</code> callback.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "bubbleEvent": {
        "!type": "fn(eventType: string, args: +yui.Array, cancelBubbling: bool, stopActionPropagation: bool)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_bubbleEvent",
-       "!doc": "Bubble event to all parent nodes."
+       "!doc": "Bubble event to all parent nodes.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "createNode": {
        "!type": "fn(options: +yui.Object) -> +aui_tree.TreeNode",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_createNode",
-       "!doc": "Create a TreeNode instance."
+       "!doc": "Create a TreeNode instance.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "appendChild": {
        "!type": "fn(node: +aui_tree.TreeNode, cancelBubbling: bool)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_appendChild",
-       "!doc": "Append a child node to the TreeData."
+       "!doc": "Append a child node to the TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "item": {
        "!type": "fn(index: number) -> +aui_tree.TreeNode",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_item",
-       "!doc": "Get a TreeNode children by index."
+       "!doc": "Get a TreeNode children by index.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "indexOf": {
        "!type": "fn(node: +aui_tree.TreeNode) -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_indexOf",
-       "!doc": "Index of the passed TreeNode on the <a\nhref=\"TreeData.html#config_children\">children</a> attribute."
+       "!doc": "Index of the passed TreeNode on the <a\nhref=\"TreeData.html#config_children\">children</a> attribute.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "hasChildNodes": {
        "!type": "fn() -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_hasChildNodes",
-       "!doc": "Whether the TreeData contains children or not."
+       "!doc": "Whether the TreeData contains children or not.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "getChildren": {
        "!type": "fn(deep: bool) -> +yui.Array",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_getChildren",
-       "!doc": "Get an Array of the children nodes of the current TreeData."
+       "!doc": "Get an Array of the children nodes of the current TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "getEventOutputMap": {
        "!type": "fn(node: +aui_tree.TreeData) -> +yui.Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_getEventOutputMap",
-       "!doc": "Get an object containing metadata for the custom events."
+       "!doc": "Get an object containing metadata for the custom events.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "removeChild": {
        "!type": "fn(node: +aui_tree.TreeData)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_removeChild",
-       "!doc": "Remove the passed <code>node</code> from the current TreeData."
+       "!doc": "Remove the passed <code>node</code> from the current TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "_removeChild": {
        "!type": "fn(node: +aui_tree.TreeData)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method__removeChild",
-       "!doc": "Remove the passed <code>node</code> from the current TreeData."
+       "!doc": "Remove the passed <code>node</code> from the current TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "empty": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_empty",
-       "!doc": "Delete all children of the current TreeData."
+       "!doc": "Delete all children of the current TreeData.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "insert": {
        "!type": "fn(treeNode: +aui_tree.TreeNode, refTreeNode: +aui_tree.TreeNode, where: +aui_tree.TreeNode)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_insert",
-       "!doc": "Insert <code>treeNode</code> before or after the <code>refTreeNode</code>."
+       "!doc": "Insert <code>treeNode</code> before or after the <code>refTreeNode</code>.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "insertAfter": {
        "!type": "fn(treeNode: +aui_tree.TreeNode, refTreeNode: +aui_tree.TreeNode)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_insertAfter",
-       "!doc": "Insert <code>treeNode</code> after the <code>refTreeNode</code>."
+       "!doc": "Insert <code>treeNode</code> after the <code>refTreeNode</code>.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "insertBefore": {
        "!type": "fn(treeNode: +aui_tree.TreeNode, refTreeNode: +aui_tree.TreeNode)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_insertBefore",
-       "!doc": "Insert <code>treeNode</code> before the <code>refTreeNode</code>."
+       "!doc": "Insert <code>treeNode</code> before the <code>refTreeNode</code>.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       },
       "getNodeByChild": {
        "!type": "fn(child: +node.Node) -> +aui_tree.TreeNode",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_getNodeByChild",
-       "!doc": "Get a TreeNode instance by a child DOM Node."
+       "!doc": "Get a TreeNode instance by a child DOM Node.",
+       "!data": {
+        "submodule": "aui-tree-data"
+       }
       }
      },
      "TreeData.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#property_TreeData.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-data"
+      }
      },
      "TreeData.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#property_TreeData.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeData."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeData.",
+      "!data": {
+       "submodule": "aui-tree-data"
+      }
      }
     },
     "TreeNode": {
@@ -3918,53 +4937,83 @@
       "collapse": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_collapse",
-       "!doc": "Collapse the current TreeNode."
+       "!doc": "Collapse the current TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "contains": {
        "!type": "fn(node: +aui_tree.TreeNode) -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_contains",
-       "!doc": "Check if the current TreeNode contains the passed <code>node</code>."
+       "!doc": "Check if the current TreeNode contains the passed <code>node</code>.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "expand": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_expand",
-       "!doc": "Expand the current TreeNode."
+       "!doc": "Expand the current TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "getDepth": {
        "!type": "fn() -> number",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_getDepth",
-       "!doc": "Get the depth of the current TreeNode."
+       "!doc": "Get the depth of the current TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "isSelected": {
        "!type": "fn() -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_isSelected",
-       "!doc": "Whether the current TreeNode is selected or not."
+       "!doc": "Whether the current TreeNode is selected or not.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "isLeaf": {
        "!type": "fn() -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_isLeaf",
-       "!doc": "Whether the current TreeNode is ancestor of the passed <code>node</code> or not."
+       "!doc": "Whether the current TreeNode is ancestor of the passed <code>node</code> or not.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "toggle": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#method_toggle",
-       "!doc": "Toggle the current TreeNode, <code>collapsed</code> or <code>expanded</code>."
+       "!doc": "Toggle the current TreeNode, <code>collapsed</code> or <code>expanded</code>.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "A.TreeNode.nodeTypes": {
        "!type": "+yui.Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#property_A.TreeNode.nodeTypes",
-       "!doc": "TreeNode types hash map.\n\n<pre><code>A.TreeNode.nodeTypes = {\n radio: A.TreeNodeRadio,\n task: A.TreeNodeTask,\n check: A.TreeNodeCheck,\n node: A.TreeNode,\n io: A.TreeNodeIO\n};</code></pre>"
+       "!doc": "TreeNode types hash map.\n\n<pre><code>A.TreeNode.nodeTypes = {\n radio: A.TreeNodeRadio,\n task: A.TreeNodeTask,\n check: A.TreeNodeCheck,\n node: A.TreeNode,\n io: A.TreeNodeIO\n};</code></pre>",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNode.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#property_TreeNode.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "TreeNode.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#property_TreeNode.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeIO": {
@@ -3975,38 +5024,59 @@
       "initIO": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#method_initIO",
-       "!doc": "Initialize the IO transaction setup on the <a\nhref=\"TreeNode.html#config_io\">io</a> attribute."
+       "!doc": "Initialize the IO transaction setup on the <a\nhref=\"TreeNode.html#config_io\">io</a> attribute.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ioStartHandler": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#method_ioStartHandler",
-       "!doc": "IO Start handler."
+       "!doc": "IO Start handler.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ioCompleteHandler": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#method_ioCompleteHandler",
-       "!doc": "IO Complete handler."
+       "!doc": "IO Complete handler.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ioSuccessHandler": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#method_ioSuccessHandler",
-       "!doc": "IO Success handler."
+       "!doc": "IO Success handler.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "ioFailureHandler": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#method_ioFailureHandler",
-       "!doc": "IO Failure handler."
+       "!doc": "IO Failure handler.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNode.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#property_TreeNode.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "TreeNode.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#property_TreeNode.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeCheck": {
@@ -4017,28 +5087,43 @@
       "check": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#method_check",
-       "!doc": "Check the current TreeNode."
+       "!doc": "Check the current TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "uncheck": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#method_uncheck",
-       "!doc": "Uncheck the current TreeNode."
+       "!doc": "Uncheck the current TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       },
       "toggleCheck": {
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#method_toggleCheck",
-       "!doc": "Toggle the check status of the current TreeNode."
+       "!doc": "Toggle the check status of the current TreeNode.",
+       "!data": {
+        "submodule": "aui-tree-node"
+       }
       }
      },
      "TreeNode.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#property_TreeNode.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      },
      "TreeNode.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#property_TreeNode.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeTask": {
@@ -4050,7 +5135,10 @@
      "TreeNode.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeTask.html#property_TreeNode.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeNodeRadio": {
@@ -4062,7 +5150,10 @@
      "TreeNode.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeRadio.html#property_TreeNode.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-node"
+      }
      }
     },
     "TreeView": {
@@ -4074,12 +5165,18 @@
      "TreeView.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#property_TreeView.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "TreeView.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#property_TreeView.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      }
     },
     "TreeViewDD": {
@@ -4091,12 +5188,18 @@
      "TreeViewDD.NAME": {
       "!type": "string",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#property_TreeViewDD.NAME",
-      "!doc": "Static property provides a string to identify the class."
+      "!doc": "Static property provides a string to identify the class.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      },
      "TreeViewDD.ATTRS": {
       "!type": "+yui.Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#property_TreeViewDD.ATTRS",
-      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewDD."
+      "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewDD.",
+      "!data": {
+       "submodule": "aui-tree-view"
+      }
      }
     }
    }
