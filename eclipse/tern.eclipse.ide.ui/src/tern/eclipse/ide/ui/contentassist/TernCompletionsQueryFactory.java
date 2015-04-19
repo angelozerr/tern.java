@@ -36,7 +36,13 @@ public class TernCompletionsQueryFactory {
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				preferencesService, lookupOrder);
 		if (!omitObjectPrototype) {
-			query.setOmitObjectPrototype (omitObjectPrototype );
+			query.setOmitObjectPrototype(omitObjectPrototype);
+		}
+		boolean guess = getBoolean(
+				TernUIPreferenceConstants.GUESS_CONTENT_ASSIST,
+				preferencesService, lookupOrder);
+		if (!guess) {
+			query.setGuess(guess);
 		}
 		return query;
 	}

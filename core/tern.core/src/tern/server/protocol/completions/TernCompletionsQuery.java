@@ -40,6 +40,8 @@ public class TernCompletionsQuery extends TernQuery {
 
 	private static final String OMIT_OBJECT_PROTOTYPE_FIELD_NAME = "omitObjectPrototype";
 
+	private static final String GUESS_FIELD_NAME = "guess";
+
 	public TernCompletionsQuery(String file, Integer pos) {
 		super(COMPLETIONS_TYPE_QUERY);
 		setFile(file);
@@ -149,5 +151,27 @@ public class TernCompletionsQuery extends TernQuery {
 	public boolean isOmitObjectPrototype() {
 		return JsonHelper.getBoolean(this, OMIT_OBJECT_PROTOTYPE_FIELD_NAME,
 				true);
+	}
+
+	/**
+	 * When completing a property and no completions are found, Tern will use
+	 * some heuristics to try and return some properties anyway. Set this to
+	 * false to turn that off.
+	 * 
+	 * @param guess
+	 */
+	public void setGuess(boolean guess) {
+		super.add(GUESS_FIELD_NAME, guess);
+	}
+
+	/**
+	 * When completing a property and no completions are found, Tern will use
+	 * some heuristics to try and return some properties anyway. Set this to
+	 * false to turn that off.
+	 * 
+	 * @return
+	 */
+	public boolean isGuess() {
+		return JsonHelper.getBoolean(this, GUESS_FIELD_NAME, true);
 	}
 }

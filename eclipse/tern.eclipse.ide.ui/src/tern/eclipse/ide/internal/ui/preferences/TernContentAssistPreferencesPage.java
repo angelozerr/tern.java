@@ -45,6 +45,7 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 	private Button generateAnonymousFunctionCheckbox;
 	private Button expandFunctionCheckbox;
 	private Button omitObjectPrototype;
+	private Button guess;
 	private Text indentSizeText;
 	private Button indentTabsButton;
 
@@ -93,6 +94,10 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				preferenceScopes,
 				TernUIMessages.TernContentAssistPreferencesPage_omitObjectPrototype_label);
+		guess = createCheckbox(filteringGroup,
+				TernUIPreferenceConstants.GUESS_CONTENT_ASSIST,
+				preferenceScopes,
+				TernUIMessages.TernContentAssistPreferencesPage_guess_label);
 	}
 
 	/**
@@ -249,6 +254,8 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 		updateCheckbox(omitObjectPrototype,
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				defaultPreferences);
+		updateCheckbox(guess, TernUIPreferenceConstants.GUESS_CONTENT_ASSIST,
+				defaultPreferences);
 	}
 
 	@Override
@@ -273,6 +280,8 @@ public class TernContentAssistPreferencesPage extends PropertyPreferencePage {
 				contexts, remove);
 		updateContexts(omitObjectPrototype,
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
+				contexts, remove);
+		updateContexts(guess, TernUIPreferenceConstants.GUESS_CONTENT_ASSIST,
 				contexts, remove);
 		flushContexts(contexts);
 		return ok;

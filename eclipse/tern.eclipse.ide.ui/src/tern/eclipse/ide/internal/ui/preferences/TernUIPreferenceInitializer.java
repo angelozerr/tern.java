@@ -42,6 +42,7 @@ public class TernUIPreferenceInitializer extends AbstractPreferenceInitializer {
 		node.putBoolean(
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,
 				false);
+		node.putBoolean(TernUIPreferenceConstants.GUESS_CONTENT_ASSIST, true);
 	}
 
 }

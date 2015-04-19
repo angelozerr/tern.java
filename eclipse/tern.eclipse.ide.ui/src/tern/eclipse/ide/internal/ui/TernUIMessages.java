@@ -112,6 +112,7 @@ public final class TernUIMessages extends NLS {
 	public static String TernContentAssistPreferencesPage_filteringGroup_label;
 	public static String TernContentAssistPreferencesPage_expandFunction_label;
 	public static String TernContentAssistPreferencesPage_omitObjectPrototype_label;
+	public static String TernContentAssistPreferencesPage_guess_label;
 	public static String TernContentAssistPreferencesPage_insertionGroup_label;
 	public static String TernContentAssistPreferencesPage_indentation_label;
 	public static String TernContentAssistPreferencesPage_functionInsertionGroup_label;
