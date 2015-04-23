@@ -27,7 +27,7 @@ public enum TernPlugin implements ITernPlugin {
 	angular("tern/plugin/angular"), 
 	chrome_apps("chrome-apps", "chrome-apps", null, null), 
 	component("tern/plugin/component"), 
-	ckeditor_4_4_1("ckeditor", "4.4.1", true), 
+	ckeditor_4_4_x("ckeditor", "4.4.x"), 
 	closure(""),
 	cordovajs("tern/plugin/cordovajs"), 
 	doc_comment("tern/plugin/doc_comment"), 
