@@ -69,10 +69,6 @@ See http://www.liferay.com/fr/web/gregory.amerson/blog/-/blogs/liferay-ide-2-2-r
 
 See https://www.genuitec.com/tag/tern/ for more informations.
 
-# Developing
-
-Warning: When checking out on Windows , you can run into #35 [check out on Windows - Filename too long](https://github.com/angelozerr/tern.java/issues/35)
-
 ## Build
 
 See cloudbees job: https://opensagres.ci.cloudbees.com/job/tern.java/
