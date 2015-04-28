@@ -2434,6 +2434,24 @@
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#property_AutoComplete.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the AutoComplete."
      }
+    },
+    "ButtonItem": {
+     "!type": "fn(config: +config.ButtonItemConfig)",
+     "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html",
+     "!data": {
+      "extends": [
+       "widget_child.WidgetChild"
+      ],
+      "for": "aui_button_item.ButtonItem"
+     },
+     "prototype": {
+      "!proto": "aui_component.Component.prototype",
+      "undefined": {
+       "!type": "fn()",
+       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html",
+       "!doc": "Maps an array or object to a resulting array, using the\nreturn value of fn as the values for the new array.\nLike A.each, this function can accept an object or an array."
+      }
+     }
     }
    },
    "aui_button_item": {
@@ -2443,13 +2461,13 @@
     "ButtonItem": {
      "!type": "fn(config: +config.ButtonItemConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html",
+     "!data": {
+      "extends": [
+       "widget_child.WidgetChild"
+      ]
+     },
      "prototype": {
-      "!proto": "aui_component.Component.prototype",
-      "undefined": {
-       "!type": "fn()",
-       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html",
-       "!doc": "Maps an array or object to a resulting array, using the\nreturn value of fn as the values for the new array.\nLike A.each, this function can accept an object or an array."
-      }
+      "!proto": "aui_component.Component.prototype"
      },
      "ButtonItem.NAME": {
       "!type": "string",
@@ -2695,6 +2713,11 @@
     "CharCounter": {
      "!type": "fn(config: +config.CharCounterConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CharCounter.html",
+     "!data": {
+      "augments": [
+       "AUI~input~handle"
+      ]
+     },
      "prototype": {
       "!proto": "base.Base.prototype",
       "checkLength": {
@@ -3088,6 +3111,14 @@
     "Dialog": {
      "!type": "fn(config: +config.DialogConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html",
+     "!data": {
+      "extends": [
+       "widget_position.WidgetPosition",
+       "widget_stack.WidgetStack",
+       "widget_position_align.WidgetPositionAlign",
+       "widget_position_constrain.WidgetPositionConstrain"
+      ]
+     },
      "prototype": {
       "!proto": "aui_panel.Panel.prototype",
       "alignToViewport": {
@@ -3503,6 +3534,11 @@
     "IORequest": {
      "!type": "fn(config: +config.IORequestConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html",
+     "!data": {
+      "augments": [
+       "io"
+      ]
+     },
      "prototype": {
       "!proto": "plugin.Plugin.Base.prototype",
       "start": {
@@ -3663,23 +3699,10 @@
      "Node": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html",
+      "!data": {
+       "for": "node.Node"
+      },
       "prototype": {
-       "ancestors": {
-        "!type": "fn(selector: string) -> +dom.NodeList",
-        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_ancestors",
-        "!doc": "<p>Returns the current ancestors of the node element filtered by a className.\nThis is an optimized method for finding ancestors by a specific CSS class name.</p>\n\nExample:\n\n<pre><code>\nA.one(#nodeId).ancestorsByClassName(aui-helper-hidden);\n</code></pre>",
-        "!data": {
-         "submodule": "aui-node-base"
-        }
-       },
-       "appendTo": {
-        "!type": "fn(selector: +node.Node) -> !this",
-        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_appendTo",
-        "!doc": "<p>Insert the node instance to the end of the <code>selector</code>\nelement.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// using another Node instance\nvar body = A.one(body);\nnode.appendTo(body);\n// using a CSS selector\nnode.appendTo(#container);\n</code></pre>",
-        "!data": {
-         "submodule": "aui-node-base"
-        }
-       },
        "attr": {
         "!type": "fn(name: string, value: string) -> string",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_attr",
@@ -3700,14 +3723,6 @@
         "!type": "fn(val: +yui.Array) -> !this",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_center",
         "!doc": "<p>Centralize the current Node instance with the passed\n<code>val</code> Array, Node, String, or Region, if not specified, the body will be\nused.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// Center the <code>node</code> with the <code>#container</code>.\nnode.center(#container);\n</code></pre>",
-        "!data": {
-         "submodule": "aui-node-base"
-        }
-       },
-       "empty": {
-        "!type": "fn() -> !this",
-        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_empty",
-        "!doc": "<p>This method removes not only child (and other descendant) elements,\nbut also any text within the set of matched elements. This is because,\naccording to the DOM specification, any string of text within an element\nis considered a child node of that element.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.empty();\n</code></pre>",
         "!data": {
          "submodule": "aui-node-base"
         }
@@ -3733,6 +3748,12 @@
      "NodeList": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html",
+      "!data": {
+       "extends": [
+        "aui_node.A.Node"
+       ],
+       "for": "node.NodeList"
+      },
       "prototype": {
        "all": {
         "!type": "fn()",
@@ -3814,25 +3835,16 @@
        }
       }
      }
-    }
-   },
-   "node": {
-    "!data": {
-     "submodules": {
-      "event-custom-base": {},
-      "event-base": {},
-      "node-core": {},
-      "node-deprecated": {},
-      "node-event-simulate": {},
-      "node-load": {},
-      "node-pluginhost": {},
-      "node-screen": {},
-      "node-style": {}
-     }
     },
     "Node": {
      "!type": "fn(node: +DOMNode)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html",
+     "!data": {
+      "extends": [
+       "node.EventTarget"
+      ],
+      "for": "node.Node"
+     },
      "prototype": {
       "getCenterXY": {
        "!type": "fn() -> +yui.Array",
@@ -4373,6 +4385,18 @@
     "Panel": {
      "!type": "fn(object: +yui.Object)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html",
+     "!data": {
+      "extends": [
+       "widget_stdmod.WidgetStdMod",
+       "widget_position.WidgetPosition",
+       "widget_stack.WidgetStack",
+       "widget_position_align.WidgetPositionAlign",
+       "widget_position_constrain.WidgetPositionConstrain",
+       "widget_modality.WidgetModality",
+       "widget_autohide.WidgetAutohide",
+       "widget_buttons.WidgetButtons"
+      ]
+     },
      "prototype": {
       "!proto": "widget.Widget.prototype",
       "collapse": {
@@ -4608,15 +4632,13 @@
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#property_Resize.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Resize."
      }
-    }
-   },
-   "aui_textboxlist": {
-    "!data": {
-     "module": "aui-textboxlist"
     },
     "Textboxlist": {
      "!type": "fn(config: +config.TextboxlistConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
+     "!data": {
+      "for": "aui_textboxlist.Textboxlist"
+     },
      "prototype": {
       "!proto": "aui_autocomplete.AutoComplete.prototype",
       "constrainBorderInfo": {
@@ -4628,7 +4650,22 @@
        "!type": "fn()",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
        "!doc": "Mapping UTF-8 groups of characters. Based on Steven Levithans XRegExp\nproject (http://xregexp.com)"
-      },
+      }
+     }
+    }
+   },
+   "aui_text": {
+    "!data": {
+     "module": "aui-text"
+    },
+    "Textboxlist": {
+     "!type": "fn(config: +config.TextboxlistConfig)",
+     "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
+     "!data": {
+      "for": "aui_textboxlist.Textboxlist"
+     },
+     "prototype": {
+      "!proto": "aui_autocomplete.AutoComplete.prototype",
       "match": {
        "!type": "fn(str: string, group: string, flags: string)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#method_match",
@@ -4639,6 +4676,18 @@
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#method_test",
        "!doc": "Tests a string against an Unicode pattern. Returns true or false."
       }
+     }
+    }
+   },
+   "aui_textboxlist": {
+    "!data": {
+     "module": "aui-textboxlist"
+    },
+    "Textboxlist": {
+     "!type": "fn(config: +config.TextboxlistConfig)",
+     "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
+     "prototype": {
+      "!proto": "aui_autocomplete.AutoComplete.prototype"
      },
      "Textboxlist.NAME": {
       "!type": "string",

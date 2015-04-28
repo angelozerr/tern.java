@@ -5161,6 +5161,14 @@
       "AutoCompleteList": {
        "!type": "fn(config: +config.A.AceEditor.AutoCompleteListConfig)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.AutoCompleteList.html",
+       "!data": {
+        "augments": [
+         "A.WidgetAutohide"
+        ],
+        "extends": [
+         "aui_ace_editor.A.AceEditor.AutoCompleteBase"
+        ]
+       },
        "prototype": {
         "!proto": "overlay.Overlay.prototype"
        },
@@ -5311,6 +5319,28 @@
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.AceEditor.html#property_UI_ATTRS",
        "!doc": "Static property used to define the UI attributes."
       }
+     },
+     "Plugin": {
+      "Aria": {
+       "!type": "fn(config: +config.A.Plugin.AriaConfig)",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html",
+       "!data": {
+        "for": "aui_aria.A.Plugin.Aria"
+       },
+       "prototype": {
+        "!proto": "plugin.Plugin.Base.prototype"
+       },
+       "W3C_ATTRIBUTES": {
+        "!type": "+yui.Object",
+        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#property_W3C_ATTRIBUTES",
+        "!doc": "Static property used to define [W3Cs Supported States and\nProperties](http://www.w3.org/TR/wai-aria/states_and_properties)."
+       },
+       "W3C_ROLES": {
+        "!type": "+yui.Object",
+        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#property_W3C_ROLES",
+        "!doc": "Static property used to define [W3Cs Roles Model](http://www.w3.org/TR/wai-\naria/roles)."
+       }
+      }
      }
     }
    },
@@ -5356,16 +5386,6 @@
          "!doc": "Set a list of ARIA roles."
         }
        },
-       "W3C_ATTRIBUTES": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#property_W3C_ATTRIBUTES",
-        "!doc": "Static property used to define [W3Cs Supported States and\nProperties](http://www.w3.org/TR/wai-aria/states_and_properties)."
-       },
-       "W3C_ROLES": {
-        "!type": "+yui.Object",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#property_W3C_ROLES",
-        "!doc": "Static property used to define [W3Cs Roles Model](http://www.w3.org/TR/wai-\naria/roles)."
-       },
        "NAME": {
         "!type": "string",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html#property_NAME",
@@ -5398,6 +5418,11 @@
      "ArraySort": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ArraySort.html",
+      "!data": {
+       "extends": [
+        "arraysort.ArraySort"
+       ]
+      },
       "prototype": {
        "compareIgnoreWhiteSpace": {
         "!type": "fn(a: ?, b: ?, desc: ?, compareFn: ?) -> ?",
@@ -5554,6 +5579,13 @@
      "Button": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Button.html",
+      "!data": {
+       "extends": [
+        "aui_button.A.ButtonExt",
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle"
+       ]
+      },
       "prototype": {
        "!proto": "button.Button.prototype",
        "getWidgetLazyConstructorFromNodeData": {
@@ -5922,6 +5954,13 @@
      "ColorPalette": {
       "!type": "fn(config: +config.A.ColorPaletteConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPalette.html",
+      "!data": {
+       "extends": [
+        "aui_palette.A.Palette",
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype"
       },
@@ -5991,6 +6030,16 @@
      "ColorPickerPopover": {
       "!type": "fn(config: +config.A.ColorPickerPopoverConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ColorPickerPopover.html",
+      "!data": {
+       "augments": [
+        "A.WidgetAutohide"
+       ],
+       "extends": [
+        "aui_color_picker.A.ColorPickerBase",
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle"
+       ]
+      },
       "prototype": {
        "!proto": "aui_popover.A.Popover.prototype"
       },
@@ -6022,6 +6071,12 @@
      "HSVPalette": {
       "!type": "fn(config: +config.A.HSVPaletteConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.HSVPalette.html",
+      "!data": {
+       "extends": [
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype"
       },
@@ -6130,6 +6185,12 @@
      "Component": {
       "!type": "fn(config: +config.A.ComponentConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Component.html",
+      "!data": {
+       "extends": [
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype",
        "clone": {
@@ -6185,6 +6246,9 @@
      "DataTable": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/DataTable.html",
+      "!data": {
+       "for": "datatable.DataTable"
+      },
       "prototype": {
        "!proto": "datatable.DataTable.Base.prototype"
       },
@@ -6645,6 +6709,12 @@
      "PropertyList": {
       "!type": "fn(config: +config.A.PropertyListConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.PropertyList.html",
+      "!data": {
+       "extends": [
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle"
+       ]
+      },
       "prototype": {
        "!proto": "datatable.DataTable.prototype",
        "getDefaultEditor": {
@@ -6818,20 +6888,13 @@
        "!doc": "Static property provides an object that contains hints information for\ntimezone tokens."
       }
      }
-    }
-   },
-   "datatype_date": {
-    "!data": {
-     "module": "datatype-date",
-     "submodules": {
-      "datatype-date-format": {},
-      "datatype-date-math": {},
-      "datatype-date-parse": {}
-     }
     },
     "Date": {
      "!type": "fn()",
      "!url": "http://alloyui.com/versions/2.0.x/api/classes/Date.html",
+     "!data": {
+      "for": "datatype_date.Date"
+     },
      "parse": {
       "!type": "fn(mask: string, text: string, opt_date: +datatype_date.Date) -> +datatype_date.Date",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/Date.html#method_parse",
@@ -7431,6 +7494,11 @@
      "DiagramBuilderBase": {
       "!type": "fn(config: +config.A.DiagramBuilderBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.DiagramBuilderBase.html",
+      "!data": {
+       "extends": [
+        "aui_diagram_builder.A.FieldSupport"
+       ]
+      },
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
        "isAvailableFieldsDrag": {
@@ -8354,27 +8422,23 @@
      }
     }
    },
-   "aui_form_builder": {
+   "aui_event": {
     "!data": {
-     "module": "aui-form-builder",
+     "module": "aui-event",
      "submodules": {
-      "aui-form-builder-base": {},
-      "aui-form-builder-field-base": {},
-      "aui-form-builder-field-button": {},
-      "aui-form-builder-field-checkbox": {},
-      "aui-form-builder-field-fieldset": {},
-      "aui-form-builder-field-upload": {},
-      "aui-form-builder-field-multiple-choice": {},
-      "aui-form-builder-field-radio": {},
-      "aui-form-builder-field-select": {},
-      "aui-form-builder-field-text": {},
-      "aui-form-builder-field-textarea": {}
+      "aui-event-base": {},
+      "aui-event-delegate-change": {},
+      "aui-event-delegate-submit": {},
+      "aui-event-input": {}
      }
     },
     "A": {
      "FormBuilderAvailableField": {
       "!type": "fn(config: +config.A.FormBuilderAvailableFieldConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html",
+      "!data": {
+       "for": "aui_form_builder.A.FormBuilderAvailableField"
+      },
       "prototype": {
        "!proto": "aui_diagram_builder.A.AvailableField.prototype",
        "hasModifier": {
@@ -8465,6 +8529,33 @@
          "submodule": "aui-event-input"
         }
        }
+      }
+     }
+    }
+   },
+   "aui_form_builder": {
+    "!data": {
+     "module": "aui-form-builder",
+     "submodules": {
+      "aui-form-builder-base": {},
+      "aui-form-builder-field-base": {},
+      "aui-form-builder-field-button": {},
+      "aui-form-builder-field-checkbox": {},
+      "aui-form-builder-field-fieldset": {},
+      "aui-form-builder-field-upload": {},
+      "aui-form-builder-field-multiple-choice": {},
+      "aui-form-builder-field-radio": {},
+      "aui-form-builder-field-select": {},
+      "aui-form-builder-field-text": {},
+      "aui-form-builder-field-textarea": {}
+     }
+    },
+    "A": {
+     "FormBuilderAvailableField": {
+      "!type": "fn(config: +config.A.FormBuilderAvailableFieldConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html",
+      "prototype": {
+       "!proto": "aui_diagram_builder.A.AvailableField.prototype"
       },
       "NAME": {
        "!type": "string",
@@ -8653,6 +8744,11 @@
      "FormBuilderFieldBase": {
       "!type": "fn(config: +config.A.FormBuilderFieldBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderFieldBase.html",
+      "!data": {
+       "extends": [
+        "aui_diagram_builder.A.FieldSupport"
+       ]
+      },
       "prototype": {
        "!proto": "aui_component.A.Component.prototype"
       },
@@ -9476,6 +9572,16 @@
      "ImageViewer": {
       "!type": "fn(config: +config.A.ImageViewerConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.ImageViewer.html",
+      "!data": {
+       "extends": [
+        "widget_stdmod.WidgetStdMod",
+        "widget_position.WidgetPosition",
+        "widget_stack.WidgetStack",
+        "widget_position_align.WidgetPositionAlign",
+        "widget_position_constrain.WidgetPositionConstrain",
+        "widget_modality.WidgetModality"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype",
        "close": {
@@ -9741,6 +9847,11 @@
      "IORequest": {
       "!type": "fn(config: +config.A.IORequestConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.IORequest.html",
+      "!data": {
+       "augments": [
+        "io"
+       ]
+      },
       "prototype": {
        "!proto": "plugin.Plugin.Base.prototype",
        "getFormattedData": {
@@ -9817,6 +9928,20 @@
      "Modal": {
       "!type": "fn(config: +config.A.ModalConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Modal.html",
+      "!data": {
+       "augments": [
+        "A.WidgetPosition",
+        "A.WidgetStdMod",
+        "A.WidgetAutohide",
+        "A.WidgetModality",
+        "A.WidgetPositionAlign",
+        "A.WidgetPositionConstrain",
+        "A.WidgetStack"
+       ],
+       "extends": [
+        "aui_widget_toolbars.A.WidgetToolbars"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype"
       },
@@ -9851,15 +9976,10 @@
      "Node": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html",
+      "!data": {
+       "for": "node.Node"
+      },
       "prototype": {
-       "ancestors": {
-        "!type": "fn(selector: string) -> +dom.NodeList",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_ancestors",
-        "!doc": "Returns the current ancestors of the node element. If a selector is\nspecified, the ancestors are filtered to match the selector.\n\nExample:\n\n```\nA.one(#nodeId).ancestors(div);\n```",
-        "!data": {
-         "submodule": "aui-node-base"
-        }
-       },
        "ancestorsByClassName": {
         "!type": "fn(className: string) -> +dom.NodeList",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_ancestorsByClassName",
@@ -9892,14 +10012,6 @@
          "submodule": "aui-node-base"
         }
        },
-       "empty": {
-        "!type": "fn() -> !this",
-        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_empty",
-        "!doc": "Removes not only child (and other descendant) elements, but also any text\nwithin the set of matched elements. This is because, according to the DOM\nspecification, any string of text within an element is considered a child\nnode of that element.\n\nExample:\n\n```\nvar node = A.one(#nodeId);\nnode.empty();\n```",
-        "!data": {
-         "submodule": "aui-node-base"
-        }
-       },
        "getDOM": {
         "!type": "fn() -> +HTMLNode",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html#method_getDOM",
@@ -9921,6 +10033,12 @@
      "NodeList": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html",
+      "!data": {
+       "extends": [
+        "aui_node.A.Node"
+       ],
+       "for": "node.NodeList"
+      },
       "prototype": {
        "all": {
         "!type": "fn()",
@@ -10042,26 +10160,16 @@
        }
       }
      }
-    }
-   },
-   "node": {
-    "!data": {
-     "submodules": {
-      "event-custom-base": {},
-      "event-base": {},
-      "node-base": {},
-      "node-core": {},
-      "node-data": {},
-      "node-event-html5": {},
-      "node-event-simulate": {},
-      "node-load": {},
-      "node-pluginhost": {},
-      "node-style": {}
-     }
     },
     "Node": {
      "!type": "fn(node: +DOMNode)",
      "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html",
+     "!data": {
+      "extends": [
+       "node.EventTarget"
+      ],
+      "for": "node.Node"
+     },
      "prototype": {
       "getCenterXY": {
        "!type": "fn() -> +yui.Array",
@@ -10446,6 +10554,23 @@
      "Popover": {
       "!type": "fn(config: +config.A.PopoverConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Popover.html",
+      "!data": {
+       "augments": [
+        "A.WidgetPosition",
+        "A.WidgetStdMod",
+        "A.WidgetAutohide",
+        "A.WidgetModality",
+        "A.WidgetPositionAlign",
+        "A.WidgetPositionConstrain",
+        "A.WidgetStack"
+       ],
+       "extends": [
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle",
+        "aui_widget_toolbars.A.WidgetToolbars",
+        "aui_widget_cssclass.A.WidgetPositionAlignSuggestion"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype"
       },
@@ -10844,6 +10969,11 @@
      "SchedulerView": {
       "!type": "fn(config: +config.A.SchedulerViewConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerView.html",
+      "!data": {
+       "extends": [
+        "widget_stdmod.WidgetStdMod"
+       ]
+      },
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
        "getAdjustedViewDate": {
@@ -11064,6 +11194,12 @@
      "SchedulerBase": {
       "!type": "fn(config: +config.A.SchedulerBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.SchedulerBase.html",
+      "!data": {
+       "extends": [
+        "aui_scheduler.A.SchedulerEventSupport",
+        "widget_stdmod.WidgetStdMod"
+       ]
+      },
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
        "getViewByName": {
@@ -12023,6 +12159,11 @@
      "Selector": {
       "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Selector.html",
+      "!data": {
+       "extends": [
+        "yui.Selector"
+       ]
+      },
       "prototype": {
        "button": {
         "!type": "fn(node: ?) -> bool",
@@ -12307,14 +12448,17 @@
      }
     }
    },
-   "aui_timepicker": {
+   "aui_text": {
     "!data": {
-     "module": "aui-timepicker"
+     "module": "aui-text"
     },
     "A": {
      "TimePickerBase": {
       "!type": "fn(config: +config.A.TimePickerBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html",
+      "!data": {
+       "for": "aui_timepicker.A.TimePickerBase"
+      },
       "prototype": {
        "match": {
         "!type": "fn(str: string, group: string, flags: string)",
@@ -12325,7 +12469,25 @@
         "!type": "fn(str: string, group: string, flags: string)",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#method_test",
         "!doc": "Tests a string against an Unicode pattern. Returns true or false."
-       },
+       }
+      }
+     }
+    }
+   },
+   "aui_timepicker": {
+    "!data": {
+     "module": "aui-timepicker"
+    },
+    "A": {
+     "TimePickerBase": {
+      "!type": "fn(config: +config.A.TimePickerBaseConfig)",
+      "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html",
+      "ATTRS": {
+       "!type": "+yui.Object",
+       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#property_ATTRS",
+       "!doc": "Static property used to define the default attribute configuration for the\n`TimePickerBase`."
+      },
+      "prototype": {
        "clearSelection": {
         "!type": "fn()",
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#method_clearSelection",
@@ -12346,11 +12508,6 @@
         "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#method_useInputNode",
         "!doc": "Syncs `TimePicker` values to input node value."
        }
-      },
-      "ATTRS": {
-       "!type": "+yui.Object",
-       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html#property_ATTRS",
-       "!doc": "Static property used to define the default attribute configuration for the\n`TimePickerBase`."
       }
      }
     }
@@ -12642,6 +12799,22 @@
      "Tooltip": {
       "!type": "fn(config: +config.A.TooltipConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Tooltip.html",
+      "!data": {
+       "augments": [
+        "A.WidgetPosition",
+        "A.WidgetStdMod",
+        "A.WidgetAutohide",
+        "A.WidgetPositionAlign",
+        "A.WidgetPositionConstrain",
+        "A.WidgetStack"
+       ],
+       "extends": [
+        "aui_widget_cssclass.A.WidgetCssClass",
+        "aui_widget_toggle.A.WidgetToggle",
+        "aui_widget_toolbars.A.WidgetToolbars",
+        "aui_widget_cssclass.A.WidgetPositionAlignSuggestion"
+       ]
+      },
       "prototype": {
        "!proto": "widget.Widget.prototype"
       },
@@ -12993,6 +13166,11 @@
      "TreeNode": {
       "!type": "fn(config: +config.A.TreeNodeConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNode.html",
+      "!data": {
+       "extends": [
+        "aui_tree.A.TreeData"
+       ]
+      },
       "prototype": {
        "!proto": "base.Base.prototype",
        "render": {
@@ -13120,6 +13298,12 @@
      "TreeNodeIO": {
       "!type": "fn(config: +config.A.TreeNodeIOConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeNodeIO.html",
+      "!data": {
+       "extends": [
+        "aui_tree.A.TreeViewPaginator",
+        "aui_tree.A.TreeViewIO"
+       ]
+      },
       "prototype": {
        "!proto": "aui_tree.A.TreeNode.prototype",
        "createNodes": {
@@ -13296,6 +13480,13 @@
      "TreeView": {
       "!type": "fn(config: +config.A.TreeViewConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TreeView.html",
+      "!data": {
+       "extends": [
+        "aui_tree.A.TreeData",
+        "aui_tree.A.TreeViewPaginator",
+        "aui_tree.A.TreeViewIO"
+       ]
+      },
       "prototype": {
        "!proto": "aui_component.A.Component.prototype",
        "createNodes": {
