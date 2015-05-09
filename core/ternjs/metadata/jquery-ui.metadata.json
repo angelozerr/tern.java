@@ -1,0 +1,22 @@
+{
+ "name": "jquery-ui",
+ "label": "jQuery UI", 
+ "homepage": "https://jqueryui.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add jQuery UI support.",
+ "dependencies": [
+  "ecma5",
+  "browser",
+  "jquery"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.jqueryapi.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.jqueryapi/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-jQueryUI-support"
+ }
+}

@@ -264,11 +264,15 @@
       <image
          id="ecma"
          icon="/icons/full/obj16/ecma.png" >
-      </image>       
+      </image>
+      <image
+         id="jquery-ui"
+         icon="/icons/full/obj16/jquery-ui.png" >
+      </image>             
       <image
          id="jquery"
          icon="/icons/full/obj16/jquery.png" >
-      </image>      
+      </image>
       <image
             id="underscore"
             icon="/icons/full/obj16/underscore.png" >
@@ -385,7 +389,7 @@
   	  <image
             id="tabris"
             icon="/icons/full/obj16/tabris.png" >
-      </image>            
+      </image>     
   	  <image
             id="requirejs"
             icon="/icons/full/obj16/requirejs.png" >
