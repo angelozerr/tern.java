@@ -1,7 +1,7 @@
 {
  "name": "jquery-ui",
  "label": "jQuery UI", 
- "homepage": "",
+ "homepage": "https://jqueryui.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add jQuery UI support.",
  "dependencies": [
