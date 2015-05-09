@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -123,9 +124,6 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-packaging-plugin</artifactId>
 				<version>${tycho-version}</version>
-				<configuration>
-					<strictVersions>false</strictVersions>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.mycila.maven-license-plugin</groupId>
@@ -143,7 +141,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<releaseProfiles>sonatype-oss-release</releaseProfiles>
+					<releaseProfiles>release</releaseProfiles>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -200,7 +198,7 @@
 	<profiles>
 		<profile>
 			<!-- release profile (see parent pom) -->
-			<id>sonatype-oss-release</id>
+			<id>release</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -211,10 +209,37 @@
 							<test>skip</test>
 						</configuration>
 					</plugin>
+					<plugin>
+						<groupId>de.jutzig</groupId>
+						<artifactId>github-release-plugin</artifactId>
+						<version>1.1.1</version>
+						<executions>
+							<execution>
+								<id>github-upload</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>release</goal>
+								</goals>
+								<inherited>false</inherited>
+							</execution>
+						</executions>
+						<configuration>
+							<overwriteArtifact>true</overwriteArtifact>
+							<tag>${project.artifactId}-${project.version}</tag>
+							<releaseName>${project.artifactId}-${project.version}</releaseName>
+							<artifact>${project.build.directory}/${project.artifactId}-${project.version}.jar</artifact>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
-
-
 	</profiles>
+<!--
+	 <distributionManagement>
+        <repository>
+            <id>bintray-repo-maven-example</id>
+            <url>https://api.bintray.com/maven/pascalleclercq/tern.java</url>
+        </repository>
+    </distributionManagement>
+    -->
 </project>
