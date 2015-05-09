@@ -77,7 +77,7 @@ public class TernHover extends AbstractTernHover implements
 				query.setUrls(true);
 				query.setTypes(true);
 
-				HTMLTernTypeCollector collector = new HTMLTernTypeCollector();
+				HTMLTernTypeCollector collector = new HTMLTernTypeCollector(ternProject);
 				ternProject.request(query, file, collector);
 				return new TernBrowserInformationControlInput(null,
 						collector.getInfo(), 20);

@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
 import tern.eclipse.jface.fieldassist.TernContentProposal;
+import tern.eclipse.jface.images.TernImagesRegistry;
 import tern.server.protocol.completions.TernCompletionItem;
 
 /**

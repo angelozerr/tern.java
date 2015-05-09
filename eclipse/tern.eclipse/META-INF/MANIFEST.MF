@@ -15,6 +15,7 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
 Export-Package: tern.eclipse.jface,
  tern.eclipse.jface.contentassist,
  tern.eclipse.jface.fieldassist,
+ tern.eclipse.jface.images,
  tern.eclipse.jface.text,
  tern.eclipse.swt
 Bundle-Activator: tern.eclipse.internal.Activator

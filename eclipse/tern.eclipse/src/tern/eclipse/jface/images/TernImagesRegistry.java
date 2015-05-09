@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.jface;
+package tern.eclipse.jface.images;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
@@ -18,6 +18,10 @@ import org.eclipse.swt.graphics.Image;
 import tern.server.protocol.completions.TernCompletionItem;
 import tern.server.protocol.completions.TernTypeHelper;
 
+/**
+ * Image registry for tern images.
+ *
+ */
 public class TernImagesRegistry {
 
 	public static final String IMG_FN = "tern.eclipse.jface.IMG_FN";
@@ -28,21 +32,35 @@ public class TernImagesRegistry {
 	public static final String IMG_UNKNOWN = "tern.eclipse.jface.IMG_UNKNOWN";
 
 	static {
-		ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
-
-		imageRegistry.put(IMG_FN, ImageDescriptor.createFromFile(
-				TernImagesRegistry.class, "images/fn.gif"));
-		imageRegistry.put(IMG_ARRAY, ImageDescriptor.createFromFile(
-				TernImagesRegistry.class, "images/array.gif"));
-		imageRegistry.put(IMG_NUMBER, ImageDescriptor.createFromFile(
-				TernImagesRegistry.class, "images/number.gif"));
-		imageRegistry.put(IMG_STRING, ImageDescriptor.createFromFile(
-				TernImagesRegistry.class, "images/string.gif"));
-		imageRegistry.put(IMG_BOOLEAN, ImageDescriptor.createFromFile(
-				TernImagesRegistry.class, "images/boolean.gif"));
-		imageRegistry.put(IMG_UNKNOWN, ImageDescriptor.createFromFile(
-				TernImagesRegistry.class, "images/unknown.gif"));
-
+		registerImageDescriptor(IMG_FN, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "fn.gif"));
+		registerImageDescriptor(getOvr(IMG_FN), ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "fn_ovr.gif"));
+		registerImageDescriptor(IMG_ARRAY, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "array.gif"));
+		registerImageDescriptor(getOvr(IMG_ARRAY),
+				ImageDescriptor.createFromFile(TernImagesRegistry.class,
+						"array_ovr.gif"));
+		registerImageDescriptor(IMG_NUMBER, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "number.gif"));
+		registerImageDescriptor(getOvr(IMG_NUMBER),
+				ImageDescriptor.createFromFile(TernImagesRegistry.class,
+						"number_ovr.gif"));
+		registerImageDescriptor(IMG_STRING, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "string.gif"));
+		registerImageDescriptor(getOvr(IMG_STRING),
+				ImageDescriptor.createFromFile(TernImagesRegistry.class,
+						"string_ovr.gif"));
+		registerImageDescriptor(IMG_BOOLEAN, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "boolean.gif"));
+		registerImageDescriptor(getOvr(IMG_BOOLEAN),
+				ImageDescriptor.createFromFile(TernImagesRegistry.class,
+						"boolean_ovr.gif"));
+		registerImageDescriptor(IMG_UNKNOWN, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "unknown.gif"));
+		registerImageDescriptor(getOvr(IMG_UNKNOWN),
+				ImageDescriptor.createFromFile(TernImagesRegistry.class,
+						"unknown_ovr.gif"));
 	}
 
 	/**
@@ -69,7 +87,7 @@ public class TernImagesRegistry {
 		return imageRegistry.getDescriptor(key);
 	}
 
-	private static String getImageKey(TernCompletionItem item,
+	public static String getJSType(TernCompletionItem item,
 			boolean returnNullIfUnknown) {
 		if (item.isFunction()) {
 			return TernImagesRegistry.IMG_FN;
@@ -96,13 +114,23 @@ public class TernImagesRegistry {
 
 	public static Image getImage(TernCompletionItem item,
 			boolean returnNullIfUnknown) {
-		String key = getImageKey(item, returnNullIfUnknown);
+		String key = getJSType(item, returnNullIfUnknown);
 		return key != null ? getImage(key) : null;
 	}
 
 	public static ImageDescriptor getImageDescriptor(TernCompletionItem item,
 			boolean returnNullIfUnknown) {
-		String key = getImageKey(item, returnNullIfUnknown);
+		String key = getJSType(item, returnNullIfUnknown);
 		return key != null ? getImageDescriptor(key) : null;
+	}
+
+	public static void registerImageDescriptor(String key,
+			ImageDescriptor descriptor) {
+		ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
+		imageRegistry.put(key, descriptor);
+	}
+
+	public static String getOvr(String typeKey) {
+		return new StringBuilder(typeKey).append("_ovr").toString();
 	}
 }

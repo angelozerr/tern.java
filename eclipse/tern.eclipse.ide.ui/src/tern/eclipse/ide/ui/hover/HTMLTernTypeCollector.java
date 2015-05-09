@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.ui.hover;
 
+import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.completions.TernCompletionItem;
@@ -22,9 +23,11 @@ import tern.server.protocol.type.ITernTypeCollector;
  */
 public class HTMLTernTypeCollector implements ITernTypeCollector {
 
+	private final IIDETernProject ternProject;
 	private String info;
 
-	public HTMLTernTypeCollector() {
+	public HTMLTernTypeCollector(IIDETernProject ternProject) {
+		this.ternProject = ternProject;
 		this.info = null;
 	}
 
@@ -36,6 +39,7 @@ public class HTMLTernTypeCollector implements ITernTypeCollector {
 			String label = name != null ? name : exprName;
 			TernCompletionItem item = new TernCompletionItem(
 					new TernCompletionProposalRec(label, type, doc, url, origin));
+			item.setTernProject(ternProject);
 			this.info = HTMLTernPrinter.getAdditionalProposalInfo(item, guess);
 		}
 	}

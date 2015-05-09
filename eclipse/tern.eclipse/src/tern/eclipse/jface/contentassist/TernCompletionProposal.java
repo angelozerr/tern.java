@@ -30,7 +30,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Shell;
 
-import tern.eclipse.jface.TernImagesRegistry;
+import tern.eclipse.jface.images.TernImagesRegistry;
 import tern.eclipse.jface.text.HoverControlCreator;
 import tern.eclipse.jface.text.PresenterControlCreator;
 import tern.server.protocol.completions.Parameter;
