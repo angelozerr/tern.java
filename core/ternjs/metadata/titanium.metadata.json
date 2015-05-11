@@ -1,0 +1,18 @@
+{
+ "name": "titanium",
+ "label": "Titanium",
+ "icon": "titanium.png",
+ "homepage": "http://www.appcelerator.com/",
+ "author": "Denis Parchenko",
+ "description": "Adds Titanium support.",
+ "dependencies": [
+  "ecma5"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/x-cray/tern-titanium.git"
+ },
+ "bugs": {
+  "url": "https://github.com/x-cray/tern-titanium/issues"
+ }
+}

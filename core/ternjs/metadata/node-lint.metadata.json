@@ -1,6 +1,7 @@
 {
  "name": "node-lint",
- "label": "Node lint",  
+ "label": "Node lint",
+ "icon": "node.png",
  "homepage": "http://www.nodeclipse.org/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add validation for node require module.",

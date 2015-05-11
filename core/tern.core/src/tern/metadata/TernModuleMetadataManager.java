@@ -61,12 +61,12 @@ public class TernModuleMetadataManager {
 						JsonObject json = null;
 						for (int i = 0; i < files.length; i++) {
 							file = files[i];
-							if (file.isFile()) {
+							if (file.isFile() && file.getName().endsWith(".metadata.json")) {
 								try {
 									json = JsonObject.readFrom(new FileReader(
 											file));
 									TernModuleMetadata metadata = new TernModuleMetadata(
-											json);
+											json, file);
 									metadatas.put(metadata.getName(), metadata);
 								} catch (Exception e) {
 									e.printStackTrace();

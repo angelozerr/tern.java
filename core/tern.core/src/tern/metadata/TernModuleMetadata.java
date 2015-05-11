@@ -10,6 +10,7 @@
  */
 package tern.metadata;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,6 +49,7 @@ public class TernModuleMetadata {
 	private static final String URL_FIELD = "url";
 	private static final String DEPENDENCIES_FIELD = "dependencies";
 	private static final String OPTIONS_FIELD = "options";
+	private static final String ICON_FIELD = "icon";
 
 	private final String name;
 	private final String origin;
@@ -62,13 +64,15 @@ public class TernModuleMetadata {
 	private final Map<String, Collection<String>> dependencies;
 	private final Map<String, Collection<String>> requiredDependencies;
 	private final Collection<TernModuleMetadataOption> options;
+	private File fileIcon;
 
 	/**
 	 * Create module metadata from JSON object.
 	 * 
 	 * @param json
+	 * @param file
 	 */
-	public TernModuleMetadata(JsonObject json) {
+	public TernModuleMetadata(JsonObject json, File file) {
 		this.name = JsonHelper.getString(json, NAME_FIELD);
 		this.label = JsonHelper.getString(json, LABEL_FIELD);
 		this.origin = !StringUtils.isEmpty(JsonHelper.getString(json,
@@ -97,6 +101,20 @@ public class TernModuleMetadata {
 		} else {
 			this.options = null;
 		}
+		// icon
+		this.fileIcon = getFileIcon(json, file);
+	}
+
+	private File getFileIcon(JsonObject json, File file) {
+		if (file == null) {
+			return null;
+		}
+		String icon = JsonHelper.getString(json, ICON_FIELD);
+		if (StringUtils.isEmpty(icon)) {
+			return null;
+		}
+		File fileIcon = new File(file.getParentFile(), icon);
+		return fileIcon.exists() ? fileIcon : null;
 	}
 
 	private Map<String, Collection<String>> getRequiredDependencies() {
@@ -323,5 +341,9 @@ public class TernModuleMetadata {
 
 	public boolean hasOptions() {
 		return options != null && options.size() > 0;
+	}
+
+	public File getFileIcon() {
+		return fileIcon;
 	}
 }

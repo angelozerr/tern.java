@@ -1,6 +1,7 @@
 {
  "name": "jscs",
- "label": "JSCS",  
+ "label": "JSCS",
+ "icon": "jscs.png",
  "homepage": "https://github.com/angelozerr/tern-jscs",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "This plugin validate JS files with JSCS.",

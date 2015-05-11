@@ -1,6 +1,7 @@
 {
  "name": "jquery",
  "label": "jQuery",
+ "icon": "jquery.png", 
  "origin": "jQuery",  
  "homepage": "http://jquery.com/",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",

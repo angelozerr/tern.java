@@ -1,6 +1,7 @@
 {
  "name": "extjs",
  "label": "ExtJS",
+ "icon": "extjs.png",
  "homepage": "http://www.sencha.com/products/extjs/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add ExtJS support.",

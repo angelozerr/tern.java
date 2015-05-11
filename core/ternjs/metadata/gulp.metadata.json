@@ -1,6 +1,7 @@
 {
  "name": "gulp",
- "label": "Gulp",  
+ "label": "Gulp",
+ "icon": "gulp.png",
  "homepage": "http://gulpjs.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add Gulp support. The streaming build system.",

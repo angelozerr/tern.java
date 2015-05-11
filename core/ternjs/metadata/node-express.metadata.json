@@ -1,6 +1,7 @@
 {
  "name": "node-express",
- "label": "Express",  
+ "label": "Express",
+ "icon": "node-express.png",
  "homepage": "http://expressjs.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add express web application framework for node support. Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.",

@@ -343,7 +343,19 @@ public class TernCompletionItem {
 	 * 
 	 * @return the origin type.
 	 */
-	public String getOriginType() {
+//	public String getOriginType() {
+//		ITernModule module = getModule();
+//		// Use tern repository to retrieve the real module type (ex : yui for
+//		// yui3).
+//		return module != null ? module.getType() : null;
+//	}
+
+	/**
+	 * Returns the tern module and null otherwise.
+	 * 
+	 * @return the tern module and null otherwise.
+	 */
+	public ITernModule getTernModule() {
 		String origin = getOrigin();
 		if (origin == null) {
 			return null;
@@ -351,9 +363,6 @@ public class TernCompletionItem {
 		if (ternProject == null) {
 			return null;
 		}
-		// Use tern repository to retrieve the real module type (ex : yui for
-		// yui3).
-		ITernModule module = this.ternProject.getRepository().getModuleByOrigin(origin);
-		return module != null ? module.getType() : null;
+		return this.ternProject.getRepository().getModuleByOrigin(origin);
 	}
 }

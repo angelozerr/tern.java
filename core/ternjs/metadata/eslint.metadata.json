@@ -1,6 +1,7 @@
 {
  "name": "eslint",
- "label": "ESLint",  
+ "label": "ESLint",
+ "icon": "eslint.png",
  "homepage": "https://github.com/angelozerr/tern-eslint",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "This plugin validate JS files with ESLint.",

@@ -1,6 +1,7 @@
 {
  "name": "qooxdoo",
- "label": "Qooxdoo",  
+ "label": "Qooxdoo",
+ "icon": "qooxdoo.png",
  "homepage": "http://qooxdoo.org/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add Qooxdoo support. qooxdoo is a universal JavaScript framework with a coherent set of individual components and a powerful toolchain. It is open source under liberal licenses, and supported by one of the world's leading web hosts, 1&1.",

@@ -16,11 +16,9 @@ import org.eclipse.swt.graphics.Image;
 
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.server.ITernPlugin;
-import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
 /**
@@ -70,7 +68,7 @@ public class TernModuleLabelProvider extends LabelProvider implements
 	 */
 	public static Image getImageModule(ITernModule module) {
 		Image image = TernUIPlugin.getTernDescriptorManager().getImage(
-				module.getType());
+				module);
 		if (image != null) {
 			return image;
 		}

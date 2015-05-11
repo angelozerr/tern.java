@@ -19,7 +19,6 @@
       <complexType>
          <sequence minOccurs="1" maxOccurs="unbounded">
             <element ref="optionFactory" minOccurs="0" maxOccurs="unbounded"/>
-            <element ref="image" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -63,30 +62,6 @@
                </documentation>
                <appInfo>
                   <meta.attribute kind="java" basedOn=":tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory"/>
-               </appInfo>
-            </annotation>
-         </attribute>
-      </complexType>
-   </element>
-
-   <element name="image">
-      <complexType>
-         <sequence>
-         </sequence>
-         <attribute name="id" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="icon" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-               <appInfo>
-                  <meta.attribute kind="resource"/>
                </appInfo>
             </annotation>
          </attribute>

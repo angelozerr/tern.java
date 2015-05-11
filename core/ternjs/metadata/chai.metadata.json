@@ -1,6 +1,7 @@
 {
  "name": "chai",
- "label": "Chai",  
+ "label": "Chai",
+ "icon": "chai.png",
  "homepage": "http://chaijs.com/",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "Adds Chai support. Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.",

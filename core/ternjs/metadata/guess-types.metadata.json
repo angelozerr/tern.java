@@ -1,6 +1,7 @@
 {
  "name": "guess-types",
- "label": "Completion Guess",  
+ "label": "Completion Guess",
+ "icon": "completion.png",  
  "homepage": "https://github.com/angelozerr/tern-guess-types",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Guess filled function arguments after completion applied.",

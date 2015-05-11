@@ -1,6 +1,7 @@
 {
  "name": "tabris",
- "label": "tabris.js",  
+ "label": "tabris.js",
+ "icon": "tabris.png",
  "homepage": "https://github.com/eclipsesource/tabris-js",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Adds tabris.js Javascript API support. Native apps in JavaScript https://tabrisjs.com",

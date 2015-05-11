@@ -10,13 +10,18 @@
  */
 package tern.eclipse.jface.images;
 
+import java.io.File;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.Image;
 
+import tern.metadata.TernModuleMetadata;
+import tern.server.ITernModule;
 import tern.server.protocol.completions.TernCompletionItem;
 import tern.server.protocol.completions.TernTypeHelper;
+import tern.utils.StringUtils;
 
 /**
  * Image registry for tern images.
@@ -124,13 +129,124 @@ public class TernImagesRegistry {
 		return key != null ? getImageDescriptor(key) : null;
 	}
 
-	public static void registerImageDescriptor(String key,
+	private static void registerImageDescriptor(String key,
 			ImageDescriptor descriptor) {
 		ImageRegistry imageRegistry = JFaceResources.getImageRegistry();
 		imageRegistry.put(key, descriptor);
 	}
 
-	public static String getOvr(String typeKey) {
+	static String getOvr(String typeKey) {
 		return new StringBuilder(typeKey).append("_ovr").toString();
 	}
+
+	public static Image getImage(ITernModule module) {
+		TernModuleMetadata metadata = module.getMetadata();
+		if (metadata == null) {
+			return null;
+		}
+		File icon = metadata.getFileIcon();
+		if (icon == null) {
+			return null;
+		}
+		String key = icon.getPath();
+		Image image = getImage(key);
+		if (image != null) {
+			return image;
+		}
+		ImageDescriptor desc = ImageDescriptor.createFromFile(null,
+				icon.getPath());
+		registerImageDescriptor(key, desc);
+		return TernImagesRegistry.getImage(key);
+	}
+
+	public static Image getImage(String jsType, ITernModule module) {
+		boolean hasJSType = !StringUtils.isEmpty(jsType);
+		boolean hasOrigin = module != null;
+		if (!hasJSType) {
+			// JS type is unknown, try to retrieve the image of the origin tern
+			// module
+			Image originImage = hasOrigin ? getImage(module) : null;
+			return originImage != null ? originImage : TernImagesRegistry
+					.getImage(TernImagesRegistry.IMG_UNKNOWN);
+		}
+		// here JS Type is known, try to retrieve the image of the origin tern
+		// module
+		if (!hasOrigin) {
+			// None origin, returns the JS type
+			return TernImagesRegistry.getImage(jsType);
+		}
+		// origin + js type is known, try to merge
+		String imageKey = getImageKey(jsType, module.getOrigin());
+		Image image = TernImagesRegistry.getImage(imageKey);
+		if (image != null) {
+			return image;
+		}
+		ImageDescriptor originImageDescriptor = getImageDescriptor(module);
+		if (originImageDescriptor == null) {
+			return TernImagesRegistry.getImage(TernImagesRegistry.IMG_UNKNOWN);
+		}
+		TernCompositeImageDescriptor desc = new TernCompositeImageDescriptor(
+				originImageDescriptor, jsType);
+		TernImagesRegistry.registerImageDescriptor(imageKey, desc);
+		return TernImagesRegistry.getImage(imageKey);
+	}
+
+	public static ImageDescriptor getImageDescriptor(ITernModule module) {
+		TernModuleMetadata metadata = module.getMetadata();
+		if (metadata == null) {
+			return null;
+		}
+		File icon = metadata.getFileIcon();
+		if (icon == null) {
+			return null;
+		}
+		String key = icon.getPath();
+		ImageDescriptor desc = getImageDescriptor(key);
+		if (desc != null) {
+			return desc;
+		}
+		desc = ImageDescriptor.createFromFile(null, icon.getPath());
+		registerImageDescriptor(key, desc);
+		return desc;
+	}
+
+	private static String getImageKey(String jsType, String origin) {
+		return jsType + "_" + origin;
+	}
+
+	public static ImageDescriptor getImageDescriptor(String jsType,
+			ITernModule module) {
+		boolean hasJSType = !StringUtils.isEmpty(jsType);
+		boolean hasOrigin = module != null;
+		if (!hasJSType) {
+			// JS type is unknown, try to retrieve the image of the origin tern
+			// module
+			ImageDescriptor originImage = hasOrigin ? getImageDescriptor(module)
+					: null;
+			return originImage != null ? originImage : TernImagesRegistry
+					.getImageDescriptor(TernImagesRegistry.IMG_UNKNOWN);
+		}
+		// here JS Type is known, try to retrieve the image of the origin tern
+		// module
+		if (!hasOrigin) {
+			// None origin, returns the JS type
+			return TernImagesRegistry.getImageDescriptor(jsType);
+		}
+		// origin + js type is known, try to merge
+		String imageKey = getImageKey(jsType, module.getOrigin());
+		ImageDescriptor image = TernImagesRegistry.getImageDescriptor(imageKey);
+		if (image != null) {
+			return image;
+		}
+		ImageDescriptor originImageDescriptor = getImageDescriptor(module);
+		if (originImageDescriptor == null) {
+			return TernImagesRegistry
+					.getImageDescriptor(TernImagesRegistry.IMG_UNKNOWN);
+		}
+		TernCompositeImageDescriptor desc = new TernCompositeImageDescriptor(
+				originImageDescriptor, jsType);
+		TernImagesRegistry.registerImageDescriptor(imageKey, desc);
+		return TernImagesRegistry.getImageDescriptor(imageKey);
+	}
+
 }

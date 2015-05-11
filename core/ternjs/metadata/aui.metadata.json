@@ -1,6 +1,7 @@
 {
  "name": "aui",
  "label": "AlloyUI",
+ "icon": "aui.png",
  "homepage": "http://alloyui.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Adds AlloyUI support. AlloyUI is a framework built on top of YUI3 (JavaScript) that uses Bootstrap (HTML/CSS) to provide a simple API for building high scalable applications.",

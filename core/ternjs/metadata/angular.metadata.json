@@ -1,6 +1,7 @@
 {
  "name": "angular",
  "label": "AngularJS",
+ "icon": "angular.png",
  "homepage": "https://angularjs.org/",
  "author": "Marijn Haverbeke <marijnh@gmail.com> forked by Angelo ZERR",
  "description": "Adds AngularJS support.",

@@ -103,7 +103,7 @@ public class TernRepository implements ITernRepository {
 		return linters.toArray(ITernPlugin.EMPTY_PLUGIN);
 	}
 
-	private Map<String, ITernModule> loadModules(
+	private void loadModules(
 			Map<String, ITernModule> modules,
 			Map<String, ITernModule> modulesByOrigin) throws TernException {
 		// defs
@@ -112,7 +112,6 @@ public class TernRepository implements ITernRepository {
 		loadModules(modules, modulesByOrigin, PLUGIN_FOLDER);
 		// node_modules
 		loadModules(modules, modulesByOrigin, NODE_MODULES_FOLDER);
-		return modules;
 	}
 
 	private void loadModules(Map<String, ITernModule> modules,

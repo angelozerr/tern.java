@@ -1,6 +1,7 @@
 {
  "name": "jasmine",
- "label": "Jasmine",  
+ "label": "Jasmine",
+ "icon": "jasmine.png",
  "homepage": "http://jasmine.github.io/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add Jasmine support. Behavior-Driven JavaScript.",

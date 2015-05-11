@@ -1,6 +1,7 @@
 {
  "name": "node",
-  "label": "Node.js",
+ "label": "Node.js",
+ "icon": "node.png",
  "homepage": "http://www.nodeclipse.org/",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "Adds node.js support.",

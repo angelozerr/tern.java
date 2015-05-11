@@ -12,7 +12,7 @@ public class TernModuleToDownload extends AbstractBasicTernModule {
 
 	public TernModuleToDownload(String name, JsonObject module) {
 		super(name, getModuleType(module));
-		this.metadata = new TernModuleMetadata(module);
+		this.metadata = new TernModuleMetadata(module, null);
 	}
 
 	private static ModuleType getModuleType(JsonObject module) {

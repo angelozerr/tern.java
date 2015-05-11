@@ -1,6 +1,7 @@
 {
  "name": "cordovajs",
- "label": "Cordova JavaScript",  
+ "label": "Cordova JavaScript",
+ "icon": "cordovajs.png",
  "homepage": "http://cordova.apache.org/",
  "author": "Victor V. Rubezhny <vrubezhny@exadel.com>",
  "description": "Adds Cordova Javascript support. Apache Cordova is a platform for building native mobile applications using HTML, CSS and JavaScript",

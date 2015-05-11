@@ -1,6 +1,7 @@
 {
  "name": "ckeditor",
  "label": "CKEditor",
+ "icon": "ckeditor.png",
  "homepage": "http://ckeditor.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add CKEditor support. The best web text editor for everyone",

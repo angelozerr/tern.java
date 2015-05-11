@@ -1,6 +1,7 @@
 {
  "name": "lint",
- "label": "Lint",  
+ "label": "Lint",
+ "icon": "lint.png",
  "homepage": "https://github.com/angelozerr/tern-lint",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "This plugin validate JS files (but not syntax errors).",
