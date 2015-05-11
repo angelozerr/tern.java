@@ -15,6 +15,7 @@ import java.util.Collection;
 
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataManager;
+import tern.utils.StringUtils;
 
 /**
  * Tern plugin.
@@ -159,5 +160,15 @@ public enum TernPlugin implements ITernPlugin {
 	@Override
 	public boolean isLinter() {
 		return linter;
+	}
+	
+	@Override
+	public String getOrigin() {
+		String origin = null;
+		TernModuleMetadata metadata = getMetadata();
+		if (metadata != null) {
+			origin = metadata.getOrigin();
+		}
+		return !StringUtils.isEmpty(origin) ? origin : getName();
 	}
 }

@@ -12,6 +12,7 @@ package tern.server;
 
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataManager;
+import tern.utils.StringUtils;
 
 /**
  * Abstract class for basic tern moduleµ.
@@ -50,5 +51,15 @@ public abstract class AbstractBasicTernModule extends TernModuleInfo implements
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	@Override
+	public String getOrigin() {
+		String origin = null;
+		TernModuleMetadata metadata = getMetadata();
+		if (metadata != null) {
+			origin = metadata.getOrigin();
+		}
+		return !StringUtils.isEmpty(origin) ? origin : getName();
 	}
 }

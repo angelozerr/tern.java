@@ -31,6 +31,13 @@ public interface ITernModule {
 	String getName();
 
 	/**
+	 * Return the origin.
+	 * 
+	 * @return
+	 */
+	String getOrigin();
+	
+	/**
 	 * Returns the type of the def or plugin.
 	 * 
 	 * @return the type of the def or plugin.

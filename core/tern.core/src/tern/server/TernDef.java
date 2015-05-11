@@ -12,6 +12,7 @@ package tern.server;
 
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataManager;
+import tern.utils.StringUtils;
 
 public enum TernDef implements ITernDef {
 
@@ -20,7 +21,9 @@ public enum TernDef implements ITernDef {
 	ecma5(null, "ecma", "5", "tern/defs/ecma5.json"), 
 	ecma6(null, "ecma", "6", "tern/defs/ecma5.json"),
 	jquery("tern/defs/jquery.json"), 
-	underscore("tern/defs/underscore.json");
+	underscore("tern/defs/underscore.json"),
+	
+	titanium("titanium.json");
 
 	private final String name;
 	private final String type;
@@ -90,4 +93,13 @@ public enum TernDef implements ITernDef {
 		return metadata;
 	}
 
+	@Override
+	public String getOrigin() {
+		String origin = null;
+		TernModuleMetadata metadata = getMetadata();
+		if (metadata != null) {
+			origin = metadata.getOrigin();
+		}
+		return !StringUtils.isEmpty(origin) ? origin : getName();
+	}
 }

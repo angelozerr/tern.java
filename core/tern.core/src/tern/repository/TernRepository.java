@@ -37,6 +37,7 @@ public class TernRepository implements ITernRepository {
 	private File ternBaseDir;
 	private final boolean defaultRepository;
 	private Map<String, ITernModule> modules;
+	private Map<String, ITernModule> modulesByOrigin;
 	private ITernPlugin[] linters;
 
 	public TernRepository(String name, File ternBaseDir) {
@@ -68,12 +69,25 @@ public class TernRepository implements ITernRepository {
 		} catch (TernException e) {
 			return null;
 		}
-
 	}
 
+	@Override
+	public ITernModule getModuleByOrigin(String origin) {
+		try {
+			intializeIfNeeded();
+			return modulesByOrigin.get(origin);
+		} catch (TernException e) {
+			return null;
+		}
+	}
+	
 	private void intializeIfNeeded() throws TernException {
 		if (modules == null) {
-			modules = loadModules();
+			Map<String, ITernModule> modules = new HashMap<String, ITernModule>();
+			Map<String, ITernModule> modulesByOrigin = new HashMap<String, ITernModule>();
+			loadModules(modules, modulesByOrigin);
+			this.modules = modules;
+			this.modulesByOrigin = modulesByOrigin;
 			linters = searchLinters(modules.values());
 		}
 	}
@@ -89,18 +103,20 @@ public class TernRepository implements ITernRepository {
 		return linters.toArray(ITernPlugin.EMPTY_PLUGIN);
 	}
 
-	private Map<String, ITernModule> loadModules() throws TernException {
-		Map<String, ITernModule> modules = new HashMap<String, ITernModule>();
+	private Map<String, ITernModule> loadModules(
+			Map<String, ITernModule> modules,
+			Map<String, ITernModule> modulesByOrigin) throws TernException {
 		// defs
-		loadModules(modules, DEFS_FOLDER);
+		loadModules(modules, modulesByOrigin, DEFS_FOLDER);
 		// plugin
-		loadModules(modules, PLUGIN_FOLDER);
+		loadModules(modules, modulesByOrigin, PLUGIN_FOLDER);
 		// node_modules
-		loadModules(modules, NODE_MODULES_FOLDER);
+		loadModules(modules, modulesByOrigin, NODE_MODULES_FOLDER);
 		return modules;
 	}
 
-	private void loadModules(Map<String, ITernModule> modules, String dir)
+	private void loadModules(Map<String, ITernModule> modules,
+			Map<String, ITernModule> modulesByOrigin, String dir)
 			throws TernException {
 		File baseDir = new File(getTernBaseDir(), dir);
 		if (baseDir.exists()) {
@@ -112,6 +128,7 @@ public class TernRepository implements ITernRepository {
 				module = TernModuleHelper.getModule(file.getName());
 				if (module != null) {
 					modules.put(module.getName(), module);
+					modulesByOrigin.put(module.getOrigin(), module);
 				}
 			}
 		}

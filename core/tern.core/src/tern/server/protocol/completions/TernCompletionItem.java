@@ -353,7 +353,7 @@ public class TernCompletionItem {
 		}
 		// Use tern repository to retrieve the real module type (ex : yui for
 		// yui3).
-		ITernModule module = this.ternProject.getRepository().getModule(origin);
+		ITernModule module = this.ternProject.getRepository().getModuleByOrigin(origin);
 		return module != null ? module.getType() : null;
 	}
 }

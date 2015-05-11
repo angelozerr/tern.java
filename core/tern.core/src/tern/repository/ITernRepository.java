@@ -98,6 +98,14 @@ public interface ITernRepository {
 	ITernModule getModule(String name);
 
 	/**
+	 * Returns the module by origin and null otherwise.
+	 * 
+	 * @param origin
+	 * @return the module by origin and null otherwise.
+	 */
+	ITernModule getModuleByOrigin(String origin);
+
+	/**
 	 * Returns the list fo tern plugin which are linter.
 	 * 
 	 * @return the list fo tern plugin which are linter.

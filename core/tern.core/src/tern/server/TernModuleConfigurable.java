@@ -46,6 +46,11 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	public String getName() {
 		return wrappedModule.getName();
 	}
+	
+	@Override
+	public String getOrigin() {
+		return wrappedModule.getOrigin();
+	}
 
 	@Override
 	public String getType() {
@@ -133,4 +138,5 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	public String toString() {		
 		return getType();
 	}
+
 }

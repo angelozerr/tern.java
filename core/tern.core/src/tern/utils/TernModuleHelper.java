@@ -217,7 +217,7 @@ public class TernModuleHelper {
 		if (filename.startsWith(TERN_SUFFIX)) {
 			String name = filename.substring(TERN_SUFFIX.length(),
 					filename.length());
-			return getPlugin(name);
+			return getPluginOrDef(name);
 		}
 		int index = filename.lastIndexOf('.');
 		if (index == -1) {
@@ -257,6 +257,26 @@ public class TernModuleHelper {
 		return new BasicTernPlugin(name);
 	}
 
+	/**
+	 * Return the tern plugin or def by name.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private static ITernModule getPluginOrDef(String name) {
+		// tern plugin?
+		ITernPlugin plugin = TernPlugin.getTernPlugin(name);
+		if (plugin != null) {
+			return plugin;
+		}
+		// tern def?
+		ITernDef def = TernDef.getTernDef(name);
+		if (def != null) {
+			return def;
+		}
+		return new BasicTernPlugin(name);
+	}
+	
 	/**
 	 * Returns the file path as string.
 	 * 

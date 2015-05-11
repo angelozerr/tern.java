@@ -37,6 +37,7 @@ public class TernModuleMetadata {
 
 	private static final String NAME_FIELD = "name";
 	private static final String LABEL_FIELD = "label";
+	private static final String ORIGIN_FIELD = "origin";
 	private static final String DESCRIPTION_FIELD = "description";
 	private static final String HOMEPAGE_FIELD = "homepage";
 	private static final String AUTHOR_FIELD = "author";
@@ -49,6 +50,7 @@ public class TernModuleMetadata {
 	private static final String OPTIONS_FIELD = "options";
 
 	private final String name;
+	private final String origin;
 	private final String label;
 	private final String description;
 	private final String homepage;
@@ -69,6 +71,9 @@ public class TernModuleMetadata {
 	public TernModuleMetadata(JsonObject json) {
 		this.name = JsonHelper.getString(json, NAME_FIELD);
 		this.label = JsonHelper.getString(json, LABEL_FIELD);
+		this.origin = !StringUtils.isEmpty(JsonHelper.getString(json,
+				ORIGIN_FIELD)) ? JsonHelper.getString(json, ORIGIN_FIELD)
+				: null;
 		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
 		this.homepage = JsonHelper.getString(json, HOMEPAGE_FIELD);
 		this.author = JsonHelper.getString(json, AUTHOR_FIELD);
@@ -206,6 +211,15 @@ public class TernModuleMetadata {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * Returns the origin of the module.
+	 * 
+	 * @return the origin of the module.
+	 */
+	public String getOrigin() {
+		return origin;
 	}
 
 	/**
