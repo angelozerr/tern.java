@@ -9,6 +9,10 @@
     "type": "git",
     "url": "git://github.com/daniel-lundin/tern-snabbt.git"
   },
+  "dependencies": {
+    "tern": ">=0.10.0",
+    "acorn": ">=1.0.0"
+  },  
   "keywords": [
     "tern",
     "snabbt"

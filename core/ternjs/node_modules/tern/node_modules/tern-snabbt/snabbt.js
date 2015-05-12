@@ -17,9 +17,6 @@
   var defs = {
     "!name": "snabbt",
     "!define": {
-      "Float32Array": {
-        
-      },
       "snabbtObj": {
         "then": {
           "!type": "fn(config: +snabbtConfigObj) -> !this"
