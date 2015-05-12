@@ -4,7 +4,7 @@
  "icon": "jquery-ui.png",
  "homepage": "https://jqueryui.com/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
- "description": "Add jQuery UI support.",
+ "description": "Add jQuery UI support. jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library. Whether you're building highly interactive web applications or you just need to add a date picker to a form control, jQuery UI is the perfect choice.",
  "dependencies": [
   "ecma5",
   "browser",

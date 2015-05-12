@@ -1,0 +1,28 @@
+{
+ "name": "jquery-mobile",
+ "label": "jQuery Mobile",
+ "icon": "jquery-mobile.png",
+ "homepage": "https://jquerymobile.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add jQuery Mobile support. jQuery Mobile is a HTML5-based user interface system designed to make responsive web sites and apps that are accessible on all smartphone, tablet and desktop devices.",
+ "dependencies": {
+  "?": [
+   "ecma5",
+   "browser",
+   "jquery"
+  ],
+  "1.5": [
+   "jquery-ui1-12"
+  ]
+ },
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.jqueryapi.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.jqueryapi/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-jQueryMobile-support"
+ }
+}
