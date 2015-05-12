@@ -18,6 +18,8 @@ import java.util.Set;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
+import tern.eclipse.ide.jsdt.core.JSDTTernCorePlugin;
+
 /**
  * Helper class to route trace output.
  */
