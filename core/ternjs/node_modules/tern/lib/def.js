@@ -533,10 +533,23 @@
     return infer.ANull;
   });
 
+  infer.registerFunction("Object_defineProperties", function(_self, args, argNodes) {
+    if (args.length >= 2) {
+      var obj = args[0];
+      args[1].forAllProps(function(prop, val, local) {
+        if (!local) return;
+        var connect = new infer.AVal;
+        obj.propagate(new infer.PropHasSubset(prop, connect, argNodes && argNodes[1]));
+        val.propagate(new PropSpec(connect));
+      });
+    }
+    return infer.ANull;
+  });
+
   var IsBound = infer.constraint("self, args, target", {
     addType: function(tp) {
       if (!(tp instanceof infer.Fn)) return;
-      this.target.addType(new infer.Fn(tp.name, tp.self, tp.args.slice(this.args.length),
+      this.target.addType(new infer.Fn(tp.name, infer.ANull, tp.args.slice(this.args.length),
                                        tp.argNames.slice(this.args.length), tp.retval));
       this.self.propagate(tp.self);
       for (var i = 0; i < Math.min(tp.args.length, this.args.length); ++i)
