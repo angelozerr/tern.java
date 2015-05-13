@@ -96,7 +96,6 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 			proposals
 					.add(internalCreateProposal(proposalItem.changeType("fn")));
 		}
-
 		proposals.add(proposal);
 
 		if (expandFunction) {

@@ -364,7 +364,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 				indent(replacement, indentation, nbIndentations);
 				replacement.append("}");
 			} else {
-				if ("{}".equals(parameter.getType()) && isGenerateObjectValue()) {
+				if ("{}".equals(parameter.getType()) && isGenerateObjectValue() && initialFunction) {
 					replacement.append("{");
 					replacement.append("\n");
 					indent(replacement, indentation, nbIndentations);
