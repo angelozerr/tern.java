@@ -1,0 +1,23 @@
+{
+ "name": "qunit",
+ "label": "jQuery Mobile",
+ "icon": "qunit.png",
+ "homepage": "http://qunitjs.com/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add QUnit support. QUnit is a powerful, easy-to-use JavaScript unit testing framework. It's used by the jQuery, jQuery UI and jQuery Mobile projects and is capable of testing any generic JavaScript code, including itself!",
+ "dependencies": {
+  "?": [
+   "ecma5"
+  ]
+ },
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.jqueryapi.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.jqueryapi/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-QUnit-support"
+ }
+}
