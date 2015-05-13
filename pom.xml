@@ -197,7 +197,6 @@
 	</scm>
 	<profiles>
 		<profile>
-			<!-- release profile (see parent pom) -->
 			<id>release</id>
 			<build>
 				<plugins>
@@ -234,12 +233,4 @@
 			</build>
 		</profile>
 	</profiles>
-<!--
-	 <distributionManagement>
-        <repository>
-            <id>bintray-repo-maven-example</id>
-            <url>https://api.bintray.com/maven/pascalleclercq/tern.java</url>
-        </repository>
-    </distributionManagement>
-    -->
 </project>
