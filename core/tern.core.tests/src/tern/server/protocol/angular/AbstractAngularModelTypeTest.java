@@ -98,7 +98,7 @@ public abstract class AbstractAngularModelTypeTest extends
 		server.request(doc, collector);
 
 		Assert.assertEquals("todos", collector.getName());
-		Assert.assertEquals("[{done, text}]", collector.getType());
+		Assert.assertEquals("[{done: bool, text: string}]", collector.getType());
 		Assert.assertEquals("myfile.js", collector.getOrigin());
 	}
 
