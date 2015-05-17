@@ -183,7 +183,7 @@ public class TernImagesRegistry {
 		}
 		ImageDescriptor originImageDescriptor = getImageDescriptor(module);
 		if (originImageDescriptor == null) {
-			return TernImagesRegistry.getImage(TernImagesRegistry.IMG_UNKNOWN);
+			return TernImagesRegistry.getImage(jsType);
 		}
 		TernCompositeImageDescriptor desc = new TernCompositeImageDescriptor(
 				originImageDescriptor, jsType);
