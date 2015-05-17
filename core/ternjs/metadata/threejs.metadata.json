@@ -1,0 +1,18 @@
+{
+ "name": "threejs",
+ "label": "three.js",
+ "homepage": "http://threejs.org/",
+ "author": "Tyler Bell <tyler@tylerwbell.com>",
+ "description": "Adds three.js - Javascript 3D library support. The aim of the project is to create a lightweight 3D library with a very low level of complexity — in other words, for dummies. The library provides <canvas>, <svg>, CSS3D and WebGL renderers.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/tylerwbell/tern-threejs.git"
+ },
+ "bugs": {
+  "url": "https://github.com/tylerwbell/tern-threejs/issues"
+ }
+}
