@@ -13,7 +13,6 @@
   "!name": "threejs",
   "THREE": {
     "Original": {
-      "!name": "Original",
       "!url": "http://threejs.org/docs/#Reference/Original",
       "prototype": {
         "!proto": "Geometry"
@@ -21,16 +20,15 @@
       "!doc": "todo"
     },
     "Camera": {
-      "!name": "Camera",
       "!url": "http://threejs.org/docs/#Reference/cameras/Camera",
       "prototype": {
         "!proto": "Object3D",
         "matrixWorldInverse": {
-          "!type": "Matrix4",
+          "!type": "+THREE.Matrix4",
           "!doc": "This is the inverse of matrixWorld. MatrixWorld contains the Matrix which has the world transform of the Camera."
         },
         "lookAt": {
-          "!type": "fn(vector: Vector3)",
+          "!type": "fn(vector: +THREE.Vector3)",
           "!doc": "vector — point to look at<br>\n\t\t<br>\n\t\tThis makes the camera look at the vector position in the global space as long as the parent of this camera is the scene or at position (0,0,0)."
         }
       },
@@ -38,12 +36,11 @@
       "!type": "fn()"
     },
     "CubeCamera": {
-      "!name": "CubeCamera",
       "!url": "http://threejs.org/docs/#Reference/cameras/CubeCamera",
       "prototype": {
         "!proto": "Object3D",
         "renderTarget": {
-          "!type": "WebGLRenderTargetCube",
+          "!type": "+THREE.WebGLRenderTargetCube",
           "!doc": "The cube texture that gets generated."
         },
         "updateCubeMap": {
@@ -55,7 +52,6 @@
       "!type": "fn(near: number, far: number, cubeResolution: number)"
     },
     "OrthographicCamera": {
-      "!name": "OrthographicCamera",
       "!url": "http://threejs.org/docs/#Reference/cameras/OrthographicCamera",
       "prototype": {
         "!proto": "Object3D",
@@ -80,7 +76,6 @@
       "!type": "fn(left: number, right: number, top: number, bottom: number, near: number, far: number)"
     },
     "PerspectiveCamera": {
-      "!name": "PerspectiveCamera",
       "!url": "http://threejs.org/docs/#Reference/cameras/PerspectiveCamera",
       "prototype": {
         "!proto": "Object3D",
@@ -105,37 +100,31 @@
       "!type": "fn(fov: number, aspect: number, near: number, far: number)"
     },
     "CustomBlendingEquations": {
-      "!name": "CustomBlendingEquations",
       "!url": "http://threejs.org/docs/#Reference/constants/CustomBlendingEquations",
       "prototype": {}
     },
     "GLState": {
-      "!name": "GLState",
       "!url": "http://threejs.org/docs/#Reference/constants/GLState",
       "prototype": {}
     },
     "Materials": {
-      "!name": "Materials",
       "!url": "http://threejs.org/docs/#Reference/constants/Materials",
       "prototype": {}
     },
     "ShadowingTypes": {
-      "!name": "ShadowingTypes",
       "!url": "http://threejs.org/docs/#Reference/constants/ShadowingTypes",
       "prototype": {}
     },
     "Textures": {
-      "!name": "Textures",
       "!url": "http://threejs.org/docs/#Reference/constants/Textures",
       "prototype": {}
     },
     "BufferAttribute": {
-      "!name": "BufferAttribute",
       "!url": "http://threejs.org/docs/#Reference/core/BufferAttribute",
       "prototype": {
         "!proto": "BufferGeometry",
         "array": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Stores the data associated with this attribute; can be an Array or a Typed Array. This element should have <code>itemSize * numVertices</code> elements, where numVertices is the number of vertices in the associated [page:BufferGeometry geometry]."
         },
         "length": {
@@ -155,15 +144,14 @@
           "!doc": "Sets the value of the array at <code>index * itemSize</code> to x,\n\t\tthe value of the array at <code>index * itemSize + 1</code> to y, and\n\t\tthe value of the array at <code>index * itemSize + 2</code> to z."
         },
         "clone": {
-          "!type": "fn() -> BufferAttribute",
+          "!type": "fn() -> +THREE.BufferAttribute",
           "!doc": "Copies this attribute."
         }
       },
       "!doc": "This class stores data for an attribute associated with a [page:BufferGeometry]. See that page for details and a usage example. This class is used to store builtin attributes such as vertex position, normals, color, etc., but can also be used in your code to store custom attributes in a [page:BufferGeometry].",
-      "!type": "fn(array: array, itemSize: number)"
+      "!type": "fn(array: [], itemSize: number)"
     },
     "BufferGeometry": {
-      "!name": "BufferGeometry",
       "!url": "http://threejs.org/docs/#Reference/core/BufferGeometry",
       "prototype": {
         "!proto": "Geometry",
@@ -172,11 +160,11 @@
           "!doc": "Unique number for this buffergeometry instance."
         },
         "drawCalls": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "For geometries that use indexed triangles, this Array can be used to split the object into multiple WebGL draw calls. Each draw call will draw some subset of the vertices in this geometry using the configured [page:Material shader]. This may be necessary if, for instance, you have more than 65535 vertices in your object. \n\t\tEach element is an object of the form:\n\t\t<code>{ start: Integer, count: Integer, index: Integer }</code>\n\t\twhere start specifies the index of the first vertex in this draw call, count specifies how many vertices are included, and index specifies an optional offset.\n\n\t\tUse addDrawCall to add draw calls, rather than modifying this array directly."
         },
         "boundingSphere": {
-          "!type": "Sphere",
+          "!type": "+THREE.Sphere",
           "!doc": "Bounding sphere.\n\t\t<code>{ radius: float }</code>"
         },
         "hasTangents": {
@@ -204,7 +192,7 @@
           "!doc": "Disposes the object from memory. <br>\n\t\tYou need to call this when you want the bufferGeometry removed while the application is running."
         },
         "getAttribute": {
-          "!type": "fn(name: string) -> BufferAttribute",
+          "!type": "fn(name: string) -> +THREE.BufferAttribute",
           "!doc": "Returns the [page:BufferAttribute attribute] with the specified name."
         }
       },
@@ -212,11 +200,10 @@
       "!type": "fn()"
     },
     "Clock": {
-      "!name": "Clock",
       "!url": "http://threejs.org/docs/#Reference/core/Clock",
       "prototype": {
         "autoStart": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "If set, starts the clock automatically when the first update is called."
         },
         "oldTime": {
@@ -224,7 +211,7 @@
           "!doc": "When the clock is running, It holds the previous time from a update.<br>\n\t\tThis counted from the number of milliseconds elapsed since 1 January 1970 00:00:00 UTC."
         },
         "running": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "This property keeps track whether the clock is running or not."
         },
         "start": {
@@ -237,10 +224,9 @@
         }
       },
       "!doc": "Object for keeping track of time.",
-      "!type": "fn(autoStart: boolean)"
+      "!type": "fn(autoStart: bool)"
     },
     "EventDispatcher": {
-      "!name": "EventDispatcher",
       "!url": "http://threejs.org/docs/#Reference/core/EventDispatcher",
       "prototype": {
         "addEventListener": {
@@ -256,7 +242,6 @@
       "!type": "fn()"
     },
     "Face3": {
-      "!name": "Face3",
       "!url": "http://threejs.org/docs/#Reference/core/Face3",
       "prototype": {
         "a": {
@@ -268,11 +253,11 @@
           "!doc": "Vertex C index."
         },
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "Face color."
         },
         "vertexColors": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of 3 vertex colors."
         },
         "materialIndex": {
@@ -280,15 +265,14 @@
           "!doc": "Material index (points to [page:MeshFaceMaterial MeshFaceMaterial.materials])."
         },
         "clone": {
-          "!type": "fn() -> Face3",
+          "!type": "fn() -> +THREE.Face3",
           "!doc": "Creates a new clone of the Face3 object."
         }
       },
       "!doc": "Triangle face.",
-      "!type": "fn(a: number, b: number, c: number, normal: Vector3, color: Color, materialIndex: number)"
+      "!type": "fn(a: number, b: number, c: number, normal: +THREE.Vector3, color: +THREE.Color, materialIndex: number)"
     },
     "Geometry": {
-      "!name": "Geometry",
       "!url": "http://threejs.org/docs/#Reference/core/Geometry",
       "prototype": {
         "!proto": "PointCloud",
@@ -297,23 +281,23 @@
           "!doc": "Unique number for this geometry instance."
         },
         "vertices": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of [page:Vector3 vertices].<br>\n\t\tThe array of vertices holds every position of points in the model.<br>\n\t\tTo signal an update in this array, [page:Geometry Geometry.verticesNeedUpdate] needs to be set to true."
         },
         "faces": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of [page:Face3 triangles].<br>\n\t\tThe array of faces describe how each vertex in the model is connected with each other.<br>\n\t\tTo signal an update in this array, [page:Geometry Geometry.elementsNeedUpdate] needs to be set to true."
         },
         "morphTargets": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of morph targets. Each morph target is a Javascript object:\n\t\t<code>{ name: \"targetName\", vertices: [ new THREE.Vector3(), ... ] }</code>\n\t\tMorph vertices match number and order of primary vertices."
         },
         "morphNormals": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of morph normals. Morph normals have similar structure as morph targets, each normal set is a Javascript object:\n\t\t<code>morphNormal = { name: \"NormalName\", normals: [ new THREE.Vector3(), ... ] }</code>"
         },
         "skinIndices": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of skinning indices, matching number and order of vertices."
         },
         "boundingSphere": {
@@ -321,19 +305,19 @@
           "!doc": "Bounding sphere.\n\t\t<code>{ radius: float }</code>"
         },
         "dynamic": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Set to *true* if attribute buffers will need to change in runtime (using \"dirty\" flags).<br>\n\t\tUnless set to true internal typed arrays corresponding to buffers will be deleted once sent to GPU.<br>\n\t\tDefaults to true."
         },
         "elementsNeedUpdate": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Set to *true* if the faces array has been updated."
         },
         "normalsNeedUpdate": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Set to *true* if the normals array has been updated."
         },
         "colorsNeedUpdate": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Set to *true* if the colors array has been updated."
         },
         "lineDistances": {
@@ -341,7 +325,7 @@
           "!doc": "An array containing distances between vertices for Line geometries.\n\t\tThis is required for LinePieces/LineDashedMaterial to render correctly.\n\t\tLine distances can also be generated with computeLineDistances."
         },
         "applyMatrix": {
-          "!type": "fn(matrix: Matrix4)",
+          "!type": "fn(matrix: +THREE.Matrix4)",
           "!doc": "Bakes matrix transform directly into vertex coordinates."
         },
         "computeVertexNormals": {
@@ -369,7 +353,6 @@
       "!type": "fn()"
     },
     "Object3D": {
-      "!name": "Object3D",
       "!url": "http://threejs.org/docs/#Reference/core/Object3D",
       "prototype": {
         "!proto": "Mesh",
@@ -382,31 +365,31 @@
           "!doc": "Optional name of the object (doesn't need to be unique)."
         },
         "children": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "Array with object's children."
         },
         "rotation": {
-          "!type": "Euler",
+          "!type": "+THREE.Euler",
           "!doc": "Object's local rotation (<a href=\"https://en.wikipedia.org/wiki/Euler_angles\" target=\"_blank\">Euler angles</a>), in radians."
         },
         "up": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "Up direction."
         },
         "quaternion": {
-          "!type": "Quaternion",
+          "!type": "+THREE.Quaternion",
           "!doc": "Object's local rotation as [page:Quaternion Quaternion]."
         },
         "castShadow": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "default – false"
         },
         "frustumCulled": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "default – true"
         },
         "matrixWorldNeedsUpdate": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "default – false"
         },
         "userData": {
@@ -414,7 +397,7 @@
           "!doc": "An object that can be used to store custom data about the Object3d. It should not hold references to functions as these will not be cloned."
         },
         "applyMatrix": {
-          "!type": "fn(matrix: Matrix4)",
+          "!type": "fn(matrix: +THREE.Matrix4)",
           "!doc": "This updates the position, rotation and scale with the matrix."
         },
         "translateY": {
@@ -422,11 +405,11 @@
           "!doc": "Translates object along y axis by distance."
         },
         "localToWorld": {
-          "!type": "fn(vector: Vector3) -> Vector3",
+          "!type": "fn(vector: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Updates the vector from local space to world space."
         },
         "lookAt": {
-          "!type": "fn(vector: Vector3)",
+          "!type": "fn(vector: +THREE.Vector3)",
           "!doc": "Rotates object to face point in space."
         },
         "traverse": {
@@ -438,19 +421,19 @@
           "!doc": "Executes the callback on this object and all ancestors."
         },
         "updateMatrixWorld": {
-          "!type": "fn(force: boolean)",
+          "!type": "fn(force: bool)",
           "!doc": "Updates global transform of the object and its children."
         },
         "getObjectByName": {
-          "!type": "fn(name: string) -> Object3D",
+          "!type": "fn(name: string) -> +THREE.Object3D",
           "!doc": "Searches through the object's children and returns the first with a matching name."
         },
         "translateOnAxis": {
-          "!type": "fn(axis: Vector3, distance: number) -> Object3D",
+          "!type": "fn(axis: +THREE.Vector3, distance: number) -> +THREE.Object3D",
           "!doc": "Translate an object by distance along an axis in object space. The axis is assumed to be normalized."
         },
         "raycast": {
-          "!type": "fn(raycaster: Raycaster, intersects: array) -> array",
+          "!type": "fn(raycaster: +THREE.Raycaster, intersects: []) -> []",
           "!doc": "Abstract method to get intersections between a casted ray and this object. Subclasses such as [page:Mesh], [page:Line], and [page:PointCloud] implement this method in order to participate in raycasting."
         }
       },
@@ -458,12 +441,11 @@
       "!type": "fn()"
     },
     "Raycaster": {
-      "!name": "Raycaster",
       "!url": "http://threejs.org/docs/#Reference/core/Raycaster",
       "prototype": {
         "!proto": "Mesh",
         "ray": {
-          "!type": "Ray",
+          "!type": "+THREE.Ray",
           "!doc": "The Ray used for the raycasting."
         },
         "far": {
@@ -471,19 +453,18 @@
           "!doc": "The far factor of the raycaster. This value indicates which objects can be discarded based on the distance.<br>\n\t\tThis value shouldn't be negative and should be larger than the near property."
         },
         "set": {
-          "!type": "fn(origin: Vector3, direction: Vector3)",
+          "!type": "fn(origin: +THREE.Vector3, direction: +THREE.Vector3)",
           "!doc": "Updates the ray with a new origin and direction."
         },
         "intersectObject": {
-          "!type": "fn(object: Object3D, recursive: boolean) -> array",
+          "!type": "fn(object: +THREE.Object3D, recursive: bool) -> []",
           "!doc": "Checks all intersection between the ray and the object with or without the descendants. Intersections are returned sorted by distance, closest first. An array of intersections is returned...\n        <code>\n            [ { distance, point, face, faceIndex, indices, object }, ... ]\n        </code>\n        <p>\n        [page:Float distance] – distance between the origin of the ray and the intersection<br>\n        [page:Vector3 point] – point of intersection, in world coordinates<br>\n        [page:Face3 face] – intersected face<br>\n        [page:Integer faceIndex] – index of the intersected face<br>\n        [page:Array indices] – indices of vertices comprising the intersected face<br>\n        [page:Object3D object] – the intersected object\n    \t</p>\n        <p>\n        When intersecting a [page:Mesh] with a [page:BufferGeometry], the *faceIndex* will be *undefined*, and *indices* will be set; when intersecting a [page:Mesh] with a [page:Geometry], *indices* will be *undefined*. \n        </p>\n\t\t<p>\n\t\t*Raycaster* delegates to the [page:Object3D.raycast raycast] method of the passed object, when evaluating whether the ray intersects the object or not. This allows [page:Mesh meshes] to respond differently to ray casting than [page:Line lines] and [page:PointCloud pointclouds].\n\t\t</p>\n\t\t<p>\n\t\t*Note* that for meshes, faces must be pointed towards the origin of the [page:.ray ray] in order to be detected; intersections of the ray passing through the back of a face will not be detected. To raycast against both faces of an object, you'll want to set the [page:Mesh.material material]'s [page:Material.side side] property to *THREE.DoubleSide*.  \n\t\t</p>"
         }
       },
       "!doc": "This class makes raycasting easier. Raycasting is used for picking and more.",
-      "!type": "fn(origin: Vector3, direction: Vector3, near: number, far: number)"
+      "!type": "fn(origin: +THREE.Vector3, direction: +THREE.Vector3, near: number, far: number)"
     },
     "Lut": {
-      "!name": "Lut",
       "!url": "http://threejs.org/docs/#Reference/examples/Lut",
       "prototype": {
         "minV": {
@@ -491,19 +472,19 @@
           "!doc": "The minimum value to be represented with the lookup table. Default is 0."
         },
         "copy": {
-          "!type": "fn(lut: Lut)",
+          "!type": "fn(lut: +THREE.Lut)",
           "!doc": "Copies given lut."
         },
         "setminV": {
-          "!type": "fn(minV: number) -> Lut",
+          "!type": "fn(minV: number) -> +THREE.Lut",
           "!doc": "Sets this Lut with the minimum value to be represented."
         },
         "changeNumberOfColors": {
-          "!type": "fn(numberOfColors: number) -> Lut",
+          "!type": "fn(numberOfColors: number) -> +THREE.Lut",
           "!doc": "Sets this Lut with the number of colors to be used."
         },
         "addColorMap": {
-          "!type": "fn(colorMapName, arrayOfColors) -> Lut",
+          "!type": "fn(colorMapName, arrayOfColors) -> +THREE.Lut",
           "!doc": "Insert a new color map into the set of available color maps."
         }
       },
@@ -511,7 +492,6 @@
       "!type": "fn(colormap, numberOfColors)"
     },
     "CombinedCamera": {
-      "!name": "CombinedCamera",
       "!url": "http://threejs.org/docs/#Reference/examples/cameras/CombinedCamera",
       "prototype": {
         "!proto": "Camera",
@@ -532,7 +512,7 @@
           "!doc": "Gets camera frustum near plane."
         },
         "cameraO": {
-          "!type": "OrthographicCamera",
+          "!type": "+THREE.OrthographicCamera",
           "!doc": "Gets or sets the internal OrthographicCamera used as camera."
         },
         "inOrthographicMode": {
@@ -572,7 +552,6 @@
       "!type": "fn(width: number, height: number, fov: number, near: number, far: number, orthoNear: number, orthoFar: number)"
     },
     "FontUtils": {
-      "!name": "FontUtils",
       "!url": "http://threejs.org/docs/#Reference/extras/FontUtils",
       "prototype": {
         "!proto": "TextGeometry",
@@ -593,7 +572,7 @@
           "!doc": "Calculates the path and offset of the text in the used font. It returns an  object like { paths : fontPaths, offset : width }."
         },
         "extractGlyphPoints": {
-          "!type": "fn(c: string, face: string, scale: number, offset: number, path: Path) -> object",
+          "!type": "fn(c: string, face: string, scale: number, offset: number, path: +THREE.Path) -> object",
           "!doc": "This ectracts the glyphPoints of the character of the face and returns an object containing the path and the new offset."
         },
         "loadFace": {
@@ -604,13 +583,11 @@
       "!doc": "A class for text operations in three.js (See [page:TextGeometry])"
     },
     "GeometryUtils": {
-      "!name": "GeometryUtils",
       "!url": "http://threejs.org/docs/#Reference/extras/GeometryUtils",
       "prototype": {},
       "!doc": "Contains handy functions geometry manipulations."
     },
     "ImageUtils": {
-      "!name": "ImageUtils",
       "!url": "http://threejs.org/docs/#Reference/extras/ImageUtils",
       "prototype": {
         "crossOrigin": {
@@ -618,7 +595,7 @@
           "!doc": "The crossOrigin string to implement CORS for loading the image from a different domain that allows CORS."
         },
         "generateDataTexture": {
-          "!type": "fn(width: number, height: number, color: number) -> DataTexture",
+          "!type": "fn(width: number, height: number, color: number) -> +THREE.DataTexture",
           "!doc": "Generates a texture of a single color. It is a DataTexture with format, RGBFormat."
         },
         "loadCompressedTexture": {
@@ -637,22 +614,20 @@
       "!doc": "A Helper class to ease the loading of images of different types."
     },
     "SceneUtils": {
-      "!name": "SceneUtils",
       "!url": "http://threejs.org/docs/#Reference/extras/SceneUtils",
       "prototype": {
         "createMultiMaterialObject": {
-          "!type": "fn(geometry: Geometry, materials: array) -> Object3D",
+          "!type": "fn(geometry: +THREE.Geometry, materials: []) -> +THREE.Object3D",
           "!doc": "Creates an new Object3D an new mesh for each material defined in materials. Beware that this is not the same as Meshfacematerial which defines multiple material for 1 mesh.<br>\n\t\tThis is mostly useful for object that need a material and a wireframe implementation."
         },
         "detach": {
-          "!type": "fn(child: Object3D, parent: Object3D, scene: Object3D)",
+          "!type": "fn(child: +THREE.Object3D, parent: +THREE.Object3D, scene: +THREE.Object3D)",
           "!doc": "Detaches the object from the parent and adds it back to the scene without moving in worldspace."
         }
       },
       "!doc": "A class containing useful utility functions for scene manipulation."
     },
     "Animation": {
-      "!name": "Animation",
       "!url": "http://threejs.org/docs/#Reference/extras/animation/Animation",
       "prototype": {
         "root": {
@@ -660,7 +635,7 @@
           "!doc": "The root object of the animation."
         },
         "hierarchy": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "The objects that are influenced by the animation."
         },
         "timeScale": {
@@ -680,7 +655,7 @@
           "!doc": "Starts the animation from a moment startTime in the animation."
         },
         "update": {
-          "!type": "fn(deltaTimeMS: number) -> boolean",
+          "!type": "fn(deltaTimeMS: number) -> bool",
           "!doc": "Updates the animation in time. This shouldn't be called by user code. The animationHandler calls this method."
         },
         "getNextKeyWith": {
@@ -692,7 +667,6 @@
       "!type": "fn(root: Object3d, name: string)"
     },
     "AnimationHandler": {
-      "!name": "AnimationHandler",
       "!url": "http://threejs.org/docs/#Reference/extras/animation/AnimationHandler",
       "prototype": {
         "CATMULLROM": {
@@ -704,7 +678,7 @@
           "!doc": "Enum Value to indicate that the animation needs to be interpolated as LINEAR."
         },
         "removeFromUpdate": {
-          "!type": "fn(animation: Animation)",
+          "!type": "fn(animation: +THREE.Animation)",
           "!doc": "Removes the animation from the update cycle. This gets called when the animation stops. This shouldn't be called by usercode."
         },
         "update": {
@@ -720,7 +694,6 @@
       "!type": "fn()"
     },
     "AnimationMorphTarget": {
-      "!name": "AnimationMorphTarget",
       "!url": "http://threejs.org/docs/#Reference/extras/animation/AnimationMorphTarget",
       "prototype": {
         "root": {
@@ -756,7 +729,6 @@
       "!type": "fn(root: todo, data: todo)"
     },
     "KeyFrameAnimation": {
-      "!name": "KeyFrameAnimation",
       "!url": "http://threejs.org/docs/#Reference/extras/animation/KeyFrameAnimation",
       "prototype": {
         "root": {
@@ -800,7 +772,6 @@
       "!type": "fn(root: todo, data: todo, JITCompile: todo)"
     },
     "Curve": {
-      "!name": "Curve",
       "!url": "http://threejs.org/docs/#Reference/extras/core/Curve",
       "prototype": {
         "getPoint": {
@@ -808,7 +779,7 @@
           "!doc": "Returns a vector for point t of the curve where t is between 0 and 1"
         },
         "getPoints": {
-          "!type": "fn(divisions) -> array",
+          "!type": "fn(divisions) -> []",
           "!doc": "Get sequence of points using getPoint( t )"
         },
         "getLength": {
@@ -828,7 +799,6 @@
       "!type": "fn()"
     },
     "CurvePath": {
-      "!name": "CurvePath",
       "!url": "http://threejs.org/docs/#Reference/extras/core/CurvePath",
       "prototype": {
         "!proto": "Curve",
@@ -869,7 +839,6 @@
       "!type": "fn()"
     },
     "Gyroscope": {
-      "!name": "Gyroscope",
       "!url": "http://threejs.org/docs/#Reference/extras/core/Gyroscope",
       "prototype": {
         "!proto": "Object3D"
@@ -878,7 +847,6 @@
       "!type": "fn()"
     },
     "Path": {
-      "!name": "Path",
       "!url": "http://threejs.org/docs/#Reference/extras/core/Path",
       "prototype": {
         "!proto": "CurvePath",
@@ -915,7 +883,6 @@
       "!type": "fn(points: todo)"
     },
     "Shape": {
-      "!name": "Shape",
       "!url": "http://threejs.org/docs/#Reference/extras/core/Shape",
       "prototype": {
         "!proto": "Path",
@@ -944,7 +911,6 @@
       "!type": "fn()"
     },
     "ArcCurve": {
-      "!name": "ArcCurve",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/ArcCurve",
       "prototype": {
         "!proto": "EllipseCurve"
@@ -952,113 +918,102 @@
       "!doc": "Alias for [page:EllipseCurve]"
     },
     "ClosedSplineCurve3": {
-      "!name": "ClosedSplineCurve3",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/ClosedSplineCurve3",
       "prototype": {
         "!proto": "Curve",
-        "points": "array"
+        "points": "[]"
       },
       "!doc": "Create a smooth 3d spline curve from a series of points that loops back onto itself",
-      "!type": "fn(points: array)"
+      "!type": "fn(points: [])"
     },
     "CubicBezierCurve": {
-      "!name": "CubicBezierCurve",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/CubicBezierCurve",
       "prototype": {
         "!proto": "Curve",
-        "v0": "Vector2",
-        "v2": "Vector2"
+        "v0": "+THREE.Vector2",
+        "v2": "+THREE.Vector2"
       },
       "!doc": "Create a smooth 2d <a href=\"http://en.wikipedia.org/wiki/B%C3%A9zier_curve#mediaviewer/File:Bezier_curve.svg\" target=\"_blank\">cubic bezier curve</a>."
     },
     "CubicBezierCurve3": {
-      "!name": "CubicBezierCurve3",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/CubicBezierCurve3",
       "prototype": {
         "!proto": "Curve",
-        "v0": "Vector3",
-        "v2": "Vector3"
+        "v0": "+THREE.Vector3",
+        "v2": "+THREE.Vector3"
       },
       "!doc": "Create a smooth 3d <a href=\"http://en.wikipedia.org/wiki/B%C3%A9zier_curve#mediaviewer/File:Bezier_curve.svg\" target=\"_blank\">cubic bezier curve</a>.",
-      "!type": "fn(v0: Vector3, v1: Vector3, v2: Vector3, v3: Vector3)"
+      "!type": "fn(v0: +THREE.Vector3, v1: +THREE.Vector3, v2: +THREE.Vector3, v3: +THREE.Vector3)"
     },
     "EllipseCurve": {
-      "!name": "EllipseCurve",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/EllipseCurve",
       "prototype": {
         "!proto": "Curve",
         "aX": "number",
         "xRadius": "Radians",
         "aStartAngle": "number",
-        "aClockwise": "boolean"
+        "aClockwise": "bool"
       },
       "!doc": "Creates a 2d curve in the shape of an ellipse.",
-      "!type": "fn(aX: number, aY: number, xRadius: number, yRadius: number, aStartAngle: Radians, aEndAngle: Radians, aClockwise: boolean)"
+      "!type": "fn(aX: number, aY: number, xRadius: number, yRadius: number, aStartAngle: Radians, aEndAngle: Radians, aClockwise: bool)"
     },
     "LineCurve": {
-      "!name": "LineCurve",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/LineCurve",
       "prototype": {
         "!proto": "Curve",
-        "v1": "Vector2"
+        "v1": "+THREE.Vector2"
       },
       "!doc": "A curve representing a 2d line segment",
-      "!type": "fn(v1: Vector2, v2: Vector2)"
+      "!type": "fn(v1: +THREE.Vector2, v2: +THREE.Vector2)"
     },
     "LineCurve3": {
-      "!name": "LineCurve3",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/LineCurve3",
       "prototype": {
         "!proto": "Curve",
-        "v1": "Vector3"
+        "v1": "+THREE.Vector3"
       },
       "!doc": "A curve representing a 3d line segment",
-      "!type": "fn(v1: Vector3, v2: Vector3)"
+      "!type": "fn(v1: +THREE.Vector3, v2: +THREE.Vector3)"
     },
     "QuadraticBezierCurve": {
-      "!name": "QuadraticBezierCurve",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/QuadraticBezierCurve",
       "prototype": {
         "!proto": "Curve",
-        "v0": "Vector2",
-        "v2": "Vector2"
+        "v0": "+THREE.Vector2",
+        "v2": "+THREE.Vector2"
       },
       "!doc": "Create a smooth 2d <a href=\"http://en.wikipedia.org/wiki/B%C3%A9zier_curve#mediaviewer/File:B%C3%A9zier_2_big.gif\" target=\"_blank\">quadratic bezier curve</a>.",
-      "!type": "fn(v0: Vector2, v1: Vector2, v2: Vector2)"
+      "!type": "fn(v0: +THREE.Vector2, v1: +THREE.Vector2, v2: +THREE.Vector2)"
     },
     "QuadraticBezierCurve3": {
-      "!name": "QuadraticBezierCurve3",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/QuadraticBezierCurve3",
       "prototype": {
         "!proto": "Curve",
-        "v0": "Vector3",
-        "v2": "Vector3"
+        "v0": "+THREE.Vector3",
+        "v2": "+THREE.Vector3"
       },
       "!doc": "Create a smooth 3d <a href=\"http://en.wikipedia.org/wiki/B%C3%A9zier_curve#mediaviewer/File:B%C3%A9zier_2_big.gif\" target=\"_blank\">quadratic bezier curve</a>.",
-      "!type": "fn(v0: Vector3, v1: Vector3, v2: Vector3)"
+      "!type": "fn(v0: +THREE.Vector3, v1: +THREE.Vector3, v2: +THREE.Vector3)"
     },
     "SplineCurve": {
-      "!name": "SplineCurve",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/SplineCurve",
       "prototype": {
         "!proto": "Curve",
-        "points": "array"
+        "points": "[]"
       },
       "!doc": "Create a smooth 2d spline curve from a series of points",
-      "!type": "fn(points: array)"
+      "!type": "fn(points: [])"
     },
     "SplineCurve3": {
-      "!name": "SplineCurve3",
       "!url": "http://threejs.org/docs/#Reference/extras/curves/SplineCurve3",
       "prototype": {
         "!proto": "Curve",
-        "points": "array"
+        "points": "[]"
       },
       "!doc": "Create a smooth 3d spline curve from a series of points",
-      "!type": "fn(points: array)"
+      "!type": "fn(points: [])"
     },
     "BoxGeometry": {
-      "!name": "BoxGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/BoxGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1067,7 +1022,6 @@
       "!type": "fn(width: number, height: number, depth: number, widthSegments: number, heightSegments: number, depthSegments: number)"
     },
     "CircleGeometry": {
-      "!name": "CircleGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/CircleGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1076,7 +1030,6 @@
       "!type": "fn(radius: number, segments: number, thetaStart: number, thetaLength: number)"
     },
     "CubeGeometry": {
-      "!name": "CubeGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/CubeGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1084,16 +1037,14 @@
       "!doc": "Renamed CubeGeometry to BoxGeometry. see [page:BoxGeometry]."
     },
     "CylinderGeometry": {
-      "!name": "CylinderGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/CylinderGeometry",
       "prototype": {
         "!proto": "Geometry"
       },
       "!doc": "A class for generating cylinder geometries",
-      "!type": "fn(radiusTop: number, radiusBottom: number, height: number, radiusSegments: number, heightSegments: number, openEnded: boolean, thetaStart: number, thetaLength: number)"
+      "!type": "fn(radiusTop: number, radiusBottom: number, height: number, radiusSegments: number, heightSegments: number, openEnded: bool, thetaStart: number, thetaLength: number)"
     },
     "DodecahedronGeometry": {
-      "!name": "DodecahedronGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/DodecahedronGeometry",
       "prototype": {
         "!proto": "PolyhedronGeometry",
@@ -1106,20 +1057,18 @@
       "!type": "fn(radius: number, detail: number)"
     },
     "ExtrudeGeometry": {
-      "!name": "ExtrudeGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/ExtrudeGeometry",
       "prototype": {
         "!proto": "Geometry",
         "addShapeList": {
-          "!type": "fn(shapes: array, options: object)",
+          "!type": "fn(shapes: [], options: object)",
           "!doc": "Adds the shapes to the list to extrude."
         }
       },
       "!doc": "Creates extruded geometry from a path shape",
-      "!type": "fn(shapes: array, options: object)"
+      "!type": "fn(shapes: [], options: object)"
     },
     "IcosahedronGeometry": {
-      "!name": "IcosahedronGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/IcosahedronGeometry",
       "prototype": {
         "!proto": "PolyhedronGeometry",
@@ -1132,16 +1081,14 @@
       "!type": "fn(radius: number, detail: number)"
     },
     "LatheGeometry": {
-      "!name": "LatheGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/LatheGeometry",
       "prototype": {
         "!proto": "Geometry"
       },
       "!doc": "Class for generating meshes with axial symmetry. Possible uses include donuts, pipes, vases etc. The lathe rotate around the Z axis.",
-      "!type": "fn(points: array, segments: number, phiStart: number, phiLength: number)"
+      "!type": "fn(points: [], segments: number, phiStart: number, phiLength: number)"
     },
     "OctahedronGeometry": {
-      "!name": "OctahedronGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/OctahedronGeometry",
       "prototype": {
         "!proto": "PolyhedronGeometry",
@@ -1154,7 +1101,6 @@
       "!type": "fn(radius: number, detail: number)"
     },
     "ParametricGeometry": {
-      "!name": "ParametricGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/ParametricGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1163,7 +1109,6 @@
       "!type": "fn(func: function, slices: number, stacks: number)"
     },
     "PlaneGeometry": {
-      "!name": "PlaneGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/PlaneGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1172,7 +1117,6 @@
       "!type": "fn(width: number, height: number, widthSegments: number, heightSegments: number)"
     },
     "PolyhedronGeometry": {
-      "!name": "PolyhedronGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/PolyhedronGeometry",
       "prototype": {
         "!proto": "Geometry",
@@ -1182,10 +1126,9 @@
         }
       },
       "!doc": "A polyhedron is a solid in three dimensions with flat faces. This class will take an array of vertices,\n\t\t\tproject them onto a sphere, and then divide them up to the desired level of detail. This class is used\n\t\t\tby [page:DodecahedronGeometry], [page:IcosahedronGeometry], [page:OctahedronGeometry],\n\t\t\tand [page:TetrahedronGeometry] to generate their respective geometries.",
-      "!type": "fn(vertices: array, faces: array, radius: number, detail: number)"
+      "!type": "fn(vertices: [], faces: [], radius: number, detail: number)"
     },
     "RingGeometry": {
-      "!name": "RingGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/RingGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1194,20 +1137,18 @@
       "!type": "fn(innerRadius: number, outerRadius: number, thetaSegments: number, phiSegments: number, thetaStart: number, thetaLength: number)"
     },
     "ShapeGeometry": {
-      "!name": "ShapeGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/ShapeGeometry",
       "prototype": {
         "!proto": "Geometry",
         "addShape": {
-          "!type": "fn(shape: Shape, options: object)",
+          "!type": "fn(shape: +THREE.Shape, options: object)",
           "!doc": "Adds a single shape to the geometry"
         }
       },
       "!doc": "Creates a one-sided polygonal geometry from one or more path shapes. Similar to [page:ExtrudeGeometry]",
-      "!type": "fn(shapes: array, options: object)"
+      "!type": "fn(shapes: [], options: object)"
     },
     "SphereGeometry": {
-      "!name": "SphereGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/SphereGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1216,7 +1157,6 @@
       "!type": "fn(radius: number, widthSegments: number, heightSegments: number, phiStart: number, phiLength: number, thetaStart: number, thetaLength: number)"
     },
     "TetrahedronGeometry": {
-      "!name": "TetrahedronGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/TetrahedronGeometry",
       "prototype": {
         "!proto": "PolyhedronGeometry",
@@ -1229,7 +1169,6 @@
       "!type": "fn(radius: number, detail: number)"
     },
     "TextGeometry": {
-      "!name": "TextGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/TextGeometry",
       "prototype": {
         "!proto": "ExtrudeGeometry"
@@ -1238,7 +1177,6 @@
       "!type": "fn(text: string, parameters: object)"
     },
     "TorusGeometry": {
-      "!name": "TorusGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/TorusGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1247,7 +1185,6 @@
       "!type": "fn(radius: number, tube: number, radialSegments: number, tubularSegments: number, arc: number)"
     },
     "TorusKnotGeometry": {
-      "!name": "TorusKnotGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/TorusKnotGeometry",
       "prototype": {
         "!proto": "Geometry"
@@ -1256,7 +1193,6 @@
       "!type": "fn(radius: number, tube: number, radialSegments: number, tubularSegments: number, p: number, q: number, heightScale: number)"
     },
     "TubeGeometry": {
-      "!name": "TubeGeometry",
       "!url": "http://threejs.org/docs/#Reference/extras/geometries/TubeGeometry",
       "prototype": {
         "!proto": "Geometry",
@@ -1265,20 +1201,19 @@
           "!doc": "An object with all of the parameters that were used to generate the geometry."
         },
         "normals": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "An array of [page:Vector3] normals"
         }
       },
       "!doc": "Creates a tube that extrudes along a 3d curve",
-      "!type": "fn(path: Curve, segments: number, radius: number, radiusSegments: number, closed: boolean)"
+      "!type": "fn(path: +THREE.Curve, segments: number, radius: number, radiusSegments: number, closed: bool)"
     },
     "ArrowHelper": {
-      "!name": "ArrowHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/ArrowHelper",
       "prototype": {
         "!proto": "Object3D",
         "line": {
-          "!type": "Line",
+          "!type": "+THREE.Line",
           "!doc": "Contains the line part of the arrowHelper."
         },
         "setColor": {
@@ -1286,15 +1221,14 @@
           "!doc": "Sets the color of the arrowHelper."
         },
         "setDirection": {
-          "!type": "fn(dir: Vector3)",
+          "!type": "fn(dir: +THREE.Vector3)",
           "!doc": "Sets the direction of the arrowhelper."
         }
       },
       "!doc": "An 3D arrow Object.",
-      "!type": "fn(dir: Vector3, origin: Vector3, length: number, hex: number, headLength: number, headWidth: number)"
+      "!type": "fn(dir: +THREE.Vector3, origin: +THREE.Vector3, length: number, hex: number, headLength: number, headWidth: number)"
     },
     "AxisHelper": {
-      "!name": "AxisHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/AxisHelper",
       "prototype": {
         "!proto": "Line"
@@ -1303,12 +1237,11 @@
       "!type": "fn(size: number)"
     },
     "BoundingBoxHelper": {
-      "!name": "BoundingBoxHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/BoundingBoxHelper",
       "prototype": {
         "!proto": "Mesh",
         "object": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "Contains the object3D to show the world-axis-aligned boundingbox."
         },
         "update": {
@@ -1317,23 +1250,21 @@
         }
       },
       "!doc": "A helper object to show the world-axis-aligned bounding box for an object.",
-      "!type": "fn(object: Object3D, hex: number)"
+      "!type": "fn(object: +THREE.Object3D, hex: number)"
     },
     "BoxHelper": {
-      "!name": "BoxHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/BoxHelper",
       "prototype": {
         "!proto": "Line",
         "update": {
-          "!type": "fn(object: Object3D)",
+          "!type": "fn(object: +THREE.Object3D)",
           "!doc": "Updates the helper's geometry to match the dimensions of the [page:Geometry.boundingBox bounding box] of the passed object's geometry.\n\n\t\t<h2>Source</h2>\n\n\t\t[link:https://github.com/mrdoob/three.js/blob/master/src/[path].js src/[path].js]"
         }
       },
       "!doc": "Helper object to show a wireframe box (with no face diagonals) around an object",
-      "!type": "fn(object: Object3D)"
+      "!type": "fn(object: +THREE.Object3D)"
     },
     "CameraHelper": {
-      "!name": "CameraHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/CameraHelper",
       "prototype": {
         "!proto": "Line",
@@ -1347,19 +1278,18 @@
         }
       },
       "!doc": "The camera Helper is an Object3D which helps visualizing what a camera contains in its frustum.<br>\n\t\tIt visualizes the frustum with an line Geometry.",
-      "!type": "fn(camera: Camera)"
+      "!type": "fn(camera: +THREE.Camera)"
     },
     "DirectionalLightHelper": {
-      "!name": "DirectionalLightHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/DirectionalLightHelper",
       "prototype": {
         "!proto": "Object3D",
         "lightPlane": {
-          "!type": "Line",
+          "!type": "+THREE.Line",
           "!doc": "Contains the line mesh showing the location of the directional light."
         },
         "targetLine": {
-          "!type": "Line",
+          "!type": "+THREE.Line",
           "!doc": "Contains the line mesh that shows the direction of the light."
         },
         "update": {
@@ -1368,24 +1298,22 @@
         }
       },
       "!doc": "Visualize a [page:DirectionalLight]'s effect on the scene",
-      "!type": "fn(light: DirectionalLight, size: number)"
+      "!type": "fn(light: +THREE.DirectionalLight, size: number)"
     },
     "EdgesHelper": {
-      "!name": "EdgesHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/EdgesHelper",
       "prototype": {
         "!proto": "Line"
       },
       "!doc": "Creates a wireframe object that shows the \"hard\" edges of another object's geometry. To draw a full wireframe image of an object, see [page:WireframeHelper].",
-      "!type": "fn(object: Object3D, color: Color, thresholdAngle: number)"
+      "!type": "fn(object: +THREE.Object3D, color: +THREE.Color, thresholdAngle: number)"
     },
     "FaceNormalsHelper": {
-      "!name": "FaceNormalsHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/FaceNormalsHelper",
       "prototype": {
         "!proto": "Line",
         "object": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "The attached object"
         },
         "update": {
@@ -1394,10 +1322,9 @@
         }
       },
       "!doc": "Renders [page:ArrowHelper arrows] to visualize an object's [page:Face3 face] normals. Requires that the object's geometry be an instance of [page:Geometry] (does not work with [page:BufferGeometry]), and that face normals have been specified on all [page:Face3 faces] or calculated with [page:Geometry.computeFaceNormals computeFaceNormals].",
-      "!type": "fn(object: Object3D, size: number, color: Color, linewidth: number)"
+      "!type": "fn(object: +THREE.Object3D, size: number, color: +THREE.Color, linewidth: number)"
     },
     "GridHelper": {
-      "!name": "GridHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/GridHelper",
       "prototype": {
         "!proto": "Line",
@@ -1410,12 +1337,11 @@
       "!type": "fn(size: number, step: number)"
     },
     "HemisphereLightHelper": {
-      "!name": "HemisphereLightHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/HemisphereLightHelper",
       "prototype": {
         "!proto": "Object3D",
         "lightSphere": {
-          "!type": "Mesh",
+          "!type": "+THREE.Mesh",
           "!doc": "The sphere mesh that shows the location of the hemispherelight."
         },
         "update": {
@@ -1424,15 +1350,14 @@
         }
       },
       "!doc": "Creates a visual aid for a [page:HemisphereLight HemisphereLight].",
-      "!type": "fn(light: HemisphereLight, sphereSize: number)"
+      "!type": "fn(light: +THREE.HemisphereLight, sphereSize: number)"
     },
     "PointLightHelper": {
-      "!name": "PointLightHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/PointLightHelper",
       "prototype": {
         "!proto": "Mesh",
         "lightSphere": {
-          "!type": "Mesh",
+          "!type": "+THREE.Mesh",
           "!doc": "todo"
         },
         "update": {
@@ -1444,16 +1369,15 @@
       "!type": "fn(light: todo, sphereSize: todo)"
     },
     "SpotLightHelper": {
-      "!name": "SpotLightHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/SpotLightHelper",
       "prototype": {
         "!proto": "Object3D",
         "lightSphere": {
-          "!type": "Mesh",
+          "!type": "+THREE.Mesh",
           "!doc": "todo"
         },
         "lightCone": {
-          "!type": "Mesh",
+          "!type": "+THREE.Mesh",
           "!doc": "todo"
         },
         "update": {
@@ -1465,12 +1389,11 @@
       "!type": "fn(light: todo, sphereSize: todo)"
     },
     "VertexNormalsHelper": {
-      "!name": "VertexNormalsHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/VertexNormalsHelper",
       "prototype": {
         "!proto": "Line",
         "object": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "The attached object"
         },
         "update": {
@@ -1479,15 +1402,14 @@
         }
       },
       "!doc": "Renders [page:ArrowHelper arrows] to visualize an object's vertex normal vectors. Requires that normals have been specified in a [page:BufferAttribute custom attribute] or have been calculated using [page:Geometry.computeVertexNormals computeVertexNormals].",
-      "!type": "fn(object: Object3D, size: number, color: Color, linewidth: number)"
+      "!type": "fn(object: +THREE.Object3D, size: number, color: +THREE.Color, linewidth: number)"
     },
     "VertexTangentsHelper": {
-      "!name": "VertexTangentsHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/VertexTangentsHelper",
       "prototype": {
         "!proto": "Line",
         "object": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "The attached object"
         },
         "update": {
@@ -1496,19 +1418,17 @@
         }
       },
       "!doc": "Renders [page:ArrowHelper arrows] to visualize an object's vertex tangent vectors. Requires that tangents have been specified in a [page:BufferAttribute custom attribute] or have been computed using [page:Geometry.computeTangents computeTangents].",
-      "!type": "fn(object: Object3D, size: number, color: Color, linewidth: number)"
+      "!type": "fn(object: +THREE.Object3D, size: number, color: +THREE.Color, linewidth: number)"
     },
     "WireframeHelper": {
-      "!name": "WireframeHelper",
       "!url": "http://threejs.org/docs/#Reference/extras/helpers/WireframeHelper",
       "prototype": {
         "!proto": "Line"
       },
       "!doc": "Creates a wireframe object that shows the edges of another object's geometry. To draw a  wireframe image showing only \"hard\" edges (edges between non-coplanar faces), see [page:EdgesHelper].",
-      "!type": "fn(object: Object3D, color: Color)"
+      "!type": "fn(object: +THREE.Object3D, color: +THREE.Color)"
     },
     "ImmediateRenderObject": {
-      "!name": "ImmediateRenderObject",
       "!url": "http://threejs.org/docs/#Reference/extras/objects/ImmediateRenderObject",
       "prototype": {
         "!proto": "Object3D",
@@ -1521,7 +1441,6 @@
       "!type": "fn()"
     },
     "MorphBlendMesh": {
-      "!name": "MorphBlendMesh",
       "!url": "http://threejs.org/docs/#Reference/extras/objects/MorphBlendMesh",
       "prototype": {
         "!proto": "Mesh",
@@ -1562,7 +1481,6 @@
       "!type": "fn(geometry: todo, material: todo)"
     },
     "AmbientLight": {
-      "!name": "AmbientLight",
       "!url": "http://threejs.org/docs/#Reference/lights/AmbientLight",
       "prototype": {
         "!proto": "Object3D"
@@ -1571,12 +1489,11 @@
       "!type": "fn(hex: number)"
     },
     "AreaLight": {
-      "!name": "AreaLight",
       "!url": "http://threejs.org/docs/#Reference/lights/AreaLight",
       "prototype": {
         "!proto": "Object3D",
         "right": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "Sets or gets an unit vector that indicates the right side of the light. This is calculated in local space."
         },
         "height": {
@@ -1596,16 +1513,15 @@
       "!type": "fn(hex: number, intensity: number)"
     },
     "DirectionalLight": {
-      "!name": "DirectionalLight",
       "!url": "http://threejs.org/docs/#Reference/lights/DirectionalLight",
       "prototype": {
         "!proto": "Object3D",
         "target": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "Target used for shadow camera orientation."
         },
         "onlyShadow": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "If set to *true* light will only cast shadow but not contribute any lighting (as if *intensity* was 0 but cheaper to compute).<br>\n\t\t\tDefault — *false*."
         },
         "shadowCameraFar": {
@@ -1629,31 +1545,31 @@
           "!doc": "Shadow map texture width in pixels.<br>\n\t\t\tDefault — *512*."
         },
         "shadowCascade": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "**Experimental** If true, use a series of shadow maps in a cascade. This can give better z-depth resolution for a directional light. <br>\n\t\t\tDefault — *false*."
         },
         "shadowCascadeOffset": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "A relative position to real camera where virtual shadow cameras are attached. A magic vector; scene and light orientation dependent. <br>\n\t\t\tDefault — *Three.Vector3( 0, 0, -1000 )*."
         },
         "shadowCascadeWidth": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "An array of shadowMapWidth values for the corresponding shadow map in the cascade, near to far. <br>\n\t\t\tDefault — <strong>[ 512, 512, 512 ]</strong>."
         },
         "shadowCascadeNearZ": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "An array of shadowMapNear values for the corresponding shadow map in the cascade, near to far. These typically start with -1.0 (near plane) and match with the previous shadowCascadeFarZ array value.<br>\n\t\t\tDefault — <strong>[ -1.000, 0.990, 0.998 ]</strong>."
         },
         "shadowCascadeArray": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of size shadowCascadeCount of [page:DirectionalLight THREE.DirectionalLight] objects. This holds the series of separate shadow maps in a cascade, near to far. Created internally."
         },
         "shadowCamera": {
-          "!type": "OrthographicCamera",
+          "!type": "+THREE.OrthographicCamera",
           "!doc": "The shadow's view of the world. Computed internally during rendering from the shadowCamera* settings."
         },
         "shadowMap": {
-          "!type": "WebGLRenderTarget",
+          "!type": "+THREE.WebGLRenderTarget",
           "!doc": "The depth map generated using the shadowCamera; a location beyond a pixel's depth is in shadow. Computed internally during rendering."
         }
       },
@@ -1661,7 +1577,6 @@
       "!type": "fn(hex: number, intensity: number)"
     },
     "HemisphereLight": {
-      "!name": "HemisphereLight",
       "!url": "http://threejs.org/docs/#Reference/lights/HemisphereLight",
       "prototype": {
         "!proto": "Object3D",
@@ -1674,12 +1589,11 @@
       "!type": "fn(skyColorHex: number, groundColorHex: number, intensity: number)"
     },
     "Light": {
-      "!name": "Light",
       "!url": "http://threejs.org/docs/#Reference/lights/Light",
       "prototype": {
         "!proto": "Object3D",
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "Color of the light.<br>"
         }
       },
@@ -1687,7 +1601,6 @@
       "!type": "fn(hex: number)"
     },
     "PointLight": {
-      "!name": "PointLight",
       "!url": "http://threejs.org/docs/#Reference/lights/PointLight",
       "prototype": {
         "!proto": "Object3D",
@@ -1700,12 +1613,11 @@
       "!type": "fn(hex: number, intensity: number, distance: number)"
     },
     "SpotLight": {
-      "!name": "SpotLight",
       "!url": "http://threejs.org/docs/#Reference/lights/SpotLight",
       "prototype": {
         "!proto": "Object3D",
         "target": {
-          "!type": "Object3D",
+          "!type": "+THREE.Object3D",
           "!doc": "Spotlight focus points at target.position.<br>\n\t\t\tDefault position — *(0,0,0)*."
         },
         "distance": {
@@ -1717,7 +1629,7 @@
           "!doc": "Rapidity of the falloff of light from its target direction.<br>\n\t\t\tDefault — *10.0*."
         },
         "onlyShadow": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "If set to *true* light will only cast shadow but not contribute any lighting (as if *intensity* was 0 but cheaper to compute).<br>\n\t\t\tDefault — *false*."
         },
         "shadowCameraFar": {
@@ -1725,7 +1637,7 @@
           "!doc": "Perspective shadow camera frustum <em>far</em> parameter.<br>\n\t\t\tDefault — *5000*."
         },
         "shadowCameraVisible": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Show debug shadow camera frustum.<br>\n\t\t\tDefault — *false*."
         },
         "shadowDarkness": {
@@ -1737,11 +1649,11 @@
           "!doc": "Shadow map texture height in pixels.<br>\n\t\t\tDefault — *512*."
         },
         "shadowCamera": {
-          "!type": "PerspectiveCamera",
+          "!type": "+THREE.PerspectiveCamera",
           "!doc": "The shadow's view of the world. Computed internally during rendering from the shadowCamera* settings."
         },
         "shadowMap": {
-          "!type": "WebGLRenderTarget",
+          "!type": "+THREE.WebGLRenderTarget",
           "!doc": "The depth map generated using the shadowCamera; a location beyond a pixel's depth is in shadow. Computed internally during rendering."
         }
       },
@@ -1749,7 +1661,6 @@
       "!type": "fn(hex: number, intensity: number, distance: todo, angle: todo, exponent: todo)"
     },
     "BabylonLoader": {
-      "!name": "BabylonLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/BabylonLoader",
       "prototype": {
         "!proto": "Object3D",
@@ -1759,10 +1670,9 @@
         }
       },
       "!doc": "A loader for loading a <em>.babylon</em> resource.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "BufferGeometryLoader": {
-      "!name": "BufferGeometryLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/BufferGeometryLoader",
       "prototype": {
         "!proto": "BufferGeometry",
@@ -1772,10 +1682,9 @@
         }
       },
       "!doc": "A loader for loading a [page:BufferGeometry].",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "Cache": {
-      "!name": "Cache",
       "!url": "http://threejs.org/docs/#Reference/loaders/Cache",
       "prototype": {
         "!proto": "XHRLoader",
@@ -1796,12 +1705,11 @@
       "!type": "fn()"
     },
     "ColladaLoader": {
-      "!name": "ColladaLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/ColladaLoader",
       "prototype": {
         "!proto": "Geometry",
         "options": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "&nbsp;.[page:Boolean centerGeometry] — Force [page:Geometry] to always be centered at the local origin of the containing [page: Mesh].<br>\n\t\t&nbsp;.[page:Boolean convertUpAxis] — Axis conversion is done for geometries, animations, and controllers.<br>\n\t\t&nbsp;.[page:Boolean subdivideFaces] — Force subdivision into multiple [page: Face3].<br>\n\t\t&nbsp;.[page:String upAxis] — X, Y or Z<br>\n\t\t&nbsp;.[page:Boolean defaultEnvMap] — Cubemap to use for reflective or refractive materials.<br>"
         },
         "load": {
@@ -1817,7 +1725,6 @@
       "!type": "fn()"
     },
     "ImageLoader": {
-      "!name": "ImageLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/ImageLoader",
       "prototype": {
         "!proto": "Image",
@@ -1831,10 +1738,9 @@
         }
       },
       "!doc": "A loader for loading an [page:Image].",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "JSONLoader": {
-      "!name": "JSONLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/JSONLoader",
       "prototype": {
         "!proto": "Loader",
@@ -1855,7 +1761,7 @@
           "!doc": "[page:String url] — required<br>\n\t\t[page:Function callback] — required. Will be called when load completes. The arguments will be the loaded [page:Object3D] and the loaded [page:Array materials].<br>\n\t\t[page:String texturePath] — optional. If not specified, textures will be assumed to be in the same folder as the Javascript model file."
         },
         "parse": {
-          "!type": "fn(json: object, texturePath: string) -> Object3D",
+          "!type": "fn(json: object, texturePath: string) -> +THREE.Object3D",
           "!doc": "Parse a <em>JSON</em> structure and return an [page:Object] containing the parsed .[page:Geometry] and .[page:Array materials]."
         },
         "updateProgress": {
@@ -1863,7 +1769,7 @@
           "!doc": "Updates the DOM object with the progress made."
         },
         "initMaterials": {
-          "!type": "fn(materials: array, texturePath: string) -> array",
+          "!type": "fn(materials: [], texturePath: string) -> []",
           "!doc": "Creates an array of [page:Material] based on the array of parameters m. The index of the parameters decide the correct index of the materials."
         },
         "addStatusElement": {
@@ -1872,15 +1778,14 @@
         }
       },
       "!doc": "A loader for loading objects in JSON format.",
-      "!type": "fn(showStatus: boolean)"
+      "!type": "fn(showStatus: bool)"
     },
     "Loader": {
-      "!name": "Loader",
       "!url": "http://threejs.org/docs/#Reference/loaders/Loader",
       "prototype": {
         "!proto": "Material",
         "showStatus": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "If true, show loading status in the statusDomElement."
         },
         "onLoadStart": {
@@ -1892,11 +1797,11 @@
           "!doc": "The default is a function with empty body."
         },
         "needsTangents": {
-          "!type": "fn(materials: array) -> boolean",
+          "!type": "fn(materials: []) -> bool",
           "!doc": "Checks if the loaded object needs tangents based on its materials."
         },
         "createMaterial": {
-          "!type": "fn(m: object, texturePath: string) -> Material",
+          "!type": "fn(m: object, texturePath: string) -> +THREE.Material",
           "!doc": "Creates the Material based on the parameters m."
         },
         "extractUrlBase": {
@@ -1905,10 +1810,9 @@
         }
       },
       "!doc": "Base class for implementing loaders.",
-      "!type": "fn(showStatus: boolean)"
+      "!type": "fn(showStatus: bool)"
     },
     "LoadingManager": {
-      "!name": "LoadingManager",
       "!url": "http://threejs.org/docs/#Reference/loaders/LoadingManager",
       "prototype": {
         "onLoad": {
@@ -1928,7 +1832,6 @@
       "!type": "fn(onLoad: function, onProgress: function, onError: function)"
     },
     "MTLLoader": {
-      "!name": "MTLLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/MTLLoader",
       "prototype": {
         "!proto": "OBJMTLLoader",
@@ -1941,7 +1844,6 @@
       "!type": "fn(baseUrl: string, options: object, crossOrigin: string)"
     },
     "MaterialLoader": {
-      "!name": "MaterialLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/MaterialLoader",
       "prototype": {
         "!proto": "Material",
@@ -1950,15 +1852,14 @@
           "!doc": "Begin loading from url and return the [page:Material] object that will contain the data."
         },
         "parse": {
-          "!type": "fn(json: object) -> Material",
+          "!type": "fn(json: object) -> +THREE.Material",
           "!doc": "Parse a <em>JSON</em> structure and create a new [page:Material] of the type [page:String json.type] with parameters defined in the json object."
         }
       },
       "!doc": "A loader for loading a [page:Material] in JSON format.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "OBJLoader": {
-      "!name": "OBJLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/OBJLoader",
       "prototype": {
         "!proto": "Object3D",
@@ -1968,10 +1869,9 @@
         }
       },
       "!doc": "A loader for loading an <em>.obj</em> resource.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "OBJMTLLoader": {
-      "!name": "OBJMTLLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/OBJMTLLoader",
       "prototype": {
         "!proto": "Object3D",
@@ -1981,10 +1881,9 @@
         }
       },
       "!doc": "A loader for loading a <em>.obj</em> and its <em>.mtl</em> together.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "ObjectLoader": {
-      "!name": "ObjectLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/ObjectLoader",
       "prototype": {
         "!proto": "JSONLoader",
@@ -1998,10 +1897,9 @@
         }
       },
       "!doc": "A loader for loading a JSON resource. Unlike the [page:JSONLoader], this one make use of the <em>.type</em> attributes of objects to map them to their original classes.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "PDBLoader": {
-      "!name": "PDBLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/PDBLoader",
       "prototype": {
         "!proto": "Geometry",
@@ -2015,10 +1913,9 @@
         }
       },
       "!doc": "A loader for loading a <em>.pdb</em> resource.\n\t\t<br><br>\n\t\tThe <a href=\"http://en.wikipedia.org/wiki/Protein_Data_Bank_(file_format)\">Protein Data Bank file format</a> is a textual file format describing the three-dimensional structures of molecules.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "SVGLoader": {
-      "!name": "SVGLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/SVGLoader",
       "prototype": {
         "!proto": "SVGDocument",
@@ -2028,23 +1925,21 @@
         }
       },
       "!doc": "A loader for loading an <em>.svg</em> resource.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "TGALoader": {
-      "!name": "TGALoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/TGALoader",
       "prototype": {
         "!proto": "DataTexture",
         "load": {
-          "!type": "fn(url: string, onLoad: function, onProgress: function, onError: function) -> DataTexture",
+          "!type": "fn(url: string, onLoad: function, onProgress: function, onError: function) -> +THREE.DataTexture",
           "!doc": "Begin loading from url and pass the loaded [page:DataTexture texture] to onLoad. The [page:DataTexture texture] is also directly returned for immediate use (but may not be fully loaded)."
         }
       },
       "!doc": "Class for loading a <em>.tga</em> [page:DataTexture texture].",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "TextureLoader": {
-      "!name": "TextureLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/TextureLoader",
       "prototype": {
         "crossOrigin": {
@@ -2057,14 +1952,13 @@
         }
       },
       "!doc": "Class for loading a [page:Texture texture].",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "XHRLoader": {
-      "!name": "XHRLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/XHRLoader",
       "prototype": {
         "cache": {
-          "!type": "Cache",
+          "!type": "+THREE.Cache",
           "!doc": "A [page:Cache cache] instance that hold the response from each request made through this loader, so each file is requested once."
         },
         "responseType": {
@@ -2081,15 +1975,14 @@
         }
       },
       "!doc": "A low level class for loading resources with XmlHttpRequest, used internaly by most loaders.",
-      "!type": "fn(manager: LoadingManager)"
+      "!type": "fn(manager: +THREE.LoadingManager)"
     },
     "glTFLoader": {
-      "!name": "glTFLoader",
       "!url": "http://threejs.org/docs/#Reference/loaders/glTFLoader",
       "prototype": {
         "!proto": "Loader",
         "load": {
-          "!type": "fn(url: string, callback: function) -> Object3D",
+          "!type": "fn(url: string, callback: function) -> +THREE.Object3D",
           "!doc": "Begin loading from url and call the callback function with the parsed response content."
         }
       },
@@ -2097,7 +1990,6 @@
       "!type": "fn()"
     },
     "LineBasicMaterial": {
-      "!name": "LineBasicMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/LineBasicMaterial",
       "prototype": {
         "!proto": "Material",
@@ -2118,12 +2010,11 @@
       "!type": "fn(parameters: object)"
     },
     "LineDashedMaterial": {
-      "!name": "LineDashedMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/LineDashedMaterial",
       "prototype": {
         "!proto": "Material",
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "Sets the color of the line. Default is 0xffffff."
         },
         "scale": {
@@ -2143,7 +2034,6 @@
       "!type": "fn(parameters: object)"
     },
     "Material": {
-      "!name": "Material",
       "!url": "http://threejs.org/docs/#Reference/materials/Material",
       "prototype": {
         "!proto": "CanvasRenderer",
@@ -2160,11 +2050,11 @@
           "!doc": "Blending destination. It's one of the blending mode constants defined in [page:Three Three.js]. Default is [page:CustomBlendingEquation OneMinusSrcAlphaFactor]."
         },
         "depthTest": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Whether to have depth test enabled when rendering this material. Default is *true*."
         },
         "polygonOffset": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Whether to use polygon offset. Default is *false*. This corresponds to the *POLYGON_OFFSET_FILL* WebGL feature."
         },
         "polygonOffsetUnits": {
@@ -2180,7 +2070,7 @@
           "!doc": "Default is [page:Materials THREE.FrontSide]. Other options are [page:Materials THREE.BackSide] and [page:Materials THREE.DoubleSide]."
         },
         "clone": {
-          "!type": "fn(material: material) -> Material",
+          "!type": "fn(material: material) -> +THREE.Material",
           "!doc": "This clones the material in the optional parameter and returns it."
         },
         "setValues": {
@@ -2192,7 +2082,6 @@
       "!type": "fn()"
     },
     "MeshBasicMaterial": {
-      "!name": "MeshBasicMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/MeshBasicMaterial",
       "prototype": {
         "!proto": "Material",
@@ -2201,7 +2090,7 @@
           "!doc": "Sets the color of the geometry. Default is 0xffffff."
         },
         "specularMap": {
-          "!type": "Texture",
+          "!type": "+THREE.Texture",
           "!doc": "Set specular map. Default is null."
         },
         "envMap": {
@@ -2221,11 +2110,11 @@
           "!doc": "This setting might not have any effect when used with certain renderers. For example, it is ignored with the [page:WebGLRenderer WebGL] renderer, but does work with the [page:CanvasRenderer Canvas] renderer."
         },
         "skinning": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Define whether the material uses skinning. Default is false."
         },
         "map": {
-          "!type": "Texture",
+          "!type": "+THREE.Texture",
           "!doc": "Sets the texture map. Default is  null."
         },
         "reflectivity": {
@@ -2237,7 +2126,6 @@
       "!type": "fn(parameters: object)"
     },
     "MeshDepthMaterial": {
-      "!name": "MeshDepthMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/MeshDepthMaterial",
       "prototype": {
         "!proto": "Material",
@@ -2254,24 +2142,22 @@
       "!type": "fn(parameters: object)"
     },
     "MeshFaceMaterial": {
-      "!name": "MeshFaceMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/MeshFaceMaterial",
       "prototype": {
         "materials": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Get or set the materials for the geometry."
         }
       },
       "!doc": "A Material to define multiple materials for the same geometry. \n\t\tThe geometry decides which material is used for which faces by the [page:Face3 faces materialindex].\n\t\tThe materialindex corresponds with the index of the material in the materials array.",
-      "!type": "fn(materials: array)"
+      "!type": "fn(materials: [])"
     },
     "MeshLambertMaterial": {
-      "!name": "MeshLambertMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/MeshLambertMaterial",
       "prototype": {
         "!proto": "Material",
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "Diffuse color of the material. Default is white.<br>"
         },
         "wrapAround": {
@@ -2279,11 +2165,11 @@
           "!doc": "Define whether the diffuse lighting wraps around the model or not. This option adds a little more (tintable) light\n\t\t\tonto the side of the object in relation to a light."
         },
         "map": {
-          "!type": "Texture",
+          "!type": "+THREE.Texture",
           "!doc": "Set color texture map. Default is null."
         },
         "specularMap": {
-          "!type": "Texture",
+          "!type": "+THREE.Texture",
           "!doc": "Since this material does not have a specular component, the specular value affects only how much of the environment map affects the surface. Default is null."
         },
         "envMap": {
@@ -2295,11 +2181,11 @@
           "!doc": "How much the environment map affects the surface; also see \"combine\"."
         },
         "fog": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "This setting might not have any effect when used with certain renderers. For example, it is ignored with the [page:CanvasRenderer Canvas] renderer, but does work with the [page:WebGLRenderer WebGL] renderer."
         },
         "wireframe": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Whether the triangles' edges are displayed instead of surfaces. Default is *false*."
         },
         "wireframeLinecap": {
@@ -2311,7 +2197,7 @@
           "!doc": "This setting might not have any effect when used with certain renderers. For example, it is ignored with the [page:CanvasRenderer Canvas] renderer, but does work with the [page:WebGLRenderer WebGL] renderer."
         },
         "morphTargets": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Define whether the material uses morphTargets. Default is *false*."
         }
       },
@@ -2319,7 +2205,6 @@
       "!type": "fn(parameters: object)"
     },
     "MeshNormalMaterial": {
-      "!name": "MeshNormalMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/MeshNormalMaterial",
       "prototype": {
         "!proto": "Material",
@@ -2336,16 +2221,15 @@
       "!type": "fn(parameters: object)"
     },
     "MeshPhongMaterial": {
-      "!name": "MeshPhongMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/MeshPhongMaterial",
       "prototype": {
         "!proto": "Material",
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "Diffuse color of the material. Default is white.<br>"
         },
         "specular": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "Specular color of the material, i.e., how shiny the material is and the color of its shine. Setting this the same color as the diffuse value (times some intensity) makes the material more metallic-looking; setting this to some gray makes the material look more plastic. Default is dark gray.<br>"
         },
         "metal": {
@@ -2353,11 +2237,11 @@
           "!doc": "If set to true the shader multiplies the specular highlight by the underlying color of the object, making\n\t\t\tit appear to be more metal-like and darker. If set to false the specular highlight is added ontop of the\n\t\t\tunderlying colors."
         },
         "wrapRGB": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "Decide how much of the wrap around values get used if the wrapAround option is set. The x, y, z values correspond\n\t\t\tto the r, g, b values respectively. The typical range is of each is from 0 to 1. For example setting all of the\n\t\t\tvector values to 0.5 will add a moderate amount of light to the side of the model. Changing *b* to 1 will\n\t\t\ttint the light on the side to be more blue. Defaults to (1,1,1)."
         },
         "lightMap": {
-          "!type": "Texture",
+          "!type": "+THREE.Texture",
           "!doc": "Set light map. Default is null."
         },
         "bumpScale": {
@@ -2365,11 +2249,11 @@
           "!doc": "How much the bump map affects the material. Typical ranges are 0-1. Default is 1."
         },
         "normalScale": {
-          "!type": "Vector2",
+          "!type": "+THREE.Vector2",
           "!doc": "How much the normal map affects the material. Typical ranges are 0-1. Default is (1,1)."
         },
         "alphaMap": {
-          "!type": "Texture",
+          "!type": "+THREE.Texture",
           "!doc": "Only the color of the texture is used, ignoring the alpha channel if one exists. For RGB and RGBA textures, the [page:WebGLRenderer WebGL] renderer will use the green channel when sampling this texture due to the extra bit of precision provided for green in DXT-compressed and uncompressed RGB 565 formats. Luminance-only and luminance/alpha textures will also still work as expected."
         },
         "combine": {
@@ -2393,7 +2277,7 @@
           "!doc": "This setting might not have any effect when used with certain renderers. For example, it is ignored with the [page:WebGLRenderer WebGL] renderer, but does work with the [page:CanvasRenderer Canvas] renderer."
         },
         "skinning": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Define whether the material uses skinning. Default is *false*."
         },
         "morphNormals": {
@@ -2405,7 +2289,6 @@
       "!type": "fn(parameters: object)"
     },
     "PointCloudMaterial": {
-      "!name": "PointCloudMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/PointCloudMaterial",
       "prototype": {
         "!proto": "Material",
@@ -2418,7 +2301,7 @@
           "!doc": "Sets the size of the particles. Default is 1.0."
         },
         "vertexColors": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "This setting might not have any effect when used with certain renderers. For example, it is ignored with the [page:CanvasRenderer Canvas] renderer, but does work with the [page:WebGLRenderer WebGL] renderer."
         }
       },
@@ -2426,7 +2309,6 @@
       "!type": "fn(parameters: object)"
     },
     "RawShaderMaterial": {
-      "!name": "RawShaderMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/RawShaderMaterial",
       "prototype": {
         "!proto": "ShaderMaterial"
@@ -2434,7 +2316,6 @@
       "!doc": "This class works just like [page:ShaderMaterial], except that definitions of built-in uniforms and attributes are not automatically prepended to the GLSL shader code."
     },
     "ShaderMaterial": {
-      "!name": "ShaderMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/ShaderMaterial",
       "prototype": {
         "!proto": "Material",
@@ -2459,11 +2340,11 @@
           "!doc": "Due to limitations in the <a href=\"https://code.google.com/p/angleproject/\" target=\"_blank\">ANGLE layer</a>, on Windows platforms linewidth will always be 1 regardless of the set value."
         },
         "lights": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Defines whether this material uses lighting; true to pass uniform data related to lighting to this shader"
         },
         "skinning": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Define whether the material uses skinning; true to pass skinning attributes to the shader. Default is false."
         },
         "morphNormals": {
@@ -2471,7 +2352,7 @@
           "!doc": "Defines whether the material uses morphNormals. Set as true to pass morphNormal attributes from the [page:Geometry]\n\t\t\tto the shader. Default is *false*."
         },
         "clone": {
-          "!type": "fn() -> ShaderMaterial",
+          "!type": "fn() -> +THREE.ShaderMaterial",
           "!doc": "Generates a shallow copy of this material. Note that the vertexShader and fragmentShader are copied <emph>by reference</emph>, as are the definitions of the *attributes*; this means that clones of the material will share the same compiled [page:WebGLProgram]. However, the *uniforms* are copied <emph>by value</emph>, which allows you to have different sets of uniforms for different copies of the material."
         }
       },
@@ -2479,16 +2360,15 @@
       "!type": "fn(parameters: object)"
     },
     "SpriteCanvasMaterial": {
-      "!name": "SpriteCanvasMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/SpriteCanvasMaterial",
       "prototype": {
         "!proto": "Material",
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "The color of the sprite. The material will set up the color for the context before calling the material's program."
         },
         "program": {
-          "!type": "fn(context: CanvasRenderingContext2D, color: Color)",
+          "!type": "fn(context: CanvasRenderingContext2D, color: +THREE.Color)",
           "!doc": "Define a program that will use the context to draw the sprite."
         }
       },
@@ -2496,12 +2376,11 @@
       "!type": "fn(parameters: object)"
     },
     "SpriteMaterial": {
-      "!name": "SpriteMaterial",
       "!url": "http://threejs.org/docs/#Reference/materials/SpriteMaterial",
       "prototype": {
         "!proto": "Material",
         "color": {
-          "!type": "Color",
+          "!type": "+THREE.Color",
           "!doc": "The texture is multiplied by this color. The default is 0xffffff"
         },
         "rotation": {
@@ -2513,129 +2392,126 @@
       "!type": "fn(parameters: object)"
     },
     "Box2": {
-      "!name": "Box2",
       "!url": "http://threejs.org/docs/#Reference/math/Box2",
       "prototype": {
         "!proto": "Vector2",
         "min": {
-          "!type": "Vector2",
+          "!type": "+THREE.Vector2",
           "!doc": "Lower (x, y) boundary of this box."
         },
         "set": {
-          "!type": "fn(min: Vector2, max: Vector2) -> Box2",
+          "!type": "fn(min: +THREE.Vector2, max: +THREE.Vector2) -> +THREE.Box2",
           "!doc": "Sets the lower and upper (x, y) boundaries of this box."
         },
         "clampPoint": {
-          "!type": "fn(point: Vector2, optionalTarget: Vector2) -> Vector2",
+          "!type": "fn(point: +THREE.Vector2, optionalTarget: +THREE.Vector2) -> +THREE.Vector2",
           "!doc": "Clamps *point* within the bounds of this box."
         },
         "setFromPoints": {
-          "!type": "fn(points: array) -> Box2",
+          "!type": "fn(points: []) -> +THREE.Box2",
           "!doc": "Sets the upper and lower bounds of this box to include all of the points in *points*."
         },
         "union": {
-          "!type": "fn(box: Box2) -> Box2",
+          "!type": "fn(box: +THREE.Box2) -> +THREE.Box2",
           "!doc": "Unions this box with *box* setting the upper bound of this box to the greater of the \n\t\ttwo boxes' upper bounds and the lower bound of this box to the lesser of the two boxes'\n\t\tlower bounds."
         },
         "expandByScalar": {
-          "!type": "fn(scalar: float) -> Box2",
+          "!type": "fn(scalar: float) -> +THREE.Box2",
           "!doc": "Expands each dimension of the box by *scalar*. If negative, the dimensions of the box <br>\n\t\twill be contracted."
         },
         "containsBox": {
-          "!type": "fn(box: Box2) -> boolean",
+          "!type": "fn(box: +THREE.Box2) -> bool",
           "!doc": "Returns true if this box includes the entirety of *box*. If this and *box* overlap exactly,<br>\n\t\tthis function also returns true."
         },
         "empty": {
-          "!type": "fn() -> boolean",
+          "!type": "fn() -> bool",
           "!doc": "Returns true if this box includes zero points within its bounds.<br>\n\t\tNote that a box with equal lower and upper bounds still includes one point, the\n\t\tone both bounds share."
         },
         "equals": {
-          "!type": "fn(box: Box2) -> boolean",
+          "!type": "fn(box: +THREE.Box2) -> bool",
           "!doc": "Returns true if this box and *box* share the same lower and upper bounds."
         },
         "copy": {
-          "!type": "fn(box: Box2) -> Box2",
+          "!type": "fn(box: +THREE.Box2) -> +THREE.Box2",
           "!doc": "Copies the values of *box* to this box."
         },
         "center": {
-          "!type": "fn(optionalTarget: Vector2) -> Vector2",
+          "!type": "fn(optionalTarget: +THREE.Vector2) -> +THREE.Vector2",
           "!doc": "Returns the center point of this box."
         },
         "containsPoint": {
-          "!type": "fn(point: Vector2) -> boolean",
+          "!type": "fn(point: +THREE.Vector2) -> bool",
           "!doc": "Returns true if the specified point lies within the boundaries of this box."
         }
       },
       "!doc": "Represents a boundary box in 2D space.",
-      "!type": "fn(min: Vector2, max: Vector2)"
+      "!type": "fn(min: +THREE.Vector2, max: +THREE.Vector2)"
     },
     "Box3": {
-      "!name": "Box3",
       "!url": "http://threejs.org/docs/#Reference/math/Box3",
       "prototype": {
         "!proto": "Matrix4",
         "min": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "Lower (x, y, z) boundary of this box."
         },
         "set": {
-          "!type": "fn(min: Vector3, max: Vector3) -> Box3",
+          "!type": "fn(min: +THREE.Vector3, max: +THREE.Vector3) -> +THREE.Box3",
           "!doc": "Sets the lower and upper (x, y, z) boundaries of this box."
         },
         "clampPoint": {
-          "!type": "fn(point: Vector3, optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(point: +THREE.Vector3, optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Clamps *point* within the bounds of this box."
         },
         "setFromPoints": {
-          "!type": "fn(points: array) -> Box3",
+          "!type": "fn(points: []) -> +THREE.Box3",
           "!doc": "Sets the upper and lower bounds of this box to include all of the points in *points*."
         },
         "size": {
-          "!type": "fn(optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Returns the width, height, and depth of this box."
         },
         "getParameter": {
-          "!type": "fn(point: Vector3, optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(point: +THREE.Vector3, optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Returns point as a proportion of this box's width and height."
         },
         "containsBox": {
-          "!type": "fn(box: Box3) -> boolean",
+          "!type": "fn(box: +THREE.Box3) -> bool",
           "!doc": "Returns true if this box includes the entirety of *box*. If this and *box* overlap exactly,<br>\n\t\tthis function also returns true."
         },
         "translate": {
-          "!type": "fn(offset: Vector3) -> Box3",
+          "!type": "fn(offset: +THREE.Vector3) -> +THREE.Box3",
           "!doc": "Adds *offset* to both the upper and lower bounds of this box, effectively moving this box <br>\n\t\t*offset* units in 3D space."
         },
         "clone": {
-          "!type": "fn() -> Box3",
+          "!type": "fn() -> +THREE.Box3",
           "!doc": "Returns a copy of this box."
         },
         "expandByPoint": {
-          "!type": "fn(point: Vector3) -> Box3",
+          "!type": "fn(point: +THREE.Vector3) -> +THREE.Box3",
           "!doc": "Expands the boundaries of this box to include *point*."
         },
         "expandByVector": {
-          "!type": "fn(vector: Vector3) -> Box3",
+          "!type": "fn(vector: +THREE.Vector3) -> +THREE.Box3",
           "!doc": "Expands this box equilaterally by *vector*. The width of this box will be\n\t\texpanded by the x component of *vector* in both directions. The height of \n\t\tthis box will be expanded by the y component of *vector* in both directions.\n\t\tThe depth of this box will be expanded by the z component of *vector* in\n\t\tboth directions."
         },
         "makeEmpty": {
-          "!type": "fn() -> Box3",
+          "!type": "fn() -> +THREE.Box3",
           "!doc": "Makes this box empty."
         },
         "getBoundingSphere": {
-          "!type": "fn(optionalTarget: Sphere) -> Sphere",
+          "!type": "fn(optionalTarget: +THREE.Sphere) -> +THREE.Sphere",
           "!doc": "Gets a sphere that bounds the box."
         },
         "setFromCenterAndSize": {
-          "!type": "fn(center: Vector3, size: Vector3) -> Box3",
+          "!type": "fn(center: +THREE.Vector3, size: +THREE.Vector3) -> +THREE.Box3",
           "!doc": "Centers this box on *center* and sets this box's width and height to the values specified\n\t\tin *size*."
         }
       },
       "!doc": "Represents a boundary box in 3d space.",
-      "!type": "fn(min: Vector3, max: Vector3)"
+      "!type": "fn(min: +THREE.Vector3, max: +THREE.Vector3)"
     },
     "Color": {
-      "!name": "Color",
       "!url": "http://threejs.org/docs/#Reference/math/Color",
       "prototype": {
         "!proto": "Color",
@@ -2648,15 +2524,15 @@
           "!doc": "Blue channel value between 0 and 1. Default is 1."
         },
         "copy": {
-          "!type": "fn(color: Color) -> Color",
+          "!type": "fn(color: +THREE.Color) -> +THREE.Color",
           "!doc": "Copies given color."
         },
         "copyLinearToGamma": {
-          "!type": "fn(color: Color) -> Color",
+          "!type": "fn(color: +THREE.Color) -> +THREE.Color",
           "!doc": "Copies given color making conversion from linear to gamma space."
         },
         "convertLinearToGamma": {
-          "!type": "fn() -> Color",
+          "!type": "fn() -> +THREE.Color",
           "!doc": "Converts this color from linear to gamma space."
         },
         "getHex": {
@@ -2664,7 +2540,7 @@
           "!doc": "Returns the hexadecimal value of this color."
         },
         "setHex": {
-          "!type": "fn(hex: number) -> Color",
+          "!type": "fn(hex: number) -> +THREE.Color",
           "!doc": "Sets this color from a hexadecimal value."
         },
         "getStyle": {
@@ -2672,27 +2548,27 @@
           "!doc": "Returns the value of this color as a CSS-style string. Example: rgb(255,0,0)"
         },
         "offsetHSL": {
-          "!type": "fn(h: number, s: number, l: number) -> Color",
+          "!type": "fn(h: number, s: number, l: number) -> +THREE.Color",
           "!doc": "Adds given h, s, and l to this color's existing h, s, and l values."
         },
         "addColors": {
-          "!type": "fn(color1: Color, color2: Color) -> Color",
+          "!type": "fn(color1: +THREE.Color, color2: +THREE.Color) -> +THREE.Color",
           "!doc": "Sets this color to the sum of color1 and color2"
         },
         "multiply": {
-          "!type": "fn(color: Color) -> Color",
+          "!type": "fn(color: +THREE.Color) -> +THREE.Color",
           "!doc": "Multiplies this color's rgb values by given color's rgb values"
         },
         "lerp": {
-          "!type": "fn(color: Color, alpha) -> Color",
+          "!type": "fn(color: +THREE.Color, alpha) -> +THREE.Color",
           "!doc": "Linear interpolation of this colors rgb values and the rgb values of the first argument. The alpha argument can be thought of as the percent between the two colors, where 0 is this color and 1 is the first argument."
         },
         "equals": {
-          "!type": "fn(c: Color) -> Color",
+          "!type": "fn(c: +THREE.Color) -> +THREE.Color",
           "!doc": "Compares this color and c and returns true if they are the same, false otherwise."
         },
         "set": {
-          "!type": "fn(value) -> Color",
+          "!type": "fn(value) -> +THREE.Color",
           "!doc": "Delegates to .copy, .setStyle, or .setHex depending on input type."
         }
       },
@@ -2700,34 +2576,33 @@
       "!type": "fn(value)"
     },
     "Euler": {
-      "!name": "Euler",
       "!url": "http://threejs.org/docs/#Reference/math/Euler",
       "prototype": {
-        "!proto": "number",
+        "!proto": "Float",
         "x": "number",
         "z": "number",
         "set": {
-          "!type": "fn(x: number, y: number, z: number, order: string) -> Euler",
+          "!type": "fn(x: number, y: number, z: number, order: string) -> +THREE.Euler",
           "!doc": "Sets the angles of this euler transform."
         },
         "setFromRotationMatrix": {
-          "!type": "fn(m: Matrix4, order: string) -> Euler",
+          "!type": "fn(m: +THREE.Matrix4, order: string) -> +THREE.Euler",
           "!doc": "Sets the angles of this euler transform from a pure rotation matrix based on the orientation specified by order."
         },
         "reorder": {
-          "!type": "fn(newOrder: string) -> Euler",
+          "!type": "fn(newOrder: string) -> +THREE.Euler",
           "!doc": "Resets the euler angle with a new order by creating a quaternion from this euler angle and then setting this euler angle with the quaternion and the new order. <br>\n\t\tWARNING: this discards revolution information."
         },
         "toVector3": {
-          "!type": "fn() -> Vector3",
+          "!type": "fn() -> +THREE.Vector3",
           "!doc": "Returns the Euler's XYZ properties as a Vector3."
         },
         "toArray": {
-          "!type": "fn(array: array) -> array",
+          "!type": "fn(array: []) -> []",
           "!doc": "Returns an array [x, y, z, order]"
         },
         "clone": {
-          "!type": "fn() -> Euler",
+          "!type": "fn() -> +THREE.Euler",
           "!doc": "Returns a new euler created from this euler."
         }
       },
@@ -2735,46 +2610,44 @@
       "!type": "fn(x: number, y: number, z: number, order: string)"
     },
     "Frustum": {
-      "!name": "Frustum",
       "!url": "http://threejs.org/docs/#Reference/math/Frustum",
       "prototype": {
         "!proto": "Plane",
         "planes": {
-          "!type": "array",
+          "!type": "[]",
           "!doc": "Array of 6 [page:Plane planes]."
         },
         "setFromMatrix": {
-          "!type": "fn(matrix: Matrix4) -> Frustum",
+          "!type": "fn(matrix: +THREE.Matrix4) -> +THREE.Frustum",
           "!doc": "Array of 6 [page:Plane planes]."
         },
         "clone": {
-          "!type": "fn() -> Frustum",
+          "!type": "fn() -> +THREE.Frustum",
           "!doc": "Return a copy of this Frustum"
         },
         "copy": {
-          "!type": "fn(frustum: Frustum) -> Frustum",
+          "!type": "fn(frustum: +THREE.Frustum) -> +THREE.Frustum",
           "!doc": "Copies the values of the passed frustum."
         },
         "intersectsSphere": {
-          "!type": "fn(sphere: Sphere) -> boolean",
+          "!type": "fn(sphere: +THREE.Sphere) -> bool",
           "!doc": "Check to see if the sphere intersects with the frustum."
         }
       },
       "!doc": "<a href=\"http://en.wikipedia.org/wiki/Frustum\">Frustums</a> are used to determine what is inside the camera's field of view. They help speed up the rendering process.",
-      "!type": "fn(p0: Plane, p1: Plane, p2: Plane, p3: Plane, p4: Plane, p5: Plane)"
+      "!type": "fn(p0: +THREE.Plane, p1: +THREE.Plane, p2: +THREE.Plane, p3: +THREE.Plane, p4: +THREE.Plane, p5: +THREE.Plane)"
     },
     "Line3": {
-      "!name": "Line3",
       "!url": "http://threejs.org/docs/#Reference/math/Line3",
       "prototype": {
         "!proto": "Vector3",
-        "start": "Vector3",
+        "start": "+THREE.Vector3",
         "set": {
-          "!type": "fn(start: Vector3, end: Vector3) -> Line3",
+          "!type": "fn(start: +THREE.Vector3, end: +THREE.Vector3) -> +THREE.Line3",
           "!doc": "Sets the start and end values by copying the provided vectors."
         },
         "clone": {
-          "!type": "fn() -> Line3",
+          "!type": "fn() -> +THREE.Line3",
           "!doc": "Return a new copy of this [page:Line3]."
         },
         "distance": {
@@ -2782,26 +2655,25 @@
           "!doc": "Returns the length of the line segment."
         },
         "applyMatrix4": {
-          "!type": "fn(matrix: Matrix4) -> Line3",
+          "!type": "fn(matrix: +THREE.Matrix4) -> +THREE.Line3",
           "!doc": "Apply a matrix transform to the line segment."
         },
         "center": {
-          "!type": "fn(optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Return the center of the line segment."
         },
         "closestPointToPoint": {
-          "!type": "fn(point: Vector3, clampToLine: boolean, optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(point: +THREE.Vector3, clampToLine: bool, optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Returns the closets point on the line. If clamp to line is true, then the returned value will be clamped to the line segment."
         }
       },
       "!doc": "A geometric line segment represented by a start and end point.",
-      "!type": "fn(start: Vector3, end: Vector3)"
+      "!type": "fn(start: +THREE.Vector3, end: +THREE.Vector3)"
     },
     "Math": {
-      "!name": "Math",
       "!url": "http://threejs.org/docs/#Reference/math/Math",
       "prototype": {
-        "!proto": "number",
+        "!proto": "Float",
         "clamp": {
           "!type": "fn(x: number, a: number, b: number) -> number",
           "!doc": "Clamps the *x* to be between *a* and *b*."
@@ -2830,16 +2702,15 @@
       "!doc": "Math utility functions"
     },
     "Matrix3": {
-      "!name": "Matrix3",
       "!url": "http://threejs.org/docs/#Reference/math/Matrix3",
       "prototype": {
-        "!proto": "number",
+        "!proto": "Float",
         "elements": {
           "!type": "Float32Array",
           "!doc": "Float32Array with column-major matrix values."
         },
         "transpose": {
-          "!type": "fn() -> Matrix3",
+          "!type": "fn() -> +THREE.Matrix3",
           "!doc": "Transposes this matrix in place."
         },
         "determinant": {
@@ -2847,19 +2718,19 @@
           "!doc": "Returns the matrix's determinant."
         },
         "multiplyScalar": {
-          "!type": "fn(scalar: number) -> Matrix3",
+          "!type": "fn(scalar: number) -> +THREE.Matrix3",
           "!doc": "Multiply every component of the matrix by a scalar value."
         },
         "getNormalMatrix": {
-          "!type": "fn(matrix4: Matrix4) -> Matrix3",
+          "!type": "fn(matrix4: +THREE.Matrix4) -> +THREE.Matrix3",
           "!doc": "Set this matrix as the normal matrix of the passed [page:Matrix4 matrix4]. The normal matrix is the inverse transpose of the matrix."
         },
         "copy": {
-          "!type": "fn(matrix: Matrix3) -> Matrix3",
+          "!type": "fn(matrix: +THREE.Matrix3) -> +THREE.Matrix3",
           "!doc": "Copy the values of the passed matrix."
         },
         "identity": {
-          "!type": "fn() -> Matrix3",
+          "!type": "fn() -> +THREE.Matrix3",
           "!doc": "Set as an identity matrix.<br><br>\n\t\t\n\t\t1, 0, 0<br>\n\t\t0, 1, 0<br>\n\t\t0, 0, 1<br>"
         }
       },
@@ -2867,7 +2738,6 @@
       "!type": "fn(n11: number, n12: number, n13: number, n21: number, n22: number, n23: number, n31: number, n32: number, n33: number)"
     },
     "Matrix4": {
-      "!name": "Matrix4",
       "!url": "http://threejs.org/docs/#Reference/math/Matrix4",
       "prototype": {
         "elements": {
@@ -2875,27 +2745,27 @@
           "!doc": "A column-major list of matrix values."
         },
         "set": {
-          "!type": "fn(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number) -> Matrix4",
+          "!type": "fn(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number) -> +THREE.Matrix4",
           "!doc": "Sets all fields of this matrix to the supplied row-major values n11..n44."
         },
         "copy": {
-          "!type": "fn(m: Matrix4) -> Matrix4",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Matrix4",
           "!doc": "Copies a matrix *m* into this matrix."
         },
         "makeBasis": {
-          "!type": "fn(xAxis: Vector3, zAxis: Vector3, zAxis: Vector3) -> Matrix4",
+          "!type": "fn(xAxis: +THREE.Vector3, zAxis: +THREE.Vector3, zAxis: +THREE.Vector3) -> +THREE.Matrix4",
           "!doc": "Creates the basis matrix consisting of the three provided axis vectors.  Returns the current matrix."
         },
         "extractRotation": {
-          "!type": "fn(m: Matrix4) -> Matrix4",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Matrix4",
           "!doc": "Extracts the rotation of the supplied matrix *m* into this matrix rotation component."
         },
         "multiply": {
-          "!type": "fn(m: Matrix4) -> Matrix4",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Matrix4",
           "!doc": "Multiplies this matrix by *m*."
         },
         "multiplyToArray": {
-          "!type": "fn(a: Matrix4, b: Matrix4, r: array) -> Matrix4",
+          "!type": "fn(a: +THREE.Matrix4, b: +THREE.Matrix4, r: []) -> +THREE.Matrix4",
           "!doc": "Sets this matrix to *a x b* and stores the result into the flat array *r*.<br>\n\t\t*r* can be either a regular Array or a TypedArray."
         },
         "determinant": {
@@ -2903,43 +2773,43 @@
           "!doc": "Computes determinant of this matrix.<br>\n\t\tBased on [link:http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm]"
         },
         "flattenToArrayOffset": {
-          "!type": "fn(flat: array, offset: number) -> array",
+          "!type": "fn(flat: [], offset: number) -> []",
           "!doc": "Flattens this matrix into supplied *flat* array starting from *offset* position in the array."
         },
         "getInverse": {
-          "!type": "fn(m: Matrix4) -> Matrix4",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Matrix4",
           "!doc": "Sets this matrix to the inverse of matrix *m*.<br>\n\t\tBased on [link:http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm]."
         },
         "makeRotationFromQuaternion": {
-          "!type": "fn(q: Quaternion) -> Matrix4",
+          "!type": "fn(q: +THREE.Quaternion) -> +THREE.Matrix4",
           "!doc": "Sets the rotation submatrix of this matrix to the rotation specified by *q*. The rest of the matrix is identity."
         },
         "compose": {
-          "!type": "fn(translation: Vector3, quaternion: Quaternion, scale: Vector3) -> Matrix4",
+          "!type": "fn(translation: +THREE.Vector3, quaternion: +THREE.Quaternion, scale: +THREE.Vector3) -> +THREE.Matrix4",
           "!doc": "Sets this matrix to the transformation composed of *translation*, *quaternion* and *scale*."
         },
         "makeTranslation": {
-          "!type": "fn(x: number, y: number, z: number) -> Matrix4",
+          "!type": "fn(x: number, y: number, z: number) -> +THREE.Matrix4",
           "!doc": "Sets this matrix as translation transform."
         },
         "makeRotationY": {
-          "!type": "fn(theta: number) -> Matrix4",
+          "!type": "fn(theta: number) -> +THREE.Matrix4",
           "!doc": "Sets this matrix as rotation transform around y axis by *theta* radians."
         },
         "makeRotationAxis": {
-          "!type": "fn(axis: Vector3, theta: number) -> Matrix4",
+          "!type": "fn(axis: +THREE.Vector3, theta: number) -> +THREE.Matrix4",
           "!doc": "Sets this matrix as rotation transform around *axis* by *angle* radians.<br>\n\t\tBased on [link:http://www.gamedev.net/reference/articles/article1199.asp]."
         },
         "makeFrustum": {
-          "!type": "fn(left: number, right: number, bottom: number, top: number, near: number, far: number) -> Matrix4",
+          "!type": "fn(left: number, right: number, bottom: number, top: number, near: number, far: number) -> +THREE.Matrix4",
           "!doc": "Creates a [page:Frustum frustum] matrix."
         },
         "makeOrthographic": {
-          "!type": "fn(left: number, right: number, bottom: number, top: number, near: number, far: number) -> Matrix4",
+          "!type": "fn(left: number, right: number, bottom: number, top: number, near: number, far: number) -> +THREE.Matrix4",
           "!doc": "Creates an orthographic projection matrix."
         },
         "applyToVector3Array": {
-          "!type": "fn(a: array) -> array",
+          "!type": "fn(a: []) -> []",
           "!doc": "Multiply (apply) this matrix to every vector3 in the array."
         }
       },
@@ -2947,95 +2817,93 @@
       "!type": "fn(n11: number, n12: number, n13: number, n14: number, n21: number, n22: number, n23: number, n24: number, n31: number, n32: number, n33: number, n34: number, n41: number, n42: number, n43: number, n44: number)"
     },
     "Plane": {
-      "!name": "Plane",
       "!url": "http://threejs.org/docs/#Reference/math/Plane",
       "prototype": {
         "!proto": "Vector3",
-        "normal": "Vector3",
+        "normal": "+THREE.Vector3",
         "normalize": {
-          "!type": "fn() -> Plane",
+          "!type": "fn() -> +THREE.Plane",
           "!doc": "Normalizes the normal vector, and adjusts the constant value accordingly."
         },
         "copy": {
-          "!type": "fn(plane: Plane) -> Plane",
+          "!type": "fn(plane: +THREE.Plane) -> +THREE.Plane",
           "!doc": "Copies the values of the passed plane to this plane."
         },
         "orthoPoint": {
-          "!type": "fn(point: Vector3, optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(point: +THREE.Vector3, optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Returns a vector in the same direction as the Plane's normal, but the magnitude is passed point's original distance to the plane."
         },
         "intersectLine": {
-          "!type": "fn(line: Line3, optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(line: +THREE.Line3, optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Returns the intersection point of the passed line and the plane. Returns undefined if the line does not intersect. Returns the line's starting point if the line is coplanar with the plane."
         },
         "clone": {
-          "!type": "fn() -> Plane",
+          "!type": "fn() -> +THREE.Plane",
           "!doc": "Returns a new copy of this plane."
         },
         "equals": {
-          "!type": "fn(plane: Plane) -> boolean",
+          "!type": "fn(plane: +THREE.Plane) -> bool",
           "!doc": "Checks to see if two planes are equal (their normals and constants match)"
         },
         "distanceToSphere": {
-          "!type": "fn(sphere: Sphere) -> number",
+          "!type": "fn(sphere: +THREE.Sphere) -> number",
           "!doc": "Returns the smallest distance from an edge of the sphere to the plane."
         },
         "projectPoint": {
-          "!type": "fn(point: Vector3, optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(point: +THREE.Vector3, optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Projects a point onto the plane. The projected point is the closest point on the plane to the passed point, so a line drawn from the projected point and the passed point would be orthogonal to the plane."
         },
         "translate": {
-          "!type": "fn(offset: Vector3) -> Plane",
+          "!type": "fn(offset: +THREE.Vector3) -> +THREE.Plane",
           "!doc": "Translates the plane the distance defined by the vector. Note that this only affects the constant (distance from origin) and will not affect the normal vector."
         }
       },
       "!doc": "A two dimensional surface that extends infinitely in 3d space.",
-      "!type": "fn(normal: Vector3, constant: number)"
+      "!type": "fn(normal: +THREE.Vector3, constant: number)"
     },
     "Quaternion": {
-      "!name": "Quaternion",
       "!url": "http://threejs.org/docs/#Reference/math/Quaternion",
       "prototype": {
         "x": "number",
         "z": "number",
         "set": {
-          "!type": "fn(x: number, y: number, z: number, w: number) -> Quaternion",
+          "!type": "fn(x: number, y: number, z: number, w: number) -> +THREE.Quaternion",
           "!doc": "Sets values of this quaternion."
         },
         "setFromEuler": {
-          "!type": "fn(euler: Euler) -> Quaternion",
+          "!type": "fn(euler: +THREE.Euler) -> +THREE.Quaternion",
           "!doc": "Sets this quaternion from rotation specified by Euler angle."
         },
         "setFromRotationMatrix": {
-          "!type": "fn(m: Matrix4) -> Quaternion",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Quaternion",
           "!doc": "Sets this quaternion from rotation component of *m*.<br>\n\t\tAdapted from [link:http://www.euclideanspace.com/maths/geometry/rotations/conversions/matrixToQuaternion/index.htm]."
         },
         "inverse": {
-          "!type": "fn() -> Quaternion",
+          "!type": "fn() -> +THREE.Quaternion",
           "!doc": "Inverts this quaternion."
         },
         "normalize": {
-          "!type": "fn() -> Quaternion",
+          "!type": "fn() -> +THREE.Quaternion",
           "!doc": "Normalizes this quaternion."
         },
         "multiplyQuaternions": {
-          "!type": "fn(a: Quaternion, b: Quaternion) -> Quaternion",
+          "!type": "fn(a: +THREE.Quaternion, b: +THREE.Quaternion) -> +THREE.Quaternion",
           "!doc": "Sets this quaternion to *a x b*<br>\n\t\tAdapted from [link:http://www.euclideanspace.com/maths/algebra/realNormedAlgebra/quaternions/code/index.htm]."
         },
         "clone": {
-          "!type": "fn() -> Quaternion",
+          "!type": "fn() -> +THREE.Quaternion",
           "!doc": "Clones this quaternion."
         },
         "slerp": {
-          "!type": "fn(qb: Quaternion, t: float) -> Quaternion",
+          "!type": "fn(qb: +THREE.Quaternion, t: float) -> +THREE.Quaternion",
           "!doc": "Handles the spherical linear interpolation between this quaternion's configuration\n\t\tand that of *qb*. *t* represents how close to the current (0) or target (1) rotation the\n\t\tresult should be."
         },
         "equals": {
-          "!type": "fn(v: Quaternion) -> boolean",
+          "!type": "fn(v: +THREE.Quaternion) -> bool",
           "!doc": "Compares each component of *v* to each component of this quaternion to determine if they\n\t\trepresent the same rotation."
         },
         "fromArray": {
-          "!type": "fn(array: array) -> Quaternion",
+          "!type": "fn(array: []) -> +THREE.Quaternion",
           "!doc": "Sets this quaternion's component values from an array."
         }
       },
@@ -3043,95 +2911,92 @@
       "!type": "fn(x: number, y: number, z: number, w: number)"
     },
     "Ray": {
-      "!name": "Ray",
       "!url": "http://threejs.org/docs/#Reference/math/Ray",
       "prototype": {
         "!proto": "Vector3",
         "origin": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "The origin of the [page:Ray]."
         },
         "applyMatrix4": {
-          "!type": "fn(matrix4: Matrix4) -> Ray",
+          "!type": "fn(matrix4: +THREE.Matrix4) -> +THREE.Ray",
           "!doc": "Transform this [page:Ray] by the [page:Matrix4]."
         },
         "clone": {
-          "!type": "fn() -> Ray",
+          "!type": "fn() -> +THREE.Ray",
           "!doc": "Create a clone of this [page:Ray]."
         },
         "copy": {
-          "!type": "fn(ray: Ray) -> Ray",
+          "!type": "fn(ray: +THREE.Ray) -> +THREE.Ray",
           "!doc": "Copy the properties of the provided [page:Ray], then return this [page:Ray]."
         },
         "distanceToPlane": {
-          "!type": "fn(plane: Plane) -> number",
+          "!type": "fn(plane: +THREE.Plane) -> number",
           "!doc": "Get the distance from the origin to the [page:Plane], or *null* if the [page:Ray] doesn't intersect the [page:Plane]."
         },
         "equals": {
-          "!type": "fn(ray: Ray) -> boolean",
+          "!type": "fn(ray: +THREE.Ray) -> bool",
           "!doc": "Return whether this and the other [page:Ray] have equal offsets and directions."
         },
         "isIntersectionBox": {
-          "!type": "fn(box: Box3) -> boolean",
+          "!type": "fn(box: +THREE.Box3) -> bool",
           "!doc": "Return whether or not this [page:Ray] intersects with the [page:Box3]."
         },
         "isIntersectionSphere": {
-          "!type": "fn(sphere: Sphere) -> boolean",
+          "!type": "fn(sphere: +THREE.Sphere) -> bool",
           "!doc": "Return whether or not this [page:Ray] intersects with the [page:Sphere]."
         },
         "set": {
-          "!type": "fn(origin: Vector3, direction: Vector3) -> Ray",
+          "!type": "fn(origin: +THREE.Vector3, direction: +THREE.Vector3) -> +THREE.Ray",
           "!doc": "Copy the parameters to the origin and direction properties."
         }
       },
       "!doc": "A ray that emits from an origin in a certain direction.",
-      "!type": "fn(origin: Vector3, direction: Vector3)"
+      "!type": "fn(origin: +THREE.Vector3, direction: +THREE.Vector3)"
     },
     "Sphere": {
-      "!name": "Sphere",
       "!url": "http://threejs.org/docs/#Reference/math/Sphere",
       "prototype": {
         "!proto": "Vector3",
-        "center": "Vector3",
+        "center": "+THREE.Vector3",
         "applyMatrix4": {
-          "!type": "fn(matrix: Matrix4) -> Sphere",
+          "!type": "fn(matrix: +THREE.Matrix4) -> +THREE.Sphere",
           "!doc": "Transforms this sphere with the provided [page:Matrix4]."
         },
         "translate": {
-          "!type": "fn(offset: Vector3) -> Sphere",
+          "!type": "fn(offset: +THREE.Vector3) -> +THREE.Sphere",
           "!doc": "Translate the sphere's center by the provided offset vector."
         },
         "equals": {
-          "!type": "fn(sphere: Sphere) -> boolean",
+          "!type": "fn(sphere: +THREE.Sphere) -> bool",
           "!doc": "Checks to see if the two spheres' centers and radii are equal."
         },
         "distanceToPoint": {
-          "!type": "fn(point: Vector3) -> number",
+          "!type": "fn(point: +THREE.Vector3) -> number",
           "!doc": "Returns the closest distance from the boundary of the sphere to the point. If the sphere contains the point, the distance will be negative."
         },
         "containsPoint": {
-          "!type": "fn(point: Vector3) -> boolean",
+          "!type": "fn(point: +THREE.Vector3) -> bool",
           "!doc": "Checks to see if the sphere contains the provided point inclusive of the edge of the sphere."
         },
         "intersectsSphere": {
-          "!type": "fn(sphere: Sphere) -> boolean",
+          "!type": "fn(sphere: +THREE.Sphere) -> bool",
           "!doc": "Checks to see if two spheres intersect."
         }
       },
       "!doc": "A geometric sphere defined by a center position and radius.",
-      "!type": "fn(center: Vector3, radius: number)"
+      "!type": "fn(center: +THREE.Vector3, radius: number)"
     },
     "Spline": {
-      "!name": "Spline",
       "!url": "http://threejs.org/docs/#Reference/math/Spline",
       "prototype": {
-        "points": "array",
+        "points": "[]",
         "initFromArray": {
-          "!type": "fn(a: array)",
+          "!type": "fn(a: [])",
           "!doc": "Initialises using the data in the array as a series of points. Each value in *a* must be another array with three values, where a[n] is v, the value for the *nth* point, and v[0], v[1] and v[2] are the x, y and z coordinates of that point n, respectively."
         },
         "getControlPointsArray": {
-          "!type": "fn() -> array",
+          "!type": "fn() -> []",
           "!doc": "Returns an array with triplets of x, y, z coordinates that correspond to the current control points."
         },
         "reparametrizeByArcLength": {
@@ -3140,73 +3005,71 @@
         }
       },
       "!doc": "Represents a spline.",
-      "!type": "fn(points: array)"
+      "!type": "fn(points: [])"
     },
     "Triangle": {
-      "!name": "Triangle",
       "!url": "http://threejs.org/docs/#Reference/math/Triangle",
       "prototype": {
         "!proto": "Vector3",
         "a": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "The first [page:Vector3] of the triangle."
         },
         "c": {
-          "!type": "Vector3",
+          "!type": "+THREE.Vector3",
           "!doc": "The third [page:Vector3] of the triangle."
         },
         "setFromPointsAndIndices": {
-          "!type": "fn(points: array, i0: number, i1: number, i2: number) -> Triangle",
+          "!type": "fn(points: [], i0: number, i1: number, i2: number) -> +THREE.Triangle",
           "!doc": "Sets the triangle's vectors to the vectors in the array."
         },
         "normal": {
-          "!type": "fn(optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Return the calculated normal of the triangle."
         },
         "clone": {
-          "!type": "fn() -> Triangle",
+          "!type": "fn() -> +THREE.Triangle",
           "!doc": "Return a new copy of this triangle."
         },
         "midpoint": {
-          "!type": "fn(optionalTarget: Vector3) -> Vector3",
+          "!type": "fn(optionalTarget: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Return the midpoint of the triangle. Optionally sets a target vector."
         },
         "plane": {
-          "!type": "fn(optionalTarget: Plane) -> Plane",
+          "!type": "fn(optionalTarget: +THREE.Plane) -> +THREE.Plane",
           "!doc": "Return a [page:Plane plane] based on the triangle. Optionally sets a target plane."
         },
         "copy": {
-          "!type": "fn(triangle: Triangle) -> Triangle",
+          "!type": "fn(triangle: +THREE.Triangle) -> +THREE.Triangle",
           "!doc": "Copies the values of the vertices of the passed triangle to this triangle."
         }
       },
       "!doc": "A geometric triangle as defined by three vectors.",
-      "!type": "fn(a: Vector3, b: Vector3, c: Vector3)"
+      "!type": "fn(a: +THREE.Vector3, b: +THREE.Vector3, c: +THREE.Vector3)"
     },
     "Vector2": {
-      "!name": "Vector2",
       "!url": "http://threejs.org/docs/#Reference/math/Vector2",
       "prototype": {
-        "!proto": "number",
+        "!proto": "Float",
         "x": "number",
         "set": {
-          "!type": "fn(x: number, y: number) -> Vector2",
+          "!type": "fn(x: number, y: number) -> +THREE.Vector2",
           "!doc": "Sets value of this vector."
         },
         "add": {
-          "!type": "fn(v: Vector2) -> Vector2",
+          "!type": "fn(v: +THREE.Vector2) -> +THREE.Vector2",
           "!doc": "Adds *v* to this vector."
         },
         "sub": {
-          "!type": "fn(v: Vector2) -> Vector2",
+          "!type": "fn(v: +THREE.Vector2) -> +THREE.Vector2",
           "!doc": "Subtracts *v* from this vector."
         },
         "multiplyScalar": {
-          "!type": "fn(s: number) -> Vector2",
+          "!type": "fn(s: number) -> +THREE.Vector2",
           "!doc": "Multiplies this vector by scalar *s*."
         },
         "negate": {
-          "!type": "fn() -> Vector2",
+          "!type": "fn() -> +THREE.Vector2",
           "!doc": "Inverts this vector."
         },
         "lengthSq": {
@@ -3214,31 +3077,31 @@
           "!doc": "Computes squared length of this vector."
         },
         "normalize": {
-          "!type": "fn() -> Vector2",
+          "!type": "fn() -> +THREE.Vector2",
           "!doc": "Normalizes this vector."
         },
         "distanceToSquared": {
-          "!type": "fn(v: Vector2) -> number",
+          "!type": "fn(v: +THREE.Vector2) -> number",
           "!doc": "Computes squared distance of this vector to *v*."
         },
         "equals": {
-          "!type": "fn(v: Vector2) -> boolean",
+          "!type": "fn(v: +THREE.Vector2) -> bool",
           "!doc": "Checks for strict equality of this vector and *v*."
         },
         "clamp": {
-          "!type": "fn(min: Vector2, max: Vector2) -> Vector2",
+          "!type": "fn(min: +THREE.Vector2, max: +THREE.Vector2) -> +THREE.Vector2",
           "!doc": "If this vector's x or y value is greater than the max vector's x or y value, it is replaced by the corresponding value. <br>\tIf this vector's x or y value is less than the min vector's x or y value, it is replace by the corresponding value."
         },
         "floor": {
-          "!type": "fn() -> Vector2",
+          "!type": "fn() -> +THREE.Vector2",
           "!doc": "The components of the vector are rounded downwards (towards negative infinity) to an integer value."
         },
         "round": {
-          "!type": "fn() -> Vector2",
+          "!type": "fn() -> +THREE.Vector2",
           "!doc": "The components of the vector are rounded towards the nearest integer value."
         },
         "lerp": {
-          "!type": "fn(v: Vector2, alpha: number) -> Vector2",
+          "!type": "fn(v: +THREE.Vector2, alpha: number) -> +THREE.Vector2",
           "!doc": "Linear interpolation between this vector and v, where alpha is the percent along the line."
         },
         "setComponent": {
@@ -3250,15 +3113,15 @@
           "!doc": "if index equals 0 returns the x value. <br>\n\t\tif index equals 1 returns the y value."
         },
         "toArray": {
-          "!type": "fn(array: array) -> array",
+          "!type": "fn(array: []) -> []",
           "!doc": "Returns an array [x, y]."
         },
         "max": {
-          "!type": "fn(v: Vector2) -> Vector2",
+          "!type": "fn(v: +THREE.Vector2) -> +THREE.Vector2",
           "!doc": "If this vector's x or y value is greater than v's x or y value, replace that value with the corresponding max value."
         },
         "setY": {
-          "!type": "fn(y: number) -> Vector2",
+          "!type": "fn(y: number) -> +THREE.Vector2",
           "!doc": "replace this vector's y value with y."
         }
       },
@@ -3266,38 +3129,37 @@
       "!type": "fn(x: number, y: number)"
     },
     "Vector3": {
-      "!name": "Vector3",
       "!url": "http://threejs.org/docs/#Reference/math/Vector3",
       "prototype": {
-        "!proto": "number",
+        "!proto": "Float",
         "x": "number",
         "z": "number",
         "set": {
-          "!type": "fn(x: number, y: number, z: number) -> Vector3",
+          "!type": "fn(x: number, y: number, z: number) -> +THREE.Vector3",
           "!doc": "Sets value of this vector."
         },
         "setY": {
-          "!type": "fn(y: number) -> Vector3",
+          "!type": "fn(y: number) -> +THREE.Vector3",
           "!doc": "Sets y value of this vector."
         },
         "copy": {
-          "!type": "fn(v: Vector3) -> Vector3",
+          "!type": "fn(v: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Copies value of *v* to this vector."
         },
         "addVectors": {
-          "!type": "fn(a: Vector3, b: Vector3) -> Vector3",
+          "!type": "fn(a: +THREE.Vector3, b: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Sets this vector to *a + b*."
         },
         "subVectors": {
-          "!type": "fn(a: Vector3, b: Vector3) -> Vector3",
+          "!type": "fn(a: +THREE.Vector3, b: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Sets this vector to *a - b*."
         },
         "divideScalar": {
-          "!type": "fn(s: number) -> Vector3",
+          "!type": "fn(s: number) -> +THREE.Vector3",
           "!doc": "Divides this vector by scalar *s*.<br>\n\t\tSet vector to *( 0, 0, 0 )* if *s == 0*."
         },
         "dot": {
-          "!type": "fn(v: Vector3) -> number",
+          "!type": "fn(v: +THREE.Vector3) -> number",
           "!doc": "Computes dot product of this vector and *v*."
         },
         "length": {
@@ -3305,87 +3167,87 @@
           "!doc": "Computes length of this vector."
         },
         "normalize": {
-          "!type": "fn() -> Vector3",
+          "!type": "fn() -> +THREE.Vector3",
           "!doc": "Normalizes this vector. Transforms this Vector into a Unit vector by dividing the vector by it's length."
         },
         "distanceToSquared": {
-          "!type": "fn(v: Vector3) -> number",
+          "!type": "fn(v: +THREE.Vector3) -> number",
           "!doc": "Computes squared distance of this vector to *v*."
         },
         "cross": {
-          "!type": "fn(v: Vector3) -> Vector3",
+          "!type": "fn(v: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Sets this vector to cross product of itself and *v*."
         },
         "setFromMatrixPosition": {
-          "!type": "fn(m: Matrix4) -> Vector3",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Vector3",
           "!doc": "Sets this vector extracting position from matrix transform."
         },
         "equals": {
-          "!type": "fn(v: Vector3) -> boolean",
+          "!type": "fn(v: +THREE.Vector3) -> bool",
           "!doc": "Checks for strict equality of this vector and *v*."
         },
         "clamp": {
-          "!type": "fn(min: Vector3, max: Vector3) -> Vector3",
+          "!type": "fn(min: +THREE.Vector3, max: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "If this vector's x, y or z value is greater than the max vector's x, y or z value, it is replaced by the corresponding value. <br><br>\n\t\tIf this vector's x, y or z value is less than the min vector's x, y or z value, it is replace by the corresponding value."
         },
         "floor": {
-          "!type": "fn() -> Vector3",
+          "!type": "fn() -> +THREE.Vector3",
           "!doc": "The components of the vector are rounded downwards (towards negative infinity) to an integer value."
         },
         "round": {
-          "!type": "fn() -> Vector3",
+          "!type": "fn() -> +THREE.Vector3",
           "!doc": "The components of the vector are rounded towards the nearest integer value."
         },
         "applyMatrix3": {
-          "!type": "fn(m: Matrix3) -> Vector3",
+          "!type": "fn(m: +THREE.Matrix3) -> +THREE.Vector3",
           "!doc": "Multiplies this vector times a 3 x 3 matrix."
         },
         "projectOnPlane": {
-          "!type": "fn(planeNormal: Vector3) -> Vector3",
+          "!type": "fn(planeNormal: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Projects this vector onto a plane by subtracting this vector projected onto the plane's normal from this vector."
         },
         "addScalar": {
-          "!type": "fn() -> Vector3",
+          "!type": "fn() -> +THREE.Vector3",
           "!doc": "Adds a s to this vector."
         },
         "min": {
-          "!type": "fn(v: Vector3) -> Vector3",
+          "!type": "fn(v: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "If this vector's x, y, or z value is less than vector v's x, y, or z value, that value is replaced by the corresponding vector v value."
         },
         "setComponent": {
-          "!type": "fn(index: number, value: number) -> Vector3",
+          "!type": "fn(index: number, value: number) -> +THREE.Vector3",
           "!doc": "If index equals 0 the method sets this vector's x value to value <br>\n\t\tIf index equals 1 the method sets this vector's y value to value <br>\n\t\tIf index equals 2 the method sets this vector's z value to value"
         },
         "multiplyVectors": {
-          "!type": "fn(a: Vector3, b: Vector3) -> Vector3",
+          "!type": "fn(a: +THREE.Vector3, b: +THREE.Vector3) -> +THREE.Vector3",
           "!doc": "Sets this vector equal to the result of multiplying vector a by vector b."
         },
         "applyAxisAngle": {
-          "!type": "fn(axis: Vector3, angle: number) -> Vector3",
+          "!type": "fn(axis: +THREE.Vector3, angle: number) -> +THREE.Vector3",
           "!doc": "Applies a rotation specified by an axis and an angle to this vector."
         },
         "lerpVectors": {
-          "!type": "fn(v1: Vector3, v2: Vector3, alpha: number) -> Vector3",
+          "!type": "fn(v1: +THREE.Vector3, v2: +THREE.Vector3, alpha: number) -> +THREE.Vector3",
           "!doc": "Sets this vector to be the vector linearly interpolated between *v1* and *v2* with *alpha* factor."
         },
         "setFromMatrixColumn": {
-          "!type": "fn(index: number, matrix: Matrix4) -> Vector3",
+          "!type": "fn(index: number, matrix: +THREE.Matrix4) -> +THREE.Vector3",
           "!doc": "Sets this vector's x, y, and z equal to the column of the matrix specified by the index."
         },
         "fromArray": {
-          "!type": "fn(array: array) -> Vector3",
+          "!type": "fn(array: []) -> +THREE.Vector3",
           "!doc": "Sets the vector's components based on an array formatted like [x, y, z]"
         },
         "applyProjection": {
-          "!type": "fn(m: Matrix4) -> Vector3",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Vector3",
           "!doc": "Multiplies this vector and m, and divides by perspective."
         },
         "applyEuler": {
-          "!type": "fn(euler: Euler) -> Vector3",
+          "!type": "fn(euler: +THREE.Euler) -> +THREE.Vector3",
           "!doc": "Applies euler transform to this vector by converting the [page:Euler] obect to a [page:Quaternion] and applying."
         },
         "project": {
-          "!type": "fn(camera: Camera) -> Vector3",
+          "!type": "fn(camera: +THREE.Camera) -> +THREE.Vector3",
           "!doc": "Projects the vector with the camera."
         }
       },
@@ -3393,30 +3255,29 @@
       "!type": "fn(x: number, y: number, z: number)"
     },
     "Vector4": {
-      "!name": "Vector4",
       "!url": "http://threejs.org/docs/#Reference/math/Vector4",
       "prototype": {
-        "!proto": "number",
+        "!proto": "Float",
         "x": "number",
         "z": "number",
         "set": {
-          "!type": "fn(x: number, y: number, z: number, w: number) -> Vector4",
+          "!type": "fn(x: number, y: number, z: number, w: number) -> +THREE.Vector4",
           "!doc": "Sets value of this vector."
         },
         "add": {
-          "!type": "fn(v: Vector4) -> Vector4",
+          "!type": "fn(v: +THREE.Vector4) -> +THREE.Vector4",
           "!doc": "Adds *v* to this vector."
         },
         "sub": {
-          "!type": "fn(v: Vector4) -> Vector4",
+          "!type": "fn(v: +THREE.Vector4) -> +THREE.Vector4",
           "!doc": "Subtracts *v* from this vector."
         },
         "multiplyScalar": {
-          "!type": "fn(s: number) -> Vector4",
+          "!type": "fn(s: number) -> +THREE.Vector4",
           "!doc": "Multiplies this vector by scalar *s*."
         },
         "negate": {
-          "!type": "fn() -> Vector4",
+          "!type": "fn() -> +THREE.Vector4",
           "!doc": "Inverts this vector."
         },
         "lengthSq": {
@@ -3424,39 +3285,39 @@
           "!doc": "Computes squared length of this vector."
         },
         "normalize": {
-          "!type": "fn() -> Vector4",
+          "!type": "fn() -> +THREE.Vector4",
           "!doc": "Normalizes this vector."
         },
         "lerp": {
-          "!type": "fn(v: Vector4, alpha: number) -> Vector4",
+          "!type": "fn(v: +THREE.Vector4, alpha: number) -> +THREE.Vector4",
           "!doc": "Linearly interpolate between this vector and *v* with *alpha* factor."
         },
         "clone": {
-          "!type": "fn() -> Vector4",
+          "!type": "fn() -> +THREE.Vector4",
           "!doc": "Clones this vector."
         },
         "clampScalar": {
-          "!type": "fn(min: number, max: number) -> Vector4",
+          "!type": "fn(min: number, max: number) -> +THREE.Vector4",
           "!doc": "If this vector's x, y, z or w values are greater than the max value, they are replaced by the max value. <br>\n\t\tIf this vector's x, y, z or w values are less than the min value, they are replace by the min value."
         },
         "ceil": {
-          "!type": "fn() -> Vector4",
+          "!type": "fn() -> +THREE.Vector4",
           "!doc": "The components of the vector are rounded upwards (towards positive infinity) to an integer value."
         },
         "roundToZero": {
-          "!type": "fn() -> Vector4",
+          "!type": "fn() -> +THREE.Vector4",
           "!doc": "The components of the vector are rounded towards zero (up if negative, down if positive) to an integer value."
         },
         "min": {
-          "!type": "fn(v: Vector4) -> Vector4",
+          "!type": "fn(v: +THREE.Vector4) -> +THREE.Vector4",
           "!doc": "If this vector's x, y, z, or w value is less than vector v's x, y, z, or w value, that value is replaced by the corresponding vector v value."
         },
         "addScalar": {
-          "!type": "fn(s: number) -> Vector4",
+          "!type": "fn(s: number) -> +THREE.Vector4",
           "!doc": "Adds a scalar value to all of the vector's components."
         },
         "setAxisAngleFromRotationMatrix": {
-          "!type": "fn(m: Matrix4) -> Vector4",
+          "!type": "fn(m: +THREE.Matrix4) -> +THREE.Vector4",
           "!doc": "Sets this Vector4 to the computed <a href=\"http://en.wikipedia.org/wiki/Axis%E2%80%93angle_representation\" target=\"_blank\">axis-angle representation</a> of the rotation defined by Matrix4 m. Assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled).<br><br>\n\n\t\tThe axis is stored in components (x, y, z) of the vector, and the rotation in radians is stored in component w"
         },
         "getComponent": {
@@ -3464,7 +3325,7 @@
           "!doc": "Returns the value of the vector component x, y, or z by an index.<br><br>\n\n\t\tIndex 0: x<br>\n\t\tIndex 1: y<br>\n\t\tIndex 2: z<br>\n\t\tIndex 3: w<br>"
         },
         "fromArray": {
-          "!type": "fn(array: array) -> Vector4",
+          "!type": "fn(array: []) -> +THREE.Vector4",
           "!doc": "Sets the vector's components based on an array formatted like [x, y, z, w]"
         },
         "lengthManhattan": {
@@ -3472,11 +3333,11 @@
           "!doc": "Computes Manhattan length of this vector.<br>\n\t\t[link:http://en.wikipedia.org/wiki/Taxicab_geometry]"
         },
         "setY": {
-          "!type": "fn(y: number) -> Vector4",
+          "!type": "fn(y: number) -> +THREE.Vector4",
           "!doc": "Sets the y component of the vector."
         },
         "setW": {
-          "!type": "fn(w: number) -> Vector4",
+          "!type": "fn(w: number) -> +THREE.Vector4",
           "!doc": "Sets the w component of the vector."
         }
       },
@@ -3484,24 +3345,22 @@
       "!type": "fn(x: number, y: number, z: number, w: number)"
     },
     "Bone": {
-      "!name": "Bone",
       "!url": "http://threejs.org/docs/#Reference/objects/Bone",
       "prototype": {
         "!proto": "Object3D",
         "skinMatrix": {
-          "!type": "Matrix4",
+          "!type": "+THREE.Matrix4",
           "!doc": "The matrix of the bone."
         },
         "update": {
-          "!type": "fn(parentSkinMatrix: Matrix4, forceUpdate: boolean) -> todo",
+          "!type": "fn(parentSkinMatrix: +THREE.Matrix4, forceUpdate: boolean) -> todo",
           "!doc": "This updates the matrix of the bone and the matrices of its children."
         }
       },
       "!doc": "A bone which is part of a SkinnedMesh.",
-      "!type": "fn(belongsToSkin: SkinnedMesh)"
+      "!type": "fn(belongsToSkin: +THREE.SkinnedMesh)"
     },
     "LOD": {
-      "!name": "LOD",
       "!url": "http://threejs.org/docs/#Reference/objects/LOD",
       "prototype": {
         "!proto": "Object3D",
@@ -3522,7 +3381,6 @@
       "!type": "fn()"
     },
     "LensFlare": {
-      "!name": "LensFlare",
       "!url": "http://threejs.org/docs/#Reference/objects/LensFlare",
       "prototype": {
         "!proto": "Object3D",
@@ -3543,12 +3401,11 @@
       "!type": "fn(texture: todo, size: todo, distance: todo, blending: todo, color: todo)"
     },
     "Line": {
-      "!name": "Line",
       "!url": "http://threejs.org/docs/#Reference/objects/Line",
       "prototype": {
         "!proto": "Object3D",
         "geometry": {
-          "!type": "Geometry",
+          "!type": "+THREE.Geometry",
           "!doc": "Vertices representing the line segment(s)."
         },
         "type": {
@@ -3556,20 +3413,19 @@
           "!doc": "In OpenGL terms, LineStrip is the classic GL_LINE_STRIP and LinePieces is the equivalent to GL_LINES."
         },
         "raycast": {
-          "!type": "fn(raycaster: Raycaster, intersects: array) -> array",
+          "!type": "fn(raycaster: +THREE.Raycaster, intersects: []) -> []",
           "!doc": "Get intersections between a casted ray and this Line. [page:Raycaster.intersectObject] will call this method."
         }
       },
       "!doc": "A line or a series of lines.",
-      "!type": "fn(geometry: Geometry, material: Material, type: number)"
+      "!type": "fn(geometry: +THREE.Geometry, material: +THREE.Material, type: number)"
     },
     "Mesh": {
-      "!name": "Mesh",
       "!url": "http://threejs.org/docs/#Reference/objects/Mesh",
       "prototype": {
         "!proto": "Object3D",
         "geometry": {
-          "!type": "Geometry",
+          "!type": "+THREE.Geometry",
           "!doc": "An instance of [page:Geometry], defining the object's structure."
         },
         "getMorphTargetIndexByName": {
@@ -3577,15 +3433,14 @@
           "!doc": "Returns the index of a morph target defined by name."
         },
         "raycast": {
-          "!type": "fn(raycaster: Raycaster, intersects: array) -> array",
+          "!type": "fn(raycaster: +THREE.Raycaster, intersects: []) -> []",
           "!doc": "Get intersections between a casted ray and this mesh. [page:Raycaster.intersectObject] will call this method."
         }
       },
       "!doc": "Base class for Mesh objects, such as [page:MorphAnimMesh] and [page:SkinnedMesh].",
-      "!type": "fn(geometry: Geometry, material: Material)"
+      "!type": "fn(geometry: +THREE.Geometry, material: +THREE.Material)"
     },
     "MorphAnimMesh": {
-      "!name": "MorphAnimMesh",
       "!url": "http://threejs.org/docs/#Reference/objects/MorphAnimMesh",
       "prototype": {
         "!proto": "Object3D",
@@ -3630,24 +3485,22 @@
       "!type": "fn(geometry: todo, material: todo)"
     },
     "PointCloud": {
-      "!name": "PointCloud",
       "!url": "http://threejs.org/docs/#Reference/objects/PointCloud",
       "prototype": {
         "!proto": "Object3D",
         "geometry": {
-          "!type": "Geometry",
+          "!type": "+THREE.Geometry",
           "!doc": "An instance of [page:Geometry], where each vertex designates the position of a particle in the system."
         },
         "clone": {
-          "!type": "fn() -> PointCloud",
+          "!type": "fn() -> +THREE.PointCloud",
           "!doc": "This creates a clone of the particle system."
         }
       },
       "!doc": "A class for displaying particles in the form of variable size points. For example, if using the [page:WebGLRenderer], the particles are displayed using GL_POINTS.",
-      "!type": "fn(geometry: Geometry, material: Material)"
+      "!type": "fn(geometry: +THREE.Geometry, material: +THREE.Material)"
     },
     "SkinnedMesh": {
-      "!name": "SkinnedMesh",
       "!url": "http://threejs.org/docs/#Reference/objects/SkinnedMesh",
       "prototype": {
         "!proto": "Object3D",
@@ -3665,27 +3518,25 @@
         }
       },
       "!doc": "An 3d object that has bones data. These Bones can then be used to animate the vertices of the object.",
-      "!type": "fn(geometry: Geometry, material: Material, useVertexTexture: boolean)"
+      "!type": "fn(geometry: +THREE.Geometry, material: +THREE.Material, useVertexTexture: boolean)"
     },
     "Sprite": {
-      "!name": "Sprite",
       "!url": "http://threejs.org/docs/#Reference/objects/Sprite",
       "prototype": {
         "!proto": "Object3D",
         "material": {
-          "!type": "SpriteMaterial",
+          "!type": "+THREE.SpriteMaterial",
           "!doc": "An instance of [page:Material], defining the object's appearance. Default is a [page:SpriteMaterial] which is a white plane."
         },
         "clone": {
-          "!type": "fn() -> Sprite",
+          "!type": "fn() -> +THREE.Sprite",
           "!doc": "This creates a new clone of the sprite."
         }
       },
       "!doc": "A sprite is a plane in an 3d scene which faces always towards the camera.",
-      "!type": "fn(material: Material)"
+      "!type": "fn(material: +THREE.Material)"
     },
     "CanvasRenderer": {
-      "!name": "CanvasRenderer",
       "!url": "http://threejs.org/docs/#Reference/renderers/CanvasRenderer",
       "prototype": {
         "!proto": "WebGLRenderer",
@@ -3694,7 +3545,7 @@
           "!doc": "An object with a series of statistical information about the graphics board memory and the rendering process. Useful for debugging or just for the sake of curiosity. The object contains the following fields:"
         },
         "autoClear": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Defines whether the renderer should automatically clear its output before rendering."
         },
         "sortElements": {
@@ -3702,11 +3553,11 @@
           "!doc": "Defines whether the renderer should sort the face of each object. Default is true."
         },
         "render": {
-          "!type": "fn(scene: Scene, camera: Camera)",
+          "!type": "fn(scene: +THREE.Scene, camera: +THREE.Camera)",
           "!doc": "Render a scene using a camera."
         },
         "setClearColor": {
-          "!type": "fn(color: Color, alpha: number)",
+          "!type": "fn(color: +THREE.Color, alpha: number)",
           "!doc": "This set the clearColor and the clearAlpha."
         },
         "setClearColorHex": {
@@ -3722,7 +3573,6 @@
       "!type": "fn(parameters: object)"
     },
     "WebGLRenderTarget": {
-      "!name": "WebGLRenderTarget",
       "!url": "http://threejs.org/docs/#Reference/renderers/WebGLRenderTarget",
       "prototype": {
         "wrapS": {
@@ -3738,7 +3588,7 @@
           "!doc": "The number of samples taken along the axis through the pixel that has the highest density of texels. By default, this value is 1. A higher value gives a less blurry result than a basic mipmap, at the cost of more texture samples being used. Use renderer.getMaxAnisotropy() to find the maximum valid anisotropy value for the GPU; this value is usually a power of 2."
         },
         "offset": {
-          "!type": "Vector2",
+          "!type": "+THREE.Vector2",
           "!doc": "How much a single repetition of the texture is offset from the beginning, in each direction U and V. Typical range is 0.0 to 1.0."
         },
         "type": {
@@ -3750,7 +3600,7 @@
           "!doc": "Renders to the stencil buffer. Default is true."
         },
         "shareDepthFrom": {
-          "!type": "WebGLRenderTarget",
+          "!type": "+THREE.WebGLRenderTarget",
           "!doc": "Shares the depth from another WebGLRenderTarget. Default is null."
         },
         "setSize": {
@@ -3766,7 +3616,6 @@
       "!type": "fn(width: number, height: number, options: object)"
     },
     "WebGLRenderTargetCube": {
-      "!name": "WebGLRenderTargetCube",
       "!url": "http://threejs.org/docs/#Reference/renderers/WebGLRenderTargetCube",
       "prototype": {
         "!proto": "WebGLRenderTarget",
@@ -3779,7 +3628,6 @@
       "!type": "fn(width: number, height: number, options: object)"
     },
     "WebGLRenderer": {
-      "!name": "WebGLRenderer",
       "!url": "http://threejs.org/docs/#Reference/renderers/WebGLRenderer",
       "prototype": {
         "!proto": "CanvasRenderer",
@@ -3788,23 +3636,23 @@
           "!doc": "A [page:Canvas] where the renderer draws its output.<br>\n\t\tThis is automatically created by the renderer in the constructor (if not provided already); you just need to add it to your page."
         },
         "autoClear": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Defines whether the renderer should automatically clear its output before rendering."
         },
         "autoClearDepth": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "If autoClear is true, defines whether the renderer should clear the depth buffer. Default is true."
         },
         "sortObjects": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Note: Sorting is used to attempt to properly render objects that have some degree of transparency.  By definition, sorting objects may not work in all cases.  Depending on the needs of application, it may be neccessary to turn off sorting and use other methods to deal with transparency rendering e.g. manually determining the object rendering order."
         },
         "gammaInput": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Default is false. If set, then it expects that all textures and colors are premultiplied gamma."
         },
         "shadowMapEnabled": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Default is false. If set, use shadow maps in the scene."
         },
         "shadowMapCullFace": {
@@ -3812,7 +3660,7 @@
           "!doc": "Default is THREE.CullFaceFront. The faces that needed to be culled. Possible values: THREE.CullFaceFront and THREE.CullFaceBack"
         },
         "shadowMapCascade": {
-          "!type": "boolean",
+          "!type": "bool",
           "!doc": "Default is false. If Set, use cascaded shadowmaps. See [link:http://developer.download.nvidia.com/SDK/10.5/opengl/src/cascaded_shadow_maps/doc/cascaded_shadow_maps.pdf cascaded shadowmaps] for more information."
         },
         "maxMorphNormals": {
@@ -3836,7 +3684,7 @@
           "!doc": "Sets the scissor area from (x, y) to (x + width, y + height)."
         },
         "setClearColor": {
-          "!type": "fn(color: Color, alpha: number)",
+          "!type": "fn(color: +THREE.Color, alpha: number)",
           "!doc": "Sets the clear color and opacity."
         },
         "getClearAlpha": {
@@ -3844,11 +3692,11 @@
           "!doc": "Returns a [page:Float float] with the current clear alpha. Ranges from 0 to 1."
         },
         "renderBufferImmediate": {
-          "!type": "fn(object: Object3D, program: shaderprogram, shading: Material)",
+          "!type": "fn(object: +THREE.Object3D, program: shaderprogram, shading: +THREE.Material)",
           "!doc": "Render an immediate buffer. Gets called by renderImmediateObject."
         },
         "renderBuffer": {
-          "!type": "fn(camera: Camera, lights: array, fog: Fog, material: Material, geometryGroup: object, object: Object3D)",
+          "!type": "fn(camera: +THREE.Camera, lights: [], fog: +THREE.Fog, material: +THREE.Material, geometryGroup: object, object: +THREE.Object3D)",
           "!doc": "Render a geometry group using the camera and with the correct material."
         },
         "renderImmediateObject": {
@@ -3864,7 +3712,7 @@
           "!doc": "This method sets the correct blending."
         },
         "setRenderTarget": {
-          "!type": "fn(renderTarget: WebGLRenderTarget)",
+          "!type": "fn(renderTarget: +THREE.WebGLRenderTarget)",
           "!doc": "This method sets the active rendertarget."
         },
         "getMaxAnisotropy": {
@@ -3872,7 +3720,7 @@
           "!doc": "This returns the anisotropy level of the textures."
         },
         "setMaterialFaces": {
-          "!type": "fn(material: Material)",
+          "!type": "fn(material: +THREE.Material)",
           "!doc": "This sets which side needs to be culled in the webgl renderer."
         },
         "supportsFloatTextures": {
@@ -3884,53 +3732,46 @@
       "!type": "fn(parameters: object)"
     },
     "ShaderChunk": {
-      "!name": "ShaderChunk",
       "!url": "http://threejs.org/docs/#Reference/renderers/shaders/ShaderChunk",
       "prototype": {},
       "!doc": "Shader chunks for WebLG Shader library"
     },
     "ShaderLib": {
-      "!name": "ShaderLib",
       "!url": "http://threejs.org/docs/#Reference/renderers/shaders/ShaderLib",
       "prototype": {},
       "!doc": "Webgl Shader Library for three.js"
     },
     "UniformsLib": {
-      "!name": "UniformsLib",
       "!url": "http://threejs.org/docs/#Reference/renderers/shaders/UniformsLib",
       "prototype": {},
       "!doc": "Uniforms library for shared webgl shaders"
     },
     "UniformsUtils": {
-      "!name": "UniformsUtils",
       "!url": "http://threejs.org/docs/#Reference/renderers/shaders/UniformsUtils",
       "prototype": {},
       "!doc": "Uniform Utilities. Support merging and cloning of uniform variables"
     },
     "WebGLProgram": {
-      "!name": "WebGLProgram",
       "!url": "http://threejs.org/docs/#Reference/renderers/webgl/WebGLProgram",
       "prototype": {
         "uniforms": "object",
         "id": "string",
         "usedTimes": "number",
-        "vertexShader": "WebGLShader"
+        "vertexShader": "+THREE.WebGLShader"
       },
       "!doc": "Constructor for the GLSL program sent to vertex and fragment shaders, including default uniforms and attributes.",
-      "!type": "fn(renderer: WebGLRenderer, code: object, material: Material, parameters: object)"
+      "!type": "fn(renderer: +THREE.WebGLRenderer, code: object, material: +THREE.Material, parameters: object)"
     },
     "WebGLShader": {
-      "!name": "WebGLShader",
       "!url": "http://threejs.org/docs/#Reference/renderers/webgl/WebGLShader",
       "prototype": {},
       "!doc": "todo"
     },
     "LensFlarePlugin": {
-      "!name": "LensFlarePlugin",
       "!url": "http://threejs.org/docs/#Reference/renderers/webgl/plugins/LensFlarePlugin",
       "prototype": {
         "render": {
-          "!type": "fn(scene: Scene, camera: Camera, viewportWidth: number, viewportHeight: number)",
+          "!type": "fn(scene: +THREE.Scene, camera: +THREE.Camera, viewportWidth: number, viewportHeight: number)",
           "!doc": "Renders the lensflares defined in the scene. This gets automatically called as post render function to draw the lensflares."
         }
       },
@@ -3938,11 +3779,10 @@
       "!type": "fn()"
     },
     "ShadowMapPlugin": {
-      "!name": "ShadowMapPlugin",
       "!url": "http://threejs.org/docs/#Reference/renderers/webgl/plugins/ShadowMapPlugin",
       "prototype": {
         "render": {
-          "!type": "fn(scene: Scene, camera: Camera)",
+          "!type": "fn(scene: +THREE.Scene, camera: +THREE.Camera)",
           "!doc": "Prepares the shadowmaps to be rendered defined in the scene. This gets automatically called as pre render function to draw the lensflares."
         }
       },
@@ -3950,11 +3790,10 @@
       "!type": "fn()"
     },
     "SpritePlugin": {
-      "!name": "SpritePlugin",
       "!url": "http://threejs.org/docs/#Reference/renderers/webgl/plugins/SpritePlugin",
       "prototype": {
         "render": {
-          "!type": "fn(scene: Scene, camera: Camera)",
+          "!type": "fn(scene: +THREE.Scene, camera: +THREE.Camera)",
           "!doc": "Renders the sprites defined in the scene. This gets automatically called as post-render function to draw the lensflares."
         }
       },
@@ -3962,7 +3801,6 @@
       "!type": "fn()"
     },
     "Fog": {
-      "!name": "Fog",
       "!url": "http://threejs.org/docs/#Reference/scenes/Fog",
       "prototype": {
         "!proto": "Color",
@@ -3975,7 +3813,7 @@
           "!doc": "Default is 1."
         },
         "clone": {
-          "!type": "fn() -> Fog",
+          "!type": "fn() -> +THREE.Fog",
           "!doc": "Returns a copy of this."
         }
       },
@@ -3983,7 +3821,6 @@
       "!type": "fn(hex: number, near: number, far: number)"
     },
     "FogExp2": {
-      "!name": "FogExp2",
       "!url": "http://threejs.org/docs/#Reference/scenes/FogExp2",
       "prototype": {
         "!proto": "Color",
@@ -3996,7 +3833,7 @@
           "!doc": "Default is 0.00025."
         },
         "clone": {
-          "!type": "fn() -> FogExp2",
+          "!type": "fn() -> +THREE.FogExp2",
           "!doc": "Returns a copy of this."
         }
       },
@@ -4004,12 +3841,11 @@
       "!type": "fn(hex: number, density: number)"
     },
     "Scene": {
-      "!name": "Scene",
       "!url": "http://threejs.org/docs/#Reference/scenes/Scene",
       "prototype": {
         "!proto": "Object3D",
         "fog": {
-          "!type": "Fog",
+          "!type": "+THREE.Fog",
           "!doc": "A [page:Fog fog] instance defining the type of fog that affects everything rendered in the scene. Default is null."
         },
         "autoUpdate": {
@@ -4021,7 +3857,6 @@
       "!type": "fn()"
     },
     "CompressedTexture": {
-      "!name": "CompressedTexture",
       "!url": "http://threejs.org/docs/#Reference/textures/CompressedTexture",
       "prototype": {
         "!proto": "Texture",
@@ -4031,10 +3866,9 @@
         }
       },
       "!doc": "Creates a texture based on data in compressed form.",
-      "!type": "fn(mipmaps: array, width: number, height: number, format: number, type: number, mapping: number, wrapS: number, wrapT: number, magFilter: number, minFilter: number, anisotropy: number)"
+      "!type": "fn(mipmaps: [], width: number, height: number, format: number, type: number, mapping: number, wrapS: number, wrapT: number, magFilter: number, minFilter: number, anisotropy: number)"
     },
     "DataTexture": {
-      "!name": "DataTexture",
       "!url": "http://threejs.org/docs/#Reference/textures/DataTexture",
       "prototype": {
         "!proto": "Texture"
@@ -4043,7 +3877,6 @@
       "!type": "fn(data: ArraybufferView, width: number, height: number, format: number, type: number, mapping: number, wrapS: number, wrapT: number, magFilter: number, minFilter: number, anisotropy: number)"
     },
     "Texture": {
-      "!name": "Texture",
       "!url": "http://threejs.org/docs/#Reference/textures/Texture",
       "prototype": {
         "id": {
@@ -4071,7 +3904,7 @@
           "!doc": "If a texture is changed after creation, set this flag to true so that the texture is properly set up. Particularly important for setting the wrap mode."
         },
         "offset": {
-          "!type": "Vector2",
+          "!type": "+THREE.Vector2",
           "!doc": "How much a single repetition of the texture is offset from the beginning, in each direction U and V. Typical range is 0.0 to 1.0."
         },
         "generateMipmaps": {
