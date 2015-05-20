@@ -179,7 +179,11 @@ public class JSDTClassPathManager implements IElementChangedListener,
 	public void startup() {
 		JavaScriptCore.addElementChangedListener(this,
 				ElementChangedEvent.POST_CHANGE);
-		TernCorePlugin.addTernProjectLifeCycleListener(this);
+		// the JSDT Class Path Manager is registered as listener with the
+		// ternProjectLifecycleListeners extension point
+		// to be sure when TernProject fires listener, this JSDT Class Path
+		// manager is registered.
+		// TernCorePlugin.addTernProjectLifeCycleListener(this);
 	}
 
 	public void shutdown() {
@@ -224,16 +228,16 @@ public class JSDTClassPathManager implements IElementChangedListener,
 				case IIncludePathEntry.CPE_LIBRARY:
 					// TODO : manage JSDT library
 					// JSDT Source file => Tern script path file.
-					/*IFolder libFolder = ResourcesPlugin.getWorkspace().getRoot()
-							.getFolder(entry.getPath());
-					try {
-						ternProject.addExternalScriptPath(libFolder,
-								ScriptPathsType.FOLDER, JSDT_EXTERNAL_LABEL);
-					} catch (IOException e) {
-						Trace.trace(Trace.SEVERE,
-								"Error while adding external tern script path for project "
-										+ ternProject.getProject().getName(), e);
-					}*/
+					/*
+					 * IFolder libFolder =
+					 * ResourcesPlugin.getWorkspace().getRoot()
+					 * .getFolder(entry.getPath()); try {
+					 * ternProject.addExternalScriptPath(libFolder,
+					 * ScriptPathsType.FOLDER, JSDT_EXTERNAL_LABEL); } catch
+					 * (IOException e) { Trace.trace(Trace.SEVERE,
+					 * "Error while adding external tern script path for project "
+					 * + ternProject.getProject().getName(), e); }
+					 */
 					break;
 				case IIncludePathEntry.CPE_SOURCE:
 					if (entry.getPath().segmentCount() == 1) {

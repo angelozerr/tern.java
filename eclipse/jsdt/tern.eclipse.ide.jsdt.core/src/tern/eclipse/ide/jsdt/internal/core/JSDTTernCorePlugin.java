@@ -8,13 +8,11 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.jsdt.core;
+package tern.eclipse.ide.jsdt.internal.core;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import tern.eclipse.ide.jsdt.internal.core.DOMSSEProvider;
-import tern.eclipse.ide.jsdt.internal.core.JSDTClassPathManager;
 import tern.internal.resources.InternalTernResourcesManager;
 
 /**

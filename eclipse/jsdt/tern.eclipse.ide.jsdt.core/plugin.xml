@@ -14,4 +14,13 @@
  -->
 <plugin>
 
+	<extension
+	      point="tern.eclipse.ide.core.ternProjectLifecycleListeners">
+	   <provider
+	         class="tern.eclipse.ide.jsdt.internal.core.JSDTClassPathManagerProvider"
+	         id="tern.eclipse.ide.jsdt.core.JSDTClassPathManagerProvider"
+	         name="JSDT Class Path Manager Provider">
+	   </provider>
+	</extension>
+
 </plugin>        

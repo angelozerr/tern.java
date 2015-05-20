@@ -20,6 +20,8 @@
 		schema="schema/ternFileConfigurations.exsd" />
 	<extension-point id="ternNatureAdapters" name="%ternNatureAdapters.name"
 		schema="schema/ternNatureAdapters.exsd" />
+	<extension-point id="ternProjectLifecycleListeners" name="%ternProjectLifecycleListeners.name"
+		schema="schema/ternProjectLifecycleListeners.exsd" />		
 	<extension-point id="ternServerTypes" name="%ternServerTypes.name"
 		schema="schema/ternServerTypes.exsd" />								
 	

@@ -15,8 +15,6 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import tern.eclipse.ide.jsdt.core.JSDTTernCorePlugin;
-
 public class JSDTTernStartup implements IStartup {
 
 	@Override
@@ -24,8 +22,6 @@ public class JSDTTernStartup implements IStartup {
 		final IWorkbench workbench = PlatformUI.getWorkbench();
 		workbench.getDisplay().asyncExec(new Runnable() {
 			public void run() {
-				// force the start of the JSDT Tern Core Plugin
-				JSDTTernCorePlugin.getDefault();
 				// Java Editor tracker
 				IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
 				if (window != null) {

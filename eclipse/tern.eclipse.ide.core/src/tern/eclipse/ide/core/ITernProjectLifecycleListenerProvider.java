@@ -11,25 +11,11 @@
 package tern.eclipse.ide.core;
 
 /**
- * Tern project lifecycle listener API.
+ * Tern project lifecyle listener provider.
  *
  */
-public interface ITernProjectLifecycleListener {
+public interface ITernProjectLifecycleListenerProvider {
 
-	/**
-	 * Lifecycle event type.
-	 *
-	 */
-	public enum LifecycleEventType {
-		onLoadBefore, onLoadAfter, onSaveBefore, onSaveAfter, onDisposeBefore, onDisposeAfter;
-	}
-
-	/**
-	 * Handle event type;
-	 * 
-	 * @param project
-	 * @param sate
-	 */
-	void handleEvent(IIDETernProject project, LifecycleEventType sate);
+	ITernProjectLifecycleListener getListener();
 
 }
