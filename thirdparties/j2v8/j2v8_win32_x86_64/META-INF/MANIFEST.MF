@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Vendor: %Bundle-Vendor.0
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: j2v8_win32_x86_64
-Bundle-Version: 2.2.0
+Bundle-Version: 3.0.0
 Export-Package: com.eclipsesource.v8,
  com.eclipsesource.v8.utils
-Bundle-ClassPath: lib/j2v8_win32_x86_64-2.2.0.jar
+Bundle-ClassPath: lib/j2v8_win32_x86_64-3.0.0-SNAPSHOT.jar
 Eclipse-PlatformFilter: (& (osgi.ws=win32)(osgi.os=win32)(osgi.arch=x86_64))

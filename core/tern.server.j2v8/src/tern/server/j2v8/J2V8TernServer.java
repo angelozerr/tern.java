@@ -73,11 +73,17 @@ public class J2V8TernServer extends AbstractScriptEngineTernServer {
 		}
 	}
 
-	private JsonObject request(TernDoc doc) throws TernException {
+	private synchronized JsonObject request(TernDoc doc) throws TernException {
 		String script = new StringBuilder("server.request(")
 				.append(doc.toString()).append(");").toString();
-		String json = getV8().executeStringScript(script);
-		return (JsonObject) JsonValue.readFrom(json);
+		V8 v8 = getV8();
+		try {
+			v8.getLocker().acquire();
+			String json = v8.executeStringScript(script);
+			return (JsonObject) JsonValue.readFrom(json);
+		} finally {
+			v8.getLocker().release();
+		}
 
 	}
 
@@ -108,7 +114,6 @@ public class J2V8TernServer extends AbstractScriptEngineTernServer {
 	private V8 getV8() throws TernException {
 		if (v8 == null) {
 			v8 = V8.createV8Runtime();
-			// v8.disableDebugSupport();
 			loadTern();
 			try {
 				v8.registerJavaMethod(this, "log", "_javaConsole",
