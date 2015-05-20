@@ -66,7 +66,7 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 		if (project != null && TernCorePlugin.hasTernNature(project)) {
 			try {
 				IIDETernProject ternProject = TernCorePlugin.getTernProject(
-						project, true);
+						project, false);
 				if (ternProject.getLinters().length > 0) {
 					TernValidatorContext context = getTernContext(state, true);
 					setupValidation(context, ternProject);
