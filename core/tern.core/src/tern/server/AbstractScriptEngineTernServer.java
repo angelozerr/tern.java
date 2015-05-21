@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import tern.ITernProject;
@@ -39,25 +40,78 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 	private final String[] TERN_SCRIPTS = { "lib/signal.js", "lib/tern.js",
 			"lib/def.js", "lib/comment.js", "lib/infer.js" };
 
+	protected class TernResource {
+
+		private final String content;
+		private final String filename;
+
+		public TernResource(String content, String filename) {
+			this.content = content;
+			this.filename = filename;
+		}
+
+		public String getContent() {
+			return content;
+		}
+
+		public String getFilename() {
+			return filename;
+		}
+	}
+
+	protected class TernResources {
+
+		private final List<TernResource> scripts;
+		private final List<TernResource> defs;
+
+		public TernResources(List<TernResource> scripts, List<TernResource> defs) {
+			this.scripts = scripts;
+			this.defs = defs;
+		}
+
+		public List<TernResource> getScripts() {
+			return scripts;
+		}
+
+		public List<TernResource> getDefs() {
+			return defs;
+		}
+
+		public String getDefsAsString() {
+			StringBuilder s = new StringBuilder();
+			for (int i = 0; i < defs.size(); i++) {
+				if (i > 0) {
+					s.append(",");
+				}
+				s.append(defs.get(i).getContent());
+			}
+			return s.toString();
+		}
+	}
+
 	public AbstractScriptEngineTernServer(ITernProject project) {
 		super(project);
 	}
 
-	protected void loadTern() throws TernException {
+	protected TernResources loadTern() throws TernException {
 		ITernRepository repository = getProject().getRepository();
 		if (repository == null) {
 			throw new TernException("Tern repository must be initialized.");
 		}
 		try {
+
+			List<TernResource> scripts = new ArrayList<TernResource>();
+			List<TernResource> defs = new ArrayList<TernResource>();
+
 			// Load acorn
 			for (int i = 0; i < ACORN_SCRIPTS.length; i++) {
-				loadScript(new File(repository.getTernBaseDir(),
-						ACORN_SCRIPTS[i]));
+				scripts.add(getResource(new File(repository.getTernBaseDir(),
+						ACORN_SCRIPTS[i])));
 			}
 			// Load ternjs
 			for (int i = 0; i < TERN_SCRIPTS.length; i++) {
-				loadScript(new File(repository.getTernBaseDir(),
-						TERN_SCRIPTS[i]));
+				scripts.add(getResource(new File(repository.getTernBaseDir(),
+						TERN_SCRIPTS[i])));
 			}
 			// Load defs
 			JsonArray libs = getProject().getLibs();
@@ -69,7 +123,7 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 					if (module != null) {
 						defFile = repository.getFile(module);
 						if (defFile != null && defFile.exists()) {
-							addDef(getScriptContent(defFile));
+							defs.add(getResource(defFile));
 						}
 					}
 				}
@@ -85,19 +139,20 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 					if (module != null) {
 						pluginFile = repository.getFile(module);
 						if (pluginFile != null && pluginFile.exists()) {
-							loadScript(pluginFile);
+							scripts.add(getResource(pluginFile));
 						}
 					}
 				}
 			}
+			return new TernResources(scripts, defs);
 		} catch (IOException e) {
 			throw new TernException(e);
 		}
 	}
 
-	protected abstract void addDef(String def);
+	// protected abstract void addDef(String def);
 
-	protected void loadScript(File scriptFile) throws IOException {
+	protected TernResource getResource(File scriptFile) throws IOException {
 		// Use FileInputStream (instead of FileReader) to set encoding to UTF-8,
 		// to avoid exception of acorn.js loading :
 		// ternjs\node_modules\tern\node_modules\acorn\dist\acorn.js:877:
@@ -106,7 +161,7 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 		// Range out of order in character class
 		String script = getScriptContent(scriptFile);
 		String filename = getFilename(scriptFile);
-		loadScript(script, filename);
+		return new TernResource(script, filename);
 	}
 
 	protected String getScriptContent(File scriptFile) throws IOException,
@@ -121,8 +176,5 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 			return scriptFile.getPath().toString();
 		}
 	}
-
-	protected abstract void loadScript(String script, String filename)
-			throws IOException;
 
 }
