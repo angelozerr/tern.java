@@ -160,7 +160,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions"
       },
       "styles": {
-        "!type": "+Array<MapTypeStyle>",
+        "!type": "[+MapTypeStyle]",
         "!doc": "Styles to apply to each of the default map types. Note that for Satellite/Hybrid and Terrain modes, these styles will only apply to labels and geometry.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapOptions"
       },
@@ -189,7 +189,7 @@
       "!doc": "Options for the rendering of the map type control.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapTypeControlOptions",
       "mapTypeIds": {
-        "!type": "+Array<MapTypeId>",
+        "!type": "[+google.maps.MapTypeId]",
         "!doc": "IDs of map types to show in the control.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapTypeControlOptions"
       },
@@ -272,7 +272,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DataOptions"
       },
       "controls": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Describes which drawing modes are available for the user to select, in the order they are displayed. This should not include the null drawing mode, which is added by default. If null, drawing controls are disabled and not displayed. Defaults to null. Possible drawing modes are \"Point\", \"LineString\" or \"Polygon\".",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DataOptions"
       },
@@ -620,7 +620,7 @@
       "!doc": "This object defines the clickable region of a marker image for browsers other than Internet Explorer. The shape consists of two properties — type and coord — which define the non-transparent region of an image. A MarkerShape object is not required on Internet Explorer since the browser does not fire events on the transparent region of an image by default.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerShape",
       "coords": {
-        "!type": "+Array<number>",
+        "!type": "[number]",
         "!doc": "The format of this attribute depends on the value of the type and follows the w3 AREA coords specification found at  http://www.w3.org/TR/REC-html40/struct/objects.html#adef-coords. The coords attribute is an array of integers that specify the pixel position of the shape relative to the top-left corner of the target image. The coordinates depend on the value of type as follows:   - circle: coords is [x1,y1,r] where x1,y2 are the coordinates of the center of the circle, and r is the radius of the circle.   - poly: coords is [x1,y1,x2,y2...xn,yn] where each x,y pair contains the coordinates of one vertex of the polygon.   - rect: coords is [x1,y1,x2,y2] where x1,y1 are the coordinates of the upper-left corner of the rectangle and x2,y2 are the coordinates of the lower-right coordinates of the rectangle.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MarkerShape"
       },
@@ -734,7 +734,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PolylineOptions"
       },
       "icons": {
-        "!type": "+Array<IconSequence>",
+        "!type": "[+IconSequence]",
         "!doc": "The icons to be rendered along the polyline.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PolylineOptions"
       },
@@ -744,7 +744,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PolylineOptions"
       },
       "path": {
-        "!type": "+MVCArray<LatLng>",
+        "!type": "+google.maps.MVCArray",
         "!doc": "The ordered sequence of coordinates of the Polyline. This path may be specified using either a simple array of LatLngs, or an MVCArray of LatLngs. Note that if you pass a simple array, it will be converted to an MVCArray Inserting or removing LatLngs in the MVCArray will automatically update the polyline on the map.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PolylineOptions"
       },
@@ -836,7 +836,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PolygonOptions"
       },
       "paths": {
-        "!type": "+MVCArray<MVCArray<LatLng>>",
+        "!type": "+google.maps.MVCArray",
         "!doc": "The ordered sequence of coordinates that designates a closed loop. Unlike polylines, a polygon may consist of one or more paths. As a result, the paths property may specify one or more arrays of LatLng coordinates. Paths are closed automatically; do not repeat the first vertex of the path as the last vertex. Simple polygons may be defined using a single array of LatLngs. More complex polygons may specify an array of arrays. Any simple arrays are converted into MVCArrays. Inserting or removing LatLngs from the MVCArray will automatically update the polygon on the map.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PolygonOptions"
       },
@@ -1176,7 +1176,7 @@
       "!doc": "A single geocoder result retrieved from the geocode server. A geocode request may return multiple result objects. Note that though this result is \"JSON-like,\" it is not strictly JSON, as it indirectly includes a LatLng object.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderResult",
       "address_components": {
-        "!type": "+Array<GeocoderAddressComponent>",
+        "!type": "[+GeocoderAddressComponent]",
         "!doc": "An array of GeocoderAddressComponents",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderResult"
       },
@@ -1196,12 +1196,12 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderResult"
       },
       "postcode_localities": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "An array of strings denoting all the localities contained in a postal code. This is only present when the result is a postal code that contains multiple localities.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderResult"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "An array of strings denoting the type of the returned geocoded element. For a list of possible strings, refer to the  Address Component Types section of the Developer's Guide.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderResult"
       }
@@ -1220,7 +1220,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderAddressComponent"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "An array of strings denoting the type of this address component. A list of valid types can be found here",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeocoderAddressComponent"
       }
@@ -1387,7 +1387,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRequest"
       },
       "waypoints": {
-        "!type": "+Array<DirectionsWaypoint>",
+        "!type": "[+DirectionsWaypoint]",
         "!doc": "Array of intermediate waypoints. Directions will be calculated from the origin to the destination by way of each waypoint in this array. The maximum allowed waypoints is 8, plus the origin, and destination. Maps API for Business customers are allowed 23 waypoints, plus the origin, and destination. Waypoints are not supported for transit directions. Optional.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRequest"
       }
@@ -1406,7 +1406,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TransitOptions"
       },
       "modes": {
-        "!type": "+Array<TransitMode>",
+        "!type": "[+google.maps.TransitMode]",
         "!doc": "One or more preferred modes of transit, such as bus or train. If no preference is given, the API returns the default best route.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TransitOptions"
       },
@@ -1438,7 +1438,7 @@
       "!doc": "The directions response retrieved from the directions server. You can render these using a DirectionsRenderer or parse this object and render it yourself. You must display the warnings and copyrights as noted in the Maps API terms of service. Note that though this result is \"JSON-like,\" it is not strictly JSON, as it indirectly includes LatLng objects.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsResult",
       "routes": {
-        "!type": "+Array<DirectionsRoute>",
+        "!type": "[+DirectionsRoute]",
         "!doc": "An array of DirectionsRoutes, each of which contains information about the legs and steps of which it is composed. There will only be one route unless the DirectionsRequest was made with provideRouteAlternatives set to true.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsResult"
       }
@@ -1462,12 +1462,12 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRoute"
       },
       "legs": {
-        "!type": "+Array<DirectionsLeg>",
+        "!type": "[+DirectionsLeg]",
         "!doc": "An array of DirectionsLegs, each of which contains information about the steps of which it is composed. There will be one leg for each waypoint or destination specified. So a route with no waypoints will contain one DirectionsLeg and a route with one waypoint will contain two.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRoute"
       },
       "overview_path": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "An array of LatLngs representing the entire course of this route. The path is simplified in order to make it suitable in contexts where a small number of vertices is required (such as Static Maps API URLs).",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRoute"
       },
@@ -1477,12 +1477,12 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRoute"
       },
       "warnings": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Warnings to be displayed when showing these directions.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRoute"
       },
       "waypoint_order": {
-        "!type": "+Array<number>",
+        "!type": "[number]",
         "!doc": "If optimizeWaypoints was set to true, this field will contain the re-ordered permutation of the input waypoints. For example, if the input was:   Origin: Los Angeles   Waypoints: Dallas, Bangor, Phoenix   Destination: New York and the optimized output was ordered as follows:   Origin: Los Angeles   Waypoints: Phoenix, Dallas, Bangor   Destination: New York then this field will be an Array containing the values [2, 0, 1]. Note that the numbering of waypoints is zero-based. If any of the input waypoints has stopover set to false, this field will be empty, since route optimization is not available for such queries.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRoute"
       }
@@ -1536,12 +1536,12 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsLeg"
       },
       "steps": {
-        "!type": "+Array<DirectionsStep>",
+        "!type": "[+DirectionsStep]",
         "!doc": "An array of DirectionsSteps, each of which contains information about the individual steps in this leg.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsLeg"
       },
       "via_waypoints": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "An array of waypoints along this leg that were not specified in the original request, either as a result of a user dragging the polyline or selecting an alternate route.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsLeg"
       }
@@ -1570,7 +1570,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsStep"
       },
       "path": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "A sequence of LatLngs describing the course of this step.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsStep"
       },
@@ -1580,7 +1580,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsStep"
       },
       "steps": {
-        "!type": "+Array<DirectionsStep>",
+        "!type": "[+DirectionsStep]",
         "!doc": "Sub-steps of this step. Specified for non-transit sections of transit routes.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsStep"
       },
@@ -1700,7 +1700,7 @@
     "TransitLine": {
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TransitLine",
       "agencies": {
-        "!type": "+Array<TransitAgency>",
+        "!type": "[+TransitAgency]",
         "!doc": "The transit agency that operates this transit line.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TransitLine"
       },
@@ -1789,7 +1789,7 @@
       "!doc": "An elevation request sent by the ElevationService containing the list of discrete coordinates (LatLngs) for which to return elevation data.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LocationElevationRequest",
       "locations": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "The discrete locations for which to retrieve elevations.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LocationElevationRequest"
       }
@@ -1798,7 +1798,7 @@
       "!doc": "An elevation query sent by the ElevationService containing the path along which to return sampled data. This request defines a continuous path along the earth along which elevation samples should be taken at evenly-spaced distances. All paths from vertex to vertex use segments of the great circle between those two points.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PathElevationRequest",
       "path": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "The path along which to collect elevation values.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PathElevationRequest"
       },
@@ -1860,7 +1860,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixRequest"
       },
       "destinations": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "An array containing destination address strings and/or LatLngs, to which to calculate distance and time. Required.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixRequest"
       },
@@ -1870,7 +1870,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixRequest"
       },
       "origins": {
-        "!type": "+Array<LatLng>",
+        "!type": "[+google.maps.LatLng]",
         "!doc": "An array containing origin address strings and/or LatLngs, from which to calculate distance and time. Required.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixRequest"
       },
@@ -1899,17 +1899,17 @@
       "!doc": "The response to a DistanceMatrixService request, consisting of the formatted origin and destination addresses, and a sequence of DistanceMatrixResponseRows, one for each corresponding origin address.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixResponse",
       "destinationAddresses": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "The formatted destination addresses.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixResponse"
       },
       "originAddresses": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "The formatted origin addresses.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixResponse"
       },
       "rows": {
-        "!type": "+Array<DistanceMatrixResponseRow>",
+        "!type": "[+DistanceMatrixResponseRow]",
         "!doc": "The rows of the matrix, corresponding to the origin addresses.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixResponse"
       }
@@ -1918,7 +1918,7 @@
       "!doc": "A row of the response to a DistanceMatrixService request, consisting of a sequence of DistanceMatrixResponseElements, one for each corresponding destination address.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixResponseRow",
       "elements": {
-        "!type": "+Array<DistanceMatrixResponseElement>",
+        "!type": "[+DistanceMatrixResponseElement]",
         "!doc": "The row's elements, corresponding to the destination addresses.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixResponseRow"
       }
@@ -2139,7 +2139,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapTypeStyle"
       },
       "stylers": {
-        "!type": "+Array<MapTypeStyler>",
+        "!type": "[+MapTypeStyler]",
         "!doc": "The style rules to apply to the selectors. The rules are applied to the map's elements in the order they are listed in this array.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapTypeStyle"
       }
@@ -2220,7 +2220,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#FusionTablesLayerOptions"
       },
       "styles": {
-        "!type": "+Array<FusionTablesStyle>",
+        "!type": "[+FusionTablesStyle]",
         "!doc": "An array of up to 5 style specifications, which control the appearance of features within the layer.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#FusionTablesLayerOptions"
       },
@@ -2682,7 +2682,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanoramaData"
       },
       "links": {
-        "!type": "+Array<StreetViewLink>",
+        "!type": "[+StreetViewLink]",
         "!doc": "Specifies the navigational links to adjacent panoramas.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanoramaData"
       },
@@ -2914,7 +2914,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompleteOptions"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "The types of predictions to be returned. Four types are supported: 'establishment' for businesses, 'geocode' for addresses, '(regions)' for administrative regions and  '(cities)' for localities. If nothing is specified, all types are returned. In general only a single type is allowed. The exception is that you can safely mix the 'geocode' and 'establishment' types, but note that this will have the same effect as specifying no types.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompleteOptions"
       }
@@ -2927,7 +2927,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletePrediction"
       },
       "matched_substrings": {
-        "!type": "+Array<PredictionSubstring>",
+        "!type": "[+PredictionSubstring]",
         "!doc": "A set of substrings in the place's description that match elements in the user's input, suitable for use in highlighting those substrings. Each substring is identified by an offset and a length, expressed in unicode characters.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletePrediction"
       },
@@ -2937,12 +2937,12 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletePrediction"
       },
       "terms": {
-        "!type": "+Array<PredictionTerm>",
+        "!type": "[+PredictionTerm]",
         "!doc": "Information about individual terms in the above description, from most to least specific. For example, \"Taco Bell\", \"Willitis\", and \"CA\".",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletePrediction"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "An array of types that the prediction belongs to, for example 'establishment' or 'geocode'.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletePrediction"
       }
@@ -3007,7 +3007,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletionRequest"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "The types of predictions to be returned. Four types are supported: 'establishment' for businesses, 'geocode' for addresses, '(regions)' for administrative regions and  '(cities)' for localities. If nothing is specified, all types are returned.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompletionRequest"
       }
@@ -3067,7 +3067,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlacePhoto"
       },
       "html_attributions": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Attribution text to be displayed for this photo.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlacePhoto"
       },
@@ -3102,12 +3102,12 @@
       "!doc": "Defines information about a Place.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult",
       "address_components": {
-        "!type": "+Array<GeocoderAddressComponent>",
+        "!type": "[+GeocoderAddressComponent]",
         "!doc": "The collection of address components for this Place's location.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
       "aspects": {
-        "!type": "+Array<PlaceAspectRating>",
+        "!type": "[+PlaceAspectRating]",
         "!doc": "The rated aspects of this Place, based on Google and Zagat user reviews. The ratings are on a scale of 0 to 30.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
@@ -3127,7 +3127,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
       "html_attributions": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Attribution text to be displayed for this Place result.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
@@ -3152,7 +3152,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
       "photos": {
-        "!type": "+Array<PlacePhoto>",
+        "!type": "[+PlacePhoto]",
         "!doc": "Photos of this Place. The collection will contain up to ten PlacePhoto objects.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
@@ -3172,12 +3172,12 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
       "reviews": {
-        "!type": "+Array<PlaceReview>",
+        "!type": "[+PlaceReview]",
         "!doc": "A list of reviews of this Place.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "An array of types for this Place (e.g., [\"political\",  \"locality\"] or [\"restaurant\", \"establishment\"]).",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceResult"
       },
@@ -3201,7 +3201,7 @@
       "!doc": "Represents a single review of a place.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceReview",
       "aspects": {
-        "!type": "+Array<PlaceAspectRating>",
+        "!type": "[+PlaceAspectRating]",
         "!doc": "The aspects rated by the review. The ratings on a scale of 0 to 3.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceReview"
       },
@@ -3291,7 +3291,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceSearchRequest"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Restricts the Place search results to Places with a type matching at least one of the specified types in this array. Valid types are given here.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlaceSearchRequest"
       }
@@ -3305,7 +3305,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#QueryAutocompletePrediction"
       },
       "matched_substrings": {
-        "!type": "+Array<PredictionSubstring>",
+        "!type": "[+PredictionSubstring]",
         "!doc": "A set of substrings in the place's description that match elements in the user's input, suitable for use in highlighting those substrings. Each substring is identified by an offset and a length, expressed in unicode characters.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#QueryAutocompletePrediction"
       },
@@ -3315,7 +3315,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#QueryAutocompletePrediction"
       },
       "terms": {
-        "!type": "+Array<PredictionTerm>",
+        "!type": "[+PredictionTerm]",
         "!doc": "Information about individual terms in the above description. Categorical terms come first (e.g., \"restaurant\"). Address terms appear from most to least specific. For example, \"San Francisco\", and \"CA\".",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#QueryAutocompletePrediction"
       }
@@ -3378,7 +3378,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#RadarSearchRequest"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Restricts the Place search results to Places with a type matching at least one of the specified types in this array. Valid types are given here.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#RadarSearchRequest"
       }
@@ -3416,7 +3416,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TextSearchRequest"
       },
       "types": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "Restricts the Place search results to Places with a type matching at least one of the specified types in this array. Valid types are given here.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TextSearchRequest"
       }
@@ -3474,7 +3474,7 @@
       "!doc": "Options for the rendering of the drawing control.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DrawingControlOptions",
       "drawingModes": {
-        "!type": "+Array<OverlayType>",
+        "!type": "[+google.maps.drawing.OverlayType]",
         "!doc": "The drawing modes to display in the drawing control, in the order in which they are to be displayed. The hand icon (which corresponds to the null drawing mode) is always available and is not to be specified in this array. Defaults to [MARKER, POLYLINE, RECTANGLE, CIRCLE, POLYGON].",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DrawingControlOptions"
       },
@@ -3565,7 +3565,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#WeatherFeature"
       },
       "forecast": {
-        "!type": "+Array<WeatherForecast>",
+        "!type": "[+WeatherForecast]",
         "!doc": "A forecast of weather conditions over the next four days. The forecast array is always in chronological order.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#WeatherFeature"
       },
@@ -3893,7 +3893,7 @@
       "!doc": "This object defines the properties that can be set on a HeatmapLayer object.",
       "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayerOptions",
       "data": {
-        "!type": "+MVCArray<LatLng>",
+        "!type": "+google.maps.MVCArray",
         "!doc": "The data points to display. Required.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayerOptions"
       },
@@ -3903,7 +3903,7 @@
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayerOptions"
       },
       "gradient": {
-        "!type": "+Array<string>",
+        "!type": "[string]",
         "!doc": "The color gradient of the heatmap, specified as an array of CSS color strings. All CSS3 colors are supported except for extended named colors.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayerOptions"
       },
@@ -3947,12 +3947,12 @@
     "maps": {
       "Map": {
         "!type": "fn(mapDiv: +Node, opts?: +MapOptions) -> +google.maps.Map",
-        "!doc": "This class extends\nMVCObject.",
+        "!doc": "Creates a new map inside of the given HTML container, which is typically a DIV element.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Map",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
           "controls": {
-            "!type": "+Array<MVCArray<Node>>",
+            "!type": "[+google.maps.MVCArray]",
             "!doc": "Additional controls to attach to the map. To add a control to the map, add the control's <div> to the MVCArray corresponding to the ControlPosition where it should be rendered.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Map"
           },
@@ -3967,7 +3967,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Map"
           },
           "overlayMapTypes": {
-            "!type": "+MVCArray<MapType>",
+            "!type": "+google.maps.MVCArray",
             "!doc": "Additional map types to overlay.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Map"
           },
@@ -4088,7 +4088,7 @@
       },
       "Data": {
         "!type": "fn(options?: +Data.DataOptions) -> +google.maps.Data",
-        "!doc": "A layer for displaying geospatial data. Points, line-strings and polygons can be displayed.",
+        "!doc": "Creates an empty collection, with the given DataOptions.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4098,7 +4098,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data"
           },
           "addGeoJson": {
-            "!type": "fn(geoJson: ?, options?: +Data.GeoJsonOptions) -> +Array<Data",
+            "!type": "fn(geoJson: ?, options?: +Data.GeoJsonOptions) -> [+Dat]",
             "!doc": "Adds GeoJSON features to the collection. Give this method a parsed JSON. The imported features are returned. Throws an exception if the GeoJSON could not be imported.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data"
           },
@@ -4118,7 +4118,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data"
           },
           "getControls": {
-            "!type": "fn() -> +Array<string>",
+            "!type": "fn() -> [string]",
             "!doc": "Returns which drawing modes are available for the user to select, in the order they are displayed. This does not include the null drawing mode, which is added by default. Possible drawing modes are \"Point\", \"LineString\" or \"Polygon\".",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data"
           },
@@ -4168,7 +4168,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data"
           },
           "setControls": {
-            "!type": "fn(controls: +Array<string>)",
+            "!type": "fn(controls: [string])",
             "!doc": "Sets which drawing modes are available for the user to select, in the order they are displayed. This should not include the null drawing mode, which is added by default. If null, drawing controls are disabled and not displayed. Possible drawing modes are \"Point\", \"LineString\" or \"Polygon\".",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Data"
           },
@@ -4199,7 +4199,7 @@
         },
         "Feature": {
           "!type": "fn(options?: +Data.FeatureOptions) -> +google.maps.Data.Feature",
-          "!doc": "A feature has a geometry, an id, and a set of properties.",
+          "!doc": "Constructs a Feature with the given options.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Feature",
           "prototype": {
             "forEachProperty": {
@@ -4257,7 +4257,7 @@
         },
         "Point": {
           "!type": "fn(latLng: +google.maps.LatLng) -> +google.maps.Data.Point",
-          "!doc": "A Point geometry contains a single LatLng.",
+          "!doc": "Constructs a Data.Point from the given LatLng or LatLngLiteral.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Point",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
@@ -4274,13 +4274,13 @@
           }
         },
         "MultiPoint": {
-          "!type": "fn(elements: +Array<LatLng) -> +google.maps.Data.MultiPoint",
-          "!doc": "A MultiPoint geometry contains a number of LatLngs.",
+          "!type": "fn(elements: [+LatLn]) -> +google.maps.Data.MultiPoint",
+          "!doc": "Constructs a Data.MultiPoint from the given LatLngs or LatLngLiterals.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MultiPoint",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<LatLng>",
+              "!type": "fn() -> [+google.maps.LatLng]",
               "!doc": "Returns an array of the contained LatLngs. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MultiPoint"
             },
@@ -4302,13 +4302,13 @@
           }
         },
         "LineString": {
-          "!type": "fn(elements: +Array<LatLng) -> +google.maps.Data.LineString",
-          "!doc": "A LineString geometry contains a number of LatLngs.",
+          "!type": "fn(elements: [+LatLn]) -> +google.maps.Data.LineString",
+          "!doc": "Constructs a Data.LineString from the given LatLngs or LatLngLiterals.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LineString",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<LatLng>",
+              "!type": "fn() -> [+google.maps.LatLng]",
               "!doc": "Returns an array of the contained LatLngs. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LineString"
             },
@@ -4330,13 +4330,13 @@
           }
         },
         "MultiLineString": {
-          "!type": "fn(elements: +Array<Data.LineString) -> +google.maps.Data.MultiLineString",
-          "!doc": "A MultiLineString geometry contains a number of LineStrings.",
+          "!type": "fn(elements: [+Data.LineStrin]) -> +google.maps.Data.MultiLineString",
+          "!doc": "Constructs a Data.MultiLineString from the given Data.LineStrings or arrays of positions.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MultiLineString",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<Data",
+              "!type": "fn() -> [+Dat]",
               "!doc": "Returns an array of the contained Data.LineStrings. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MultiLineString"
             },
@@ -4358,13 +4358,13 @@
           }
         },
         "LinearRing": {
-          "!type": "fn(elements: +Array<LatLng) -> +google.maps.Data.LinearRing",
-          "!doc": "A LinearRing geometry contains a number of LatLngs, representing a closed LineString. There is no need to make the first LatLng equal to the last LatLng. The LinearRing is closed implicitly.",
+          "!type": "fn(elements: [+LatLn]) -> +google.maps.Data.LinearRing",
+          "!doc": "Constructs a Data.LinearRing from the given LatLngs or LatLngLiterals.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LinearRing",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<LatLng>",
+              "!type": "fn() -> [+google.maps.LatLng]",
               "!doc": "Returns an array of the contained LatLngs. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LinearRing"
             },
@@ -4386,13 +4386,13 @@
           }
         },
         "Polygon": {
-          "!type": "fn(elements: +Array<Data.LinearRing) -> +google.maps.Data.Polygon",
-          "!doc": "A Polygon geometry contains a number of Data.LinearRings. The first linear-ring must be the polygon exterior boundary, and subsequent linear-rings must be interior boundaries or \"holes\".",
+          "!type": "fn(elements: [+Data.LinearRin]) -> +google.maps.Data.Polygon",
+          "!doc": "Constructs a Data.Polygon from the given Data.LinearRings or arrays of positions.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<Data",
+              "!type": "fn() -> [+Dat]",
               "!doc": "Returns an array of the contained Data.LinearRings. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
             },
@@ -4414,13 +4414,13 @@
           }
         },
         "MultiPolygon": {
-          "!type": "fn(elements: +Array<Data.Polygon) -> +google.maps.Data.MultiPolygon",
-          "!doc": "A MultiPolygon geometry contains a number of Data.Polygons.",
+          "!type": "fn(elements: [+Data.Polygo]) -> +google.maps.Data.MultiPolygon",
+          "!doc": "Constructs a Data.MultiPolygon from the given Data.Polygons or arrays of positions.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MultiPolygon",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<Data",
+              "!type": "fn() -> [+Dat]",
               "!doc": "Returns an array of the contained Data.Polygons. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MultiPolygon"
             },
@@ -4442,13 +4442,13 @@
           }
         },
         "GeometryCollection": {
-          "!type": "fn(elements: +Array<Data.Geometry) -> +google.maps.Data.GeometryCollection",
-          "!doc": "A GeometryCollection contains a number of geometry objects. Any LatLng or LatLngLiteral objects are automatically converted to Data.Point geometry objects.",
+          "!type": "fn(elements: [+Data.Geometr]) -> +google.maps.Data.GeometryCollection",
+          "!doc": "Constructs a Data.GeometryCollection from the given geometry objects or LatLngs.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeometryCollection",
           "prototype": {
             "!proto": "Data.Geometry.prototype",
             "getArray": {
-              "!type": "fn() -> +Array<Data",
+              "!type": "fn() -> [+Dat]",
               "!doc": "Returns an array of the contained geometry objects. A new array is returned each time getArray() is called.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GeometryCollection"
             },
@@ -4472,7 +4472,7 @@
       },
       "Marker": {
         "!type": "fn(opts?: +MarkerOptions) -> +google.maps.Marker",
-        "!doc": "This class extends\nMVCObject.",
+        "!doc": "Creates a marker with the options specified. If a map is specified, the marker is added to the map upon construction. Note that the position must be set for the marker to display.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Marker",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4606,7 +4606,7 @@
       },
       "InfoWindow": {
         "!type": "fn(opts?: +InfoWindowOptions) -> +google.maps.InfoWindow",
-        "!doc": "An overlay that looks like a bubble and is often connected to a marker.",
+        "!doc": "Creates an info window with the given options. An InfoWindow can be placed on a map at a particular position or above a marker, depending on what is specified in the options. Unless auto-pan is disabled, an InfoWindow will pan the map to make itself visible when it is opened. After constructing an InfoWindow, you must call open to display it on the map. The user can click the close button on the InfoWindow to remove it from the map, or the developer can call close() for the same effect.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#InfoWindow",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4652,7 +4652,7 @@
       },
       "Polyline": {
         "!type": "fn(opts?: +PolylineOptions) -> +google.maps.Polyline",
-        "!doc": "A polyline is a linear overlay of connected line segments on the map.",
+        "!doc": "Create a polyline using the passed PolylineOptions, which specify both the path of the polyline and the stroke style to use when drawing the polyline. You may pass either an array of LatLngs or an MVCArray of LatLngs when constructing a polyline, though simple arrays are converted to MVCArrays within the polyline upon instantiation.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polyline",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4672,7 +4672,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polyline"
           },
           "getPath": {
-            "!type": "fn() -> +MVCArray<LatLng>",
+            "!type": "fn() -> +google.maps.MVCArray",
             "!doc": "Retrieves the path.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polyline"
           },
@@ -4701,7 +4701,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polyline"
           },
           "setPath": {
-            "!type": "fn(path: +MVCArray<LatLng>)",
+            "!type": "fn(path: +google.maps.MVCArray)",
             "!doc": "Sets the path. See PolylineOptions for more details.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polyline"
           },
@@ -4714,7 +4714,7 @@
       },
       "Polygon": {
         "!type": "fn(opts?: +PolygonOptions) -> +google.maps.Polygon",
-        "!doc": "A polygon (like a polyline) defines a series of connected coordinates in an ordered sequence; additionally, polygons form a closed loop and define a filled region.",
+        "!doc": "Create a polygon using the passed PolygonOptions, which specify the polygon's path, the stroke style for the polygon's edges, and the fill style for the polygon's interior regions. A polygon may contain one or more paths, where each path consists of an array of LatLngs. You may pass either an array of LatLngs or an MVCArray of LatLngs when constructing these paths. Arrays are converted to MVCArrays within the polygon upon instantiation.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4734,12 +4734,12 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
           },
           "getPath": {
-            "!type": "fn() -> +MVCArray<LatLng>",
+            "!type": "fn() -> +google.maps.MVCArray",
             "!doc": "Retrieves the first path.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
           },
           "getPaths": {
-            "!type": "fn() -> +MVCArray<MVCArray<LatLng>>",
+            "!type": "fn() -> +google.maps.MVCArray",
             "!doc": "Retrieves the paths for this polygon.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
           },
@@ -4768,12 +4768,12 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
           },
           "setPath": {
-            "!type": "fn(path: +MVCArray<LatLng>)",
+            "!type": "fn(path: +google.maps.MVCArray)",
             "!doc": "Sets the first path. See PolygonOptions for more details.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
           },
           "setPaths": {
-            "!type": "fn(paths: +MVCArray<MVCArray<LatLng>>)",
+            "!type": "fn(paths: +google.maps.MVCArray)",
             "!doc": "Sets the path for this polygon.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Polygon"
           },
@@ -4786,7 +4786,7 @@
       },
       "Rectangle": {
         "!type": "fn(opts?: +RectangleOptions) -> +google.maps.Rectangle",
-        "!doc": "A rectangle overlay.",
+        "!doc": "Create a rectangle using the passed RectangleOptions, which specify the bounds and style.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Rectangle",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4848,7 +4848,7 @@
       },
       "Circle": {
         "!type": "fn(opts?: +CircleOptions) -> +google.maps.Circle",
-        "!doc": "A circle on the Earth's surface; also known as a \"spherical cap\".",
+        "!doc": "Create a circle using the passed CircleOptions, which specify the center, radius, and style.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Circle",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4925,7 +4925,7 @@
       },
       "GroundOverlay": {
         "!type": "fn(url: string, bounds: +google.maps.LatLngBounds, opts?: +GroundOverlayOptions) -> +google.maps.GroundOverlay",
-        "!doc": "A rectangular image overlay on the map.",
+        "!doc": "Creates a ground overlay from the provided image URL and its LatLngBounds. The image is scaled to fit the current bounds, and projected using the current map projection.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#GroundOverlay",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -4963,7 +4963,7 @@
       },
       "OverlayView": {
         "!type": "fn() -> +google.maps.OverlayView",
-        "!doc": "You can implement this class if you want to display custom types of overlay objects on the map. Inherit from this class by setting your overlay's prototype: MyOverlay.prototype = new google.maps.OverlayView();. The OverlayView constructor is guaranteed to be an empty function. You must implement three methods: onAdd(), draw(), and onRemove().",
+        "!doc": "Creates an OverlayView.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#OverlayView",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5005,7 +5005,7 @@
       },
       "Geocoder": {
         "!type": "fn() -> +google.maps.Geocoder",
-        "!doc": "A service for converting between an address and a LatLng.",
+        "!doc": "Creates a new instance of a Geocoder that sends geocode requests to Google servers.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Geocoder",
         "prototype": {
           "geocode": {
@@ -5025,7 +5025,7 @@
       },
       "DirectionsRenderer": {
         "!type": "fn(opts?: +DirectionsRendererOptions) -> +google.maps.DirectionsRenderer",
-        "!doc": "Renders directions retrieved in the form of a DirectionsResult object retrieved from the DirectionsService.",
+        "!doc": "Creates the renderer with the given options. Directions can be rendered on a map (as visual overlays) or additionally on a <div> panel (as textual instructions).",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsRenderer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5078,7 +5078,7 @@
       },
       "DirectionsService": {
         "!type": "fn() -> +google.maps.DirectionsService",
-        "!doc": "A service for computing directions between two or more places.",
+        "!doc": "Creates a new instance of a DirectionsService that sends directions queries to Google servers.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DirectionsService",
         "prototype": {
           "route": {
@@ -5110,7 +5110,7 @@
       },
       "ElevationService": {
         "!type": "fn() -> +google.maps.ElevationService",
-        "!doc": "Defines a service class that talks directly to Google servers for requesting elevation data.",
+        "!doc": "Creates a new instance of a ElevationService that sends elevation queries to Google servers.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#ElevationService",
         "prototype": {
           "getElevationAlongPath": {
@@ -5131,7 +5131,7 @@
       },
       "MaxZoomService": {
         "!type": "fn() -> +google.maps.MaxZoomService",
-        "!doc": "A service for obtaining the highest zoom level at which satellite imagery is available for a given location.",
+        "!doc": "Creates a new instance of a MaxZoomService that can be used to send queries about the maximum zoom level available for satellite imagery.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MaxZoomService",
         "prototype": {
           "getMaxZoomAtLatLng": {
@@ -5147,7 +5147,7 @@
       },
       "DistanceMatrixService": {
         "!type": "fn() -> +google.maps.DistanceMatrixService",
-        "!doc": "A service for computing distances between multiple origins and destinations.",
+        "!doc": "Creates a new instance of a DistanceMatrixService that sends distance matrix queries to Google servers.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DistanceMatrixService",
         "prototype": {
           "getDistanceMatrix": {
@@ -5167,7 +5167,7 @@
       },
       "SaveWidget": {
         "!type": "fn(container: +Node, opts?: +SaveWidgetOptions) -> +google.maps.SaveWidget",
-        "!doc": "A control that users can use to save a place to Google Maps from your website. In this context, 'place' means a business, point of interest or geographic location. The SaveWidget has a fixed height of 22px.",
+        "!doc": "Creates a new SaveWidget, and renders it in a given div.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#SaveWidget",
         "prototype": {
           "getAttribution": {
@@ -5198,7 +5198,7 @@
       },
       "MapTypeRegistry": {
         "!type": "fn() -> +google.maps.MapTypeRegistry",
-        "!doc": "This class extends\nMVCObject.",
+        "!doc": "The MapTypeRegistry holds the collection of custom map types available to the map for its use. The API consults this registry when providing the list of avaiable map types within controls, for example.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapTypeRegistry",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5211,7 +5211,7 @@
       },
       "ImageMapType": {
         "!type": "fn(opts: +ImageMapTypeOptions) -> +google.maps.ImageMapType",
-        "!doc": "This class implements the MapType interface and is provided for rendering image tiles.",
+        "!doc": "Constructs an ImageMapType using the provided ImageMapTypeOptions",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#ImageMapType",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5264,8 +5264,8 @@
         }
       },
       "StyledMapType": {
-        "!type": "fn(styles: +Array<MapTypeStyle>, options?: +StyledMapTypeOptions) -> +google.maps.StyledMapType",
-        "!doc": "Creates a MapType with a custom style.",
+        "!type": "fn(styles: [+MapTypeStyle], options?: +StyledMapTypeOptions) -> +google.maps.StyledMapType",
+        "!doc": "Creates a styled MapType with the specified options. The StyledMapType takes an array of MapTypeStyles, where each MapTypeStyle is applied to the map consecutively. A later MapTypeStyle that applies the same MapTypeStylers to the same selectors as an earlier MapTypeStyle will override the earlier MapTypeStyle.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StyledMapType",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5309,7 +5309,7 @@
       },
       "BicyclingLayer": {
         "!type": "fn() -> +google.maps.BicyclingLayer",
-        "!doc": "A layer showing bike lanes and paths.",
+        "!doc": "A layer that displays bike lanes and paths and demotes large roads.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#BicyclingLayer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5327,7 +5327,7 @@
       },
       "FusionTablesLayer": {
         "!type": "fn(options: +FusionTablesLayerOptions) -> +google.maps.FusionTablesLayer",
-        "!doc": "A FusionTablesLayer allows you to display data from a Google Fusion Table on a map, as a rendered layer. (See https://developers.google.com/fusiontables/ for more information about Fusion Tables).",
+        "!doc": "A layer that displays data from a Fusion Table.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#FusionTablesLayer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5349,7 +5349,7 @@
       },
       "KmlLayer": {
         "!type": "fn(opts?: +KmlLayerOptions) -> +google.maps.KmlLayer",
-        "!doc": "A KmlLayer adds geographic markup to the map from a KML, KMZ or GeoRSS file that is hosted on a publicly accessible web server. A KmlFeatureData object is provided for each feature when clicked.",
+        "!doc": "Creates a KmlLayer which renders the contents of the specified KML/KMZ file (https://developers.google.com/kml/documentation/kmlreference) or GeoRSS file (http://www.georss.org).",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#KmlLayer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5406,7 +5406,7 @@
       },
       "TrafficLayer": {
         "!type": "fn() -> +google.maps.TrafficLayer",
-        "!doc": "A traffic layer.",
+        "!doc": "A layer that displays current road traffic.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TrafficLayer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5424,7 +5424,7 @@
       },
       "TransitLayer": {
         "!type": "fn() -> +google.maps.TransitLayer",
-        "!doc": "A transit layer.",
+        "!doc": "A layer that displays transit lines.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#TransitLayer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5442,17 +5442,17 @@
       },
       "StreetViewPanorama": {
         "!type": "fn(container: +Node, opts?: +StreetViewPanoramaOptions) -> +google.maps.StreetViewPanorama",
-        "!doc": "Displays the panorama for a given LatLng or panorama ID. A StreetViewPanorama object provides a Street View \"viewer\" which can be stand-alone within a separate <div> or bound to a Map.",
+        "!doc": "Creates a panorama with the passed StreetViewPanoramaOptions.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanorama",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
           "controls": {
-            "!type": "+Array<MVCArray<Node>>",
+            "!type": "[+google.maps.MVCArray]",
             "!doc": "Additional controls to attach to the panorama. To add a control to the panorama, add the control's <div> to the MVCArray corresponding to the ControlPosition where it should be rendered.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanorama"
           },
           "getLinks": {
-            "!type": "fn() -> +Array<StreetViewLink>",
+            "!type": "fn() -> [+StreetViewLink]",
             "!doc": "Returns the set of navigation links for the Street View panorama.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanorama"
           },
@@ -5502,7 +5502,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanorama"
           },
           "setLinks": {
-            "!type": "fn(links: +Array<StreetViewLink>)",
+            "!type": "fn(links: [+StreetViewLink])",
             "!doc": "Sets the set of navigation links for the Street View panorama.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanorama"
           },
@@ -5560,7 +5560,7 @@
       },
       "StreetViewCoverageLayer": {
         "!type": "fn() -> +google.maps.StreetViewCoverageLayer",
-        "!doc": "A layer that illustrates the locations where Street View is available.",
+        "!doc": "Creates a new instance of StreetViewCoverageLayer.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewCoverageLayer",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5578,52 +5578,50 @@
       },
       "event": {
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event",
-        "prototype": {
-          "addDomListener": {
-            "!type": "fn(instance: ?, eventName: string, handler: fn(), capture?: bool) -> +MapsEventListener",
-            "!doc": "Cross browser event handler registration. This listener is removed by calling removeListener(handle) for the handle that is returned by this function.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "addDomListenerOnce": {
-            "!type": "fn(instance: ?, eventName: string, handler: fn(), capture?: bool) -> +MapsEventListener",
-            "!doc": "Wrapper around addDomListener that removes the listener after the first event.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "addListener": {
-            "!type": "fn(instance: ?, eventName: string, handler: fn()) -> +MapsEventListener",
-            "!doc": "Adds the given listener function to the given event name for the given object instance. Returns an identifier for this listener that can be used with removeListener().",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "addListenerOnce": {
-            "!type": "fn(instance: ?, eventName: string, handler: fn()) -> +MapsEventListener",
-            "!doc": "Like addListener, but the handler removes itself after handling the first event.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "clearInstanceListeners": {
-            "!type": "fn(instance: ?)",
-            "!doc": "Removes all listeners for all events for the given instance.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "clearListeners": {
-            "!type": "fn(instance: ?, eventName: string)",
-            "!doc": "Removes all listeners for the given event for the given instance.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "removeListener": {
-            "!type": "fn(listener: +MapsEventListener)",
-            "!doc": "Removes the given listener, which should have been returned by addListener above.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          },
-          "trigger": {
-            "!type": "fn(instance: ?, eventName: string, var_args: ?)",
-            "!doc": "Triggers the given event. All arguments after eventName are passed as arguments to the listeners.",
-            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
-          }
+        "addDomListener": {
+          "!type": "fn(instance: ?, eventName: string, handler: fn(), capture?: bool) -> +MapsEventListener",
+          "!doc": "Cross browser event handler registration. This listener is removed by calling removeListener(handle) for the handle that is returned by this function.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "addDomListenerOnce": {
+          "!type": "fn(instance: ?, eventName: string, handler: fn(), capture?: bool) -> +MapsEventListener",
+          "!doc": "Wrapper around addDomListener that removes the listener after the first event.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "addListener": {
+          "!type": "fn(instance: ?, eventName: string, handler: fn()) -> +MapsEventListener",
+          "!doc": "Adds the given listener function to the given event name for the given object instance. Returns an identifier for this listener that can be used with removeListener().",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "addListenerOnce": {
+          "!type": "fn(instance: ?, eventName: string, handler: fn()) -> +MapsEventListener",
+          "!doc": "Like addListener, but the handler removes itself after handling the first event.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "clearInstanceListeners": {
+          "!type": "fn(instance: ?)",
+          "!doc": "Removes all listeners for all events for the given instance.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "clearListeners": {
+          "!type": "fn(instance: ?, eventName: string)",
+          "!doc": "Removes all listeners for the given event for the given instance.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "removeListener": {
+          "!type": "fn(listener: +MapsEventListener)",
+          "!doc": "Removes the given listener, which should have been returned by addListener above.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
+        },
+        "trigger": {
+          "!type": "fn(instance: ?, eventName: string, var_args: ?)",
+          "!doc": "Triggers the given event. All arguments after eventName are passed as arguments to the listeners.",
+          "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#event"
         }
       },
       "LatLng": {
         "!type": "fn(lat: number, lng: number, noWrap?: bool) -> +google.maps.LatLng",
-        "!doc": "A LatLng is a point in geographical coordinates: latitude and longitude.",
+        "!doc": "Creates a LatLng object representing a geographic point. Latitude is specified in degrees within the range [-90, 90]. Longitude is specified in degrees within the range [-180, 180]. Set noWrap to true to enable values outside of this range. Note the ordering of latitude and longitude.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LatLng",
         "prototype": {
           "equals": {
@@ -5655,7 +5653,7 @@
       },
       "LatLngBounds": {
         "!type": "fn(sw?: +google.maps.LatLng, ne?: +google.maps.LatLng) -> +google.maps.LatLngBounds",
-        "!doc": "A LatLngBounds instance represents a rectangle in geographical coordinates, including one that crosses the 180 degrees longitudinal meridian.",
+        "!doc": "Constructs a rectangle from the points at its south-west and north-east corners.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#LatLngBounds",
         "prototype": {
           "contains": {
@@ -5722,6 +5720,7 @@
       },
       "Point": {
         "!type": "fn(x: number, y: number) -> +google.maps.Point",
+        "!doc": "A point on a two-dimensional plane.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Point",
         "prototype": {
           "x": {
@@ -5748,6 +5747,7 @@
       },
       "Size": {
         "!type": "fn(width: number, height: number, widthUnit?: string, heightUnit?: string) -> +google.maps.Size",
+        "!doc": "Two-dimensonal size, where width is the distance on the x-axis, and height is the distance on the y-axis.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Size",
         "prototype": {
           "height": {
@@ -5774,7 +5774,7 @@
       },
       "MVCObject": {
         "!type": "fn() -> +google.maps.MVCObject",
-        "!doc": "Base class implementing KVO. The MVCObject constructor is guaranteed to be an empty function, and so you may inherit from MVCObject by simply writing MySubclass.prototype = new google.maps.MVCObject();. Unless otherwise noted, this is not true of other classes in the API, and inheriting from other classes in the API is not supported.",
+        "!doc": "Creates an MVCObject.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MVCObject",
         "prototype": {
           "addListener": {
@@ -5825,8 +5825,8 @@
         }
       },
       "MVCArray": {
-        "!type": "fn(array?: +Array) -> +google.maps.MVCArray",
-        "!doc": "This class extends\nMVCObject.",
+        "!type": "fn(array?: [?]) -> +google.maps.MVCArray",
+        "!doc": "A mutable MVC Array.",
         "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MVCArray",
         "prototype": {
           "!proto": "google.maps.MVCObject.prototype",
@@ -5841,7 +5841,7 @@
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MVCArray"
           },
           "getArray": {
-            "!type": "fn() -> +Array",
+            "!type": "fn() -> [?]",
             "!doc": "Returns a reference to the underlying Array. Warning: if the Array is mutated, no events will be fired by this object.",
             "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MVCArray"
           },
@@ -5886,86 +5886,80 @@
         "encoding": {
           "!doc": "Utilities for polyline encoding and decoding.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#encoding",
-          "prototype": {
-            "decodePath": {
-              "!type": "fn(encodedPath: string) -> +Array<LatLng>",
-              "!doc": "Decodes an encoded path string into a sequence of LatLngs.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#encoding"
-            },
-            "encodePath": {
-              "!type": "fn(path: +Array<LatLng>) -> string",
-              "!doc": "Encodes a sequence of LatLngs into an encoded path string.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#encoding"
-            }
+          "decodePath": {
+            "!type": "fn(encodedPath: string) -> [+google.maps.LatLng]",
+            "!doc": "Decodes an encoded path string into a sequence of LatLngs.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#encoding"
+          },
+          "encodePath": {
+            "!type": "fn(path: [+google.maps.LatLng]) -> string",
+            "!doc": "Encodes a sequence of LatLngs into an encoded path string.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#encoding"
           }
         },
         "spherical": {
           "!doc": "Utility functions for computing geodesic angles, distances and areas. The default radius is Earth's radius of 6378137 meters.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical",
-          "prototype": {
-            "computeArea": {
-              "!type": "fn(path: +Array<LatLng>, radius?: number) -> number",
-              "!doc": "Returns the area of a closed path. The computed area uses the same units as the radius. The radius defaults to the Earth's radius in meters, in which case the area is in square meters.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "computeDistanceBetween": {
-              "!type": "fn(from: +google.maps.LatLng, to: +google.maps.LatLng, radius?: number) -> number",
-              "!doc": "Returns the distance between two LatLngs.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "computeHeading": {
-              "!type": "fn(from: +google.maps.LatLng, to: +google.maps.LatLng) -> number",
-              "!doc": "Returns the heading from one LatLng to another LatLng. Headings are expressed in degrees clockwise from North within the range [-180,180).",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "computeLength": {
-              "!type": "fn(path: +Array<LatLng>, radius?: number) -> number",
-              "!doc": "Returns the length of the given path.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "computeOffset": {
-              "!type": "fn(from: +google.maps.LatLng, distance: number, heading: number, radius?: number) -> +google.maps.LatLng",
-              "!doc": "Returns the LatLng resulting from moving a distance from an origin in the specified heading (expressed in degrees clockwise from north).",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "computeOffsetOrigin": {
-              "!type": "fn(to: +google.maps.LatLng, distance: number, heading: number, radius?: number) -> +google.maps.LatLng",
-              "!doc": "Returns the location of origin when provided with a LatLng destination, meters travelled and original heading. Headings are expressed in degrees clockwise from North. This function returns null when no solution is available.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "computeSignedArea": {
-              "!type": "fn(loop: +Array<LatLng>, radius?: number) -> number",
-              "!doc": "Returns the signed area of a closed path. The signed area may be used to determine the orientation of the path. The computed area uses the same units as the radius. The radius defaults to the Earth's radius in meters, in which case the area is in square meters.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            },
-            "interpolate": {
-              "!type": "fn(from: +google.maps.LatLng, to: +google.maps.LatLng, fraction: number) -> +google.maps.LatLng",
-              "!doc": "Returns the LatLng which lies the given fraction of the way between the origin LatLng and the destination LatLng.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
-            }
+          "computeArea": {
+            "!type": "fn(path: [+google.maps.LatLng], radius?: number) -> number",
+            "!doc": "Returns the area of a closed path. The computed area uses the same units as the radius. The radius defaults to the Earth's radius in meters, in which case the area is in square meters.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "computeDistanceBetween": {
+            "!type": "fn(from: +google.maps.LatLng, to: +google.maps.LatLng, radius?: number) -> number",
+            "!doc": "Returns the distance between two LatLngs.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "computeHeading": {
+            "!type": "fn(from: +google.maps.LatLng, to: +google.maps.LatLng) -> number",
+            "!doc": "Returns the heading from one LatLng to another LatLng. Headings are expressed in degrees clockwise from North within the range [-180,180).",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "computeLength": {
+            "!type": "fn(path: [+google.maps.LatLng], radius?: number) -> number",
+            "!doc": "Returns the length of the given path.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "computeOffset": {
+            "!type": "fn(from: +google.maps.LatLng, distance: number, heading: number, radius?: number) -> +google.maps.LatLng",
+            "!doc": "Returns the LatLng resulting from moving a distance from an origin in the specified heading (expressed in degrees clockwise from north).",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "computeOffsetOrigin": {
+            "!type": "fn(to: +google.maps.LatLng, distance: number, heading: number, radius?: number) -> +google.maps.LatLng",
+            "!doc": "Returns the location of origin when provided with a LatLng destination, meters travelled and original heading. Headings are expressed in degrees clockwise from North. This function returns null when no solution is available.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "computeSignedArea": {
+            "!type": "fn(loop: [+google.maps.LatLng], radius?: number) -> number",
+            "!doc": "Returns the signed area of a closed path. The signed area may be used to determine the orientation of the path. The computed area uses the same units as the radius. The radius defaults to the Earth's radius in meters, in which case the area is in square meters.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
+          },
+          "interpolate": {
+            "!type": "fn(from: +google.maps.LatLng, to: +google.maps.LatLng, fraction: number) -> +google.maps.LatLng",
+            "!doc": "Returns the LatLng which lies the given fraction of the way between the origin LatLng and the destination LatLng.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#spherical"
           }
         },
         "poly": {
           "!doc": "Utility functions for computations involving polygons and polylines.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#poly",
-          "prototype": {
-            "containsLocation": {
-              "!type": "fn(point: +google.maps.LatLng, polygon: +google.maps.Polygon) -> bool",
-              "!doc": "Computes whether the given point lies inside the specified polygon.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#poly"
-            },
-            "isLocationOnEdge": {
-              "!type": "fn(point: +google.maps.LatLng, poly: +google.maps.Polygon, tolerance?: number) -> bool",
-              "!doc": "Computes whether the given point lies on or near to a polyline, or the edge of a polygon, within a specified tolerance. Returns true when the difference between the latitude and longitude of the supplied point, and the closest point on the edge, is less than the tolerance. The tolerance defaults to 10-9 degrees.",
-              "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#poly"
-            }
+          "containsLocation": {
+            "!type": "fn(point: +google.maps.LatLng, polygon: +google.maps.Polygon) -> bool",
+            "!doc": "Computes whether the given point lies inside the specified polygon.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#poly"
+          },
+          "isLocationOnEdge": {
+            "!type": "fn(point: +google.maps.LatLng, poly: +google.maps.Polygon, tolerance?: number) -> bool",
+            "!doc": "Computes whether the given point lies on or near to a polyline, or the edge of a polygon, within a specified tolerance. Returns true when the difference between the latitude and longitude of the supplied point, and the closest point on the edge, is less than the tolerance. The tolerance defaults to 10-9 degrees.",
+            "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#poly"
           }
         }
       },
       "adsense": {
         "AdUnit": {
           "!type": "fn(container: +Node, opts: +AdUnitOptions) -> +google.maps.adsense.AdUnit",
-          "!doc": "Implements AdSense for Content advertising on an associated map. To use an AdUnit, you must obtain and specify an AdSense for Content publisher ID within the AdUnit's constructor options.",
+          "!doc": "Creates an AdSense for Content display ad on the associated map.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AdUnit",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6079,7 +6073,7 @@
       "panoramio": {
         "PanoramioLayer": {
           "!type": "fn(opts?: +PanoramioLayerOptions) -> +google.maps.panoramio.PanoramioLayer",
-          "!doc": "A PanoramioLayer displays photos from Panoramio as a rendered layer.",
+          "!doc": "A layer that displays data from Panoramio.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PanoramioLayer",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6119,7 +6113,7 @@
       "places": {
         "Autocomplete": {
           "!type": "fn(inputField: +HTMLInputElement, opts?: +AutocompleteOptions) -> +google.maps.places.Autocomplete",
-          "!doc": "A service to provide Place predictions based on a user's text input. It attaches to an input element of type text, and listens for text entry in that field. The list of predictions is presented as a drop-down list, and is updated as text is entered.",
+          "!doc": "Creates a new instance of Autocomplete that attaches to the specified input text field with the given options.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Autocomplete",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6144,7 +6138,7 @@
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Autocomplete"
             },
             "setTypes": {
-              "!type": "fn(types: +Array<string>)",
+              "!type": "fn(types: [string])",
               "!doc": "Sets the types of predictions to be returned. Supported types are 'establishment' for businesses and 'geocode' for addresses. If no type is specified, both types will be returned. The setTypes method accepts a single element array.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#Autocomplete"
             }
@@ -6152,7 +6146,7 @@
         },
         "AutocompleteService": {
           "!type": "fn() -> +google.maps.places.AutocompleteService",
-          "!doc": "Contains methods related to retrieving Autocomplete predictions.",
+          "!doc": "Creates a new instance of the AutocompleteService.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#AutocompleteService",
           "prototype": {
             "getPlacePredictions": {
@@ -6169,7 +6163,7 @@
         },
         "PlacesService": {
           "!type": "fn(attrContainer: +HTMLDivElement) -> +google.maps.places.PlacesService",
-          "!doc": "Contains methods related to searching for Places and retrieving details about a Place.",
+          "!doc": "Creates a new instance of the PlacesService that renders attributions in the specified container.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#PlacesService",
           "prototype": {
             "getDetails": {
@@ -6204,7 +6198,7 @@
         },
         "SearchBox": {
           "!type": "fn(inputField: +HTMLInputElement, opts?: +SearchBoxOptions) -> +google.maps.places.SearchBox",
-          "!doc": "A service to provide query predictions based on a user's text input. It attaches to an input element of type text, and listens for text entry in that field. The list of predictions is presented as a drop-down list, and is updated as text is entered.",
+          "!doc": "Creates a new instance of SearchBox that attaches to the specified input text field with the given options.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#SearchBox",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6214,7 +6208,7 @@
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#SearchBox"
             },
             "getPlaces": {
-              "!type": "fn() -> +Array<PlaceResult>",
+              "!type": "fn() -> [+PlaceResult]",
               "!doc": "Returns the query selected by the user, or null if no places have been found yet, to be used with places_changed event.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#SearchBox"
             },
@@ -6229,7 +6223,7 @@
       "drawing": {
         "DrawingManager": {
           "!type": "fn(options?: +DrawingManagerOptions) -> +google.maps.drawing.DrawingManager",
-          "!doc": "Allows users to draw markers, polygons, polylines, rectangles, and circles on the map. The DrawingManager's drawing mode defines the type of overlay that will be created by the user. Adds a control to the map, allowing the user to switch drawing mode.",
+          "!doc": "Creates a DrawingManager that allows users to draw overlays on the map, and switch between the type of overlay to be drawn with a drawing control.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DrawingManager",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6268,7 +6262,7 @@
       "weather": {
         "CloudLayer": {
           "!type": "fn() -> +google.maps.weather.CloudLayer",
-          "!doc": "A layer showing cloud imagery.",
+          "!doc": "Creates a new CloudLayer instance that displays a cloud overlay.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#CloudLayer",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6286,7 +6280,7 @@
         },
         "WeatherLayer": {
           "!type": "fn(opts?: +WeatherLayerOptions) -> +google.maps.weather.WeatherLayer",
-          "!doc": "A layer that displays weather icons.",
+          "!doc": "Creates a new WeatherLayer instance that displays weather icons.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#WeatherLayer",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6323,7 +6317,7 @@
       "visualization": {
         "MapsEngineLayer": {
           "!type": "fn(options: +MapsEngineLayerOptions) -> +google.maps.visualization.MapsEngineLayer",
-          "!doc": "A MapsEngineLayer allows you to display data from Google Maps Engine or the Google Earth Gallery.",
+          "!doc": "Creates a new instance of MapsEngineLayer.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#MapsEngineLayer",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6405,7 +6399,7 @@
         },
         "DynamicMapsEngineLayer": {
           "!type": "fn(options: +DynamicMapsEngineLayerOptions) -> +google.maps.visualization.DynamicMapsEngineLayer",
-          "!doc": "A DynamicMapsEngineLayer allows you to display data from Google Maps Engine or the Google Earth Gallery.",
+          "!doc": "Creates a new instance of DynamicMapsEngineLayer.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#DynamicMapsEngineLayer",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
@@ -6477,12 +6471,12 @@
         },
         "HeatmapLayer": {
           "!type": "fn(opts?: +HeatmapLayerOptions) -> +google.maps.visualization.HeatmapLayer",
-          "!doc": "A layer that provides a client-side rendered heatmap, depicting the intensity of data at geographical points.",
+          "!doc": "Creates a new instance of HeatmapLayer.",
           "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayer",
           "prototype": {
             "!proto": "google.maps.MVCObject.prototype",
             "getData": {
-              "!type": "fn() -> +MVCArray<LatLng",
+              "!type": "fn() -> +google.maps.MVCArray",
               "!doc": "Returns the data points currently displayed by this heatmap.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayer"
             },
@@ -6491,7 +6485,7 @@
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayer"
             },
             "setData": {
-              "!type": "fn(data: +MVCArray<LatLng)",
+              "!type": "fn(data: +google.maps.MVCArray)",
               "!doc": "Sets the data points to be displayed by this heatmap.",
               "!url": "https://developers.google.com/maps/documentation/javascript/3.exp/reference#HeatmapLayer"
             },
