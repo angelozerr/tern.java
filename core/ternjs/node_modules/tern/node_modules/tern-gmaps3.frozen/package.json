@@ -1,8 +1,8 @@
 {
-  "name": "tern-gmaps3.20",
+  "name": "tern-gmaps3.frozen",
   "license": "MIT",
   "version": "0.1.0",
-  "main": "gmaps3.20.js",
+  "main": "gmaps3.frozen.js",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
   "description": "A Tern plugin adding Google Maps JavaScript API v3 support.",
   "repository": {
