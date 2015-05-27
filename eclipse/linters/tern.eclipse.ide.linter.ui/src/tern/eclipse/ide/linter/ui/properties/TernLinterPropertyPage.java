@@ -108,7 +108,4 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
 		}
 	}
 
-	private void updateConfig(JsonObject jsonOptions, ITernLinterConfig config) {
-
-	}
 }

@@ -14,7 +14,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.text.IInformationControlCreator;
 import org.eclipse.jface.text.IRegion;
-import org.eclipse.jface.text.ITextHover;
 import org.eclipse.jface.text.ITextHoverExtension;
 import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.ITextViewer;
@@ -26,7 +25,6 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
-import tern.eclipse.ide.ui.JavaWordFinder;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.eclipse.jface.text.TernBrowserInformationControlInput;
 import tern.server.protocol.type.TernTypeQuery;
@@ -42,7 +40,6 @@ public class TernHover extends AbstractTernHover implements
 	private IInformationControlCreator fHoverControlCreator;
 	private IInformationControlCreator fPresenterControlCreator;
 	private IIDETernProject ternProject;
-	private String filename;
 	private Integer offset;
 	private ITernFile file;
 
@@ -56,7 +53,6 @@ public class TernHover extends AbstractTernHover implements
 	@Override
 	public Object getHoverInfo2(ITextViewer textViewer, IRegion hoverRegion) {
 		this.ternProject = null;
-		this.filename = null;
 		this.offset = null;
 
 		IFile scriptFile = getFile(textViewer);

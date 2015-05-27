@@ -13,7 +13,6 @@ package tern.eclipse.ide.ui.hover;
 import org.eclipse.jface.internal.text.html.BrowserInformationControl;
 import org.eclipse.jface.text.IInformationControlCreator;
 
-import tern.eclipse.ide.core.IIDETernProjectProvider;
 import tern.eclipse.jface.text.HoverControlCreator;
 import tern.eclipse.jface.text.HoverLocationListener;
 
