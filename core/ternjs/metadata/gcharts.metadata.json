@@ -1,0 +1,22 @@
+{
+ "name": "gcharts",
+ "label": "Google Charts",
+ "icon": "gcharts.png",
+ "homepage": "https://developers.google.com/chart/interactive/docs/reference",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Google Charts support. Google Charts provides a perfect way to visualize data on your website. From simple line charts to complex hierarchical tree maps, the chart gallery provides a large number of ready-to-use chart types.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern.googleapi.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern.googleapi/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Google-Charts-support"
+ }
+}

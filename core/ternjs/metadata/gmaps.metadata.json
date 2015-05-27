@@ -4,7 +4,7 @@
  "icon": "gmaps.png",
  "homepage": "https://developers.google.com/maps/documentation/javascript/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
- "description": "Add Google Maps Javascript API support.",
+ "description": "Add Google Maps JavaScript API support.",
  "dependencies": [
   "ecma5",
   "browser"
