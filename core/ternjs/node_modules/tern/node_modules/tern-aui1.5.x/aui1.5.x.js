@@ -2436,7 +2436,6 @@
      }
     },
     "ButtonItem": {
-     "!type": "fn(config: +config.ButtonItemConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html",
      "!data": {
       "extends": [
@@ -3697,7 +3696,6 @@
     },
     "A": {
      "Node": {
-      "!type": "fn()",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html",
       "!data": {
        "for": "node.Node"
@@ -3746,7 +3744,6 @@
       }
      },
      "NodeList": {
-      "!type": "fn()",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.NodeList.html",
       "!data": {
        "extends": [
@@ -3837,7 +3834,6 @@
      }
     },
     "Node": {
-     "!type": "fn(node: +DOMNode)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html",
      "!data": {
       "extends": [
@@ -4634,7 +4630,6 @@
      }
     },
     "Textboxlist": {
-     "!type": "fn(config: +config.TextboxlistConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
      "!data": {
       "for": "aui_textboxlist.Textboxlist"
@@ -4659,7 +4654,6 @@
      "module": "aui-text"
     },
     "Textboxlist": {
-     "!type": "fn(config: +config.TextboxlistConfig)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html",
      "!data": {
       "for": "aui_textboxlist.Textboxlist"

@@ -5322,7 +5322,6 @@
      },
      "Plugin": {
       "Aria": {
-       "!type": "fn(config: +config.A.Plugin.AriaConfig)",
        "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Plugin.Aria.html",
        "!data": {
         "for": "aui_aria.A.Plugin.Aria"
@@ -6244,7 +6243,6 @@
     },
     "A": {
      "DataTable": {
-      "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/DataTable.html",
       "!data": {
        "for": "datatable.DataTable"
@@ -6890,7 +6888,6 @@
      }
     },
     "Date": {
-     "!type": "fn()",
      "!url": "http://alloyui.com/versions/2.0.x/api/classes/Date.html",
      "!data": {
       "for": "datatype_date.Date"
@@ -8434,7 +8431,6 @@
     },
     "A": {
      "FormBuilderAvailableField": {
-      "!type": "fn(config: +config.A.FormBuilderAvailableFieldConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.FormBuilderAvailableField.html",
       "!data": {
        "for": "aui_form_builder.A.FormBuilderAvailableField"
@@ -9974,7 +9970,6 @@
     },
     "A": {
      "Node": {
-      "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.Node.html",
       "!data": {
        "for": "node.Node"
@@ -10031,7 +10026,6 @@
       }
      },
      "NodeList": {
-      "!type": "fn()",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.NodeList.html",
       "!data": {
        "extends": [
@@ -10162,7 +10156,6 @@
      }
     },
     "Node": {
-     "!type": "fn(node: +DOMNode)",
      "!url": "http://alloyui.com/versions/2.0.x/api/classes/Node.html",
      "!data": {
       "extends": [
@@ -12454,7 +12447,6 @@
     },
     "A": {
      "TimePickerBase": {
-      "!type": "fn(config: +config.A.TimePickerBaseConfig)",
       "!url": "http://alloyui.com/versions/2.0.x/api/classes/A.TimePickerBase.html",
       "!data": {
        "for": "aui_timepicker.A.TimePickerBase"
