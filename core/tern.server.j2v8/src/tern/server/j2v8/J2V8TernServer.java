@@ -124,9 +124,12 @@ public class J2V8TernServer extends AbstractScriptEngineTernServer {
 	}
 
 	private V8 loadV8() throws TernException {
+		V8 v8 = null;
 		TernResources resources = loadTern();
 		try {
-			V8 v8 = V8.createV8Runtime();
+			v8 = V8.createV8Runtime();
+			v8.getLocker().acquire();
+
 			// Load tern scripts (acorn + ternjs) + plugins scripts
 			List<TernResource> scripts = resources.getScripts();
 			for (TernResource script : scripts) {
@@ -152,6 +155,10 @@ public class J2V8TernServer extends AbstractScriptEngineTernServer {
 			return v8;
 		} catch (IOException e) {
 			throw new TernException(e);
+		} finally {
+			if (v8 != null) {
+				v8.getLocker().release();
+			}
 		}
 	}
 
