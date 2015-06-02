@@ -1,0 +1,21 @@
+{
+ "name": "chrome-extension",
+ "label": "Chrome Extension",
+ "icon": "chrome-extension.png",
+ "homepage": "https://developer.chrome.com/extensions/api_index",
+ "author": "Yasushi Abe",
+ "description": "A Tern plugin adding support for Chrome Extension API. Extensions are small software programs that can modify and enhance the functionality of the Chrome browser. You write them using web technologies such as HTML, JavaScript, and CSS.",
+ "dependencies": [
+  "ecma5"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/Yasushi/tern-chrome-extension.git"
+ },
+ "bugs": {
+  "url": "https://github.com/Yasushi/tern-chrome-extension/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Chrome-Extension-support"
+ }
+}
