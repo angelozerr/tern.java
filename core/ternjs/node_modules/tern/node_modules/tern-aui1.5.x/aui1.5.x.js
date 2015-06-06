@@ -39,7 +39,7 @@
      "!doc": "To use a button"
     },
     "dataSource": {
-     "!type": "+yui.Object",
+     "!type": "+Object|string|[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#attribute_dataSource",
      "!doc": "The data source that results will be read from. This can either be\nan existing <a href=\"DataSource.html\">DataSource</a> object, or it can be a\nvalue that would be passed to <a href=\"DataSource.html\">DataSource</a>."
     },
@@ -59,12 +59,12 @@
      "!doc": "If <a href=\"AutoComplete.html#config_typeAhead\">typeAhead</a> is true, this\nwill clear a selection when the overlay closes unless a user explicitly selects an item."
     },
     "input": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#attribute_input",
      "!doc": "The input field which will recieve the users input."
     },
     "matchKey": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#attribute_matchKey",
      "!doc": "The key or numeric index in the schema to match the result against."
     },
@@ -104,7 +104,7 @@
      "!doc": "For IO DataSources, AutoComplete will automatically insert a \"?\" between the server URI and \nthe encoded query string. To prevent this behavior, you can\nset this value to false. If you need to customize this even further, you\ncan override the <a href=\"AutoComplete.html#method_generateRequest\">generateRequest</a> method."
     },
     "schema": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#attribute_schema",
      "!doc": "A valid configuration object for any of <a href=\"module_datasource.html\">DataSource</a> schema plugins."
     },
@@ -142,7 +142,7 @@
      "!doc": "Whether to track the active state of the button."
     },
     "classNames": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html#attribute_classNames",
      "!doc": "An object map of the CSS class names to use for the different interaction states."
     },
@@ -243,7 +243,7 @@
      }
     },
     "dates": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_dates",
      "!doc": "Dates which the calendar will show as selected by default.",
      "!data": {
@@ -291,7 +291,7 @@
      }
     },
     "maxDate": {
-     "!type": "string",
+     "!type": "string|+Date",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_maxDate",
      "!doc": "Maximum allowable date. Values supported by the Date\nconstructor are supported.",
      "!data": {
@@ -299,7 +299,7 @@
      }
     },
     "minDate": {
-     "!type": "+Date",
+     "!type": "+Date|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#attribute_minDate",
      "!doc": "Minimum allowable date. Values supported by the Date\nconstructor are supported.",
      "!data": {
@@ -406,7 +406,7 @@
    "CharCounterConfig": {
     "!proto": "config.BaseConfig",
     "counter": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CharCounter.html#attribute_counter",
      "!doc": "Node or Selector to display the information of the counter."
     },
@@ -416,7 +416,7 @@
      "!doc": "Max number of characters the <a\nhref=\"CharCounter.html#config_input\">input</a> can have."
     },
     "input": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CharCounter.html#attribute_input",
      "!doc": "Node or Selector for the input field. Required."
     }
@@ -439,7 +439,7 @@
      "!doc": "css class added to hide the <code>boundingBox</code> when\n<a href=\"Component.html#config_visible\">visible</a> is set to\n<code>false</code>."
     },
     "render": {
-     "!type": "bool",
+     "!type": "bool|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Component.html#attribute_render",
      "!doc": "If <code>true</code> the render phase will be autimatically invoked\npreventing the <code>.render()</code> manual call."
     }
@@ -447,7 +447,7 @@
    "CellEditorSupportConfig": {
     "!proto": "config.BaseConfig",
     "dataSource": {
-     "!type": "+yui.Object",
+     "!type": "+Object|string|[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#attribute_dataSource",
      "!doc": "The data source that results will be read from. This can either be\nan existing <a href=\"DataSource.html\">DataSource</a> object, or it can be a\nvalue that would be passed to <a href=\"DataSource.html\">DataSource</a>."
     },
@@ -457,7 +457,7 @@
      "!doc": "The type of the data source passed into <a href=\"AutoComplete.html#config_dataSource\">dataSource</a>.\nThis can be used to explicitly declare what kind of <a href=\"DataSource.html\">DataSource</a> object will\nbe created."
     },
     "schema": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#attribute_schema",
      "!doc": "A valid configuration object for any of <a href=\"module_datasource.html\">DataSource</a> schema plugins."
     },
@@ -482,12 +482,12 @@
      "!doc": "If <a href=\"AutoComplete.html#config_typeAhead\">typeAhead</a> is true, this\nwill clear a selection when the overlay closes unless a user explicitly selects an item."
     },
     "input": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#attribute_input",
      "!doc": "The input field which will recieve the users input."
     },
     "matchKey": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#attribute_matchKey",
      "!doc": "The key or numeric index in the schema to match the result against."
     },
@@ -545,7 +545,7 @@
    "DatepickerManagerConfig": {
     "!proto": "config.OverlayManagerConfig",
     "calendar": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatepickerManager.html#attribute_calendar",
      "!doc": "<a href=\"Calendar.html\">Calendar</a> configuration Object.</a>"
     },
@@ -573,7 +573,7 @@
    "DatePickerSelectConfig": {
     "!proto": "config.ComponentConfig",
     "appendOrder": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_appendOrder",
      "!doc": "The order the selects elements are appended to the\n<a href=\"DatePickerSelect.html#config_srcNode\">srcNode</a>.",
      "!data": {
@@ -589,7 +589,7 @@
      }
     },
     "calendar": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_calendar",
      "!doc": "<a href=\"Calendar.html\">Calendar</a> configuration Object.</a>",
      "!data": {
@@ -597,7 +597,7 @@
      }
     },
     "dayNode": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_dayNode",
      "!doc": "DOM Node to display the day of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>.",
      "!data": {
@@ -613,7 +613,7 @@
      }
     },
     "monthNode": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_monthNode",
      "!doc": "DOM Node to display the month of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>.",
      "!data": {
@@ -685,7 +685,7 @@
      }
     },
     "trigger": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_trigger",
      "!doc": "Trigger element to open the calendar. Inherited from\n<a href=\"OverlayContext.html#config_trigger\">OverlayContext</a>.",
      "!data": {
@@ -693,7 +693,7 @@
      }
     },
     "yearNode": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_yearNode",
      "!doc": "DOM Node to display the year of the DatePickerSelect. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-datepicker-year</code>.",
      "!data": {
@@ -709,7 +709,7 @@
      }
     },
     "yearRange": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#attribute_yearRange",
      "!doc": "Year range to be displayed on the year select element. By default\nit displays from -10 to +10 years from the current year.",
      "!data": {
@@ -720,12 +720,12 @@
    "DialogConfig": {
     "!proto": "config.PanelConfig",
     "bodyContent": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html#attribute_bodyContent",
      "!doc": "See <a href=\"WidgetStdMod.html#config_bodyContent\">WidgetStdMod bodyContent</a>."
     },
     "buttons": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html#attribute_buttons",
      "!doc": "<p>Array of object literals, each containing a set of properties\ndefining a button to be appended into the Dialogs footer. Each\nbutton object in the buttons array can have two properties:</p>\n\n<dl>\n   <dt>text:</dt>\n   <dd>\n       The text that will display on the face of the button. The text can include\n       HTML, as long as it is compliant with HTML Button specifications.\n   </dd>\n   <dt>handler:</dt>\n   <dd>\n       A reference to a function that should fire when the button is clicked.\n       (In this case scope of this function is always its Dialog instance.)\n   </dd>\n</dl>"
     },
@@ -735,7 +735,7 @@
      "!doc": "If <code>true</code> the close icon will be displayed on the\nDialog header."
     },
     "constrain2view": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html#attribute_constrain2view",
      "!doc": "Will attempt to constrain the dialog to the boundaries of the\nviewport region."
     },
@@ -785,7 +785,7 @@
      "!doc": "If <code>true</code> give stacking habilities to the Dialog."
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html#attribute_strings",
      "!doc": "Collection of strings used to label elements of the Dialogs UI."
     }
@@ -823,7 +823,7 @@
      "!doc": "Event type to initialize the editable."
     },
     "renderTo": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Editable.html#attribute_renderTo",
      "!doc": "Node to render the editable."
     },
@@ -833,7 +833,7 @@
      "!doc": "<a href=\"ButtonItem.html\">ButtonItem</a> constructor Object for the\nsaveButton."
     },
     "icons": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Editable.html#attribute_icons",
      "!doc": "Array with icons for the <a href=\"Toolbar.html\">Toolbar</a>."
     },
@@ -894,7 +894,7 @@
      }
     },
     "imageAnim": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_imageAnim",
      "!doc": "Configuration attributes passed to the <a href=\"Anim.html\">Anim</a>\nclass.",
      "!data": {
@@ -910,7 +910,7 @@
      }
     },
     "links": {
-     "!type": "string",
+     "!type": "string|+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_links",
      "!doc": "Selector or NodeList containing the links where the ImageViewer\nextracts the information to generate the thumbnails.",
      "!data": {
@@ -926,7 +926,7 @@
      }
     },
     "modal": {
-     "!type": "bool",
+     "!type": "bool|+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#attribute_modal",
      "!doc": "Displays the modal <a href=\"OverlayMask.html\">OverlayMask</a> on\nthe viewport. Set to <code>false</code> to disable.",
      "!data": {
@@ -1057,7 +1057,7 @@
      }
     },
     "paginator": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#attribute_paginator",
      "!doc": "<a href=\"Paginator.html\">Paginator</a> configuration Object. The\n<code>Paginator</code> handles the thumbnails control.",
      "!data": {
@@ -1150,7 +1150,7 @@
      "IOConfig": {
       "!proto": "config.IORequestConfig",
       "node": {
-       "!type": "+node.Node",
+       "!type": "+node.Node|string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_node",
        "!doc": "Plug IO in any object we want, the setContent will use the node to\nset the content.",
        "!data": {
@@ -1166,7 +1166,7 @@
        }
       },
       "loadingMask": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#attribute_loadingMask",
        "!doc": "Options passed to the <a href=\"LoadingMask.html\">LoadingMask</a>.",
        "!data": {
@@ -1243,7 +1243,7 @@
      }
     },
     "responseData": {
-     "!type": "string",
+     "!type": "string|+JSONObject|+XMLDocument",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_responseData",
      "!doc": "This is a normalized attribute for the response data. Its useful\nto retrieve the correct type for the\n<a href=\"IORequest.html#config_dataType\">dataType</a> (i.e., in json\nrequests the <code>responseData</code>) is a JSONObject.",
      "!data": {
@@ -1275,7 +1275,7 @@
      }
     },
     "transaction": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_transaction",
      "!doc": "Stores the IO Object of the current transaction.",
      "!data": {
@@ -1283,7 +1283,7 @@
      }
     },
     "arguments": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_arguments",
      "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
      "!data": {
@@ -1291,7 +1291,7 @@
      }
     },
     "context": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_context",
      "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
      "!data": {
@@ -1299,7 +1299,7 @@
      }
     },
     "data": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_data",
      "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
      "!data": {
@@ -1307,7 +1307,7 @@
      }
     },
     "form": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_form",
      "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
      "!data": {
@@ -1315,7 +1315,7 @@
      }
     },
     "headers": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_headers",
      "!doc": "Set the correct ACCEPT header based on the dataType.",
      "!data": {
@@ -1355,7 +1355,7 @@
      }
     },
     "xdr": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#attribute_xdr",
      "!doc": "See <a href=\"http://developer.yahoo.com/yui/3/io/#configuration\">IO\nConfiguration</a>.",
      "!data": {
@@ -1381,12 +1381,12 @@
      "!doc": "Function to be executed to hide the node when the data of that node\nnot matches with the filter."
     },
     "index": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#attribute_index",
      "!doc": "Index for the nodes content."
     },
     "input": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#attribute_input",
      "!doc": "The <code>value</code> of this input node is used to filter the\nresults."
     },
@@ -1396,7 +1396,7 @@
      "!doc": "The input <code>value</code> need to matches with this RegExp to be\naccept as a filter (i.e., in order to accept only digits you\ncould use /\\d+/g)."
     },
     "nodes": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|+dom.NodeList",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#attribute_nodes",
      "!doc": "Nodes to be indexed for the filtering."
     },
@@ -1419,12 +1419,12 @@
      "!doc": "Node element to display the message."
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LoadingMask.html#attribute_strings",
      "!doc": "Strings used on the LoadingMask. See\n<a href=\"Widget.html#method_strings\">strings</a>."
     },
     "target": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|+widget.Widget",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/LoadingMask.html#attribute_target",
      "!doc": "Node where the mask will be positioned and re-dimensioned."
     }
@@ -1432,7 +1432,7 @@
    "OverlayContextPanelConfig": {
     "!proto": "config.OverlayContextConfig",
     "anim": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#attribute_anim",
      "!doc": "Enable or disable the animation for hide and show. Used as the\n<a href=\"Anim.html\">Anim</a> configuration attributes.\n\n<pre><code>anim: {\n show: {\n \tduration: .9\n },\n hide: {\n \tduration: .2\n }\n}\n</code></pre>",
      "!data": {
@@ -1483,7 +1483,7 @@
    "OverlayContextConfig": {
     "!proto": "config.OverlayBaseConfig",
     "align": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_align",
      "!doc": "Inherited from <a href=\"Overlay.html#config_align\">Overlay</a>.",
      "!data": {
@@ -1547,7 +1547,7 @@
      }
     },
     "trigger": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|+dom.NodeList|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#attribute_trigger",
      "!doc": "Node, NodeList or Selector which will be used as trigger elements\nto show or hide the OverlayContext.",
      "!data": {
@@ -1585,7 +1585,7 @@
    "OverlayMaskConfig": {
     "!proto": "config.OverlayBaseConfig",
     "alignPoints": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_alignPoints",
      "!doc": "Points to align the <a href=\"Overlay.html\">Overlay</a> used as\nmask.",
      "!data": {
@@ -1601,7 +1601,7 @@
      }
     },
     "target": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#attribute_target",
      "!doc": "Node where the mask will be positioned and re-dimensioned. The\ndefault is the document, which means that if not specified the mask\ntakes the full screen.",
      "!data": {
@@ -1649,12 +1649,12 @@
      "!doc": "If true the Paginator will be always visible, even when the number\nof pages is 0. To hide the paginator controls automatically when\nthere is no pages to display use <code>false</code>."
     },
     "containers": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_containers",
      "!doc": "The Paginator controls UI could be displayed in more than one\ncontainer (i.e., in the header and footer of a list). Pass a\n<a href=\"NodeList.html\">NodeList</a> or a selector to grab the\ncontainers."
     },
     "firstPageLink": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_firstPageLink",
      "!doc": "The <a href=\"Node.html\">Node</a> or template to be used as the\nfirst link element."
     },
@@ -1664,7 +1664,7 @@
      "!doc": "The label used as content of the\n<a href=\"Paginator.html#config_firstPageLink\">firstPageLink</a> element."
     },
     "lastPageLink": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_lastPageLink",
      "!doc": "The <a href=\"Node.html\">Node</a> or template to be used as the\nlast link element."
     },
@@ -1679,7 +1679,7 @@
      "!doc": "The max number of page links to be displayed. If lower than the\ntotal number of pages they are still navigable using next and prev\nlinks."
     },
     "nextPageLink": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_nextPageLink",
      "!doc": "The <a href=\"Node.html\">Node</a> or template to be used as the\nnext link element."
     },
@@ -1719,7 +1719,7 @@
      "!doc": "Template for the\n<a href=\"Paginator.html#config_pageReportEl\">pageReportEl</a> content.\nNote the placeholders for the page {page} and the total pages\n{totalPages}."
     },
     "prevPageLink": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_prevPageLink",
      "!doc": "The <a href=\"Node.html\">Node</a> or template to be used as the\nprev link element."
     },
@@ -1729,7 +1729,7 @@
      "!doc": "The label used as content of the\n<a href=\"Paginator.html#config_prevPageLink\">prevPageLink</a> element."
     },
     "rowsPerPageOptions": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_rowsPerPageOptions",
      "!doc": "Array to be displayed on the generated HTML Select element with the\n<a href=\"Paginator.html#config_rowsPerPage\">rowsPerPage</a>\ninformation. (i.e., [1,3,5,7], will display these values on the\nselect)"
     },
@@ -1739,12 +1739,12 @@
      "!doc": "Number of records constituting a \"page\"."
     },
     "rowsPerPageEl": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_rowsPerPageEl",
      "!doc": "Node element to display the\n<a href=\"Paginator.html#config_rowsPerPage\">rowsPerPage</a>."
     },
     "state": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#attribute_state",
      "!doc": "Generates information to the <code>changeRequest</code> event. See\n<a href=\"Paginator.html#method_changeRequest\">changeRequest</a>."
     },
@@ -1787,17 +1787,17 @@
      "!doc": "Whether the panel is able to be collapsed."
     },
     "title": {
-     "!type": "bool",
+     "!type": "bool|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html#attribute_title",
      "!doc": "The title to be displayed on the Panel."
     },
     "icons": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html#attribute_icons",
      "!doc": "<p>Array of <a href=\"ButtonItem.html\">ButtonItem</a> configuration objects to be displayed as icons\non the Panel title.</p>\n\nExample:\n\n<pre><code>icons: [ { icon: close, id: close } ]</code></pre>\n\nFor more information how to use this option see\n<a href=\"ButtonItem.html\">ButtonItem</a>."
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html#attribute_strings",
      "!doc": "Collection of strings used to label elements of the Panels UI."
     },
@@ -1810,7 +1810,7 @@
    "ProgressBarConfig": {
     "!proto": "config.ComponentConfig",
     "height": {
-     "!type": "number",
+     "!type": "number|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ProgressBar.html#attribute_height",
      "!doc": "Display height of the progressbar."
     },
@@ -1855,7 +1855,7 @@
      "!doc": "DOM Node to display the text of the progressbar. If not\nspecified try to query using HTML_PARSER an element inside\ncontentBox which matches <code>aui-progressbar-text</code>."
     },
     "value": {
-     "!type": "number",
+     "!type": "number|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/ProgressBar.html#attribute_value",
      "!doc": "The value for the bar. Valid values are in between the minValue\nand maxValue attributes."
     }
@@ -1944,7 +1944,7 @@
      "!doc": "False to ensure that the resize handles are always visible, true to\ndisplay them only when the user mouses over the resizable borders."
     },
     "handles": {
-     "!type": "+yui.Array",
+     "!type": "[?]|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#attribute_handles",
      "!doc": "The handles to use (any combination of): t, b, r, l, bl,\nbr, tl, tr. Can use a shortcut of All."
     },
@@ -1959,7 +1959,7 @@
      "!doc": "Resize a proxy element instead of the real element."
     },
     "proxyEl": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#attribute_proxyEl",
      "!doc": "The Resize proxy element."
     },
@@ -1979,7 +1979,7 @@
      "!doc": "Elements that requires a wrapper by default. Normally are elements\nwhich cannot have children elements."
     },
     "wrapper": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#attribute_wrapper",
      "!doc": "Element to wrap the <code>wrapTypes</code>. This element will house\nthe handles elements."
     }
@@ -1987,7 +1987,7 @@
    "TextboxlistConfig": {
     "!proto": "config.AutoCompleteConfig",
     "constrain": {
-     "!type": "string",
+     "!type": "string|+Object|+node.Node",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#attribute_constrain",
      "!doc": "Will attempt to constrain the resize node to the boundaries. Arguments:<br>\nview: Contrain to Viewport<br>\n#selector_string: Constrain to this node<br>\n{Region Object}: An Object Literal containing a valid region (top, right, bottom, left) of page positions"
     },
@@ -2017,12 +2017,12 @@
      "!doc": "Maintain the elements ratio when resizing."
     },
     "tickX": {
-     "!type": "number",
+     "!type": "number|bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#attribute_tickX",
      "!doc": "The number of x ticks to span the resize to."
     },
     "tickY": {
-     "!type": "number",
+     "!type": "number|bool",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#attribute_tickY",
      "!doc": "The number of y ticks to span the resize to."
     },
@@ -2045,7 +2045,7 @@
      "!doc": "Receives an interaction state of active when the user clicks on it."
     },
     "children": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Toolbar.html#attribute_children",
      "!doc": "Receives the toolbar items."
     },
@@ -2060,7 +2060,7 @@
      "!doc": "Receives an interaction state of hover during the\n<code>mouseover</code> event."
     },
     "defaultChildType": {
-     "!type": "string",
+     "!type": "string|+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Toolbar.html#attribute_defaultChildType",
      "!doc": "The default type of child widget to render into the Element"
     },
@@ -2073,12 +2073,12 @@
    "TooltipConfig": {
     "!proto": "config.OverlayContextPanelConfig",
     "anim": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Tooltip.html#attribute_anim",
      "!doc": "See <a href=\"OverlayContextPanel.html#config_anim\">OverlayContextPanel anim</a>."
     },
     "align": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Tooltip.html#attribute_align",
      "!doc": "See <a href=\"Overlay.html#config_align\">OverlayContextPanel align</a>."
     },
@@ -2106,7 +2106,7 @@
    "TreeDataConfig": {
     "!proto": "config.BaseConfig",
     "container": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_container",
      "!doc": "Container to nest children nodes. If has cntainer its not a leaf.",
      "!data": {
@@ -2114,7 +2114,7 @@
      }
     },
     "children": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_children",
      "!doc": "Array of children (i.e. could be a JSON metadata object or a TreeNode instance).",
      "!data": {
@@ -2122,7 +2122,7 @@
      }
     },
     "index": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#attribute_index",
      "!doc": "Index the nodes.",
      "!data": {
@@ -2205,7 +2205,7 @@
      }
     },
     "labelEl": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_labelEl",
      "!doc": "Label element to house the <code>label</code> attribute.",
      "!data": {
@@ -2213,7 +2213,7 @@
      }
     },
     "hitAreaEl": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_hitAreaEl",
      "!doc": "Hitarea element.",
      "!data": {
@@ -2229,7 +2229,7 @@
      }
     },
     "iconEl": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#attribute_iconEl",
      "!doc": "Icon element.",
      "!data": {
@@ -2240,7 +2240,7 @@
    "TreeNodeIOConfig": {
     "!proto": "config.TreeNodeConfig",
     "io": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#attribute_io",
      "!doc": "IO options for the current TreeNode load the children.",
      "!data": {
@@ -2291,7 +2291,7 @@
      }
     },
     "checkContainerEl": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checkContainerEl",
      "!doc": "Container element for the checkbox.",
      "!data": {
@@ -2299,7 +2299,7 @@
      }
     },
     "checkEl": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#attribute_checkEl",
      "!doc": "Checkbox element.",
      "!data": {
@@ -2326,7 +2326,7 @@
      }
     },
     "io": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#attribute_io",
      "!doc": "IO metadata for loading the children using ajax.",
      "!data": {
@@ -2337,7 +2337,7 @@
    "TreeViewDDConfig": {
     "!proto": "config.TreeViewConfig",
     "helper": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|string",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#attribute_helper",
      "!doc": "Dragdrop helper element.",
      "!data": {
@@ -2389,7 +2389,7 @@
      "prototype": {
       "!proto": "aui_component.Component.prototype",
       "doBeforeExpandContainer": {
-       "!type": "fn(query: string, allResults: +yui.Object) -> bool",
+       "!type": "fn(query: string, allResults: +Object) -> bool",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#method_doBeforeExpandContainer",
        "!doc": "An overridable method that is executed before the result container is shown.\nThe method can return false to prevent the container from being shown."
       },
@@ -2399,17 +2399,17 @@
        "!doc": "An overridable method that is executed before the result overlay is loaded with results."
       },
       "filterResults": {
-       "!type": "fn(event: +event_custom.EventFacade) -> +yui.Object",
+       "!type": "fn(event: +event_custom.EventFacade) -> +Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#method_filterResults",
        "!doc": "Executed by the data source as a mechanism to do simple client-side\nfiltering of the results."
       },
       "formatResult": {
-       "!type": "fn(result: +yui.Object, request: string, resultMatch: string) -> string",
+       "!type": "fn(result: +Object, request: string, resultMatch: string) -> string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#method_formatResult",
        "!doc": "An overridable method for formatting the result of the query before its displayed in the overlay."
       },
       "generateRequest": {
-       "!type": "fn(query: string) -> +yui.Object",
+       "!type": "fn(query: string) -> +Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#method_generateRequest",
        "!doc": "An overridable method that creates an object to be passed to the sendRequest\nmethod of the data source object. Useful to overwrite if you wish to create\na custom request object before its sent."
       },
@@ -2430,7 +2430,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "AutoComplete.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/AutoComplete.html#property_AutoComplete.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the AutoComplete."
      }
@@ -2474,17 +2474,17 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "ButtonItem.AUGMENTS": {
-      "!type": "+array",
+      "!type": "[?]",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html#property_ButtonItem.AUGMENTS",
       "!doc": "Static property provides an array to specify which classes augment this one."
      },
      "ButtonItem.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html#property_ButtonItem.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ButtonItem."
      },
      "ButtonItem.HTML_PARSER": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ButtonItem.html#property_ButtonItem.HTML_PARSER",
       "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box."
      }
@@ -2552,7 +2552,7 @@
        }
       },
       "getDetailedSelectedDates": {
-       "!type": "fn() -> +yui.Array",
+       "!type": "fn() -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getDetailedSelectedDates",
        "!doc": "Get an Array with selected dates with detailed information (day, month, year).\n<pre><code>[{\n   year: date.getFullYear(),\n   month: date.getMonth(),\n   day: date.getDate()\n}]</code></pre>",
        "!data": {
@@ -2568,7 +2568,7 @@
        }
       },
       "getFormattedSelectedDates": {
-       "!type": "fn() -> +yui.Array",
+       "!type": "fn() -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getFormattedSelectedDates",
        "!doc": "Get the selected dates formatted by the\n<a href=\"Calendar.html#config_dateFormat\">dateFormat</a>.",
        "!data": {
@@ -2576,7 +2576,7 @@
        }
       },
       "getSelectedDates": {
-       "!type": "fn() -> +yui.Array",
+       "!type": "fn() -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#method_getSelectedDates",
        "!doc": "Get the selected dates.",
        "!data": {
@@ -2657,7 +2657,7 @@
       }
      },
      "Calendar.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#property_Calendar.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Calendar.",
       "!data": {
@@ -2665,7 +2665,7 @@
       }
      },
      "ProgressBar.HTML_PARSER": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Calendar.html#property_ProgressBar.HTML_PARSER",
       "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box.",
       "!data": {
@@ -2688,7 +2688,7 @@
       }
      },
      "DatePickerSelect.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#property_DatePickerSelect.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the DatePickerSelect.",
       "!data": {
@@ -2696,7 +2696,7 @@
       }
      },
      "DatePickerSelect.HTML_PARSER": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/DatePickerSelect.html#property_DatePickerSelect.HTML_PARSER",
       "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box.",
       "!data": {
@@ -2731,7 +2731,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "CharCounter.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/CharCounter.html#property_CharCounter.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the CharCounter."
      }
@@ -2753,7 +2753,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "ColorPicker.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ColorPicker.html#property_ColorPicker.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ColorPicker."
      }
@@ -2769,7 +2769,7 @@
      "prototype": {
       "!proto": "widget.Widget.prototype",
       "clone": {
-       "!type": "fn(config: +config.cloneConfig) -> +widget.Widget",
+       "!type": "fn(config: +config.ComponentCloneConfig) -> +widget.Widget",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Component.html#method_clone",
        "!doc": "Clone the current Component."
       },
@@ -2785,7 +2785,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Component.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Component.html#property_Component.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Component."
      }
@@ -2801,12 +2801,12 @@
        "!doc": "An overridable method that is executed before the result overlay is loaded with results."
       },
       "formatResult": {
-       "!type": "fn(result: +yui.Object, request: string, resultMatch: string) -> string",
+       "!type": "fn(result: +Object, request: string, resultMatch: string) -> string",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#method_formatResult",
        "!doc": "An overridable method for formatting the result of the query before its displayed in the overlay."
       },
       "generateRequest": {
-       "!type": "fn(query: string) -> +yui.Object",
+       "!type": "fn(query: string) -> +Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#method_generateRequest",
        "!doc": "An overridable method that creates an object to be passed to the sendRequest\nmethod of the data source object. Useful to overwrite if you wish to create\na custom request object before its sent."
       },
@@ -2817,7 +2817,7 @@
       }
      },
      "AutoComplete.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/CellEditorSupport.html#property_AutoComplete.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the AutoComplete."
      }
@@ -2844,7 +2844,7 @@
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/DataType.String.html",
       "prototype": {
        "evaluate": {
-        "!type": "fn(data: ?) -> bool",
+        "!type": "fn(data: ?) -> bool|number|string",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/DataType.String.html#method_evaluate",
         "!doc": "Evaluates a string to a primitive value (if possible). Supports\n<code>true</code> and <code>false</code> also. Unrecognized strings are\nreturned without any modification."
        }
@@ -3087,11 +3087,11 @@
      "module": "aui-delayed-task"
     },
     "DelayedTask": {
-     "!type": "fn(config: +config.DelayedTaskConfig, fn: fn(), scope: +yui.Object, args: ?)",
+     "!type": "fn(config: +config.DelayedTaskConfig, fn: fn(), scope: +Object, args: ?)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/DelayedTask.html",
      "prototype": {
       "delay": {
-       "!type": "fn(delay: number, newFn: fn(), newScope: +yui.Object, newArgs: ?)",
+       "!type": "fn(delay: number, newFn: fn(), newScope: +Object, newArgs: ?)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/DelayedTask.html#method_delay",
        "!doc": "<p>This function is responsible to execute the user callback, passed in\nthe <code>constructor</code> after <code>delay</code> milliseconds.</p>\n\nExample:\n\n<pre><code>// executes after 1000ms the callback\ndelayed.delay(1000);</code></pre>"
       },
@@ -3137,7 +3137,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Dialog.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Dialog.html#property_Dialog.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Dialog."
      }
@@ -3148,17 +3148,17 @@
      "prototype": {
       "!proto": "aui_overlay.OverlayManager.prototype",
       "findByChild": {
-       "!type": "fn(child: +node.Node) -> +widget.Widget",
+       "!type": "fn(child: +node.Node|string) -> +widget.Widget",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/DialogManager.html#method_findByChild",
        "!doc": "Find the <a href=\"Widget.html\">Widget</a> instance based on a child\nelement."
       },
       "closeByChild": {
-       "!type": "fn(child: +node.Node) -> +aui_dialog.Dialog",
+       "!type": "fn(child: +node.Node|string) -> +aui_dialog.Dialog",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/DialogManager.html#method_closeByChild",
        "!doc": "<p>Invoke the <a href=\"Dialog.html#method_close\">close</a> method from\nthe Dialog which contains the <code>child</code> element.</p>\n\nExample:\n\n<pre><code>A.DialogManager.closeByChild(#dialogContent1);</code></pre>"
       },
       "refreshByChild": {
-       "!type": "fn(child: +node.Node)",
+       "!type": "fn(child: +node.Node|string)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/DialogManager.html#method_refreshByChild",
        "!doc": "<p>Invoke the <a href=\"IOPlugin.html#method_start\">start</a> method\nfrom the <a href=\"IOPlugin.html\">IOPlugin</a> plugged on this Dialog\ninstance. If there is no IOPlugin plugged it does nothing.</p>\n\nExample:\n\n<pre><code>A.DialogManager.refreshByChild(#dialogContent1);</code></pre>"
       }
@@ -3191,7 +3191,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Editable.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Editable.html#property_Editable.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Editable."
      }
@@ -3369,7 +3369,7 @@
       }
      },
      "ImageViewer.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageViewer.html#property_ImageViewer.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ImageViewer.",
       "!data": {
@@ -3432,7 +3432,7 @@
       }
      },
      "ImageGallery.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ImageGallery.html#property_ImageGallery.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ImageGallery.",
       "!data": {
@@ -3506,7 +3506,7 @@
         }
        },
        "A.Plugin.IO.ATTRS": {
-        "!type": "+yui.Object",
+        "!type": "+Object",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Plugin.IO.html#property_A.Plugin.IO.ATTRS",
         "!doc": "Static property used to define the default attribute\nconfiguration for the A.Plugin.IO.",
         "!data": {
@@ -3520,7 +3520,7 @@
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.io.html",
       "prototype": {
        "A.io.request": {
-        "!type": "fn(uri: string, config: +config.A.io.requestConfig) -> +aui_io.IORequest",
+        "!type": "fn(uri: string, config: +config.A.ioA.io.requestConfig) -> +aui_io.IORequest",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.io.html#method_A.io.request",
         "!doc": "Static method to invoke the <a href=\"IORequest.html\">IORequest</a>. Likewise <a href=\"io.html#method_io\">io</a>.",
         "!data": {
@@ -3566,7 +3566,7 @@
       }
      },
      "IORequest.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/IORequest.html#property_IORequest.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the IORequest.",
       "!data": {
@@ -3585,7 +3585,7 @@
      "prototype": {
       "!proto": "base.Base.prototype",
       "filter": {
-       "!type": "fn(query: string) -> +yui.Array",
+       "!type": "fn(query: string) -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#method_filter",
        "!doc": "Filter the <a href=\"LiveSearch.html#config_nodes\">nodes</a> based on\nthe input value."
       },
@@ -3595,7 +3595,7 @@
        "!doc": "Refreshes the <a href=\"LiveSearch.html#config_index\">index</a>."
       },
       "search": {
-       "!type": "fn(value: string)",
+       "!type": "fn(value: string|number)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#method_search",
        "!doc": "Searches for the user supplied value."
       }
@@ -3606,7 +3606,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "LiveSearch.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/LiveSearch.html#property_LiveSearch.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the LiveSearch."
      }
@@ -3658,7 +3658,7 @@
       "!doc": "Static property provides a string to identify the namespace."
      },
      "LoadingMask.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/LoadingMask.html#property_LoadingMask.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the LoadingMask."
      }
@@ -3680,7 +3680,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "NestedList.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/NestedList.html#property_NestedList.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the NestedList."
      }
@@ -3718,7 +3718,7 @@
         }
        },
        "center": {
-        "!type": "fn(val: +yui.Array) -> !this",
+        "!type": "fn(val: [?]|+node.Node|+Region|string) -> !this",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.Node.html#method_center",
         "!doc": "<p>Centralize the current Node instance with the passed\n<code>val</code> Array, Node, String, or Region, if not specified, the body will be\nused.</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\n// Center the <code>node</code> with the <code>#container</code>.\nnode.center(#container);\n</code></pre>",
         "!data": {
@@ -3823,7 +3823,7 @@
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.HTML5.html",
       "prototype": {
        "IECreateFix": {
-        "!type": "fn(frag: +node.Node, content: string) -> +node.Node",
+        "!type": "fn(frag: +node.Node|+DocumentFragment, content: string) -> +node.Node|+DocumentFragment",
         "!url": "http://alloyui.com/versions/1.5.x/api/classes/A.HTML5.html#method_IECreateFix",
         "!doc": "Receives a <code>frag</code> and a HTML content. This method\nshivs the HTML5 nodes appended to a Node or fragment which is not\non the document yet.",
         "!data": {
@@ -3843,7 +3843,7 @@
      },
      "prototype": {
       "getCenterXY": {
-       "!type": "fn() -> +yui.Array",
+       "!type": "fn() -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_getCenterXY",
        "!doc": "Gets the current center position of the node in page coordinates.",
        "!data": {
@@ -3915,7 +3915,7 @@
        }
       },
       "prependTo": {
-       "!type": "fn(selector: +node.Node) -> !this",
+       "!type": "fn(selector: +node.Node|string) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_prependTo",
        "!doc": "<p>Inserts the node instance to the begining of the <code>selector</code>\nnode (i.e., insert before the <code>firstChild</code> of the\n<code>selector</code>).</p>\n\nExample:\n\n<pre><code>var node = A.one(#nodeId);\nnode.prependTo(body);\n</code></pre>",
        "!data": {
@@ -3955,7 +3955,7 @@
        }
       },
       "swallowEvent": {
-       "!type": "fn(eventName: string, preventDefault: bool) -> !this",
+       "!type": "fn(eventName: string|[?], preventDefault: bool) -> !this",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Node.html#method_swallowEvent",
        "!doc": "<p>Stops the specified event(s) from bubbling and optionally prevents the\ndefault action.</p>\n\nExample:\n\n<pre><code>var anchor = A.one(a#anchorId);\nanchor.swallowEvent(click);\n</code></pre>",
        "!data": {
@@ -4086,7 +4086,7 @@
      "prototype": {
       "!proto": "aui_overlay.OverlayContext.prototype",
       "align": {
-       "!type": "fn(node: +node.Node, points: [+yui.Array])",
+       "!type": "fn(node: +node.Node|string, points: [?])",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#method_align",
        "!doc": "Aligns the OverlayContextPanel to the provided node (or viewport) using the\nprovided points. Inherited from\n<a href=\"Overlay.html#method_align\">Overlay</a>.",
        "!data": {
@@ -4127,7 +4127,7 @@
       }
      },
      "OverlayContextPanel.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContextPanel.html#property_OverlayContextPanel.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayContextPanel.",
       "!data": {
@@ -4190,7 +4190,7 @@
       }
      },
      "OverlayContext.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayContext.html#property_OverlayContext.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayContext.",
       "!data": {
@@ -4212,7 +4212,7 @@
        }
       },
       "register": {
-       "!type": "fn(overlay: +overlay.Overlay) -> +yui.Array",
+       "!type": "fn(overlay: +overlay.Overlay) -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_register",
        "!doc": "Register the passed <a href=\"Overlay.html\">Overlay</a> to this\nOverlayManager.",
        "!data": {
@@ -4220,7 +4220,7 @@
        }
       },
       "remove": {
-       "!type": "fn(overlay: +overlay.Overlay) -> +Null",
+       "!type": "fn(overlay: +overlay.Overlay) -> ?",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_remove",
        "!doc": "Remove the passed <a href=\"Overlay.html\">Overlay</a> from this\nOverlayManager.",
        "!data": {
@@ -4228,7 +4228,7 @@
        }
       },
       "each": {
-       "!type": "fn(fn: fn()) -> +Null",
+       "!type": "fn(fn: fn()) -> ?",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#method_each",
        "!doc": "Loop through all registered <a href=\"Overlay.html\">Overlay</a> and\nexecute a callback.",
        "!data": {
@@ -4269,7 +4269,7 @@
       }
      },
      "OverlayManager.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayManager.html#property_OverlayManager.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayManager.",
       "!data": {
@@ -4283,7 +4283,7 @@
      "prototype": {
       "!proto": "aui_overlay.OverlayBase.prototype",
       "getTargetSize": {
-       "!type": "fn() -> +yui.Object",
+       "!type": "fn() -> +Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#method_getTargetSize",
        "!doc": "Get the size of the\n<a href=\"OverlayMask.html#config_target\">target</a>. Used to dimension\nthe mask node.",
        "!data": {
@@ -4308,7 +4308,7 @@
       }
      },
      "OverlayMask.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/OverlayMask.html#property_OverlayMask.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the OverlayMask.",
       "!data": {
@@ -4327,7 +4327,7 @@
      "prototype": {
       "!proto": "base.Base.prototype",
       "calculateRange": {
-       "!type": "fn(name: +Type) -> +yui.Object",
+       "!type": "fn(name: +Type) -> +Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#method_calculateRange",
        "!doc": "Create a range to display on the pageLinks, keep the current page on\ncenter."
       },
@@ -4357,7 +4357,7 @@
        "!doc": "Check if there is a previous page."
       },
       "setState": {
-       "!type": "fn(v: +yui.Object)",
+       "!type": "fn(v: +Object)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#method_setState",
        "!doc": "Public setter for <a href=\"Paginator.html#config_state\">state</a>."
       }
@@ -4368,7 +4368,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Paginator.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Paginator.html#property_Paginator.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Paginator."
      }
@@ -4379,7 +4379,7 @@
      "module": "aui-panel"
     },
     "Panel": {
-     "!type": "fn(object: +yui.Object)",
+     "!type": "fn(object: +Object)",
      "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html",
      "!data": {
       "extends": [
@@ -4417,7 +4417,7 @@
       }
      },
      "Panel.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Panel.html#property_Panel.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Panel."
      }
@@ -4454,7 +4454,7 @@
       "!doc": "Static property provides a string to identify the namespace."
      },
      "ParseContent.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ParseContent.html#property_ParseContent.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ParseContent."
      }
@@ -4476,7 +4476,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "PortalLayout.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/PortalLayout.html#property_PortalLayout.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the PortalLayout."
      }
@@ -4498,12 +4498,12 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "ProgressBar.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ProgressBar.html#property_ProgressBar.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ProgressBar."
      },
      "ProgressBar.HTML_PARSER": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ProgressBar.html#property_ProgressBar.HTML_PARSER",
       "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box."
      }
@@ -4545,12 +4545,12 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Rating.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Rating.html#property_Rating.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Rating."
      },
      "StarRating.HTML_PARSER": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Rating.html#property_StarRating.HTML_PARSER",
       "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box."
      }
@@ -4572,7 +4572,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "ThumbRating.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/ThumbRating.html#property_ThumbRating.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the ThumbRating."
      }
@@ -4608,7 +4608,7 @@
        "!doc": "Whether the handle being dragged can change the width."
       },
       "delegate": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#property_delegate",
        "!doc": "Store DD.Delegate reference for the respective Resize instance."
       },
@@ -4624,7 +4624,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Resize.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Resize.html#property_Resize.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Resize."
      }
@@ -4637,7 +4637,7 @@
      "prototype": {
       "!proto": "aui_autocomplete.AutoComplete.prototype",
       "constrainBorderInfo": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#property_constrainBorderInfo",
        "!doc": "Cache the border widths of the contrain node if constrain\noption is being used."
       },
@@ -4689,7 +4689,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Textboxlist.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Textboxlist.html#property_Textboxlist.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Textboxlist."
      }
@@ -4726,7 +4726,7 @@
       "!doc": "Static property provides a string to identify the class."
      },
      "Tooltip.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/Tooltip.html#property_Tooltip.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Tooltip."
      }
@@ -4787,7 +4787,7 @@
        }
       },
       "updateIndex": {
-       "!type": "fn(index: +yui.Object)",
+       "!type": "fn(index: +Object)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_updateIndex",
        "!doc": "Update the <a href=\"TreeData.html#config_index\">index</a> attribute value.",
        "!data": {
@@ -4835,7 +4835,7 @@
        }
       },
       "bubbleEvent": {
-       "!type": "fn(eventType: string, args: +yui.Array, cancelBubbling: bool, stopActionPropagation: bool)",
+       "!type": "fn(eventType: string, args: [?], cancelBubbling: bool, stopActionPropagation: bool)",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_bubbleEvent",
        "!doc": "Bubble event to all parent nodes.",
        "!data": {
@@ -4843,7 +4843,7 @@
        }
       },
       "createNode": {
-       "!type": "fn(options: +yui.Object) -> +aui_tree.TreeNode",
+       "!type": "fn(options: +Object) -> +aui_tree.TreeNode",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_createNode",
        "!doc": "Create a TreeNode instance.",
        "!data": {
@@ -4883,7 +4883,7 @@
        }
       },
       "getChildren": {
-       "!type": "fn(deep: bool) -> +yui.Array",
+       "!type": "fn(deep: bool) -> [?]",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_getChildren",
        "!doc": "Get an Array of the children nodes of the current TreeData.",
        "!data": {
@@ -4891,7 +4891,7 @@
        }
       },
       "getEventOutputMap": {
-       "!type": "fn(node: +aui_tree.TreeData) -> +yui.Object",
+       "!type": "fn(node: +aui_tree.TreeData) -> +Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#method_getEventOutputMap",
        "!doc": "Get an object containing metadata for the custom events.",
        "!data": {
@@ -4964,7 +4964,7 @@
       }
      },
      "TreeData.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeData.html#property_TreeData.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeData.",
       "!data": {
@@ -5034,7 +5034,7 @@
        }
       },
       "A.TreeNode.nodeTypes": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#property_A.TreeNode.nodeTypes",
        "!doc": "TreeNode types hash map.\n\n<pre><code>A.TreeNode.nodeTypes = {\n radio: A.TreeNodeRadio,\n task: A.TreeNodeTask,\n check: A.TreeNodeCheck,\n node: A.TreeNode,\n io: A.TreeNodeIO\n};</code></pre>",
        "!data": {
@@ -5051,7 +5051,7 @@
       }
      },
      "TreeNode.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNode.html#property_TreeNode.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
       "!data": {
@@ -5114,7 +5114,7 @@
       }
      },
      "TreeNode.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeIO.html#property_TreeNode.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
       "!data": {
@@ -5161,7 +5161,7 @@
       }
      },
      "TreeNode.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeNodeCheck.html#property_TreeNode.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeNode.",
       "!data": {
@@ -5214,7 +5214,7 @@
       }
      },
      "TreeView.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeView.html#property_TreeView.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeView.",
       "!data": {
@@ -5237,7 +5237,7 @@
       }
      },
      "TreeViewDD.ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://alloyui.com/versions/1.5.x/api/classes/TreeViewDD.html#property_TreeViewDD.ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the TreeViewDD.",
       "!data": {

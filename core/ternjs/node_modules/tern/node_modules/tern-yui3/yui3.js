@@ -336,7 +336,7 @@
      }
     },
     "from": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Anim.html#attribute_from",
      "!doc": "The starting values for the animated properties.\n\nFields may be strings, numbers, or functions.\nIf a function is used, the return value becomes the from value.\nIf no from value is specified, the DEFAULT_GETTER will be used.\nSupports any unit, provided it matches the \"to\" (or default)\nunit (e.g. `{width: 10em, color: rgb(0, 0, 0), borderColor: #ccc}`).\n\nIf using the default (px for length-based units), the unit may be omitted\n(e.g. `{width: 100}, borderColor: ccc}`, which defaults to pixels\nand hex, respectively).",
      "!data": {
@@ -344,7 +344,7 @@
      }
     },
     "to": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Anim.html#attribute_to",
      "!doc": "The ending values for the animated properties.\n\nFields may be strings, numbers, or functions.\nSupports any unit, provided it matches the \"from\" (or default)\nunit (e.g. `{width: 50%, color: red, borderColor: #ccc}`).\n\nIf using the default (px for length-based units), the unit may be omitted\n(e.g. `{width: 100, borderColor: ccc}`, which defaults to pixels\nand hex, respectively).",
      "!data": {
@@ -416,10 +416,23 @@
      }
     }
    },
+   "AppConfig": {
+    "!proto": "config.App.BaseConfig",
+    "views": {
+     "!type": "+Object",
+     "!doc": "Hash of view-name to metadata used to\n    declaratively describe an applications views and their relationship with\n    the app and other views. The views specified here will override any defaults\n    provided by the `views` object on the `prototype`."
+    }
+   },
    "App": {
+    "ContentShowContentConfig": {
+     "view": {
+      "!type": "+Object|string",
+      "!doc": "The name of a view defined in this\n      apps `views`, or an object with the following properties:"
+     }
+    },
     "TransitionsConfig": {
      "transitions": {
-      "!type": "bool",
+      "!type": "bool|+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Transitions.html#attribute_transitions",
       "!doc": "Whether or not this application should use view transitions, and if so then\nwhich ones or `true` for the defaults which are specified by the\n`transitions` prototype property.\n\n**Note:** Transitions are an opt-in feature and will only be used in\nbrowsers which support native CSS3 transitions.",
       "!data": {
@@ -427,8 +440,34 @@
       }
      }
     },
+    "TransitionsShowViewConfig": {
+     "callback": {
+      "!type": "fn()",
+      "!doc": "Optional callback function to call\n    after new `activeView` is ready to use, the function will be passed:"
+     },
+     "prepend": {
+      "!type": "bool",
+      "!doc": "Whether the `view` should be\n    prepended instead of appended to the `viewContainer`."
+     },
+     "render": {
+      "!type": "bool",
+      "!doc": "Whether the `view` should be rendered.\n    **Note:** If no value is specified, a view instance will only be\n    rendered if its newly created by this method."
+     },
+     "transition": {
+      "!type": "bool|string",
+      "!doc": "Optional transition override.\n    A transition can be specified which will override the default, or\n    `false` for no transition."
+     },
+     "update": {
+      "!type": "bool",
+      "!doc": "Whether an existing view should\n    have its attributes updated by passing the `config` object to its\n    `setAttrs()` method. **Note:** This option does not have an effect if\n    the `view` instance is created as a result of calling this method."
+     }
+    },
     "BaseConfig": {
      "!proto": "config.BaseConfig",
+     "views": {
+      "!type": "+Object",
+      "!doc": "Hash of view-name to metadata used to\n    declaratively describe an applications views and their relationship with\n    the app and other views. The views specified here will override any defaults\n    provided by the `views` object on the `prototype`."
+     },
      "activeView": {
       "!type": "+app.View",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#attribute_activeView",
@@ -438,7 +477,7 @@
       }
      },
      "container": {
-      "!type": "+HTMLElement",
+      "!type": "+HTMLElement|+node.Node|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#attribute_container",
       "!doc": "Container node which represents the applications bounding-box, into\nwhich this apps content will be rendered.\n\nThe container node serves as the host for all DOM events attached by the\napp. Delegation is used to handle events on children of the container,\nallowing the containers contents to be re-rendered at any time without\nlosing event subscriptions.\n\nThe default container is the `<body>` Node, but you can override this in\na subclass, or by passing in a custom `container` config value at\ninstantiation time.\n\nWhen `container` is overridden by a subclass or passed as a config\noption at instantiation time, it may be provided as a selector string, a\nDOM element, or a `Y.Node` instance. During initialization, this apps\n`create()` method will be called to convert the container into a\n`Y.Node` instance if it isnt one already and stamp it with the CSS\nclass: `\"yui3-app\"`.\n\nThe container is not added to the page automatically. This allows you to\nhave full control over how and when your app is actually rendered to\nthe page.",
       "!data": {
@@ -470,13 +509,132 @@
       }
      },
      "viewContainer": {
-      "!type": "+HTMLElement",
+      "!type": "+HTMLElement|+node.Node|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#attribute_viewContainer",
       "!doc": "The node into which this apps `views` will be rendered when they become\nthe `activeView`.\n\nThe view container node serves as the container to hold the apps\n`activeView`. Each time the `activeView` is set via `showView()`, the\nprevious view will be removed from this node, and the new active views\n`container` node will be appended.\n\nThe default view container is a `<div>` Node, but you can override this\nin a subclass, or by passing in a custom `viewContainer` config value at\ninstantiation time. The `viewContainer` may be provided as a selector\nstring, DOM element, or a `Y.Node` instance (having the `viewContainer`\nand the `container` be the same node is also supported).\n\nThe apps `render()` method will stamp the view container with the CSS\nclass `\"yui3-app-views\"` and append it to the apps `container` node if\nit isnt already, and any `activeView` will be appended to this node if\nit isnt already.",
       "!data": {
        "submodule": "app-base"
       }
      }
+    },
+    "BaseNavigateConfig": {
+     "replace": {
+      "!type": "bool",
+      "!doc": "Whether or not the current history\n      entry will be replaced, or a new entry will be created. Will default\n      to `true` if the specified `url` is the same as the current URL."
+     },
+     "force": {
+      "!type": "bool",
+      "!doc": "Whether the enhanced navigation\n      should occur even in browsers without HTML5 history. Will default to\n      `true` when `serverRouting` is falsy."
+     }
+    },
+    "BaseShowViewConfig": {
+     "callback": {
+      "!type": "fn()",
+      "!doc": "Optional callback function to call\n    after new `activeView` is ready to use, the function will be passed:"
+     },
+     "prepend": {
+      "!type": "bool",
+      "!doc": "Whether the `view` should be\n    prepended instead of appended to the `viewContainer`."
+     },
+     "render": {
+      "!type": "bool",
+      "!doc": "Whether the `view` should be rendered.\n    **Note:** If no value is specified, a view instance will only be\n    rendered if its newly created by this method."
+     },
+     "update": {
+      "!type": "bool",
+      "!doc": "Whether an existing view should\n    have its attributes updated by passing the `config` object to its\n    `setAttrs()` method. **Note:** This option does not have an effect if\n    the `view` instance is created as a result of calling this method."
+     }
+    }
+   },
+   "ModelSync": {
+    "RESTSyncConfig": {
+     "csrfToken": {
+      "!type": "string",
+      "!doc": "The authenticity token used by the\n    server to verify the validity of this request and protected against CSRF\n    attacks. This overrides the default value provided by the static\n    `CSRF_TOKEN` property."
+     },
+     "headers": {
+      "!type": "+Object",
+      "!doc": "The HTTP headers to mix with the default\n    headers specified by the static `HTTP_HEADERS` property."
+     },
+     "timeout": {
+      "!type": "number",
+      "!doc": "The number of milliseconds before the\n    request will timeout and be aborted. This overrides the default provided\n    by the static `HTTP_TIMEOUT` property."
+     }
+    }
+   },
+   "ModelListConfig": {
+    "!proto": "config.BaseConfig",
+    "items": {
+     "!type": "+app.Model|[+app.Model]|+app.ModelList|+Object|[+Object]",
+     "!doc": "Model\n        instance, array of model instances, or ModelList to add to this list on\n        init. The `add` event will not be fired for models added on init."
+    }
+   },
+   "ModelListAddConfig": {
+    "index": {
+     "!type": "number",
+     "!doc": "Index at which to insert the added\n        models. If not specified, the models will automatically be inserted\n        in the appropriate place according to the current sort order as\n        dictated by the `comparator()` method, if any."
+    },
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `add` event(s)\n        will be fired."
+    }
+   },
+   "ModelListCreateConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `add` event(s) will\n      be fired."
+    }
+   },
+   "ModelListFilterConfig": {
+    "asList": {
+     "!type": "bool",
+     "!doc": "If truthy, results will be\n        returned as a new ModelList instance rather than as an array."
+    }
+   },
+   "ModelListRemoveConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `remove` event(s)\n        will be fired."
+    }
+   },
+   "ModelListResetConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `reset` event will\n        be fired."
+    }
+   },
+   "ModelListSortConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `reset` event will\n      be fired."
+    },
+    "descending": {
+     "!type": "bool",
+     "!doc": "If `true`, the sort is\n      performed in descending order."
+    }
+   },
+   "ModelDestroyConfig": {
+    "remove": {
+     "!type": "bool",
+     "!doc": "If `true`, the model will be\n    deleted via the sync layer in addition to the instance being destroyed."
+    }
+   },
+   "ModelSetConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `change` event will\n      be fired."
+    }
+   },
+   "ModelSetAttrsConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `change` event will\n      be fired."
+    }
+   },
+   "ModelUndoConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, no `change` event will\n      be fired."
     }
    },
    "ModelConfig": {
@@ -490,7 +648,7 @@
      }
     },
     "id": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#attribute_id",
      "!doc": "A unique identifier for this model. Among other things, this id may be\nused to retrieve model instances from lists, so it should be unique.\n\nIf the id is empty, this model instance is assumed to represent a new\nitem that hasnt yet been saved.\n\nIf you would prefer to use a custom attribute as this models id instead\nof using the `id` attribute (for example, maybe youd rather use `_id`\nor `uid` as the primary id), you may set the `idAttribute` property to\nthe name of your custom id attribute. The `id` attribute will then\nact as an alias for your custom attribute.",
      "!data": {
@@ -508,14 +666,6 @@
       "submodule": "router"
      }
     },
-    "params": {
-     "!type": "+yui.Object",
-     "!url": "http://yuilibrary.com/yui/docs/api/classes/Router.html#attribute_params",
-     "!doc": "Map of params handlers in the form: `name` -> RegExp | Function.\n\nIf a param handler regex or function returns a value of `false`, `null`,\n`undefined`, or `NaN`, the current route will not match and be skipped.\nAll other return values will be used in place of the original param\nvalue parsed from the URL.\n\nThis attribute is intended to be used to set params at init time, or to\ncompletely reset all params after init. To add params after init without\nresetting all existing params, use the `param()` method.",
-     "!data": {
-      "submodule": "router"
-     }
-    },
     "root": {
      "!type": "string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Router.html#attribute_root",
@@ -525,23 +675,91 @@
      }
     },
     "routes": {
-     "!type": "[+yui.Object]",
+     "!type": "[+Object]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Router.html#attribute_routes",
      "!doc": "Array of route objects.\n\nEach item in the array must be an object with the following properties\nin order to be processed by the router:\n\n  * `path`: String or regex representing the path to match. See the docs\n    for the `route()` method for more details.\n\n  * `callbacks`: Function or a string representing the name of a\n    function on this router instance that should be called when the\n    route is triggered. An array of functions and/or strings may also be\n    provided. See the docs for the `route()` method for more details.\n\nIf a route object contains a `regex` or `regexp` property, or if its\n`path` is a regular express, then the route will be considered to be\nfully-processed. Any fully-processed routes may contain the following\nproperties:\n\n  * `regex`: The regular expression representing the path to match, this\n    property may also be named `regexp` for greater compatibility.\n\n  * `keys`: Array of named path parameters used to populate `req.params`\n    objects when dispatching to route handlers.\n\nAny additional data contained on these route objects will be retained.\nThis is useful to store extra metadata about a route; e.g., a `name` to\ngive routes logical names.\n\nThis attribute is intended to be used to set routes at init time, or to\ncompletely reset all routes after init. To add routes after init without\nresetting all existing routes, use the `route()` method.",
      "!data": {
       "submodule": "router"
      }
+    },
+    "params": {
+     "!type": "+Object",
+     "!url": "http://yuilibrary.com/yui/docs/api/classes/Router.html#attribute_params",
+     "!doc": "Map of params handlers in the form: `name` -> RegExp | Function.\n\nIf a param handler regex or function returns a value of `false`, `null`,\n`undefined`, or `NaN`, the current route will not match and be skipped.\nAll other return values will be used in place of the original param\nvalue parsed from the URL.\n\nThis attribute is intended to be used to set params at init time, or to\ncompletely reset all params after init. To add params after init without\nresetting all existing params, use the `param()` method.",
+     "!data": {
+      "submodule": "router"
+     }
+    }
+   },
+   "param0Config": {
+    "params": {
+     "!type": "[?]|+Object",
+     "!doc": "Captured parameters matched\n      by the route path specification. If a string path was used and\n      contained named parameters, then this will be a key/value hash mapping\n      parameter names to their matched values. If a regex path was used,\n      this will be an array of subpattern matches starting at index 0 for\n      the full match, then 1 for the first subpattern match, and so on."
+    },
+    "path": {
+     "!type": "string",
+     "!doc": "The current URL path."
+    },
+    "pendingCallbacks": {
+     "!type": "number",
+     "!doc": "Number of remaining\n      callbacks the route handler has after this one in the dispatch chain."
+    },
+    "pendingRoutes": {
+     "!type": "number",
+     "!doc": "Number of matching routes\n      after this one in the dispatch chain."
+    },
+    "query": {
+     "!type": "+Object",
+     "!doc": "Query hash representing the URL\n      query string, if any. Parameter names are keys, and are mapped to\n      parameter values."
+    },
+    "route": {
+     "!type": "+Object",
+     "!doc": "Reference to the current route\n      object whose callbacks are being dispatched."
+    },
+    "router": {
+     "!type": "+Object",
+     "!doc": "Reference to this router instance."
+    },
+    "src": {
+     "!type": "string",
+     "!doc": "What initiated the dispatch. In an\n      HTML5 browser, when the back/forward buttons are used, this property\n      will have a value of \"popstate\". When the `dispath()` method is\n      called, the `src` will be `\"dispatch\"`."
+    },
+    "url": {
+     "!type": "string",
+     "!doc": "The full URL."
+    }
+   },
+   "param1Config": {
+    "req": {
+     "!type": "+Object",
+     "!doc": "Reference to the request object."
+    }
+   },
+   "ViewDestroyConfig": {
+    "remove": {
+     "!type": "bool",
+     "!doc": "If `true`, this Views container\n        will be removed from the DOM and destroyed as well."
     }
    },
    "ViewConfig": {
     "!proto": "config.BaseConfig",
     "container": {
-     "!type": "+HTMLElement",
+     "!type": "+HTMLElement|+node.Node|string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/View.html#attribute_container",
      "!doc": "Container node into which this views content will be rendered.\n\nThe container node serves as the host for all DOM events attached by the\nview. Delegation is used to handle events on children of the container,\nallowing the containers contents to be re-rendered at any time without\nlosing event subscriptions.\n\nThe default container is a `<div>` Node, but you can override this in\na subclass, or by passing in a custom `container` config value at\ninstantiation time. If you override the default container in a subclass\nusing `ATTRS`, you must use the `valueFn` property. The views constructor\nwill ignore any assignments using `value`.\n\nWhen `container` is overridden by a subclass or passed as a config\noption at instantiation time, you can provide it as a selector string, a\nDOM element, a `Y.Node` instance, or (if you are subclassing and modifying\nthe attribute), a `valueFn` function that returns a `Y.Node` instance.\nThe value will be converted into a `Y.Node` instance if it isnt one\nalready.\n\nThe container is not added to the page automatically. This allows you to\nhave full control over how and when your view is actually rendered to\nthe page.",
      "!data": {
       "submodule": "view"
      }
+    }
+   },
+   "ArraySortNaturalCompareConfig": {
+    "caseSensitive": {
+     "!type": "bool",
+     "!doc": "If `true`, a\n        case-sensitive comparison will be performed. By default the\n        comparison is case-insensitive."
+    },
+    "descending": {
+     "!type": "bool",
+     "!doc": "If `true`, the sort order\n        will be reversed so that larger values are sorted before smaller\n        values."
     }
    },
    "AutoCompleteBaseConfig": {
@@ -570,7 +788,7 @@
      }
     },
     "inputNode": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|+HTMLElement|string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteBase.html#attribute_inputNode",
      "!doc": "Node to monitor for changes, which will generate `query` events when\nappropriate. May be either an `<input>` or a `<textarea>`.",
      "!data": {
@@ -626,7 +844,7 @@
      }
     },
     "resultFilters": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteBase.html#attribute_resultFilters",
      "!doc": "Array of local result filter functions. If provided, each filter will be\ncalled with two arguments when results are received: the query and an array\nof result objects. See the documentation for the `results` event for a list\nof the properties available on each result object.\n\nEach filter is expected to return a filtered or modified version of the\nresults array, which will then be passed on to subsequent filters, then the\n`resultHighlighter` function (if set), then the `resultFormatter` function\n(if set), and finally to subscribers to the `results` event.\n\nIf no `source` is set, result filters will not be called.\n\nPrepackaged result filters provided by the autocomplete-filters and\nautocomplete-filters-accentfold modules can be used by specifying the filter\nname as a string, such as `phraseMatch` (assuming the necessary filters\nmodule is loaded).",
      "!data": {
@@ -658,7 +876,7 @@
      }
     },
     "results": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteBase.html#attribute_results",
      "!doc": "Current results, or an empty array if there are no results.",
      "!data": {
@@ -674,7 +892,7 @@
      }
     },
     "source": {
-     "!type": "+yui.Array",
+     "!type": "[?]|+DataSource|+node.Node|+Object|string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteBase.html#attribute_source",
      "!doc": "Source for autocomplete results. The following source types are supported:\n\n<dl>\n  <dt>Array</dt>\n  <dd>\n    <p>\n    The full array will be provided to any configured filters for each\n    query. This is an easy way to create a fully client-side autocomplete\n    implementation.\n    </p>\n\n    <p>\n    Example: `[first result, second result, etc]`\n    </p>\n  </dd>\n\n  <dt>DataSource</dt>\n  <dd>\n    A `DataSource` instance or other object that provides a DataSource-like\n    `sendRequest` method. See the `DataSource` documentation for details.\n  </dd>\n\n  <dt>Function</dt>\n  <dd>\n    <p>\n    A function source will be called with the current query and a\n    callback function as parameters, and should either return an array of\n    results (for synchronous operation) or return nothing and pass an\n    array of results to the provided callback (for asynchronous\n    operation).\n    </p>\n\n    <p>\n    Example (synchronous):\n    </p>\n\n    <pre>\n    function (query) {\n        return [foo, bar];\n    }\n    </pre>\n\n    <p>\n    Example (async):\n    </p>\n\n    <pre>\n    function (query, callback) {\n        callback([foo, bar]);\n    }\n    </pre>\n  </dd>\n\n  <dt>Object</dt>\n  <dd>\n    <p>\n    An object will be treated as a query hashmap. If a property on the\n    object matches the current query, the value of that property will be\n    used as the response.\n    </p>\n\n    <p>\n    The response is assumed to be an array of results by default. If the\n    response is not an array, provide a `resultListLocator` to\n    process the response and return an array.\n    </p>\n\n    <p>\n    Example: `{foo: [foo result 1, foo result 2], bar: [bar result]}`\n    </p>\n  </dd>\n</dl>\n\nIf the optional `autocomplete-sources` module is loaded, then\nthe following additional source types will be supported as well:\n\n<dl>\n  <dt>&lt;select&gt; Node</dt>\n  <dd>\n    You may provide a YUI Node instance wrapping a &lt;select&gt;\n    element, and the options in the list will be used as results. You\n    will also need to specify a `resultTextLocator` of text\n    or value, depending on what you want to use as the text of the\n    result.\n\n    Each result will be an object with the following properties:\n\n    <dl>\n      <dt>html (String)</dt>\n      <dd>\n        <p>HTML content of the &lt;option&gt; element.</p>\n      </dd>\n\n      <dt>index (Number)</dt>\n      <dd>\n        <p>Index of the &lt;option&gt; element in the list.</p>\n      </dd>\n\n      <dt>node (Y.Node)</dt>\n      <dd>\n        <p>Node instance referring to the original &lt;option&gt; element.</p>\n      </dd>\n\n      <dt>selected (Boolean)</dt>\n      <dd>\n        <p>Whether or not this item is currently selected in the\n        &lt;select&gt; list.</p>\n      </dd>\n\n      <dt>text (String)</dt>\n      <dd>\n        <p>Text content of the &lt;option&gt; element.</p>\n      </dd>\n\n      <dt>value (String)</dt>\n      <dd>\n        <p>Value of the &lt;option&gt; element.</p>\n      </dd>\n    </dl>\n  </dd>\n\n  <dt>String (JSONP URL)</dt>\n  <dd>\n    <p>\n    If a URL with a `{callback}` placeholder is provided, it will be used to\n    make a JSONP request. The `{query}` placeholder will be replaced with\n    the current query, and the `{callback}` placeholder will be replaced\n    with an internally-generated JSONP callback name. Both placeholders must\n    appear in the URL, or the request will fail. An optional `{maxResults}`\n    placeholder may also be provided, and will be replaced with the value of\n    the maxResults attribute (or 1000 if the maxResults attribute is 0 or\n    less).\n    </p>\n\n    <p>\n    The response is assumed to be an array of results by default. If the\n    response is not an array, provide a `resultListLocator` to process the\n    response and return an array.\n    </p>\n\n    <p>\n    <strong>The `jsonp` module must be loaded in order for\n    JSONP URL sources to work.</strong> If the `jsonp` module\n    is not already loaded, it will be loaded on demand if possible.\n    </p>\n\n    <p>\n    Example: `http://example.com/search?q={query}&callback={callback}`\n    </p>\n  </dd>\n\n  <dt>String (XHR URL)</dt>\n  <dd>\n    <p>\n    If a URL without a `{callback}` placeholder is provided, it will be used\n    to make a same-origin XHR request. The `{query}` placeholder will be\n    replaced with the current query. An optional `{maxResults}` placeholder\n    may also be provided, and will be replaced with the value of the\n    maxResults attribute (or 1000 if the maxResults attribute is 0 or less).\n    </p>\n\n    <p>\n    The response is assumed to be a JSON array of results by default. If the\n    response is a JSON object and not an array, provide a\n    `resultListLocator` to process the response and return an array. If the\n    response is in some form other than JSON, you will need to use a custom\n    DataSource instance as the source.\n    </p>\n\n    <p>\n    <strong>The `io-base` and `json-parse` modules\n    must be loaded in order for XHR URL sources to work.</strong> If\n    these modules are not already loaded, they will be loaded on demand\n    if possible.\n    </p>\n\n    <p>\n    Example: `http://example.com/search?q={query}`\n    </p>\n  </dd>\n\n  <dt>String (YQL query)</dt>\n  <dd>\n    <p>\n    If a YQL query is provided, it will be used to make a YQL request. The\n    `{query}` placeholder will be replaced with the current autocomplete\n    query. This placeholder must appear in the YQL query, or the request\n    will fail. An optional `{maxResults}` placeholder may also be provided,\n    and will be replaced with the value of the maxResults attribute (or 1000\n    if the maxResults attribute is 0 or less).\n    </p>\n\n    <p>\n    <strong>The `yql` module must be loaded in order for YQL\n    sources to work.</strong> If the `yql` module is not\n    already loaded, it will be loaded on demand if possible.\n    </p>\n\n    <p>\n    Example: `select * from search.suggest where query=\"{query}\"`\n    </p>\n  </dd>\n</dl>\n\nAs an alternative to providing a source, you could simply listen for `query`\nevents and handle them any way you see fit. Providing a source is optional,\nbut will usually be simpler.",
      "!data": {
@@ -781,7 +999,7 @@
      }
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteList.html#attribute_strings",
      "!doc": "Translatable strings used by the AutoCompleteList widget.",
      "!data": {
@@ -869,7 +1087,7 @@
      }
     },
     "expires": {
-     "!type": "+datatype_date.Date",
+     "!type": "+datatype_date.Date|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cache.html#attribute_expires",
      "!doc": "Absolute Date when data expires or\nrelative number of milliseconds. Zero disables expiration.",
      "!data": {
@@ -877,7 +1095,7 @@
      }
     },
     "entries": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cache.html#attribute_entries",
      "!doc": "Cached entries.",
      "!data": {
@@ -896,7 +1114,7 @@
      }
     },
     "expires": {
-     "!type": "+datatype_date.Date",
+     "!type": "+datatype_date.Date|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CacheOffline.html#attribute_expires",
      "!doc": "Absolute Date when data expires or\nrelative number of milliseconds. Zero disables expiration.",
      "!data": {
@@ -971,7 +1189,7 @@
      }
     },
     "selectedDates": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CalendarBase.html#attribute_selectedDates",
      "!doc": "A read-only attribute providing a list of currently selected dates.",
      "!data": {
@@ -979,7 +1197,7 @@
      }
     },
     "customRenderer": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CalendarBase.html#attribute_customRenderer",
      "!doc": "An object of the form {rules:Object, filterFunction:Function},\nproviding  set of rules and a custom rendering function for\ncustomizing specific calendar cells.",
      "!data": {
@@ -1026,12 +1244,12 @@
       "!doc": "Default visibility applied to new categories and sources."
      },
      "category": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ConsoleFilters.html#attribute_category",
       "!doc": "<p>Map of entry categories to their visibility status.  Update a\nparticular categorys visibility by setting the subattribute to true\n(visible) or false (hidden).</p>\n\n<p>For example, yconsole.filter.set(category.info, false) to hide\nlog entries with the category/logLevel of info.</p>\n\n<p>Similarly, yconsole.filter.get(category.warn) will return a\nboolean indicating whether that category is currently being included\nin the UI.</p>\n\n<p>Unlike the YUI instance configurations logInclude and logExclude\nproperties, filtered entries are only hidden from the UI, but\ncan be made visible again.</p>"
      },
      "source": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ConsoleFilters.html#attribute_source",
       "!doc": "<p>Map of entry sources to their visibility status.  Update a\nparticular sourcess visibility by setting the subattribute to true\n(visible) or false (hidden).</p>\n\n<p>For example, yconsole.filter.set(sources.slider, false) to hide\nlog entries originating from Y.Slider.</p>"
      },
@@ -1052,7 +1270,7 @@
       }
      },
      "initialRequest": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DataTableDataSource.html#attribute_initialRequest",
       "!doc": "Request sent to DataSource immediately upon initialization.",
       "!data": {
@@ -1079,7 +1297,7 @@
       }
      },
      "tickX": {
-      "!type": "number",
+      "!type": "number|bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_tickX",
       "!doc": "The X tick offset the drag node should snap to on each drag move. False for no ticks. Default: false",
       "!data": {
@@ -1087,7 +1305,7 @@
       }
      },
      "tickY": {
-      "!type": "number",
+      "!type": "number|bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_tickY",
       "!doc": "The Y tick offset the drag node should snap to on each drag move. False for no ticks. Default: false",
       "!data": {
@@ -1095,7 +1313,7 @@
       }
      },
      "tickXArray": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_tickXArray",
       "!doc": "An array of page coordinates to use as X ticks for drag movement.",
       "!data": {
@@ -1103,7 +1321,7 @@
       }
      },
      "tickYArray": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_tickYArray",
       "!doc": "An array of page coordinates to use as Y ticks for drag movement.",
       "!data": {
@@ -1119,7 +1337,7 @@
       }
      },
      "constrain": {
-      "!type": "string",
+      "!type": "string|+Object|+node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_constrain",
       "!doc": "Will attempt to constrain the drag node to the boundaries. Arguments:<br>\nview: Contrain to Viewport<br>\n#selector_string: Constrain to this node<br>\n{Region Object}: An Object Literal containing a valid region (top, right, bottom, left) of page positions",
       "!data": {
@@ -1127,7 +1345,7 @@
       }
      },
      "constrain2region": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_constrain2region",
       "!doc": "An Object Literal containing a valid region (top, right, bottom, left) of page positions to constrain the drag node to.",
       "!data": {
@@ -1135,7 +1353,7 @@
       }
      },
      "constrain2node": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_constrain2node",
       "!doc": "Will attempt to constrain the drag node to the boundaries of this node.",
       "!data": {
@@ -1143,7 +1361,7 @@
       }
      },
      "constrain2view": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#attribute_constrain2view",
       "!doc": "Will attempt to constrain the drag node to the boundaries of the viewport region.",
       "!data": {
@@ -1297,7 +1515,7 @@
     },
     "ResizeConstrainedConfig": {
      "constrain": {
-      "!type": "string",
+      "!type": "string|+Object|+node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ResizeConstrained.html#attribute_constrain",
       "!doc": "Will attempt to constrain the resize node to the boundaries. Arguments:<br>\nview: Contrain to Viewport<br>\n#selector_string: Constrain to this node<br>\n{Region Object}: An Object Literal containing a valid region (top, right, bottom, left) of page positions",
       "!data": {
@@ -1345,7 +1563,7 @@
       }
      },
      "tickX": {
-      "!type": "number",
+      "!type": "number|bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ResizeConstrained.html#attribute_tickX",
       "!doc": "The number of x ticks to span the resize to.",
       "!data": {
@@ -1353,7 +1571,7 @@
       }
      },
      "tickY": {
-      "!type": "number",
+      "!type": "number|bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ResizeConstrained.html#attribute_tickY",
       "!doc": "The number of y ticks to span the resize to.",
       "!data": {
@@ -1383,7 +1601,7 @@
     "ResizeProxyConfig": {
      "!proto": "config.Plugin.BaseConfig",
      "proxyNode": {
-      "!type": "string",
+      "!type": "string|+node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ResizeProxy.html#attribute_proxyNode",
       "!doc": "The Resize proxy element.",
       "!data": {
@@ -1471,7 +1689,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AreaSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing area fills. This attribute is inherited from `Renderer`. Below are the default values:\n\n <dl>\n     <dt>color</dt><dd>The color of the fill. The default value is determined by the order of the series on the graph. The color will be\n     retrieved from the following array:\n     `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n     </dd>\n     <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1</dd>\n </dl>",
      "!data": {
@@ -1490,7 +1708,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AreaSplineSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing area fills. This attribute is inherited from `Renderer`. Below are the default values:\n\n <dl>\n     <dt>color</dt><dd>The color of the fill. The default value is determined by the order of the series on the graph. The color will be\n     retrieved from the following array:\n     `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n     </dd>\n     <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1</dd>\n </dl>",
      "!data": {
@@ -1573,7 +1791,7 @@
      }
     },
     "labels": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Axis.html#attribute_labels",
      "!doc": "Collection of labels used to render the axis.",
      "!data": {
@@ -1581,7 +1799,7 @@
      }
     },
     "tickPoints": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Axis.html#attribute_tickPoints",
      "!doc": "Collection of points used for placement of labels and ticks along the axis.",
      "!data": {
@@ -1621,7 +1839,7 @@
      }
     },
     "labelValues": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Axis.html#attribute_labelValues",
      "!doc": "An array containing the unformatted values of the axis labels. By default, TimeAxis, NumericAxis and\nStackedAxis labelValues are determined by the majorUnit style. By default, CategoryAxis labels are\ndetermined by the values of the dataProvider.\n<p>When the labelValues attribute is explicitly set, the labelValues are dictated by the set value and\nthe position of ticks and labels are determined by where those values would fall on the axis. </p>",
      "!data": {
@@ -1645,7 +1863,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Axis.html#attribute_styles",
      "!doc": "Style properties used for drawing an axis. This attribute is inherited from `Renderer`. Below are the default values:\n <dl>\n     <dt>majorTicks</dt><dd>Properties used for drawing ticks.\n         <dl>\n             <dt>display</dt><dd>Position of the tick. Possible values are `inside`, `outside`, `cross` and `none`.\n             The default value is `inside`.</dd>\n             <dt>length</dt><dd>The length (in pixels) of the tick. The default value is 4.</dd>\n             <dt>color</dt><dd>The color of the tick. The default value is `#dad8c9`</dd>\n             <dt>weight</dt><dd>Number indicating the width of the tick. The default value is 1.</dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the tick. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>line</dt><dd>Properties used for drawing the axis line.\n         <dl>\n             <dt>weight</dt><dd>Number indicating the width of the axis line. The default value is 1.</dd>\n             <dt>color</dt><dd>The color of the axis line. The default value is `#dad8c9`.</dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the tick. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>majorUnit</dt><dd>Properties used to calculate the `majorUnit` for the axis.\n         <dl>\n             <dt>determinant</dt><dd>The algorithm used for calculating distance between ticks. The possible options are\n             `count` and `distance`. If the `determinant` is `count`, the axis ticks will spaced so that a specified number\n             of ticks appear on the axis. If the `determinant` is `distance`, the axis ticks will spaced out according to\n             the specified distance. The default value is `count`.</dd>\n             <dt>count</dt><dd>Number of ticks to appear on the axis when the `determinant` is `count`. The default value is 11.</dd>\n             <dt>distance</dt><dd>The distance (in pixels) between ticks when the `determinant` is `distance`. The default\n             value is 75.</dd>\n         </dl>\n     </dd>\n     <dt>label</dt><dd>Properties and styles applied to the axis labels.\n         <dl>\n             <dt>color</dt><dd>The color of the labels. The default value is `#808080`.</dd>\n             <dt>alpha</dt><dd>Number between 0 and 1 indicating the opacity of the labels. The default value is 1.</dd>\n             <dt>fontSize</dt><dd>The font-size of the labels. The default value is 85%</dd>\n             <dt>rotation</dt><dd>The rotation, in degrees (between -90 and 90) of the labels. The default value is 0.</dd>\n             <dt>offset</td><dd>A number between 0 and 1 indicating the relationship of the label to a tick. For a horizontal axis\n             label, a value of 0 will position the labels left side even to the the tick. A position of 1 would position the\n             right side of the label with the tick. A position of 0.5 would center the label horizontally with the tick. For a\n             vertical axis, a value of 0 would position the top of the label with the tick, a value of 1 would position the bottom\n             of the label with the tick and a value 0 would center the label vertically with the tick. The default value is 0.5.</dd>\n             <dt>margin</dt><dd>The distance between the label and the axis/tick. Depending on the position of the `Axis`,\n             only one of the properties used.\n                 <dl>\n                     <dt>top</dt><dd>Pixel value used for an axis with a `position` of `bottom`. The default value is 4.</dd>\n                     <dt>right</dt><dd>Pixel value used for an axis with a `position` of `left`. The default value is 4.</dd>\n                     <dt>bottom</dt><dd>Pixel value used for an axis with a `position` of `top`. The default value is 4.</dd>\n                     <dt>left</dt><dd>Pixel value used for an axis with a `position` of `right`. The default value is 4.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n </dl>",
      "!data": {
@@ -1664,7 +1882,7 @@
      }
     },
     "keys": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AxisBase.html#attribute_keys",
      "!doc": "Hash of array identifed by a string value.",
      "!data": {
@@ -1680,7 +1898,7 @@
      }
     },
     "dataProvider": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AxisBase.html#attribute_dataProvider",
      "!doc": "Instance of `ChartDataProvider` that the class uses\nto build its own data.",
      "!data": {
@@ -1736,7 +1954,7 @@
      }
     },
     "data": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AxisBase.html#attribute_data",
      "!doc": "Array of axis data",
      "!data": {
@@ -1744,7 +1962,7 @@
      }
     },
     "keyCollection": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AxisBase.html#attribute_keyCollection",
      "!doc": "Array containing all the keys in the axis.",
      "!data": {
@@ -1752,7 +1970,7 @@
      }
     },
     "labelFunctionScope": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AxisBase.html#attribute_labelFunctionScope",
      "!doc": "Object which should have by the labelFunction",
      "!data": {
@@ -1779,7 +1997,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/BarSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `MarkerSeries`. Below are the default values:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n             </dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>height</dt><dd>indicates the width of the marker. The default value is 12.</dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -1830,7 +2048,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CandlestickSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing candles and wicks. This attribute is inherited from `RangeSeries`. Below are the default values:\n <dl>\n     <dt>upcandle</dt><dd>Properties for a candle representing a period that closes higher than it opens.\n         <dl>\n             <dt>fill</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the fill. The default value is \"#00aa00\".</dd>\n                     </dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n                 </dl>\n             </dd>\n             <dt>border</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the border. The default value is \"#000000\".</dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n                     <dt>weight</dt><dd>Number indicating the width of the border. The default value is 0.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n     <dt>downcandle</dt><dd>Properties for a candle representing a period that opens higher than it closes.\n         <dl>\n             <dt>fill</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the fill. The default value is \"#aa0000\".</dd>\n                     </dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n                 </dl>\n             </dd>\n             <dt>border</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the border. The default value is \"#000000\".</dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n                     <dt>weight</dt><dd>Number indicating the width of the border. The default value is 0.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n     <dt>wick</dt><dd>Properties for the wick, which is a line drawn from the high point of the period to the low point of the period.\n         <dl>\n             <dt>color</dt><dd>The color of the wick. The default value is \"#000000\".</dd>\n             <dt>weight</dt><dd>The weight of the wick. The default value is 1.</dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the wick. The default value is 1.</dd>\n         </dl>\n     </dd>\n </dl>",
      "!data": {
@@ -1849,7 +2067,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianChart.html#attribute_styles",
      "!doc": "Style properties for the chart. Contains a key indexed hash of the following:\n <dl>\n     <dt>series</dt><dd>A key indexed hash containing references to the `styles` attribute for each series in the chart.\n     Specific style attributes vary depending on the series:\n     <ul>\n         <li><a href=\"AreaSeries.html#attr_styles\">AreaSeries</a></li>\n         <li><a href=\"BarSeries.html#attr_styles\">BarSeries</a></li>\n         <li><a href=\"ColumnSeries.html#attr_styles\">ColumnSeries</a></li>\n         <li><a href=\"ComboSeries.html#attr_styles\">ComboSeries</a></li>\n         <li><a href=\"LineSeries.html#attr_styles\">LineSeries</a></li>\n         <li><a href=\"MarkerSeries.html#attr_styles\">MarkerSeries</a></li>\n         <li><a href=\"SplineSeries.html#attr_styles\">SplineSeries</a></li>\n     </ul>\n     </dd>\n     <dt>axes</dt><dd>A key indexed hash containing references to the `styles` attribute for each axes in the chart. Specific\n     style attributes can be found in the <a href=\"Axis.html#attr_styles\">Axis</a> class.</dd>\n     <dt>graph</dt><dd>A reference to the `styles` attribute in the chart. Specific style attributes can be found in the\n     <a href=\"Graph.html#attr_styles\">Graph</a> class.</dd>\n </dl>",
      "!data": {
@@ -1857,7 +2075,7 @@
      }
     },
     "axes": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianChart.html#attribute_axes",
      "!doc": "Axes to appear in the chart. This can be a key indexed hash of axis instances or object literals\nused to construct the appropriate axes.",
      "!data": {
@@ -1865,7 +2083,7 @@
      }
     },
     "seriesCollection": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianChart.html#attribute_seriesCollection",
      "!doc": "Collection of series to appear on the chart. This can be an array of Series instances or object literals\nused to construct the appropriate series.",
      "!data": {
@@ -1964,7 +2182,7 @@
    "CartesianSeriesConfig": {
     "!proto": "config.SeriesBaseConfig",
     "seriesTypeCollection": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_seriesTypeCollection",
      "!doc": "An array of all series of the same type used within a chart application.",
      "!data": {
@@ -2028,7 +2246,7 @@
      }
     },
     "xcoords": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_xcoords",
      "!doc": "x coordinates for the series.",
      "!data": {
@@ -2036,7 +2254,7 @@
      }
     },
     "ycoords": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_ycoords",
      "!doc": "y coordinates for the series",
      "!data": {
@@ -2076,7 +2294,7 @@
      }
     },
     "xData": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_xData",
      "!doc": "Array of x values for the series.",
      "!data": {
@@ -2084,7 +2302,7 @@
      }
     },
     "yData": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_yData",
      "!doc": "Array of y values for the series.",
      "!data": {
@@ -2092,7 +2310,7 @@
      }
     },
     "xMarkerPlane": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_xMarkerPlane",
      "!doc": "Collection of area maps along the xAxis. Used to determine mouseover for multiple\nseries.",
      "!data": {
@@ -2100,7 +2318,7 @@
      }
     },
     "yMarkerPlane": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CartesianSeries.html#attribute_yMarkerPlane",
      "!doc": "Collection of area maps along the yAxis. Used to determine mouseover for multiple\nseries.",
      "!data": {
@@ -2134,7 +2352,7 @@
    },
    "CategoryImplConfig": {
     "labelFormat": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/CategoryImpl.html#attribute_labelFormat",
      "!doc": "Pattern used by the `labelFunction` to format a label. The default `labelFunction` values for\n`CategoryAxis` and `CategoryAxisBase` do not accept a format object. This value can be used by\na custom method.",
      "!data": {
@@ -2160,7 +2378,7 @@
    },
    "ChartBaseConfig": {
     "dataProvider": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartBase.html#attribute_dataProvider",
      "!doc": "Data used to generate the chart.",
      "!data": {
@@ -2168,7 +2386,7 @@
      }
     },
     "seriesKeys": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartBase.html#attribute_seriesKeys",
      "!doc": "A collection of keys that map to the series axes. If no keys are set,\nthey will be generated automatically depending on the data structure passed into\nthe chart.",
      "!data": {
@@ -2192,7 +2410,7 @@
      }
     },
     "tooltip": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartBase.html#attribute_tooltip",
      "!doc": "Reference to the default tooltip available for the chart.\n<p>Contains the following properties:</p>\n <dl>\n     <dt>node</dt><dd>Reference to the actual dom node</dd>\n     <dt>showEvent</dt><dd>Event that should trigger the tooltip</dd>\n     <dt>hideEvent</dt><dd>Event that should trigger the removal of a tooltip (can be an event or an array of events)</dd>\n     <dt>styles</dt><dd>A hash of style properties that will be applied to the tooltip node</dd>\n     <dt>show</dt><dd>Indicates whether or not to show the tooltip</dd>\n     <dt>markerEventHandler</dt><dd>Displays and hides tooltip based on marker events</dd>\n     <dt>planarEventHandler</dt><dd>Displays and hides tooltip based on planar events</dd>\n     <dt>markerLabelFunction</dt><dd>Reference to the function used to format a marker event triggered tooltips text.\n     The method contains the following arguments:\n <dl>\n     <dt>categoryItem</dt><dd>An object containing the following:\n <dl>\n     <dt>axis</dt><dd>The axis to which the category is bound.</dd>\n     <dt>displayName</dt><dd>The display name set to the category (defaults to key if not provided).</dd>\n     <dt>key</dt><dd>The key of the category.</dd>\n     <dt>value</dt><dd>The value of the category.</dd>\n </dl>\n </dd>\n <dt>valueItem</dt><dd>An object containing the following:\n     <dl>\n         <dt>axis</dt><dd>The axis to which the items series is bound.</dd>\n         <dt>displayName</dt><dd>The display name of the series. (defaults to key if not provided)</dd>\n         <dt>key</dt><dd>The key for the series.</dd>\n         <dt>value</dt><dd>The value for the series item.</dd>\n     </dl>\n </dd>\n <dt>itemIndex</dt><dd>The index of the item within the series.</dd>\n <dt>series</dt><dd> The `CartesianSeries` instance of the item.</dd>\n <dt>seriesIndex</dt><dd>The index of the series in the `seriesCollection`.</dd>\n </dl>\n The method returns an `HTMLElement` which is written into the DOM using `appendChild`. If you override this method and choose\n to return an html string, you will also need to override the tooltips `setTextFunction` method to accept an html string.\n </dd>\n <dt>planarLabelFunction</dt><dd>Reference to the function used to format a planar event triggered tooltips text\n <dl>\n     <dt>categoryAxis</dt><dd> `CategoryAxis` Reference to the categoryAxis of the chart.\n     <dt>valueItems</dt><dd>Array of objects for each series that has a data point in the coordinate plane of the event. Each\n     object contains the following data:\n <dl>\n     <dt>axis</dt><dd>The value axis of the series.</dd>\n     <dt>key</dt><dd>The key for the series.</dd>\n     <dt>value</dt><dd>The value for the series item.</dd>\n     <dt>displayName</dt><dd>The display name of the series. (defaults to key if not provided)</dd>\n </dl>\n </dd>\n     <dt>index</dt><dd>The index of the item within its series.</dd>\n     <dt>seriesArray</dt><dd>Array of series instances for each value item.</dd>\n     <dt>seriesIndex</dt><dd>The index of the series in the `seriesCollection`.</dd>\n </dl>\n </dd>\n </dl>\n The method returns an `HTMLElement` which is written into the DOM using `appendChild`. If you override this method and choose\n to return an html string, you will also need to override the tooltips `setTextFunction` method to accept an html string.\n </dd>\n <dt>setTextFunction</dt><dd>Method that writes content returned from `planarLabelFunction` or `markerLabelFunction` into the\n the tooltip node. Has the following signature:\n <dl>\n     <dt>label</dt><dd>The `HTMLElement` that the content is to be added.</dd>\n     <dt>val</dt><dd>The content to be rendered into tooltip. This can be a `String` or `HTMLElement`. If an HTML string is used,\n     it will be rendered as a string.</dd>\n </dl>\n </dd>\n </dl>",
      "!data": {
@@ -2224,7 +2442,7 @@
      }
     },
     "axesCollection": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartBase.html#attribute_axesCollection",
      "!doc": "Reference to all the axes in the chart.",
      "!data": {
@@ -2307,7 +2525,7 @@
      }
     },
     "items": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartLegend.html#attribute_items",
      "!doc": "Array of items contained in the legend. Each item is an object containing the following properties:\n\n<dl>\n     <dt>node</dt><dd>Node containing text for the legend item.</dd>\n     <dt>marker</dt><dd>Shape for the legend item.</dd>\n</dl>",
      "!data": {
@@ -2323,7 +2541,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartLegend.html#attribute_styles",
      "!doc": "Properties used to display and style the ChartLegend.  This attribute is inherited from `Renderer`.\nBelow are the default values:\n\n <dl>\n     <dt>gap</dt><dd>Distance, in pixels, between the `ChartLegend` instance and the charts content. When `ChartLegend`\n     is rendered within a `Chart` instance this value is applied.</dd>\n     <dt>hAlign</dt><dd>Defines the horizontal alignment of the `items` in a `ChartLegend` rendered in a horizontal direction.\n     This value is applied when the instances `position` is set to top or bottom. This attribute can be set to left, center\n     or right. The default value is center.</dd>\n     <dt>vAlign</dt><dd>Defines the vertical alignment of the `items` in a `ChartLegend` rendered in vertical direction. This\n     value is applied when the instances `position` is set to left or right. The attribute can be set to top, middle or\n     bottom. The default value is middle.</dd>\n     <dt>item</dt><dd>Set of style properties applied to the `items` of the `ChartLegend`.\n         <dl>\n             <dt>hSpacing</dt><dd>Horizontal distance, in pixels, between legend `items`.</dd>\n             <dt>vSpacing</dt><dd>Vertical distance, in pixels, between legend `items`.</dd>\n             <dt>label</dt><dd>Properties for the text of an `item`.\n                 <dl>\n                     <dt>color</dt><dd>Color of the text. The default values is \"#808080\".</dd>\n                     <dt>fontSize</dt><dd>Font size for the text. The default value is \"85%\".</dd>\n                 </dl>\n             </dd>\n             <dt>marker</dt><dd>Properties for the `item` markers.\n                 <dl>\n                     <dt>width</dt><dd>Specifies the width of the markers.</dd>\n                     <dt>height</dt><dd>Specifies the height of the markers.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n     <dt>background</dt><dd>Properties for the `ChartLegend` background.\n         <dl>\n             <dt>fill</dt><dd>Properties for the background fill.\n                 <dl>\n                     <dt>color</dt><dd>Color for the fill. The default value is \"#faf9f2\".</dd>\n                 </dl>\n             </dd>\n             <dt>border</dt><dd>Properties for the background border.\n                 <dl>\n                     <dt>color</dt><dd>Color for the border. The default value is \"#dad8c9\".</dd>\n                     <dt>weight</dt><dd>Weight of the border. The default values is 1.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n</dl>",
      "!data": {
@@ -2342,7 +2560,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ColumnSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `MarkerSeries`. Below are the default values:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n             </dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>width</dt><dd>indicates the width of the marker. The default value is 12.</dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -2385,7 +2603,7 @@
      }
     },
     "marker": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ComboSeries.html#attribute_marker",
      "!doc": "Reference to the styles of the markers. These styles can also\nbe accessed through the `styles` attribute. Below are default\nvalues:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the\n             graph. The color will be retrieved from the below array:<br/>\n             `[\"#6084d0\", \"#eeb647\", \"#6c6b5f\", \"#d6484f\", \"#ce9ed1\", \"#ff9f3b\", \"#93b7ff\", \"#e0ddd0\", \"#94ecba\", \"#309687\"]`\n             </dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph.\n             The color will be retrieved from the below array:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>width</dt><dd>indicates the width of the marker. The default value is 10.</dd>\n     <dt>height</dt><dd>indicates the height of the marker The default value is 10.</dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -2393,7 +2611,7 @@
      }
     },
     "line": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ComboSeries.html#attribute_line",
      "!doc": "Reference to the styles of the lines. These styles can also be accessed through the `styles` attribute.\nBelow are the default values:\n <dl>\n     <dt>color</dt><dd>The color of the line. The default value is determined by the order of the series on the graph. The color\n     will be retrieved from the following array:\n     `[\"#426ab3\", \"#d09b2c\", \"#000000\", \"#b82837\", \"#b384b5\", \"#ff7200\", \"#779de3\", \"#cbc8ba\", \"#7ed7a6\", \"#007a6c\"]`\n     <dt>weight</dt><dd>Number that indicates the width of the line. The default value is 6.</dd>\n     <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the line. The default value is 1.</dd>\n     <dt>lineType</dt><dd>Indicates whether the line is solid or dashed. The default value is solid.</dd>\n     <dt>dashLength</dt><dd>When the `lineType` is dashed, indicates the length of the dash. The default value is 10.</dd>\n     <dt>gapSpace</dt><dd>When the `lineType` is dashed, indicates the distance between dashes. The default value is 10.</dd>\n     <dt>connectDiscontinuousPoints</dt><dd>Indicates whether or not to connect lines when there is a missing or null value\n     between points. The default value is true.</dd>\n     <dt>discontinuousType</dt><dd>Indicates whether the line between discontinuous points is solid or dashed. The default\n     value is solid.</dd>\n     <dt>discontinuousDashLength</dt><dd>When the `discontinuousType` is dashed, indicates the length of the dash. The default\n     value is 10.</dd>\n     <dt>discontinuousGapSpace</dt><dd>When the `discontinuousType` is dashed, indicates the distance between dashes. The default\n     value is 10.</dd>\n </dl>",
      "!data": {
@@ -2401,7 +2619,7 @@
      }
     },
     "area": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ComboSeries.html#attribute_area",
      "!doc": "Reference to the styles of the area fills. These styles can also be accessed through the `styles` attribute.\nBelow are the default values:\n\n <dl>\n     <dt>color</dt><dd>The color of the fill. The default value is determined by the order of the series on the\n     graph. The color will be retrieved from the following array:\n     `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n     </dd>\n     <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1</dd>\n </dl>",
      "!data": {
@@ -2409,7 +2627,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ComboSeries.html#attribute_styles",
      "!doc": "Style properties for the series. Contains a key indexed hash of the following:\n <dl>\n     <dt>marker</dt><dd>Style properties for the markers in the series. Specific style attributes are listed\n     <a href=\"#attr_marker\">here</a>.</dd>\n     <dt>line</dt><dd>Style properties for the lines in the series. Specific\n     style attributes are listed <a href=\"#attr_line\">here</a>.</dd>\n     <dt>area</dt><dd>Style properties for the area fills in the series. Specific style attributes are listed\n     <a href=\"#attr_area\">here</a>.</dd>\n </dl>",
      "!data": {
@@ -2455,7 +2673,7 @@
      }
     },
     "seriesDictionary": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Graph.html#attribute_seriesDictionary",
      "!doc": "Read-only hash lookup for all series on in the `Graph`.",
      "!data": {
@@ -2511,7 +2729,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Graph.html#attribute_styles",
      "!doc": "Style properties used for drawing a background. Below are the default values:\n <dl>\n     <dt>background</dt><dd>An object containing the following values:\n         <dl>\n             <dt>fill</dt><dd>Defines the style properties for the fill. Contains the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the fill. The default value is #faf9f2.</dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the background fill.\n                     The default value is 1.</dd>\n                 </dl>\n             </dd>\n             <dt>border</dt><dd>Defines the style properties for the border. Contains the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the border. The default value is #dad8c9.</dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the background border.\n                     The default value is 1.</dd>\n                     <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n </dl>",
      "!data": {
@@ -2565,7 +2783,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/LineSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing lines. This attribute is inherited from `Renderer`. Below are the\ndefault values:\n <dl>\n     <dt>color</dt><dd>The color of the line. The default value is determined by the order of the series\n     on the graph. The color will be retrieved from the following array:\n     `[\"#426ab3\", \"#d09b2c\", \"#000000\", \"#b82837\", \"#b384b5\", \"#ff7200\", \"#779de3\", \"#cbc8ba\", \"#7ed7a6\", \"#007a6c\"]`\n     <dt>weight</dt><dd>Number that indicates the width of the line. The default value is 6.</dd>\n     <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the line. The default value is 1.</dd>\n     <dt>lineType</dt><dd>Indicates whether the line is solid or dashed. The default value is solid.</dd>\n     <dt>dashLength</dt><dd>When the `lineType` is dashed, indicates the length of the dash. The default\n     value is 10.</dd>\n     <dt>gapSpace</dt><dd>When the `lineType` is dashed, indicates the distance between dashes. The default\n     value is 10.</dd>\n     <dt>connectDiscontinuousPoints</dt><dd>Indicates whether or not to connect lines when there is a missing\n     or null value between points. The default value is true.</dd>\n     <dt>discontinuousType</dt><dd>Indicates whether the line between discontinuous points is solid or dashed.\n     The default value is solid.</dd>\n     <dt>discontinuousDashLength</dt><dd>When the `discontinuousType` is dashed, indicates the length of the\n     dash. The default value is 10.</dd>\n     <dt>discontinuousGapSpace</dt><dd>When the `discontinuousType` is dashed, indicates the distance between\n     dashes. The default value is 10.</dd>\n </dl>",
      "!data": {
@@ -2584,7 +2802,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/MarkerSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `Renderer`. Below are the default\nvalues:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on\n             the graph. The color will be retrieved from the below array:<br/>\n             `[\"#6084d0\", \"#eeb647\", \"#6c6b5f\", \"#d6484f\", \"#ce9ed1\", \"#ff9f3b\", \"#93b7ff\", \"#e0ddd0\", \"#94ecba\", \"#309687\"]`\n             </dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on\n             the graph. The color will be retrieved from the below array:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>width</dt><dd>indicates the width of the marker. The default value is 10.</dd>\n     <dt>height</dt><dd>indicates the height of the marker The default value is 10.</dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -2610,7 +2828,7 @@
      }
     },
     "labelFormat": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/NumericImpl.html#attribute_labelFormat",
      "!doc": "Object containing properties used by the `labelFunction` to format a\nlabel.",
      "!data": {
@@ -2653,7 +2871,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/OHLCSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `RangeSeries`. Below are the default values:\n <dl>\n     <dt>upmarker</dt><dd>Properties for a marker representing a period that closes higher than it opens.\n         <dl>\n             <dt>fill</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the fill. The default value is \"#00aa00\".</dd>\n                     </dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n                 </dl>\n             </dd>\n             <dt>border</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the border. The default value is \"#000000\".</dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n                     <dt>weight</dt><dd>Number indicating the width of the border. The default value is 0.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n     <dt>downmarker</dt><dd>Properties for a marker representing a period that opens higher than it closes.\n         <dl>\n             <dt>fill</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the fill. The default value is \"#aa0000\".</dd>\n                     </dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n                 </dl>\n             </dd>\n             <dt>border</dt><dd>A hash containing the following values:\n                 <dl>\n                     <dt>color</dt><dd>Color of the border. The default value is \"#000000\".</dd>\n                     <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n                     <dt>weight</dt><dd>Number indicating the width of the border. The default value is 0.</dd>\n                 </dl>\n             </dd>\n         </dl>\n     </dd>\n </dl>",
      "!data": {
@@ -2672,7 +2890,7 @@
      }
     },
     "axes": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/PieChart.html#attribute_axes",
      "!doc": "Axes to appear in the chart.",
      "!data": {
@@ -2680,7 +2898,7 @@
      }
     },
     "seriesCollection": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/PieChart.html#attribute_seriesCollection",
      "!doc": "Collection of series to appear on the chart. This can be an array of Series instances or object literals\nused to describe a Series instance.",
      "!data": {
@@ -2768,7 +2986,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/PieSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `MarkerSeries`. Below are  the default\nvalues:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>colors</dt><dd>An array of colors to be used for the marker fills. The color for each marker  is\n             retrieved from the array below:<br/>\n             `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n             </dd>\n             <dt>alphas</dt><dd>An array of alpha references (Number from 0 to 1) indicating the opacity of each marker\n             fill. The default value is [1].</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>An array of colors to be used for the marker borders. The color for each marker is\n             retrieved from the array below:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -2787,7 +3005,7 @@
      }
     },
     "ohlc": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/RangeSeries.html#attribute_ohlc",
      "!doc": "Values to be used for open, high, low and close keys.",
      "!data": {
@@ -2797,7 +3015,7 @@
    },
    "RendererConfig": {
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Renderer.html#attribute_styles",
      "!doc": "Style properties for class"
     },
@@ -2877,7 +3095,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/SplineSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing lines. This attribute is inherited from `Renderer`.\nBelow are the default values:\n <dl>\n     <dt>color</dt><dd>The color of the line. The default value is determined by the order of the series on\n     the graph. The color will be retrieved from the following array:\n     `[\"#426ab3\", \"#d09b2c\", \"#000000\", \"#b82837\", \"#b384b5\", \"#ff7200\", \"#779de3\", \"#cbc8ba\", \"#7ed7a6\", \"#007a6c\"]`\n     <dt>weight</dt><dd>Number that indicates the width of the line. The default value is 6.</dd>\n     <dt>alpha</dt><dd>Number between 0 and 1 that indicates the opacity of the line. The default value is 1.</dd>\n     <dt>lineType</dt><dd>Indicates whether the line is solid or dashed. The default value is solid.</dd>\n     <dt>dashLength</dt><dd>When the `lineType` is dashed, indicates the length of the dash. The default value\n     is 10.</dd>\n     <dt>gapSpace</dt><dd>When the `lineType` is dashed, indicates the distance between dashes. The default value is\n     10.</dd>\n     <dt>connectDiscontinuousPoints</dt><dd>Indicates whether or not to connect lines when there is a missing or null\n     value between points. The default value is true.</dd>\n     <dt>discontinuousType</dt><dd>Indicates whether the line between discontinuous points is solid or dashed. The\n     default value is solid.</dd>\n     <dt>discontinuousDashLength</dt><dd>When the `discontinuousType` is dashed, indicates the length of the dash.\n     The default value is 10.</dd>\n     <dt>discontinuousGapSpace</dt><dd>When the `discontinuousType` is dashed, indicates the distance between dashes.\n     The default value is 10.</dd>\n </dl>",
      "!data": {
@@ -2926,7 +3144,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/StackedBarSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `BarSeries`. Below are the default values:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n             </dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>height</dt><dd>indicates the width of the marker. The default value is 24.</dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -2945,7 +3163,7 @@
      }
     },
     "styles": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/StackedColumnSeries.html#attribute_styles",
      "!doc": "Style properties used for drawing markers. This attribute is inherited from `ColumnSeries`. Below are the default values:\n <dl>\n     <dt>fill</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the fill. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#66007f\", \"#a86f41\", \"#295454\", \"#996ab2\", \"#e8cdb7\", \"#90bdbd\",\"#000000\",\"#c3b8ca\", \"#968373\", \"#678585\"]`\n             </dd>\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker fill. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>border</dt><dd>A hash containing the following values:\n         <dl>\n             <dt>color</dt><dd>Color of the border. The default value is determined by the order of the series on the graph. The color\n             will be retrieved from the below array:<br/>\n             `[\"#205096\", \"#b38206\", \"#000000\", \"#94001e\", \"#9d6fa0\", \"#e55b00\", \"#5e85c9\", \"#adab9e\", \"#6ac291\", \"#006457\"]`\n             <dt>alpha</dt><dd>Number from 0 to 1 indicating the opacity of the marker border. The default value is 1.</dd>\n             <dt>weight</dt><dd>Number indicating the width of the border. The default value is 1.</dd>\n         </dl>\n     </dd>\n     <dt>width</dt><dd>indicates the width of the marker. The default value is 24.</dd>\n     <dt>over</dt><dd>hash containing styles for markers when highlighted by a `mouseover` event. The default\n     values for each style is null. When an over style is not set, the non-over value will be used. For example,\n     the default value for `marker.over.fill.color` is equivalent to `marker.fill.color`.</dd>\n </dl>",
      "!data": {
@@ -3042,6 +3260,19 @@
      }
     }
    },
+   "Color": {
+    "HarmonyGetOffsetConfig": {
+     "h": {
+      "!type": "number"
+     },
+     "s": {
+      "!type": "number"
+     },
+     "l": {
+      "!type": "number"
+     }
+    }
+   },
    "ConsoleConfig": {
     "!proto": "config.WidgetConfig",
     "logEvent": {
@@ -3055,7 +3286,7 @@
      "!doc": "Object that will emit the log events.  By default the YUI instance.\nTo have a single Console capture events from all YUI instances, set\nthis to the Y.Global object."
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#attribute_strings",
      "!doc": "Collection of strings used to label elements in the Console UI.\nDefault collection contains the following name:value pairs:\n\n<ul>\n  <li>title : &quot;Log Console&quot;</li>\n  <li>pause : &quot;Pause&quot;</li>\n  <li>clear : &quot;Clear&quot;</li>\n  <li>collapse : &quot;Collapse&quot;</li>\n  <li>expand : &quot;Expand&quot;</li>\n</ul>"
     },
@@ -3125,12 +3356,12 @@
      "!doc": "Controls the collapsed state of the Console"
     },
     "height": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#attribute_height",
      "!doc": "String with units, or number, representing the height of the Console,\ninclusive of header and footer. If a number is provided, the default\nunit, defined by Widgets DEF_UNIT, property is used."
     },
     "width": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#attribute_width",
      "!doc": "String with units, or number, representing the width of the Console.\nIf a number is provided, the default unit, defined by Widgets\nDEF_UNIT, property is used."
     },
@@ -3143,6 +3374,56 @@
      "!type": "string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#attribute_style",
      "!doc": "Allows the Console to flow in the document.  Available values are\ninline, block, and separate (the default)."
+    }
+   },
+   "DataSchema": {
+    "ArrayApplyConfig": {
+     "resultFields": {
+      "!type": "[?]",
+      "!doc": "Field identifiers to\n      locate/assign values in the response records. See above for\n      details."
+     }
+    },
+    "JSONApplyConfig": {
+     "resultListLocator": {
+      "!type": "string",
+      "!doc": "Path locator for the\n      location of the array of records to flatten into `response.results`"
+     },
+     "resultFields": {
+      "!type": "[?]",
+      "!doc": "Field identifiers to\n      locate/assign values in the response records. See above for\n      details."
+     },
+     "metaFields": {
+      "!type": "[?]",
+      "!doc": "Path locators to extract extra\n      non-record related information from the data object."
+     }
+    },
+    "TextApplyConfig": {
+     "resultDelimiter": {
+      "!type": "string",
+      "!doc": "Character or character\n      sequence that marks the end of one record and the start of\n      another."
+     },
+     "fieldDelimiter": {
+      "!type": "string",
+      "!doc": "Character or character\n      sequence that marks the end of a field and the start of\n      another within the same record."
+     },
+     "resultFields": {
+      "!type": "[?]",
+      "!doc": "Field identifiers to\n      assign values in the response records. See above for details."
+     }
+    },
+    "XMLApplyConfig": {
+     "resultListLocator": {
+      "!type": "string",
+      "!doc": "XPath locator for the\n      XML nodes that contain the data to flatten into `response.results`"
+     },
+     "resultFields": {
+      "!type": "[?]",
+      "!doc": "Field identifiers to\n      locate/assign values in the response records. See above for\n      details."
+     },
+     "metaFields": {
+      "!type": "[?]",
+      "!doc": "XPath locators to extract extra\n      non-record related information from the XML data"
+     }
     }
    },
    "DataSource": {
@@ -3203,7 +3484,7 @@
       }
      },
      "ioConfig": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSource.IO.html#attribute_ioConfig",
       "!doc": "Default IO Config.",
       "!data": {
@@ -3289,7 +3570,7 @@
      "ViewConfig": {
       "!proto": "config.ViewConfig",
       "pageSizes": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Paginator.View.html#attribute_pageSizes",
        "!doc": "Array of values used to populate the drop down for items per page",
        "!data": {
@@ -3308,7 +3589,7 @@
     },
     "PaginatorConfig": {
      "paginatorModel": {
-      "!type": "+app.Model",
+      "!type": "+app.Model|+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Paginator.html#attribute_paginatorModel",
       "!doc": "A model instance or a configuration object for the Model.",
       "!data": {
@@ -3316,7 +3597,7 @@
       }
      },
      "paginatorModelType": {
-      "!type": "+app.Model",
+      "!type": "+app.Model|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Paginator.html#attribute_paginatorModelType",
       "!doc": "A pointer to a Model object to be instantiated, or a String off of the\n`Y` namespace.\n\nThis is only used if the `paginatorModel` is a configuration object or\nis null.",
       "!data": {
@@ -3324,7 +3605,7 @@
       }
      },
      "paginatorView": {
-      "!type": "+app.View",
+      "!type": "+app.View|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Paginator.html#attribute_paginatorView",
       "!doc": "A pointer to a `Y.View` object to be instantiated. A new view will be\ncreated for each location provided. Each view created will be given the\nsame model instance.",
       "!data": {
@@ -3332,7 +3613,7 @@
       }
      },
      "pageSizes": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Paginator.html#attribute_pageSizes",
       "!doc": "Array of values used to populate the values in the Paginator UI allowing\nthe end user to select the number of items to display per page.",
       "!data": {
@@ -3348,7 +3629,7 @@
       }
      },
      "paginatorLocation": {
-      "!type": "string",
+      "!type": "string|[?]|+node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Paginator.html#attribute_paginatorLocation",
       "!doc": "String of `footer` or `header`, a Y.Node, or an Array or any combination\nof those values.",
       "!data": {
@@ -3375,7 +3656,7 @@
       }
      },
      "columns": {
-      "!type": "[+yui.Object]",
+      "!type": "[+Object]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#attribute_columns",
       "!doc": "Columns to include in the rendered table.\n\nThis attribute takes an array of objects. Each object is considered a\ndata column or header cell to be rendered.  How the objects are\ntranslated into markup is delegated to the `headerView`, `bodyView`,\nand `footerView`.\n\nThe raw value is passed to the `headerView` and `footerView`.  The\n`bodyView` receives the instances `displayColumns` array, which is\nparsed from the columns array.  If there are no nested columns (columns\nconfigured with a `children` array), the `displayColumns` is the same\nas the raw value.",
       "!data": {
@@ -3399,7 +3680,7 @@
       }
      },
      "headerConfig": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#attribute_headerConfig",
       "!doc": "Configuration overrides used when instantiating the `headerView`\ninstance.",
       "!data": {
@@ -3415,7 +3696,7 @@
       }
      },
      "footerConfig": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#attribute_footerConfig",
       "!doc": "Configuration overrides used when instantiating the `footerView`\ninstance.",
       "!data": {
@@ -3431,7 +3712,7 @@
       }
      },
      "bodyConfig": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#attribute_bodyConfig",
       "!doc": "Configuration overrides used when instantiating the `bodyView`\ninstance.",
       "!data": {
@@ -3443,7 +3724,7 @@
    "DataTableConfig": {
     "!proto": "config.DataTable.BaseConfig",
     "columns": {
-     "!type": "[+yui.Object]",
+     "!type": "[+Object]|[string]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_columns",
      "!doc": "Columns to include in the rendered table.\n\nIf omitted, the attributes on the configured `recordType` or the first item\nin the `data` collection will be used as a source.\n\nThis attribute takes an array of strings or objects (mixing the two is\nfine).  Each string or object is considered a column to be rendered.\nStrings are converted to objects, so `columns: [first, last]` becomes\n`columns: [{ key: first }, { key: last }]`.\n\nDataTable.Core only concerns itself with a few properties of columns.\nThese properties are:\n\n* `key` - Used to identify the record field/attribute containing content for\n  this column.  Also used to create a default Model if no `recordType` or\n  `data` are provided during construction.  If `name` is not specified, this\n  is assigned to the `_id` property (with added incrementer if the key is\n  used by multiple columns).\n* `children` - Traversed to initialize nested column objects\n* `name` - Used in place of, or in addition to, the `key`.  Useful for\n  columns that arent bound to a field/attribute in the record data.  This\n  is assigned to the `_id` property.\n* `id` - For backward compatibility.  Implementers can specify the id of\n  the header cell.  This should be avoided, if possible, to avoid the\n  potential for creating DOM elements with duplicate IDs.\n* `field` - For backward compatibility.  Implementers should use `name`.\n* `_id` - Assigned unique-within-this-instance id for a column.  By order\n  of preference, assumes the value of `name`, `key`, `id`, or `_yuid`.\n  This is used by the rendering views as well as feature module\n  as a means to identify a specific column without ambiguity (such as\n  multiple columns using the same `key`.\n* `_yuid` - Guid stamp assigned to the column object.\n* `_parent` - Assigned to all child columns, referencing their parent\n  column.",
      "!data": {
@@ -3459,7 +3740,7 @@
      }
     },
     "data": {
-     "!type": "+app.ModelList",
+     "!type": "+app.ModelList|[+Object]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_data",
      "!doc": "The collection of data records to display.  This attribute is a pass\nthrough to a `data` property, which is a ModelList instance.\n\nIf this attribute is passed a ModelList or subclass, it will be assigned to\nthe property directly.  If an array of objects is passed, a new ModelList\nwill be created using the configured `recordType` as its `model` property\nand seeded with the array.\n\nRetrieving this attribute will return the ModelList stored in the `data`\nproperty.",
      "!data": {
@@ -3483,7 +3764,7 @@
      }
     },
     "recordset": {
-     "!type": "[+yui.Object]",
+     "!type": "[+Object]|+recordset.Recordset",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_recordset",
      "!doc": "Deprecated as of 3.5.0. Passes through to the `data` attribute.\n\nWARNING: `get(recordset)` will NOT return a Recordset instance as of\n3.5.0.  This is a break in backward compatibility.",
      "!data": {
@@ -3491,7 +3772,7 @@
      }
     },
     "columnset": {
-     "!type": "[+yui.Object]",
+     "!type": "[+Object]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_columnset",
      "!doc": "Deprecated as of 3.5.0. Passes through to the `columns` attribute.\n\nWARNING: `get(columnset)` will NOT return a Columnset instance as of\n3.5.0.  This is a break in backward compatibility.",
      "!data": {
@@ -3499,12 +3780,12 @@
      }
     },
     "booleanLabels": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_booleanLabels",
      "!doc": "Determines the texts to be shown to represent Boolean values when the\n[boolean](DataTable.BodyView.Formatters.html#method_boolean) formatter\nis used on any column.\n\nIt works like the column-specific\n[booleanLabels](DataTable.Column.html#property_booleanLabels) but\nfor all columns using the\n[boolean](DataTable.BodyView.Formatters.html#method_boolean) formatter at once.\nThe values are often retrieved from a resource of localized texts."
     },
     "currencyFormat": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_currencyFormat",
      "!doc": "Format specification for columns using the\n[currency](DataTable.BodyView.Formatters.html#method_currency) formatter.\nIt contains an object as described in\n[Number.format](Number.html#method_format).\n\nIt is similar to\n[currencyFormat](DataTable.Column.html#property_currencyFormat)\nbut it applies to any column using the\n[currency](DataTable.BodyView.Formatters.html#method_currency) formatter.\n The values are often retrieved from a resource of localized configuration."
     },
@@ -3514,7 +3795,7 @@
      "!doc": "Format specification for columns using the\n[date](DataTable.BodyView.Formatters.html#method_date) formatter.\nIt contains an object as described in\n[Date.format](Date.html#method_format).\n\nIt is similar to\n[dateFormat](DataTable.Column.html#property_dateFormat)\nbut it applies to any column using the\n[date](DataTable.BodyView.Formatters.html#method_date) formatter.\n The values are often retrieved from a resource of localized configuration."
     },
     "numberFormat": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_numberFormat",
      "!doc": "Format specification for columns using the\n[number](DataTable.BodyView.Formatters.html#method_number) formatter.\nIt contains an object as described in\n[Number.format](Number.html#method_format).\n\nIt is similar to\n[numberFormat](DataTable.Column.html#property_numberFormat)\nbut it applies to any column using the\n[number](DataTable.BodyView.Formatters.html#method_number) formatter.\n The values are often retrieved from a resource of localized configuration."
     },
@@ -3551,12 +3832,12 @@
      }
     },
     "scrollable": {
-     "!type": "string",
+     "!type": "string|bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_scrollable",
      "!doc": "Activates or deactivates scrolling in the table.  Acceptable values are:\n\n * `false` - (default) Scrolling is disabled.\n * `true` or xy - If `height` is set, vertical scrolling will be\n   activated, if `width` is set, horizontal scrolling will be activated.\n * x - Activate horizontal scrolling only. Requires the `width` attribute\n   is also set.\n * y - Activate vertical scrolling only. Requires the `height` attribute\n   is also set."
     },
     "sortable": {
-     "!type": "string",
+     "!type": "string|[string]|bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_sortable",
      "!doc": "Controls which column headers can trigger sorting by user clicks.\n\nAcceptable values are:\n\n * \"auto\" - (default) looks for `sortable: true` in the column configurations\n * `true` - all columns are enabled\n * `false - no UI sortable is enabled\n * {String[]} - array of key names to give sortable headers",
      "!data": {
@@ -3564,7 +3845,7 @@
      }
     },
     "sortBy": {
-     "!type": "string",
+     "!type": "string|[string]|+Object|[+Object]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_sortBy",
      "!doc": "The current sort configuration to maintain in the data.\n\nAccepts column `key` strings or objects with a single property, the column\n`key`, with a value of 1, -1, \"asc\", or \"desc\".  E.g. `{ username: asc\n}`.  String values are assumed to be ascending.\n\nExample values would be:\n\n * `\"username\"` - sort by the datas `username` field or the `key`\n   associated to a column with that `name`.\n * `{ username: \"desc\" }` - sort by `username` in descending order.\n   Alternately, use values \"asc\", 1 (same as \"asc\"), or -1 (same as \"desc\").\n * `[\"lastName\", \"firstName\"]` - ascending sort by `lastName`, but for\n   records with the same `lastName`, ascending subsort by `firstName`.\n   Array can have as many items as you want.\n * `[{ lastName: -1 }, \"firstName\"]` - descending sort by `lastName`,\n   ascending subsort by `firstName`. Mixed types are ok.",
      "!data": {
@@ -3572,7 +3853,7 @@
      }
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#attribute_strings",
      "!doc": "Strings containing language for sorting tooltips.",
      "!data": {
@@ -3691,7 +3972,7 @@
       }
      },
      "dragConfig": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Delegate.html#attribute_dragConfig",
       "!doc": "The default config to be used when creating the DD instance.",
       "!data": {
@@ -3699,7 +3980,7 @@
       }
      },
      "handles": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Delegate.html#attribute_handles",
       "!doc": "The handles config option added to the temp DD instance.",
       "!data": {
@@ -3830,7 +4111,7 @@
       }
      },
      "groups": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#attribute_groups",
       "!doc": "Array of groups to add this drag into.",
       "!data": {
@@ -3838,7 +4119,7 @@
       }
      },
      "handles": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#attribute_handles",
       "!doc": "Array of valid handles to add. Adding something here will set all handles, even if previously added with addHandle",
       "!data": {
@@ -3846,7 +4127,7 @@
       }
      },
      "bubbles": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#attribute_bubbles",
       "!doc": "Controls the default bubble parent for this Drag instance. Default: Y.DD.DDM. Set to false to disable bubbling. Use bubbleTargets in config",
       "!data": {
@@ -3873,7 +4154,7 @@
       }
      },
      "groups": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drop.html#attribute_groups",
       "!doc": "Array of groups to add this drop into.",
       "!data": {
@@ -3897,7 +4178,7 @@
       }
      },
      "bubbles": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drop.html#attribute_bubbles",
       "!doc": "Controls the default bubble parent for this Drop instance. Default: Y.DD.DDM. Set to false to disable bubbling.\nUse bubbleTargets in config.",
       "!data": {
@@ -3932,7 +4213,7 @@
       }
      },
      "host": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Scroll.html#attribute_host",
       "!doc": "The host we are plugged into.",
       "!data": {
@@ -4023,7 +4304,7 @@
      "!doc": "number of decimal places of accuracy in the value"
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Dial.html#attribute_strings",
      "!doc": "visible strings for the dial UI. This attribute is\ndefined by the base Widget class but has an empty value. The\nDial is simply providing a default value for the attribute.\nGets localized strings in the current language"
     },
@@ -4044,7 +4325,7 @@
      }
     },
     "container": {
-     "!type": "string",
+     "!type": "string|+HTMLElement|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ContentEditable.html#attribute_container",
      "!doc": "The container to set contentEditable=true or to create on render.",
      "!data": {
@@ -4092,7 +4373,7 @@
      }
     },
     "linkedcss": {
-     "!type": "string",
+     "!type": "string|[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ContentEditable.html#attribute_linkedcss",
      "!doc": "An array of urls to external linked style sheets",
      "!data": {
@@ -4108,7 +4389,7 @@
      }
     },
     "use": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ContentEditable.html#attribute_use",
      "!doc": "Array of modules to include in the scoped YUI instance at render time. Default: [node-base, editor-selection, stylesheet]",
      "!data": {
@@ -4135,7 +4416,7 @@
      }
     },
     "linkedcss": {
-     "!type": "string",
+     "!type": "string|[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/EditorBase.html#attribute_linkedcss",
      "!doc": "An array of urls to external linked style sheets",
      "!data": {
@@ -4218,7 +4499,7 @@
      }
     },
     "use": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Frame.html#attribute_use",
      "!doc": "Array of modules to include in the scoped YUI instance at render time. Default: [none, selector-css2]",
      "!data": {
@@ -4226,7 +4507,7 @@
      }
     },
     "container": {
-     "!type": "string",
+     "!type": "string|+HTMLElement|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Frame.html#attribute_container",
      "!doc": "The container to append the iFrame to on render.",
      "!data": {
@@ -4250,7 +4531,7 @@
      }
     },
     "linkedcss": {
-     "!type": "string",
+     "!type": "string|[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Frame.html#attribute_linkedcss",
      "!doc": "An array of urls to external linked style sheets",
      "!data": {
@@ -4272,6 +4553,68 @@
      "!data": {
       "submodule": "frame"
      }
+    }
+   },
+   "EventTargetPublishConfig": {
+    "broadcast": {
+     "!type": "bool",
+     "!doc": "whether or not the YUI instance and YUI global\n     are notified when the event is fired."
+    },
+    "bubbles": {
+     "!type": "bool",
+     "!doc": "Whether or not this event bubbles. Events can\n     only bubble if `emitFacade` is true."
+    },
+    "context": {
+     "!type": "+Object",
+     "!doc": "the default execution context for the listeners."
+    },
+    "defaultFn": {
+     "!type": "fn()",
+     "!doc": "the default function to execute when this event\n     fires if preventDefault was not called."
+    },
+    "emitFacade": {
+     "!type": "bool",
+     "!doc": "whether or not this event emits a facade."
+    },
+    "prefix": {
+     "!type": "string",
+     "!doc": "the prefix for this targets events, e.g., menu in menu:click."
+    },
+    "fireOnce": {
+     "!type": "bool",
+     "!doc": "if an event is configured to fire once,\n     new subscribers after the fire will be notified immediately."
+    },
+    "async": {
+     "!type": "bool",
+     "!doc": "fireOnce event listeners will fire synchronously\n     if the event has already fired unless `async` is `true`."
+    },
+    "preventable": {
+     "!type": "bool",
+     "!doc": "whether or not `preventDefault()` has an effect."
+    },
+    "preventedFn": {
+     "!type": "fn()",
+     "!doc": "a function that is executed when `preventDefault()` is called."
+    },
+    "queuable": {
+     "!type": "bool",
+     "!doc": "whether or not this event can be queued during bubbling."
+    },
+    "silent": {
+     "!type": "bool",
+     "!doc": "if silent is true, debug messages are not provided for this event."
+    },
+    "stoppedFn": {
+     "!type": "fn()",
+     "!doc": "a function that is executed when stopPropagation is called."
+    },
+    "monitored": {
+     "!type": "bool",
+     "!doc": "specifies whether or not this event should send notifications about\n     when the event has been attached, detached, or published."
+    },
+    "type": {
+     "!type": "string",
+     "!doc": "the event type (valid option if not provided as the first parameter to publish)."
     }
    },
    "FileFlashConfig": {
@@ -4365,7 +4708,7 @@
      "!doc": "The pointer to the instance of XMLHttpRequest used by FileHTML5 to upload the file."
     },
     "xhrHeaders": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/FileHTML5.html#attribute_xhrHeaders",
      "!doc": "The dictionary of headers that should be set on the XMLHttpRequest object before\nsending it."
     },
@@ -4378,6 +4721,102 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/FileHTML5.html#attribute_boundEventHandler",
      "!doc": "The bound event handler used to handle events from XMLHttpRequest."
+    }
+   },
+   "EventSimulateGestureConfig": {
+    "point": {
+     "!type": "[?]",
+     "!doc": "(Optional) Indicates the [x, y] coordinates\n       where the flick should be simulated. Default is the center of the\n       node element."
+    },
+    "hold": {
+     "!type": "number",
+     "!doc": "(Optional) The hold time in milliseconds.\n       This is the time between `touchstart` and `touchend` event generation.\n       Default is 3000ms (3 seconds).\n\n     Valid options properties for the `move` gesture:"
+    },
+    "times": {
+     "!type": "number",
+     "!doc": "(Optional) Indicates the number of taps."
+    },
+    "delay": {
+     "!type": "number",
+     "!doc": "(Optional) The number of milliseconds\n       before the next tap simulation happens. This is valid only when `times`\n       is more than 1.\n\n     Valid options properties for the `doubletap` gesture:"
+    },
+    "path": {
+     "!type": "+Object",
+     "!doc": "(Optional) Indicates the path of the finger\n       movement. Its an object with three optional properties: `point`,\n       `xdist` and  `ydist`."
+    },
+    "duration": {
+     "!type": "number",
+     "!doc": "(Optional) The duration of the\n       gesture in milliseconds."
+    },
+    "axis": {
+     "!type": "string",
+     "!doc": "(Optional) Valid values are either\n       \"x\" or \"y\". Indicates axis to move along. The flick can move to one of\n       4 directions(left, right, up and down)."
+    },
+    "distance": {
+     "!type": "number",
+     "!doc": "(Optional) Distance to move in pixels"
+    },
+    "center": {
+     "!type": "[?]",
+     "!doc": "(Optional) The center of the circle where\n       two fingers are placed. Default is the center of the node element."
+    },
+    "r1": {
+     "!type": "number",
+     "!doc": "(Optional) Pixel radius of the start circle\n       where 2 fingers will be on when the gesture starts. The circles are\n       centered at the center of the element. Default is a fourth of the node\n       element width or height, whichever is smaller."
+    },
+    "r2": {
+     "!type": "number",
+     "!doc": "(Optional) Pixel radius of the end circle\n       when this gesture ends. Default is a fourth of the node element width or\n       height, whichever is smaller."
+    },
+    "start": {
+     "!type": "number",
+     "!doc": "(Optional) Starting degree of the first\n       finger. The value is relative to the path of the north. Default is 0\n       (i.e., 12:00 on a clock)."
+    },
+    "rotation": {
+     "!type": "number",
+     "!doc": "(Required) Degrees to rotate from\n       the starting degree. A negative value means rotation to the\n       counter-clockwise direction."
+    }
+   },
+   "HandlebarsRenderConfig": {
+    "helpers": {
+     "!type": "+Object",
+     "!doc": "Helper functions."
+    },
+    "partials": {
+     "!type": "+Object",
+     "!doc": "Partials."
+    },
+    "data": {
+     "!type": "+Object",
+     "!doc": "Data."
+    }
+   },
+   "HighlightAllFoldConfig": {
+    "startsWith": {
+     "!type": "bool",
+     "!doc": "If `true`, matches must be\n    anchored to the beginning of the string."
+    }
+   },
+   "HighlightAllConfig": {
+    "caseSensitive": {
+     "!type": "bool",
+     "!doc": "If `true`, matching will\n    be case-sensitive."
+    },
+    "startsWith": {
+     "!type": "bool",
+     "!doc": "If `true`, matches must be\n    anchored to the beginning of the string."
+    }
+   },
+   "HighlightStartConfig": {
+    "caseSensitive": {
+     "!type": "bool",
+     "!doc": "If `true`, matching will\n    be case-sensitive."
+    }
+   },
+   "HighlightWordsConfig": {
+    "caseSensitive": {
+     "!type": "bool",
+     "!doc": "If `true`, matching will\n    be case-sensitive."
     }
    },
    "ImgLoadGroupConfig": {
@@ -4456,6 +4895,214 @@
      "!doc": "AlphaImageLoader <code>enabled</code> property to be set for the image.\nOnly set if <code>isPng</code> value for this image is set to <code>true</code>.\nDefaults to <code>true</code>."
     }
    },
+   "IOStringifyConfig": {
+    "useDisabled": {
+     "!type": "bool",
+     "!doc": "Whether to include disabled fields."
+    },
+    "extra": {
+     "!type": "+Object|string",
+     "!doc": "Extra values to include. May be a query string or an object with key/value pairs."
+    }
+   },
+   "LoaderConfig": {
+    "base": {
+     "!type": "string",
+     "!doc": "The base dir which to fetch this module from"
+    },
+    "comboBase": {
+     "!type": "string",
+     "!doc": "The Combo service base path. Ex: `http://yui.yahooapis.com/combo?`"
+    },
+    "root": {
+     "!type": "string",
+     "!doc": "The root path to prepend to module names for the combo service. Ex: `2.5.2/build/`"
+    },
+    "filter": {
+     "!type": "string|+Object",
+     "!doc": "A filter to apply to result urls. <a href=\"#property_filter\">See filter property</a>"
+    },
+    "filters": {
+     "!type": "+Object",
+     "!doc": "Per-component filter specification.  If specified for a given component, this overrides the filter config."
+    },
+    "combine": {
+     "!type": "bool",
+     "!doc": "Use a combo service to reduce the number of http connections required to load your dependencies"
+    },
+    "async": {
+     "!type": "bool",
+     "!doc": "Fetch files in async"
+    },
+    "ignore:": {
+     "!type": "[?]",
+     "!doc": "A list of modules that should never be dynamically loaded"
+    },
+    "force": {
+     "!type": "[?]",
+     "!doc": "A list of modules that should always be loaded when required, even if already present on the page"
+    },
+    "insertBefore": {
+     "!type": "+HTMLElement|string",
+     "!doc": "Node or id for a node that should be used as the insertion point for new nodes"
+    },
+    "jsAttributes": {
+     "!type": "+Object",
+     "!doc": "Object literal containing attributes to add to script nodes"
+    },
+    "cssAttributes": {
+     "!type": "+Object",
+     "!doc": "Object literal containing attributes to add to link nodes"
+    },
+    "timeout": {
+     "!type": "number",
+     "!doc": "The number of milliseconds before a timeout occurs when dynamically loading nodes.  If not set, there is no timeout"
+    },
+    "context": {
+     "!type": "+Object",
+     "!doc": "Execution context for all callbacks"
+    },
+    "onSuccess": {
+     "!type": "fn()",
+     "!doc": "Callback for the success event"
+    },
+    "onFailure": {
+     "!type": "fn()",
+     "!doc": "Callback for the failure event"
+    },
+    "onTimeout": {
+     "!type": "fn()",
+     "!doc": "Callback for the timeout event"
+    },
+    "onProgress": {
+     "!type": "fn()",
+     "!doc": "Callback executed each time a script or css file is loaded"
+    },
+    "modules": {
+     "!type": "+Object",
+     "!doc": "A list of module definitions.  See <a href=\"#method_addModule\">Loader.addModule</a> for the supported module metadata"
+    },
+    "groups": {
+     "!type": "+Object",
+     "!doc": "A list of group definitions.  Each group can contain specific definitions for `base`, `comboBase`, `combine`, and accepts a list of `modules`."
+    },
+    "2in3": {
+     "!type": "string",
+     "!doc": "The version of the YUI 2 in 3 wrapper to use.  The intrinsic support for YUI 2 modules in YUI 3 relies on versions of the YUI 2 components inside YUI 3 module wrappers.  These wrappers change over time to accomodate the issues that arise from running YUI 2 in a YUI 3 sandbox."
+    },
+    "yui2": {
+     "!type": "string",
+     "!doc": "When using the 2in3 project, you can select the version of YUI 2 to use.  Valid values are `2.2.2`, `2.3.1`, `2.4.1`, `2.5.2`, `2.6.0`, `2.7.0`, `2.8.0`, `2.8.1` and `2.9.0` [default] -- plus all versions of YUI 2 going forward."
+    },
+    "doBeforeLoader": {
+     "!type": "fn()",
+     "!doc": "An optional hook that allows for the patching of the loader instance. The `Y` instance is available as `this.context` and the only argument to the function is the Loader configuration object."
+    }
+   },
+   "LoaderAddGroupConfig": {
+    "name": {
+     "!type": "string",
+     "!doc": "required, the group name"
+    },
+    "base": {
+     "!type": "string",
+     "!doc": "The base directory for this module group"
+    },
+    "root": {
+     "!type": "string",
+     "!doc": "The root path to add to each combo resource path"
+    },
+    "combine": {
+     "!type": "bool",
+     "!doc": "Should the request be combined"
+    },
+    "comboBase": {
+     "!type": "string",
+     "!doc": "Combo service base path"
+    },
+    "modules": {
+     "!type": "+Object",
+     "!doc": "The group of modules"
+    }
+   },
+   "LoaderAddModuleConfig": {
+    "name": {
+     "!type": "string",
+     "!doc": "Required, the component name"
+    },
+    "type": {
+     "!type": "string",
+     "!doc": "Required, the component type (js or css)"
+    },
+    "path": {
+     "!type": "string",
+     "!doc": "Required, the path to the script from `base`"
+    },
+    "requires": {
+     "!type": "[?]",
+     "!doc": "Array of modules required by this component"
+    },
+    "optional": {
+     "!type": "[?]",
+     "!doc": "Array of optional modules for this component"
+    },
+    "supersedes": {
+     "!type": "[?]",
+     "!doc": "Array of the modules this component replaces"
+    },
+    "after": {
+     "!type": "[?]",
+     "!doc": "Array of modules the components which, if present, should be sorted above this one"
+    },
+    "after_map": {
+     "!type": "+Object",
+     "!doc": "Faster alternative to after -- supply a hash instead of an array"
+    },
+    "rollup": {
+     "!type": "number",
+     "!doc": "The number of superseded modules required for automatic rollup"
+    },
+    "fullpath": {
+     "!type": "string",
+     "!doc": "If `fullpath` is specified, this is used instead of the configured `base + path`"
+    },
+    "skinnable": {
+     "!type": "bool",
+     "!doc": "Flag to determine if skin assets should automatically be pulled in"
+    },
+    "submodules": {
+     "!type": "+Object",
+     "!doc": "Hash of submodules"
+    },
+    "group": {
+     "!type": "string",
+     "!doc": "The group the module belongs to -- this is set automatically when it is added as part of a group configuration."
+    },
+    "lang": {
+     "!type": "[?]",
+     "!doc": "Array of BCP 47 language tags of languages for which this module has localized resource bundles, e.g., `[\"en-GB\", \"zh-Hans-CN\"]`"
+    },
+    "condition": {
+     "!type": "+Object",
+     "!doc": "Specifies that the module should be loaded automatically if a condition is met. This is an object with up to four fields:"
+    },
+    "testresults": {
+     "!type": "+Object",
+     "!doc": "A hash of test results from `Y.Features.all()`"
+    },
+    "configFn": {
+     "!type": "fn()",
+     "!doc": "A function to exectute when configuring this module"
+    },
+    "optionalRequires": {
+     "!type": "[string]",
+     "!doc": "List of dependencies that\n       may optionally be loaded by this loader. This is targeted mostly at\n       polyfills, since they should not be in the list of requires because\n       polyfills are assumed to be available in the global scope."
+    },
+    "test": {
+     "!type": "fn()",
+     "!doc": "Test to be called when this module is\n       added as an optional dependency of another module. If the test function\n       returns `false`, the module will be ignored and will not be attached to\n       this YUI instance."
+    }
+   },
    "plugin": {
     "NodeFocusManagerConfig": {
      "focused": {
@@ -4474,12 +5121,12 @@
       "!doc": "<p>Node, or index of the Node, representing the descendant that is either\nfocused or is focusable (<code>tabIndex</code> attribute is set to 0).\nThe value cannot represent a disabled descendant Node.  Use a value of -1\nto remove all descendant Nodes from the default tab flow.\nIf no value is specified, the active descendant will be inferred using\nthe following criteria:</p>\n<ol>\n<li>Examining the <code>tabIndex</code> attribute of each descendant and\nusing the first descendant whose <code>tabIndex</code> attribute is set\nto 0</li>\n<li>If no default can be inferred then the value is set to either 0 or\nthe index of the first enabled descendant.</li>\n</ol>"
      },
      "keys": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/plugin.NodeFocusManager.html#attribute_keys",
       "!doc": "Object literal representing the keys to be used to navigate between the\nnext/previous descendant.  The format for the attributes value is\n<code>{ next: \"down:40\", previous: \"down:38\" }</code>.  The value for the\n\"next\" and \"previous\" properties are used to attach\n<a href=\"event/#keylistener\"><code>key</code></a> event listeners. See\nthe <a href=\"event/#keylistener\">Using the key Event</a> section of\nthe Event documentation for more information on \"key\" event listeners."
      },
      "focusClass": {
-      "!type": "string",
+      "!type": "string|+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/plugin.NodeFocusManager.html#attribute_focusClass",
       "!doc": "String representing the name of class applied to the focused active\ndescendant Node.  Can also be an object literal used to define both the\nclass name, and the Node to which the class should be applied.  If using\nan object literal, the format is:\n<code>{ className: \"focus\", fn: myFunction }</code>.  The function\nreferenced by the <code>fn</code> property in the object literal will be\npassed a reference to the currently focused active descendant Node."
      },
@@ -4515,6 +5162,82 @@
       "!url": "http://yuilibrary.com/yui/docs/api/classes/plugin.NodeMenuNav.html#attribute_mouseOutHideDelay",
       "!doc": "Number indicating the time (in milliseconds) that should expire before a\nsubmenu is hidden when the user mouses out of it."
      }
+    }
+   },
+   "NodeSimulateGestureConfig": {
+    "point": {
+     "!type": "[?]",
+     "!doc": "(Optional) Indicates the [x, y] coordinates\n       where the flick should be simulated. Default is the center of the\n       node element."
+    },
+    "hold": {
+     "!type": "number",
+     "!doc": "(Optional) The hold time in milliseconds.\n       This is the time between `touchstart` and `touchend` event generation.\n       Default is 3000ms (3 seconds).\n\n     Valid options properties for the `move` gesture:"
+    },
+    "times": {
+     "!type": "number",
+     "!doc": "(Optional) Indicates the number of taps."
+    },
+    "delay": {
+     "!type": "number",
+     "!doc": "(Optional) The number of milliseconds\n       before the next tap simulation happens. This is valid only when `times`\n       is more than 1.\n\n     Valid options properties for the `doubletap` gesture:"
+    },
+    "path": {
+     "!type": "+Object",
+     "!doc": "(Optional) Indicates the path of the finger\n       movement. Its an object with three optional properties: `point`,\n       `xdist` and  `ydist`."
+    },
+    "duration": {
+     "!type": "number",
+     "!doc": "(Optional) The duration of the\n       gesture in milliseconds."
+    },
+    "axis": {
+     "!type": "string",
+     "!doc": "(Optional) Valid values are either\n       \"x\" or \"y\". Indicates axis to move along. The flick can move to one of\n       4 directions(left, right, up and down)."
+    },
+    "distance": {
+     "!type": "number",
+     "!doc": "(Optional) Distance to move in pixels"
+    },
+    "center": {
+     "!type": "[?]",
+     "!doc": "(Optional) The center of the circle where\n       two fingers are placed. Default is the center of the node element."
+    },
+    "r1": {
+     "!type": "number",
+     "!doc": "(Optional) Pixel radius of the start circle\n       where 2 fingers will be on when the gesture starts. The circles are\n       centered at the center of the element. Default is a fourth of the node\n       element width or height, whichever is smaller."
+    },
+    "r2": {
+     "!type": "number",
+     "!doc": "(Optional) Pixel radius of the end circle\n       when this gesture ends. Default is a fourth of the node element width or\n       height, whichever is smaller."
+    },
+    "start": {
+     "!type": "number",
+     "!doc": "(Optional) Starting degree of the first\n       finger. The value is relative to the path of the north. Default is 0\n       (i.e., 12:00 on a clock)."
+    },
+    "rotation": {
+     "!type": "number",
+     "!doc": "(Required) Degrees to rotate from\n       the starting degree. A negative value means rotation to the\n       counter-clockwise direction."
+    }
+   },
+   "NumberParseConfig": {
+    "prefix": {
+     "!type": "string",
+     "!doc": "String to be removed from the start, like a currency designator \"\""
+    },
+    "decimalPlaces": {
+     "!type": "number",
+     "!doc": "Ignored, it is accepted only for compatibility with [Y.Date.format](#method_format)."
+    },
+    "decimalSeparator": {
+     "!type": "string",
+     "!doc": "Decimal separator."
+    },
+    "thousandsSeparator": {
+     "!type": "string",
+     "!doc": "Thousands separator."
+    },
+    "suffix": {
+     "!type": "string",
+     "!doc": "String to be removed from the end of the number, like \" items\"."
     }
    },
    "PaginatorConfig": {
@@ -4561,6 +5284,22 @@
        "submodule": "paginator-url"
       }
      }
+    }
+   },
+   "ParallelConfig": {
+    "context": {
+     "!type": "+Object",
+     "!doc": "The execution context of the callback to done"
+    }
+   },
+   "PjaxBaseNavigateConfig": {
+    "replace": {
+     "!type": "bool",
+     "!doc": "Whether or not the current history\n      entry will be replaced, or a new entry will be created. Will default\n      to `true` if the specified `url` is the same as the current URL."
+    },
+    "force": {
+     "!type": "bool",
+     "!doc": "Whether the enhanced navigation\n      should occur even in browsers without HTML5 history."
     }
    },
    "PjaxBaseConfig": {
@@ -4646,7 +5385,7 @@
      "!doc": "Unique ID of the record instance"
     },
     "data": {
-     "!type": "+object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Record.html#attribute_data",
      "!doc": "The object stored within the record instance"
     }
@@ -4662,7 +5401,7 @@
      }
     },
     "table": {
-     "!type": "+object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Recordset.html#attribute_table",
      "!doc": "A hash table where the ID of the record is the key, and the record\ninstance is the value.",
      "!data": {
@@ -4680,7 +5419,7 @@
    },
    "RecordsetIndexerConfig": {
     "hashTables": {
-     "!type": "+object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/RecordsetIndexer.html#attribute_hashTables",
      "!doc": "Collection of all the hashTables created by the plugin.\nThe individual tables can be accessed by the key they are hashing against.",
      "!data": {
@@ -4690,7 +5429,7 @@
    },
    "RecordsetSortConfig": {
     "lastSortProperties": {
-     "!type": "+object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/RecordsetSort.html#attribute_lastSortProperties",
      "!doc": "The last properties used to sort. Consists of an object literal with the keys \"field\", \"desc\", and \"sorter\"",
      "!data": {
@@ -4724,7 +5463,7 @@
      "!doc": "The default minimum width of the element. Only used when\nResizeConstrained is not plugged."
     },
     "handles": {
-     "!type": "+yui.Array",
+     "!type": "[?]|string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Resize.html#attribute_handles",
      "!doc": "The handles to use (any combination of): t, b, r, l, bl,\nbr, tl, tr. Can use a shortcut of All."
     },
@@ -4754,7 +5493,7 @@
      "!doc": "Elements that requires a wrapper by default. Normally are elements\nwhich cannot have children elements."
     },
     "wrapper": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Resize.html#attribute_wrapper",
      "!doc": "Element to wrap the <code>wrapTypes</code>. This element will house\nthe handles elements."
     }
@@ -4802,7 +5541,7 @@
      }
     },
     "flick": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ScrollView.html#attribute_flick",
      "!doc": "The minimum distance and/or velocity which define a flick. Can be set to false,\nto disable flick support (note: drag support is enabled/disabled separately)",
      "!data": {
@@ -4879,7 +5618,7 @@
      }
     },
     "length": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/SliderBase.html#attribute_length",
      "!doc": "The length of the rail (exclusive of the end caps if positioned by\nCSS).  This corresponds to the movable range of the thumb.",
      "!data": {
@@ -4940,7 +5679,7 @@
    "SortableConfig": {
     "!proto": "config.BaseConfig",
     "handles": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Sortable.html#attribute_handles",
      "!doc": "Drag handles to pass on to the internal DD.Delegate instance."
     },
@@ -4999,7 +5738,154 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Tab.html#attribute_panelNode"
     }
    },
+   "TreeConfig": {
+    "!proto": "config.BaseConfig",
+    "nodes": {
+     "!type": "[+Object]|[+tree.Tree.Node]",
+     "!doc": "Array of tree node config\n        objects or `Tree.Node` instances to add to this tree at initialization\n        time."
+    },
+    "rootNode": {
+     "!type": "+Object|+tree.Tree.Node",
+     "!doc": "Node to use as the root node of\n        this tree."
+    }
+   },
    "Tree": {
+    "Node": {
+     "LabelableConfig": {
+      "label": {
+       "!type": "string",
+       "!doc": "Label for this node."
+      }
+     },
+     "OpenableCloseConfig": {
+      "silent": {
+       "!type": "bool",
+       "!doc": "If `true`, the `close` event\n        will be suppressed."
+      },
+      "src": {
+       "!type": "string",
+       "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+      }
+     },
+     "OpenableOpenConfig": {
+      "silent": {
+       "!type": "bool",
+       "!doc": "If `true`, the `open` event\n        will be suppressed."
+      },
+      "src": {
+       "!type": "string",
+       "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+      }
+     },
+     "OpenableToggleOpenConfig": {
+      "silent": {
+       "!type": "bool",
+       "!doc": "If `true`, events will be\n        suppressed."
+      },
+      "src": {
+       "!type": "string",
+       "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+      }
+     },
+     "SelectableSelectConfig": {
+      "silent": {
+       "!type": "bool",
+       "!doc": "If `true`, the `select` event\n        will be suppressed."
+      },
+      "src": {
+       "!type": "string",
+       "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+      }
+     },
+     "SelectableUnselectConfig": {
+      "silent": {
+       "!type": "bool",
+       "!doc": "If `true`, the `unselect` event\n        will be suppressed."
+      },
+      "src": {
+       "!type": "string",
+       "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+      }
+     },
+     "SortableSortConfig": {
+      "silent": {
+       "!type": "bool",
+       "!doc": "If `true`, no `sort` event will be\n        fired."
+      },
+      "sortComparator": {
+       "!type": "fn()",
+       "!doc": "Custom comparator function to\n        use. If specified, this will become the nodes new comparator\n        function, overwriting any previous comparator function that was set\n        for the node."
+      },
+      "sortReverse": {
+       "!type": "bool",
+       "!doc": "If `true`, children will be\n        sorted in reverse (descending) order. Otherwise theyll be sorted in\n        ascending order. This will become the nodes new sort order,\n        overwriting any previous sort order that was set for the node."
+      },
+      "src": {
+       "!type": "string",
+       "!doc": "Source of the sort operation. Will be\n        passed along to the `sort` event facade."
+      }
+     }
+    },
+    "OpenableCloseNodeConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `close` event\n        will be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "OpenableOpenNodeConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `open` event\n        will be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "OpenableToggleOpenNodeConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, events will be\n        suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "SelectableSelectNodeConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `select` event\n        will be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "SelectableUnselectConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `unselect` event\n        will be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "SelectableUnselectNodeConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `unselect` event\n        will be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
     "SelectableConfig": {
      "multiSelect": {
       "!type": "bool",
@@ -5009,6 +5895,208 @@
        "submodule": "tree-selectable"
       }
      }
+    },
+    "SortableConfig": {
+     "sortComparator": {
+      "!type": "fn()",
+      "!doc": "Default comparator function to use\n    when sorting a nodes children if the node itself doesnt have a custom\n    comparator function. If not specified, insertion order will be used by\n    default."
+     },
+     "sortReverse": {
+      "!type": "bool",
+      "!doc": "If `true`, node children will be\n    sorted in reverse (descending) order by default. Otherwise theyll be sorted\n    in ascending order."
+     }
+    },
+    "SortableSortConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, no `sort` events will be\n        fired."
+     },
+     "sortComparator": {
+      "!type": "fn()",
+      "!doc": "Custom comparator function to\n        use. If specified, this will become the new comparator function for\n        each node, overwriting any previous comparator function that was set\n        for the node."
+     },
+     "sortReverse": {
+      "!type": "bool",
+      "!doc": "If `true`, children will be\n        sorted in reverse (descending) order. Otherwise theyll be sorted in\n        ascending order. This will become each nodes new sort order,\n        overwriting any previous sort order that was set for the node."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the sort operation. Will be\n        passed along to the `sort` event facade."
+     }
+    },
+    "SortableSortNodeConfig": {
+     "deep": {
+      "!type": "bool",
+      "!doc": "If `true`, all of this nodes\n        children (and their children, and so on) will be traversed and\n        re-sorted as well."
+     },
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, no `sort` event will be\n        fired."
+     },
+     "sortComparator": {
+      "!type": "fn()",
+      "!doc": "Custom comparator function to\n        use. If specified, this will become the nodes new comparator\n        function, overwriting any previous comparator function that was set\n        for the node."
+     },
+     "sortReverse": {
+      "!type": "bool",
+      "!doc": "If `true`, children will be\n        sorted in reverse (descending) order. Otherwise theyll be sorted in\n        ascending order. This will become the nodes new sort order,\n        overwriting any previous sort order that was set for the node."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the sort operation. Will be\n        passed along to the `sort` event facade."
+     }
+    },
+    "NodeAppendConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `add` event will\n        be suppressed."
+     }
+    },
+    "NodeEmptyConfig": {
+     "destroy": {
+      "!type": "bool",
+      "!doc": "If `true`, the children will\n        also be destroyed, which makes them available for garbage collection\n        and means they cant be reused."
+     },
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, `remove` events will\n        be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "NodeFindConfig": {
+     "depth": {
+      "!type": "number",
+      "!doc": "Depth limit. If specified, descendants\n        will only be traversed to this depth before backtracking and moving\n        on."
+     }
+    },
+    "NodeInsertConfig": {
+     "index": {
+      "!type": "number",
+      "!doc": "Index at which to insert the child node.\n        If not specified, the node will be appended as the last child of the\n        parent."
+     },
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `add` event will\n        be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be\n        passed along to the event facade of the resulting event. This can be\n        used to distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "NodePrependConfig": {
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `add` event will\n        be suppressed."
+     }
+    },
+    "NodeRemoveConfig": {
+     "destroy": {
+      "!type": "bool",
+      "!doc": "If `true`, this node and all\n        its children will also be destroyed, which makes them available for\n        garbage collection and means they cant be reused."
+     },
+     "silent": {
+      "!type": "bool",
+      "!doc": "If `true`, the `remove` event\n        will be suppressed."
+     },
+     "src": {
+      "!type": "string",
+      "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+     }
+    },
+    "NodeTraverseConfig": {
+     "depth": {
+      "!type": "number",
+      "!doc": "Depth limit. If specified, descendants\n        will only be traversed to this depth before backtracking and moving\n        on."
+     }
+    }
+   },
+   "TreeAppendNodeConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, the `add` event will\n        be suppressed."
+    }
+   },
+   "TreeClearConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, the `clear` event\n        will be suppressed."
+    },
+    "src": {
+     "!type": "string",
+     "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+    }
+   },
+   "TreeDestroyNodeConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, `remove` events will\n        be suppressed."
+    },
+    "src": {
+     "!type": "string",
+     "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting events. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+    }
+   },
+   "TreeEmptyNodeConfig": {
+    "destroy": {
+     "!type": "bool",
+     "!doc": "If `true`, the children will\n        also be destroyed, which makes them available for garbage collection\n        and means they cant be reused."
+    },
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, `remove` events will\n        be suppressed."
+    },
+    "src": {
+     "!type": "string",
+     "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting events. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+    }
+   },
+   "TreeFindNodeConfig": {
+    "depth": {
+     "!type": "number",
+     "!doc": "Depth limit. If specified, descendants\n        will only be traversed to this depth before backtracking and moving\n        on."
+    }
+   },
+   "TreeInsertNodeConfig": {
+    "index": {
+     "!type": "number",
+     "!doc": "Index at which to insert the child node.\n        If not specified, the node will be appended as the last child of the\n        parent."
+    },
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, the `add` event will\n        be suppressed."
+    },
+    "src": {
+     "!type": "string",
+     "!doc": "Source of the change, to be\n        passed along to the event facade of the resulting event. This can be\n        used to distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+    }
+   },
+   "TreePrependNodeConfig": {
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, the `add` event will\n        be suppressed."
+    }
+   },
+   "TreeRemoveNodeConfig": {
+    "destroy": {
+     "!type": "bool",
+     "!doc": "If `true`, the node and all its\n        children will also be destroyed, which makes them available for\n        garbage collection and means they cant be reused."
+    },
+    "silent": {
+     "!type": "bool",
+     "!doc": "If `true`, the `remove` event\n        will be suppressed."
+    },
+    "src": {
+     "!type": "string",
+     "!doc": "Source of the change, to be passed along\n        to the event facade of the resulting event. This can be used to\n        distinguish between changes triggered by a user and changes\n        triggered programmatically, for example."
+    }
+   },
+   "TreeTraverseNodeConfig": {
+    "depth": {
+     "!type": "number",
+     "!doc": "Depth limit. If specified, descendants\n        will only be traversed to this depth before backtracking and moving\n        on."
     }
    },
    "UploaderFlashConfig": {
@@ -5019,7 +6107,7 @@
      "!doc": "A Boolean indicating whether newly selected files should be appended\nto the existing file list, or whether they should replace it."
     },
     "buttonClassNames": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#attribute_buttonClassNames",
      "!doc": "The names of CSS classes that correspond to different button states\nof the \"Select Files\" control. These classes are assigned to the\n\"Select Files\" control based on the mouse states reported by the\nFlash player. The keys for the class names are:\n<ul>\n  <li> <strong>`hover`</strong>: the class corresponding to mouse hovering over\n     the \"Select Files\" button.</li>\n  <li> <strong>`active`</strong>: the class corresponding to mouse down state of\n     the \"Select Files\" button.</li>\n  <li> <strong>`disabled`</strong>: the class corresponding to the disabled state\n     of the \"Select Files\" button.</li>\n  <li> <strong>`focus`</strong>: the class corresponding to the focused state of\n     the \"Select Files\" button.</li>\n</ul>"
     },
@@ -5034,7 +6122,7 @@
      "!doc": "The action  performed when an upload error occurs for a specific file being uploaded.\nThe possible values are:\n<ul>\n  <li> <strong>`UploaderQueue.CONTINUE`</strong>: the error is ignored and the upload process is continued.</li>\n  <li> <strong>`UploaderQueue.STOP`</strong>: the upload process is stopped as soon as any other parallel file\n    uploads are finished.</li>\n  <li> <strong>`UploaderQueue.RESTART_ASAP`</strong>: the file is added back to the front of the queue.</li>\n  <li> <strong>`UploaderQueue.RESTART_AFTER`</strong>: the file is added to the back of the queue.</li>\n</ul>"
     },
     "fileFilters": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#attribute_fileFilters",
      "!doc": "An array indicating what fileFilters should be applied to the file\nselection dialog. Each element in the array should be an object with\nthe following key-value pairs:\n{\n  description : String\n        extensions: String of the form &lquot;*.ext1;*.ext2;*.ext3;...&rquot;\n}"
     },
@@ -5049,7 +6137,7 @@
      "!doc": "A String specifying what should be the POST field name for the file\ncontent in the upload request."
     },
     "fileList": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#attribute_fileList",
      "!doc": "The array of files to be uploaded. All elements in the array\nmust be instances of `Y.FileFlash` and be instantiated with a `fileId`\nretrieved from an instance of the uploader."
     },
@@ -5059,7 +6147,7 @@
      "!doc": "A Boolean indicating whether multiple file selection is enabled."
     },
     "postVarsPerFile": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#attribute_postVarsPerFile",
      "!doc": "An object, keyed by `fileId`, containing sets of key-value pairs\nthat should be passed as POST variables along with each corresponding\nfile. This attribute is only used if no POST variables are specifed\nin the upload method call."
     },
@@ -5069,7 +6157,7 @@
      "!doc": "The label for the \"Select Files\" widget. This is the value that replaces the\n`{selectButtonLabel}` token in the `SELECT_FILES_BUTTON` template."
     },
     "selectFilesButton": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|+widget.Widget",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#attribute_selectFilesButton",
      "!doc": "The widget that serves as the \"Select Files\" control for the file uploader"
     },
@@ -5084,7 +6172,7 @@
      "!doc": "The URL to the SWF file of the flash uploader. A copy local to\nthe server that hosts the page on which the uploader appears is\nrecommended."
     },
     "tabElements": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#attribute_tabElements",
      "!doc": "The ids or `Node` references of the DOM elements that precede\nand follow the `Select Files` button in the tab order. Specifying\nthese allows keyboard navigation to and from the Flash player\nlayer of the uploader.\nThe two keys corresponding to the DOM elements are:\n       <ul>\n  <li> `from`: the id or the `Node` reference corresponding to the\n    DOM element that precedes the `Select Files` button in the tab order.</li>\n  <li> `to`: the id or the `Node` reference corresponding to the\n    DOM element that follows the `Select Files` button in the tab order.</li>\n</ul>"
     },
@@ -5107,7 +6195,7 @@
      "!doc": "A Boolean indicating whether newly selected files should be appended\nto the existing file list, or whether they should replace it."
     },
     "buttonClassNames": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#attribute_buttonClassNames",
      "!doc": "The names of CSS classes that correspond to different button states\nof the \"Select Files\" control. These classes are assigned to the\n\"Select Files\" control based on the configuration of the uploader.\nCurrently, the only class name used is that corresponding to the\n`disabled` state of the uploader. Other button states should be managed\ndirectly via CSS selectors.\n<ul>\n  <li> <strong>`disabled`</strong>: the class corresponding to the disabled state\n     of the \"Select Files\" button.</li>\n</ul>"
     },
@@ -5127,7 +6215,7 @@
      "!doc": "The action  performed when an upload error occurs for a specific file being uploaded.\nThe possible values are:\n<ul>\n  <li> <strong>`UploaderQueue.CONTINUE`</strong>: the error is ignored and the upload process is continued.</li>\n  <li> <strong>`UploaderQueue.STOP`</strong>: the upload process is stopped as soon as any other parallel file\n    uploads are finished.</li>\n  <li> <strong>`UploaderQueue.RESTART_ASAP`</strong>: the file is added back to the front of the queue.</li>\n  <li> <strong>`UploaderQueue.RESTART_AFTER`</strong>: the file is added to the back of the queue.</li>\n</ul>"
     },
     "fileFilters": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#attribute_fileFilters",
      "!doc": "An array indicating what fileFilters should be applied to the file\nselection dialog. Each element in the array should be a string\nindicating the Media (MIME) type for the files that should be supported\nfor selection. The Media type strings should be properly formatted\nor this parameter will be ignored. Examples of valid strings include:\n\"audio/*\", \"video/*\", \"application/pdf\", etc. More information\non valid Media type strings is available here:\nhttp://www.iana.org/assignments/media-types/index.html"
     },
@@ -5142,7 +6230,7 @@
      "!doc": "A String specifying what should be the POST field name for the file\ncontent in the upload request."
     },
     "fileList": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#attribute_fileList",
      "!doc": "The array of files to be uploaded. All elements in the array\nmust be instances of `Y.File` and be instantiated with an instance\nof native JavaScript File() class."
     },
@@ -5152,7 +6240,7 @@
      "!doc": "A Boolean indicating whether multiple file selection is enabled."
     },
     "postVarsPerFile": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#attribute_postVarsPerFile",
      "!doc": "An object, keyed by `fileId`, containing sets of key-value pairs\nthat should be passed as POST variables along with each corresponding\nfile. This attribute is only used if no POST variables are specifed\nin the upload method call."
     },
@@ -5162,7 +6250,7 @@
      "!doc": "The label for the \"Select Files\" widget. This is the value that replaces the\n`{selectButtonLabel}` token in the `SELECT_FILES_BUTTON` template."
     },
     "selectFilesButton": {
-     "!type": "+node.Node",
+     "!type": "+node.Node|+widget.Widget",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#attribute_selectFilesButton",
      "!doc": "The widget that serves as the \"Select Files control for the file uploader"
     },
@@ -5177,7 +6265,7 @@
      "!doc": "The URL to which file upload requested are POSTed. Only used if a different url is not passed to the upload method call."
     },
     "uploadHeaders": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#attribute_uploadHeaders",
      "!doc": "Additional HTTP headers that should be included\nin the upload request."
     },
@@ -5216,7 +6304,7 @@
       "!doc": "The total number of bytes in the queue."
      },
      "fileList": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Uploader.Queue.html#attribute_fileList",
       "!doc": "The queue file list. This file list should only be modified\nbefore the upload has been started; modifying it after starting\nthe upload has no effect, and `addToQueueTop` or `addToQueueBottom` methods\nshould be used instead."
      },
@@ -5231,7 +6319,7 @@
       "!doc": "The URL to POST the file upload requests to."
      },
      "uploadHeaders": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Uploader.Queue.html#attribute_uploadHeaders",
       "!doc": "Additional HTTP headers that should be included\nin the upload request. Due to Flash Player security\nrestrictions, this attribute is only honored in the\nHTML5 Uploader."
      },
@@ -5241,7 +6329,7 @@
       "!doc": "A Boolean that specifies whether the file should be\nuploaded with the appropriate user credentials for the\ndomain. Due to Flash Player security restrictions, this\nattribute is only honored in the HTML5 Uploader."
      },
      "perFileParameters": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Uploader.Queue.html#attribute_perFileParameters",
       "!doc": "An object, keyed by `fileId`, containing sets of key-value pairs\nthat should be passed as POST variables along with each corresponding\nfile."
      },
@@ -5254,14 +6342,14 @@
    },
    "WidgetAutohideConfig": {
     "hideOn": {
-     "!type": "+array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetAutohide.html#attribute_hideOn",
      "!doc": "An array of objects corresponding to the nodes, events, and keycodes to hide the widget on.\nThe implementer can supply an array of objects, with each object having the following properties:\n<p>eventName: (string, required): The eventName to listen to.</p>\n<p>node: (Y.Node, optional): The Y.Node that will fire the event (defaults to the boundingBox of the widget)</p>\n<p>keyCode: (string, optional): If listening for key events, specify the keyCode</p>\n<p>By default, this attribute consists of one object which will cause the widget to hide if the\nescape key is pressed.</p>"
     }
    },
    "WidgetButtonsConfig": {
     "buttons": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#attribute_buttons",
      "!doc": "Collection containing a widgets buttons.\n\nThe collection is an Object which contains an Array of `Y.Node`s for every\n`WidgetStdMod` section (header, body, footer) which has one or more buttons.\nAll button nodes have the `Y.Plugin.Button` plugin applied.\n\nThis attribute is very flexible in the values it will accept. `buttons` can\nbe specified as a single Array, or an Object of Arrays keyed to a particular\nsection.\n\nAll specified values will be normalized to this type of structure:\n\n    {\n        header: [...],\n        footer: [...]\n    }\n\nA button can be specified as a `Y.Node`, config Object, or String name for a\npredefined button on the `BUTTONS` prototype property. When a config Object\nis provided, it will be merged with any defaults provided by a button with\nthe same `name` defined on the `BUTTONS` property.\n\nSee `addButton()` for the detailed list of configuration properties.\n\nFor convenience, a widgets buttons will always persist and remain rendered\nafter header/body/footer content updates. Buttons should be removed by\nupdating this attribute or using the `removeButton()` method."
     },
@@ -5310,14 +6398,14 @@
      "!doc": "Whether the widget should be modal or not."
     },
     "focusOn": {
-     "!type": "+array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetModality.html#attribute_focusOn",
      "!doc": "An array of objects corresponding to the nodes and events that will trigger a re-focus back on the widget.\nThe implementer can supply an array of objects, with each object having the following properties:\n<p>eventName: (string, required): The eventName to listen to.</p>\n<p>node: (Y.Node, optional): The Y.Node that will fire the event (defaults to the boundingBox of the widget)</p>\n<p>By default, this attribute consists of two objects which will cause the widget to re-focus if anything\noutside the widget is clicked on or focussed upon.</p>"
     }
    },
    "WidgetParentConfig": {
     "defaultChildType": {
-     "!type": "string",
+     "!type": "string|+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetParent.html#attribute_defaultChildType",
      "!doc": "String representing the default type of the children\nmanaged by this Widget.  Can also supply default type as a constructor\nreference."
     },
@@ -5332,31 +6420,31 @@
      "!doc": "Boolean indicating if multiple children can be selected at\nonce.  Whether or not multiple selection is enabled is always delegated\nto the value of the <code>multiple</code> attribute of the root widget\nin the object hierarchy."
     },
     "selection": {
-     "!type": "+collection.ArrayList",
+     "!type": "+collection.ArrayList|+widget.Widget",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetParent.html#attribute_selection",
      "!doc": "Returns the currently selected child Widget.  If the\n<code>mulitple</code> attribte is set to <code>true</code> will\nreturn an Y.ArrayList instance containing the currently selected\nchildren.  If no children are selected, will return null."
     }
    },
    "WidgetPositionAlignConfig": {
     "align": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionAlign.html#attribute_align",
      "!doc": "The alignment configuration for this widget.\n\nThe `align` attribute is used to align a reference point on the widget, with\nthe reference point on another `Node`, or the viewport. The object which\n`align` expects has the following properties:\n\n  * __`node`__: The `Node` to which the widget is to be aligned. If set to\n    `null`, or not provided, the widget is aligned to the viewport.\n\n  * __`points`__: A two element Array, defining the two points on the widget\n    and `Node`/viewport which are to be aligned. The first element is the\n    point on the widget, and the second element is the point on the\n    `Node`/viewport. Supported alignment points are defined as static\n    properties on `WidgetPositionAlign`."
     },
     "centered": {
-     "!type": "bool",
+     "!type": "bool|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionAlign.html#attribute_centered",
      "!doc": "A convenience Attribute, which can be used as a shortcut for the `align`\nAttribute.\n\nIf set to `true`, the widget is centered in the viewport. If set to a `Node`\nreference or valid selector String, the widget will be centered within the\n`Node`. If set to `false`, no center positioning is applied."
     },
     "alignOn": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionAlign.html#attribute_alignOn",
      "!doc": "An Array of Objects corresponding to the `Node`s and events that will cause\nthe alignment of this widget to be synced to the DOM.\n\nThe `alignOn` Attribute is expected to be an Array of Objects with the\nfollowing properties:\n\n  * __`eventName`__: The String event name to listen for.\n\n  * __`node`__: The optional `Node` that will fire the event, it can be a\n    `Node` reference or a selector String. This will default to the widgets\n    `boundingBox`."
     }
    },
    "WidgetPositionConstrainConfig": {
     "constrain": {
-     "!type": "bool",
+     "!type": "bool|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionConstrain.html#attribute_constrain",
      "!doc": "The node to constrain the widgets bounding box to, when setting xy. Can also be\nset to true, to constrain to the viewport."
     },
@@ -5378,7 +6466,7 @@
      "!doc": "Page Y co-ordinate for the widget. This attribute acts as a facade for the\nxy attribute. Changes in position can be monitored by listening for xyChange events."
     },
     "xy": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPosition.html#attribute_xy",
      "!doc": "Page XY co-ordinate pair for the widget."
     }
@@ -5435,7 +6523,7 @@
      }
     },
     "boundingBox": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_boundingBox",
      "!doc": "The outermost DOM node for the Widget, used for sizing and positioning\nof a Widget as well as a containing element for any decorator elements used\nfor skinning.",
      "!data": {
@@ -5443,7 +6531,7 @@
      }
     },
     "contentBox": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_contentBox",
      "!doc": "A DOM node that is a direct descendant of a Widgets bounding box that\nhouses its content.",
      "!data": {
@@ -5483,7 +6571,7 @@
      }
     },
     "height": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_height",
      "!doc": "String with units, or number, representing the height of the Widget. If a number is provided,\nthe default unit, defined by the Widgets DEF_UNIT, property is used.",
      "!data": {
@@ -5491,7 +6579,7 @@
      }
     },
     "width": {
-     "!type": "string",
+     "!type": "string|number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_width",
      "!doc": "String with units, or number, representing the width of the Widget. If a number is provided,\nthe default unit, defined by the Widgets DEF_UNIT, property is used.",
      "!data": {
@@ -5499,7 +6587,7 @@
      }
     },
     "strings": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_strings",
      "!doc": "Collection of strings used to label elements of the Widgets UI.",
      "!data": {
@@ -5507,7 +6595,7 @@
      }
     },
     "render": {
-     "!type": "bool",
+     "!type": "bool|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_render",
      "!doc": "Whether or not to render the widget automatically after init, and optionally, to which parent node.",
      "!data": {
@@ -5515,12 +6603,40 @@
      }
     },
     "srcNode": {
-     "!type": "string",
+     "!type": "string|+node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#attribute_srcNode",
      "!doc": "The DOM node to parse for configuration values, passed to the Widgets HTML_PARSER definition",
      "!data": {
       "submodule": "widget-htmlparser"
      }
+    }
+   },
+   "FeaturesAddConfig": {
+    "name": {
+     "!type": "string",
+     "!doc": "The name of the test"
+    },
+    "test": {
+     "!type": "fn()",
+     "!doc": "The test function to execute, the only argument to the function is the `Y` instance"
+    },
+    "trigger": {
+     "!type": "string",
+     "!doc": "The module that triggers this test."
+    }
+   },
+   "YUIAddConfig": {
+    "requires": {
+     "!type": "[?]",
+     "!doc": "Array of other module names that must be\n        attached before this module can be attached."
+    },
+    "optional": {
+     "!type": "[?]",
+     "!doc": "Array of optional module names that should\n        be attached before this module is attached if theyve already been\n        loaded. If the `loadOptional` YUI option is `true`, optional modules\n        that have not yet been loaded will be loaded just as if they were hard\n        requirements."
+    },
+    "use": {
+     "!type": "[?]",
+     "!doc": "Array of module names that are included within\n        or otherwise provided by this module, and which should be attached\n        automatically when this module is attached. This makes it possible to\n        create \"virtual rollup\" modules that simply attach a collection of other\n        modules or submodules."
     }
    }
   },
@@ -5822,7 +6938,7 @@
       ]
      },
      "route": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Content.html#property_route",
       "!doc": "A stack of middleware which forms a pjax-style content route.\n\nThis route will load the rendered HTML content from the server, then create and\nshow a new view using those contents.",
       "!data": {
@@ -5831,7 +6947,7 @@
      },
      "prototype": {
       "showContent": {
-       "!type": "fn(content: +HTMLElement, options?: +yui.Object, callback?: fn(view: +app.View)) -> !this",
+       "!type": "fn(content: +HTMLElement|+node.Node|string, options?: +config.App.ContentShowContentConfig, callback?: fn(view: +app.View)) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Content.html#method_showContent",
        "!doc": "Sets this apps `activeView` attribute using the specified `content`.\n\nThis provides an easy way to view-ify HTML content which should be shown as\nthis apps active/visible view. This method will determine the appropriate\nview `container` node based on the specified `content`. By default, a new\n`Y.View` instance will be created unless `options.view` is specified.\n\nUnder the hood, this method calls the `showView()` method, so refer to its\ndocs for more information.",
        "!data": {
@@ -5849,7 +6965,7 @@
       ]
      },
      "FX": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Transitions.html#property_FX",
       "!doc": "Collect of transitions -> fx.\n\nA transition (e.g. \"fade\") is a simple name given to a configuration of fx to\napply, consisting of `viewIn` and `viewOut` properties whos values are names of\nfx registered on `Y.Transition.fx`.\n\nBy default transitions: `fade`, `slideLeft`, and `slideRight` have fx defined.",
       "!data": {
@@ -5858,7 +6974,7 @@
      },
      "prototype": {
       "transitions": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Transitions.html#property_transitions",
        "!doc": "Default transitions to use when the `activeView` changes.\n\nThe following are types of changes for which transitions can be defined that\ncorrespond to the relationship between the new and previous `activeView`:\n\n  * `navigate`: The default transition to use when changing the `activeView`\n    of the application.\n\n  * `toChild`: The transition to use when the new `activeView` is configured\n    as a child of the previously active view via its `parent` property as\n    defined in this apps `views`.\n\n  * `toParent`: The transition to use when the new `activeView` is\n    configured as the `parent` of the previously active view as defined in\n    this apps `views`.\n\n**Note:** Transitions are an opt-in feature and will only be used in\nbrowsers which support native CSS3 transitions.",
        "!data": {
@@ -5866,7 +6982,7 @@
        }
       },
       "showView": {
-       "!type": "fn(view: string, config?: +config.showViewConfig, options?: +yui.Object, callback?: fn(view: +app.View)) -> !this",
+       "!type": "fn(view: string|+app.View, config?: +config.App.TransitionsShowViewConfig, options?: +config.App.TransitionsShowViewConfig, callback?: fn(view: +app.View)) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Transitions.html#method_showView",
        "!doc": "Sets which view is active/visible for the application. This will set the\napps `activeView` attribute to the specified `view`.\n\nThe `view` will be \"attached\" to this app, meaning it will be both rendered\ninto this apps `viewContainer` node and all of its events will bubble to\nthe app. The previous `activeView` will be \"detached\" from this app.\n\nWhen a string-name is provided for a view which has been registered on this\napps `views` object, the referenced metadata will be used and the\n`activeView` will be set to either a preserved view instance, or a new\ninstance of the registered view will be created using the specified `config`\nobject passed-into this method.\n\nA callback function can be specified as either the third or fourth argument,\nand this function will be called after the new `view` becomes the\n`activeView`, is rendered to the `viewContainer`, and is ready to use.",
        "!data": {
@@ -5888,7 +7004,7 @@
      "prototype": {
       "!proto": "base.Base.prototype",
       "views": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#property_views",
        "!doc": "Hash of view-name to metadata used to declaratively describe an\napplications views and their relationship with the app and its other views.\n\nThe view metadata is composed of Objects keyed to a view-name that can have\nany or all of the following properties:\n\n  * `type`: Function or a string representing the view constructor to use to\n    create view instances. If a string is used, the constructor function is\n    assumed to be on the `Y` object; e.g. `\"SomeView\"` -> `Y.SomeView`.\n\n  * `preserve`: Boolean for whether the view instance should be retained. By\n    default, the view instance will be destroyed when it is no longer the\n    `activeView`. If `true` the view instance will simply be `removed()`\n    from the DOM when it is no longer active. This is useful when the view\n    is frequently used and may be expensive to re-create.\n\n  * `parent`: String to another named view in this hash that represents the\n    parent view within the applications view hierarchy; e.g. a `\"photo\"`\n    view could have `\"album\"` has its `parent` view. This parent/child\n    relationship is a useful cue for things like transitions.\n\n  * `instance`: Used internally to manage the current instance of this named\n    view. This can be used if your view instance is created up-front, or if\n    you would rather manage the View lifecycle, but you probably should just\n    let this be handled for you.\n\nIf `views` are specified at instantiation time, the metadata in the `views`\nObject here will be used as defaults when creating the instances `views`.\n\nEvery `Y.App` instance gets its own copy of a `views` object so this Object\non the prototype will not be polluted.",
        "!data": {
@@ -5896,7 +7012,7 @@
        }
       },
       "createView": {
-       "!type": "fn(name: string, config?: +config.createViewConfig) -> +app.View",
+       "!type": "fn(name: string, config?: +config.App.BaseCreateViewConfig) -> +app.View",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#method_createView",
        "!doc": "Creates and returns a new view instance using the provided `name` to look up\nthe view info metadata defined in the `views` object. The passed-in `config`\nobject is passed to the view constructor function.\n\nThis function also maps a view instance back to its view info metadata.",
        "!data": {
@@ -5904,7 +7020,7 @@
        }
       },
       "getViewInfo": {
-       "!type": "fn(view: +app.View) -> +yui.Object",
+       "!type": "fn(view: +app.View|string) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#method_getViewInfo",
        "!doc": "Returns the metadata associated with a view instance or view name defined on\nthe `views` object.",
        "!data": {
@@ -5912,7 +7028,7 @@
        }
       },
       "navigate": {
-       "!type": "fn(url: string, options?: +yui.Object)",
+       "!type": "fn(url: string, options?: +config.App.BaseNavigateConfig)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#method_navigate",
        "!doc": "Navigates to the specified URL if there is a route handler that matches. In\nbrowsers capable of using HTML5 history or when `serverRouting` is falsy,\nthe navigation will be enhanced by firing the `navigate` event and having\nthe app handle the \"request\". When `serverRouting` is `true`, non-HTML5\nbrowsers will navigate to the new URL via a full page reload.\n\nWhen there is a route handler for the specified URL and it is being\nnavigated to, this method will return `true`, otherwise it will return\n`false`.\n\n**Note:** The specified URL _must_ be of the same origin as the current URL,\notherwise an error will be logged and navigation will not occur. This is\nintended as both a security constraint and a purposely imposed limitation as\nit does not make sense to tell the app to navigate to a URL on a\ndifferent scheme, host, or port.",
        "!data": {
@@ -5928,7 +7044,7 @@
        }
       },
       "showView": {
-       "!type": "fn(view: string, config?: +config.showViewConfig, options?: +yui.Object, callback?: fn(view: +app.View)) -> !this",
+       "!type": "fn(view: string|+app.View, config?: +config.App.BaseShowViewConfig, options?: +config.App.BaseShowViewConfig, callback?: fn(view: +app.View)) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/App.Base.html#method_showView",
        "!doc": "Sets which view is active/visible for the application. This will set the\napps `activeView` attribute to the specified `view`.\n\nThe `view` will be \"attached\" to this app, meaning it will be both rendered\ninto this apps `viewContainer` node and all of its events will bubble to\nthe app. The previous `activeView` will be \"detached\" from this app.\n\nWhen a string-name is provided for a view which has been registered on this\napps `views` object, the referenced metadata will be used and the\n`activeView` will be set to either a preserved view instance, or a new\ninstance of the registered view will be created using the specified `config`\nobject passed-into this method.\n\nA callback function can be specified as either the third or fourth argument,\nand this function will be called after the new `view` becomes the\n`activeView`, is rendered to the `viewContainer`, and is ready to use.",
        "!data": {
@@ -5938,7 +7054,7 @@
      }
     },
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/App.html#property_CLASS_NAMES",
      "!doc": "CSS classes used by `Y.App`.",
      "!data": {
@@ -5970,7 +7086,7 @@
        "!doc": "Shortcut for access to localStorage."
       },
       "sync": {
-       "!type": "fn(action: string, options?: +yui.Object, callback?: fn(err: +Error, response?: ?))",
+       "!type": "fn(action: string, options?: +Object, callback?: fn(err: +Error, response?: ?))",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelSync.Local.html#method_sync",
        "!doc": "Creates a synchronization layer with the localStorage API, if available.\nOtherwise, falls back to a in-memory data store.\n\nThis method is called internally by load(), save(), and destroy()."
       }
@@ -5996,7 +7112,7 @@
       }
      },
      "HTTP_HEADERS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelSync.REST.html#property_HTTP_HEADERS",
       "!doc": "Default headers used with all XHRs.\n\nBy default the `Accept` and `Content-Type` headers are set to\n\"application/json\", this signals to the HTTP server to process the request\nbodies as JSON and send JSON responses. If youre sending and receiving content\nother than JSON, you can override these headers and the `parse()` and\n`serialize()` methods.\n\n**Note:** These headers will be merged with any request-specific headers, and\nthe request-specific headers will take precedence.",
       "!data": {
@@ -6004,7 +7120,7 @@
       }
      },
      "HTTP_METHODS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelSync.REST.html#property_HTTP_METHODS",
       "!doc": "Static mapping of RESTful HTTP methods corresponding to CRUD actions.",
       "!data": {
@@ -6037,7 +7153,7 @@
        }
       },
       "getURL": {
-       "!type": "fn(action?: string, options?: +yui.Object) -> string",
+       "!type": "fn(action?: string, options?: +Object) -> string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelSync.REST.html#method_getURL",
        "!doc": "Returns the URL for this model or model list for the given `action` and\n`options`, if specified.\n\nThis method correctly handles the variations of `root` and `url` values and\nis called by the `sync()` method to get the URLs used to make the XHRs.\n\nYou can override this method if you need to provide a specific\nimplementation for how the URLs of your Model and ModelList subclasses need\nto be generated.",
        "!data": {
@@ -6045,7 +7161,7 @@
        }
       },
       "parseIOResponse": {
-       "!type": "fn(response: +yui.Object) -> ?",
+       "!type": "fn(response: +Object) -> ?",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelSync.REST.html#method_parseIOResponse",
        "!doc": "Called to parse the response object returned from `Y.io()`. This method\nreceives the full response object and is expected to \"prep\" a response which\nis suitable to pass to the `parse()` method.\n\nBy default the response body is returned (`responseText`), because it\nusually represents the entire entity of this model on the server.\n\nIf you need to parse data out of the responses headers you should do so by\noverriding this method. If youd like the entire response object from the\nXHR to be passed to your `parse()` method, you can simply assign this\nproperty to `false`.",
        "!data": {
@@ -6061,7 +7177,7 @@
        }
       },
       "sync": {
-       "!type": "fn(action: string, options?: +yui.Object, callback?: fn(err: +Error, response?: ?))",
+       "!type": "fn(action: string, options?: +config.ModelSync.RESTSyncConfig, callback?: fn(err: +Error, response?: ?))",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelSync.REST.html#method_sync",
        "!doc": "Communicates with a RESTful HTTP server by sending and receiving data via\nXHRs. This method is called internally by load(), save(), and destroy().\n\nThe URL used for each XHR will be retrieved by calling the `getURL()` method\nand passing it the specified `action` and `options`.\n\nThis method relies heavily on standard RESTful HTTP conventions",
        "!data": {
@@ -6085,7 +7201,7 @@
       }
      },
      "events": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/View.html#property_events",
       "!doc": "Hash of CSS selectors mapped to events to delegate to elements matching\nthose selectors.\n\nCSS selectors are relative to the `container` element. Events are attached\nto the container, and delegation is used so that subscribers are only\nnotified of events that occur on elements inside the container that match\nthe specified selectors. This allows the containers contents to be re-\nrendered as needed without losing event subscriptions.\n\nEvent handlers can be specified either as functions or as strings that map\nto function names on this view instance or its prototype.\n\nThe `this` object in event handlers will refer to this view instance. If\nyoud prefer `this` to be something else, use `Y.bind()` to bind a custom\n`this` object.",
       "!data": {
@@ -6101,7 +7217,7 @@
       }
      },
      "destroy": {
-      "!type": "fn(options?: +yui.Object) -> !this",
+      "!type": "fn(options?: +config.ViewDestroyConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/View.html#method_destroy",
       "!doc": "Destroys this View, detaching any DOM events and optionally also destroying\nits container node.\n\nBy default, the container node will not be destroyed. Pass an _options_\nobject with a truthy `remove` property to destroy the container as well.",
       "!data": {
@@ -6109,7 +7225,7 @@
       }
      },
      "attachEvents": {
-      "!type": "fn(events?: +yui.Object) -> !this",
+      "!type": "fn(events?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/View.html#method_attachEvents",
       "!doc": "Attaches delegated event handlers to this views container element. This\nmethod is called internally to subscribe to events configured in the\n`events` attribute when the view is initialized.\n\nYou may override this method to customize the event attaching logic.",
       "!data": {
@@ -6117,7 +7233,7 @@
       }
      },
      "create": {
-      "!type": "fn(container?: +HTMLElement) -> +node.Node",
+      "!type": "fn(container?: +HTMLElement|+node.Node|string) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/View.html#method_create",
       "!doc": "Creates and returns a container node for this view.\n\nBy default, the container is created from the HTML template specified in the\n`containerTemplate` property, and is _not_ added to the DOM automatically.\n\nYou may override this method to customize how the container node is created\n(such as by rendering it from a custom template format). Your method must\nreturn a `Y.Node` instance.",
       "!data": {
@@ -6153,7 +7269,7 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/View.NodeMap.html",
      "getByNode": {
-      "!type": "fn(node: +node.Node) -> +app.View",
+      "!type": "fn(node: +node.Node|+HTMLElement|string) -> +app.View",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/View.NodeMap.html#method_getByNode",
       "!doc": "Returns the nearest View instance associated with the given Node. The Node may\nbe a View container or any child of a View container.\n\nNote that only instances of Views that have the Y.View.NodeMap extension mixed\nin will be returned. The base View class doesnt provide this functionality by\ndefault due to the additional memory management overhead involved in maintaining\na mapping of Nodes to View instances.",
       "!data": {
@@ -6168,7 +7284,7 @@
     "prototype": {
      "!proto": "app.ModelList.prototype",
      "free": {
-      "!type": "fn(model?: +app.Model) -> !this",
+      "!type": "fn(model?: +app.Model|number) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/LazyModelList.html#method_free",
       "!doc": "Deletes the specified model from the model cache to release memory. The\nmodel wont be destroyed or removed from the list, just freed from the\ncache; it can still be instantiated again using `revive()`.\n\nIf no model or model index is specified, all cached models in this list will\nbe freed.\n\nNote: Specifying an index is faster than specifying a model instance, since\nthe latter requires an `indexOf()` call.",
       "!data": {
@@ -6200,7 +7316,7 @@
       }
      },
      "indexOf": {
-      "!type": "fn(needle: +app.Model) -> number",
+      "!type": "fn(needle: +app.Model|+Object) -> number",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/LazyModelList.html#method_indexOf",
       "!doc": "Returns the index of the given object or Model instance in this\nLazyModelList.",
       "!data": {
@@ -6208,7 +7324,7 @@
       }
      },
      "reset": {
-      "!type": "fn(models?: [+yui.Object], options?: +yui.Object) -> !this",
+      "!type": "fn(models?: [+Object]|[+app.Model]|+app.ModelList, options?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/LazyModelList.html#method_reset",
       "!doc": "Overrides ModelList#reset() to work with plain objects.",
       "!data": {
@@ -6216,7 +7332,7 @@
       }
      },
      "revive": {
-      "!type": "fn(item?: number) -> +app.Model",
+      "!type": "fn(item?: number|+Object) -> +app.Model|[+app.Model]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/LazyModelList.html#method_revive",
       "!doc": "Revives an item (or all items) into a full Model instance. The _item_\nargument may be the index of an object in this list, an actual object (which\nmust exist in the list), or may be omitted to revive all items in the list.\n\nOnce revived, Model instances are attached to this list and cached so that\nreviving them in the future doesnt require another Model instantiation. Use\nthe `free()` method to explicitly uncache and detach a previously revived\nModel instance.\n\nNote: Specifying an index rather than an object will be faster, since\nobjects require an `indexOf()` lookup in order to retrieve the index.",
       "!data": {
@@ -6224,7 +7340,7 @@
       }
      },
      "toJSON": {
-      "!type": "fn() -> [+yui.Object]",
+      "!type": "fn() -> [+Object]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/LazyModelList.html#method_toJSON",
       "!doc": "Overrides ModelList#toJSON() to use toArray() instead, since its more\nefficient for LazyModelList.",
       "!data": {
@@ -6244,7 +7360,7 @@
     "prototype": {
      "!proto": "base.Base.prototype",
      "model": {
-      "!type": "+app.Model",
+      "!type": "+app.Model|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#property_model",
       "!doc": "The `Model` class or subclass of the models in this list.\n\nThe class specified here will be used to create model instances\nautomatically based on attribute hashes passed to the `add()`, `create()`,\nand `reset()` methods.\n\nYou may specify the class as an actual class reference or as a string that\nresolves to a class reference at runtime (the latter can be useful if the\nspecified class will be loaded lazily).",
       "!data": {
@@ -6252,7 +7368,7 @@
       }
      },
      "add": {
-      "!type": "fn(models: +app.Model, options?: +yui.Object) -> +app.Model",
+      "!type": "fn(models: +app.Model|[+app.Model]|+app.ModelList|+Object|[+Object], options?: +config.ModelListAddConfig) -> +app.Model|[+app.Model]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_add",
       "!doc": "Adds the specified model or array of models to this list. You may also pass\nanother ModelList instance, in which case all the models in that list will\nbe added to this one as well.",
       "!data": {
@@ -6260,7 +7376,7 @@
       }
      },
      "comparator": {
-      "!type": "fn(model: +app.Model) -> number",
+      "!type": "fn(model: +app.Model) -> number|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_comparator",
       "!doc": "Define this method to provide a function that takes a model as a parameter\nand returns a value by which that model should be sorted relative to other\nmodels in this list.\n\nBy default, no comparator is defined, meaning that models will not be sorted\n(theyll be stored in the order theyre added).",
       "!data": {
@@ -6268,7 +7384,7 @@
       }
      },
      "create": {
-      "!type": "fn(model: +app.Model, options?: +yui.Object, callback?: fn(err: +Error, response: ?)) -> +app.Model",
+      "!type": "fn(model: +app.Model|+Object, options?: +config.ModelListCreateConfig, callback?: fn(err: +Error, response: ?)) -> +app.Model",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_create",
       "!doc": "Creates or updates the specified model on the server, then adds it to this\nlist if the server indicates success.",
       "!data": {
@@ -6276,7 +7392,7 @@
       }
      },
      "each": {
-      "!type": "fn(callback: fn(model: +app.Model, index: number, list: +app.ModelList), thisObj?: +yui.Object) -> !this",
+      "!type": "fn(callback: fn(model: +app.Model, index: number, list: +app.ModelList), thisObj?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_each",
       "!doc": "Executes the supplied function on each model in this list.\n\nBy default, the callback functions `this` object will refer to the model\ncurrently being iterated. Specify a `thisObj` to override the `this` object\nif desired.\n\nNote: Iteration is performed on a copy of the internal array of models, so\nits safe to delete a model from the list during iteration.",
       "!data": {
@@ -6284,7 +7400,7 @@
       }
      },
      "filter": {
-      "!type": "fn(options?: +yui.Object, callback: fn(model: +app.Model, index: number, list: +app.ModelList)) -> [+app.Model]",
+      "!type": "fn(options?: +config.ModelListFilterConfig, callback: fn(model: +app.Model, index: number, list: +app.ModelList)) -> [+app.Model]|+app.ModelList",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_filter",
       "!doc": "Executes the supplied function on each model in this list. Returns an array\ncontaining the models for which the supplied function returned a truthy\nvalue.\n\nThe callback functions `this` object will refer to this ModelList. Use\n`Y.bind()` to bind the `this` object to another object if desired.",
       "!data": {
@@ -6292,7 +7408,7 @@
       }
      },
      "get": {
-      "!type": "fn(name: string) -> ?",
+      "!type": "fn(name: string) -> ?|?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_get",
       "!doc": "If _name_ refers to an attribute on this ModelList instance, returns the\nvalue of that attribute. Otherwise, returns an array containing the values\nof the specified attribute from each model in this list.",
       "!data": {
@@ -6300,7 +7416,7 @@
       }
      },
      "getAsHTML": {
-      "!type": "fn(name: string) -> string",
+      "!type": "fn(name: string) -> string|[string]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_getAsHTML",
       "!doc": "If _name_ refers to an attribute on this ModelList instance, returns the\nHTML-escaped value of that attribute. Otherwise, returns an array containing\nthe HTML-escaped values of the specified attribute from each model in this\nlist.\n\nThe values are escaped using `Escape.html()`.",
       "!data": {
@@ -6308,7 +7424,7 @@
       }
      },
      "getAsURL": {
-      "!type": "fn(name: string) -> string",
+      "!type": "fn(name: string) -> string|[string]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_getAsURL",
       "!doc": "If _name_ refers to an attribute on this ModelList instance, returns the\nURL-encoded value of that attribute. Otherwise, returns an array containing\nthe URL-encoded values of the specified attribute from each model in this\nlist.\n\nThe values are encoded using the native `encodeURIComponent()` function.",
       "!data": {
@@ -6324,7 +7440,7 @@
       }
      },
      "getById": {
-      "!type": "fn(id: string) -> +app.Model",
+      "!type": "fn(id: string|number) -> +app.Model",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_getById",
       "!doc": "Returns the model with the specified _id_, or `null` if not found.\n\nNote that models arent expected to have an id until theyre saved, so if\nyoure working with unsaved models, it may be safer to call\n`getByClientId()`.",
       "!data": {
@@ -6348,7 +7464,7 @@
       }
      },
      "load": {
-      "!type": "fn(options?: +yui.Object, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(options?: +Object, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_load",
       "!doc": "Loads this list of models from the server.\n\nThis method delegates to the `sync()` method to perform the actual load\noperation, which is an asynchronous action. Specify a _callback_ function to\nbe notified of success or failure.\n\nIf the load operation succeeds, a `reset` event will be fired.",
       "!data": {
@@ -6356,7 +7472,7 @@
       }
      },
      "map": {
-      "!type": "fn(fn: fn(model: +app.Model, index: number, models: [+app.Model]), thisObj?: +yui.Object) -> +yui.Array",
+      "!type": "fn(fn: fn(model: +app.Model, index: number, models: [+app.Model]), thisObj?: +Object) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_map",
       "!doc": "Executes the specified function on each model in this list and returns an\narray of the functions collected return values.",
       "!data": {
@@ -6364,7 +7480,7 @@
       }
      },
      "parse": {
-      "!type": "fn(response: ?) -> [+yui.Object]",
+      "!type": "fn(response: ?) -> [+Object]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_parse",
       "!doc": "Called to parse the _response_ when the list is loaded from the server.\nThis method receives a server _response_ and is expected to return an array\nof model attribute hashes.\n\nThe default implementation assumes that _response_ is either an array of\nattribute hashes or a JSON string that can be parsed into an array of\nattribute hashes. If _response_ is a JSON string and either `Y.JSON` or the\nnative `JSON` object are available, it will be parsed automatically. If a\nparse error occurs, an `error` event will be fired and the model will not be\nupdated.\n\nYou may override this method to implement custom parsing logic if necessary.",
       "!data": {
@@ -6372,7 +7488,7 @@
       }
      },
      "remove": {
-      "!type": "fn(models: +app.Model, options?: +yui.Object) -> +app.Model",
+      "!type": "fn(models: +app.Model|[+app.Model]|+app.ModelList|number|[number], options?: +config.ModelListRemoveConfig) -> +app.Model|[+app.Model]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_remove",
       "!doc": "Removes the specified model or array of models from this list. You may also\npass another ModelList instance to remove all the models that are in both\nthat instance and this instance, or pass numerical indices to remove the\nmodels at those indices.",
       "!data": {
@@ -6380,7 +7496,7 @@
       }
      },
      "reset": {
-      "!type": "fn(models?: [+app.Model], options?: +yui.Object) -> !this",
+      "!type": "fn(models?: [+app.Model]|+app.ModelList|[+Object], options?: +config.ModelListResetConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_reset",
       "!doc": "Completely replaces all models in the list with those specified, and fires a\nsingle `reset` event.\n\nUse `reset` when you want to add or remove a large number of items at once\nwith less overhead, and without firing `add` or `remove` events for each\none.",
       "!data": {
@@ -6388,7 +7504,7 @@
       }
      },
      "some": {
-      "!type": "fn(callback: fn(model: +app.Model, index: number, list: +app.ModelList), thisObj?: +yui.Object) -> bool",
+      "!type": "fn(callback: fn(model: +app.Model, index: number, list: +app.ModelList), thisObj?: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_some",
       "!doc": "Executes the supplied function on each model in this list, and stops\niterating if the callback returns `true`.\n\nBy default, the callback functions `this` object will refer to the model\ncurrently being iterated. Specify a `thisObj` to override the `this` object\nif desired.\n\nNote: Iteration is performed on a copy of the internal array of models, so\nits safe to delete a model from the list during iteration.",
       "!data": {
@@ -6396,7 +7512,7 @@
       }
      },
      "sort": {
-      "!type": "fn(options?: +yui.Object) -> !this",
+      "!type": "fn(options?: +config.ModelListSortConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_sort",
       "!doc": "Forcibly re-sorts the list.\n\nUsually it shouldnt be necessary to call this method since the list\nmaintains its sort order when items are added and removed, but if you change\nthe `comparator` function after items are already in the list, youll need\nto re-sort.",
       "!data": {
@@ -6404,7 +7520,7 @@
       }
      },
      "sync": {
-      "!type": "fn(action: string, options?: +yui.Object, callback?: fn(err: +Error, response?: ?))",
+      "!type": "fn(action: string, options?: +Object, callback?: fn(err: +Error, response?: ?))",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_sync",
       "!doc": "Override this method to provide a custom persistence implementation for this\nlist. The default method just calls the callback without actually doing\nanything.\n\nThis method is called internally by `load()` and its implementations relies\non the callback being called. This effectively means that when a callback is\nprovided, it must be called at some point for the class to operate correctly.",
       "!data": {
@@ -6420,7 +7536,7 @@
       }
      },
      "toJSON": {
-      "!type": "fn() -> [+yui.Object]",
+      "!type": "fn() -> [+Object]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ModelList.html#method_toJSON",
       "!doc": "Returns an array containing attribute hashes for each model in this list,\nsuitable for being passed to `Y.JSON.stringify()`.\n\nUnder the hood, this method calls `toJSON()` on each model in the list and\npushes the results into an array.",
       "!data": {
@@ -6435,7 +7551,7 @@
     "prototype": {
      "!proto": "base.Base.prototype",
      "changed": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#property_changed",
       "!doc": "Hash of attributes that have changed since the last time this model was\nsaved.",
       "!data": {
@@ -6451,7 +7567,7 @@
       }
      },
      "lastChange": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#property_lastChange",
       "!doc": "Hash of attributes that were changed in the last `change` event. Each item\nin this hash is an object with the following properties:\n\n  * `newVal`: The new value of the attribute after it changed.\n  * `prevVal`: The old value of the attribute before it changed.\n  * `src`: The source of the change, or `null` if no source was specified.",
       "!data": {
@@ -6467,7 +7583,7 @@
       }
      },
      "destroy": {
-      "!type": "fn(options?: +yui.Object, callback?: fn(err: +Error)) -> !this",
+      "!type": "fn(options?: +config.ModelDestroyConfig, callback?: fn(err: +Error)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_destroy",
       "!doc": "Destroys this model instance and removes it from its containing lists, if\nany.\n\nThe _callback_, if one is provided, will be called after the model is\ndestroyed.\n\nIf `options.remove` is `true`, then this method delegates to the `sync()`\nmethod to delete the model from the persistence layer, which is an\nasynchronous action. In this case, the _callback_ (if provided) will be\ncalled after the sync layer indicates success or failure of the delete\noperation.",
       "!data": {
@@ -6523,7 +7639,7 @@
       }
      },
      "load": {
-      "!type": "fn(options?: +yui.Object, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(options?: +Object, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_load",
       "!doc": "Loads this model from the server.\n\nThis method delegates to the `sync()` method to perform the actual load\noperation, which is an asynchronous action. Specify a _callback_ function to\nbe notified of success or failure.\n\nA successful load operation will fire a `load` event, while an unsuccessful\nload operation will fire an `error` event with the `src` value \"load\".\n\nIf the load operation succeeds and one or more of the loaded attributes\ndiffer from this models current attributes, a `change` event will be fired.",
       "!data": {
@@ -6531,7 +7647,7 @@
       }
      },
      "parse": {
-      "!type": "fn(response: ?) -> +yui.Object",
+      "!type": "fn(response: ?) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_parse",
       "!doc": "Called to parse the _response_ when the model is loaded from the server.\nThis method receives a server _response_ and is expected to return an\nattribute hash.\n\nThe default implementation assumes that _response_ is either an attribute\nhash or a JSON string that can be parsed into an attribute hash. If\n_response_ is a JSON string and either `Y.JSON` or the native `JSON` object\nare available, it will be parsed automatically. If a parse error occurs, an\n`error` event will be fired and the model will not be updated.\n\nYou may override this method to implement custom parsing logic if necessary.",
       "!data": {
@@ -6539,7 +7655,7 @@
       }
      },
      "save": {
-      "!type": "fn(options?: +yui.Object, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(options?: +Object, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_save",
       "!doc": "Saves this model to the server.\n\nThis method delegates to the `sync()` method to perform the actual save\noperation, which is an asynchronous action. Specify a _callback_ function to\nbe notified of success or failure.\n\nA successful save operation will fire a `save` event, while an unsuccessful\nsave operation will fire an `error` event with the `src` value \"save\".\n\nIf the save operation succeeds and one or more of the attributes returned in\nthe servers response differ from this models current attributes, a\n`change` event will be fired.",
       "!data": {
@@ -6547,7 +7663,7 @@
       }
      },
      "set": {
-      "!type": "fn(name: string, value: ?, options?: +yui.Object) -> !this",
+      "!type": "fn(name: string, value: ?, options?: +config.ModelSetConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_set",
       "!doc": "Sets the value of a single attribute. If model validation fails, the\nattribute will not be set and an `error` event will be fired.\n\nUse `setAttrs()` to set multiple attributes at once.",
       "!data": {
@@ -6555,7 +7671,7 @@
       }
      },
      "setAttrs": {
-      "!type": "fn(attributes: +yui.Object, options?: +yui.Object) -> !this",
+      "!type": "fn(attributes: +Object, options?: +config.ModelSetAttrsConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_setAttrs",
       "!doc": "Sets the values of multiple attributes at once. If model validation fails,\nthe attributes will not be set and an `error` event will be fired.",
       "!data": {
@@ -6563,7 +7679,7 @@
       }
      },
      "sync": {
-      "!type": "fn(action: string, options?: +yui.Object, callback?: fn(err: +Error, response?: ?))",
+      "!type": "fn(action: string, options?: +Object, callback?: fn(err: +Error, response?: ?))",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_sync",
       "!doc": "Override this method to provide a custom persistence implementation for this\nmodel. The default just calls the callback without actually doing anything.\n\nThis method is called internally by `load()`, `save()`, and `destroy()`, and\ntheir implementations rely on the callback being called. This effectively\nmeans that when a callback is provided, it must be called at some point for\nthe class to operate correctly.",
       "!data": {
@@ -6571,7 +7687,7 @@
       }
      },
      "toJSON": {
-      "!type": "fn() -> +yui.Object",
+      "!type": "fn() -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_toJSON",
       "!doc": "Returns a copy of this models attributes that can be passed to\n`Y.JSON.stringify()` or used for other nefarious purposes.\n\nThe `clientId` attribute is not included in the returned object.\n\nIf youve specified a custom attribute name in the `idAttribute` property,\nthe default `id` attribute will not be included in the returned object.\n\nNote: The ECMAScript 5 specification states that objects may implement a\n`toJSON` method to provide an alternate object representation to serialize\nwhen passed to `JSON.stringify(obj)`.  This allows class instances to be\nserialized as if they were plain objects.  This is why Models `toJSON`\nreturns an object, not a JSON string.\n\nSee <http://es5.github.com/#x15.12.3> for details.",
       "!data": {
@@ -6579,7 +7695,7 @@
       }
      },
      "undo": {
-      "!type": "fn(attrNames?: [string], options?: +yui.Object) -> !this",
+      "!type": "fn(attrNames?: [string], options?: +config.ModelUndoConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_undo",
       "!doc": "Reverts the last change to the model.\n\nIf an _attrNames_ array is provided, then only the named attributes will be\nreverted (and only if they were modified in the previous change). If no\n_attrNames_ array is provided, then all changed attributes will be reverted\nto their previous values.\n\nNote that only one level of undo is available: from the current state to the\nprevious state. If `undo()` is called when no previous state is available,\nit will simply do nothing.",
       "!data": {
@@ -6587,7 +7703,7 @@
       }
      },
      "validate": {
-      "!type": "fn(attrs: +yui.Object, callback: fn(err?: ?))",
+      "!type": "fn(attrs: +Object, callback: fn(err?: ?))",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Model.html#method_validate",
       "!doc": "Override this method to provide custom validation logic for this model.\n\nWhile attribute-specific validators can be used to validate individual\nattributes, this method gives you a hook to validate a hash of all\nattributes before the model is saved. This method is called automatically\nbefore `save()` takes any action. If validation fails, the `save()` call\nwill be aborted.\n\nIn your validation method, call the provided `callback` function with no\narguments to indicate success. To indicate failure, pass a single argument,\nwhich may contain an error message, an array of error messages, or any other\nvalue. This value will be passed along to the `error` event.",
       "!data": {
@@ -6626,7 +7742,7 @@
       }
      },
      "match": {
-      "!type": "fn(path: string) -> [+yui.Object]",
+      "!type": "fn(path: string) -> [+Object]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Router.html#method_match",
       "!doc": "Returns an array of route objects that match the specified URL path.\n\nIf this router has a `root`, then the specified `path` _must_ be\nsemantically within the `root` path to match any routes.\n\nThis method is called internally to determine which routes match the current\npath whenever the URL changes. You may override it if you want to customize\nthe route matching logic, although this usually shouldnt be necessary.\n\nEach returned route object has the following properties:\n\n  * `callback`: A function or a string representing the name of a function\n    this router that should be executed when the route is triggered.\n\n  * `keys`: An array of strings representing the named parameters defined in\n    the routes path specification, if any.\n\n  * `path`: The routes path specification, which may be either a string or\n    a regex.\n\n  * `regex`: A regular expression version of the routes path specification.\n    This regex is used to determine whether the route matches a given path.",
       "!data": {
@@ -6666,7 +7782,7 @@
       }
      },
      "route": {
-      "!type": "fn(route: string, callbacks: +yui.Array) -> !this",
+      "!type": "fn(route: string|+RegExp|+Object, callbacks: [?]|string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Router.html#method_route",
       "!doc": "Adds a route handler for the specified `route`.\n\nThe `route` parameter may be a string or regular expression to represent a\nURL path, or a route object. If its a string (which is most common), it may\ncontain named parameters: `:param` will match any single part of a URL path\n(not including `/` characters), and `*param` will match any number of parts\nof a URL path (including `/` characters). These named parameters will be\nmade available as keys on the `req.params` object thats passed to route\nhandlers.\n\nIf the `route` parameter is a regex, all pattern matches will be made\navailable as numbered keys on `req.params`, starting with `0` for the full\nmatch, then `1` for the first subpattern match, and so on.\n\nAlternatively, an object can be provided to represent the route and it may\ncontain a `path` property which is a string or regular expression which\ncauses the route to be process as described above. If the route object\nalready contains a `regex` or `regexp` property, the route will be\nconsidered fully-processed and will be associated with any `callacks`\nspecified on the object and those specified as parameters to this method.\n**Note:** Any additional data contained on the route object will be\npreserved.\n\nHeres a set of sample routes along with URL paths that they match:\n\n  * Route: `/photos/:tag/:page`\n    * URL: `/photos/kittens/1`, params: `{tag: kittens, page: 1}`\n    * URL: `/photos/puppies/2`, params: `{tag: puppies, page: 2}`\n\n  * Route: `/file/*path`\n    * URL: `/file/foo/bar/baz.txt`, params: `{path: foo/bar/baz.txt}`\n    * URL: `/file/foo`, params: `{path: foo}`\n\n**Middleware**: Routes also support an arbitrary number of callback\nfunctions. This allows you to easily reuse parts of your route-handling code\nwith different route. This method is liberal in how it processes the\nspecified `callbacks`, you can specify them as separate arguments, or as\narrays, or both.\n\nIf multiple route match a given URL, they will be executed in the order they\nwere added. The first route that was added will be the first to be executed.\n\n**Passing Control**: Invoking the `next()` function within a route callback\nwill pass control to the next callback function (if any) or route handler\n(if any). If a value is passed to `next()`, its assumed to be an error,\ntherefore stopping the dispatch chain, unless that value is: `\"route\"`,\nwhich is special case and dispatching will skip to the next route handler.\nThis allows middleware to skip any remaining middleware for a particular\nroute.",
       "!data": {
@@ -6705,12 +7821,12 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/ArraySort.html",
     "compare": {
-     "!type": "fn(a: +yui.Object, b: +yui.Object, desc: bool) -> bool",
+     "!type": "fn(a: +Object, b: +Object, desc: bool) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ArraySort.html#method_compare",
      "!doc": "Comparator function for simple case-insensitive sorting of an array of\nstrings."
     },
     "naturalCompare": {
-     "!type": "fn(a: number, b: number, options?: +yui.Object) -> number",
+     "!type": "fn(a: number|string, b: number|string, options?: +config.ArraySortNaturalCompareConfig) -> number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ArraySort.html#method_naturalCompare",
      "!doc": "Performs a natural-order comparison of two strings or numbers (or a string\nand a number). This ensures that a value like foo2 will be sorted before\nfoo10, whereas a standard ASCII sort would sort foo10 first."
     }
@@ -6726,7 +7842,7 @@
     "prototype": {
      "!proto": "event_custom.EventTarget.prototype",
      "defaults": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AsyncQueue.html#property_defaults",
       "!doc": "Callback defaults for this instance.  Static defaults that are not\noverridden are also included."
      },
@@ -6766,17 +7882,17 @@
       "!doc": "Returns the current index of a callback.  Pass in either the id or\ncallback function from getCallback."
      },
      "getCallback": {
-      "!type": "fn(id: string) -> +yui.Object",
+      "!type": "fn(id: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AsyncQueue.html#method_getCallback",
       "!doc": "Retrieve a callback by its id.  Useful to modify the configuration\nwhile the queue is running."
      },
      "promote": {
-      "!type": "fn(callback: string) -> !this",
+      "!type": "fn(callback: string|+Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AsyncQueue.html#method_promote",
       "!doc": "Promotes the named callback to the top of the queue. If a callback is\ncurrently executing or looping (via until or iterations), the promotion\nis scheduled to occur after the current callback has completed."
      },
      "remove": {
-      "!type": "fn(callback: string) -> !this",
+      "!type": "fn(callback: string|+Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AsyncQueue.html#method_remove",
       "!doc": "Removes the callback from the queue.  If the queue is active, the\nremoval is scheduled to occur after the current callback has completed."
      },
@@ -6787,7 +7903,7 @@
      }
     },
     "defaults": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AsyncQueue.html#property_defaults",
      "!doc": "<p>Static default values used to populate callback configuration properties.\nPreconfigured defaults include:</p>\n\n<ul>\n <li><code>autoContinue</code>: <code>true</code></li>\n <li><code>iterations</code>: 1</li>\n <li><code>timeout</code>: 10 (10ms between callbacks)</li>\n <li><code>until</code>: (function to run until iterations &lt;= 0)</li>\n</ul>"
     }
@@ -6804,7 +7920,7 @@
     }
    },
    "Attribute": {
-    "!type": "fn(attrs: +yui.Object, values: +yui.Object, lazy: bool)",
+    "!type": "fn(attrs: +Object, values: +Object, lazy: bool)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Attribute.html",
     "!data": {
      "extends": [
@@ -6815,7 +7931,7 @@
      ]
     },
     "INVALID_VALUE": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Attribute.html#property_INVALID_VALUE",
      "!doc": "<p>The value to return from an attribute setter in order to prevent the set from going through.</p>\n\n<p>You can return this value from your setter if you wish to combine validator and setter\nfunctionality into a single setter function, which either returns the massaged value to be stored or\nAttributeCore.INVALID_VALUE to prevent invalid values from being stored.</p>",
      "!data": {
@@ -6823,7 +7939,7 @@
      }
     },
     "protectAttrs": {
-     "!type": "fn(attrs: +yui.Object) -> +yui.Object",
+     "!type": "fn(attrs: +Object) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Attribute.html#method_protectAttrs",
      "!doc": "Utility method to protect an attribute configuration hash, by merging the\nentire object and the individual attr config objects.",
      "!data": {
@@ -6832,10 +7948,10 @@
     }
    },
    "AttributeCore": {
-    "!type": "fn(attrs: +yui.Object, values: +yui.Object, lazy: bool)",
+    "!type": "fn(attrs: +Object, values: +Object, lazy: bool)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html",
     "INVALID_VALUE": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#property_INVALID_VALUE",
      "!doc": "<p>The value to return from an attribute setter in order to prevent the set from going through.</p>\n\n<p>You can return this value from your setter if you wish to combine validator and setter\nfunctionality into a single setter function, which either returns the massaged value to be stored or\nAttributeCore.INVALID_VALUE to prevent invalid values from being stored.</p>",
      "!data": {
@@ -6843,7 +7959,7 @@
      }
     },
     "protectAttrs": {
-     "!type": "fn(attrs: +yui.Object) -> +yui.Object",
+     "!type": "fn(attrs: +Object) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#method_protectAttrs",
      "!doc": "Utility method to protect an attribute configuration hash, by merging the\nentire object and the individual attr config objects.",
      "!data": {
@@ -6852,7 +7968,7 @@
     },
     "prototype": {
      "addAttr": {
-      "!type": "fn(name: string, config: +config.addAttrConfig, lazy: bool) -> !this",
+      "!type": "fn(name: string, config: +config.AttributeCoreAddAttrConfig, lazy: bool) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#method_addAttr",
       "!doc": "<p>\nAdds an attribute with the provided configuration to the host object.\n</p>\n<p>\nThe config argument object supports the following properties:\n</p>\n\n<dl>\n   <dt>value &#60;Any&#62;</dt>\n   <dd>The initial value to set on the attribute</dd>\n\n   <dt>valueFn &#60;Function | String&#62;</dt>\n   <dd>\n   <p>A function, which will return the initial value to set on the attribute. This is useful\n   for cases where the attribute configuration is defined statically, but needs to\n   reference the host instance (\"this\") to obtain an initial value. If both the value and valueFn properties are defined,\n   the value returned by the valueFn has precedence over the value property, unless it returns undefined, in which\n   case the value property is used.</p>\n\n   <p>valueFn can also be set to a string, representing the name of the instance method to be used to retrieve the value.</p>\n   </dd>\n\n   <dt>readOnly &#60;boolean&#62;</dt>\n   <dd>Whether or not the attribute is read only. Attributes having readOnly set to true\n       cannot be modified by invoking the set method.</dd>\n\n   <dt>writeOnce &#60;boolean&#62; or &#60;string&#62;</dt>\n   <dd>\n       Whether or not the attribute is \"write once\". Attributes having writeOnce set to true,\n       can only have their values set once, be it through the default configuration,\n       constructor configuration arguments, or by invoking set.\n       <p>The writeOnce attribute can also be set to the string \"initOnly\",\n        in which case the attribute can only be set during initialization\n       (when used with Base, this means it can only be set during construction)</p>\n   </dd>\n\n   <dt>setter &#60;Function | String&#62;</dt>\n   <dd>\n   <p>The setter function used to massage or normalize the value passed to the set method for the attribute.\n   The value returned by the setter will be the final stored value. Returning\n   <a href=\"#property_Attribute.INVALID_VALUE\">Attribute.INVALID_VALUE</a>, from the setter will prevent\n   the value from being stored.\n   </p>\n\n   <p>setter can also be set to a string, representing the name of the instance method to be used as the setter function.</p>\n   </dd>\n\n   <dt>getter &#60;Function | String&#62;</dt>\n   <dd>\n   <p>\n   The getter function used to massage or normalize the value returned by the get method for the attribute.\n   The value returned by the getter function is the value which will be returned to the user when they\n   invoke get.\n   </p>\n\n   <p>getter can also be set to a string, representing the name of the instance method to be used as the getter function.</p>\n   </dd>\n\n   <dt>validator &#60;Function | String&#62;</dt>\n   <dd>\n   <p>\n   The validator function invoked prior to setting the stored value. Returning\n   false from the validator function will prevent the value from being stored.\n   </p>\n\n   <p>validator can also be set to a string, representing the name of the instance method to be used as the validator function.</p>\n   </dd>\n\n   <dt>lazyAdd &#60;boolean&#62;</dt>\n   <dd>Whether or not to delay initialization of the attribute until the first call to get/set it.\n   This flag can be used to over-ride lazy initialization on a per attribute basis, when adding multiple attributes through\n   the <a href=\"#method_addAttrs\">addAttrs</a> method.</dd>\n\n</dl>\n\n<p>The setter, getter and validator are invoked with the value and name passed in as the first and second arguments, and with\nthe context (\"this\") set to the host object.</p>\n\n<p>Configuration properties outside of the list mentioned above are considered private properties used internally by attribute,\nand are not intended for public use.</p>",
       "!data": {
@@ -6876,7 +7992,7 @@
       }
      },
      "set": {
-      "!type": "fn(name: string, value: ?, opts?: +yui.Object) -> !this",
+      "!type": "fn(name: string, value: ?, opts?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#method_set",
       "!doc": "Sets the value of an attribute.",
       "!data": {
@@ -6884,7 +8000,7 @@
       }
      },
      "setAttrs": {
-      "!type": "fn(attrs: +yui.Object, opts?: +yui.Object) -> !this",
+      "!type": "fn(attrs: +Object, opts?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#method_setAttrs",
       "!doc": "Sets multiple attribute values.",
       "!data": {
@@ -6892,7 +8008,7 @@
       }
      },
      "getAttrs": {
-      "!type": "fn(attrs: [string]) -> +yui.Object",
+      "!type": "fn(attrs: [string]|bool) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#method_getAttrs",
       "!doc": "Gets multiple attribute values.",
       "!data": {
@@ -6900,7 +8016,7 @@
       }
      },
      "addAttrs": {
-      "!type": "fn(cfgs: +yui.Object, values: +yui.Object, lazy: bool) -> !this",
+      "!type": "fn(cfgs: +Object, values: +Object, lazy: bool) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeCore.html#method_addAttrs",
       "!doc": "Configures a group of attributes, and sets initial values.\n\n<p>\n<strong>NOTE:</strong> This method does not isolate the configuration object by merging/cloning.\nThe caller is responsible for merging/cloning the configuration object if required.\n</p>",
       "!data": {
@@ -6914,7 +8030,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeExtras.html",
     "prototype": {
      "modifyAttr": {
-      "!type": "fn(name: string, config: +config.modifyAttrConfig)",
+      "!type": "fn(name: string, config: +config.AttributeExtrasModifyAttrConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeExtras.html#method_modifyAttr",
       "!doc": "Updates the configuration of an attribute which has already been added.\n<p>\nThe properties which can be modified through this interface are limited\nto the following subset of attributes, which can be safely modified\nafter a value has already been set on the attribute:\n</p>\n<dl>\n <dt>readOnly;</dt>\n <dt>writeOnce;</dt>\n <dt>broadcast; and</dt>\n <dt>getter.</dt>\n</dl>\n<p>\nNote: New attributes cannot be added using this interface. New attributes must be\nadded using {{#crossLink \"AttributeCore/addAttr:method\"}}addAttr{{/crossLink}}, or an\nappropriate manner for a class which utilises Attributes (e.g. the\n{{#crossLink \"Base/ATTRS:property\"}}ATTRS{{/crossLink}} property in\n{{#crossLink \"Base\"}}Base{{/crossLink}}).\n</p>",
       "!data": {
@@ -6949,7 +8065,7 @@
     },
     "prototype": {
      "set": {
-      "!type": "fn(name: string, value: ?, opts: +yui.Object) -> !this",
+      "!type": "fn(name: string, value: ?, opts: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeObservable.html#method_set",
       "!doc": "Sets the value of an attribute.",
       "!data": {
@@ -6957,7 +8073,7 @@
       }
      },
      "setAttrs": {
-      "!type": "fn(attrs: +yui.Object, opts: +yui.Object) -> !this",
+      "!type": "fn(attrs: +Object, opts: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeObservable.html#method_setAttrs",
       "!doc": "Sets multiple attribute values.",
       "!data": {
@@ -6981,7 +8097,7 @@
       "!doc": "Adds a property to an item."
      },
      "addAll": {
-      "!type": "fn(name: string, obj: +yui.Object)",
+      "!type": "fn(name: string, obj: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/State.html#method_addAll",
       "!doc": "Adds multiple properties to an item."
      },
@@ -6991,7 +8107,7 @@
       "!doc": "Removes a property from an item."
      },
      "removeAll": {
-      "!type": "fn(name: string, obj: +yui.Object)",
+      "!type": "fn(name: string, obj: +Object|[?])",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/State.html#method_removeAll",
       "!doc": "Removes multiple properties from an item, or removes the item completely."
      },
@@ -7001,7 +8117,7 @@
       "!doc": "For a given item, returns the value of the property requested, or undefined if not found."
      },
      "getAll": {
-      "!type": "fn(name: string, reference: bool) -> +yui.Object",
+      "!type": "fn(name: string, reference: bool) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/State.html#method_getAll",
       "!doc": "For the given item, returns an object with all of the\nitems property/value pairs. By default the object returned\nis a shallow copy of the stored data, but passing in true\nas the second parameter will return a reference to the stored\ndata."
      }
@@ -7044,7 +8160,7 @@
      }
     },
     "SOURCE_TYPES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteBase.html#property_SOURCE_TYPES",
      "!doc": "Mapping of built-in source types to their setter functions. DataSource instances\nand DataSource-like objects are handled natively, so are not mapped here.",
      "!data": {
@@ -7056,7 +8172,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html",
     "charMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_charMatchFold",
      "!doc": "Accent folding version of `charMatch()`.",
      "!data": {
@@ -7064,7 +8180,7 @@
      }
     },
     "phraseMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_phraseMatchFold",
      "!doc": "Accent folding version of `phraseMatch()`.",
      "!data": {
@@ -7072,7 +8188,7 @@
      }
     },
     "startsWithFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_startsWithFold",
      "!doc": "Accent folding version of `startsWith()`.",
      "!data": {
@@ -7080,7 +8196,7 @@
      }
     },
     "subWordMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_subWordMatchFold",
      "!doc": "Accent folding version of `subWordMatch()`.",
      "!data": {
@@ -7088,7 +8204,7 @@
      }
     },
     "wordMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_wordMatchFold",
      "!doc": "Accent folding version of `wordMatch()`.",
      "!data": {
@@ -7096,7 +8212,7 @@
      }
     },
     "charMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_charMatch",
      "!doc": "Returns an array of results that contain all of the characters in the query,\nin any order (not necessarily consecutive). Case-insensitive.",
      "!data": {
@@ -7104,7 +8220,7 @@
      }
     },
     "charMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_charMatchCase",
      "!doc": "Case-sensitive version of `charMatch()`.",
      "!data": {
@@ -7112,7 +8228,7 @@
      }
     },
     "phraseMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_phraseMatch",
      "!doc": "Returns an array of results that contain the complete query as a phrase.\nCase-insensitive.",
      "!data": {
@@ -7120,7 +8236,7 @@
      }
     },
     "phraseMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_phraseMatchCase",
      "!doc": "Case-sensitive version of `phraseMatch()`.",
      "!data": {
@@ -7128,7 +8244,7 @@
      }
     },
     "startsWith": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_startsWith",
      "!doc": "Returns an array of results that start with the complete query as a phrase.\nCase-insensitive.",
      "!data": {
@@ -7136,7 +8252,7 @@
      }
     },
     "startsWithCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_startsWithCase",
      "!doc": "Case-sensitive version of `startsWith()`.",
      "!data": {
@@ -7144,7 +8260,7 @@
      }
     },
     "subWordMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_subWordMatch",
      "!doc": "Returns an array of results in which all the words of the query match either\nwhole words or parts of words in the result. Non-word characters like\nwhitespace and certain punctuation are ignored. Case-insensitive.\n\nThis is basically a combination of `wordMatch()` (by ignoring whitespace and\nword order) and `phraseMatch()` (by allowing partial matching instead of\nrequiring the entire word to match).\n\nExample use case: Trying to find personal names independently of name order\n(Western or Eastern order) and supporting immediate feedback by allowing\npartial occurences. So queries like \"J. Doe\", \"Doe, John\", and \"J. D.\" would\nall match \"John Doe\".",
      "!data": {
@@ -7152,7 +8268,7 @@
      }
     },
     "subWordMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_subWordMatchCase",
      "!doc": "Case-sensitive version of `subWordMatch()`.",
      "!data": {
@@ -7160,7 +8276,7 @@
      }
     },
     "wordMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_wordMatch",
      "!doc": "Returns an array of results that contain all of the words in the query, in\nany order. Non-word characters like whitespace and certain punctuation are\nignored. Case-insensitive.",
      "!data": {
@@ -7168,7 +8284,7 @@
      }
     },
     "wordMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteFilters.html#method_wordMatchCase",
      "!doc": "Case-sensitive version of `wordMatch()`.",
      "!data": {
@@ -7180,7 +8296,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html",
     "charMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_charMatchFold",
      "!doc": "Accent-folding version of `charMatch()`.",
      "!data": {
@@ -7188,7 +8304,7 @@
      }
     },
     "phraseMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_phraseMatchFold",
      "!doc": "Accent-folding version of `phraseMatch()`.",
      "!data": {
@@ -7196,7 +8312,7 @@
      }
     },
     "startsWithFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_startsWithFold",
      "!doc": "Accent-folding version of `startsWith()`.",
      "!data": {
@@ -7204,7 +8320,7 @@
      }
     },
     "subWordMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_subWordMatchFold",
      "!doc": "Accent-folding version of `subWordMatch()`.",
      "!data": {
@@ -7212,7 +8328,7 @@
      }
     },
     "wordMatchFold": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_wordMatchFold",
      "!doc": "Accent-folding version of `wordMatch()`.",
      "!data": {
@@ -7220,7 +8336,7 @@
      }
     },
     "charMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_charMatch",
      "!doc": "Highlights any individual query character that occurs anywhere in a result.\nCase-insensitive.",
      "!data": {
@@ -7228,7 +8344,7 @@
      }
     },
     "charMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_charMatchCase",
      "!doc": "Case-sensitive version of `charMatch()`.",
      "!data": {
@@ -7236,7 +8352,7 @@
      }
     },
     "phraseMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_phraseMatch",
      "!doc": "Highlights the complete query as a phrase anywhere within a result. Case-\ninsensitive.",
      "!data": {
@@ -7244,7 +8360,7 @@
      }
     },
     "phraseMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_phraseMatchCase",
      "!doc": "Case-sensitive version of `phraseMatch()`.",
      "!data": {
@@ -7252,7 +8368,7 @@
      }
     },
     "startsWith": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_startsWith",
      "!doc": "Highlights the complete query as a phrase at the beginning of a result.\nCase-insensitive.",
      "!data": {
@@ -7260,7 +8376,7 @@
      }
     },
     "startsWithCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_startsWithCase",
      "!doc": "Case-sensitive version of `startsWith()`.",
      "!data": {
@@ -7268,7 +8384,7 @@
      }
     },
     "subWordMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_subWordMatch",
      "!doc": "Highlights portions of results in which words from the query match either\nwhole words or parts of words in the result. Non-word characters like\nwhitespace and certain punctuation are ignored. Case-insensitive.",
      "!data": {
@@ -7276,7 +8392,7 @@
      }
     },
     "subWordMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_subWordMatchCase",
      "!doc": "Case-sensitive version of `subWordMatch()`.",
      "!data": {
@@ -7284,7 +8400,7 @@
      }
     },
     "wordMatch": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_wordMatch",
      "!doc": "Highlights individual words in results that are also in the query. Non-word\ncharacters like punctuation are ignored. Case-insensitive.",
      "!data": {
@@ -7292,7 +8408,7 @@
      }
     },
     "wordMatchCase": {
-     "!type": "fn(query: string, results: +yui.Array) -> +yui.Array",
+     "!type": "fn(query: string, results: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/AutoCompleteHighlighters.html#method_wordMatchCase",
      "!doc": "Case-sensitive version of `wordMatch()`.",
      "!data": {
@@ -7363,7 +8479,7 @@
      }
     },
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Base.html#property_ATTRS",
      "!doc": "The default set of attributes which will be available for instances of this class, and\ntheir configuration. In addition to the configuration properties listed by\nAttributes <a href=\"Attribute.html#method_addAttr\">addAttr</a> method, the attribute\ncan also be configured with a \"cloneDefaultValue\" property, which defines how the statically\ndefined value field should be protected (\"shallow\", \"deep\" and false are supported values).\n\nBy default if the value is an object literal or an array it will be \"shallow\" cloned, to\nprotect the default value.",
      "!data": {
@@ -7371,7 +8487,7 @@
      }
     },
     "modifyAttrs": {
-     "!type": "fn(ctor?: fn(), configs: +yui.Object)",
+     "!type": "fn(ctor?: fn(), configs: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Base.html#method_modifyAttrs",
      "!doc": "Provides a way to safely modify a `Y.Base` subclass static `ATTRS` after\nthe class has been defined or created.\n\nBase-based classes cache information about the class hierarchy in order to\nefficiently create instances. This cache includes includes the aggregated\n`ATTRS` configs. If the static `ATTRS` configs need to be modified after the\nclass has been defined or create, then use this method which will make sure\nto clear any cached data before making any modifications.",
      "!data": {
@@ -7379,7 +8495,7 @@
      }
     },
     "build": {
-     "!type": "fn(name: fn(), main: fn(), extensions: fn(), cfg: +yui.Object) -> fn()",
+     "!type": "fn(name: fn(), main: fn(), extensions: fn(), cfg: +Object) -> fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Base.html#method_build",
      "!doc": "<p>\nBuilds a custom constructor function (class) from the\nmain function, and array of extension functions (classes)\nprovided. The NAME field for the constructor function is\ndefined by the first argument passed in.\n</p>\n<p>\nThe cfg object supports the following properties\n</p>\n<dl>\n   <dt>dynamic &#60;boolean&#62;</dt>\n   <dd>\n   <p>If true (default), a completely new class\n   is created which extends the main class, and acts as the\n   host on which the extension classes are augmented.</p>\n   <p>If false, the extensions classes are augmented directly to\n   the main class, modifying the main class prototype.</p>\n   </dd>\n   <dt>aggregates &#60;String[]&#62;</dt>\n   <dd>An array of static property names, which will get aggregated\n   on to the built class, in addition to the default properties build\n   will always aggregate as defined by the main class static _buildCfg\n   property.\n   </dd>\n</dl>",
      "!data": {
@@ -7387,7 +8503,7 @@
      }
     },
     "create": {
-     "!type": "fn(name: string, main: fn(), extensions: fn(), px: +yui.Object, sx: +yui.Object) -> fn()",
+     "!type": "fn(name: string, main: fn(), extensions: fn(), px: +Object, sx: +Object) -> fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Base.html#method_create",
      "!doc": "Creates a new class (constructor function) which extends the base class passed in as the second argument,\nand mixes in the array of extensions provided.\n\nPrototype properties or methods can be added to the new class, using the px argument (similar to Y.extend).\n\nStatic properties or methods can be added to the new class, using the sx argument (similar to Y.extend).\n\n**NOTE FOR COMPONENT DEVELOPERS**: Both the `base` class, and `extensions` can define static a `_buildCfg`\nproperty, which acts as class creation meta-data, and drives how special static properties from the base\nclass, or extensions should be copied, aggregated or (custom) mixed into the newly created class.\n\nThe `_buildCfg` property is a hash with 3 supported properties: `statics`, `aggregates` and `custom`, e.g:\n\n    // If the Base/Main class is the thing introducing the property:\n\n    MyBaseClass._buildCfg = {\n\n       // Static properties/methods to copy (Alias) to the built class.\n       statics: [\"CopyThisMethod\", \"CopyThisProperty\"],\n\n       // Static props to aggregate onto the built class.\n       aggregates: [\"AggregateThisProperty\"],\n\n       // Static properties which need custom handling (e.g. deep merge etc.)\n       custom: {\n          \"CustomProperty\" : function(property, Receiver, Supplier) {\n             ...\n             var triggers = Receiver.CustomProperty.triggers;\n             Receiver.CustomProperty.triggers = triggers.concat(Supplier.CustomProperty.triggers);\n             ...\n          }\n       }\n    };\n\n    MyBaseClass.CopyThisMethod = function() {...};\n    MyBaseClass.CopyThisProperty = \"foo\";\n    MyBaseClass.AggregateThisProperty = {...};\n    MyBaseClass.CustomProperty = {\n       triggers: [...]\n    }\n\n    // Or, if the Extension is the thing introducing the property:\n\n    MyExtension._buildCfg = {\n        statics : ...\n        aggregates : ...\n        custom : ...\n    }\n\nThis way, when users pass your base or extension class to `Y.Base.create` or `Y.Base.mix`, they dont need to\nknow which properties need special handling. `Y.Base` has a buildCfg which defines `ATTRS` for custom mix handling\n(to protect the static config objects), and `Y.Widget` has a buildCfg which specifies `HTML_PARSER` for\nstraight up aggregation.",
      "!data": {
@@ -7420,7 +8536,7 @@
     }
    },
    "BaseCore": {
-    "!type": "fn(cfg: +yui.Object)",
+    "!type": "fn(cfg: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/BaseCore.html",
     "!data": {
      "extends": [
@@ -7436,7 +8552,7 @@
      }
     },
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/BaseCore.html#property_ATTRS",
      "!doc": "The default set of attributes which will be available for instances of this class, and\ntheir configuration. In addition to the configuration properties listed by\nAttributeCores <a href=\"AttributeCore.html#method_addAttr\">addAttr</a> method,\nthe attribute can also be configured with a \"cloneDefaultValue\" property, which\ndefines how the statically defined value field should be protected\n(\"shallow\", \"deep\" and false are supported values).\n\nBy default if the value is an object literal or an array it will be \"shallow\"\ncloned, to protect the default value.",
      "!data": {
@@ -7444,7 +8560,7 @@
      }
     },
     "modifyAttrs": {
-     "!type": "fn(ctor?: fn(), configs: +yui.Object)",
+     "!type": "fn(ctor?: fn(), configs: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/BaseCore.html#method_modifyAttrs",
      "!doc": "Provides a way to safely modify a `Y.BaseCore` subclass static `ATTRS`\nafter the class has been defined or created.\n\nBaseCore-based classes cache information about the class hierarchy in order\nto efficiently create instances. This cache includes includes the aggregated\n`ATTRS` configs. If the static `ATTRS` configs need to be modified after the\nclass has been defined or create, then use this method which will make sure\nto clear any cached data before making any modifications.",
      "!data": {
@@ -7461,7 +8577,7 @@
       }
      },
      "init": {
-      "!type": "fn(cfg: +yui.Object) -> !this",
+      "!type": "fn(cfg: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/BaseCore.html#method_init",
       "!doc": "Init lifecycle method, invoked during construction. Sets up attributes\nand invokes initializers for the class hierarchy.",
       "!data": {
@@ -7497,7 +8613,7 @@
     },
     "prototype": {
      "init": {
-      "!type": "fn(config: +config.initConfig) -> !this",
+      "!type": "fn(config: +config.BaseObservableInitConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/BaseObservable.html#method_init",
       "!doc": "Init lifecycle method, invoked during construction.\nFires the init event prior to setting up attributes and\ninvoking initializers for the class hierarchy.",
       "!data": {
@@ -7538,7 +8654,7 @@
      }
     },
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Button.html#property_CLASS_NAMES",
      "!doc": "List of class names used in the Buttons DOM"
     }
@@ -7581,7 +8697,7 @@
      }
     },
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ToggleButton.html#property_CLASS_NAMES",
      "!doc": "Array of static constants used to identify the classnames applied to DOM nodes"
     }
@@ -7641,7 +8757,7 @@
      "!doc": "Name of this component."
     },
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ButtonCore.html#property_CLASS_NAMES",
      "!doc": "Array of static constants used to identify the classnames applied to DOM nodes"
     }
@@ -7688,7 +8804,7 @@
      }
     },
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ButtonGroup.html#property_CLASS_NAMES",
      "!doc": "List of class names to use for ButtonGroups"
     }
@@ -7705,7 +8821,7 @@
      "prototype": {
       "!proto": "button_core.ButtonCore.prototype",
       "createNode": {
-       "!type": "fn(node: +yui.Object, config: +config.createNodeConfig) -> +yui.Object",
+       "!type": "fn(node: +Object, config: +config.Plugin.ButtonCreateNodeConfig) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Button.html#method_createNode",
        "!doc": "A factory that plugs a Y.Node instance with Y.Plugin.Button"
       }
@@ -7737,7 +8853,7 @@
     "prototype": {
      "!proto": "base.Base.prototype",
      "add": {
-      "!type": "fn(request: +yui.Object, response: +yui.Object)",
+      "!type": "fn(request: +Object, response: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Cache.html#method_add",
       "!doc": "Adds a new entry to the cache of the format\n{request:request, response:response, cached:cached, expires:expires}.\nIf cache is full, evicts the stalest entry before adding the new one.",
       "!data": {
@@ -7753,7 +8869,7 @@
       }
      },
      "retrieve": {
-      "!type": "fn(request: +yui.Object) -> +yui.Object",
+      "!type": "fn(request: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Cache.html#method_retrieve",
       "!doc": "Retrieves cached object for given request, if available, and refreshes\nentry in the cache. Returns null if there is no cache match.",
       "!data": {
@@ -7776,7 +8892,7 @@
     "prototype": {
      "!proto": "cache.Cache.prototype",
      "add": {
-      "!type": "fn(request: +yui.Object, response: +yui.Object)",
+      "!type": "fn(request: +Object, response: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CacheOffline.html#method_add",
       "!doc": "Adds a new entry to the cache of the format\n{request:request, response:response, cached:cached, expires: expires}.",
       "!data": {
@@ -7784,7 +8900,7 @@
       }
      },
      "retrieve": {
-      "!type": "fn(request: +yui.Object) -> +yui.Object",
+      "!type": "fn(request: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CacheOffline.html#method_retrieve",
       "!doc": "Retrieves cached object for given request, if available.\nReturns null if there is no cache match.",
       "!data": {
@@ -7876,7 +8992,7 @@
       }
      },
      "selectDates": {
-      "!type": "fn(dates: +datatype_date.Date) -> !this",
+      "!type": "fn(dates: +datatype_date.Date|[?]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CalendarBase.html#method_selectDates",
       "!doc": "Selects a given date or array of dates.",
       "!data": {
@@ -7884,7 +9000,7 @@
       }
      },
      "deselectDates": {
-      "!type": "fn(dates?: +datatype_date.Date) -> !this",
+      "!type": "fn(dates?: +datatype_date.Date|[?]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CalendarBase.html#method_deselectDates",
       "!doc": "Deselects a given date or array of dates, or deselects\nall dates if no argument is specified.",
       "!data": {
@@ -7955,7 +9071,7 @@
       "!doc": "The NAME of the CalendarNavigator class. Used to prefix events generated\nby the plugin class."
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.CalendarNavigator.html#property_ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the plugin."
      }
@@ -8056,7 +9172,7 @@
       }
      },
      "getMajorUnitDistance": {
-      "!type": "fn(len: number, uiLen: number, majorUnit: +yui.Object) -> ?",
+      "!type": "fn(len: number, uiLen: number, majorUnit: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Axis.html#method_getMajorUnitDistance",
       "!doc": "Returns the distance between major units on an axis.",
       "!data": {
@@ -8124,7 +9240,7 @@
       }
      },
      "getDataByKey": {
-      "!type": "fn(value: string) -> ?",
+      "!type": "fn(value: string|[?]) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AxisBase.html#method_getDataByKey",
       "!doc": "Returns values based on key identifiers. When a string is passed as an argument, an array of values is returned.\nWhen an array of keys is passed as an argument, an object literal with an array of values mapped to each key is\nreturned.",
       "!data": {
@@ -8213,7 +9329,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/CategoryImpl.html",
     "prototype": {
      "formatLabel": {
-      "!type": "fn(value: +yui.Object) -> ?",
+      "!type": "fn(value: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CategoryImpl.html#method_formatLabel",
       "!doc": "Formats a label based on the axis type and optionally specified format.",
       "!data": {
@@ -8229,7 +9345,7 @@
       }
      },
      "getTotalMajorUnits": {
-      "!type": "fn(majorUnit: +yui.Object, len: number) -> ?",
+      "!type": "fn(majorUnit: +Object, len: number) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CategoryImpl.html#method_getTotalMajorUnits",
       "!doc": "Returns the total number of majorUnits that will appear on an axis.",
       "!data": {
@@ -8275,7 +9391,7 @@
       }
      },
      "toggleTooltip": {
-      "!type": "fn(e: +yui.Object)",
+      "!type": "fn(e: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartBase.html#method_toggleTooltip",
       "!doc": "Event listener for toggling the tooltip. If a tooltip is visible, hide it. If not, it\nwill create and show a tooltip based on the event object.",
       "!data": {
@@ -8291,7 +9407,7 @@
       }
      },
      "_getAllKeys": {
-      "!type": "fn(dp: +yui.Array) -> ?",
+      "!type": "fn(dp: [?]) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ChartBase.html#method__getAllKeys",
       "!doc": "Returns all the keys contained in a  `dataProvider`.",
       "!data": {
@@ -8333,7 +9449,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/NumericImpl.html",
     "prototype": {
      "": {
-      "!type": "fn(value: +yui.Object, format: +yui.Object) -> ?",
+      "!type": "fn(value: +Object, format: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NumericImpl.html",
       "!doc": "Formats a label based on the axis type and optionally specified format.",
       "!data": {
@@ -8426,7 +9542,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/TimeImpl.html",
     "prototype": {
      "formatLabel": {
-      "!type": "fn(value: +yui.Object, format: +yui.Object) -> ?",
+      "!type": "fn(value: +Object, format: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/TimeImpl.html#method_formatLabel",
       "!doc": "Formats a label based on the axis type and optionally specified format.",
       "!data": {
@@ -8475,7 +9591,7 @@
      "for": "yui.Array"
     },
     "lastIndexOf": {
-     "!type": "fn(a: +yui.Array, val: ?, fromIndex?: number) -> number",
+     "!type": "fn(a: [?], val: ?, fromIndex?: number) -> number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_lastIndexOf",
      "!doc": "Returns the index of the last item in the array that contains the specified\nvalue, or `-1` if the value isnt found.",
      "!data": {
@@ -8483,7 +9599,7 @@
      }
     },
     "unique": {
-     "!type": "fn(array: +yui.Array, testFn?: fn(a: ?, b: ?, index: number, array: +yui.Array)) -> +yui.Array",
+     "!type": "fn(array: [?], testFn?: fn(a: ?, b: ?, index: number, array: [?])) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_unique",
      "!doc": "Returns a copy of the input array with duplicate items removed.\n\nNote: If the input array only contains strings, the `Y.Array.dedupe()` method is\na much faster alternative.",
      "!data": {
@@ -8491,7 +9607,7 @@
      }
     },
     "filter": {
-     "!type": "fn(a: +yui.Array, f: fn(), o?: +yui.Object) -> +yui.Array",
+     "!type": "fn(a: [?], f: fn(), o?: +Object) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_filter",
      "!doc": "Executes the supplied function on each item in the array. Returns a new array\ncontaining the items for which the supplied function returned a truthy value.",
      "!data": {
@@ -8499,7 +9615,7 @@
      }
     },
     "reject": {
-     "!type": "fn(a: +yui.Array, f: fn(), o?: +yui.Object) -> +yui.Array",
+     "!type": "fn(a: [?], f: fn(), o?: +Object) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_reject",
      "!doc": "The inverse of `Array.filter()`. Executes the supplied function on each item.\nReturns a new array containing the items for which the supplied function\nreturned `false`.",
      "!data": {
@@ -8507,7 +9623,7 @@
      }
     },
     "every": {
-     "!type": "fn(a: +yui.Array, f: fn(), o?: +yui.Object) -> bool",
+     "!type": "fn(a: [?], f: fn(), o?: +Object) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_every",
      "!doc": "Executes the supplied function on each item in the array. Iteration stops if the\nsupplied function does not return a truthy value.",
      "!data": {
@@ -8515,7 +9631,7 @@
      }
     },
     "map": {
-     "!type": "fn(a: +yui.Array, f: fn(), o?: +yui.Object) -> +yui.Array",
+     "!type": "fn(a: [?], f: fn(), o?: +Object) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_map",
      "!doc": "Executes the supplied function on each item in the array and returns a new array\ncontaining all the values returned by the supplied function.",
      "!data": {
@@ -8523,7 +9639,7 @@
      }
     },
     "reduce": {
-     "!type": "fn(a: +yui.Array, init: ?, f: fn(previousValue: ?, currentValue: ?, index: number, array: +yui.Array), o?: +yui.Object) -> ?",
+     "!type": "fn(a: [?], init: ?, f: fn(previousValue: ?, currentValue: ?, index: number, array: [?]), o?: +Object) -> ?",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_reduce",
      "!doc": "Executes the supplied function on each item in the array, \"folding\" the array\ninto a single value.",
      "!data": {
@@ -8531,7 +9647,7 @@
      }
     },
     "find": {
-     "!type": "fn(a: +yui.Array, f: fn(), o?: +yui.Object) -> +yui.Object",
+     "!type": "fn(a: [?], f: fn(), o?: +Object) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_find",
      "!doc": "Executes the supplied function on each item in the array, searching for the\nfirst item that matches the supplied function.",
      "!data": {
@@ -8539,7 +9655,7 @@
      }
     },
     "grep": {
-     "!type": "fn(a: +yui.Array, pattern: +RegExp) -> +yui.Array",
+     "!type": "fn(a: [?], pattern: +RegExp) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_grep",
      "!doc": "Iterates over an array, returning a new array of all the elements that match the\nsupplied regular expression.",
      "!data": {
@@ -8547,7 +9663,7 @@
      }
     },
     "partition": {
-     "!type": "fn(a: +yui.Array, f: fn(item: ?, index: number, array: +yui.Array), o?: +yui.Object) -> +yui.Object",
+     "!type": "fn(a: [?], f: fn(item: ?, index: number, array: [?]), o?: +Object) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_partition",
      "!doc": "Partitions an array into two new arrays, one with the items for which the\nsupplied function returns `true`, and one with the items for which the function\nreturns `false`.",
      "!data": {
@@ -8555,7 +9671,7 @@
      }
     },
     "zip": {
-     "!type": "fn(a: +yui.Array, a2: +yui.Array) -> +yui.Array",
+     "!type": "fn(a: [?], a2: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_zip",
      "!doc": "Creates an array of arrays by pairing the corresponding elements of two arrays\ntogether into a new array.",
      "!data": {
@@ -8563,7 +9679,7 @@
      }
     },
     "flatten": {
-     "!type": "fn(a: +yui.Array) -> +yui.Array",
+     "!type": "fn(a: [?]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_flatten",
      "!doc": "Flattens an array of nested arrays at any abitrary depth into a single, flat\narray.",
      "!data": {
@@ -8571,7 +9687,7 @@
      }
     },
     "invoke": {
-     "!type": "fn(items: +yui.Array, name: string, args?: ?) -> +yui.Array",
+     "!type": "fn(items: [?], name: string, args?: ?) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_invoke",
      "!doc": "Executes a named method on each item in an array of objects. Items in the array\nthat do not have a function by that name will be skipped.",
      "!data": {
@@ -8580,7 +9696,7 @@
     }
    },
    "ArrayList": {
-    "!type": "fn(items: +yui.Array)",
+    "!type": "fn(items: [?])",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/ArrayList.html",
     "prototype": {
      "add": {
@@ -8664,7 +9780,7 @@
       }
      },
      "toJSON": {
-      "!type": "fn() -> +yui.Array",
+      "!type": "fn() -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ArrayList.html#method_toJSON",
       "!doc": "Provides an array-like representation for JSON.stringify.",
       "!data": {
@@ -8673,7 +9789,7 @@
      }
     },
     "addMethod": {
-     "!type": "fn(dest: +yui.Object, name: string)",
+     "!type": "fn(dest: +Object, name: string|[string])",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ArrayList.html#method_addMethod",
      "!doc": "<p>Adds a pass through method to dest (typically the prototype of a list\nclass) that calls the named method on each item in the list with\nwhatever parameters are passed in.  Allows for API indirection via list\ninstances.</p>\n\n<p>Accepts a single string name or an array of string names.</p>\n\n<pre><code>list.each( function ( item ) {\n    item.methodName( 1, 2, 3 );\n} );\n// becomes\nlist.methodName( 1, 2, 3 );</code></pre>\n\n<p>Additionally, the pass through methods use the item retrieved by the\n<code>_item</code> method in case there is any special behavior that is\nappropriate for API mirroring.</p>\n\n<p>If the iterated method returns a value, the return value from the\nadded method will be an array of values with each value being at the\ncorresponding index for that item.  If the iterated method does not\nreturn a value, the added method will be chainable.",
      "!data": {
@@ -8695,7 +9811,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.html",
     "KEYWORDS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.html#property_KEYWORDS",
      "!data": {
       "submodule": "color-base"
@@ -8746,14 +9862,14 @@
      }
     },
     "TYPES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.html#property_TYPES",
      "!data": {
       "submodule": "color-base"
      }
     },
     "CONVERTS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.html#property_CONVERTS",
      "!data": {
       "submodule": "color-base"
@@ -8793,7 +9909,7 @@
       }
      },
      "toArray": {
-      "!type": "fn(str: string) -> +yui.Array",
+      "!type": "fn(str: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.html#method_toArray",
       "!doc": "Converts the provided color string to an array of values where the\n    last value is the alpha value. Will return an empty array if\n    the provided string is not able to be parsed.\n\n    NOTE: `(\\ufffe)?` is added to `HEX` and `HEX3` Regular Expressions to\n    carve out a place for the alpha channel that is returned from\n    toArray without compromising any usage of the Regular Expression\n\n    Y.Color.toArray(fff);              // [ff, ff, ff, 1]\n    Y.Color.toArray(rgb(0, 0, 0));     // [0, 0, 0, 1]\n    Y.Color.toArray(rgba(0, 0, 0, 0)); // [0, 0, 0, 1]",
       "!data": {
@@ -8801,7 +9917,7 @@
       }
      },
      "fromArray": {
-      "!type": "fn(arr: +yui.Array, template: string) -> string",
+      "!type": "fn(arr: [?], template: string) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.html#method_fromArray",
       "!doc": "Converts the array of values to a string based on the provided template.",
       "!data": {
@@ -8822,7 +9938,7 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.Harmony.html",
      "prototype": {
       "getComplementary": {
-       "!type": "fn(str: string, to?: string) -> +yui.Array",
+       "!type": "fn(str: string, to?: string) -> [?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.Harmony.html#method_getComplementary",
        "!doc": "Returns an Array of two colors. The first color in the Array\n  will be the color passed in. The second will be the\n  complementary color of the color provided",
        "!data": {
@@ -8886,7 +10002,7 @@
        }
       },
       "getOffset": {
-       "!type": "fn(str: string, adjust: +yui.Object, to?: string) -> string",
+       "!type": "fn(str: string, adjust: +config.Color.HarmonyGetOffsetConfig, to?: string) -> string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Color.Harmony.html#method_getOffset",
        "!doc": "Adjusts the provided color by the offset(s) given. You may\n  adjust hue, saturation, and/or luminance in one step.",
        "!data": {
@@ -9135,12 +10251,12 @@
      "!doc": "Static identifier for logLevel configuration setting to allow only\nincoming messages of logLevel &quot;error&quot; to generate\nConsole entries."
     },
     "ENTRY_CLASSES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#property_ENTRY_CLASSES",
      "!doc": "Map (object) of classNames used to populate the placeholders in the\nConsole.ENTRY_TEMPLATE markup when rendering a new Console entry.\n\n<p>By default, the keys contained in the object are:</p>\n<ul>\n   <li>entry_class</li>\n   <li>entry_meta_class</li>\n   <li>entry_cat_class</li>\n   <li>entry_src_class</li>\n   <li>entry_time_class</li>\n   <li>entry_content_class</li>\n</ul>"
     },
     "CHROME_CLASSES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#property_CHROME_CLASSES",
      "!doc": "Map (object) of classNames used to populate the placeholders in the\nConsole.HEADER_TEMPLATE, Console.BODY_TEMPLATE, and\nConsole.FOOTER_TEMPLATE markup when rendering the Console UI.\n\n<p>By default, the keys contained in the object are:</p>\n<ul>\n  <li>console_hd_class</li>\n  <li>console_bd_class</li>\n  <li>console_ft_class</li>\n  <li>console_controls_class</li>\n  <li>console_checkbox_class</li>\n  <li>console_pause_class</li>\n  <li>console_pause_label_class</li>\n  <li>console_button_class</li>\n  <li>console_clear_class</li>\n  <li>console_collapse_class</li>\n  <li>console_title_class</li>\n</ul>"
     },
@@ -9165,7 +10281,7 @@
      "!doc": "Default markup template used to create the DOM structure for Console\nentries. The markup contains {placeholder}s for content and classes\nthat are replaced via Y.Lang.sub.  The default template contains\nthe {placeholder}s identified in Console.ENTRY_CLASSES as well as the\nfollowing placeholders that will be populated by the log entry data:\n\n<ul>\n  <li>cat_class</li>\n  <li>src_class</li>\n  <li>totalTime</li>\n  <li>elapsedTime</li>\n  <li>localTime</li>\n  <li>sourceAndDetail</li>\n  <li>message</li>\n</ul>"
     },
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Console.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute configuration of\nthe Widget."
     }
@@ -9186,37 +10302,37 @@
      "!doc": "Returns the cookie value for the given name."
     },
     "getSub": {
-     "!type": "fn(name: string, subName: string, converter: fn(), options: +yui.Object) -> ?",
+     "!type": "fn(name: string, subName: string, converter: fn(), options: +Object) -> ?",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_getSub",
      "!doc": "Returns the value of a subcookie."
     },
     "getSubs": {
-     "!type": "fn(name: string, options: +yui.Object) -> +yui.Object",
+     "!type": "fn(name: string, options: +Object) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_getSubs",
      "!doc": "Returns an object containing name-value pairs stored in the cookie with the given name."
     },
     "remove": {
-     "!type": "fn(name: string, options: +yui.Object) -> string",
+     "!type": "fn(name: string, options: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_remove",
      "!doc": "Removes a cookie from the machine by setting its expiration date to\nsometime in the past."
     },
     "removeSub": {
-     "!type": "fn(name: string, subName: string, options: +yui.Object) -> string",
+     "!type": "fn(name: string, subName: string, options: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_removeSub",
      "!doc": "Removes a sub cookie with a given name."
     },
     "set": {
-     "!type": "fn(name: string, value: ?, options: +yui.Object) -> string",
+     "!type": "fn(name: string, value: ?, options: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_set",
      "!doc": "Sets a cookie with a given name and value."
     },
     "setSub": {
-     "!type": "fn(name: string, subName: string, value: ?, options: +yui.Object) -> string",
+     "!type": "fn(name: string, subName: string, value: ?, options: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_setSub",
      "!doc": "Sets a sub cookie with a given name to a particular value."
     },
     "setSubs": {
-     "!type": "fn(name: string, value: +yui.Object, options: +yui.Object) -> string",
+     "!type": "fn(name: string, value: +Object, options: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Cookie.html#method_setSubs",
      "!doc": "Sets a cookie with a given name to contain a hash of name-value pairs."
     }
@@ -9240,7 +10356,7 @@
       "!proto": "dataschema.DataSchema.Base.prototype"
      },
      "apply": {
-      "!type": "fn(schema?: +yui.Object, data: +yui.Array) -> +yui.Object",
+      "!type": "fn(schema?: +config.DataSchema.ArrayApplyConfig, data: [?]) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.Array.html#method_apply",
       "!doc": "Applies a schema to an array of data, returning a normalized object\nwith results in the `results` property. The `meta` property of the\nresponse object is present for consistency, but is assigned an empty\nobject.  If the input data is absent or not an array, an `error`\nproperty will be added.\n\nThe input array is expected to contain objects, arrays, or strings.\n\nIf _schema_ is not specified or _schema.resultFields_ is not an array,\n`response.results` will be assigned the input array unchanged.\n\nWhen a _schema_ is specified, the following will occur:\n\nIf the input array contains strings, they will be copied as-is into the\n`response.results` array.\n\nIf the input array contains arrays, `response.results` will contain an\narray of objects with key:value pairs assuming the fields in\n_schema.resultFields_ are ordered in accordance with the data array\nvalues.\n\nIf the input array contains objects, the identified\n_schema.resultFields_ will be used to extract a value from those\nobjects for the output result.\n\n_schema.resultFields_ field identifiers are objects with the following properties:\n\n  * `key`   : <strong>(required)</strong> The locator name (String)\n  * `parser`: A function or the name of a function on `Y.Parsers` used\n        to convert the input value into a normalized type.  Parser\n        functions are passed the value as input and are expected to\n        return a value.\n\nIf no value parsing is needed, you can use strings as identifiers\ninstead of objects (see example below).",
       "!data": {
@@ -9252,7 +10368,7 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.Base.html",
      "apply": {
-      "!type": "fn(schema: +yui.Object, data: +yui.Object) -> +yui.Object",
+      "!type": "fn(schema: +Object, data: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.Base.html#method_apply",
       "!doc": "Overridable method returns data as-is.",
       "!data": {
@@ -9261,7 +10377,7 @@
      },
      "prototype": {
       "parse": {
-       "!type": "fn(value: +yui.Object, field: +yui.Object) -> +yui.Object",
+       "!type": "fn(value: +Object, field: +Object) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.Base.html#method_parse",
        "!doc": "Applies field parser, if defined",
        "!data": {
@@ -9285,7 +10401,7 @@
       }
      },
      "getLocationValue": {
-      "!type": "fn(path: [string], data: string) -> +yui.Object",
+      "!type": "fn(path: [string], data: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.JSON.html#method_getLocationValue",
       "!doc": "Utility function to walk a path and return the value located there.",
       "!data": {
@@ -9293,7 +10409,7 @@
       }
      },
      "apply": {
-      "!type": "fn(schema?: +yui.Object, data: +yui.Object) -> +yui.Object",
+      "!type": "fn(schema?: +config.DataSchema.JSONApplyConfig, data: +Object|[?]|string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.JSON.html#method_apply",
       "!doc": "Applies a schema to an array of data located in a JSON structure, returning\na normalized object with results in the `results` property. Additional\ninformation can be parsed out of the JSON for inclusion in the `meta`\nproperty of the response object.  If an error is encountered during\nprocessing, an `error` property will be added.\n\nThe input _data_ is expected to be an object or array.  If it is a string,\nit will be passed through `Y.JSON.parse()`.\n\nIf _data_ contains an array of data records to normalize, specify the\n_schema.resultListLocator_ as a dot separated path string just as you would\nreference it in JavaScript.  So if your _data_ object has a record array at\n_data.response.results_, use _schema.resultListLocator_ =\n\"response.results\". Bracket notation can also be used for array indices or\nobject properties (e.g. \"response[results]\");  This is called a \"path\nlocator\"\n\nField data in the result list is extracted with field identifiers in\n_schema.resultFields_.  Field identifiers are objects with the following\nproperties:\n\n  * `key`   : <strong>(required)</strong> The path locator (String)\n  * `parser`: A function or the name of a function on `Y.Parsers` used\n        to convert the input value into a normalized type.  Parser\n        functions are passed the value as input and are expected to\n        return a value.\n\nIf no value parsing is needed, you can use path locators (strings)\ninstead of field identifiers (objects) -- see example below.\n\nIf no processing of the result list array is needed, _schema.resultFields_\ncan be omitted; the `response.results` will point directly to the array.\n\nIf the result list contains arrays, `response.results` will contain an\narray of objects with key:value pairs assuming the fields in\n_schema.resultFields_ are ordered in accordance with the data array\nvalues.\n\nIf the result list contains objects, the identified _schema.resultFields_\nwill be used to extract a value from those objects for the output result.\n\nTo extract additional information from the JSON, include an array of\npath locators in _schema.metaFields_.  The collected values will be\nstored in `response.meta`.",
       "!data": {
@@ -9308,7 +10424,7 @@
       "!proto": "dataschema.DataSchema.Base.prototype"
      },
      "apply": {
-      "!type": "fn(schema: +yui.Object, data: string) -> +yui.Object",
+      "!type": "fn(schema: +config.DataSchema.TextApplyConfig, data: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.Text.html#method_apply",
       "!doc": "Applies a schema to a string of delimited data, returning a normalized\nobject with results in the `results` property. The `meta` property of\nthe response object is present for consistency, but is assigned an\nempty object.  If the input data is absent or not a string, an `error`\nproperty will be added.\n\nUse _schema.resultDelimiter_ and _schema.fieldDelimiter_ to instruct\n`apply` how to split up the string into an array of data arrays for\nprocessing.\n\nUse _schema.resultFields_ to specify the keys in the generated result\nobjects in `response.results`. The key:value pairs will be assigned\nin the order of the _schema.resultFields_ array, assuming the values\nin the data records are defined in the same order.\n\n_schema.resultFields_ field identifiers are objects with the following\nproperties:\n\n  * `key`   : <strong>(required)</strong> The property name you want\n        the data value assigned to in the result object (String)\n  * `parser`: A function or the name of a function on `Y.Parsers` used\n        to convert the input value into a normalized type.  Parser\n        functions are passed the value as input and are expected to\n        return a value.\n\nIf no value parsing is needed, you can use just the desired property\nname string as the field identifier instead of an object (see example\nbelow).",
       "!data": {
@@ -9323,7 +10439,7 @@
       "!proto": "dataschema.DataSchema.Base.prototype"
      },
      "apply": {
-      "!type": "fn(schema: +yui.Object, data: +XMLDocument) -> +yui.Object",
+      "!type": "fn(schema: +config.DataSchema.XMLApplyConfig, data: +XMLDocument) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSchema.XML.html#method_apply",
       "!doc": "Applies a schema to an XML data tree, returning a normalized object with\nresults in the `results` property. Additional information can be parsed out\nof the XML for inclusion in the `meta` property of the response object.  If\nan error is encountered during processing, an `error` property will be\nadded.\n\nField data in the nodes captured by the XPath in _schema.resultListLocator_\nis extracted with the field identifiers described in _schema.resultFields_.\nField identifiers are objects with the following properties:\n\n  * `key`    : <strong>(required)</strong> The desired property name to use\n        store the retrieved value in the result object.  If `locator` is\n        not specified, `key` is also used as the XPath locator (String)\n  * `locator`: The XPath locator to the node or attribute within each\n        result node found by _schema.resultListLocator_ containing the\n        desired field data (String)\n  * `parser` : A function or the name of a function on `Y.Parsers` used\n        to convert the input value into a normalized type.  Parser\n        functions are passed the value as input and are expected to\n        return a value.\n  * `schema` : Used to retrieve nested field data into an array for\n        assignment as the result field value.  This object follows the same\n        conventions as _schema_.\n\nIf no value parsing or nested parsing is needed, you can use XPath locators\n(strings) instead of field identifiers (objects) -- see example below.\n\n`response.results` will contain an array of objects with key:value pairs.\nThe keys are the field identifier `key`s, and the values are the data\nvalues extracted from the nodes or attributes found by the field `locator`\n(or `key` fallback).\n\nTo extract additional information from the XML, include an array of\nXPath locators in _schema.metaFields_.  The collected values will be\nstored in `response.meta` with the XPath locator as keys.",
       "!data": {
@@ -9474,7 +10590,7 @@
      "prototype": {
       "!proto": "base.Base.prototype",
       "sendRequest": {
-       "!type": "fn(request?: +yui.Object) -> number",
+       "!type": "fn(request?: +Object) -> number",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSource.Local.html#method_sendRequest",
        "!doc": "Generates a unique transaction ID and fires <code>request</code> event.\n<strong>Note</strong>: the property <code>callback</code> is a\ndeprecated alias for the <code>on</code> transaction configuration\nproperty described below.",
        "!data": {
@@ -9491,7 +10607,7 @@
       }
      },
      "transactions": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataSource.Local.html#property_transactions",
       "!doc": "Global in-progress transaction objects.",
       "!data": {
@@ -9537,7 +10653,7 @@
     "prototype": {
      "!proto": "datasource.DataSource.Local.prototype",
      "setInterval": {
-      "!type": "fn(msec: number, request?: +yui.Object) -> number",
+      "!type": "fn(msec: number, request?: +Object) -> number",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Pollable.html#method_setInterval",
       "!doc": "Sets up a polling mechanism to send requests at set intervals and\nforward responses to given callback.",
       "!data": {
@@ -9650,7 +10766,7 @@
       }
      },
      "setColumnWidth": {
-      "!type": "fn(id: number, width: number) -> !this",
+      "!type": "fn(id: number|string|+Object, width: number|string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_setColumnWidth",
       "!doc": "Assigns the style width of the `<col>` representing the column identifed by\n`id` and updates the column configuration.\n\nPass the empty string for `width` to return a column to auto sizing.\n\nThis does not trigger a `columnsChange` event today, but I can be convinced\nthat it should.",
       "!data": {
@@ -9666,7 +10782,7 @@
       }
      },
      "getColumn": {
-      "!type": "fn(name: string) -> +yui.Object",
+      "!type": "fn(name: string|number|[number]) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_getColumn",
       "!doc": "Gets the column configuration object for the given key, name, or index.  For\nnested columns, `name` can be an array of indexes, each identifying the index\nof that column in the respective parents \"children\" array.\n\nIf you pass a column object, it will be returned.\n\nFor columns with keys, you can also fetch the column with\n`instance.get(columns.foo)`.",
       "!data": {
@@ -9674,7 +10790,7 @@
       }
      },
      "getRecord": {
-      "!type": "fn(seed: number) -> +app.Model",
+      "!type": "fn(seed: number|string|+node.Node) -> +app.Model",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_getRecord",
       "!doc": "Returns the Model associated to the record `id`, `clientId`, or index (not\nrow index).  If none of those yield a Model from the `data` ModelList, the\narguments will be passed to the `view` instances `getRecord` method\nif it has one.\n\nIf no Model can be found, `null` is returned.",
       "!data": {
@@ -9690,7 +10806,7 @@
       }
      },
      "keyActions": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#property_keyActions",
       "!doc": "Table of actions to be performed for each key.  It is loaded with a clone\nof [ARIA_ACTIONS](#property_ARIA_ACTIONS) by default.\n\nThe key for each entry is either a key-code or an alias from the\n[KEY_NAMES](#property_KEY_NAMES) table. They can be prefixed with any combination\nof the modifier keys `alt`, `ctrl`, `meta` or `shift` each followed by a hyphen,\nsuch as `\"ctrl-shift-up\"` (modifiers, if more than one, should appear in alphabetical order).\n\nThe value for each entry should be a function or the name of a method in\nthe DataTable instance.  The method will receive the original keyboard\nEventFacade as its only argument.\n\nIf the value is a string and it cannot be resolved into a method,\nit will be assumed to be the name of an event to fire. The listener for that\nevent will receive an EventFacade containing references to the cell that has the focus,\nthe row, column and, unless it is a header row, the record it corresponds to.\nThe second argument will be the original EventFacade for the keyboard event.",
       "!data": {
@@ -9730,7 +10846,7 @@
       }
      },
      "addColumn": {
-      "!type": "fn(config: +yui.Object, index?: number) -> !this",
+      "!type": "fn(config: +Object|string, index?: number|[number]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_addColumn",
       "!doc": "Adds the column configuration to the DataTables `columns` configuration.\nIf the `index` parameter is supplied, it is injected at that index.  If the\ntable has nested headers, inject a subcolumn by passing an array of indexes\nto identify the new columns final location.\n\nThe `index` parameter is required if adding a nested column.\n\nThis method is a convienience method for fetching the DataTables `columns`\nattribute, updating it, and calling\n`table.set(columns, _updatedColumnsDefs_)`\n\nFor example:\n\n<pre><code>// Becomes last column\ntable.addColumn(name);\n\n// Inserted after the current second column, moving the current third column\n// to index 4\ntable.addColumn({ key: price, formatter: currencyFormatter }, 2 );\n\n// Insert a new column in a set of headers three rows deep.  The index array\n// translates to\n// [ 2, --  in the third columns children\n//   1, --  in the second childs children\n//   3 ] -- as the fourth child column\ntable.addColumn({ key: age, sortable: true }, [ 2, 1, 3 ]);\n</code></pre>",
       "!data": {
@@ -9738,7 +10854,7 @@
       }
      },
      "modifyColumn": {
-      "!type": "fn(name: string, config: +config.modifyColumnConfig) -> !this",
+      "!type": "fn(name: string|number|[number]|+Object, config: +config.DataTableModifyColumnConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_modifyColumn",
       "!doc": "Updates an existing column definition. Fires the `modifyColumn` event.\n\nFor example:\n\n<pre><code>// Add a formatter to the existing price column definition\ntable.modifyColumn(price, { formatter: currencyFormatter });\n\n// Change the label on a header cell in a set of nested headers three rows\n// deep.  The index array translates to\n// [ 2,  -- in the third columns children\n//   1,  -- the second child\n//   3 ] -- the fourth child column\ntable.modifyColumn([2, 1, 3], { label: Experience });\n</code></pre>",
       "!data": {
@@ -9746,7 +10862,7 @@
       }
      },
      "moveColumn": {
-      "!type": "fn(name: string, index: number) -> !this",
+      "!type": "fn(name: string|number|[number]|+Object, index: number|[number]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_moveColumn",
       "!doc": "Moves an existing column to a new location. Fires the `moveColumn` event.\n\nThe destination index can be a number or array of numbers to place a column\nheader in a nested header row.",
       "!data": {
@@ -9754,7 +10870,7 @@
       }
      },
      "removeColumn": {
-      "!type": "fn(name: string) -> !this",
+      "!type": "fn(name: string|number|[number]|+Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_removeColumn",
       "!doc": "Removes an existing column. Fires the `removeColumn` event.",
       "!data": {
@@ -9762,7 +10878,7 @@
       }
      },
      "addRow": {
-      "!type": "fn(data: +yui.Object, config?: +config.addRowConfig, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(data: +Object, config?: +config.DataTableAddRowConfig, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_addRow",
       "!doc": "Adds a new record to the DataTables `data` ModelList.  Record data can be\nan object of field values or an instance of the DataTables configured\n`recordType` class.\n\nThis relays all parameters to the `data` ModelLists `add` method.\n\nIf a configuration object is passed as a second argument, and that object\nhas `sync: true` set, the underlying Model will be `save()`d.\n\nIf the DataTables `autoSync` attribute is set to `true`, the additional\nargument is not needed.\n\nIf syncing and the last argument is a function, that function will be used\nas a callback to the Models `save()` method.",
       "!data": {
@@ -9770,7 +10886,7 @@
       }
      },
      "removeRow": {
-      "!type": "fn(id: +yui.Object, config?: +config.removeRowConfig, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(id: +Object|string|number, config?: +config.DataTableRemoveRowConfig, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_removeRow",
       "!doc": "Removes a record from the DataTables `data` ModelList.  The record can be\nprovided explicitly or targeted by its `id` (see ModelLists `getById`\nmethod), `clientId`, or index in the ModelList.\n\nAfter locating the target Model, this relays the Model and all other passed\narguments to the `data` ModelLists `remove` method.\n\nIf a configuration object is passed as a second argument, and that object\nhas `sync: true` set, the underlying Model will be destroyed, passing\n`{ delete: true }` to trigger calling the Models sync layer.\n\nIf the DataTables `autoSync` attribute is set to `true`, the additional\nargument is not needed.\n\nIf syncing and the last argument is a function, that function will be used\nas a callback to the Models `destroy()` method.",
       "!data": {
@@ -9778,7 +10894,7 @@
       }
      },
      "modifyRow": {
-      "!type": "fn(id: +yui.Object, data: +yui.Object, config?: +config.modifyRowConfig, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(id: +Object|string|number, data: +Object, config?: +config.DataTableModifyRowConfig, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_modifyRow",
       "!doc": "Updates an existing record in the DataTables `data` ModelList.  The record\ncan be provided explicitly or targeted by its `id` (see ModelLists\n`getById` method), `clientId`, or index in the ModelList.\n\nAfter locating the target Model, this relays the all other passed\narguments to the Models `setAttrs` method.\n\nIf a configuration object is passed as a second argument, and that object\nhas `sync: true` set, the underlying Model will be `save()`d.\n\nIf the DataTables `autoSync` attribute is set to `true`, the additional\nargument is not needed.\n\nIf syncing and the last argument is a function, that function will be used\nas a callback to the Models `save()` method.",
       "!data": {
@@ -9786,7 +10902,7 @@
       }
      },
      "addRows": {
-      "!type": "fn(data: [+yui.Object], config?: +config.addRowsConfig, callback?: fn(err: +Error, response: ?)) -> !this",
+      "!type": "fn(data: [+Object], config?: +config.DataTableAddRowsConfig, callback?: fn(err: +Error, response: ?)) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_addRows",
       "!doc": "Adds an array of new records to the DataTables `data` ModelList.  Record data\ncan be an array of objects containing field values or an array of instance of\nthe DataTables configured `recordType` class.\n\nThis relays all parameters to the `data` ModelLists `add` method.\n\nTechnically, this is an alias to `addRow`, but please use the appropriately\nnamed method for readability.\n\nIf a configuration object is passed as a second argument, and that object\nhas `sync: true` set, the underlying Models will be `save()`d.\n\nIf the DataTables `autoSync` attribute is set to `true`, the additional\nargument is not needed.\n\nIf syncing and the last argument is a function, that function will be used\nas a callback to each Models `save()` method.",
       "!data": {
@@ -9794,7 +10910,7 @@
       }
      },
      "sort": {
-      "!type": "fn(fields: string, payload?: +yui.Object) -> !this",
+      "!type": "fn(fields: string|[string]|+Object|[+Object], payload?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_sort",
       "!doc": "Sort the data in the `data` ModelList and refresh the table with the new\norder.\n\nAcceptable values for `fields` are `key` strings or objects with a single\nproperty, the column `key`, with a value of 1, -1, \"asc\", or \"desc\".  E.g.\n`{ username: asc }`.  String values are assumed to be ascending.\n\nExample values would be:\n\n * `\"username\"` - sort by the datas `username` field or the `key`\n   associated to a column with that `name`.\n * `{ username: \"desc\" }` - sort by `username` in descending order.\n   Alternately, use values \"asc\", 1 (same as \"asc\"), or -1 (same as \"desc\").\n * `[\"lastName\", \"firstName\"]` - ascending sort by `lastName`, but for\n   records with the same `lastName`, ascending subsort by `firstName`.\n   Array can have as many items as you want.\n * `[{ lastName: -1 }, \"firstName\"]` - descending sort by `lastName`,\n   ascending subsort by `firstName`. Mixed types are ok.",
       "!data": {
@@ -9810,7 +10926,7 @@
       }
      },
      "toggleSort": {
-      "!type": "fn(fields: string, payload?: +yui.Object) -> !this",
+      "!type": "fn(fields: string|[string], payload?: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_toggleSort",
       "!doc": "Reverse the current sort direction of one or more fields currently being\nsorted by.\n\nPass the `key` of the column or columns you want the sort order reversed\nfor.",
       "!data": {
@@ -9829,7 +10945,7 @@
      "prototype": {
       "!proto": "widget.Widget.prototype",
       "delegate": {
-       "!type": "fn(type: string, fn: fn(), spec: string, context: +yui.Object, args: ?) -> +event_custom.EventHandle",
+       "!type": "fn(type: string, fn: fn(), spec: string, context: +Object, args: ?) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Base.html#method_delegate",
        "!doc": "Pass through to `delegate()` called from the `contentBox`.",
        "!data": {
@@ -9837,7 +10953,7 @@
        }
       },
       "getCell": {
-       "!type": "fn(seed: [number], shift?: [number]) -> +node.Node",
+       "!type": "fn(seed: [number]|+node.Node, shift?: [number]|string) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Base.html#method_getCell",
        "!doc": "Returns the `<td>` Node from the given row and column index.  Alternately,\nthe `seed` can be a Node.  If so, the nearest ancestor cell is returned.\nIf the `seed` is a cell, it is returned.  If there is no cell at the given\ncoordinates, `null` is returned.\n\nOptionally, include an offset array or string to return a cell near the\ncell identified by the `seed`.  The offset can be an array containing the\nnumber of rows to shift followed by the number of columns to shift, or one\nof \"above\", \"below\", \"next\", or \"previous\".\n\n<pre><code>// Previous cell in the previous row\nvar cell = table.getCell(e.target, [-1, -1]);\n\n// Next cell\nvar cell = table.getCell(e.target, next);\nvar cell = table.getCell(e.taregt, [0, 1];</pre></code>\n\nThis is actually just a pass through to the `view` instances method\nby the same name.",
        "!data": {
@@ -9845,7 +10961,7 @@
        }
       },
       "getRow": {
-       "!type": "fn(id: number) -> +node.Node",
+       "!type": "fn(id: number|string|+app.Model) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Base.html#method_getRow",
        "!doc": "Returns the `<tr>` Node from the given row index, Model, or Models\n`clientId`.  If the rows havent been rendered yet, or if the row cant be\nfound by the input, `null` is returned.\n\nThis is actually just a pass through to the `view` instances method\nby the same name.",
        "!data": {
@@ -9853,7 +10969,7 @@
        }
       },
       "_displayColumns": {
-       "!type": "[+yui.Object]",
+       "!type": "[+Object]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Base.html#property__displayColumns",
        "!doc": "Array of the columns that correspond to those with value cells in the\ndata rows. Excludes colspan header columns (configured with `children`).",
        "!data": {
@@ -9908,7 +11024,7 @@
        }
       },
       "host": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.html#property_host",
        "!doc": "The object that serves as the source of truth for column and row data.\nThis property is assigned at instantiation from the `host` property of\nthe configuration object passed to the constructor.",
        "!data": {
@@ -9924,7 +11040,7 @@
        }
       },
       "getCell": {
-       "!type": "fn(seed: [number], shift?: [number]) -> +node.Node",
+       "!type": "fn(seed: [number]|+node.Node, shift?: [number]|string) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.html#method_getCell",
        "!doc": "Returns the `<td>` Node from the given row and column index.  Alternately,\nthe `seed` can be a Node.  If so, the nearest ancestor cell is returned.\nIf the `seed` is a cell, it is returned.  If there is no cell at the given\ncoordinates, `null` is returned.\n\nOptionally, include an offset array or string to return a cell near the\ncell identified by the `seed`.  The offset can be an array containing the\nnumber of rows to shift followed by the number of columns to shift, or one\nof \"above\", \"below\", \"next\", or \"previous\".\n\n<pre><code>// Previous cell in the previous row\nvar cell = table.getCell(e.target, [-1, -1]);\n\n// Next cell\nvar cell = table.getCell(e.target, next);\nvar cell = table.getCell(e.target, [0, 1];</pre></code>",
        "!data": {
@@ -9932,7 +11048,7 @@
        }
       },
       "getRecord": {
-       "!type": "fn(seed: string) -> +app.Model",
+       "!type": "fn(seed: string|+node.Node) -> +app.Model",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.html#method_getRecord",
        "!doc": "Returns the Model associated to the row Node or id provided. Passing the\nNode or id for a descendant of the row also works.\n\nIf no Model can be found, `null` is returned.",
        "!data": {
@@ -9940,7 +11056,7 @@
        }
       },
       "getRow": {
-       "!type": "fn(id: number) -> +node.Node",
+       "!type": "fn(id: number|string|+app.Model) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.html#method_getRow",
        "!doc": "Returns the `<tr>` Node from the given row index, Model, or Models\n`clientId`.  If the rows havent been rendered yet, or if the row cant be\nfound by the input, `null` is returned.",
        "!data": {
@@ -9964,7 +11080,7 @@
        }
       },
       "refreshCell": {
-       "!type": "fn(cell: +node.Node, model?: +app.Model, col?: +yui.Object) -> !this",
+       "!type": "fn(cell: +node.Node, model?: +app.Model, col?: +Object) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.html#method_refreshCell",
        "!doc": "Refreshes the given cell with the provided model data and the provided\ncolumn configuration.\n\nUses the provided column formatter if aviable.",
        "!data": {
@@ -9972,7 +11088,7 @@
        }
       },
       "getColumn": {
-       "!type": "fn(name: string) -> +yui.Object",
+       "!type": "fn(name: string|+node.Node) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.html#method_getColumn",
        "!doc": "Returns column data from this.get(columns). If a Y.Node is provided as\nthe key, will try to determine the key from the classname",
        "!data": {
@@ -10066,7 +11182,7 @@
        }
       },
       "children": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Column.html#property_children",
        "!doc": "Used to create stacked headers.\n\nChild columns may also contain `children`. There is no limit\nto the depth of nesting.\n\nColumns configured with `children` are for display only and\n<strong>should not</strong> be configured with a [key](#property_key).\nConfigurations relating to the display of data, such as\n[formatter](#property_formatter), [nodeFormatter](#property_nodeFormatter),\n[emptyCellValue](#property_emptyCellValue), etc. are ignored.\n\n    { label: Name, children: [\n        { key: firstName, label: First`},\n        { key: lastName, label: Last`}\n    ]}",
        "!data": {
@@ -10193,7 +11309,7 @@
        }
       },
       "columns": {
-       "!type": "[+yui.Array]",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.HeaderView.html#property_columns",
        "!doc": "The data representation of the header rows to render.  This is assigned by\nparsing the `columns` configuration array, and is used by the render()\nmethod.",
        "!data": {
@@ -10209,7 +11325,7 @@
        }
       },
       "source": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.HeaderView.html#property_source",
        "!doc": "The object that serves as the source of truth for column and row data.\nThis property is assigned at instantiation from the `source` property of\nthe configuration object passed to the constructor.",
        "!data": {
@@ -10239,7 +11355,7 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Highlight.html",
      "prototype": {
       "highlightClassNames": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Highlight.html#property_highlightClassNames",
        "!doc": "An object consisting of classnames for a `row`, a `col` and a `cell` to\nbe applied to their respective objects when the user moves the mouse over\nthe item and the attribute is set to true.",
        "!data": {
@@ -10249,7 +11365,7 @@
      }
     },
     "KEY_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#property_KEY_NAMES",
      "!doc": "Mapping of key codes to friendly key names that can be used in the\n[keyActions](#property_keyActions) property and [ARIA_ACTIONS](#property_ARIA_ACTIONS)\nproperty.\n\nIt contains aliases for the following keys:\n    <ul>\n    <li>backspace</li>\n    <li>tab</li>\n    <li>enter</li>\n    <li>esc</li>\n    <li>space</li>\n    <li>pgup</li>\n    <li>pgdown</li>\n    <li>end</li>\n    <li>home</li>\n    <li>left</li>\n    <li>up</li>\n    <li>right</li>\n    <li>down</li>\n    <li>f1 .. f12</li>\n    </ul>",
      "!data": {
@@ -10257,7 +11373,7 @@
      }
     },
     "ARIA_ACTIONS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#property_ARIA_ACTIONS",
      "!doc": "Mapping of key codes to actions according to the WAI-ARIA suggestion for the\n[Grid Widget](http://www.w3.org/WAI/PF/aria-practices/#grid).\n\nThe key for each entry is a key-code or [keyName](#property_KEY_NAMES) while the\nvalue can be a function that performs the action or a string.  If a string,\nit can either correspond to the name of a method in this module (or  any\nmethod in a DataTable instance) or the name of an event to fire.",
      "!data": {
@@ -10371,7 +11487,7 @@
        }
       },
       "body": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#property_body",
        "!doc": "The object or instance of the class assigned to `bodyView` that is\nresponsible for rendering and managing the tables `<tbody>`(s) and its\ncontent.",
        "!data": {
@@ -10379,7 +11495,7 @@
        }
       },
       "foot": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#property_foot",
        "!doc": "The object or instance of the class assigned to `footerView` that is\nresponsible for rendering and managing the tables `<tfoot>` and its\ncontent.",
        "!data": {
@@ -10387,7 +11503,7 @@
        }
       },
       "head": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#property_head",
        "!doc": "The object or instance of the class assigned to `headerView` that is\nresponsible for rendering and managing the tables `<thead>` and its\ncontent.",
        "!data": {
@@ -10395,7 +11511,7 @@
        }
       },
       "getCell": {
-       "!type": "fn(seed: [number], shift?: [number]) -> +node.Node",
+       "!type": "fn(seed: [number]|+node.Node, shift?: [number]|string) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#method_getCell",
        "!doc": "Returns the `<td>` Node from the given row and column index.  Alternately,\nthe `seed` can be a Node.  If so, the nearest ancestor cell is returned.\nIf the `seed` is a cell, it is returned.  If there is no cell at the given\ncoordinates, `null` is returned.\n\nOptionally, include an offset array or string to return a cell near the\ncell identified by the `seed`.  The offset can be an array containing the\nnumber of rows to shift followed by the number of columns to shift, or one\nof \"above\", \"below\", \"next\", or \"previous\".\n\n<pre><code>// Previous cell in the previous row\nvar cell = table.getCell(e.target, [-1, -1]);\n\n// Next cell\nvar cell = table.getCell(e.target, next);\nvar cell = table.getCell(e.taregt, [0, 1];</pre></code>\n\nThis is actually just a pass through to the `bodyView` instances method\nby the same name.",
        "!data": {
@@ -10403,7 +11519,7 @@
        }
       },
       "getRecord": {
-       "!type": "fn(seed: string) -> +app.Model",
+       "!type": "fn(seed: string|+node.Node) -> +app.Model",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#method_getRecord",
        "!doc": "Relays call to the `bodyView`s `getRecord` method if it has one.",
        "!data": {
@@ -10411,7 +11527,7 @@
        }
       },
       "getRow": {
-       "!type": "fn(id: number) -> +node.Node",
+       "!type": "fn(id: number|string|+app.Model) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#method_getRow",
        "!doc": "Returns the `<tr>` Node from the given row index, Model, or Models\n`clientId`.  If the rows havent been rendered yet, or if the row cant be\nfound by the input, `null` is returned.\n\nThis is actually just a pass through to the `bodyView` instances method\nby the same name.",
        "!data": {
@@ -10419,7 +11535,7 @@
        }
       },
       "displayColumns": {
-       "!type": "[+yui.Object]",
+       "!type": "[+Object]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.TableView.html#property_displayColumns",
        "!doc": "Array of the columns that correspond to those with value cells in the\ndata rows. Excludes colspan header columns (configured with `children`).",
        "!data": {
@@ -10444,7 +11560,7 @@
      "prototype": {
       "!proto": "plugin.Plugin.Base.prototype",
       "load": {
-       "!type": "fn(config: +config.loadConfig)",
+       "!type": "fn(config: +config.Plugin.DataTableDataSourceLoadConfig)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DataTableDataSource.html#method_load",
        "!doc": "Load data by calling DataSources sendRequest() method under the hood.",
        "!data": {
@@ -10501,22 +11617,22 @@
       "!type": "fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html",
       "button": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_button",
        "!doc": "Returns a formatter that produces a BUTTON element using the value of\nthe [buttonLabel](DataTable.Column.html#property_buttonLabel)\ncolumn definition attribute as its label or the text\n`Click` if not found.\n\nApplies the CSS className `yui3-datatable-button` to the cell."
       },
       "boolean": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_boolean",
        "!doc": "Returns a formatter function that returns the texts `\"true\"` or `\"false\"`\nand assigns the CSS classNames `yui3-datatable-true` or `yui3-datatable-false`\nbased on the value of the cell.\n\nIf either a [booleanLabels](DataTable.Column.html#property_booleanLabels)\n configuration object is defined for the column\nor a [booleanLabels](DataTable.html#attr_booleanLabels)\nconfiguration attribute is defined for the datatable,\nthe formatter will use the values for the properties `true` or `false`\nof either of those objects as the text to show.\n\nIt returns `null`s or `undefined`s unchanged so that the `emptyCellValue`\nconfiguration attribute will eventually apply.\n\n     {key:\"active\", formatter: \"boolean\", booleanLabels: {\n         \"true\": \"yes\",\n         \"false\": \"no\"\n     }}"
       },
       "currency": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_currency",
        "!doc": "Returns a formatter function that formats values as currency using\nthe [Number.format](Number.html#method_format) method.\nIt looks for the format to apply in the\n[currencyFormat](DataTable.Column.html#property_currencyFormat) property\nof the column or in the\n[currencyFormat](DataTable.html#attr_currencyFormat)\n attribute of the whole table.\n\n    {key: \"amount\", formatter: \"currency\", currencyFormat: {\n        decimalPlaces:2,\n        decimalSeparator: \",\",\n        thousandsSeparator: \".\",\n        suffix: \"&euro;\"\n    }}\n\nSee [Number.format](Number.html#method_format) for the available format specs.\n\nAnything that cannot be parsed as a number will be returned unchanged.\n\nApplies the CSS className `yui3-datatable-currency` to the cell."
       },
       "date": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_date",
        "!doc": "Returns a date formatting function.\nIt looks for the format to apply in the\n[dateFormat](DataTable.Column.html#property_dateFormat)\nproperty of the column or in the\n[dateFormat](DataTable.html#attr_dateFormat)\n attribute of the whole table.\n\n    {key: \"DOB\", formatter: \"date\", dateFormat: \"%I:%M:%S %p\"}\n\nSee [Date.format](Date.html#method_format) for the available format specs.\n\nAnything that is not a date is returned unchanged.\n\nApplies the CSS className `yui3-datatable-date` to the cell."
       },
@@ -10536,22 +11652,22 @@
        "!doc": "Returns a date formatting function using the current locale.\n\n    {key: \"DOB\", formatter: \"localDateTime\"}\n\nAnything that is not a date is returned unchanged.\n\nApplies the CSS className `yui3-datatable-date` to the cell."
       },
       "email": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_email",
        "!doc": "Returns a function that produces email links.\nIf the column definition contains a property\n[linkFrom](DataTable.Column.html#property_linkFrom) it will use the value\nin that field for the link, otherwise, the same column value will be used for both\nlink and text.\n\n    {key: \"contact\", formatter: \"email\", linkFrom: \"contactEmail\"}\n\nIt will use the respective\n[emptyCellValue](DataTable.Column.html#property_emptyCellValue)\ncolumn configuration attribute\nfor each of the value and the link if either is empty.\nIf the link value is still empty, it will return the value with no link.\n\nApplies the CSS className `yui3-datatable-email` to the cell."
       },
       "link": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_link",
        "!doc": "Returns a function that produces links.\nIf the column definition contains a property\n[linkFrom](DataTable.Column.html#property_linkFrom) it will use the value\nin that field for the link, otherwise, the same column value will be used for both\nlink and text.\n\n    {key: \"company\", formatter: \"link\", linkFrom: \"webSite\"}\n\nIt will use the respective\n[emptyCellValue](DataTable.Column.html#property_emptyCellValue)\n column configuration attribute\nfor each of the value and the link if either is empty.\nIf the link value is still empty, it will return the value with no link.\n\nApplies the CSS className `yui3-datatable-link` to the cell."
       },
       "number": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_number",
        "!doc": "Returns a formatter function that formats values using\nthe [Number.format](Number.html#method_format) method.\nIt looks for the format to apply in the\n[numberFormat](DataTable.Column.html#property_numberFormat)\nproperty of the column or in the\n[numberFormat](DataTable.html#attr_numberFormat)\nattribute of the whole table.\n\n     {key: \"weight\", formatter: \"number\", numberFormat: {\n         decimalPlaces:2,\n         decimalSeparator: \",\",\n         thousandsSeparator: \",\",\n         suffix: \"kg\"\n     }}\n\nSee [Number.format](Number.html#method_format) for the available format specs.\n\nAnything that cannot be parsed as a number will be returned unchanged.\n\nApplies the CSS className `yui3-datatable-number` to the cell."
       },
       "lookup": {
-       "!type": "fn(col: +yui.Object) -> fn()",
+       "!type": "fn(col: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.BodyView.Formatters.html#method_lookup",
        "!doc": "Returns a formatter function that returns texts from a lookup table\nbased on the stored value.\n\nIt looks for the translation to apply in the\n[lookupTable](DataTable.Column.html#property_lookupTable) property of the\ncolumn in either of these two formats:\n\n    {key: \"status\", formatter: \"lookup\", lookupTable: {\n        0: \"unknown\",\n        1: \"requested\",\n        2: \"approved\",\n        3: \"delivered\"\n    }},\n    {key: \"otherStatus\", formatter: \"lookup\", lookupTable: [\n        {value:0, text: \"unknown\"},\n        {value:1, text: \"requested\"},\n        {value:2, text: \"approved\"},\n        {value:3, text: \"delivered\"}\n    ]}\n\nApplies the CSS className `yui3-datatable-lookup` to the cell."
       }
@@ -10569,12 +11685,12 @@
        "!doc": "Label to be shown in the face of a button produced by the\n[button](DataTable.BodyView.Formatters.html#method_button) formatter"
       },
       "booleanLabels": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Column.html#property_booleanLabels",
        "!doc": "Determines the texts to be shown to represent Boolean values when the\n[boolean](DataTable.BodyView.Formatters.html#method_boolean) formatter\nis used.\n\nThe attribute is an object with text values for properties `true` and `false`.\n\n    {key:\"active\", formatter: \"boolean\", booleanLabels: {\n        \"true\": \"yes\",\n        \"false\": \"no\"\n    }}"
       },
       "currencyFormat": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Column.html#property_currencyFormat",
        "!doc": "Format specification for columns using the\n[currency](DataTable.BodyView.Formatters.html#method_currency) formatter.\nIt contains an object as described in\n[Number.format](Number.html#method_format)."
       },
@@ -10589,12 +11705,12 @@
        "!doc": "Name of the field that is to provide the link for a column using the\n[email](DataTable.BodyView.Formatters.html#method_email) or\n[link](DataTable.BodyView.Formatters.html#method_link)\nformatters."
       },
       "numberFormat": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Column.html#property_numberFormat",
        "!doc": "Format specification for columns using the\n[number](DataTable.BodyView.Formatters.html#method_number) formatter.\nIt contains an object as described in\n[Number.format](Number.html#method_format)."
       },
       "lookupTable": {
-       "!type": "+yui.Object",
+       "!type": "+Object|[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.Column.html#property_lookupTable",
        "!doc": "Map of values to text used to translate internal values to human readable text\nin columns using the [lookup](DataTable.BodyView.Formatters.html#method_lookup)\nformatter.\n\nThe map can be given in either of two formats:\n\n    {key: \"status\", formatter: \"lookup\", lookupTable: {\n        0: \"unknown\",\n        1: \"requested\",\n        2: \"approved\",\n        3: \"delivered\"\n    }},\n    {key: \"otherStatus\", formatter: \"lookup\", lookupTable: [\n        {value:0, text: \"unknown\"},\n        {value:1, text: \"requested\"},\n        {value:2, text: \"approved\"},\n        {value:3, text: \"delivered\"}\n    ]}\n\nThe last format is compatible with the [dropdown](DataTable.Editors.html#property_dropdown)\nand autocomplete-based editors, where the order of the items in the dropdown matters."
       }
@@ -10614,7 +11730,7 @@
     "prototype": {
      "!proto": "datatable.DataTable.Base.prototype",
      "scrollTo": {
-      "!type": "fn(id: string) -> !this",
+      "!type": "fn(id: string|number|[number]|+node.Node) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DataTable.html#method_scrollTo",
       "!doc": "Scrolls a given row or cell into view if the table is scrolling.  Pass the\n`clientId` of a Model from the DataTables `data` ModelList or its row\nindex to scroll to a row or a [row index, column index] array to scroll to\na cell.  Alternately, to scroll to any element contained within the tables\nscrolling areas, pass its ID, or the Node itself (though you could just as\nwell call `node.scrollIntoView()` yourself, but hey, whatever)."
      }
@@ -10635,7 +11751,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Date.html",
     "prototype": {
      "format": {
-      "!type": "fn(oDate: +datatype_date.Date, oConfig: +yui.Object) -> +HTML",
+      "!type": "fn(oDate: +datatype_date.Date, oConfig: +Object) -> +HTML",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Date.html#method_format",
       "!doc": "Takes a native JavaScript Date and formats it as a string for display to user.",
       "!data": {
@@ -10707,7 +11823,7 @@
       }
      },
      "listOfDatesInMonth": {
-      "!type": "fn(oDate: +datatype_date.Date) -> +yui.Array",
+      "!type": "fn(oDate: +datatype_date.Date) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Date.html#method_listOfDatesInMonth",
       "!doc": "Lists all dates in a given month.",
       "!data": {
@@ -10723,7 +11839,7 @@
       }
      },
      "parse": {
-      "!type": "fn(data: +datatype_date.Date) -> +datatype_date.Date",
+      "!type": "fn(data: +datatype_date.Date|number|string) -> +datatype_date.Date",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Date.html#method_parse",
       "!doc": "Converts data to type Date.",
       "!data": {
@@ -10765,7 +11881,7 @@
        }
       },
       "getRegion": {
-       "!type": "fn(inc: bool) -> +yui.Object",
+       "!type": "fn(inc: bool) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#method_getRegion",
        "!doc": "Get the active region: viewport, node, custom region",
        "!data": {
@@ -10773,7 +11889,7 @@
        }
       },
       "inRegion": {
-       "!type": "fn(xy: +yui.Array) -> bool",
+       "!type": "fn(xy: [?]) -> bool",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.DDConstrained.html#method_inRegion",
        "!doc": "Checks if the XY passed or the dragNode is inside the active region.",
        "!data": {
@@ -10884,7 +12000,7 @@
        }
       },
       "getDrag": {
-       "!type": "fn(node: string) -> +yui.Object",
+       "!type": "fn(node: string|+Object) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#method_getDrag",
        "!doc": "Get a valid Drag instance back from a Node or a selector string, false otherwise",
        "!data": {
@@ -10900,7 +12016,7 @@
        }
       },
       "getNode": {
-       "!type": "fn(n: +node.Node) -> +node.Node",
+       "!type": "fn(n: +node.Node|+Object|string) -> +node.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#method_getNode",
        "!doc": "Return a node instance from the given node, selector string or Y.Base extended object.",
        "!data": {
@@ -10932,7 +12048,7 @@
        }
       },
       "activeDrop": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#property_activeDrop",
        "!doc": "A reference to the active Drop Target",
        "!data": {
@@ -10940,7 +12056,7 @@
        }
       },
       "validDrops": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#property_validDrops",
        "!doc": "An array of the valid Drop Targets for this interaction.",
        "!data": {
@@ -10948,7 +12064,7 @@
        }
       },
       "otherDrops": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#property_otherDrops",
        "!doc": "An object literal of Other Drop Targets that we encountered during this interaction (in the case of overlapping Drop Targets)",
        "!data": {
@@ -10956,7 +12072,7 @@
        }
       },
       "targets": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#property_targets",
        "!doc": "All of the Targets",
        "!data": {
@@ -10964,7 +12080,7 @@
        }
       },
       "isOverTarget": {
-       "!type": "fn(drop: +yui.Object) -> bool",
+       "!type": "fn(drop: +Object) -> bool",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#method_isOverTarget",
        "!doc": "Check to see if the Drag element is over the target, method varies on current mode",
        "!data": {
@@ -10980,7 +12096,7 @@
        }
       },
       "getBestMatch": {
-       "!type": "fn(drops: +yui.Array, all: bool) -> +Object or Array",
+       "!type": "fn(drops: [?], all: bool) -> +Object or Array",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#method_getBestMatch",
        "!doc": "This method will gather the area for all potential targets and see which has the hightest covered area and return it.",
        "!data": {
@@ -10988,7 +12104,7 @@
        }
       },
       "getDrop": {
-       "!type": "fn(node: string) -> +yui.Object",
+       "!type": "fn(node: string|+Object) -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.DDM.html#method_getDrop",
        "!doc": "Get a valid Drop instance back from a Node or a selector string, false otherwise",
        "!data": {
@@ -11035,7 +12151,7 @@
        }
       },
       "createDrop": {
-       "!type": "fn(node: +node.Node, groups: +yui.Array) -> ?",
+       "!type": "fn(node: +node.Node, groups: [?]) -> ?",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Delegate.html#method_createDrop",
        "!doc": "Apply the Drop plugin to this node",
        "!data": {
@@ -11066,7 +12182,7 @@
        }
       },
       "target": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_target",
        "!doc": "This will be a reference to the Drop instance associated with this drag if the target: true config attribute is set..",
        "!data": {
@@ -11074,7 +12190,7 @@
        }
       },
       "deltaXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_deltaXY",
        "!doc": "The offset of the mouse position to the elements position",
        "!data": {
@@ -11082,7 +12198,7 @@
        }
       },
       "startXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_startXY",
        "!doc": "The initial mouse position",
        "!data": {
@@ -11090,7 +12206,7 @@
        }
       },
       "nodeXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_nodeXY",
        "!doc": "The initial element position",
        "!data": {
@@ -11098,7 +12214,7 @@
        }
       },
       "lastXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_lastXY",
        "!doc": "The position of the element as its moving (for offset calculations)",
        "!data": {
@@ -11106,7 +12222,7 @@
        }
       },
       "actXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_actXY",
        "!doc": "The xy that the node will be set to. Changing this will alter the position as its dragged.",
        "!data": {
@@ -11114,7 +12230,7 @@
        }
       },
       "realXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_realXY",
        "!doc": "The real xy position of the node.",
        "!data": {
@@ -11122,7 +12238,7 @@
        }
       },
       "mouseXY": {
-       "!type": "+yui.Array",
+       "!type": "[?]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_mouseXY",
        "!doc": "The XY coords of the mousemove",
        "!data": {
@@ -11130,7 +12246,7 @@
        }
       },
       "region": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drag.html#property_region",
        "!doc": "A region object associated with this drag, used for checking regions while dragging.",
        "!data": {
@@ -11233,7 +12349,7 @@
        }
       },
       "shim": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drop.html#property_shim",
        "!doc": "Node reference to the targets shim",
        "!data": {
@@ -11241,7 +12357,7 @@
        }
       },
       "region": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drop.html#property_region",
        "!doc": "A region object associated with this target, used for checking regions while dragging.",
        "!data": {
@@ -11257,7 +12373,7 @@
        }
       },
       "inGroup": {
-       "!type": "fn(groups: +yui.Array) -> ?",
+       "!type": "fn(groups: [?]) -> ?",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/DD.Drop.html#method_inGroup",
        "!doc": "Check if this target is in one of the supplied groups.",
        "!data": {
@@ -11382,7 +12498,7 @@
       "!doc": "If the className exists on the node it is removed, if it doesnt exist it is added."
      },
      "byId": {
-      "!type": "fn(id: string, doc: +yui.Object) -> +HTMLElement",
+      "!type": "fn(id: string, doc: +Object) -> +HTMLElement",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_byId",
       "!doc": "Returns the HTMLElement with the given ID (Wrapper for document.getElementById).",
       "!data": {
@@ -11414,37 +12530,37 @@
       }
      },
      "create": {
-      "!type": "fn(html: string, doc: +HTMLDocument) -> +HTMLElement",
+      "!type": "fn(html: string, doc: +HTMLDocument) -> +HTMLElement|+DocumentFragment",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_create",
       "!doc": "Creates a new dom node using the provided markup string."
      },
      "addHTML": {
-      "!type": "fn(node: +HTMLElement, content: +HTMLElement, where: +HTMLElement)",
+      "!type": "fn(node: +HTMLElement, content: +HTMLElement|[?]|+HTMLCollection, where: +HTMLElement)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_addHTML",
       "!doc": "Inserts content in a node at the given location"
      },
      "region": {
-      "!type": "fn(element: +HTMLElement) -> +yui.Object",
+      "!type": "fn(element: +HTMLElement) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_region",
       "!doc": "Returns an Object literal containing the following about this element: (top, right, bottom, left)"
      },
      "intersect": {
-      "!type": "fn(element: +HTMLElement, element2: +HTMLElement, altRegion: +yui.Object) -> +yui.Object",
+      "!type": "fn(element: +HTMLElement, element2: +HTMLElement|+Object, altRegion: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_intersect",
       "!doc": "Find the intersect information for the passed nodes."
      },
      "inRegion": {
-      "!type": "fn(node: +yui.Object, node2: +yui.Object, all: bool, altRegion: +yui.Object) -> bool",
+      "!type": "fn(node: +Object, node2: +Object, all: bool, altRegion: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_inRegion",
       "!doc": "Check if any part of this node is in the passed region"
      },
      "inViewportRegion": {
-      "!type": "fn(element: +HTMLElement, all: bool, altRegion: +yui.Object) -> bool",
+      "!type": "fn(element: +HTMLElement, all: bool, altRegion: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_inViewportRegion",
       "!doc": "Check if any part of this element is in the viewport"
      },
      "viewportRegion": {
-      "!type": "fn() -> +yui.Object",
+      "!type": "fn() -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_viewportRegion",
       "!doc": "Returns an Object literal containing the following about the visible region of viewport: (top, right, bottom, left)"
      },
@@ -11497,7 +12613,7 @@
       }
      },
      "getXY": {
-      "!type": "fn(element: ?) -> +yui.Array",
+      "!type": "fn(element: ?) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_getXY",
       "!doc": "Gets the current position of an element based on page coordinates.\nElement must be part of the DOM tree to have page coordinates\n(display:none or elements not appended return false).",
       "!data": {
@@ -11529,7 +12645,7 @@
       }
      },
      "setXY": {
-      "!type": "fn(element: ?, xy: +yui.Array, noRetry: bool)",
+      "!type": "fn(element: ?, xy: [?], noRetry: bool)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_setXY",
       "!doc": "Set the position of an html element in page coordinates.\nThe element must be part of the DOM tree to have page coordinates (display:none or elements not appended return false).",
       "!data": {
@@ -11561,17 +12677,17 @@
       }
      },
      "setWidth": {
-      "!type": "fn(element: +HTMLElement, size: string)",
+      "!type": "fn(element: +HTMLElement, size: string|number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_setWidth",
       "!doc": "Sets the width of the element to the given size, regardless\nof box model, border, padding, etc."
      },
      "setHeight": {
-      "!type": "fn(element: +HTMLElement, size: string)",
+      "!type": "fn(element: +HTMLElement, size: string|number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_setHeight",
       "!doc": "Sets the height of the element to the given size, regardless\nof box model, border, padding, etc."
      },
      "setStyle": {
-      "!type": "fn(node: +HTMLElement, att: string, val: string, style?: +yui.Object)",
+      "!type": "fn(node: +HTMLElement, att: string, val: string|number, style?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_setStyle",
       "!doc": "Sets a style property for a given element.",
       "!data": {
@@ -11579,7 +12695,7 @@
       }
      },
      "getStyle": {
-      "!type": "fn(node: +HTMLElement, att: string, style?: +yui.Object)",
+      "!type": "fn(node: +HTMLElement, att: string, style?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_getStyle",
       "!doc": "Returns the current style value for the given property.",
       "!data": {
@@ -11587,7 +12703,7 @@
       }
      },
      "setStyles": {
-      "!type": "fn(node: +HTMLElement, hash: +yui.Object)",
+      "!type": "fn(node: +HTMLElement, hash: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/DOM.html#method_setStyles",
       "!doc": "Sets multiple style properties.",
       "!data": {
@@ -11609,7 +12725,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Selector.html",
     "prototype": {
      "shorthand": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Selector.html#property_shorthand",
       "!doc": "Mapping of shorthand tokens to corresponding attribute selector",
       "!data": {
@@ -11617,7 +12733,7 @@
       }
      },
      "operators": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Selector.html#property_operators",
       "!doc": "List of operators and corresponding boolean functions.\nThese functions are passed the attribute and the current nodes value of the attribute.",
       "!data": {
@@ -11678,7 +12794,7 @@
     },
     "prototype": {
      "dump": {
-      "!type": "fn(o: +yui.Object, d: number) -> string",
+      "!type": "fn(o: +Object, d: number) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_dump",
       "!doc": "Returns a simple string representation of the object or array.\nOther types of objects will be returned unprocessed.  Arrays\nare expected to be indexed."
      }
@@ -11734,7 +12850,7 @@
       }
      },
      "render": {
-      "!type": "fn(node: string) -> !this",
+      "!type": "fn(node: string|+HTMLElement|+node.Node) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ContentEditable.html#method_render",
       "!data": {
        "submodule": "content-editable"
@@ -11774,7 +12890,7 @@
      }
     },
     "DOM_EVENTS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ContentEditable.html#property_DOM_EVENTS",
      "!doc": "The DomEvents that the frame automatically attaches and bubbles",
      "!data": {
@@ -11840,7 +12956,7 @@
        }
       },
       "command": {
-       "!type": "fn(action: string, value: string) -> +node.Node",
+       "!type": "fn(action: string, value: string) -> +node.Node|+node.NodeList",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ExecCommand.html#method_command",
        "!doc": "Execute a command on the frames document.",
        "!data": {
@@ -12322,7 +13438,7 @@
       }
      },
      "execCommand": {
-      "!type": "fn(cmd: string, val: string) -> +node.Node",
+      "!type": "fn(cmd: string, val: string) -> +node.Node|+node.NodeList",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EditorBase.html#method_execCommand",
       "!doc": "Pass through to the frame.execCommand method",
       "!data": {
@@ -12338,7 +13454,7 @@
       }
      },
      "render": {
-      "!type": "fn(node: +dom.Selector) -> !this",
+      "!type": "fn(node: +dom.Selector|+HTMLElement|+node.Node) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EditorBase.html#method_render",
       "!doc": "Renders the Y.ContentEditable to the passed node.",
       "!data": {
@@ -12411,7 +13527,7 @@
      }
     },
     "NC_KEYS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/EditorBase.html#property_NC_KEYS",
      "!doc": "Hash table of keys to fire a nodeChange event for.",
      "!data": {
@@ -12419,7 +13535,7 @@
      }
     },
     "USE": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/EditorBase.html#property_USE",
      "!doc": "The default modules to use inside the Frame",
      "!data": {
@@ -12807,7 +13923,7 @@
       }
      },
      "render": {
-      "!type": "fn(node: string) -> !this",
+      "!type": "fn(node: string|+HTMLElement|+node.Node) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Frame.html#method_render",
       "!doc": "Render the iframe into the container config option or open the window.",
       "!data": {
@@ -12848,7 +13964,7 @@
      }
     },
     "DOM_EVENTS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Frame.html#property_DOM_EVENTS",
      "!doc": "The DomEvents that the frame automatically attaches and bubbles",
      "!data": {
@@ -12872,7 +13988,7 @@
      }
     },
     "IFRAME_ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Frame.html#property_IFRAME_ATTRS",
      "!doc": "Attributes to auto add to the dynamic iframe under the hood",
      "!data": {
@@ -12954,7 +14070,7 @@
     }
    },
    "CustomEvent": {
-    "!type": "fn(type: string, defaults: +yui.Object)",
+    "!type": "fn(type: string, defaults: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html",
     "prototype": {
      "type": {
@@ -13022,7 +14138,7 @@
       }
      },
      "firedWith": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#property_firedWith",
       "!doc": "An array containing the arguments the custom event\nwas last fired with.",
       "!data": {
@@ -13118,7 +14234,7 @@
       }
      },
      "context": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#property_context",
       "!doc": "The context the the event will fire from by default.  Defaults to the YUI\ninstance.",
       "!data": {
@@ -13158,7 +14274,7 @@
       }
      },
      "getSubs": {
-      "!type": "fn() -> +yui.Array",
+      "!type": "fn() -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#method_getSubs",
       "!doc": "Get all of the subscribers to this event and any sibling event",
       "!data": {
@@ -13182,7 +14298,7 @@
       }
      },
      "on": {
-      "!type": "fn(fn: fn(), context: +yui.Object, arg: +Mixed) -> +event_custom.EventHandle",
+      "!type": "fn(fn: fn(), context: +Object, arg: +Mixed) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#method_on",
       "!doc": "Listen for this event",
       "!data": {
@@ -13190,7 +14306,7 @@
       }
      },
      "after": {
-      "!type": "fn(fn: fn(), context: +yui.Object, arg: +Mixed) -> +event_custom.EventHandle",
+      "!type": "fn(fn: fn(), context: +Object, arg: +Mixed) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#method_after",
       "!doc": "Listen for this event after the normal subscribers have been notified and\nthe default behavior has been applied.  If a normal subscriber prevents the\ndefault behavior, it also prevents after listeners from firing.",
       "!data": {
@@ -13198,7 +14314,7 @@
       }
      },
      "detach": {
-      "!type": "fn(fn: fn(), context: +yui.Object) -> number",
+      "!type": "fn(fn: fn(), context: +Object) -> number",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#method_detach",
       "!doc": "Detach listeners.",
       "!data": {
@@ -13206,7 +14322,7 @@
       }
      },
      "unsubscribe": {
-      "!type": "fn(fn: fn(), context: +yui.Object) -> number",
+      "!type": "fn(fn: fn(), context: +Object) -> number",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#method_unsubscribe",
       "!doc": "Detach listeners.",
       "!data": {
@@ -13222,7 +14338,7 @@
       }
      },
      "fire": {
-      "!type": "fn(arguments: +yui.Object) -> bool",
+      "!type": "fn(arguments: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CustomEvent.html#method_fire",
       "!doc": "Notifies the subscribers.  The callback functions will be executed\nfrom the context specified when the event was created, and with the\nfollowing parameters:\n  <ul>\n  <li>The type of event</li>\n  <li>All of the arguments fire() was executed with as an array</li>\n  <li>The custom object (if any) that was passed into the subscribe()\n      method</li>\n  </ul>",
       "!data": {
@@ -13374,7 +14490,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/EventFacade.html",
     "prototype": {
      "details": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventFacade.html#property_details",
       "!doc": "The arguments passed to fire",
       "!data": {
@@ -13484,7 +14600,7 @@
       }
      },
      "once": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_once",
       "!doc": "Listen to a custom event hosted by this object one time.\nThis is the equivalent to <code>on</code> except the\nlistener is immediatelly detached when it is executed.",
       "!data": {
@@ -13492,7 +14608,7 @@
       }
      },
      "onceAfter": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_onceAfter",
       "!doc": "Listen to a custom event hosted by this object one time.\nThis is the equivalent to <code>after</code> except the\nlistener is immediatelly detached when it is executed.",
       "!data": {
@@ -13500,7 +14616,7 @@
       }
      },
      "parseType": {
-      "!type": "fn(type: string, pre?: string) -> +yui.Array",
+      "!type": "fn(type: string, pre?: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_parseType",
       "!doc": "Takes the type parameter passed to on and parses out the\nvarious pieces that could be included in the type.  If the\nevent type is passed without a prefix, it will be expanded\nto include the prefix one is supplied or the event target\nis configured with a default prefix.",
       "!data": {
@@ -13508,7 +14624,7 @@
       }
      },
      "on": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_on",
       "!doc": "Subscribe a callback function to a custom event fired by this object or\nfrom an object that bubbles its events to this object.\n\n     this.on(\"change\", this._onChange, this);\n\nCallback functions for events published with `emitFacade = true` will\nreceive an `EventFacade` as the first argument (typically named \"e\").\nThese callbacks can then call `e.preventDefault()` to disable the\nbehavior published to that events `defaultFn`.  See the `EventFacade`\nAPI for all available properties and methods. Subscribers to\nnon-`emitFacade` events will receive the arguments passed to `fire()`\nafter the event name.\n\nTo subscribe to multiple events at once, pass an object as the first\nargument, where the key:value pairs correspond to the eventName:callback.\n\n     this.on({\n         \"attrChange\" : this._onAttrChange,\n         \"change\"     : this._onChange\n     });\n\nYou can also pass an array of event names as the first argument to\nsubscribe to all listed events with the same callback.\n\n     this.on([ \"change\", \"attrChange\" ], this._onChange);\n\nReturning `false` from a callback is supported as an alternative to\ncalling `e.preventDefault(); e.stopPropagation();`.  However, it is\nrecommended to use the event methods whenever possible.",
       "!data": {
@@ -13524,7 +14640,7 @@
       }
      },
      "detach": {
-      "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventTarget",
+      "!type": "fn(type: string|+Object, fn: fn(), context: +Object) -> +event_custom.EventTarget",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_detach",
       "!doc": "Detach one or more listeners the from the specified event",
       "!data": {
@@ -13556,7 +14672,7 @@
       }
      },
      "publish": {
-      "!type": "fn(type: string, opts: +yui.Object) -> +event_custom.CustomEvent",
+      "!type": "fn(type: string, opts: +config.EventTargetPublishConfig) -> +event_custom.CustomEvent",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_publish",
       "!doc": "Creates a new custom event of the specified type.  If a custom event\nby that name already exists, it will not be re-created.  In either\ncase the custom event is returned.",
       "!data": {
@@ -13564,7 +14680,7 @@
       }
      },
      "fire": {
-      "!type": "fn(type: string, arguments: +yui.Object) -> bool",
+      "!type": "fn(type: string|+Object, arguments: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_fire",
       "!doc": "Fire a custom event by name.  The callback functions will be executed\nfrom the context specified when the event was created, and with the\nfollowing parameters.\n\nThe first argument is the event type, and any additional arguments are\npassed to the listeners as parameters.  If the first of these is an\nobject literal, and the event is configured to emit an event facade,\nthat object is mixed into the event facade and the facade is provided\nin place of the original object.\n\nIf the custom event object hasnt been created, then the event hasnt\nbeen published and it has no subscribers.  For performance sake, we\nimmediate exit in this case.  This means the event wont bubble, so\nif the intention is that a bubble target be notified, the event must\nbe published on this object first.",
       "!data": {
@@ -13580,7 +14696,7 @@
       }
      },
      "after": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/EventTarget.html#method_after",
       "!doc": "Subscribe to a custom event hosted by this object.  The\nsupplied callback will execute after any listeners add\nvia the subscribe method, and after the default function,\nif configured for the event, has executed.",
       "!data": {
@@ -13615,7 +14731,7 @@
       }
      },
      "on": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_on",
       "!doc": "`Y.on()` can do many things:\n\n<ul>\n    <li>Subscribe to custom events `publish`ed and `fire`d from Y</li>\n    <li>Subscribe to custom events `publish`ed with `broadcast` 1 or 2 and\n        `fire`d from any object in the YUI instance sandbox</li>\n    <li>Subscribe to DOM events</li>\n    <li>Subscribe to the execution of a method on any object, effectively\n    treating that method as an event</li>\n</ul>\n\nFor custom event subscriptions, pass the custom event name as the first argument\nand callback as the second. The `this` object in the callback will be `Y` unless\nan override is passed as the third argument.\n\n    Y.on(io:complete, function () {\n        Y.MyApp.updateStatus(Transaction complete);\n    });\n\nTo subscribe to DOM events, pass the name of a DOM event as the first argument\nand a CSS selector string as the third argument after the callback function.\nAlternately, the third argument can be a `Node`, `NodeList`, `HTMLElement`,\narray, or simply omitted (the default is the `window` object).\n\n    Y.on(click, function (e) {\n        e.preventDefault();\n\n        // proceed with ajax form submission\n        var url = this.get(action);\n        ...\n    }, #my-form);\n\nThe `this` object in DOM event callbacks will be the `Node` targeted by the CSS\nselector or other identifier.\n\n`on()` subscribers for DOM events or custom events `publish`ed with a\n`defaultFn` can prevent the default behavior with `e.preventDefault()` from the\nevent object passed as the first parameter to the subscription callback.\n\nTo subscribe to the execution of an object method, pass arguments corresponding to the call signature for\n<a href=\"../classes/Do.html#methods_before\">`Y.Do.before(...)`</a>.\n\nNOTE: The formal parameter list below is for events, not for function\ninjection.  See `Y.Do.before` for that signature.",
       "!data": {
@@ -13623,7 +14739,7 @@
       }
      },
      "once": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_once",
       "!doc": "Listen for an event one time.  Equivalent to `on()`, except that\nthe listener is immediately detached when executed.\n\nSee the <a href=\"#methods_on\">`on()` method</a> for additional subscription\noptions.",
       "!data": {
@@ -13631,7 +14747,7 @@
       }
      },
      "onceAfter": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_onceAfter",
       "!doc": "Listen for an event one time.  Equivalent to `once()`, except, like `after()`,\nthe subscription callback executes after all `on()` subscribers and the events\n`defaultFn` (if configured) have executed.  Like `after()` if any `on()` phase\nsubscriber calls `e.preventDefault()`, neither the `defaultFn` nor the `after()`\nsubscribers will execute.\n\nThe listener is immediately detached when executed.\n\nSee the <a href=\"#methods_on\">`on()` method</a> for additional subscription\noptions.",
       "!data": {
@@ -13639,7 +14755,7 @@
       }
      },
      "after": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, args?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, args?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_after",
       "!doc": "Like `on()`, this method creates a subscription to a custom event or to the\nexecution of a method on an object.\n\nFor events, `after()` subscribers are executed after the events\n`defaultFn` unless `e.preventDefault()` was called from an `on()` subscriber.\n\nSee the <a href=\"#methods_on\">`on()` method</a> for additional subscription\noptions.\n\nNOTE: The subscription signature shown is for events, not for function\ninjection.  See <a href=\"../classes/Do.html#methods_after\">`Y.Do.after`</a>\nfor that signature.",
       "!data": {
@@ -13675,7 +14791,7 @@
     }
    },
    "Subscriber": {
-    "!type": "fn(fn: fn(), context: +yui.Object, args: +yui.Array)",
+    "!type": "fn(fn: fn(), context: +Object, args: [?])",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Subscriber.html",
     "prototype": {
      "fn": {
@@ -13684,7 +14800,7 @@
       "!doc": "The callback that will be execute when the event fires\nThis is wrapped by Y.rbind if obj was supplied."
      },
      "context": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Subscriber.html#property_context",
       "!doc": "Optional this keyword for the listener"
      },
@@ -13694,7 +14810,7 @@
       "!doc": "Unique subscriber id"
      },
      "args": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Subscriber.html#property_args",
       "!doc": "Additional arguments to propagate to the subscriber"
      },
@@ -13709,12 +14825,12 @@
       "!doc": "This listener only reacts to the event once"
      },
      "notify": {
-      "!type": "fn(args: +yui.Array, ce: +event_custom.CustomEvent)",
+      "!type": "fn(args: [?], ce: +event_custom.CustomEvent)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Subscriber.html#method_notify",
       "!doc": "Executes the subscriber."
      },
      "contains": {
-      "!type": "fn(fn: fn(), context: +yui.Object) -> bool",
+      "!type": "fn(fn: fn(), context: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Subscriber.html#method_contains",
       "!doc": "Returns true if the fn and obj match this objects properties.\nUsed by the unsubscribe method to match the right subscriber."
      }
@@ -13731,7 +14847,7 @@
      "for": "event.Event"
     },
     "simulate": {
-     "!type": "fn(target: +HTMLElement, type: string, options: +yui.Object)",
+     "!type": "fn(target: +HTMLElement, type: string, options: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_simulate",
      "!doc": "Simulates the event or gesture with the given name on a target."
     }
@@ -13777,7 +14893,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html",
     "delegate": {
-     "!type": "fn(node: +node.Node, subscription: +yui.Array, notifier: bool, filter: string)",
+     "!type": "fn(node: +node.Node, subscription: [?], notifier: bool, filter: string)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_delegate",
      "!doc": "Event delegation for the tap event. The delegated event will use a\nsupplied selector or filtering function to test if the event references at least one\nnode that should trigger the subscription callback.\n\nUsage:\n\n    node.delegate(tap, function (e) {\n        Y.log(li a inside node was tapped.);\n    }, li a);",
      "!data": {
@@ -13825,7 +14941,7 @@
      }
     },
     "onAvailable": {
-     "!type": "fn(id: string, fn: fn(), p_obj: +yui.Object, p_override: bool, checkContent: bool)",
+     "!type": "fn(id: string|[string], fn: fn(), p_obj: +Object, p_override: bool|+Object, checkContent: bool)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_onAvailable",
      "!doc": "Executes the supplied callback when the item with the supplied\nid is found.  This is meant to be used to execute behavior as\nsoon as possible as the page loads.  If you use this after the\ninitial page load it will poll for a fixed time for the element.\nThe number of times it will poll and the frequency are\nconfigurable.  By default it will poll for 10 seconds.\n\n<p>The callback is executed with a single parameter:\nthe custom object parameter, if provided.</p>",
      "!data": {
@@ -13833,7 +14949,7 @@
      }
     },
     "onContentReady": {
-     "!type": "fn(id: string, fn: fn(), obj: +yui.Object, override: bool)",
+     "!type": "fn(id: string, fn: fn(), obj: +Object, override: bool|+Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_onContentReady",
      "!doc": "Works the same way as onAvailable, but additionally checks the\nstate of sibling elements to determine if the content of the\navailable element is safe to modify.\n\n<p>The callback is executed with a single parameter:\nthe custom object parameter, if provided.</p>",
      "!data": {
@@ -13841,7 +14957,7 @@
      }
     },
     "attach": {
-     "!type": "fn(type: string, fn: fn(), el: string, context: +yui.Object, args: bool) -> +event_custom.EventHandle",
+     "!type": "fn(type: string, fn: fn(), el: string|+HTMLElement|[?]|+node.NodeList, context: +Object, args: bool|+Object) -> +event_custom.EventHandle",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_attach",
      "!doc": "Adds an event listener",
      "!data": {
@@ -13849,7 +14965,7 @@
      }
     },
     "detach": {
-     "!type": "fn(node: +node.Node, subscription: +yui.Array, notifier: bool)",
+     "!type": "fn(node: +node.Node, subscription: [?], notifier: bool)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_detach",
      "!doc": "Detaches all event subscriptions set up by the event-tap module",
      "!data": {
@@ -13881,7 +14997,7 @@
      }
     },
     "getListeners": {
-     "!type": "fn(el: +HTMLElement, type: string) -> +event_custom.CustomEvent",
+     "!type": "fn(el: +HTMLElement|string, type: string) -> +event_custom.CustomEvent",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_getListeners",
      "!doc": "Returns all listeners attached to the given element via addListener.\nOptionally, you can specify a specific type of event to return.",
      "!data": {
@@ -13897,7 +15013,7 @@
      }
     },
     "define": {
-     "!type": "fn(type: string, config: +config.defineConfig, force: bool) -> +event.SyntheticEvent",
+     "!type": "fn(type: string, config: +config.EventDefineConfig, force: bool) -> +event.SyntheticEvent",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_define",
      "!doc": "<p>Defines a new event in the DOM event system.  Implementers are\nresponsible for monitoring for a scenario whereby the event is fired.  A\nnotifier object is provided to the functions identified below.  When the\ncriteria defining the event are met, call notifier.fire( [args] ); to\nexecute event subscribers.</p>\n\n<p>The first parameter is the name of the event.  The second parameter is a\nconfiguration object which define the behavior of the event system when the\nnew event is subscribed to or detached from.  The methods that should be\ndefined in this configuration object are <code>on</code>,\n<code>detach</code>, <code>delegate</code>, and <code>detachDelegate</code>.\nYou are free to define any other methods or properties needed to define your\nevent.  Be aware, however, that since the object is used to subclass\nSyntheticEvent, you should avoid method names used by SyntheticEvent unless\nyour intention is to override the default behavior.</p>\n\n<p>This is a list of properties and methods that you can or should specify\nin the configuration object:</p>\n\n<dl>\n  <dt><code>on</code></dt>\n      <dd><code>function (node, subscription, notifier)</code> The\n      implementation logic for subscription.  Any special setup you need to\n      do to create the environment for the event being fired--E.g. native\n      DOM event subscriptions.  Store subscription related objects and\n      state on the <code>subscription</code> object.  When the\n      criteria have been met to fire the synthetic event, call\n      <code>notifier.fire(e)</code>.  See Notifiers <code>fire()</code>\n      method for details about what to pass as parameters.</dd>\n\n  <dt><code>detach</code></dt>\n      <dd><code>function (node, subscription, notifier)</code> The\n      implementation logic for cleaning up a detached subscription. E.g.\n      detach any DOM subscriptions added in <code>on</code>.</dd>\n\n  <dt><code>delegate</code></dt>\n      <dd><code>function (node, subscription, notifier, filter)</code> The\n      implementation logic for subscription via <code>Y.delegate</code> or\n      <code>node.delegate</code>.  The filter is typically either a selector\n      string or a function.  You can use\n      <code>Y.delegate.compileFilter(selectorString)</code> to create a\n      filter function from a selector string if needed.  The filter function\n      expects an event object as input and should output either null, a\n      matching Node, or an array of matching Nodes.  Otherwise, this acts\n      like <code>on</code> DOM event subscriptions.  Store subscription\n      related objects and information on the <code>subscription</code>\n      object.  When the criteria have been met to fire the synthetic event,\n      call <code>notifier.fire(e)</code> as noted above.</dd>\n\n  <dt><code>detachDelegate</code></dt>\n      <dd><code>function (node, subscription, notifier)</code> The\n      implementation logic for cleaning up a detached delegate subscription.\n      E.g. detach any DOM delegate subscriptions added in\n      <code>delegate</code>.</dd>\n\n  <dt><code>publishConfig</code></dt>\n      <dd>(Object) The configuration object that will be used to instantiate\n      the underlying CustomEvent. See Notifiers <code>fire</code> method\n      for details.</dd>\n\n  <dt><code>processArgs</code></dt\n      <dd>\n         <p><code>function (argArray, fromDelegate)</code> Optional method\n         to extract any additional arguments from the subscription\n         signature.  Using this allows <code>on</code> or\n         <code>delegate</code> signatures like\n         <code>node.on(&quot;hover&quot;, overCallback,\n         outCallback)</code>.</p>\n         <p>When processing an atypical argument signature, make sure the\n         args array is returned to the normal signature before returning\n         from the function.  For example, in the &quot;hover&quot; example\n         above, the <code>outCallback</code> needs to be <code>splice</code>d\n         out of the array.  The expected signature of the args array for\n         <code>on()</code> subscriptions is:</p>\n         <pre>\n             <code>[type, callback, target, contextOverride, argN...]</code>\n         </pre>\n         <p>And for <code>delegate()</code>:</p>\n         <pre>\n             <code>[type, callback, target, filter, contextOverride, argN...]</code>\n         </pre>\n         <p>where <code>target</code> is the node the event is being\n         subscribed for.  You can see these signatures documented for\n         <code>Y.on()</code> and <code>Y.delegate()</code> respectively.</p>\n         <p>Whatever gets returned from the function will be stored on the\n         <code>subscription</code> object under\n         <code>subscription._extra</code>.</p></dd>\n  <dt><code>subMatch</code></dt>\n      <dd>\n          <p><code>function (sub, args)</code>  Compares a set of\n          subscription arguments against a Subscription object to determine\n          if they match.  The default implementation compares the callback\n          function against the second argument passed to\n          <code>Y.on(...)</code> or <code>node.detach(...)</code> etc.</p>\n      </dd>\n</dl>",
      "!data": {
@@ -13905,7 +15021,7 @@
      }
     },
     "on": {
-     "!type": "fn(node: +node.Node, subscription: +yui.Array, notifier: bool)",
+     "!type": "fn(node: +node.Node, subscription: [?], notifier: bool)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_on",
      "!doc": "This function should set up the node that will eventually fire the event.\n\nUsage:\n\n    node.on(tap, function (e) {\n        Y.log(the node was tapped on);\n    });",
      "!data": {
@@ -13913,7 +15029,7 @@
      }
     },
     "detachDelegate": {
-     "!type": "fn(node: +node.Node, subscription: +yui.Array, notifier: bool)",
+     "!type": "fn(node: +node.Node, subscription: [?], notifier: bool)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_detachDelegate",
      "!doc": "Detaches the delegated event subscriptions set up by the event-tap module.\nOnly used if you use node.delegate(...) instead of node.on(...);",
      "!data": {
@@ -13931,7 +15047,7 @@
     },
     "prototype": {
      "delegate": {
-      "!type": "fn(type: string, fn: fn(), el: string, filter: string, context: ?, args: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), el: string|+node, filter: string, context: ?, args: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_delegate",
       "!doc": "Sets up event delegation on a container element.  The delegated event\nwill use a supplied filter to test if the callback should be executed.\nThis filter can be either a selector string or a function that returns\na Node to use as the currentTarget for the event.\n\nThe event object for the delegated event is supplied to the callback\nfunction.  It is modified slightly in order to support all properties\nthat may be needed for event delegation.  currentTarget is set to\nthe element that matched the selector string filter or the Node returned\nfrom the filter function.  container is set to the element that the\nlistener is delegated from (this normally would be the currentTarget).\n\nFilter functions will be called with the arguments that would be passed to\nthe callback function, including the event object as the first parameter.\nThe function should return false (or a falsey value) if the success criteria\narent met, and the Node to use as the events currentTarget and this\nobject if they are.",
       "!data": {
@@ -14138,7 +15254,7 @@
      }
     },
     "_GESTURE_MAP": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/DOMEventFacade.html#property__GESTURE_MAP",
      "!doc": "A object literal with keys \"start\", \"end\", and \"move\". The value for each key is a\nstring representing the event for that environment. For touch environments, the respective\nvalues are \"touchstart\", \"touchend\" and \"touchmove\". Mouse and MSPointer environments are also\nsupported via feature detection.",
      "!data": {
@@ -14169,11 +15285,11 @@
     }
    },
    "SyntheticEvent": {
-    "!type": "fn(cfg: +yui.Object)",
+    "!type": "fn(cfg: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/SyntheticEvent.html",
     "prototype": {
      "processArgs": {
-      "!type": "fn(args: +yui.Array, delegate: bool) -> ?",
+      "!type": "fn(args: [?], delegate: bool) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SyntheticEvent.html#method_processArgs",
       "!doc": "<p>Implementers MAY provide this method definition.</p>\n\n<p>Implement this function if the event supports a different\nsubscription signature.  This function is used by both\n<code>on()</code> and <code>delegate()</code>.  The second parameter\nindicates that the event is being subscribed via\n<code>delegate()</code>.</p>\n\n<p>Implementations must remove extra arguments from the args list\nbefore returning.  The required args for <code>on()</code>\nsubscriptions are</p>\n<pre><code>[type, callback, target, context, argN...]</code></pre>\n\n<p>The required args for <code>delegate()</code>\nsubscriptions are</p>\n\n<pre><code>[type, callback, target, filter, context, argN...]</code></pre>\n\n<p>The return value from this function will be stored on the\nsubscription in the _extra property for reference elsewhere.</p>",
       "!data": {
@@ -14229,7 +15345,7 @@
       }
      },
      "getSubs": {
-      "!type": "fn(node: +node.Node, args: +yui.Array, filter: fn(), first: bool) -> [+event_custom.EventHandle]",
+      "!type": "fn(node: +node.Node, args: [?], filter: fn(), first: bool) -> [+event_custom.EventHandle]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SyntheticEvent.html#method_getSubs",
       "!doc": "Returns the detach handles of subscriptions on a node that satisfy a\nsearch/filter function.  By default, the filter used is the\n<code>subMatch</code> method.",
       "!data": {
@@ -14237,7 +15353,7 @@
       }
      },
      "subMatch": {
-      "!type": "fn(sub: +Subscription, args: +yui.Array) -> bool",
+      "!type": "fn(sub: +Subscription, args: [?]) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SyntheticEvent.html#method_subMatch",
       "!doc": "<p>Implementers MAY override this to define what constitutes a\n&quot;same&quot; subscription.  Override implementations should\nconsider the lack of a comparator as a match, so calling\n<code>getSubs()</code> with no arguments will return all subs.</p>\n\n<p>Compares a set of subscription arguments against a Subscription\nobject to determine if they match.  The default implementation\ncompares the callback function against the second argument passed to\n<code>Y.on(...)</code> or <code>node.detach(...)</code> etc.</p>",
       "!data": {
@@ -14257,7 +15373,7 @@
     "prototype": {
      "!proto": "base.Base.prototype",
      "startUpload": {
-      "!type": "fn(url: string, parameters: +yui.Object, fileFieldName: string)",
+      "!type": "fn(url: string, parameters: +Object, fileFieldName: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/FileFlash.html#method_startUpload",
       "!doc": "Starts the upload of a specific file."
      },
@@ -14279,7 +15395,7 @@
     "prototype": {
      "!proto": "base.Base.prototype",
      "startUpload": {
-      "!type": "fn(url: string, parameters: +yui.Object, fileFieldName: string)",
+      "!type": "fn(url: string, parameters: +Object, fileFieldName: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/FileHTML5.html#method_startUpload",
       "!doc": "Starts the upload of a specific file."
      },
@@ -14312,33 +15428,33 @@
     },
     "prototype": {
      "rotate": {
-      "!type": "fn(cb: fn(), center: +yui.Array, startRadius: number, endRadius: number, duration: number, start: number, rotation: number)",
+      "!type": "fn(cb: fn(), center: [?], startRadius: number, endRadius: number, duration: number, start: number, rotation: number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_rotate",
       "!doc": "The \"rotate\" and \"pinch\" methods are essencially same with the exact same\narguments. Only difference is the required parameters. The rotate method\nrequires \"rotation\" parameter while the pinch method requires \"startRadius\"\nand \"endRadius\" parameters."
      },
      "pinch": {
-      "!type": "fn(cb: fn(), center: +yui.Array, startRadius: number, endRadius: number, duration: number, start: number, rotation: number)",
+      "!type": "fn(cb: fn(), center: [?], startRadius: number, endRadius: number, duration: number, start: number, rotation: number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_pinch",
       "!doc": "The \"rotate\" and \"pinch\" methods are essencially same with the exact same\narguments. Only difference is the required parameters. The rotate method\nrequires \"rotation\" parameter while the pinch method requires \"startRadius\"\nand \"endRadius\" parameters.\n\nThe \"pinch\" gesture can simulate various 2 finger gestures such as pinch,\nspread and/or rotation. The \"startRadius\" and \"endRadius\" are required.\nIf endRadius is larger than startRadius, it becomes a spread gesture\notherwise a pinch gesture."
      },
      "tap": {
-      "!type": "fn(cb: fn(), point: +yui.Array, times: number, hold: number, delay: number)",
+      "!type": "fn(cb: fn(), point: [?], times: number, hold: number, delay: number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_tap",
       "!doc": "The \"tap\" gesture can be used for various single touch point gestures\nsuch as single tap, N number of taps, long press. The default is a single\ntap."
      },
      "flick": {
-      "!type": "fn(cb: fn(), point: +yui.Array, axis: string, distance: number, duration: number)",
+      "!type": "fn(cb: fn(), point: [?], axis: string, distance: number, duration: number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_flick",
       "!doc": "The \"flick\" gesture is a specialized \"move\" that has some velocity\nand the movement always runs either x or y axis. The velocity is calculated\nwith \"distance\" and \"duration\" arguments. If the calculated velocity is\nbelow than the minimum velocity, the given duration will be ignored and\nnew duration will be created to make a valid flick gesture."
      },
      "move": {
-      "!type": "fn(cb: fn(), path: +yui.Object, duration: number)",
+      "!type": "fn(cb: fn(), path: +Object, duration: number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_move",
       "!doc": "The \"move\" gesture simulate the movement of any direction between\nthe straight line of start and end point for the given duration.\nThe path argument is an object with \"point\", \"xdist\" and \"ydist\" properties.\nThe \"point\" property is an array with x and y coordinations(relative to the\ntop left corner of the target node element) while \"xdist\" and \"ydist\"\nproperties are used for the distance along the x and y axis. A negative\ndistance number can be used to drag either left or up direction.\n\nIf no arguments are given, it will simulate the default move, which\nis moving 200 pixels from the center of the element to the positive X-axis\ndirection for 1 sec."
      }
     },
     "simulateGesture": {
-     "!type": "fn(node: +HTMLElement, name: string, options?: +yui.Object, cb?: fn(err: +Error))",
+     "!type": "fn(node: +HTMLElement|+node.Node, name: string, options?: +config.EventSimulateGestureConfig, cb?: fn(err: +Error))",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Event.html#method_simulateGesture",
      "!doc": "Simulates the higher user level gesture of the given name on a target.\nThis method generates a set of low level touch events(Apple specific gesture\nevents as well for the iOS platforms) asynchronously. Note that gesture\nsimulation is relying on `Y.Event.simulate()` method to generate\nthe touch events under the hood. The `Y.Event.simulate()` method\nitself is a synchronous method.\n\nUsers are suggested to use `Node.simulateGesture()` method which\nbasically calls this method internally. Supported gestures are `tap`,\n`doubletap`, `press`, `move`, `flick`, `pinch` and `rotate`.\n\nThe `pinch` gesture is used to simulate the pinching and spreading of two\nfingers. During a pinch simulation, rotation is also possible. Essentially\n`pinch` and `rotate` simulations share the same base implementation to allow\nboth pinching and rotation at the same time. The only difference is `pinch`\nrequires `start` and `end` option properties while `rotate` requires `rotation`\noption property.\n\nThe `pinch` and `rotate` gestures can be described as placing 2 fingers along a\ncircle. Pinching and spreading can be described by start and end circles while\nrotation occurs on a single circle. If the radius of the start circle is greater\nthan the end circle, the gesture becomes a pinch, otherwise it is a spread spread."
     }
@@ -14353,7 +15469,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/GetNodeJS.html",
     "prototype": {
      "js": {
-      "!type": "fn(s: +yui.Array, options: +yui.Object)",
+      "!type": "fn(s: [?]|string, options: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/GetNodeJS.html#method_js",
       "!doc": "Override for Get.script for loading local or remote YUI modules."
      },
@@ -14370,17 +15486,17 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html",
     "cssOptions": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html#property_cssOptions",
      "!doc": "Default options for CSS requests. Options specified here will override\nglobal defaults for CSS requests.\n\nSee the `options` property for all available options."
     },
     "jsOptions": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html#property_jsOptions",
      "!doc": "Default options for JS requests. Options specified here will override global\ndefaults for JS requests.\n\nSee the `options` property for all available options."
     },
     "options": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html#property_options",
      "!doc": "Default options to use for all requests.\n\nNote that while all available options are documented here for ease of\ndiscovery, some options (like callback functions) only make sense at the\ntransaction level.\n\nCallback functions specified via the options object or the `options`\nparameter of the `css()`, `js()`, or `load()` methods will receive the\ntransaction object as a parameter. See `Y.Get.Transaction` for details on\nthe properties and methods available on transactions."
     },
@@ -14390,17 +15506,17 @@
      "!doc": "Aborts the specified transaction.\n\nThis will cause the transactions `onFailure` callback to be called and\nwill prevent any new script and link nodes from being added to the document,\nbut any resources that have already been requested will continue loading\n(theres no safe way to prevent this, unfortunately).\n\n*Note:* This method is deprecated as of 3.5.0, and will be removed in a\nfuture version of YUI. Use the transaction-level `abort()` method instead."
     },
     "css": {
-     "!type": "fn(urls: string, options?: +yui.Object, callback?: fn(err: +yui.Array, transaction: +get.Get.Transaction)) -> +get.Get.Transaction",
+     "!type": "fn(urls: string|+Object|[?], options?: +Object, callback?: fn(err: [?], transaction: +get.Get.Transaction)) -> +get.Get.Transaction",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html#method_css",
      "!doc": "Loads one or more CSS files.\n\nThe _urls_ parameter may be provided as a URL string, a request object,\nor an array of URL strings and/or request objects.\n\nA request object is just an object that contains a `url` property and zero\nor more options that should apply specifically to that request.\nRequest-specific options take priority over transaction-level options and\ndefault options.\n\nURLs may be relative or absolute, and do not have to have the same origin\nas the current page.\n\nThe `options` parameter may be omitted completely and a callback passed in\nits place, if desired."
     },
     "js": {
-     "!type": "fn(urls: string, options?: +yui.Object, callback?: fn(err: +yui.Array, transaction: +get.Get.Transaction)) -> +get.Get.Transaction",
+     "!type": "fn(urls: string|+Object|[?], options?: +Object, callback?: fn(err: [?], transaction: +get.Get.Transaction)) -> +get.Get.Transaction",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html#method_js",
      "!doc": "Loads one or more JavaScript resources.\n\nThe _urls_ parameter may be provided as a URL string, a request object,\nor an array of URL strings and/or request objects.\n\nA request object is just an object that contains a `url` property and zero\nor more options that should apply specifically to that request.\nRequest-specific options take priority over transaction-level options and\ndefault options.\n\nURLs may be relative or absolute, and do not have to have the same origin\nas the current page.\n\nThe `options` parameter may be omitted completely and a callback passed in\nits place, if desired.\n\nScripts will be executed in the order theyre specified unless the `async`\noption is `true`, in which case theyll be loaded in parallel and executed\nin whatever order they finish loading."
     },
     "load": {
-     "!type": "fn(urls: string, options?: +yui.Object, callback?: fn(), err: +yui.Array, Transaction: +get.Get.Transaction) -> +get.Get.Transaction",
+     "!type": "fn(urls: string|+Object|[?], options?: +Object, callback?: fn(), err: [?], Transaction: +get.Get.Transaction) -> +get.Get.Transaction",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.html#method_load",
      "!doc": "Loads one or more CSS and/or JavaScript resources in the same transaction.\n\nUse this method when you want to load both CSS and JavaScript in a single\ntransaction and be notified when all requested URLs have finished loading,\nregardless of type.\n\nBehavior and options are the same as for the `css()` and `js()` methods. If\na resource type isnt specified in per-request options or transaction-level\noptions, Get will guess the file type based on the URLs extension (`.css`\nor `.js`, with or without a following query string). If the file type cant\nbe guessed from the URL, a warning will be logged and Get will assume the\nURL is a JavaScript resource."
     },
@@ -14414,12 +15530,12 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.Transaction.html",
      "prototype": {
       "data": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.Transaction.html#property_data",
        "!doc": "Arbitrary data object associated with this transaction.\n\nThis object comes from the options passed to `Get.css()`, `Get.js()`, or\n`Get.load()`, and will be `undefined` if no data object was specified."
       },
       "errors": {
-       "!type": "[+yui.Object]",
+       "!type": "[+Object]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.Transaction.html#property_errors",
        "!doc": "Array of errors that have occurred during this transaction, if any. Each error\nobject has the following properties:\n`errors.error`: Error message.\n`errors.request`: Request object related to the error."
       },
@@ -14434,12 +15550,12 @@
        "!doc": "HTMLElement nodes (native ones, not YUI Node instances) that have been inserted\nduring the current transaction."
       },
       "options": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.Transaction.html#property_options",
        "!doc": "Options associated with this transaction.\n\nSee `Get.options` for the full list of available options."
       },
       "requests": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Get.Transaction.html#property_requests",
        "!doc": "Request objects contained in this transaction. Each request object represents\none CSS or JS URL that will be (or has been) requested and loaded into the page."
       },
@@ -14586,12 +15702,12 @@
       "!doc": "Unique id for class instance."
      },
      "shapes": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasGraphic.html#config_shapes",
       "!doc": "Key value pairs in which a shape instance is associated with its id."
      },
      "contentBounds": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasGraphic.html#config_contentBounds",
       "!doc": "Object containing size and coordinate data for the content of a Graphic in relation to the graphic instances position."
      },
@@ -14611,7 +15727,7 @@
       "!doc": "Indicates the height of the `Graphic`."
      },
      "autoSize": {
-      "!type": "bool",
+      "!type": "bool|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasGraphic.html#config_autoSize",
       "!doc": "Determines the sizing of the Graphic.\n\n<dl>\n    <dt>sizeContentToGraphic</dt><dd>The Graphics width and height attributes are, either explicitly set through the\n    <code>width</code> and <code>height</code> attributes or are determined by the dimensions of the parent element. The\n    content contained in the Graphic will be sized to fit with in the Graphic instances dimensions. When using this\n    setting, the <code>preserveAspectRatio</code> attribute will determine how the contents are sized.</dd>\n    <dt>sizeGraphicToContent</dt><dd>(Also accepts a value of true) The Graphics width and height are determined by the\n    size and positioning of the content.</dd>\n    <dt>false</dt><dd>The Graphics width and height attributes are, either explicitly set through the <code>width</code>\n    and <code>height</code> attributes or are determined by the dimensions of the parent element. The contents of the\n    Graphic instance are not affected by this setting.</dd>\n</dl>"
      },
@@ -14641,7 +15757,7 @@
       "!doc": "Indicates whether the `Graphic` and its children are visible."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasGraphic.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -14656,12 +15772,12 @@
       "!doc": "Removes all nodes."
      },
      "addShape": {
-      "!type": "fn(cfg: +yui.Object) -> ?",
+      "!type": "fn(cfg: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasGraphic.html#method_addShape",
       "!doc": "Generates a shape instance by type."
      },
      "removeShape": {
-      "!type": "fn(shape: +graphics.Shape)",
+      "!type": "fn(shape: +graphics.Shape|string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasGraphic.html#method_removeShape",
       "!doc": "Removes a shape instance from from the graphic instance."
      },
@@ -14754,12 +15870,12 @@
       "!doc": "Gets the current position of the node in page coordinates."
      },
      "setXY": {
-      "!type": "fn(Contains: +yui.Array)",
+      "!type": "fn(Contains: [?])",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#method_setXY",
       "!doc": "Set the position of the shape in page coordinates, regardless of how the node is positioned."
      },
      "contains": {
-      "!type": "fn(needle: +graphics.CanvasShape) -> ?",
+      "!type": "fn(needle: +graphics.CanvasShape|+HTMLElement) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#method_contains",
       "!doc": "Determines whether the node is an ancestor of another HTML element in the DOM hierarchy."
      },
@@ -14769,12 +15885,12 @@
       "!doc": "Test if the supplied node matches the supplied selector."
      },
      "compareTo": {
-      "!type": "fn(refNode: +HTMLElement) -> bool",
+      "!type": "fn(refNode: +HTMLElement|+node.Node) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#method_compareTo",
       "!doc": "Compares nodes to determine if they match.\nNode instances can be compared to each other and/or HTMLElements."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -14834,7 +15950,7 @@
       "!doc": "Destroys the shape instance."
      },
      "transformOrigin": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#config_transformOrigin",
       "!doc": "An array of x, y values which indicates the transformOrigin in which to rotate the shape. Valid values range between 0 and 1 representing a\nfraction of the shapes corresponding bounding box dimension. The default value is [0.5, 0.5]."
      },
@@ -14879,12 +15995,12 @@
       "!doc": "Indicates whether the shape is visible."
      },
      "fill": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#config_fill",
       "!doc": "Contains information about the fill of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the fill.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1.</dd>\n     <dt>type</dt><dd>Type of fill.\n         <dl>\n             <dt>solid</dt><dd>Solid single color fill. (default)</dd>\n             <dt>linear</dt><dd>Linear gradient fill.</dd>\n             <dt>radial</dt><dd>Radial gradient fill.</dd>\n         </dl>\n     </dd>\n </dl>\n <p>If a `linear` or `radial` is specified as the fill type. The following additional property is used:\n <dl>\n     <dt>stops</dt><dd>An array of objects containing the following properties:\n         <dl>\n             <dt>color</dt><dd>The color of the stop.</dd>\n             <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stop. The default value is 1.\n             Note: No effect for IE 6 - 8</dd>\n             <dt>offset</dt><dd>Number between 0 and 1 indicating where the color stop is positioned.</dd>\n         </dl>\n     </dd>\n     <p>Linear gradients also have the following property:</p>\n     <dt>rotation</dt><dd>Linear gradients flow left to right by default. The rotation property allows you to change the\n     flow by rotation. (e.g. A rotation of 180 would make the gradient pain from right to left.)</dd>\n     <p>Radial gradients have the following additional properties:</p>\n     <dt>r</dt><dd>Radius of the gradient circle.</dd>\n     <dt>fx</dt><dd>Focal point x-coordinate of the gradient.</dd>\n     <dt>fy</dt><dd>Focal point y-coordinate of the gradient.</dd>\n </dl>\n <p>The corresponding `SVGShape` class implements the following additional properties.</p>\n <dl>\n     <dt>cx</dt><dd>\n         <p>The x-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and\n         `VMLShape` classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n     <dt>cy</dt><dd>\n         <p>The y-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and `VMLShape`\n         classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n </dl>\n <p>These properties are not currently implemented in `CanvasShape` or `VMLShape`.</p>"
      },
      "stroke": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CanvasShape.html#config_stroke",
       "!doc": "Contains information about the stroke of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the stroke.</dd>\n     <dt>weight</dt><dd>Number that indicates the width of the stroke.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stroke. The default value is 1.</dd>\n     <dt>dashstyle</dt>Indicates whether to draw a dashed stroke. When set to \"none\", a solid stroke is drawn. When set\n     to an array, the first index indicates the length of the dash. The second index indicates the length of gap.\n     <dt>linecap</dt><dd>Specifies the linecap for the stroke. The following values can be specified:\n         <dl>\n             <dt>butt (default)</dt><dd>Specifies a butt linecap.</dd>\n             <dt>square</dt><dd>Specifies a sqare linecap.</dd>\n             <dt>round</dt><dd>Specifies a round linecap.</dd>\n         </dl>\n     </dd>\n     <dt>linejoin</dt><dd>Specifies a linejoin for the stroke. The following values can be specified:\n         <dl>\n             <dt>round (default)</dt><dd>Specifies that the linejoin will be round.</dd>\n             <dt>bevel</dt><dd>Specifies a bevel for the linejoin.</dd>\n             <dt>miter limit</dt><dd>An integer specifying the miter limit of a miter linejoin. If you want to specify a linejoin\n             of miter, you simply specify the limit as opposed to having separate miter and miter limit values.</dd>\n         </dl>\n     </dd>\n </dl>"
      },
@@ -14905,7 +16021,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/CircleGroup.html",
     "prototype": {
      "drawShape": {
-      "!type": "fn(cfg: +yui.Object)",
+      "!type": "fn(cfg: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/CircleGroup.html#method_drawShape",
       "!doc": "Algorithm for drawing shape.",
       "!data": {
@@ -14919,7 +16035,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeLite.html",
     "prototype": {
      "addAttrs": {
-      "!type": "fn(cfg: +yui.Object)",
+      "!type": "fn(cfg: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeLite.html#method_addAttrs",
       "!doc": "Initializes the attributes for a shape. If an attribute config is passed into the constructor of the host,\nthe initial values will be overwritten."
      },
@@ -14929,7 +16045,7 @@
       "!doc": "For a given item, returns the value of the property requested, or undefined if not found."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/AttributeLite.html#method_set",
       "!doc": "Sets the value of an attribute."
      }
@@ -14997,7 +16113,7 @@
     }
    },
    "Shape": {
-    "!type": "fn(cfg: +yui.Object)",
+    "!type": "fn(cfg: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html",
     "prototype": {
      "addClass": {
@@ -15016,17 +16132,17 @@
       "!doc": "Gets the current position of the node in page coordinates."
      },
      "setXY": {
-      "!type": "fn(Contains: +yui.Array)",
+      "!type": "fn(Contains: [?])",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#method_setXY",
       "!doc": "Set the position of the shape in page coordinates, regardless of how the node is positioned."
      },
      "contains": {
-      "!type": "fn(needle: +graphics.Shape) -> ?",
+      "!type": "fn(needle: +graphics.Shape|+HTMLElement) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#method_contains",
       "!doc": "Determines whether the node is an ancestor of another HTML element in the DOM hierarchy."
      },
      "compareTo": {
-      "!type": "fn(refNode: +HTMLElement) -> bool",
+      "!type": "fn(refNode: +HTMLElement|+node.Node) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#method_compareTo",
       "!doc": "Compares nodes to determine if they match.\nNode instances can be compared to each other and/or HTMLElements."
      },
@@ -15036,7 +16152,7 @@
       "!doc": "Test if the supplied node matches the supplied selector."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -15091,7 +16207,7 @@
       "!doc": "Destroys the instance."
      },
      "transformOrigin": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#config_transformOrigin",
       "!doc": "An array of x, y values which indicates the transformOrigin in which to rotate the shape. Valid values range between 0 and 1 representing a\nfraction of the shapes corresponding bounding box dimension. The default value is [0.5, 0.5]."
      },
@@ -15131,12 +16247,12 @@
       "!doc": "Indicates whether the shape is visible."
      },
      "fill": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#config_fill",
       "!doc": "Contains information about the fill of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the fill.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1.</dd>\n     <dt>type</dt><dd>Type of fill.\n         <dl>\n             <dt>solid</dt><dd>Solid single color fill. (default)</dd>\n             <dt>linear</dt><dd>Linear gradient fill.</dd>\n             <dt>radial</dt><dd>Radial gradient fill.</dd>\n         </dl>\n     </dd>\n </dl>\n <p>If a `linear` or `radial` is specified as the fill type. The following additional property is used:\n <dl>\n     <dt>stops</dt><dd>An array of objects containing the following properties:\n         <dl>\n             <dt>color</dt><dd>The color of the stop.</dd>\n             <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stop. The default value is 1.\n             Note: No effect for IE 6 - 8</dd>\n             <dt>offset</dt><dd>Number between 0 and 1 indicating where the color stop is positioned.</dd>\n         </dl>\n     </dd>\n     <p>Linear gradients also have the following property:</p>\n     <dt>rotation</dt><dd>Linear gradients flow left to right by default. The rotation property allows you to change the\n     flow by rotation. (e.g. A rotation of 180 would make the gradient pain from right to left.)</dd>\n     <p>Radial gradients have the following additional properties:</p>\n     <dt>r</dt><dd>Radius of the gradient circle.</dd>\n     <dt>fx</dt><dd>Focal point x-coordinate of the gradient.</dd>\n     <dt>fy</dt><dd>Focal point y-coordinate of the gradient.</dd>\n     <dt>cx</dt><dd>\n         <p>The x-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and\n         `VMLShape` classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n     <dt>cy</dt><dd>\n         <p>The y-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and `VMLShape`\n         classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n </dl>"
      },
      "stroke": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Shape.html#config_stroke",
       "!doc": "Contains information about the stroke of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the stroke.</dd>\n     <dt>weight</dt><dd>Number that indicates the width of the stroke.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stroke. The default value is 1.</dd>\n     <dt>dashstyle</dt>Indicates whether to draw a dashed stroke. When set to \"none\", a solid stroke is drawn. When set\n     to an array, the first index indicates the length of the dash. The second index indicates the length of gap.\n     <dt>linecap</dt><dd>Specifies the linecap for the stroke. The following values can be specified:\n         <dl>\n             <dt>butt (default)</dt><dd>Specifies a butt linecap.</dd>\n             <dt>square</dt><dd>Specifies a sqare linecap.</dd>\n             <dt>round</dt><dd>Specifies a round linecap.</dd>\n         </dl>\n     </dd>\n     <dt>linejoin</dt><dd>Specifies a linejoin for the stroke. The following values can be specified:\n         <dl>\n             <dt>round (default)</dt><dd>Specifies that the linejoin will be round.</dd>\n             <dt>bevel</dt><dd>Specifies a bevel for the linejoin.</dd>\n             <dt>miter limit</dt><dd>An integer specifying the miter limit of a miter linejoin. If you want to specify a linejoin\n             of miter, you simply specify the limit as opposed to having separate miter and miter limit values.</dd>\n         </dl>\n     </dd>\n </dl>"
      },
@@ -15191,7 +16307,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html",
     "prototype": {
      "render": {
-      "!type": "fn(parentNode: +node.Node)",
+      "!type": "fn(parentNode: +node.Node|string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html#method_render",
       "!doc": "Adds the graphics node to the dom."
      },
@@ -15201,12 +16317,12 @@
       "!doc": "Unique id for class instance."
      },
      "shapes": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html#config_shapes",
       "!doc": "Key value pairs in which a shape instance is associated with its id."
      },
      "contentBounds": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html#config_contentBounds",
       "!doc": "Object containing size and coordinate data for the content of a Graphic in relation to the coordSpace node."
      },
@@ -15226,7 +16342,7 @@
       "!doc": "Indicates the height of the `Graphic`."
      },
      "autoSize": {
-      "!type": "bool",
+      "!type": "bool|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html#config_autoSize",
       "!doc": "Determines the sizing of the Graphic.\n\n<dl>\n    <dt>sizeContentToGraphic</dt><dd>The Graphics width and height attributes are, either explicitly set through the\n    <code>width</code> and <code>height</code> attributes or are determined by the dimensions of the parent element. The\n    content contained in the Graphic will be sized to fit with in the Graphic instances dimensions. When using this\n    setting, the <code>preserveAspectRatio</code> attribute will determine how the contents are sized.</dd>\n    <dt>sizeGraphicToContent</dt><dd>(Also accepts a value of true) The Graphics width and height are determined by the\n    size and positioning of the content.</dd>\n    <dt>false</dt><dd>The Graphics width and height attributes are, either explicitly set through the <code>width</code>\n    and <code>height</code> attributes or are determined by the dimensions of the parent element. The contents of the\n    Graphic instance are not affected by this setting.</dd>\n</dl>"
      },
@@ -15266,12 +16382,12 @@
       "!doc": "Removes all nodes."
      },
      "addShape": {
-      "!type": "fn(cfg: +yui.Object) -> ?",
+      "!type": "fn(cfg: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html#method_addShape",
       "!doc": "<p>Generates a shape instance by type. The method accepts an object that contains the shapes\ntype and attributes to be customized. For example, the code below would create a rectangle:</p>\n\n           var myRect = myGraphic.addShape({\n               type: \"rect\",\n               width: 40,\n               height: 30,\n               fill: {\n                   color: \"#9aa\"\n               },\n               stroke: {\n                   weight: 1,\n                   color: \"#000\"\n               }\n           });\n\n<p>The `Graphics` module includes a few basic shapes. More information on their creation\ncan be found in each shapes documentation:\n\n <ul>\n     <li><a href=\"Circle.html\">`Circle`</a></li>\n     <li><a href=\"Ellipse.html\">`Ellipse`</a></li>\n     <li><a href=\"Rect.html\">`Rect`</a></li>\n     <li><a href=\"Path.html\">`Path`</a></li>\n </ul>\n\n The `Graphics` module also allows for the creation of custom shapes. If a custom shape\n has been created, it can be instantiated with the `addShape` method as well. The attributes,\n required and optional, would need to be defined in the custom shape.\n\n           var myCustomShape = myGraphic.addShape({\n               type: Y.MyCustomShape,\n               width: 50,\n               height: 50,\n               fill: {\n                   color: \"#9aa\"\n               },\n               stroke: {\n                   weight: 1,\n                   color: \"#000\"\n               }\n           });"
      },
      "removeShape": {
-      "!type": "fn(shape: +graphics.Shape)",
+      "!type": "fn(shape: +graphics.Shape|string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Graphic.html#method_removeShape",
       "!doc": "Removes a shape instance from from the graphic instance."
      },
@@ -15410,12 +16526,12 @@
       "!doc": "Unique id for class instance."
      },
      "shapes": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGGraphic.html#config_shapes",
       "!doc": "Key value pairs in which a shape instance is associated with its id."
      },
      "contentBounds": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGGraphic.html#config_contentBounds",
       "!doc": "Object containing size and coordinate data for the content of a Graphic in relation to the coordSpace node."
      },
@@ -15435,7 +16551,7 @@
       "!doc": "Indicates the height of the `Graphic`."
      },
      "autoSize": {
-      "!type": "bool",
+      "!type": "bool|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGGraphic.html#config_autoSize",
       "!doc": "Determines the sizing of the Graphic.\n\n<dl>\n    <dt>sizeContentToGraphic</dt><dd>The Graphics width and height attributes are, either explicitly set through the\n    <code>width</code> and <code>height</code> attributes or are determined by the dimensions of the parent element. The\n    content contained in the Graphic will be sized to fit with in the Graphic instances dimensions. When using this\n    setting, the <code>preserveAspectRatio</code> attribute will determine how the contents are sized.</dd>\n    <dt>sizeGraphicToContent</dt><dd>(Also accepts a value of true) The Graphics width and height are determined by the\n    size and positioning of the content.</dd>\n    <dt>false</dt><dd>The Graphics width and height attributes are, either explicitly set through the <code>width</code>\n    and <code>height</code> attributes or are determined by the dimensions of the parent element. The contents of the\n    Graphic instance are not affected by this setting.</dd>\n</dl>"
      },
@@ -15460,7 +16576,7 @@
       "!doc": "Indicates the y-coordinate for the instance."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGGraphic.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -15475,12 +16591,12 @@
       "!doc": "Removes all nodes."
      },
      "addShape": {
-      "!type": "fn(cfg: +yui.Object) -> ?",
+      "!type": "fn(cfg: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGGraphic.html#method_addShape",
       "!doc": "Generates a shape instance by type."
      },
      "removeShape": {
-      "!type": "fn(shape: +graphics.Shape)",
+      "!type": "fn(shape: +graphics.Shape|string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGGraphic.html#method_removeShape",
       "!doc": "Removes a shape instance from from the graphic instance."
      },
@@ -15568,17 +16684,17 @@
       "!doc": "Gets the current position of the node in page coordinates."
      },
      "setXY": {
-      "!type": "fn(Contains: +yui.Array)",
+      "!type": "fn(Contains: [?])",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#method_setXY",
       "!doc": "Set the position of the shape in page coordinates, regardless of how the node is positioned."
      },
      "contains": {
-      "!type": "fn(needle: +graphics.SVGShape) -> ?",
+      "!type": "fn(needle: +graphics.SVGShape|+HTMLElement) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#method_contains",
       "!doc": "Determines whether the node is an ancestor of another HTML element in the DOM hierarchy."
      },
      "compareTo": {
-      "!type": "fn(refNode: +HTMLElement) -> bool",
+      "!type": "fn(refNode: +HTMLElement|+node.Node) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#method_compareTo",
       "!doc": "Compares nodes to determine if they match.\nNode instances can be compared to each other and/or HTMLElements."
      },
@@ -15588,7 +16704,7 @@
       "!doc": "Test if the supplied node matches the supplied selector."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -15648,7 +16764,7 @@
       "!doc": "Destroys the shape instance."
      },
      "transformOrigin": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#config_transformOrigin",
       "!doc": "An array of x, y values which indicates the transformOrigin in which to rotate the shape. Valid values range between 0 and 1 representing a\nfraction of the shapes corresponding bounding box dimension. The default value is [0.5, 0.5]."
      },
@@ -15693,12 +16809,12 @@
       "!doc": "Only implemented in SVG implementation.\nApplies the SVG shape-rendering attribute to the shape.\n <dl>\n     <dt>auto</dt>\n     <dd>Indicates that the user agent shall make appropriate tradeoffs to balance speed,\n     crisp edges and geometric precision, but with geometric precision given more importance than speed and crisp edges.</dd>\n     <dt>optimizeSpeed</dt>\n     <dd>Indicates that the user agent shall emphasize rendering speed over geometric precision and crisp edges.\n     This option will sometimes cause the user agent to turn off shape anti-aliasing.</dd>\n     <dt>crispEdges</dt>\n     <dd>Indicates that the user agent shall attempt to emphasize the contrast between clean edges of artwork over rendering\n     speed and geometric precision. To achieve crisp edges, the user agent might turn off anti-aliasing for all lines and curves\n     or possibly just for straight lines which are close to vertical or horizontal. Also, the user agent might adjust line\n     positions and line widths to align edges with device pixels.</dd>\n     <dt>geometricPrecision</dt>\n     <dd>Indicates that the user agent shall emphasize geometric precision over speed and crisp edges.</dd>\n </dl>"
      },
      "fill": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#config_fill",
       "!doc": "Contains information about the fill of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the fill.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1.</dd>\n     <dt>type</dt><dd>Type of fill.\n         <dl>\n             <dt>solid</dt><dd>Solid single color fill. (default)</dd>\n             <dt>linear</dt><dd>Linear gradient fill.</dd>\n             <dt>radial</dt><dd>Radial gradient fill.</dd>\n         </dl>\n     </dd>\n </dl>\n <p>If a `linear` or `radial` is specified as the fill type. The following additional property is used:\n <dl>\n     <dt>stops</dt><dd>An array of objects containing the following properties:\n         <dl>\n             <dt>color</dt><dd>The color of the stop.</dd>\n             <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stop. The default value is 1.\n             Note: No effect for IE 6 - 8</dd>\n             <dt>offset</dt><dd>Number between 0 and 1 indicating where the color stop is positioned.</dd>\n         </dl>\n     </dd>\n     <p>Linear gradients also have the following property:</p>\n     <dt>rotation</dt><dd>Linear gradients flow left to right by default. The rotation property allows you to change the\n     flow by rotation. (e.g. A rotation of 180 would make the gradient pain from right to left.)</dd>\n     <p>Radial gradients have the following additional properties:</p>\n     <dt>r</dt><dd>Radius of the gradient circle.</dd>\n     <dt>fx</dt><dd>Focal point x-coordinate of the gradient.</dd>\n     <dt>fy</dt><dd>Focal point y-coordinate of the gradient.</dd>\n     <dt>cx</dt><dd>\n         <p>The x-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and\n         `VMLShape` classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n     <dt>cy</dt><dd>\n         <p>The y-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and `VMLShape`\n         classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n </dl>"
      },
      "stroke": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SVGShape.html#config_stroke",
       "!doc": "Contains information about the stroke of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the stroke.</dd>\n     <dt>weight</dt><dd>Number that indicates the width of the stroke.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stroke. The default value is 1.</dd>\n     <dt>dashstyle</dt>Indicates whether to draw a dashed stroke. When set to \"none\", a solid stroke is drawn. When set\n     to an array, the first index indicates the length of the dash. The second index indicates the length of gap.\n     <dt>linecap</dt><dd>Specifies the linecap for the stroke. The following values can be specified:\n         <dl>\n             <dt>butt (default)</dt><dd>Specifies a butt linecap.</dd>\n             <dt>square</dt><dd>Specifies a sqare linecap.</dd>\n             <dt>round</dt><dd>Specifies a round linecap.</dd>\n         </dl>\n     </dd>\n     <dt>linejoin</dt><dd>Specifies a linejoin for the stroke. The following values can be specified:\n         <dl>\n             <dt>round (default)</dt><dd>Specifies that the linejoin will be round.</dd>\n             <dt>bevel</dt><dd>Specifies a bevel for the linejoin.</dd>\n             <dt>miter limit</dt><dd>An integer specifying the miter limit of a miter linejoin. If you want to specify a linejoin\n             of miter, you simply specify the limit as opposed to having separate miter and miter limit values.</dd>\n         </dl>\n     </dd>\n </dl>"
      },
@@ -15837,12 +16953,12 @@
       "!doc": "Unique id for class instance."
      },
      "shapes": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLGraphic.html#config_shapes",
       "!doc": "Key value pairs in which a shape instance is associated with its id."
      },
      "contentBounds": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLGraphic.html#config_contentBounds",
       "!doc": "Object containing size and coordinate data for the content of a Graphic in relation to the coordSpace node."
      },
@@ -15862,7 +16978,7 @@
       "!doc": "Indicates the height of the `Graphic`."
      },
      "autoSize": {
-      "!type": "bool",
+      "!type": "bool|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLGraphic.html#config_autoSize",
       "!doc": "Determines the sizing of the Graphic.\n\n<dl>\n    <dt>sizeContentToGraphic</dt><dd>The Graphics width and height attributes are, either explicitly set through the\n    <code>width</code> and <code>height</code> attributes or are determined by the dimensions of the parent element. The\n    content contained in the Graphic will be sized to fit with in the Graphic instances dimensions. When using this\n    setting, the <code>preserveAspectRatio</code> attribute will determine how the contents are sized.</dd>\n    <dt>sizeGraphicToContent</dt><dd>(Also accepts a value of true) The Graphics width and height are determined by the\n    size and positioning of the content.</dd>\n    <dt>false</dt><dd>The Graphics width and height attributes are, either explicitly set through the <code>width</code>\n    and <code>height</code> attributes or are determined by the dimensions of the parent element. The contents of the\n    Graphic instance are not affected by this setting.</dd>\n</dl>"
      },
@@ -15887,7 +17003,7 @@
       "!doc": "Indicates the y-coordinate for the instance."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLGraphic.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -15902,12 +17018,12 @@
       "!doc": "Removes all nodes."
      },
      "addShape": {
-      "!type": "fn(cfg: +yui.Object) -> ?",
+      "!type": "fn(cfg: +Object) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLGraphic.html#method_addShape",
       "!doc": "Generates a shape instance by type."
      },
      "removeShape": {
-      "!type": "fn(shape: +graphics.Shape)",
+      "!type": "fn(shape: +graphics.Shape|string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLGraphic.html#method_removeShape",
       "!doc": "Removes a shape instance from from the graphic instance."
      },
@@ -16005,17 +17121,17 @@
       "!doc": "Gets the current position of the node in page coordinates."
      },
      "setXY": {
-      "!type": "fn(Contains: +yui.Array)",
+      "!type": "fn(Contains: [?])",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#method_setXY",
       "!doc": "Set the position of the shape in page coordinates, regardless of how the node is positioned."
      },
      "contains": {
-      "!type": "fn(needle: +graphics.VMLShape) -> ?",
+      "!type": "fn(needle: +graphics.VMLShape|+HTMLElement) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#method_contains",
       "!doc": "Determines whether the node is an ancestor of another HTML element in the DOM hierarchy."
      },
      "compareTo": {
-      "!type": "fn(refNode: +HTMLElement) -> bool",
+      "!type": "fn(refNode: +HTMLElement|+node.Node) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#method_compareTo",
       "!doc": "Compares nodes to determine if they match.\nNode instances can be compared to each other and/or HTMLElements."
      },
@@ -16065,7 +17181,7 @@
       "!doc": "Specifies a 2d scaling operation."
      },
      "set": {
-      "!type": "fn(name: string, value: ?)",
+      "!type": "fn(name: string|+Object, value: ?)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#method_set",
       "!doc": "Sets the value of an attribute."
      },
@@ -16085,7 +17201,7 @@
       "!doc": "Destroys shape"
      },
      "transformOrigin": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#config_transformOrigin",
       "!doc": "An array of x, y values which indicates the transformOrigin in which to rotate the shape. Valid values range between 0 and 1 representing a\nfraction of the shapes corresponding bounding box dimension. The default value is [0.5, 0.5]."
      },
@@ -16123,12 +17239,12 @@
       "!doc": "Indicates whether the shape is visible."
      },
      "fill": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#config_fill",
       "!doc": "Contains information about the fill of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the fill.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the fill. The default value is 1.</dd>\n     <dt>type</dt><dd>Type of fill.\n         <dl>\n             <dt>solid</dt><dd>Solid single color fill. (default)</dd>\n             <dt>linear</dt><dd>Linear gradient fill.</dd>\n             <dt>radial</dt><dd>Radial gradient fill.</dd>\n         </dl>\n     </dd>\n </dl>\n <p>If a `linear` or `radial` is specified as the fill type. The following additional property is used:\n <dl>\n     <dt>stops</dt><dd>An array of objects containing the following properties:\n         <dl>\n             <dt>color</dt><dd>The color of the stop.</dd>\n             <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stop. The default value is 1.\n             Note: No effect for IE 6 - 8</dd>\n             <dt>offset</dt><dd>Number between 0 and 1 indicating where the color stop is positioned.</dd>\n         </dl>\n     </dd>\n     <p>Linear gradients also have the following property:</p>\n     <dt>rotation</dt><dd>Linear gradients flow left to right by default. The rotation property allows you to change the\n     flow by rotation. (e.g. A rotation of 180 would make the gradient pain from right to left.)</dd>\n     <p>Radial gradients have the following additional properties:</p>\n     <dt>r</dt><dd>Radius of the gradient circle.</dd>\n     <dt>fx</dt><dd>Focal point x-coordinate of the gradient.</dd>\n     <dt>fy</dt><dd>Focal point y-coordinate of the gradient.</dd>\n </dl>\n <p>The corresponding `SVGShape` class implements the following additional properties.</p>\n <dl>\n     <dt>cx</dt><dd>\n         <p>The x-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and\n         `VMLShape` classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n     <dt>cy</dt><dd>\n         <p>The y-coordinate of the center of the gradient circle. Determines where the color stop begins. The default value 0.5.</p>\n         <p><strong>Note: </strong>Currently, this property is not implemented for corresponding `CanvasShape` and `VMLShape`\n         classes which are used on Android or IE 6 - 8.</p>\n     </dd>\n </dl>\n <p>These properties are not currently implemented in `CanvasShape` or `VMLShape`.</p>"
      },
      "stroke": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/VMLShape.html#config_stroke",
       "!doc": "Contains information about the stroke of the shape.\n <dl>\n     <dt>color</dt><dd>The color of the stroke.</dd>\n     <dt>weight</dt><dd>Number that indicates the width of the stroke.</dd>\n     <dt>opacity</dt><dd>Number between 0 and 1 that indicates the opacity of the stroke. The default value is 1.</dd>\n     <dt>dashstyle</dt>Indicates whether to draw a dashed stroke. When set to \"none\", a solid stroke is drawn. When set\n     to an array, the first index indicates the length of the dash. The second index indicates the length of gap.\n     <dt>linecap</dt><dd>Specifies the linecap for the stroke. The following values can be specified:\n         <dl>\n             <dt>butt (default)</dt><dd>Specifies a butt linecap.</dd>\n             <dt>square</dt><dd>Specifies a sqare linecap.</dd>\n             <dt>round</dt><dd>Specifies a round linecap.</dd>\n         </dl>\n     </dd>\n     <dt>linejoin</dt><dd>Specifies a linejoin for the stroke. The following values can be specified:\n         <dl>\n             <dt>round (default)</dt><dd>Specifies that the linejoin will be round.</dd>\n             <dt>bevel</dt><dd>Specifies a bevel for the linejoin.</dd>\n             <dt>miter limit</dt><dd>An integer specifying the miter limit of a miter linejoin. If you want to specify a linejoin\n             of miter, you simply specify the limit as opposed to having separate miter and miter limit values.</dd>\n         </dl>\n     </dd>\n </dl>"
      },
@@ -16193,7 +17309,7 @@
       }
      },
      "render": {
-      "!type": "fn(string: string, context: +yui.Object, options?: +yui.Object) -> string",
+      "!type": "fn(string: string, context: +Object, options?: +config.HandlebarsRenderConfig) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Handlebars.html#method_render",
       "!doc": "Compiles and renders a Handlebars template string in a single step.\n\nIf youll be using a template more than once, its more efficient to compile it\ninto a function once using `compile()`, and then render it whenever you need to\nby simply executing the compiled function. However, if you only need to compile\nand render a template once, `render()` is a handy shortcut for doing both in a\nsingle step.",
       "!data": {
@@ -16201,7 +17317,7 @@
       }
      },
      "compile": {
-      "!type": "fn(string: string, options?: +yui.Object) -> fn()",
+      "!type": "fn(string: string, options?: +Object) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Handlebars.html#method_compile",
       "!doc": "Compiles a Handlebars template string into a function. To render the template,\ncall the function and pass in a context object.",
       "!data": {
@@ -16209,7 +17325,7 @@
       }
      },
      "precompile": {
-      "!type": "fn(string: string, options?: +yui.Object) -> string",
+      "!type": "fn(string: string, options?: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Handlebars.html#method_precompile",
       "!doc": "Precompiles a Handlebars template string into a string of JavaScript code. This\ncan be used to precompile a template at build time or on the server, and the\nresulting template can then be rendered at runtime or on the client without\nneeding to go through a compile step.\n\nTo render a precompiled template, evaluate the code and then pass the resulting\nfunction to `Y.Handlebars.template()` to get back an executable template\nfunction.",
       "!data": {
@@ -16230,7 +17346,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html",
     "allFold": {
-     "!type": "fn(haystack: string, needles: string, options?: +yui.Object) -> string",
+     "!type": "fn(haystack: string, needles: string|[string], options?: +config.HighlightAllFoldConfig) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_allFold",
      "!doc": "Accent-folding version of `all()`.",
      "!data": {
@@ -16238,7 +17354,7 @@
      }
     },
     "startFold": {
-     "!type": "fn(haystack: string, needles: string) -> string",
+     "!type": "fn(haystack: string, needles: string|[string]) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_startFold",
      "!doc": "Accent-folding version of `start()`.",
      "!data": {
@@ -16246,7 +17362,7 @@
      }
     },
     "wordsFold": {
-     "!type": "fn(haystack: string, needles: string) -> string",
+     "!type": "fn(haystack: string, needles: string|[string]) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_wordsFold",
      "!doc": "Accent-folding version of `words()`.",
      "!data": {
@@ -16254,7 +17370,7 @@
      }
     },
     "all": {
-     "!type": "fn(haystack: string, needles: string, options?: +yui.Object) -> string",
+     "!type": "fn(haystack: string, needles: string|[string], options?: +config.HighlightAllConfig) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_all",
      "!doc": "Highlights all occurrences in the _haystack_ string of the items in the\n_needles_ array, regardless of where they occur. The returned string will\nhave all HTML characters escaped except for the highlighting markup.",
      "!data": {
@@ -16262,7 +17378,7 @@
      }
     },
     "allCase": {
-     "!type": "fn(haystack: string, needles: string, options?: +yui.Object) -> string",
+     "!type": "fn(haystack: string, needles: string|[string], options?: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_allCase",
      "!doc": "Same as `all()`, but case-sensitive by default.",
      "!data": {
@@ -16270,7 +17386,7 @@
      }
     },
     "start": {
-     "!type": "fn(haystack: string, needles: string, options?: +yui.Object) -> string",
+     "!type": "fn(haystack: string, needles: string|[string], options?: +config.HighlightStartConfig) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_start",
      "!doc": "Highlights _needles_ that occur at the start of _haystack_. The returned\nstring will have all HTML characters escaped except for the highlighting\nmarkup.",
      "!data": {
@@ -16278,7 +17394,7 @@
      }
     },
     "startCase": {
-     "!type": "fn(haystack: string, needles: string) -> string",
+     "!type": "fn(haystack: string, needles: string|[string]) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_startCase",
      "!doc": "Same as `start()`, but case-sensitive by default.",
      "!data": {
@@ -16286,7 +17402,7 @@
      }
     },
     "words": {
-     "!type": "fn(haystack: string, needles: string, options?: +yui.Object) -> string",
+     "!type": "fn(haystack: string, needles: string|[string], options?: +config.HighlightWordsConfig) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_words",
      "!doc": "Highlights complete words in the _haystack_ string that are also in the\n_needles_ array. The returned string will have all HTML characters escaped\nexcept for the highlighting markup.",
      "!data": {
@@ -16294,7 +17410,7 @@
      }
     },
     "wordsCase": {
-     "!type": "fn(haystack: string, needles: string) -> string",
+     "!type": "fn(haystack: string, needles: string|[string]) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Highlight.html#method_wordsCase",
      "!doc": "Same as `words()`, but case-sensitive by default.",
      "!data": {
@@ -16365,7 +17481,7 @@
       }
      },
      "add": {
-      "!type": "fn(state: +yui.Object, options: +yui.Object) -> !this",
+      "!type": "fn(state: +Object, options: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryBase.html#method_add",
       "!doc": "Adds a state entry with new values for the specified keys. By default,\nthe new state will be merged into the existing state, and new values will\noverride existing values. Specifying a <code>null</code> or\n<code>undefined</code> value will cause that key to be removed from the\nnew state entry.",
       "!data": {
@@ -16373,7 +17489,7 @@
       }
      },
      "addValue": {
-      "!type": "fn(key: string, value: string, options: +yui.Object) -> !this",
+      "!type": "fn(key: string, value: string, options: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryBase.html#method_addValue",
       "!doc": "Adds a state entry with a new value for a single key. By default, the new\nvalue will be merged into the existing state values, and will override an\nexisting value with the same key if there is one. Specifying a\n<code>null</code> or <code>undefined</code> value will cause the key to\nbe removed from the new state entry.",
       "!data": {
@@ -16381,7 +17497,7 @@
       }
      },
      "get": {
-      "!type": "fn(key: string) -> +yui.Object",
+      "!type": "fn(key: string) -> +Object|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryBase.html#method_get",
       "!doc": "Returns the current value of the state parameter specified by <i>key</i>,\nor an object hash of key/value pairs for all current state parameters if\nno key is specified.",
       "!data": {
@@ -16389,7 +17505,7 @@
       }
      },
      "replace": {
-      "!type": "fn(state: +yui.Object, options: +yui.Object) -> !this",
+      "!type": "fn(state: +Object, options: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryBase.html#method_replace",
       "!doc": "Same as <code>add()</code> except that a new browser history entry will\nnot be created. Instead, the current history entry will be replaced with\nthe new state.",
       "!data": {
@@ -16397,7 +17513,7 @@
       }
      },
      "replaceValue": {
-      "!type": "fn(key: string, value: string, options: +yui.Object) -> !this",
+      "!type": "fn(key: string, value: string, options: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryBase.html#method_replaceValue",
       "!doc": "Same as <code>addValue()</code> except that a new browser history entry\nwill not be created. Instead, the current history entry will be replaced\nwith the new state.",
       "!data": {
@@ -16434,7 +17550,7 @@
      }
     },
     "createHash": {
-     "!type": "fn(params: +yui.Object) -> string",
+     "!type": "fn(params: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryHash.html#method_createHash",
      "!doc": "Creates a location hash string from the specified object of key/value\npairs.",
      "!data": {
@@ -16474,7 +17590,7 @@
      }
     },
     "parseHash": {
-     "!type": "fn(hash: string) -> +yui.Object",
+     "!type": "fn(hash: string) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/HistoryHash.html#method_parseHash",
      "!doc": "Parses a location hash string into an object of key/value parameter\npairs. If <i>hash</i> is not specified, the current location hash will\nbe used.",
      "!data": {
@@ -16537,17 +17653,17 @@
     "prototype": {
      "!proto": "base.Base.prototype",
      "addTrigger": {
-      "!type": "fn(obj: +yui.Object, type: string) -> !this",
+      "!type": "fn(obj: +Object, type: string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ImgLoadGroup.html#method_addTrigger",
       "!doc": "Adds a trigger to the group. Arguments are passed to <code>Y.on</code>."
      },
      "addCustomTrigger": {
-      "!type": "fn(name: string, obj: +yui.Object) -> !this",
+      "!type": "fn(name: string, obj: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ImgLoadGroup.html#method_addCustomTrigger",
       "!doc": "Adds a custom event trigger to the group."
      },
      "registerImage": {
-      "!type": "fn(config: +config.registerImageConfig) -> +yui.Object",
+      "!type": "fn(config: +config.ImgLoadGroupRegisterImageConfig) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ImgLoadGroup.html#method_registerImage",
       "!doc": "Registers an image with the group.\nArguments are passed through to a <code>Y.ImgLoadImgObj</code> constructor; see that class attribute documentation for detailed information. \"<code>domId</code>\" is a required attribute."
      },
@@ -16592,7 +17708,7 @@
       "!doc": "Get the currently active language for the given module."
      },
      "add": {
-      "!type": "fn(module: string, lang: string, strings: +yui.Object)",
+      "!type": "fn(module: string, lang: string, strings: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Intl.html#method_add",
       "!doc": "Register a hash of localized resources for the given module and language"
      },
@@ -16602,7 +17718,7 @@
       "!doc": "Gets the modules localized resources for the currently active language (as provided by the <a href=\"#method_getLang\">getLang</a> method).\n<p>\nOptionally, the localized resources for alternate languages which have been added to Intl (see the <a href=\"#method_add\">add</a> method) can\nbe retrieved by providing the BCP 47 language tag as the lang parameter.\n</p>"
      },
      "getAvailableLangs": {
-      "!type": "fn(module: string) -> +yui.Array",
+      "!type": "fn(module: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Intl.html#method_getAvailableLangs",
       "!doc": "Gets the list of languages for which localized resources are available for a given module, based on the module\nmeta-data (part of loader). If loader is not on the page, returns an empty array."
      }
@@ -16624,7 +17740,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html",
     "prototype": {
      "start": {
-      "!type": "fn(transaction: +yui.Object, config: +config.startConfig)",
+      "!type": "fn(transaction: +Object, config: +config.IOStartConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_start",
       "!doc": "Fires event \"io:start\" and creates, fires a transaction-specific\nstart event, if `config.on.start` is defined.",
       "!data": {
@@ -16632,7 +17748,7 @@
       }
      },
      "complete": {
-      "!type": "fn(transaction: +yui.Object, config: +config.completeConfig)",
+      "!type": "fn(transaction: +Object, config: +config.IOCompleteConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_complete",
       "!doc": "Fires event \"io:complete\" and creates, fires a\ntransaction-specific \"complete\" event, if config.on.complete is\ndefined.",
       "!data": {
@@ -16640,7 +17756,7 @@
       }
      },
      "end": {
-      "!type": "fn(transaction: +yui.Object, config: +config.endConfig)",
+      "!type": "fn(transaction: +Object, config: +config.IOEndConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_end",
       "!doc": "Fires event \"io:end\" and creates, fires a transaction-specific \"end\"\nevent, if config.on.end is defined.",
       "!data": {
@@ -16648,7 +17764,7 @@
       }
      },
      "success": {
-      "!type": "fn(transaction: +yui.Object, config: +config.successConfig)",
+      "!type": "fn(transaction: +Object, config: +config.IOSuccessConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_success",
       "!doc": "Fires event \"io:success\" and creates, fires a transaction-specific\n\"success\" event, if config.on.success is defined.",
       "!data": {
@@ -16656,7 +17772,7 @@
       }
      },
      "failure": {
-      "!type": "fn(transaction: +yui.Object, config: +config.failureConfig)",
+      "!type": "fn(transaction: +Object, config: +config.IOFailureConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_failure",
       "!doc": "Fires event \"io:failure\" and creates, fires a transaction-specific\n\"failure\" event, if config.on.failure is defined.",
       "!data": {
@@ -16664,7 +17780,7 @@
       }
      },
      "progress": {
-      "!type": "fn(transaction: +yui.Object, progress: +yui.Object, config: +config.progressConfig)",
+      "!type": "fn(transaction: +Object, progress: +Object, config: +config.IOProgressConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_progress",
       "!doc": "Fires event \"io:progress\" and creates, fires a transaction-specific\n\"progress\" event -- for XMLHttpRequest file upload -- if\nconfig.on.progress is defined.",
       "!data": {
@@ -16672,7 +17788,7 @@
       }
      },
      "load": {
-      "!type": "fn(transaction: +yui.Object, load: +yui.Object, config: +config.loadConfig)",
+      "!type": "fn(transaction: +Object, load: +Object, config: +config.IOLoadConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_load",
       "!doc": "Fires event \"io:complete\" and creates, fires a transaction-specific\n\"complete\" event -- for XMLHttpRequest file upload -- if\nconfig.on.complete is defined.",
       "!data": {
@@ -16680,7 +17796,7 @@
       }
      },
      "error": {
-      "!type": "fn(transaction: +yui.Object, error: +yui.Object, config: +config.errorConfig)",
+      "!type": "fn(transaction: +Object, error: +Object, config: +config.IOErrorConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_error",
       "!doc": "Fires event \"io:failure\" and creates, fires a transaction-specific\n\"failure\" event -- for XMLHttpRequest file upload -- if\nconfig.on.failure is defined.",
       "!data": {
@@ -16696,7 +17812,7 @@
       }
      },
      "send": {
-      "!type": "fn(uri: string, config: +config.sendConfig, id: number) -> +yui.Object",
+      "!type": "fn(uri: string, config: +config.IOSendConfig, id: number) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_send",
       "!doc": "Requests a transaction. `send()` is implemented as `Y.io()`.  Each\ntransaction may include a configuration object.  Its properties are:\n\n<dl>\n  <dt>method</dt>\n    <dd>HTTP method verb (e.g., GET or POST). If this property is not\n        not defined, the default value will be GET.</dd>\n\n  <dt>data</dt>\n    <dd>This is the name-value string that will be sent as the\n    transaction data. If the request is HTTP GET, the data become\n    part of querystring. If HTTP POST, the data are sent in the\n    message body.</dd>\n\n  <dt>xdr</dt>\n    <dd>Defines the transport to be used for cross-domain requests.\n    By setting this property, the transaction will use the specified\n    transport instead of XMLHttpRequest. The properties of the\n    transport object are:\n    <dl>\n      <dt>use</dt>\n        <dd>The transport to be used: flash or native</dd>\n      <dt>dataType</dt>\n        <dd>Set the value to XML if that is the expected response\n        content type.</dd>\n      <dt>credentials</dt>\n        <dd>Set the value to true to set XHR.withCredentials property to true.</dd>\n    </dl></dd>\n\n  <dt>form</dt>\n    <dd>Form serialization configuration object.  Its properties are:\n    <dl>\n      <dt>id</dt>\n        <dd>Node object or id of HTML form</dd>\n      <dt>useDisabled</dt>\n        <dd>`true` to also serialize disabled form field values\n        (defaults to `false`)</dd>\n    </dl></dd>\n\n  <dt>on</dt>\n    <dd>Assigns transaction event subscriptions. Available events are:\n    <dl>\n      <dt>start</dt>\n        <dd>Fires when a request is sent to a resource.</dd>\n      <dt>complete</dt>\n        <dd>Fires when the transaction is complete.</dd>\n      <dt>success</dt>\n        <dd>Fires when the HTTP response status is within the 2xx\n        range.</dd>\n      <dt>failure</dt>\n        <dd>Fires when the HTTP response status is outside the 2xx\n        range, if an exception occurs, if the transation is aborted,\n        or if the transaction exceeds a configured `timeout`.</dd>\n      <dt>end</dt>\n        <dd>Fires at the conclusion of the transaction\n           lifecycle, after `success` or `failure`.</dd>\n    </dl>\n\n    <p>Callback functions for `start` and `end` receive the id of the\n    transaction as a first argument. For `complete`, `success`, and\n    `failure`, callbacks receive the id and the response object\n    (usually the XMLHttpRequest instance).  If the `arguments`\n    property was included in the configuration object passed to\n    `Y.io()`, the configured data will be passed to all callbacks as\n    the last argument.</p>\n    </dd>\n\n  <dt>sync</dt>\n    <dd>Pass `true` to make a same-domain transaction synchronous.\n    <strong>CAVEAT</strong>: This will negatively impact the user\n    experience. Have a <em>very</em> good reason if you intend to use\n    this.</dd>\n\n  <dt>context</dt>\n    <dd>The \"`this\" object for all configured event handlers. If a\n    specific context is needed for individual callbacks, bind the\n    callback to a context using `Y.bind()`.</dd>\n\n  <dt>headers</dt>\n    <dd>Object map of transaction headers to send to the server. The\n    object keys are the header names and the values are the header\n    values.</dd>\n\n  <dt>username</dt>\n    <dd>Username to use in a HTTP authentication.</dd>\n\n  <dt>password</dt>\n    <dd>Password to use in a HTTP authentication.</dd>\n\n  <dt>timeout</dt>\n    <dd>Millisecond threshold for the transaction before being\n    automatically aborted.</dd>\n\n  <dt>arguments</dt>\n    <dd>User-defined data passed to all registered event handlers.\n    This value is available as the second argument in the \"start\" and\n    \"end\" event handlers. It is the third argument in the \"complete\",\n    \"success\", and \"failure\" event handlers. <strong>Be sure to quote\n    this property name in the transaction configuration as\n    \"arguments\" is a reserved word in JavaScript</strong> (e.g.\n    `Y.io({ ..., \"arguments\": stuff })`).</dd>\n</dl>",
       "!data": {
@@ -16704,7 +17820,7 @@
       }
      },
      "xdr": {
-      "!type": "fn(uri: string, o: +yui.Object, c: +yui.Object)",
+      "!type": "fn(uri: string, o: +Object, c: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_xdr",
       "!doc": "Method for accessing the transports interface for making a\ncross-domain transaction.",
       "!data": {
@@ -16712,7 +17828,7 @@
       }
      },
      "xdrResponse": {
-      "!type": "fn(e: string, o: +yui.Object, c: +yui.Object) -> +yui.Object",
+      "!type": "fn(e: string, o: +Object, c: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_xdrResponse",
       "!doc": "Response controller for cross-domain requests when using the\nFlash transport or IE8s XDomainRequest object.",
       "!data": {
@@ -16720,7 +17836,7 @@
       }
      },
      "transport": {
-      "!type": "fn(o: +yui.Object)",
+      "!type": "fn(o: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_transport",
       "!doc": "Initializes the desired transport.",
       "!data": {
@@ -16729,7 +17845,7 @@
      }
     },
     "stringify": {
-     "!type": "fn(form: +node.Node, options?: +yui.Object) -> string",
+     "!type": "fn(form: +node.Node|string, options?: +config.IOStringifyConfig) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_stringify",
      "!doc": "Enumerate through an HTML forms elements collection\nand return a string comprised of key-value pairs.",
      "!data": {
@@ -16737,7 +17853,7 @@
      }
     },
     "queue": {
-     "!type": "fn() -> +yui.Object",
+     "!type": "fn() -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_queue",
      "!doc": "Method for queueing a transaction before the request is sent to the\nresource, to ensure sequential processing.",
      "!data": {
@@ -16778,7 +17894,7 @@
      "for": "yui.YUI"
     },
     "io": {
-     "!type": "fn(url: string, config: +config.ioConfig) -> +yui.Object",
+     "!type": "fn(url: string, config: +config.YUIIoConfig) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_io",
      "!doc": "Method for initiating an ajax call.  The first argument is the url end\npoint for the call.  The second argument is an object to configure the\ntransaction and attach event subscriptions.  The configuration object\nsupports the following properties:\n\n<dl>\n  <dt>method</dt>\n    <dd>HTTP method verb (e.g., GET or POST). If this property is not\n        not defined, the default value will be GET.</dd>\n\n  <dt>data</dt>\n    <dd>This is the name-value string that will be sent as the\n    transaction data. If the request is HTTP GET, the data become\n    part of querystring. If HTTP POST, the data are sent in the\n    message body.</dd>\n\n  <dt>xdr</dt>\n    <dd>Defines the transport to be used for cross-domain requests.\n    By setting this property, the transaction will use the specified\n    transport instead of XMLHttpRequest. The properties of the\n    transport object are:\n    <dl>\n      <dt>use</dt>\n        <dd>The transport to be used: flash or native</dd>\n      <dt>dataType</dt>\n        <dd>Set the value to XML if that is the expected response\n        content type.</dd>\n    </dl></dd>\n\n  <dt>form</dt>\n    <dd>Form serialization configuration object.  Its properties are:\n    <dl>\n      <dt>id</dt>\n        <dd>Node object or id of HTML form</dd>\n      <dt>useDisabled</dt>\n        <dd>`true` to also serialize disabled form field values\n        (defaults to `false`)</dd>\n    </dl></dd>\n\n  <dt>on</dt>\n    <dd>Assigns transaction event subscriptions. Available events are:\n    <dl>\n      <dt>start</dt>\n        <dd>Fires when a request is sent to a resource.</dd>\n      <dt>complete</dt>\n        <dd>Fires when the transaction is complete.</dd>\n      <dt>success</dt>\n        <dd>Fires when the HTTP response status is within the 2xx\n        range.</dd>\n      <dt>failure</dt>\n        <dd>Fires when the HTTP response status is outside the 2xx\n        range, if an exception occurs, if the transation is aborted,\n        or if the transaction exceeds a configured `timeout`.</dd>\n      <dt>end</dt>\n        <dd>Fires at the conclusion of the transaction\n           lifecycle, after `success` or `failure`.</dd>\n    </dl>\n\n    <p>Callback functions for `start` and `end` receive the id of the\n    transaction as a first argument. For `complete`, `success`, and\n    `failure`, callbacks receive the id and the response object\n    (usually the XMLHttpRequest instance).  If the `arguments`\n    property was included in the configuration object passed to\n    `Y.io()`, the configured data will be passed to all callbacks as\n    the last argument.</p>\n    </dd>\n\n  <dt>sync</dt>\n    <dd>Pass `true` to make a same-domain transaction synchronous.\n    <strong>CAVEAT</strong>: This will negatively impact the user\n    experience. Have a <em>very</em> good reason if you intend to use\n    this.</dd>\n\n  <dt>context</dt>\n    <dd>The \"`this\" object for all configured event handlers. If a\n    specific context is needed for individual callbacks, bind the\n    callback to a context using `Y.bind()`.</dd>\n\n  <dt>headers</dt>\n    <dd>Object map of transaction headers to send to the server. The\n    object keys are the header names and the values are the header\n    values.</dd>\n\n  <dt>timeout</dt>\n    <dd>Millisecond threshold for the transaction before being\n    automatically aborted.</dd>\n\n  <dt>arguments</dt>\n    <dd>User-defined data passed to all registered event handlers.\n    This value is available as the second argument in the \"start\" and\n    \"end\" event handlers. It is the third argument in the \"complete\",\n    \"success\", and \"failure\" event handlers. <strong>Be sure to quote\n    this property name in the transaction configuration as\n    \"arguments\" is a reserved word in JavaScript</strong> (e.g.\n    `Y.io({ ..., \"arguments\": stuff })`).</dd>\n</dl>",
      "!data": {
@@ -16805,11 +17921,11 @@
      "!doc": "The ID of the default IO transport, defaults to `xhr`"
     },
     "defaultTransport": {
-     "!type": "fn(id?: string) -> +yui.Object",
+     "!type": "fn(id?: string) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/JSON.html#method_defaultTransport"
     },
     "transports": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/JSON.html#property_transports",
      "!doc": "An object hash of custom transports available to IO"
     },
@@ -16820,7 +17936,7 @@
     },
     "prototype": {
      "notify": {
-      "!type": "fn(event: string, transaction: +yui.Object, config: +config.notifyConfig)",
+      "!type": "fn(event: string, transaction: +Object, config: +config.JSONNotifyConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/JSON.html#method_notify",
       "!doc": "Fired from the notify method of the transport which in turn fires\nthe event on the IO object."
      }
@@ -16842,7 +17958,7 @@
      "!doc": "Passthru to the NodeJS <a href=\"https://github.com/mikeal/request\">request</a> module.\nThis method is return of `require(request)` so you can use it inside NodeJS without\nthe IO abstraction."
     },
     "transports.nodejs": {
-     "!type": "fn() -> +yui.Object",
+     "!type": "fn() -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/IO.html#method_transports.nodejs",
      "!doc": "NodeJS IO transport, uses the NodeJS <a href=\"https://github.com/mikeal/request\">request</a>\nmodule under the hood to perform all network IO."
     }
@@ -16875,7 +17991,7 @@
      }
     },
     "stringify": {
-     "!type": "fn(o: +MIXED, w: +yui.Array, ind: number) -> string",
+     "!type": "fn(o: +MIXED, w: [?], ind: number|string) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/JSON.html#method_stringify",
      "!doc": "<p>Converts an arbitrary value to a JSON string representation.</p>\n\n<p>Objects with cyclical references will trigger an exception.</p>\n\n<p>If a whitelist is provided, only matching object keys will be\nincluded.  Alternately, a replacer function may be passed as the\nsecond parameter.  This function is executed on every value in the\ninput, and its return value will be used in place of the original value.\nThis is useful to serialize specialized objects or class instances.</p>\n\n<p>If a positive integer or non-empty string is passed as the third\nparameter, the output will be formatted with carriage returns and\nindentation for readability.  If a String is passed (such as \"\\t\") it\nwill be used once for each indentation level.  If a number is passed,\nthat number of spaces will be used.</p>",
      "!data": {
@@ -16903,7 +18019,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/JSONPRequest.html",
     "prototype": {
      "_defaultCallback": {
-      "!type": "fn(url: string, config: +config._defaultCallbackConfig) -> fn()",
+      "!type": "fn(url: string, config: +config.JSONPRequest_defaultCallbackConfig) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/JSONPRequest.html#method__defaultCallback",
       "!doc": "Override this method to provide logic to default the success callback if\nit is not provided at construction.  This is overridden by jsonp-url to\nparse the callback from the url string."
      },
@@ -17008,7 +18124,7 @@
       }
      },
      "insertBefore": {
-      "!type": "string",
+      "!type": "string|+HTMLElement",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_insertBefore",
       "!doc": "Node reference or id where new nodes should be inserted before",
       "!data": {
@@ -17024,7 +18140,7 @@
       }
      },
      "cssAttributes": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_cssAttributes",
       "!doc": "An object literal containing attributes to add to link nodes",
       "!data": {
@@ -17032,7 +18148,7 @@
       }
      },
      "jsAttributes": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_jsAttributes",
       "!doc": "An object literal containing attributes to add to script nodes",
       "!data": {
@@ -17128,7 +18244,7 @@
       }
      },
      "filter": {
-      "!type": "string",
+      "!type": "string|+searchExp",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_filter",
       "!doc": "A filter to apply to result urls.  This filter will modify the default\npath for all modules.  The default path for the YUI library is the\nminified version of the files (e.g., event-min.js).  The filter property\ncan be a predefined filter or a custom filter.  The valid predefined\nfilters are:\n<dl>\n <dt>DEBUG</dt>\n <dd>Selects the debug versions of the library (e.g., event-debug.js).\n     This option will automatically include the Logger widget</dd>\n <dt>RAW</dt>\n <dd>Selects the non-minified version of the library (e.g., event.js).\n </dd>\n</dl>\nYou can also define a custom filter, which must be an object literal\ncontaining a search expression and a replace string:\n\n     myFilter: {\n         searchExp: \"-min\\\\.js\",\n         replaceStr: \"-debug.js\"\n     }",
       "!data": {
@@ -17136,7 +18252,7 @@
       }
      },
      "filters": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_filters",
       "!doc": "per-component filter specification.  If specified for a given\ncomponent, this overrides the filter config.",
       "!data": {
@@ -17152,7 +18268,7 @@
       }
      },
      "patterns": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_patterns",
       "!doc": "If a module name is predefined when requested, it is checked againsts\nthe patterns provided in this property.  If there is a match, the\nmodule is added with the default configuration.\n\nAt the moment only supporting module prefixes, but anticipate\nsupporting at least regular expressions.",
       "!data": {
@@ -17168,7 +18284,7 @@
       }
      },
      "skin": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#property_skin",
       "!doc": "Provides the information used to skin the skinnable components.\nThe following skin definition would result in skin1 and skin2\nbeing loaded for calendar (if calendar was requested), and\nsam for all other skinnable components:\n\n     skin: {\n         // The default skin, which is automatically applied if not\n         // overriden by a component-specific skin definition.\n         // Change this in to apply a different skin globally\n         defaultSkin: sam,\n\n         // This is combined with the loader base property to get\n         // the default root directory for a skin. ex:\n         // http://yui.yahooapis.com/2.3.0/build/assets/skins/sam/\n         base: assets/skins/,\n\n         // Any component-specific overrides can be specified here,\n         // making it possible to load different skins for different\n         // components.  It is possible to load more than one skin\n         // for a given component as well.\n         overrides: {\n             calendar: [skin1, skin2]\n         }\n     }",
       "!data": {
@@ -17256,7 +18372,7 @@
       }
      },
      "addAlias": {
-      "!type": "fn(use: +yui.Array, name: string)",
+      "!type": "fn(use: [?], name: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_addAlias",
       "!doc": "Adds an alias module to the system",
       "!data": {
@@ -17264,7 +18380,7 @@
       }
      },
      "addGroup": {
-      "!type": "fn(config: +config.addGroupConfig, name: string)",
+      "!type": "fn(config: +config.LoaderAddGroupConfig, name: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_addGroup",
       "!doc": "Add a new module group",
       "!data": {
@@ -17272,7 +18388,7 @@
       }
      },
      "addModule": {
-      "!type": "fn(config: +config.addModuleConfig, name?: string) -> +yui.Object",
+      "!type": "fn(config: +config.LoaderAddModuleConfig, name?: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_addModule",
       "!doc": "Add a new module to the component metadata.",
       "!data": {
@@ -17280,7 +18396,7 @@
       }
      },
      "require": {
-      "!type": "fn(what: [string])",
+      "!type": "fn(what: [string]|string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_require",
       "!doc": "Add a requirement for one or more module",
       "!data": {
@@ -17288,7 +18404,7 @@
       }
      },
      "filterRequires": {
-      "!type": "fn(r: +yui.Array) -> +yui.Array",
+      "!type": "fn(r: [?]) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_filterRequires",
       "!doc": "Explodes the required array to remove aliases and replace them with real modules",
       "!data": {
@@ -17304,7 +18420,7 @@
       }
      },
      "getRequires": {
-      "!type": "fn(mod: +yui.Object) -> +yui.Array",
+      "!type": "fn(mod: +Object) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_getRequires",
       "!doc": "Returns an object containing properties for all modules required\nin order to load the requested module",
       "!data": {
@@ -17320,7 +18436,7 @@
       }
      },
      "getProvides": {
-      "!type": "fn(name: string) -> +yui.Object",
+      "!type": "fn(name: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_getProvides",
       "!doc": "Returns a hash of module names the supplied module satisfies.",
       "!data": {
@@ -17328,7 +18444,7 @@
       }
      },
      "calculate": {
-      "!type": "fn(o: +yui.Object, type: string)",
+      "!type": "fn(o: +Object, type: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_calculate",
       "!doc": "Calculates the dependency tree, the result is stored in the sorted\nproperty.",
       "!data": {
@@ -17344,7 +18460,7 @@
       }
      },
      "getModule": {
-      "!type": "fn(mname: string) -> +yui.Object",
+      "!type": "fn(mname: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_getModule",
       "!doc": "Gets the loader meta data for the requested module",
       "!data": {
@@ -17352,7 +18468,7 @@
       }
      },
      "insert": {
-      "!type": "fn(o: +yui.Object, type: string)",
+      "!type": "fn(o: +Object, type: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_insert",
       "!doc": "inserts the requested modules and their dependencies.\n<code>type</code> can be \"js\" or \"css\".  Both script and\ncss are inserted if type is not provided.",
       "!data": {
@@ -17368,7 +18484,7 @@
       }
      },
      "resolve": {
-      "!type": "fn(calc?: bool, sorted?: +yui.Array) -> +yui.Object",
+      "!type": "fn(calc?: bool, sorted?: [?]) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Loader.html#method_resolve",
       "!doc": "Returns an Object hash of file arrays built from `loader.sorted` or from an arbitrary list of sorted modules.",
       "!data": {
@@ -17407,7 +18523,7 @@
       "!doc": "Parses a string and returns an array of transform arrays."
      },
      "init": {
-      "!type": "fn(config: +config.initConfig)",
+      "!type": "fn(config: +config.MatrixInitConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Matrix.html#method_init",
       "!doc": "Initializes a matrix."
      },
@@ -17533,7 +18649,7 @@
       "!doc": "Converts a transform object to an array of column vectors.\n\n/                                             \\\n| matrix[0][0]   matrix[1][0]    matrix[2][0] |\n| matrix[0][1]   matrix[1][1]    matrix[2][1] |\n| matrix[0][2]   matrix[1][2]    matrix[2][2] |\n\\                                             /"
      },
      "getDeterminant": {
-      "!type": "fn(matrix: +yui.Array) -> ?",
+      "!type": "fn(matrix: [?]) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#method_getDeterminant",
       "!doc": "Returns the determinant of a given matrix.\n\n/                                             \\\n| matrix[0][0]   matrix[1][0]    matrix[2][0] |\n| matrix[0][1]   matrix[1][1]    matrix[2][1] |\n| matrix[0][2]   matrix[1][2]    matrix[2][2] |\n| matrix[0][3]   matrix[1][3]    matrix[2][3] |\n\\                                             /"
      },
@@ -17543,7 +18659,7 @@
       "!doc": "Returns the inverse of a matrix"
      },
      "scalarMultiply": {
-      "!type": "fn(matrix: +yui.Array, multiplier: number) -> ?",
+      "!type": "fn(matrix: [?], multiplier: number) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#method_scalarMultiply",
       "!doc": "Multiplies a matrix by a numeric value."
      },
@@ -17553,7 +18669,7 @@
       "!doc": "Returns the transpose for an nxn matrix."
      },
      "getMinors": {
-      "!type": "fn(matrix: +yui.Array, columnIndex: number, rowIndex: number) -> ?",
+      "!type": "fn(matrix: [?], columnIndex: number, rowIndex: number) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#method_getMinors",
       "!doc": "Returns a matrix of minors based on a matrix, column index and row index."
      },
@@ -17563,12 +18679,12 @@
       "!doc": "Returns the sign of value"
      },
      "vectorMatrixProduct": {
-      "!type": "fn(vector: +yui.Array, matrix: +yui.Array) -> ?",
+      "!type": "fn(vector: [?], matrix: [?]) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#method_vectorMatrixProduct",
       "!doc": "Multiplies a vector and a matrix"
      },
      "decompose": {
-      "!type": "fn(matrix: +yui.Array) -> ?",
+      "!type": "fn(matrix: [?]) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#method_decompose",
       "!doc": "Breaks up a 2d transform matrix into a series of transform operations."
      },
@@ -17583,12 +18699,12 @@
       "!doc": "Returns an array of transform arrays representing transform functions and arguments."
      },
      "compareTransformSequence": {
-      "!type": "fn(list1: +yui.Array, list2: +yui.Array) -> ?",
+      "!type": "fn(list1: [?], list2: [?]) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#method_compareTransformSequence",
       "!doc": "Compares to arrays or transform functions to ensure both contain the same functions in the same\norder."
      },
      "transformMethods": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/MatrixUtil.html#property_transformMethods",
       "!doc": "Mapping of possible transform method names."
      }
@@ -17615,7 +18731,7 @@
      },
      "prototype": {
       "initializer": {
-       "!type": "fn(config: +config.initializerConfig)",
+       "!type": "fn(config: +config.Plugin.FlickInitializerConfig)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Flick.html#method_initializer",
        "!doc": "The initializer lifecycle implementation."
       },
@@ -17646,7 +18762,7 @@
       "!doc": "The default easing to use for the bounce snap-back transition"
      },
      "CLASS_NAMES": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Flick.html#property_CLASS_NAMES",
       "!doc": "The default CSS class names used by the plugin"
      }
@@ -17663,7 +18779,7 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/plugin.NodeFocusManager.html",
      "prototype": {
       "focus": {
-       "!type": "fn(index: number)",
+       "!type": "fn(index: number|+node.Node)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/plugin.NodeFocusManager.html#method_focus",
        "!doc": "Focuses the active descendant and sets the\n<code>focused</code> attribute to true."
       },
@@ -17735,12 +18851,12 @@
        "!doc": "Returns a NodeList containing all onscreen nodes inside the host node that\nmatch the given CSS selector. An onscreen node is any node that is fully or\npartially within the visible (onscreen) region of the host node based on the\ncurrent scroll location."
       },
       "getScrollInfo": {
-       "!type": "fn() -> +yui.Object",
+       "!type": "fn() -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollInfo.html#method_getScrollInfo",
        "!doc": "Returns an object hash containing information about the current scroll\nposition of the host node. This is the same information thats mixed into\nthe event facade of the `scroll` event and other scroll-related events."
       },
       "isNodeOnscreen": {
-       "!type": "fn(node: +HTMLElement, margin?: number) -> bool",
+       "!type": "fn(node: +HTMLElement|+node.Node|string, margin?: number) -> bool",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollInfo.html#method_isNodeOnscreen",
        "!doc": "Returns `true` if _node_ is at least partially onscreen within the host\nnode, `false` otherwise."
       },
@@ -17759,16 +18875,16 @@
    },
    "Plugin": {
     "Align": {
-     "!type": "fn(User: +yui.Object)",
+     "!type": "fn(User: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Align.html",
      "prototype": {
       "to": {
-       "!type": "fn(region: string, regionPoint: string, point: string, resize: bool)",
+       "!type": "fn(region: string|+node.Node|+HTMLElement|+Object, regionPoint: string, point: string, resize: bool)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Align.html#method_to",
        "!doc": "Aligns node with a point on another node or region.\nPossible alignment points are:\n<dl>\n     <dt>tl</dt>\n     <dd>top left</dd>\n     <dt>tr</dt>\n     <dd>top right</dd>\n     <dt>bl</dt>\n     <dd>bottom left</dd>\n     <dt>br</dt>\n     <dd>bottom right</dd>\n     <dt>tc</dt>\n     <dd>top center</dd>\n     <dt>bc</dt>\n     <dd>bottom center</dd>\n     <dt>rc</dt>\n     <dd>right center</dd>\n     <dt>lc</dt>\n     <dd>left center</dd>\n     <dt>cc</dt>\n     <dd>center center</dd>\n</dl>"
       },
       "center": {
-       "!type": "fn(region: +node.Node)",
+       "!type": "fn(region: +node.Node|+HTMLElement|+Object)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Align.html#method_center",
        "!doc": "Aligns the center of a node to the center of another node or region."
       },
@@ -17805,7 +18921,7 @@
      ]
     },
     "ATTRS": {
-     "!type": "+object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#property_ATTRS",
      "!doc": "Static collection of configuration attributes for special handling",
      "!data": {
@@ -17902,7 +19018,7 @@
       }
      },
      "setAttrs": {
-      "!type": "fn(attrMap: +yui.Object) -> !this",
+      "!type": "fn(attrMap: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_setAttrs",
       "!doc": "Sets multiple attributes.",
       "!data": {
@@ -17910,7 +19026,7 @@
       }
      },
      "getAttrs": {
-      "!type": "fn(attrs: +yui.Array) -> +yui.Object",
+      "!type": "fn(attrs: [?]) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_getAttrs",
       "!doc": "Returns an object containing the values for the requested attributes.",
       "!data": {
@@ -17918,7 +19034,7 @@
       }
      },
      "compareTo": {
-      "!type": "fn(refNode: +HTMLElement) -> bool",
+      "!type": "fn(refNode: +HTMLElement|+node.Node) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_compareTo",
       "!doc": "Compares nodes to determine if they match.\nNode instances can be compared to each other and/or HTMLElements.",
       "!data": {
@@ -17926,7 +19042,7 @@
       }
      },
      "inDoc": {
-      "!type": "fn(doc: +node.Node) -> bool",
+      "!type": "fn(doc: +node.Node|+HTMLElement) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_inDoc",
       "!doc": "Determines whether the node is appended to the document.",
       "!data": {
@@ -18006,7 +19122,7 @@
       }
      },
      "replace": {
-      "!type": "fn(newNode: +node.Node) -> !this",
+      "!type": "fn(newNode: +node.Node|+HTMLElement) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_replace",
       "!doc": "Replace the node with the other node. This is a DOM update only\nand does not change the node bound to the Node instance.\nShortcut for myNode.get(parentNode).replaceChild(newNode, myNode);",
       "!data": {
@@ -18014,7 +19130,7 @@
       }
      },
      "replaceChild": {
-      "!type": "fn(node: string, refNode: +HTMLElement) -> +node.Node",
+      "!type": "fn(node: string|+HTMLElement|+node.Node, refNode: +HTMLElement|+node.Node) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_replaceChild",
       "!data": {
        "submodule": "node-core"
@@ -18069,7 +19185,7 @@
       }
      },
      "insert": {
-      "!type": "fn(content: string, where: number) -> !this",
+      "!type": "fn(content: string|+node.Node|+HTMLElement|+node.NodeList|+HTMLCollection, where: number|+node.Node|+HTMLElement|string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_insert",
       "!doc": "Inserts the content before the reference node.",
       "!data": {
@@ -18077,7 +19193,7 @@
       }
      },
      "prepend": {
-      "!type": "fn(content: string) -> !this",
+      "!type": "fn(content: string|+node.Node|+HTMLElement) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_prepend",
       "!doc": "Inserts the content as the firstChild of the node.",
       "!data": {
@@ -18085,7 +19201,7 @@
       }
      },
      "append": {
-      "!type": "fn(content: string) -> !this",
+      "!type": "fn(content: string|+node.Node|+HTMLElement) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_append",
       "!doc": "Inserts the content as the lastChild of the node.",
       "!data": {
@@ -18093,21 +19209,21 @@
       }
      },
      "appendChild": {
-      "!type": "fn(node: string) -> +node.Node",
+      "!type": "fn(node: string|+HTMLElement|+node.Node) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_appendChild",
       "!data": {
        "submodule": "node-base"
       }
      },
      "insertBefore": {
-      "!type": "fn(newNode: string, refNode: +HTMLElement) -> +node.Node",
+      "!type": "fn(newNode: string|+HTMLElement|+node.Node, refNode: +HTMLElement|+node.Node) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_insertBefore",
       "!data": {
        "submodule": "node-base"
       }
      },
      "appendTo": {
-      "!type": "fn(node: +node.Node) -> !this",
+      "!type": "fn(node: +node.Node|+HTMLElement|string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_appendTo",
       "!doc": "Appends the node to the given node.",
       "!data": {
@@ -18115,7 +19231,7 @@
       }
      },
      "setHTML": {
-      "!type": "fn(content: string) -> !this",
+      "!type": "fn(content: string|+node.Node|+HTMLElement|+node.NodeList|+HTMLCollection) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_setHTML",
       "!doc": "Replaces the nodes current html content with the content provided.\nNote that this passes to innerHTML and is not escaped.\nUse <a href=\"../classes/Escape.html#method_html\">`Y.Escape.html()`</a>\nto escape html content or `set(text)` to add as text.",
       "!data": {
@@ -18131,7 +19247,7 @@
       }
      },
      "getData": {
-      "!type": "fn(name: string) -> ?",
+      "!type": "fn(name: string) -> ?|+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_getData",
       "!doc": "Retrieves arbitrary data stored on a Node instance.\nIf no data is associated with the Node, it will attempt to retrieve\na value from the corresponding HTML data attribute. (e.g. node.getData(foo)\nwill check node.getAttribute(data-foo)).",
       "!data": {
@@ -18155,7 +19271,7 @@
       }
      },
      "delegate": {
-      "!type": "fn(type: string, fn: fn(), spec: string, context: +yui.Object, args: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), spec: string, context: +Object, args: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_delegate",
       "!doc": "<p>Sets up a delegation listener for an event occurring inside the Node.\nThe delegated event will be verified against a supplied selector or\nfiltering function to test if the event references at least one node that\nshould trigger the subscription callback.</p>\n\n<p>Selector string filters will trigger the callback if the event originated\nfrom a node that matches it or is contained in a node that matches it.\nFunction filters are called for each Node up the parent axis to the\nsubscribing container node, and receive at each level the Node and the event\nobject.  The function should return true (or a truthy value) if that Node\nshould trigger the subscription callback.  Note, it is possible for filters\nto match multiple Nodes for a single event.  In this case, the delegate\ncallback will be executed for each matching Node.</p>\n\n<p>For each matching Node, the callback will be executed with its this\nobject set to the Node matched by the filter (unless a specific context was\nprovided during subscription), and the provided events\n<code>currentTarget</code> will also be set to the matching Node.  The\ncontaining Node from which the subscription was originally made can be\nreferenced as <code>e.container</code>.",
       "!data": {
@@ -18163,7 +19279,7 @@
       }
      },
      "simulate": {
-      "!type": "fn(type: string, options: +yui.Object)",
+      "!type": "fn(type: string, options: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_simulate",
       "!doc": "Simulates an event on the node.",
       "!data": {
@@ -18171,7 +19287,7 @@
       }
      },
      "simulateGesture": {
-      "!type": "fn(name: string, options?: +yui.Object, cb?: fn(err: +Error))",
+      "!type": "fn(name: string, options?: +config.NodeSimulateGestureConfig, cb?: fn(err: +Error))",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_simulateGesture",
       "!doc": "Simulates the higher user level gesture of the given name on this node.\nThis method generates a set of low level touch events(Apple specific gesture\nevents as well for the iOS platforms) asynchronously. Note that gesture\nsimulation is relying on `Y.Event.simulate()` method to generate\nthe touch events under the hood. The `Y.Event.simulate()` method\nitself is a synchronous method.\n\nSupported gestures are `tap`, `doubletap`, `press`, `move`, `flick`, `pinch`\nand `rotate`.\n\nThe `pinch` gesture is used to simulate the pinching and spreading of two\nfingers. During a pinch simulation, rotation is also possible. Essentially\n`pinch` and `rotate` simulations share the same base implementation to allow\nboth pinching and rotation at the same time. The only difference is `pinch`\nrequires `start` and `end` option properties while `rotate` requires `rotation`\noption property.\n\nThe `pinch` and `rotate` gestures can be described as placing 2 fingers along a\ncircle. Pinching and spreading can be described by start and end circles while\nrotation occurs on a single circle. If the radius of the start circle is greater\nthan the end circle, the gesture becomes a pinch, otherwise it is a spread spread.",
       "!data": {
@@ -18195,7 +19311,7 @@
       }
      },
      "removeChild": {
-      "!type": "fn(node: +HTMLElement) -> +node.Node",
+      "!type": "fn(node: +HTMLElement|+node.Node) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_removeChild",
       "!doc": "Passes through to DOM method.",
       "!data": {
@@ -18299,7 +19415,7 @@
       }
      },
      "contains": {
-      "!type": "fn(needle: +node.Node) -> bool",
+      "!type": "fn(needle: +node.Node|+HTMLElement) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_contains",
       "!doc": "Determines whether the node is an ancestor of another HTML element in the DOM hierarchy.",
       "!data": {
@@ -18371,7 +19487,7 @@
       }
      },
      "intersect": {
-      "!type": "fn(node2: +node.Node, altRegion: +yui.Object) -> +yui.Object",
+      "!type": "fn(node2: +node.Node|+Object, altRegion: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_intersect",
       "!doc": "Compares the intersection of the node with another node or region",
       "!data": {
@@ -18379,7 +19495,7 @@
       }
      },
      "inRegion": {
-      "!type": "fn(node2: +node.Node, all: bool, altRegion: +yui.Object) -> bool",
+      "!type": "fn(node2: +node.Node|+Object, all: bool, altRegion: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_inRegion",
       "!doc": "Determines whether or not the node is within the given region.",
       "!data": {
@@ -18435,7 +19551,7 @@
       }
      },
      "getXY": {
-      "!type": "fn() -> +yui.Array",
+      "!type": "fn() -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_getXY",
       "!doc": "Gets the current position of the node in page coordinates.",
       "!data": {
@@ -18443,7 +19559,7 @@
       }
      },
      "setXY": {
-      "!type": "fn(xy: +yui.Array) -> !this",
+      "!type": "fn(xy: [?]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_setXY",
       "!doc": "Set the position of the node in page coordinates, regardless of how the node is positioned.",
       "!data": {
@@ -18483,7 +19599,7 @@
       }
      },
      "swapXY": {
-      "!type": "fn(otherNode: +node.Node) -> !this",
+      "!type": "fn(otherNode: +node.Node|+HTMLElement) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_swapXY",
       "!doc": "Swaps the XY position of this node with another node.",
       "!data": {
@@ -18491,7 +19607,7 @@
       }
      },
      "setStyle": {
-      "!type": "fn(attr: string, val: string) -> !this",
+      "!type": "fn(attr: string, val: string|number) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_setStyle",
       "!doc": "Sets a style property of the node.\nUse camelCase (e.g. backgroundColor) for multi-word properties.",
       "!data": {
@@ -18499,7 +19615,7 @@
       }
      },
      "setStyles": {
-      "!type": "fn(hash: +yui.Object) -> !this",
+      "!type": "fn(hash: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_setStyles",
       "!doc": "Sets multiple style properties on the node.\nUse camelCase (e.g. backgroundColor) for multi-word properties.",
       "!data": {
@@ -18523,7 +19639,7 @@
       }
      },
      "show": {
-      "!type": "fn(name: string, config: +config.showConfig, callback: fn()) -> !this",
+      "!type": "fn(name: string, config: +config.NodeShowConfig, callback: fn()) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_show",
       "!doc": "Makes the node visible.\nIf the \"transition\" module is loaded, show optionally\nanimates the showing of the node using either the default\ntransition effect (fadeIn), or the given named effect.",
       "!data": {
@@ -18539,7 +19655,7 @@
       }
      },
      "hide": {
-      "!type": "fn(name: string, config: +config.hideConfig, callback: fn()) -> !this",
+      "!type": "fn(name: string, config: +config.NodeHideConfig, callback: fn()) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_hide",
       "!doc": "Hides the node.\nIf the \"transition\" module is loaded, hide optionally\nanimates the hiding of the node using either the default\ntransition effect (fadeOut), or the given named effect.",
       "!data": {
@@ -18556,7 +19672,7 @@
      }
     },
     "getDOMNode": {
-     "!type": "fn(node: +node.Node) -> +HTMLElement",
+     "!type": "fn(node: +node.Node|+HTMLElement) -> +HTMLElement",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_getDOMNode",
      "!doc": "Retrieves the DOM node bound to a Node instance",
      "!data": {
@@ -18564,7 +19680,7 @@
      }
     },
     "scrubVal": {
-     "!type": "fn(node: +HTMLElement) -> +node.Node",
+     "!type": "fn(node: +HTMLElement|[+HTMLElement]|+node.Node) -> +node.Node|+node.NodeList|?",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_scrubVal",
      "!doc": "Checks Node return values and wraps DOM Nodes as Y.Node instances\nand DOM Collections / Arrays as Y.NodeList instances.\nOther return values just pass thru.  If undefined is returned (e.g. no return)\nthen the Node instance is returned for chainability.",
      "!data": {
@@ -18572,7 +19688,7 @@
      }
     },
     "addMethod": {
-     "!type": "fn(name: string, fn: fn(), context: +yui.Object) -> ?",
+     "!type": "fn(name: string, fn: fn(), context: +Object) -> ?",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_addMethod",
      "!doc": "Adds methods to the Y.Node prototype, routing through scrubVal.",
      "!data": {
@@ -18580,7 +19696,7 @@
      }
     },
     "importMethod": {
-     "!type": "fn(host: +yui.Object, name: string, altName: string, context: +yui.Object)",
+     "!type": "fn(host: +Object, name: string, altName: string, context: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_importMethod",
      "!doc": "Imports utility methods to be added as Y.Node methods.",
      "!data": {
@@ -18588,7 +19704,7 @@
      }
     },
     "one": {
-     "!type": "fn(node: string) -> +node.Node",
+     "!type": "fn(node: string|+HTMLElement) -> +node.Node",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_one",
      "!doc": "Returns a single Node instance bound to the node or the\nfirst element matching the given selector. Returns null if no match found.\n<strong>Note:</strong> For chaining purposes you may want to\nuse <code>Y.all</code>, which returns a NodeList when no match is found.",
      "!data": {
@@ -18628,7 +19744,7 @@
      }
     },
     "plug": {
-     "!type": "fn(plugin: fn(), config: +config.plugConfig)",
+     "!type": "fn(plugin: fn(), config: +config.NodePlugConfig)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_plug",
      "!doc": "Registers plugins to be instantiated at the class level (plugins\nwhich should be plugged into every instance of Node by default).",
      "!data": {
@@ -18645,7 +19761,7 @@
     }
    },
    "NodeList": {
-    "!type": "fn(nodes: string)",
+    "!type": "fn(nodes: string|+element|+node.Node|[?])",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html",
     "prototype": {
      "setAttribute": {
@@ -18665,7 +19781,7 @@
       }
      },
      "hasClass": {
-      "!type": "fn(className: string) -> +yui.Array",
+      "!type": "fn(className: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_hasClass",
       "!doc": "Determines whether each node has the given className.",
       "!data": {
@@ -18761,7 +19877,7 @@
       }
      },
      "getData": {
-      "!type": "fn(name: string) -> +yui.Array",
+      "!type": "fn(name: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_getData",
       "!doc": "Retrieves arbitrary data stored on each Node instance\nbound to the NodeList.",
       "!data": {
@@ -18785,7 +19901,7 @@
       }
      },
      "on": {
-      "!type": "fn(type: string, fn: fn(), context?: +yui.Object, arg?: ?) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context?: +Object, arg?: ?) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_on",
       "!doc": "Subscribe a callback function for each `Node` in the collection to execute\nin response to a DOM event.\n\nNOTE: Generally, the `on()` method should be avoided on `NodeLists`, in\nfavor of using event delegation from a parent Node.  See the Event user\nguide for details.\n\nMost DOM events are associated with a preventable default behavior, such as\nlink clicks navigating to a new page.  Callbacks are passed a\n`DOMEventFacade` object as their first argument (usually called `e`) that\ncan be used to prevent this default behavior with `e.preventDefault()`. See\nthe `DOMEventFacade` API for all available properties and methods on the\nobject.\n\nBy default, the `this` object will be the `NodeList` that the subscription\ncame from, <em>not the `Node` that received the event</em>.  Use\n`e.currentTarget` to refer to the `Node`.\n\nReturning `false` from a callback is supported as an alternative to calling\n`e.preventDefault(); e.stopPropagation();`.  However, it is recommended to\nuse the event methods.",
       "!data": {
@@ -18793,7 +19909,7 @@
       }
      },
      "once": {
-      "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_once",
       "!doc": "Applies an one-time event listener to each Node bound to the NodeList.",
       "!data": {
@@ -18801,7 +19917,7 @@
       }
      },
      "after": {
-      "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_after",
       "!doc": "Applies an event listener to each Node bound to the NodeList.\nThe handler is called only after all on() handlers are called\nand the event is not prevented.",
       "!data": {
@@ -18809,7 +19925,7 @@
       }
      },
      "onceAfter": {
-      "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+      "!type": "fn(type: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_onceAfter",
       "!doc": "Applies an one-time event listener to each Node bound to the NodeList\nthat will be called only after all on() handlers are called and the\nevent is not prevented.",
       "!data": {
@@ -18880,7 +19996,7 @@
       }
      },
      "getStyle": {
-      "!type": "fn(attr: string) -> +yui.Array",
+      "!type": "fn(attr: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_getStyle",
       "!doc": "Returns an array of values for each node.\nUse camelCase (e.g. backgroundColor) for multi-word properties.",
       "!data": {
@@ -18888,7 +20004,7 @@
       }
      },
      "getComputedStyle": {
-      "!type": "fn(attr: string) -> +yui.Array",
+      "!type": "fn(attr: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_getComputedStyle",
       "!doc": "Returns an array of the computed value for each node.\nUse camelCase (e.g. backgroundColor) for multi-word properties.",
       "!data": {
@@ -18896,7 +20012,7 @@
       }
      },
      "setStyle": {
-      "!type": "fn(attr: string, val: string) -> !this",
+      "!type": "fn(attr: string, val: string|number) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_setStyle",
       "!doc": "Sets a style property on each node.\nUse camelCase (e.g. backgroundColor) for multi-word properties.",
       "!data": {
@@ -18904,7 +20020,7 @@
       }
      },
      "setStyles": {
-      "!type": "fn(hash: +yui.Object) -> !this",
+      "!type": "fn(hash: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_setStyles",
       "!doc": "Sets multiple style properties on each node.\nUse camelCase (e.g. backgroundColor) for multi-word properties.",
       "!data": {
@@ -18912,7 +20028,7 @@
       }
      },
      "show": {
-      "!type": "fn(name: string, config: +config.showConfig, callback: fn()) -> !this",
+      "!type": "fn(name: string, config: +config.NodeListShowConfig, callback: fn()) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_show",
       "!doc": "Makes each node visible.\nIf the \"transition\" module is loaded, show optionally\nanimates the showing of the node using either the default\ntransition effect (fadeIn), or the given named effect.",
       "!data": {
@@ -18920,7 +20036,7 @@
       }
      },
      "hide": {
-      "!type": "fn(name: string, config: +config.hideConfig, callback: fn()) -> !this",
+      "!type": "fn(name: string, config: +config.NodeListHideConfig, callback: fn()) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_hide",
       "!doc": "Hides each node.\nIf the \"transition\" module is loaded, hide optionally\nanimates the hiding of the node using either the default\ntransition effect (fadeOut), or the given named effect.",
       "!data": {
@@ -18936,7 +20052,7 @@
       }
      },
      "concat": {
-      "!type": "fn(valueN: +node.NodeList) -> +node.NodeList",
+      "!type": "fn(valueN: +node.NodeList|[?]) -> +node.NodeList",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_concat",
       "!data": {
        "submodule": "node-core"
@@ -18950,7 +20066,7 @@
       }
      },
      "push": {
-      "!type": "fn(nodes: +node.Node)",
+      "!type": "fn(nodes: +node.Node|+HTMLElement)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_push",
       "!data": {
        "submodule": "node-core"
@@ -18978,7 +20094,7 @@
       }
      },
      "unshift": {
-      "!type": "fn(nodes: +node.Node)",
+      "!type": "fn(nodes: +node.Node|+HTMLElement)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_unshift",
       "!data": {
        "submodule": "node-core"
@@ -18993,7 +20109,7 @@
       }
      },
      "each": {
-      "!type": "fn(fn: fn(), context: +yui.Object) -> !this",
+      "!type": "fn(fn: fn(), context: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_each",
       "!doc": "Applies the given function to each Node in the NodeList.",
       "!data": {
@@ -19001,7 +20117,7 @@
       }
      },
      "some": {
-      "!type": "fn(fn: fn(), context: +yui.Object) -> bool",
+      "!type": "fn(fn: fn(), context: +Object) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_some",
       "!doc": "Executes the function once for each node until a true value is returned.",
       "!data": {
@@ -19017,7 +20133,7 @@
       }
      },
      "indexOf": {
-      "!type": "fn(node: +node.Node) -> number",
+      "!type": "fn(node: +node.Node|+HTMLElement) -> number",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_indexOf",
       "!doc": "Returns the index of the node in the NodeList instance\nor -1 if the node isnt found.",
       "!data": {
@@ -19081,7 +20197,7 @@
       }
      },
      "getDOMNodes": {
-      "!type": "fn() -> +yui.Array",
+      "!type": "fn() -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_getDOMNodes",
       "!doc": "Returns the DOM node bound to the Node instance",
       "!data": {
@@ -19129,7 +20245,7 @@
      }
     },
     "getDOMNodes": {
-     "!type": "fn(nodelist: +node.NodeList) -> +yui.Array",
+     "!type": "fn(nodelist: +node.NodeList) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_getDOMNodes",
      "!doc": "Retrieves the DOM nodes bound to a NodeList instance",
      "!data": {
@@ -19137,7 +20253,7 @@
      }
     },
     "importMethod": {
-     "!type": "fn(host: +yui.Object, name: string, altName?: string)",
+     "!type": "fn(host: +Object, name: string|[string], altName?: string)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_importMethod",
      "!doc": "Import the named method, or methods from the host onto NodeList.",
      "!data": {
@@ -19163,7 +20279,7 @@
       }
      },
      "one": {
-      "!type": "fn(node: string) -> +node.Node",
+      "!type": "fn(node: string|+HTMLElement) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_one",
       "!doc": "Returns a single Node instance bound to the node or the\nfirst element matching the given selector. Returns null if no match found.\n<strong>Note:</strong> For chaining purposes you may want to\nuse <code>Y.all</code>, which returns a NodeList when no match is found.",
       "!data": {
@@ -19179,7 +20295,7 @@
    },
    "Plugin": {
     "Shim": {
-     "!type": "fn(User: +yui.Object)",
+     "!type": "fn(User: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Shim.html",
      "CLASS_NAME": {
       "!type": "string",
@@ -19219,7 +20335,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Number.html",
     "prototype": {
      "format": {
-      "!type": "fn(data: number, config: +config.formatConfig) -> string",
+      "!type": "fn(data: number, config: +config.NumberFormatConfig) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Number.html#method_format",
       "!doc": "Takes a Number and formats to string for display to user.",
       "!data": {
@@ -19227,7 +20343,7 @@
       }
      },
      "parse": {
-      "!type": "fn(data: string, config?: +config.parseConfig) -> number",
+      "!type": "fn(data: string|number|bool, config?: +config.NumberParseConfig) -> number",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Number.html#method_parse",
       "!doc": "Converts data to type Number.\nIf a `config` argument is used, it will strip the `data` of the prefix,\nthe suffix and the thousands separator, if any of them are found,\nreplace the decimal separator by a dot and parse the resulting string.\nExtra whitespace around the prefix and suffix will be ignored.",
       "!data": {
@@ -19248,42 +20364,42 @@
     },
     "prototype": {
      "augment": {
-      "!type": "fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string], args?: +yui.Array) -> fn()",
+      "!type": "fn(receiver: fn(), supplier: fn(), overwrite?: bool, whitelist?: [string], args?: [?]|?) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_augment",
       "!doc": "Augments the _receiver_ with prototype properties from the _supplier_. The\nreceiver may be a constructor function or an object. The supplier must be a\nconstructor function.\n\nIf the _receiver_ is an object, then the _supplier_ constructor will be called\nimmediately after _receiver_ is augmented, with _receiver_ as the `this` object.\n\nIf the _receiver_ is a constructor function, then all prototype methods of\n_supplier_ that are copied to _receiver_ will be sequestered, and the\n_supplier_ constructor will not be called immediately. The first time any\nsequestered method is called on the _receiver_s prototype, all sequestered\nmethods will be immediately copied to the _receiver_s prototype, the\n_supplier_s constructor will be executed, and finally the newly unsequestered\nmethod that was called will be executed.\n\nThis sequestering logic sounds like a bunch of complicated voodoo, but it makes\nit cheap to perform frequent augmentation by ensuring that suppliers\nconstructors are only called if a supplied method is actually used. If none of\nthe supplied methods is ever used, then theres no need to take the performance\nhit of calling the _supplier_s constructor."
      },
      "aggregate": {
-      "!type": "fn(receiver: +yui.Object, supplier: +yui.Object, overwrite?: bool, whitelist?: [string]) -> +yui.Object",
+      "!type": "fn(receiver: +Object, supplier: +Object, overwrite?: bool, whitelist?: [string]) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_aggregate",
       "!doc": "Copies object properties from the supplier to the receiver. If the target has\nthe property, and the property is an object, the target object will be\naugmented with the suppliers value."
      },
      "extend": {
-      "!type": "fn(r: fn(), s: fn(), px: +yui.Object, sx: +yui.Object) -> +yui.Object",
+      "!type": "fn(r: fn(), s: fn(), px: +Object, sx: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_extend",
       "!doc": "Utility to set up the prototype, constructor and superclass properties to\nsupport an inheritance strategy that can chain constructors and methods.\nStatic members will not be inherited."
      },
      "each": {
-      "!type": "fn(o: +yui.Object, f: fn(), c: +yui.Object, proto: bool) -> +yui.YUI",
+      "!type": "fn(o: +Object, f: fn(), c: +Object, proto: bool) -> +yui.YUI",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_each",
       "!doc": "Executes the supplied function for each item in\na collection.  Supports arrays, objects, and\nNodeLists"
      },
      "some": {
-      "!type": "fn(o: +yui.Object, f: fn(), c: +yui.Object, proto: bool) -> bool",
+      "!type": "fn(o: +Object, f: fn(), c: +Object, proto: bool) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_some",
       "!doc": "Executes the supplied function for each item in\na collection.  The operation stops if the function\nreturns true. Supports arrays, objects, and\nNodeLists."
      },
      "clone": {
-      "!type": "fn(o: +yui.Object, safe: bool, f: fn(), c: +yui.Object, owner: +yui.Object, cloned: +yui.Object) -> +yui.Array",
+      "!type": "fn(o: +Object, safe: bool, f: fn(), c: +Object, owner: +Object, cloned: +Object) -> [?]|+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_clone",
       "!doc": "Deep object/array copy. Function clones are actually wrappers around the\noriginal function. Array-like objects are treated as arrays. Primitives are\nreturned untouched. Optionally, a function can be provided to handle other data\ntypes, filter keys, validate values, etc.\n\n**Note:** Cloning a non-trivial object is a reasonably heavy operation, due to\nthe need to recursively iterate down non-primitive properties. Clone should be\nused only when a deep clone down to leaf level properties is explicitly\nrequired. This method will also\n\nIn many cases (for example, when trying to isolate objects used as hashes for\nconfiguration properties), a shallow copy, using `Y.merge()` is normally\nsufficient. If more than one level of isolation is required, `Y.merge()` can be\nused selectively at each level which needs to be isolated from the original\nwithout going all the way to leaf properties."
      },
      "bind": {
-      "!type": "fn(f: fn(), c: +yui.Object, args: ?) -> fn()",
+      "!type": "fn(f: fn(), c: +Object, args: ?) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_bind",
       "!doc": "Returns a function that will execute the supplied function in the\nsupplied objects context, optionally adding any additional\nsupplied parameters to the beginning of the arguments collection the\nsupplied to the function."
      },
      "rbind": {
-      "!type": "fn(f: fn(), c: +yui.Object, args: ?) -> fn()",
+      "!type": "fn(f: fn(), c: +Object, args: ?) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_rbind",
       "!doc": "Returns a function that will execute the supplied function in the\nsupplied objects context, optionally adding any additional\nsupplied parameters to the end of the arguments the function\nis executed with."
      }
@@ -19385,7 +20501,7 @@
     "prototype": {
      "!proto": "widget.Widget.prototype",
      "BUTTONS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Panel.html#property_BUTTONS",
       "!doc": "Collection of predefined buttons mapped from name => config.\n\nPanel includes a \"close\" button which can be use by name. When the close\nbutton is in the header (which is the default), it will look like: [x].\n\nSee `addButton()` for a list of possible configuration values."
      }
@@ -19394,11 +20510,11 @@
   },
   "parallel": {
    "Parallel": {
-    "!type": "fn(o: +yui.Object)",
+    "!type": "fn(o: +config.ParallelConfig)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Parallel.html",
     "prototype": {
      "results": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Parallel.html#property_results",
       "!doc": "An Array of results from all the callbacks in the stack"
      },
@@ -19443,7 +20559,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/PjaxBase.html",
     "prototype": {
      "navigate": {
-      "!type": "fn(url: string, options?: +yui.Object) -> bool",
+      "!type": "fn(url: string, options?: +config.PjaxBaseNavigateConfig) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/PjaxBase.html#method_navigate",
       "!doc": "Navigates to the specified URL if there is a route handler that matches. In\nbrowsers capable of using HTML5 history, the navigation will be enhanced by\nfiring the `navigate` event and having the router handle the \"request\".\nNon-HTML5 browsers will navigate to the new URL via manipulation of\n`window.location`.\n\nWhen there is a route handler for the specified URL and it is being\nnavigated to, this method will return `true`, otherwise it will return\n`false`.\n\n**Note:** The specified URL _must_ be of the same origin as the current URL,\notherwise an error will be logged and navigation will not occur. This is\nintended as both a security constraint and a purposely imposed limitation as\nit does not make sense to tell the router to navigate to a URL on a\ndifferent scheme, host, or port.",
       "!data": {
@@ -19457,7 +20573,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/PjaxContent.html",
     "prototype": {
      "getContent": {
-      "!type": "fn(responseText: string) -> +yui.Object",
+      "!type": "fn(responseText: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/PjaxContent.html#method_getContent",
       "!doc": "Extracts and returns the relevant HTML content from an Ajax response. The\ncontent is extracted using the `contentSelector` attribute as a CSS\nselector. If `contentSelector` is `null`, the entire response will be\nreturned.\n\nThe return value is an object containing two properties:\n\n  * `node`: A `Y.Node` instance for a document fragment containing the\n    extracted HTML content.\n\n  * `title`: The title of the HTML page, if any, extracted using the\n    `titleSelector` attribute (which defaults to looking for a `<title>`\n    element). If `titleSelector` is not set or if a title could not be\n    found, this property will be `undefined`.",
       "!data": {
@@ -19465,7 +20581,7 @@
       }
      },
      "loadContent": {
-      "!type": "fn(req: +yui.Object, res: +yui.Object, next: fn())",
+      "!type": "fn(req: +Object, res: +Object, next: fn())",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/PjaxContent.html#method_loadContent",
       "!doc": "Pjax route middleware to load content from a server. This makes an Ajax\nrequest for the requested URL, parses the returned content and puts it on\nthe routes response object.\n\nThis is route middleware and not intended to be the final callback for a\nroute. This will add the following information to the routes request and\nresponse objects:\n\n  - `req.ioURL`: The full URL that was used to make the `Y.io()` XHR. This\n    may contain `\"pjax=1\"` if the `addPjaxParam` option is set.\n\n  - `res.content`: An object containing `node` and `title` properties for\n    the content extracted from the servers response. See `getContent()` for\n    more details.\n\n  - `res.ioResponse`: The full `Y.io()` response object. This is useful if\n    you need access to the XHRs response `status` or HTTP headers.",
       "!data": {
@@ -19487,7 +20603,7 @@
      "!proto": "app.Router.prototype"
     },
     "defaultRoute": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Pjax.html#property_defaultRoute",
      "!doc": "A stack of middleware which forms the default Pjax route."
     }
@@ -19501,7 +20617,7 @@
      "prototype": {
       "!proto": "base.Base.prototype",
       "initializer": {
-       "!type": "fn(config: +config.initializerConfig)",
+       "!type": "fn(config: +config.Plugin.BaseInitializerConfig)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_initializer",
        "!doc": "Initializer lifecycle implementation."
       },
@@ -19511,48 +20627,48 @@
        "!doc": "Destructor lifecycle implementation.\n\nRemoves any event listeners or injected methods applied by the Plugin"
       },
       "doBefore": {
-       "!type": "fn(strMethod: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(strMethod: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_doBefore",
        "!doc": "Listens for the \"on\" moment of events fired by the host,\nor injects code \"before\" a given method on the host."
       },
       "doAfter": {
-       "!type": "fn(strMethod: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(strMethod: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_doAfter",
        "!doc": "Listens for the \"after\" moment of events fired by the host,\nor injects code \"after\" a given method on the host."
       },
       "onHostEvent": {
-       "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(type: string|+Object, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_onHostEvent",
        "!doc": "Listens for the \"on\" moment of events fired by the host object.\n\nListeners attached through this method will be detached when the plugin is unplugged."
       },
       "onceHostEvent": {
-       "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(type: string|+Object, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_onceHostEvent",
        "!doc": "Listens for the \"on\" moment of events fired by the host object one time only.\nThe listener is immediately detached when it is executed.\n\nListeners attached through this method will be detached when the plugin is unplugged."
       },
       "afterHostEvent": {
-       "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(type: string|+Object, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_afterHostEvent",
        "!doc": "Listens for the \"after\" moment of events fired by the host object.\n\nListeners attached through this method will be detached when the plugin is unplugged."
       },
       "onceAfterHostEvent": {
-       "!type": "fn(type: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(type: string|+Object, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_onceAfterHostEvent",
        "!doc": "Listens for the \"after\" moment of events fired by the host object one time only.\nThe listener is immediately detached when it is executed.\n\nListeners attached through this method will be detached when the plugin is unplugged."
       },
       "beforeHostMethod": {
-       "!type": "fn(method: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(method: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_beforeHostMethod",
        "!doc": "Injects a function to be executed before a given method on host object.\n\nThe function will be detached when the plugin is unplugged."
       },
       "afterHostMethod": {
-       "!type": "fn(method: string, fn: fn(), context: +yui.Object) -> +event_custom.EventHandle",
+       "!type": "fn(method: string, fn: fn(), context: +Object) -> +event_custom.EventHandle",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#method_afterHostMethod",
        "!doc": "Injects a function to be executed after a given method on host object.\n\nThe function will be detached when the plugin is unplugged."
       }
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Base.html#property_ATTRS",
       "!doc": "Object defining the set of attributes supported by the Plugin.Base class"
      },
@@ -19598,7 +20714,7 @@
       }
      },
      "plug": {
-      "!type": "fn(hostClass: fn(), plugin: fn(), config: +config.plugConfig)",
+      "!type": "fn(hostClass: fn(), plugin: fn(), config: +config.Plugin.HostPlugConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Host.html#method_plug",
       "!doc": "Registers plugins to be instantiated at the class level (plugins\nwhich should be plugged into every instance of the class by default).",
       "!data": {
@@ -19764,7 +20880,7 @@
      }
     },
     "stringify": {
-     "!type": "fn(obj: ?, cfg: +yui.Object, name: string)",
+     "!type": "fn(obj: ?, cfg: +Object, name: string)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/QueryString.html#method_stringify",
      "!doc": "<p>Converts an arbitrary value to a Query String representation.</p>\n\n<p>Objects with cyclical references will trigger an exception.</p>",
      "!data": {
@@ -19848,7 +20964,7 @@
       }
      },
      "getRecordsByIndex": {
-      "!type": "fn(index: number, range: number) -> +yui.Array",
+      "!type": "fn(index: number, range: number) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Recordset.html#method_getRecordsByIndex",
       "!doc": "Returns a range of records beginning at particular index",
       "!data": {
@@ -19864,7 +20980,7 @@
       }
      },
      "getValuesByKey": {
-      "!type": "fn(key?: string) -> +yui.Array",
+      "!type": "fn(key?: string) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Recordset.html#method_getValuesByKey",
       "!doc": "Gets an array of values for a data _key_ in the sets records.  If no _key_\nis supplied, the returned array will contain the full data object for each\nrecord.",
       "!data": {
@@ -19872,7 +20988,7 @@
       }
      },
      "add": {
-      "!type": "fn(oData: +queue_promote.Record, index?: number) -> +recordset.Recordset",
+      "!type": "fn(oData: +queue_promote.Record|+Object|[?], index?: number) -> +recordset.Recordset",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Recordset.html#method_add",
       "!doc": "Adds one or more Records to the RecordSet at the given index. If index is null, then adds the Records to the end of the RecordSet.",
       "!data": {
@@ -19896,7 +21012,7 @@
       }
      },
      "update": {
-      "!type": "fn(data: +queue_promote.Record, index?: number) -> +recordset.Recordset",
+      "!type": "fn(data: +queue_promote.Record|+Object|[?], index?: number) -> +recordset.Recordset",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Recordset.html#method_update",
       "!doc": "Updates the recordset with the new records passed in. Overwrites existing\nrecords when updating the index with the new records.",
       "!data": {
@@ -19904,7 +21020,7 @@
       }
      },
      "_setRecords": {
-      "!type": "fn(items: [+queue_promote.Record]) -> [+queue_promote.Record]",
+      "!type": "fn(items: [+queue_promote.Record]|[+Object]) -> [+queue_promote.Record]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Recordset.html#method__setRecords",
       "!doc": "Ensures the value being set is an array of Record instances. If array items\nare raw object data, they are turned into Records.",
       "!data": {
@@ -19948,7 +21064,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/RecordsetIndexer.html",
     "prototype": {
      "createTable": {
-      "!type": "fn(key: string) -> +yui.Object",
+      "!type": "fn(key: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/RecordsetIndexer.html#method_createTable",
       "!doc": "Creates a new hash table.",
       "!data": {
@@ -19956,7 +21072,7 @@
       }
      },
      "getTable": {
-      "!type": "fn(key: string) -> +yui.Object",
+      "!type": "fn(key: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/RecordsetIndexer.html#method_getTable",
       "!doc": "Get a hash table that hashes records by a given key.",
       "!data": {
@@ -20068,12 +21184,12 @@
       "!doc": "Each box has a content area and optional surrounding padding and\nborder areas. This property stores the sum of all vertical\nsurrounding * information needed to adjust the node height."
      },
      "nodeSurrounding": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Resize.html#property_nodeSurrounding",
       "!doc": "Stores the <a href=\"Resize.html#attr_node\">node</a>\nsurrounding information retrieved from\n<a href=\"Resize.html#method__getBoxSurroundingInfo\">_getBoxSurroundingInfo</a>."
      },
      "wrapperSurrounding": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Resize.html#property_wrapperSurrounding",
       "!doc": "Stores the <a href=\"Resize.html#attr_wrapper\">wrapper</a>\nsurrounding information retrieved from\n<a href=\"Resize.html#method__getBoxSurroundingInfo\">_getBoxSurroundingInfo</a>."
      },
@@ -20098,7 +21214,7 @@
       "!doc": "Whether the handle being dragged can change the width."
      },
      "delegate": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Resize.html#property_delegate",
       "!doc": "Store DD.Delegate reference for the respective Resize instance."
      },
@@ -20114,7 +21230,7 @@
      "!doc": "Static property provides a string to identify the class."
     },
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Resize.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration for the Resize."
     }
@@ -20125,7 +21241,7 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ResizeConstrained.html",
      "prototype": {
       "constrainSurrounding": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ResizeConstrained.html#property_constrainSurrounding",
        "!doc": "Stores the <code>constrain</code>\nsurrounding information retrieved from\n<a href=\"Resize.html#method__getBoxSurroundingInfo\">_getBoxSurroundingInfo</a>.",
        "!data": {
@@ -20157,7 +21273,7 @@
       }
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.Resize.html#property_ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the Resize plugin.",
       "!data": {
@@ -20209,7 +21325,7 @@
       "!doc": "The namespace on which the plugin will reside."
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollViewList.html#property_ATTRS",
       "!doc": "The default attribute configuration for the plugin"
      }
@@ -20227,7 +21343,7 @@
      "prototype": {
       "!proto": "plugin.Plugin.Base.prototype",
       "initializer": {
-       "!type": "fn(Configuration: +yui.Object)",
+       "!type": "fn(Configuration: +Object)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollViewPaginator.html#method_initializer",
        "!doc": "Designated initializer"
       },
@@ -20258,7 +21374,7 @@
       "!doc": "The namespace on which the plugin will reside"
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollViewPaginator.html#property_ATTRS",
       "!doc": "The default attribute configuration for the plugin"
      },
@@ -20333,7 +21449,7 @@
       }
      },
      "SCROLLBAR_TEMPLATE": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollViewScrollbars.html#property_SCROLLBAR_TEMPLATE",
       "!doc": "HTML template for the scrollbar",
       "!data": {
@@ -20341,7 +21457,7 @@
       }
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.ScrollViewScrollbars.html#property_ATTRS",
       "!doc": "The default attribute configuration for the plugin",
       "!data": {
@@ -20364,7 +21480,7 @@
       }
      },
      "initializer": {
-      "!type": "fn(Configuration: +yui.Object)",
+      "!type": "fn(Configuration: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/ScrollView.html#method_initializer",
       "!doc": "Designated initializer",
       "!data": {
@@ -20397,7 +21513,7 @@
      }
     },
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/ScrollView.html#property_CLASS_NAMES",
      "!doc": "List of class names used in the scrollviews DOM",
      "!data": {
@@ -20608,12 +21724,12 @@
      }
     },
     "_test": {
-     "!type": "fn(node: +node.Node, test: string)",
+     "!type": "fn(node: +node.Node, test: string|+node.Node)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Sortable.html#method__test",
      "!doc": "Test a Node or a selector for the container"
     },
     "getSortable": {
-     "!type": "fn(node: string)",
+     "!type": "fn(node: string|+node.Node)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Sortable.html#method_getSortable",
      "!doc": "Get a Sortable instance back from a node reference or a selector string."
     },
@@ -20631,7 +21747,7 @@
   },
   "stylesheet": {
    "StyleSheet": {
-    "!type": "fn(seed: string, name: string)",
+    "!type": "fn(seed: string|+HTMLElement|+node.Node, name: string)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/StyleSheet.html",
     "prototype": {
      "getId": {
@@ -20655,12 +21771,12 @@
       "!doc": "Returns false if the StyleSheet is disabled.  Otherwise true."
      },
      "set": {
-      "!type": "fn(sel: string, css: +yui.Object) -> !this",
+      "!type": "fn(sel: string, css: +Object) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/StyleSheet.html#method_set",
       "!doc": "<p>Set style properties for a provided selector string.\nIf the selector includes commas, it will be split into individual\nselectors and applied accordingly.  If the selector string does not\nhave a corresponding rule in the sheet, it will be added.</p>\n\n<p>The object properties in the second parameter must be the JavaScript\nnames of style properties.  E.g. fontSize rather than font-size.</p>\n\n<p>The float style property will be set by any of &quot;float&quot;,\n&quot;styleFloat&quot;, or &quot;cssFloat&quot;.</p>"
      },
      "unset": {
-      "!type": "fn(sel: string, css: string) -> !this",
+      "!type": "fn(sel: string, css: string|[?]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/StyleSheet.html#method_unset",
       "!doc": "<p>Unset style properties for a provided selector string, removing\ntheir effect from the style cascade.</p>\n\n<p>If the selector includes commas, it will be split into individual\nselectors and applied accordingly.  If there are no properties\nremaining in the rule after unsetting, the rule is removed.</p>\n\n<p>The style property or properties in the second parameter must be the\nJavaScript style property names. E.g. fontSize rather than font-size.</p>\n\n<p>The float style property will be unset by any of &quot;float&quot;,\n&quot;styleFloat&quot;, or &quot;cssFloat&quot;.</p>"
      },
@@ -20671,7 +21787,7 @@
      }
     },
     "toCssText": {
-     "!type": "fn(css: +yui.Object, cssText: string) -> string",
+     "!type": "fn(css: +Object, cssText: string) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/StyleSheet.html#method_toCssText",
      "!doc": "<p>Converts an object literal of style properties and values into a string\nof css text.  This can then be assigned to el.style.cssText.</p>\n\n<p>The optional second parameter is a cssText string representing the\nstarting state of the style prior to alterations.  This is most often\nextracted from the eventual targets current el.style.cssText.</p>"
     },
@@ -20693,7 +21809,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI~substitute.html",
     "prototype": {
      "substitute": {
-      "!type": "fn(s: string, o: +yui.Object, f: fn(), recurse: bool) -> string",
+      "!type": "fn(s: string, o: +Object, f: fn(), recurse: bool) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI~substitute.html#method_substitute",
       "!doc": "<strong>Use `Y.Lang.sub` or `Y.Template` instead.</strong>\n\n\n\nDoes `{placeholder}` substitution on a string.  The object passed as the\nsecond parameter provides values to replace the `{placeholder}`s.\n{placeholder} token names must match property names of the object.  For\nexample\n\n`var greeting = Y.substitute(\"Hello, {who}!\", { who: \"World\" });`\n\n`{placeholder}` tokens that are undefined on the object map will be left in\ntact (leaving unsightly \"{placeholder}\"s in the output string).  If your\nreplacement strings *should* include curly braces, use `{LBRACE}` and\n`{RBRACE}` in your object map string value.\n\nIf a function is passed as a third argument, it will be called for each\n{placeholder} found.  The {placeholder} name is passed as the first value\nand the value from the object map is passed as the second.  If the\n{placeholder} contains a space, the first token will be used to identify\nthe object map property and the remainder will be passed as a third\nargument to the function.  See below for an example.\n\nIf the value in the object map for a given {placeholder} is an object and\nthe `dump` module is loaded, the replacement value will be the string\nresult of calling `Y.dump(...)` with the object as input.  Include a\nnumeric second token in the {placeholder} to configure the depth of the call\nto `Y.dump(...)`, e.g. \"{someObject 2}\".  See the\n<a href=\"../classes/YUI.html#method_dump\">`dump`</a> method for details."
      }
@@ -20702,7 +21818,7 @@
   },
   "swf": {
    "SWF": {
-    "!type": "fn(id: string, swfURL: string, p_oAttributes: +yui.Object)",
+    "!type": "fn(id: string|+HTMLElement, swfURL: string, p_oAttributes: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/SWF.html",
     "!data": {
      "augments": [
@@ -20711,7 +21827,7 @@
     },
     "prototype": {
      "callSWF": {
-      "!type": "fn(func: string, args: +yui.Array)",
+      "!type": "fn(func: string, args: [?])",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/SWF.html#method_callSWF",
       "!doc": "Calls a specific function exposed by the SWFs\nExternalInterface."
      },
@@ -20733,17 +21849,17 @@
       "!doc": "Stored reference to the instance of Uploader.Queue used to manage\nthe upload process. This is a read-only property that only exists\nduring an active upload process. Only one queue can be active at\na time; if an upload start is attempted while a queue is active,\nit will be ignored."
      },
      "upload": {
-      "!type": "fn(file: +file_flash.FileFlash, url: string, postVars?: +yui.Object)",
+      "!type": "fn(file: +file_flash.FileFlash, url: string, postVars?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#method_upload",
       "!doc": "Starts the upload of a specific file."
      },
      "uploadAll": {
-      "!type": "fn(url: string, postVars?: +yui.Object)",
+      "!type": "fn(url: string, postVars?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#method_uploadAll",
       "!doc": "Starts the upload of all files on the file list, using an automated queue."
      },
      "uploadThese": {
-      "!type": "fn(files: +yui.Array, url: string, postVars?: +yui.Object)",
+      "!type": "fn(files: [?], url: string, postVars?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderFlash.html#method_uploadThese",
       "!doc": "Starts the upload of the files specified in the first argument, using an automated queue."
      }
@@ -20791,11 +21907,11 @@
     }
    },
    "Template": {
-    "!type": "fn(engine?: +Mixed, defaults?: +yui.Object)",
+    "!type": "fn(engine?: +Mixed, defaults?: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html",
     "prototype": {
      "defaults": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#property_defaults",
       "!doc": "Default options.",
       "!data": {
@@ -20811,7 +21927,7 @@
       }
      },
      "compile": {
-      "!type": "fn(text: string, options?: +yui.Object) -> fn()",
+      "!type": "fn(text: string, options?: +Object) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#method_compile",
       "!doc": "Compiles a template with the current template engine and returns a compiled\ntemplate function.",
       "!data": {
@@ -20819,7 +21935,7 @@
       }
      },
      "precompile": {
-      "!type": "fn(text: string, options?: +yui.Object) -> string",
+      "!type": "fn(text: string, options?: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#method_precompile",
       "!doc": "Precompiles a template with the current template engine and returns a string\ncontaining JavaScript source code for the precompiled template.",
       "!data": {
@@ -20827,7 +21943,7 @@
       }
      },
      "render": {
-      "!type": "fn(text: string, data: +yui.Object, options?: +yui.Object) -> string",
+      "!type": "fn(text: string, data: +Object, options?: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#method_render",
       "!doc": "Compiles and renders a template with the current template engine in a single\nstep, and returns the rendered result.",
       "!data": {
@@ -20835,7 +21951,7 @@
       }
      },
      "revive": {
-      "!type": "fn(precompiled: fn(), options?: +yui.Object) -> fn()",
+      "!type": "fn(precompiled: fn(), options?: +Object) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#method_revive",
       "!doc": "Revives a precompiled template function into an executable template function\nusing the current template engine. The precompiled code must already have\nbeen evaluated; this method wont evaluate it for you.",
       "!data": {
@@ -20844,7 +21960,7 @@
      }
     },
     "register": {
-     "!type": "fn(templateName: string, template: fn(data?: +yui.Object, options?: +yui.Object)) -> fn()",
+     "!type": "fn(templateName: string, template: fn(data?: +Object, options?: +Object)) -> fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#method_register",
      "!doc": "Registers a pre-compiled template into the central template registry with a\ngiven template string, allowing that template to be called and rendered by\nthat name using the `Y.Template.render()` static method.\n\nFor example, given the following simple Handlebars template, in `foo.hbs`:",
      "!data": {
@@ -20860,7 +21976,7 @@
      }
     },
     "render": {
-     "!type": "fn(templateName: string, data?: +yui.Object, options?: +yui.Object) -> string",
+     "!type": "fn(templateName: string, data?: +Object, options?: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.html#method_render",
      "!doc": "Renders a template into a string, given the registered template name and data\nto be interpolated. The template name must have been registered previously with\n`register()`.\n\nOnce the template has been registered and built into a YUI module, it can be\nlisted as a dependency for any other YUI module. Continuing from the above\nexample, the registered template can be used in the following way:",
      "!data": {
@@ -20871,7 +21987,7 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.Micro.html",
      "options": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.Micro.html#property_options",
       "!doc": "Default options for `Y.Template.Micro`.",
       "!data": {
@@ -20879,7 +21995,7 @@
       }
      },
      "compile": {
-      "!type": "fn(text: string, options?: +yui.Object) -> fn()",
+      "!type": "fn(text: string, options?: +Object) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.Micro.html#method_compile",
       "!doc": "Compiles a template string into a JavaScript function. Pass a data object to the\nfunction to render the template using the given data and get back a rendered\nstring.\n\nWithin a template, use `<%= ... %>` to output the value of an expression (where\n`...` is the JavaScript expression or data variable to evaluate). The output\nwill be HTML-escaped by default. To output a raw value without escaping, use\n`<%== ... %>`, but be careful not to do this with untrusted user input.\n\nTo execute arbitrary JavaScript code within the template without rendering its\noutput, use `<% ... %>`, where `...` is the code to be executed. This allows the\nuse of if/else blocks, loops, function calls, etc., although its recommended\nthat you avoid embedding anything beyond basic flow control logic in your\ntemplates.\n\nProperties of the data object passed to a template function are made available\non a `data` variable within the scope of the template. So, if you pass in\nthe object `{message: hello!}`, you can print the value of the `message`\nproperty using `<%= data.message %>`.",
       "!data": {
@@ -20887,7 +22003,7 @@
       }
      },
      "precompile": {
-      "!type": "fn(text: string, options?: +yui.Object) -> string",
+      "!type": "fn(text: string, options?: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.Micro.html#method_precompile",
       "!doc": "Precompiles the given template text into a string of JavaScript source code that\ncan be evaluated later in another context (or on another machine) to render the\ntemplate.\n\nA common use case is to precompile templates at build time or on the server,\nthen evaluate the code on the client to render a template. The client only needs\nto revive and render the template, avoiding the work of the compilation step.",
       "!data": {
@@ -20895,7 +22011,7 @@
       }
      },
      "render": {
-      "!type": "fn(text: string, data: +yui.Object, options?: +yui.Object) -> string",
+      "!type": "fn(text: string, data: +Object, options?: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Template.Micro.html#method_render",
       "!doc": "Compiles and renders the given template text in a single step.\n\nThis can be useful for single-use templates, but if you plan to render the same\ntemplate multiple times, its much better to use `compile()` to compile it once,\nthen simply call the compiled function multiple times to avoid recompiling.",
       "!data": {
@@ -20923,22 +22039,22 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Console.html",
      "prototype": {
       "_isIstanbul": {
-       "!type": "fn(json: +yui.Object) -> bool",
+       "!type": "fn(json: +Object) -> bool",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Console.html#method__isIstanbul",
        "!doc": "Scans the coverage data to determine if its an Istanbul coverage object."
       },
       "parseYUITest": {
-       "!type": "fn(coverage: +yui.Object)",
+       "!type": "fn(coverage: +Object)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Console.html#method_parseYUITest",
        "!doc": "Parses and logs a summary of YUITest coverage data."
       },
       "_blankSummary": {
-       "!type": "fn() -> +yui.Object",
+       "!type": "fn() -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Console.html#method__blankSummary",
        "!doc": "Generates a generic summary object used for Istanbul conversions."
       },
       "parseInstanbul": {
-       "!type": "fn(coverage: +yui.Object)",
+       "!type": "fn(coverage: +Object)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Console.html#method_parseInstanbul",
        "!doc": "Takes an Istanbul coverage object, normalizes it and prints a log with a summary"
       }
@@ -20952,72 +22068,72 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html",
      "contains": {
-      "!type": "fn(needle: +yui.Object, haystack: +yui.Array, message: string)",
+      "!type": "fn(needle: +Object, haystack: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_contains",
       "!doc": "Asserts that a value is present in an array. This uses the triple equals\nsign so no type coercion may occur."
      },
      "containsItems": {
-      "!type": "fn(needles: [+yui.Object], haystack: +yui.Array, message: string)",
+      "!type": "fn(needles: [+Object], haystack: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_containsItems",
       "!doc": "Asserts that a set of values are present in an array. This uses the triple equals\nsign so no type coercion may occur. For this assertion to pass, all values must\nbe found."
      },
      "containsMatch": {
-      "!type": "fn(matcher: fn(), haystack: +yui.Array, message: string)",
+      "!type": "fn(matcher: fn(), haystack: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_containsMatch",
       "!doc": "Asserts that a value matching some condition is present in an array. This uses\na function to determine a match."
      },
      "doesNotContain": {
-      "!type": "fn(needle: +yui.Object, haystack: +yui.Array, message: string)",
+      "!type": "fn(needle: +Object, haystack: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_doesNotContain",
       "!doc": "Asserts that a value is not present in an array. This uses the triple equals\nAsserts that a value is not present in an array. This uses the triple equals\nsign so no type coercion may occur."
      },
      "doesNotContainItems": {
-      "!type": "fn(needles: [+yui.Object], haystack: +yui.Array, message: string)",
+      "!type": "fn(needles: [+Object], haystack: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_doesNotContainItems",
       "!doc": "Asserts that a set of values are not present in an array. This uses the triple equals\nsign so no type coercion may occur. For this assertion to pass, all values must\nnot be found."
      },
      "doesNotContainMatch": {
-      "!type": "fn(matcher: fn(), haystack: +yui.Array, message: string)",
+      "!type": "fn(matcher: fn(), haystack: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_doesNotContainMatch",
       "!doc": "Asserts that no values matching a condition are present in an array. This uses\na function to determine a match."
      },
      "indexOf": {
-      "!type": "fn(needle: +yui.Object, haystack: +yui.Array, index: number, message: string)",
+      "!type": "fn(needle: +Object, haystack: [?], index: number, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_indexOf",
       "!doc": "Asserts that the given value is contained in an array at the specified index.\nThis uses the triple equals sign so no type coercion will occur."
      },
      "itemsAreEqual": {
-      "!type": "fn(expected: +yui.Array, actual: +yui.Array, message: string)",
+      "!type": "fn(expected: [?], actual: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_itemsAreEqual",
       "!doc": "Asserts that the values in an array are equal, and in the same position,\nas values in another array. This uses the double equals sign\nso type coercion may occur. Note that the array objects themselves\nneed not be the same for this test to pass."
      },
      "itemsAreEquivalent": {
-      "!type": "fn(expected: +yui.Array, actual: +yui.Array, comparator: fn(), message: string)",
+      "!type": "fn(expected: [?], actual: [?], comparator: fn(), message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_itemsAreEquivalent",
       "!doc": "Asserts that the values in an array are equivalent, and in the same position,\nas values in another array. This uses a function to determine if the values\nare equivalent. Note that the array objects themselves\nneed not be the same for this test to pass."
      },
      "isEmpty": {
-      "!type": "fn(actual: +yui.Array, message: string)",
+      "!type": "fn(actual: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_isEmpty",
       "!doc": "Asserts that an array is empty."
      },
      "isNotEmpty": {
-      "!type": "fn(actual: +yui.Array, message: string)",
+      "!type": "fn(actual: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_isNotEmpty",
       "!doc": "Asserts that an array is not empty."
      },
      "itemsAreSame": {
-      "!type": "fn(expected: +yui.Array, actual: +yui.Array, message: string)",
+      "!type": "fn(expected: [?], actual: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_itemsAreSame",
       "!doc": "Asserts that the values in an array are the same, and in the same position,\nas values in another array. This uses the triple equals sign\nso no type coercion will occur. Note that the array objects themselves\nneed not be the same for this test to pass."
      },
      "lastIndexOf": {
-      "!type": "fn(needle: +yui.Object, haystack: +yui.Array, index: number, message: string)",
+      "!type": "fn(needle: +Object, haystack: [?], index: number, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_lastIndexOf",
       "!doc": "Asserts that the given value is contained in an array at the specified index,\nstarting from the back of the array.\nThis uses the triple equals sign so no type coercion will occur."
      },
      "isUnique": {
-      "!type": "fn(array: +yui.Array, comparator?: fn(), message?: string)",
+      "!type": "fn(array: [?], comparator?: fn(), message?: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ArrayAssert.html#method_isUnique",
       "!doc": "Asserts that given array doesnt contain duplicate items."
      }
@@ -21036,107 +22152,107 @@
       "!doc": "A marker that the test should pass."
      },
      "areEqual": {
-      "!type": "fn(expected: +yui.Object, actual: +yui.Object, message: string)",
+      "!type": "fn(expected: +Object, actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_areEqual",
       "!doc": "Asserts that a value is equal to another. This uses the double equals sign\nso type coercion may occur."
      },
      "areNotEqual": {
-      "!type": "fn(unexpected: +yui.Object, actual: +yui.Object, message: string)",
+      "!type": "fn(unexpected: +Object, actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_areNotEqual",
       "!doc": "Asserts that a value is not equal to another. This uses the double equals sign\nso type coercion may occur."
      },
      "areNotSame": {
-      "!type": "fn(unexpected: +yui.Object, actual: +yui.Object, message: string)",
+      "!type": "fn(unexpected: +Object, actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_areNotSame",
       "!doc": "Asserts that a value is not the same as another. This uses the triple equals sign\nso no type coercion may occur."
      },
      "areSame": {
-      "!type": "fn(expected: +yui.Object, actual: +yui.Object, message: string)",
+      "!type": "fn(expected: +Object, actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_areSame",
       "!doc": "Asserts that a value is the same as another. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isFalse": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isFalse",
       "!doc": "Asserts that a value is false. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isTrue": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isTrue",
       "!doc": "Asserts that a value is true. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isNaN": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isNaN",
       "!doc": "Asserts that a value is not a number."
      },
      "isNotNaN": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isNotNaN",
       "!doc": "Asserts that a value is not the special NaN value."
      },
      "isNotNull": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isNotNull",
       "!doc": "Asserts that a value is not null. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isNotUndefined": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isNotUndefined",
       "!doc": "Asserts that a value is not undefined. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isNull": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isNull",
       "!doc": "Asserts that a value is null. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isUndefined": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isUndefined",
       "!doc": "Asserts that a value is undefined. This uses the triple equals sign\nso no type coercion may occur."
      },
      "isArray": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isArray",
       "!doc": "Asserts that a value is an array."
      },
      "isBoolean": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isBoolean",
       "!doc": "Asserts that a value is a Boolean."
      },
      "isFunction": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isFunction",
       "!doc": "Asserts that a value is a function."
      },
      "isInstanceOf": {
-      "!type": "fn(expected: fn(), actual: +yui.Object, message: string)",
+      "!type": "fn(expected: fn(), actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isInstanceOf",
       "!doc": "Asserts that a value is an instance of a particular object. This may return\nincorrect results when comparing objects from one frame to constructors in\nanother frame. For best results, dont use in a cross-frame manner."
      },
      "isNumber": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isNumber",
       "!doc": "Asserts that a value is a number."
      },
      "isObject": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isObject",
       "!doc": "Asserts that a value is an object."
      },
      "isString": {
-      "!type": "fn(actual: +yui.Object, message: string)",
+      "!type": "fn(actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isString",
       "!doc": "Asserts that a value is a string."
      },
      "isTypeOf": {
-      "!type": "fn(expectedType: string, actualValue: +yui.Object, message: string)",
+      "!type": "fn(expectedType: string, actualValue: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_isTypeOf",
       "!doc": "Asserts that a value is of a particular type."
      },
      "throwsError": {
-      "!type": "fn(expectedError: string, method: fn(), message: string)",
+      "!type": "fn(expectedError: string|+Object, method: fn(), message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Assert.html#method_throwsError",
       "!doc": "Asserts that executing a particular method should throw an error of\na specific type. This is a replacement for _should.error."
      }
@@ -21168,17 +22284,17 @@
      }
     },
     "ComparisonFailure": {
-     "!type": "fn(message: string, expected: +yui.Object, actual: +yui.Object)",
+     "!type": "fn(message: string, expected: +Object, actual: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ComparisonFailure.html",
      "prototype": {
       "!proto": "AssertionError.prototype",
       "expected": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ComparisonFailure.html#property_expected",
        "!doc": "The expected value."
       },
       "actual": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ComparisonFailure.html#property_actual",
        "!doc": "The actual value."
       },
@@ -21199,12 +22315,12 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.CoverageFormat.html",
      "prototype": {
       "JSON": {
-       "!type": "fn(coverage: +yui.Object) -> string",
+       "!type": "fn(coverage: +Object) -> string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.CoverageFormat.html#method_JSON",
        "!doc": "Returns the coverage report in JSON format. This is the straight\nJSON representation of the native coverage report."
       },
       "XdebugJSON": {
-       "!type": "fn(coverage: +yui.Object) -> string",
+       "!type": "fn(coverage: +Object) -> string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.CoverageFormat.html#method_XdebugJSON",
        "!doc": "Returns the coverage report in a JSON format compatible with\nXdebug. See <a href=\"http://www.xdebug.com/docs/code_coverage\">Xdebug Documentation</a>\nfor more information. Note: function coverage is not available\nin this format."
       }
@@ -21239,7 +22355,7 @@
        "!doc": "Adds a listener for a given event type."
       },
       "fire": {
-       "!type": "fn(event: +yui.Object)",
+       "!type": "fn(event: +Object|string)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.EventTarget.html#method_fire",
        "!doc": "Fires an event based on the passed-in object."
       },
@@ -21259,17 +22375,17 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Mock.html",
      "expect": {
-      "!type": "fn(mock: +yui.Object, expectation: +yui.Object)",
+      "!type": "fn(mock: +Object, expectation: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Mock.html#method_expect",
       "!doc": "Assigns an expectation to a mock object. This is used to create\nmethods and properties on the mock object that are monitored for\ncalls and changes, respectively."
      },
      "verify": {
-      "!type": "fn(mock: +yui.Object)",
+      "!type": "fn(mock: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Mock.html#method_verify",
       "!doc": "Verifies that all expectations of a mock object have been met and\nthrows an assertion error if not."
      },
      "Value": {
-      "!type": "fn(method: fn(), originalArgs: +yui.Array, message: string)",
+      "!type": "fn(method: fn(), originalArgs: [?], message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Mock.Value.html",
       "Any": {
        "!type": "fn()",
@@ -21307,52 +22423,52 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html",
      "areEqual": {
-      "!type": "fn(expected: +yui.Object, actual: +yui.Object, message: string)",
+      "!type": "fn(expected: +Object, actual: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_areEqual",
       "!doc": "Asserts that an object has all of the same properties\nand property values as the other."
      },
      "hasKey": {
-      "!type": "fn(propertyName: string, object: +yui.Object, message: string)",
+      "!type": "fn(propertyName: string, object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_hasKey",
       "!doc": "Asserts that an object has a property with the given name."
      },
      "hasKeys": {
-      "!type": "fn(properties: +yui.Array, object: +yui.Object, message: string)",
+      "!type": "fn(properties: [?], object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_hasKeys",
       "!doc": "Asserts that an object has all properties of a reference object."
      },
      "inheritsKey": {
-      "!type": "fn(propertyName: string, object: +yui.Object, message: string)",
+      "!type": "fn(propertyName: string, object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_inheritsKey",
       "!doc": "Asserts that a property with the given name exists on an objects prototype."
      },
      "inheritsKeys": {
-      "!type": "fn(properties: +yui.Array, object: +yui.Object, message: string)",
+      "!type": "fn(properties: [?], object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_inheritsKeys",
       "!doc": "Asserts that all properties exist on an object prototype."
      },
      "ownsKey": {
-      "!type": "fn(propertyName: string, object: +yui.Object, message: string)",
+      "!type": "fn(propertyName: string, object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_ownsKey",
       "!doc": "Asserts that a property with the given name exists on an object instance (not on its prototype)."
      },
      "ownsKeys": {
-      "!type": "fn(properties: +yui.Array, object: +yui.Object, message: string)",
+      "!type": "fn(properties: [?], object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_ownsKeys",
       "!doc": "Asserts that all properties exist on an object instance (not on its prototype)."
      },
      "ownsNoKeys": {
-      "!type": "fn(object: +yui.Object, message: string)",
+      "!type": "fn(object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_ownsNoKeys",
       "!doc": "Asserts that an object owns no properties."
      },
      "ownsOrInheritsKey": {
-      "!type": "fn(propertyName: string, object: +yui.Object, message: string)",
+      "!type": "fn(propertyName: string, object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_ownsOrInheritsKey",
       "!doc": "Asserts that an object has a property with the given name."
      },
      "ownsOrInheritsKeys": {
-      "!type": "fn(properties: +yui.Array, object: +yui.Object, message: string)",
+      "!type": "fn(properties: [?], object: +Object, message: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.ObjectAssert.html#method_ownsOrInheritsKeys",
       "!doc": "Asserts that an object has all properties of a reference object."
      }
@@ -21387,7 +22503,7 @@
        "!doc": "Cleans up the memory associated with the TestReporter, removing DOM elements\nthat were created."
       },
       "report": {
-       "!type": "fn(results: +yui.Object)",
+       "!type": "fn(results: +Object)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Reporter.html#method_report",
        "!doc": "Sends the report to the server."
       }
@@ -21488,7 +22604,7 @@
        "!doc": "Causes the test case to wait a specified amount of time and then\ncontinue executing the given code."
       },
       "next": {
-       "!type": "fn(callback: fn(), context?: +yui.Object) -> fn()",
+       "!type": "fn(callback: fn(), context?: +Object) -> fn()",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestCase.html#method_next",
        "!doc": "Creates a callback that automatically resumes the test. Parameters as passed\non to the callback."
       },
@@ -21533,22 +22649,22 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestFormat.html",
      "JSON": {
-      "!type": "fn(result: +yui.Object) -> string",
+      "!type": "fn(result: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestFormat.html#method_JSON",
       "!doc": "Returns test results formatted as a JSON string. Requires JSON utility."
      },
      "XML": {
-      "!type": "fn(result: +yui.Object) -> string",
+      "!type": "fn(result: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestFormat.html#method_XML",
       "!doc": "Returns test results formatted as an XML string."
      },
      "JUnitXML": {
-      "!type": "fn(result: +yui.Object) -> string",
+      "!type": "fn(result: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestFormat.html#method_JUnitXML",
       "!doc": "Returns test results formatted in JUnit XML format."
      },
      "TAP": {
-      "!type": "fn(result: +yui.Object) -> string",
+      "!type": "fn(result: +Object) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestFormat.html#method_TAP",
       "!doc": "Returns test results formatted in TAP format.\nFor more information, see <a href=\"http://testanything.org/\">Test Anything Protocol</a>."
      }
@@ -21573,12 +22689,12 @@
        "!doc": "Indicates that the TestRunner is busy running tests and therefore cant\nbe stopped and results cannot be gathered."
       },
       "getResults": {
-       "!type": "fn(format: fn()) -> +yui.Object",
+       "!type": "fn(format: fn()) -> +Object|string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Runner.html#method_getResults",
        "!doc": "Returns the last complete results set from the TestRunner. Null is returned\nif the TestRunner is running or no tests have been run."
       },
       "getCoverage": {
-       "!type": "fn(format: fn()) -> +yui.Object",
+       "!type": "fn(format: fn()) -> +Object|string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Runner.html#method_getCoverage",
        "!doc": "Returns the coverage report for the files that have been executed.\nThis returns only coverage information for files that have been\ninstrumented using YUI Test Coverage and only those that were run\nin the same pass."
       }
@@ -21604,13 +22720,13 @@
       "!doc": "Resumes the TestRunner after wait() was called."
      },
      "run": {
-      "!type": "fn(options: +yui.Object)",
+      "!type": "fn(options: +Object|bool)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.Runner.html#method_run",
       "!doc": "Runs the test suite."
      }
     },
     "TestSuite": {
-     "!type": "fn(data: string)",
+     "!type": "fn(data: string|+Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestSuite.html",
      "prototype": {
       "name": {
@@ -21619,7 +22735,7 @@
        "!doc": "The name of the test suite."
       },
       "add": {
-       "!type": "fn(testObject: +test.Test.TestSuite)",
+       "!type": "fn(testObject: +test.Test.TestSuite|+YUITest.TestCase)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.TestSuite.html#method_add",
        "!doc": "Adds a test suite or test case to the test suite."
       },
@@ -21658,12 +22774,12 @@
      }
     },
     "UnexpectedValue": {
-     "!type": "fn(message: string, unexpected: +yui.Object)",
+     "!type": "fn(message: string, unexpected: +Object)",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.UnexpectedValue.html",
      "prototype": {
       "!proto": "AssertionError.prototype",
       "unexpected": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Test.UnexpectedValue.html#property_unexpected",
        "!doc": "The unexpected value."
       },
@@ -21724,7 +22840,7 @@
       "!doc": "Pointer to this nodes next sibling."
      },
      "results": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/TestNode.html#property_results",
       "!doc": "Test results for this test object."
      },
@@ -21783,7 +22899,7 @@
       }
      },
      "filter": {
-      "!type": "fn(haystack: +yui.Array, func: fn()) -> +yui.Array",
+      "!type": "fn(haystack: [?], func: fn()) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Text.AccentFold.html#method_filter",
       "!doc": "<p>\nReturns a copy of <em>haystack</em> containing only the strings for which\nthe supplied function returns <code>true</code>.\n</p>\n\n<p>\nWhile comparisons will be made using accent-folded strings, the returned\narray of matches will contain the original strings that were passed in.\n</p>",
       "!data": {
@@ -21791,7 +22907,7 @@
       }
      },
      "fold": {
-      "!type": "fn(input: string) -> string",
+      "!type": "fn(input: string|[?]) -> string|[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Text.AccentFold.html#method_fold",
       "!doc": "Accent-folds the specified string or array of strings and returns a copy\nin which common accented letters have been converted to their closest\nnon-accented, lowercase forms.",
       "!data": {
@@ -21803,7 +22919,7 @@
      "!type": "fn()",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Text.WordBreak.html",
      "getWords": {
-      "!type": "fn(string: string, options: +yui.Object) -> +yui.Array",
+      "!type": "fn(string: string, options: +Object) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Text.WordBreak.html#method_getWords",
       "!doc": "Splits the specified string into an array of individual words.",
       "!data": {
@@ -21811,7 +22927,7 @@
       }
      },
      "getUniqueWords": {
-      "!type": "fn(string: string, options: +yui.Object) -> +yui.Array",
+      "!type": "fn(string: string, options: +Object) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Text.WordBreak.html#method_getUniqueWords",
       "!doc": "Returns an array containing only unique words from the specified string.\nFor example, the string <code>foo bar baz foo</code> would result in\nthe array <code>[foo, bar, baz]</code>.",
       "!data": {
@@ -21840,7 +22956,7 @@
     },
     "prototype": {
      "soon": {
-      "!type": "fn(callbackFunction: fn()) -> +yui.Object",
+      "!type": "fn(callbackFunction: fn()) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_soon",
       "!doc": "Y.soon accepts a callback function.  The callback function will be called\nonce in a future turn of the JavaScript event loop.  If the function\nrequires a specific execution context or arguments, wrap it with Y.bind.\nY.soon returns an object with a cancel method.  If the cancel method is\ncalled before the callback function, the callback function wont be\ncalled."
      }
@@ -21863,7 +22979,7 @@
     },
     "prototype": {
      "transition": {
-      "!type": "fn(config: +config.transitionConfig, callback: fn()) -> !this",
+      "!type": "fn(config: +config.NodeTransitionConfig, callback: fn()) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_transition",
       "!doc": "Animate one or more css properties to a given value. Requires the \"transition\" module.\n<pre>example usage:\n    Y.one(#demo).transition({\n        duration: 1, // in seconds, default is 0.5\n        easing: ease-out, // default is ease\n        delay: 1, // delay start for 1 second, default is 0\n\n        height: 10px,\n        width: 10px,\n\n        opacity: { // per property\n            value: 0,\n            duration: 2,\n            delay: 2,\n            easing: ease-in\n        }\n    });\n</pre>"
      }
@@ -21876,7 +22992,7 @@
     },
     "prototype": {
      "transition": {
-      "!type": "fn(config: +config.transitionConfig, callback: fn(), callbackOnce: bool) -> !this",
+      "!type": "fn(config: +config.NodeListTransitionConfig, callback: fn(), callbackOnce: bool) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/NodeList.html#method_transition",
       "!doc": "Animate one or more css properties to a given value. Requires the \"transition\" module.\n<pre>example usage:\n    Y.all(.demo).transition({\n        duration: 1, // in seconds, default is 0.5\n        easing: ease-out, // default is ease\n        delay: 1, // delay start for 1 second, default is 0\n\n        height: 10px,\n        width: 10px,\n\n        opacity: { // per property\n            value: 0,\n            duration: 2,\n            delay: 2,\n            easing: ease-in\n        }\n    });\n</pre>"
      }
@@ -21905,12 +23021,12 @@
       "!doc": "Reference to the `children` array of this Trees `rootNode`.\n\nThis is a convenience property to allow you to type `tree.children` instead\nof `tree.rootNode.children`."
      },
      "nodeClass": {
-      "!type": "string",
+      "!type": "string|+tree.Tree.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#property_nodeClass",
       "!doc": "The `Tree.Node` class or subclass that should be used for nodes created by\nthis tree.\n\nYou may specify an actual class reference or a string that resolves to a\nclass reference at runtime."
      },
      "nodeExtensions": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#property_nodeExtensions",
       "!doc": "Optional array containing one or more extension classes that should be mixed\ninto the `nodeClass` when this Tree is instantiated. The resulting composed\nnode class will be unique to this Tree instance and will not affect any\nother instances, nor will it modify the defined `nodeClass` itself.\n\nThis provides a late-binding extension mechanism for nodes that doesnt\nrequire them to extend `Y.Base`, which would incur a significant performance\nhit."
      },
@@ -21920,32 +23036,32 @@
       "!doc": "Root node of this Tree."
      },
      "appendNode": {
-      "!type": "fn(parent: +tree.Tree.Node, node: +yui.Object, options?: +yui.Object) -> +tree.Tree.Node",
+      "!type": "fn(parent: +tree.Tree.Node, node: +Object|[+Object]|+tree.Tree.Node|[+tree.Tree.Node], options?: +config.TreeAppendNodeConfig) -> +tree.Tree.Node|[+tree.Tree.Node]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_appendNode",
       "!doc": "Appends a node or array of nodes as the last child of the specified parent\nnode.\n\nIf a node being appended is from another tree, it and all its children will\nbe removed from that tree and moved to this one."
      },
      "clear": {
-      "!type": "fn(rootNode?: +yui.Object, options?: +yui.Object) -> !this",
+      "!type": "fn(rootNode?: +Object|+tree.Tree.Node, options?: +config.TreeClearConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_clear",
       "!doc": "Clears this tree by destroying the root node and all its children. If a\n`rootNode` argument is provided, that node will become the root node of this\ntree; otherwise, a new root node will be created."
      },
      "createNode": {
-      "!type": "fn(config?: +yui.Object) -> +tree.Tree.Node",
+      "!type": "fn(config?: +Object|+tree.Tree.Node) -> +tree.Tree.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_createNode",
       "!doc": "Creates and returns a new `Tree.Node` instance associated with (but not\nyet appended to) this tree."
      },
      "destroyNode": {
-      "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> !this",
+      "!type": "fn(node: +tree.Tree.Node, options?: +config.TreeDestroyNodeConfig) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_destroyNode",
       "!doc": "Removes and destroys a node and all its child nodes. Once destroyed, a node\nis eligible for garbage collection and cannot be reused or re-added to the\ntree."
      },
      "emptyNode": {
-      "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> [+tree.Tree.Node]",
+      "!type": "fn(node: +tree.Tree.Node, options?: +config.TreeEmptyNodeConfig) -> [+tree.Tree.Node]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_emptyNode",
       "!doc": "Removes all children from the specified node. The removed children will\nstill be reusable unless the `destroy` option is truthy."
      },
      "findNode": {
-      "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object, callback: fn(node: +tree.Tree.Node), thisObj?: +yui.Object) -> +tree.Tree.Node",
+      "!type": "fn(node: +tree.Tree.Node, options?: +config.TreeFindNodeConfig, callback: fn(node: +tree.Tree.Node), thisObj?: +Object) -> +tree.Tree.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_findNode",
       "!doc": "Performs a depth-first traversal of _node_, passing it and each of its\ndescendants to the specified _callback_, and returning the first node for\nwhich the callback returns a truthy value.\n\nTraversal will stop as soon as a truthy value is returned from the callback.\n\nSee `traverseNode()` for more details on how depth-first traversal works."
      },
@@ -21955,17 +23071,17 @@
       "!doc": "Returns the tree node with the specified id, or `undefined` if the node\ndoesnt exist in this tree."
      },
      "insertNode": {
-      "!type": "fn(parent: +tree.Tree.Node, node: +yui.Object, options?: +yui.Object) -> +tree.Tree.Node",
+      "!type": "fn(parent: +tree.Tree.Node, node: +Object|[+Object]|+tree.Tree.Node|[+tree.Tree.Node], options?: +config.TreeInsertNodeConfig) -> +tree.Tree.Node|[+tree.Tree.Node]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_insertNode",
       "!doc": "Inserts a node or array of nodes at the specified index under the given\nparent node, or appends them to the parent if no index is specified.\n\nIf a node being inserted is from another tree, it and all its children will\nbe removed from that tree and moved to this one."
      },
      "prependNode": {
-      "!type": "fn(parent: +tree.Tree.Node, node: +yui.Object, options?: +yui.Object) -> +tree.Tree.Node",
+      "!type": "fn(parent: +tree.Tree.Node, node: +Object|[+Object]|+tree.Tree.Node|[+tree.Tree.Node], options?: +config.TreePrependNodeConfig) -> +tree.Tree.Node|[+tree.Tree.Node]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_prependNode",
       "!doc": "Prepends a node or array of nodes at the beginning of the specified parent\nnode.\n\nIf a node being prepended is from another tree, it and all its children will\nbe removed from that tree and moved to this one."
      },
      "removeNode": {
-      "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> +tree.Tree.Node",
+      "!type": "fn(node: +tree.Tree.Node, options?: +config.TreeRemoveNodeConfig) -> +tree.Tree.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_removeNode",
       "!doc": "Removes the specified node from its parent node. The removed node will still\nbe reusable unless the `destroy` option is truthy."
      },
@@ -21975,12 +23091,12 @@
       "!doc": "Returns the total number of nodes in this tree, at all levels.\n\nUse `rootNode.children.length` to get only the number of top-level nodes."
      },
      "toJSON": {
-      "!type": "fn() -> +yui.Object",
+      "!type": "fn() -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_toJSON",
       "!doc": "Serializes this tree to an object suitable for use in JSON."
      },
      "traverseNode": {
-      "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object, callback: fn(node: +tree.Tree.Node), thisObj?: +yui.Object) -> +Mixed",
+      "!type": "fn(node: +tree.Tree.Node, options?: +config.TreeTraverseNodeConfig, callback: fn(node: +tree.Tree.Node), thisObj?: +Object) -> +Mixed",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.html#method_traverseNode",
       "!doc": "Performs a depth-first traversal of _node_, passing it and each of its\ndescendants to the specified _callback_.\n\nIf the callback function returns `Tree.STOP_TRAVERSAL`, traversal will be\nstopped immediately. Otherwise, it will continue until the deepest\ndescendant of _node_ has been traversed, or until each branch has been\ntraversed to the optional maximum depth limit.\n\nSince traversal is depth-first, that means nodes are traversed like this:\n\n            1\n          / | \\\n         2  8  9\n        / \\     \\\n       3   7    10\n     / | \\      / \\\n    4  5  6    11 12"
      }
@@ -22009,7 +23125,7 @@
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Openable.html",
       "prototype": {
        "close": {
-        "!type": "fn(options?: +yui.Object) -> !this",
+        "!type": "fn(options?: +config.Tree.Node.OpenableCloseConfig) -> !this",
         "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Openable.html#method_close",
         "!doc": "Closes this node if its currently open.",
         "!data": {
@@ -22025,7 +23141,7 @@
         }
        },
        "open": {
-        "!type": "fn(options?: +yui.Object) -> !this",
+        "!type": "fn(options?: +config.Tree.Node.OpenableOpenConfig) -> !this",
         "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Openable.html#method_open",
         "!doc": "Opens this node if its currently closed.",
         "!data": {
@@ -22033,7 +23149,7 @@
         }
        },
        "toggleOpen": {
-        "!type": "fn(options?: +yui.Object) -> !this",
+        "!type": "fn(options?: +config.Tree.Node.OpenableToggleOpenConfig) -> !this",
         "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Openable.html#method_toggleOpen",
         "!doc": "Toggles the open/closed state of this node, closing it if its currently\nopen or opening it if its currently closed.",
         "!data": {
@@ -22055,7 +23171,7 @@
         }
        },
        "select": {
-        "!type": "fn(options?: +yui.Object) -> !this",
+        "!type": "fn(options?: +config.Tree.Node.SelectableSelectConfig) -> !this",
         "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Selectable.html#method_select",
         "!doc": "Selects this node.",
         "!data": {
@@ -22063,7 +23179,7 @@
         }
        },
        "unselect": {
-        "!type": "fn(options?: +yui.Object) -> !this",
+        "!type": "fn(options?: +config.Tree.Node.SelectableUnselectConfig) -> !this",
         "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Selectable.html#method_unselect",
         "!doc": "Unselects this node.",
         "!data": {
@@ -22077,7 +23193,7 @@
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Sortable.html",
       "prototype": {
        "sort": {
-        "!type": "fn(options?: +yui.Object) -> !this",
+        "!type": "fn(options?: +config.Tree.Node.SortableSortConfig) -> !this",
         "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.Sortable.html#method_sort",
         "!doc": "Sorts this nodes children.",
         "!data": {
@@ -22104,7 +23220,7 @@
        }
       },
       "data": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#property_data",
        "!doc": "Arbitrary serializable data related to this node.\n\nUse this property to store any data that should accompany this node when it\nis serialized to JSON.",
        "!data": {
@@ -22128,7 +23244,7 @@
        }
       },
       "state": {
-       "!type": "+yui.Object",
+       "!type": "+Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#property_state",
        "!doc": "Current state of this node.\n\nUse this property to store state-specific info -- such as whether this node\nis \"open\", \"selected\", or any other arbitrary state -- that should accompany\nthis node when it is serialized to JSON.",
        "!data": {
@@ -22144,7 +23260,7 @@
        }
       },
       "append": {
-       "!type": "fn(node: +yui.Object, options?: +yui.Object) -> +tree.Tree.Node",
+       "!type": "fn(node: +Object|[+Object]|+tree.Tree.Node|[+tree.Tree.Node], options?: +config.Tree.NodeAppendConfig) -> +tree.Tree.Node|[+tree.Tree.Node]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_append",
        "!doc": "Appends the given tree node or array of nodes to the end of this nodes\nchildren.",
        "!data": {
@@ -22160,7 +23276,7 @@
        }
       },
       "empty": {
-       "!type": "fn(options?: +yui.Object) -> [+tree.Tree.Node]",
+       "!type": "fn(options?: +config.Tree.NodeEmptyConfig) -> [+tree.Tree.Node]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_empty",
        "!doc": "Removes all children from this node. The removed children will still be\nreusable unless the `destroy` option is truthy.",
        "!data": {
@@ -22168,7 +23284,7 @@
        }
       },
       "find": {
-       "!type": "fn(options?: +yui.Object, callback: fn(node: +tree.Tree.Node), thisObj?: +yui.Object) -> +tree.Tree.Node",
+       "!type": "fn(options?: +config.Tree.NodeFindConfig, callback: fn(node: +tree.Tree.Node), thisObj?: +Object) -> +tree.Tree.Node",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_find",
        "!doc": "Performs a depth-first traversal of this node, passing it and each of its\ndescendants to the specified _callback_, and returning the first node for\nwhich the callback returns a truthy value.\n\nTraversal will stop as soon as a truthy value is returned from the callback.\n\nSee `Tree#traverseNode()` for more details on how depth-first traversal\nworks.",
        "!data": {
@@ -22200,7 +23316,7 @@
        }
       },
       "insert": {
-       "!type": "fn(node: +yui.Object, options?: +yui.Object) -> [+tree.Tree.Node]",
+       "!type": "fn(node: +Object|[+Object]|+tree.Tree.Node|[+tree.Tree.Node], options?: +config.Tree.NodeInsertConfig) -> [+tree.Tree.Node]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_insert",
        "!doc": "Inserts a node or array of nodes at the specified index under this node, or\nappends them to this node if no index is specified.\n\nIf a node being inserted is from another tree, it and all its children will\nbe removed from that tree and moved to this one.",
        "!data": {
@@ -22232,7 +23348,7 @@
        }
       },
       "prepend": {
-       "!type": "fn(node: +yui.Object, options?: +yui.Object) -> +tree.Tree.Node",
+       "!type": "fn(node: +Object|[+Object]|+tree.Tree.Node|[+tree.Tree.Node], options?: +config.Tree.NodePrependConfig) -> +tree.Tree.Node|[+tree.Tree.Node]",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_prepend",
        "!doc": "Prepends a node or array of nodes at the beginning of this nodes children.\n\nIf a node being prepended is from another tree, it and all its children will\nbe removed from that tree and moved to this one.",
        "!data": {
@@ -22248,7 +23364,7 @@
        }
       },
       "remove": {
-       "!type": "fn(options?: +yui.Object) -> !this",
+       "!type": "fn(options?: +config.Tree.NodeRemoveConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_remove",
        "!doc": "Removes this node from its parent node.",
        "!data": {
@@ -22264,7 +23380,7 @@
        }
       },
       "toJSON": {
-       "!type": "fn() -> +yui.Object",
+       "!type": "fn() -> +Object",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_toJSON",
        "!doc": "Serializes this node to an object suitable for use in JSON.",
        "!data": {
@@ -22272,7 +23388,7 @@
        }
       },
       "traverse": {
-       "!type": "fn(options?: +yui.Object, callback: fn(node: +tree.Tree.Node), thisObj?: +yui.Object) -> +Mixed",
+       "!type": "fn(options?: +config.Tree.NodeTraverseConfig, callback: fn(node: +tree.Tree.Node), thisObj?: +Object) -> +Mixed",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Node.html#method_traverse",
        "!doc": "Performs a depth-first traversal of this node, passing it and each of its\ndescendants to the specified _callback_.\n\nIf the callback function returns `Tree.STOP_TRAVERSAL`, traversal will be\nstopped immediately. Otherwise, it will continue until the deepest\ndescendant of _node_ has been traversed, or until each branch has been\ntraversed to the optional maximum depth limit.\n\nSince traversal is depth-first, that means nodes are traversed like this:\n\n            1\n          / | \\\n         2  8  9\n        / \\     \\\n       3   7    10\n     / | \\      / \\\n    4  5  6    11 12",
        "!data": {
@@ -22286,7 +23402,7 @@
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Openable.html",
      "prototype": {
       "closeNode": {
-       "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> !this",
+       "!type": "fn(node: +tree.Tree.Node, options?: +config.Tree.OpenableCloseNodeConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Openable.html#method_closeNode",
        "!doc": "Closes the specified node if it isnt already closed.",
        "!data": {
@@ -22294,7 +23410,7 @@
        }
       },
       "openNode": {
-       "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> !this",
+       "!type": "fn(node: +tree.Tree.Node, options?: +config.Tree.OpenableOpenNodeConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Openable.html#method_openNode",
        "!doc": "Opens the specified node if it isnt already open.",
        "!data": {
@@ -22302,7 +23418,7 @@
        }
       },
       "toggleOpenNode": {
-       "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> !this",
+       "!type": "fn(node: +tree.Tree.Node, options?: +config.Tree.OpenableToggleOpenNodeConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Openable.html#method_toggleOpenNode",
        "!doc": "Toggles the open/closed state of the specified node, closing it if its\ncurrently open or opening it if its currently closed.",
        "!data": {
@@ -22324,7 +23440,7 @@
        }
       },
       "selectNode": {
-       "!type": "fn(node: +tree.Tree.Node.Selectable, options?: +yui.Object) -> !this",
+       "!type": "fn(node: +tree.Tree.Node.Selectable, options?: +config.Tree.SelectableSelectNodeConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Selectable.html#method_selectNode",
        "!doc": "Selects the specified node.",
        "!data": {
@@ -22332,7 +23448,7 @@
        }
       },
       "unselect": {
-       "!type": "fn(options?: +yui.Object) -> !this",
+       "!type": "fn(options?: +config.Tree.SelectableUnselectConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Selectable.html#method_unselect",
        "!doc": "Unselects all selected nodes.",
        "!data": {
@@ -22340,7 +23456,7 @@
        }
       },
       "unselectNode": {
-       "!type": "fn(node: +tree.Tree.Node.Selectable, options?: +yui.Object) -> !this",
+       "!type": "fn(node: +tree.Tree.Node.Selectable, options?: +config.Tree.SelectableUnselectNodeConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Selectable.html#method_unselectNode",
        "!doc": "Unselects the specified node.",
        "!data": {
@@ -22362,7 +23478,7 @@
        }
       },
       "sort": {
-       "!type": "fn(options?: +yui.Object) -> !this",
+       "!type": "fn(options?: +config.Tree.SortableSortConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Sortable.html#method_sort",
        "!doc": "Sorts the children of every node in this tree.\n\nA `sort` event will be fired for each node whose children are sorted, which\ncan get very noisy. If this is a large tree, you may want to set the\n`silent` option to `true` to suppress these events.",
        "!data": {
@@ -22370,7 +23486,7 @@
        }
       },
       "sortComparator": {
-       "!type": "fn(node: +tree.Tree.Node) -> number",
+       "!type": "fn(node: +tree.Tree.Node) -> number|string",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Sortable.html#method_sortComparator",
        "!doc": "Default comparator function to use when sorting a nodes children if the\nnode itself doesnt have a custom comparator function.\n\nIf not specified, insertion order will be used by default.",
        "!data": {
@@ -22378,7 +23494,7 @@
        }
       },
       "sortNode": {
-       "!type": "fn(node: +tree.Tree.Node, options?: +yui.Object) -> !this",
+       "!type": "fn(node: +tree.Tree.Node, options?: +config.Tree.SortableSortNodeConfig) -> !this",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Tree.Sortable.html#method_sortNode",
        "!doc": "Sorts the children of the specified node.\n\nBy default, only the nodes direct children are sorted. To sort all nodes in\nthe hierarchy (children, childrens children, etc.), set the `deep` option\nto `true`. If this is a very deep hierarchy, you may also want to set\n`silent` to true to avoid generating a flood of `sort` events.",
        "!data": {
@@ -22414,17 +23530,17 @@
       "!doc": "Opens the File Selection dialog by simulating a click on the file input field."
      },
      "upload": {
-      "!type": "fn(file: +file.File, url: string, postVars: +yui.Object)",
+      "!type": "fn(file: +file.File, url: string, postVars: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#method_upload",
       "!doc": "Starts the upload of a specific file."
      },
      "uploadAll": {
-      "!type": "fn(url: string, postVars?: +yui.Object)",
+      "!type": "fn(url: string, postVars?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#method_uploadAll",
       "!doc": "Starts the upload of all files on the file list, using an automated queue."
      },
      "uploadThese": {
-      "!type": "fn(files: +yui.Array, url: string, postVars?: +yui.Object)",
+      "!type": "fn(files: [?], url: string, postVars?: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UploaderHTML5.html#method_uploadThese",
       "!doc": "Starts the upload of the files specified in the first argument, using an automated queue."
      }
@@ -22551,7 +23667,7 @@
      "prototype": {
       "!proto": "plugin.Plugin.Base.prototype",
       "initializer": {
-       "!type": "fn(config: +config.initializerConfig)",
+       "!type": "fn(config: +config.Plugin.WidgetAnimInitializerConfig)",
        "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.WidgetAnim.html#method_initializer",
        "!doc": "The initializer lifecycle implementation. Modifies the host widgets\nvisibililty implementation to add animation."
       },
@@ -22572,12 +23688,12 @@
       "!doc": "The NAME of the WidgetAnim class. Used to prefix events generated\nby the plugin class."
      },
      "ANIMATIONS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.WidgetAnim.html#property_ANIMATIONS",
       "!doc": "Pre-Packaged Animation implementations, which can be used for animShow and animHide attribute\nvalues."
      },
      "ATTRS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Plugin.WidgetAnim.html#property_ATTRS",
       "!doc": "Static property used to define the default attribute\nconfiguration for the plugin."
      }
@@ -22592,7 +23708,7 @@
     "!type": "fn(config: +config.WidgetAutohideConfig)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetAutohide.html",
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetAutohide.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration introduced by WidgetAutohide."
     }
@@ -22606,18 +23722,18 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html",
     "CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#property_CLASS_NAMES",
      "!doc": "CSS classes used by `WidgetButtons`."
     },
     "NON_BUTTON_NODE_CFG": {
-     "!type": "+yui.Array",
+     "!type": "[?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#property_NON_BUTTON_NODE_CFG",
      "!doc": "The list of button configuration properties which are specific to\n`WidgetButtons` and should not be passed to `Y.Plugin.Button.createNode()`."
     },
     "prototype": {
      "BUTTONS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#property_BUTTONS",
       "!doc": "Collection of predefined buttons mapped by name -> config.\n\nThese button configurations will serve as defaults for any button added to a\nwidgets buttons which have the same `name`.\n\nSee `addButton()` for a list of possible configuration values."
      },
@@ -22632,17 +23748,17 @@
       "!doc": "The default section to render buttons in when no section is specified."
      },
      "addButton": {
-      "!type": "fn(button: +node.Node, section?: string, index?: number) -> !this",
+      "!type": "fn(button: +node.Node|+Object|string, section?: string, index?: number) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#method_addButton",
       "!doc": "Adds a button to this widget.\n\nThe new button node will have the `Y.Plugin.Button` plugin applied, be added\nto this widgets `buttons`, and rendered in the specified `section` at the\nspecified `index` (or end of the section when no `index` is provided). If\nthe section does not exist, it will be created.\n\nThis fires the `buttonsChange` event and adds the following properties to\nthe event facade:\n\n  * `button`: The button node or config object to add.\n\n  * `section`: The `WidgetStdMod` section (header/body/footer) where the\n    button will be added.\n\n  * `index`: The index at which the button will be in the section.\n\n  * `src`: \"add\"\n\n**Note:** The `index` argument will be passed to the Array `splice()`\nmethod, therefore a negative value will insert the `button` that many items\nfrom the end. The `index` property on the `buttonsChange` event facade is\nthe index at which the `button` was added."
      },
      "getButton": {
-      "!type": "fn(name: number, section?: string) -> +node.Node",
+      "!type": "fn(name: number|string, section?: string) -> +node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#method_getButton",
       "!doc": "Returns a button node from this widgets `buttons`."
      },
      "removeButton": {
-      "!type": "fn(button: +node.Node, section?: string) -> !this",
+      "!type": "fn(button: +node.Node|number|string, section?: string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetButtons.html#method_removeButton",
       "!doc": "Removes a button from this widget.\n\nThe button will be removed from this widgets `buttons` and its DOM. Any\nevent subscriptions on the button which were created by this widget will be\ndetached. If the content section becomes empty after removing the button\nnode, then the section will also be removed.\n\nThis fires the `buttonsChange` event and adds the following properties to\nthe event facade:\n\n  * `button`: The button node to remove.\n\n  * `section`: The `WidgetStdMod` section (header/body/footer) where the\n    button should be removed from.\n\n  * `index`: The index at which the button exists in the section.\n\n  * `src`: \"remove\""
      }
@@ -22658,7 +23774,7 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetChild.html",
     "prototype": {
      "ROOT_TYPE": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetChild.html#property_ROOT_TYPE",
       "!doc": "Constructor reference used to determine the root of a Widget-based\nobject tree.\n<p>\nCurrently used to control the behavior of the <code>root</code>\nattribute so that recursing up the object heirarchy can be constrained\nto a specific type of Widget.  Widget authors should set this property\nto the constructor function for a given Widget implementation.\n</p>"
      }
@@ -22702,7 +23818,7 @@
     "!type": "fn(config: +config.WidgetModalityConfig)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetModality.html",
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetModality.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration introduced by WidgetModality."
     },
@@ -22799,7 +23915,7 @@
       "!doc": "The destructor implementation for Parent widgets. Destroys all children."
      },
      "add": {
-      "!type": "fn(child: +widget.Widget, index: number) -> +collection.ArrayList",
+      "!type": "fn(child: +widget.Widget|+Object|[?], index: number) -> +collection.ArrayList",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetParent.html#method_add",
       "!doc": "Adds a Widget as a child.  If the specified Widget already\nhas a parent it will be removed from its current parent before\nbeing added as a child."
      },
@@ -22885,12 +24001,12 @@
     },
     "prototype": {
      "align": {
-      "!type": "fn(node?: +node.Node, points?: [+yui.Array]) -> !this",
+      "!type": "fn(node?: +node.Node|string, points?: [?]) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionAlign.html#method_align",
       "!doc": "Aligns this widget to the provided `Node` (or viewport) using the provided\npoints. This method can be invoked with no arguments which will cause the\nwidgets current `align` Attribute value to be synced to the DOM."
      },
      "centered": {
-      "!type": "fn(node?: +node.Node) -> !this",
+      "!type": "fn(node?: +node.Node|string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionAlign.html#method_centered",
       "!doc": "Centers the widget in the viewport, or if a `Node` is passed in, it will\nbe centered to that `Node`."
      }
@@ -22902,21 +24018,21 @@
     "module": "widget-position-constrain"
    },
    "WidgetPositionConstrain": {
-    "!type": "fn(User: +yui.Object)",
+    "!type": "fn(User: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionConstrain.html",
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionConstrain.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration introduced by WidgetPositionConstrain."
     },
     "prototype": {
      "getConstrainedXY": {
-      "!type": "fn(xy: +yui.Array, node: +node.Node) -> +yui.Array",
+      "!type": "fn(xy: [?], node: +node.Node|bool) -> [?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionConstrain.html#method_getConstrainedXY",
       "!doc": "Calculates the constrained positions for the XY positions provided, using\nthe provided node argument is passed in. If no node value is passed in, the value of\nthe \"constrain\" attribute is used."
      },
      "constrain": {
-      "!type": "fn(xy: +yui.Array, node: +node.Node)",
+      "!type": "fn(xy: [?], node: +node.Node|bool)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPositionConstrain.html#method_constrain",
       "!doc": "Constrains the widgets bounding box to a node (or the viewport). If xy or node are not\npassed in, the current position and the value of \"constrain\" will be used respectively.\n\nThe widgets position will be changed to the constrained position."
      }
@@ -22931,7 +24047,7 @@
     "!type": "fn(config: +config.WidgetPositionConfig)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPosition.html",
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPosition.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration introduced by WidgetPosition."
     },
@@ -22942,7 +24058,7 @@
     },
     "prototype": {
      "move": {
-      "!type": "fn(x: number, y?: number)",
+      "!type": "fn(x: number|[number], y?: number)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetPosition.html#method_move",
       "!doc": "Moves the Widget to the specified page xy co-ordinate position."
      },
@@ -22959,15 +24075,15 @@
     "module": "widget-stack"
    },
    "WidgetStack": {
-    "!type": "fn(User: +yui.Object)",
+    "!type": "fn(User: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStack.html",
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStack.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration introduced by WidgetStack."
     },
     "HTML_PARSER": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStack.html#property_HTML_PARSER",
      "!doc": "The HTML parsing rules for the WidgetStack class."
     },
@@ -23000,7 +24116,7 @@
     "module": "widget-stdmod"
    },
    "WidgetStdMod": {
-    "!type": "fn(The: +yui.Object)",
+    "!type": "fn(The: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStdMod.html",
     "HEADER": {
      "!type": "string",
@@ -23033,28 +24149,28 @@
      "!doc": "Constant used to specify insertion position, when adding content to sections of the standard module in\nmethods which expect a \"where\" argument.\n<p>\n<em>Replaces</em> the sections existing content, with new content.\n</p>"
     },
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStdMod.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration introduced by WidgetStdMod."
     },
     "HTML_PARSER": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStdMod.html#property_HTML_PARSER",
      "!doc": "The HTML parsing rules for the WidgetStdMod class."
     },
     "SECTION_CLASS_NAMES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStdMod.html#property_SECTION_CLASS_NAMES",
      "!doc": "Static hash of default class names used for the header,\nbody and footer sections of the standard module, keyed by\nthe section identifier (WidgetStdMod.STD_HEADER, WidgetStdMod.STD_BODY, WidgetStdMod.STD_FOOTER)"
     },
     "TEMPLATES": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStdMod.html#property_TEMPLATES",
      "!doc": "The template HTML strings for each of the standard module sections. Section entries are keyed by the section constants,\nWidgetStdMod.HEADER, WidgetStdMod.BODY, WidgetStdMod.FOOTER, and contain the HTML to be added for each section.\ne.g.\n<pre>\n   {\n      header : &lt;div class=\"yui-widget-hd\"&gt;&lt;/div&gt;,\n      body : &lt;div class=\"yui-widget-bd\"&gt;&lt;/div&gt;,\n      footer : &lt;div class=\"yui-widget-ft\"&gt;&lt;/div&gt;\n   }\n</pre>"
     },
     "prototype": {
      "setStdModContent": {
-      "!type": "fn(section: string, content: string, where: string)",
+      "!type": "fn(section: string, content: string|+node.Node, where: string)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/WidgetStdMod.html#method_setStdModContent",
       "!doc": "Updates the body section of the standard module with the content provided (either an HTML string, or node reference).\n<p>\nThis method can be used instead of the corresponding section content attribute if youd like to retain the current content of the section,\nand insert content before or after it, by specifying the <code>where</code> argument.\n</p>"
      },
@@ -23102,7 +24218,7 @@
       }
      },
      "render": {
-      "!type": "fn(parentNode: +yui.Object) -> !this",
+      "!type": "fn(parentNode: +Object|string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#method_render",
       "!doc": "Establishes the initial DOM for the widget. Invoking this\nmethod will lead to the creating of all DOM elements for\nthe widget (or the manipulation of existing DOM elements\nfor the progressive enhancement use case).\n<p>\nThis method should only be invoked once for an initialized\nwidget.\n</p>\n<p>\nIt delegates to the widget specific renderer method to do\nthe actual work.\n</p>",
       "!data": {
@@ -23174,7 +24290,7 @@
       }
      },
      "DEF_PARENT_NODE": {
-      "!type": "string",
+      "!type": "string|+node.Node",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#property_DEF_PARENT_NODE",
       "!doc": "Default node to render the bounding box to. If not set,\nwill default to the current document body.",
       "!data": {
@@ -23222,7 +24338,7 @@
       }
      },
      "UI_EVENTS": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#property_UI_EVENTS",
       "!doc": "Map of DOM events that should be fired as Custom Events by the\nWidget instance.",
       "!data": {
@@ -23247,7 +24363,7 @@
      }
     },
     "ATTRS": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#property_ATTRS",
      "!doc": "Static property used to define the default attribute\nconfiguration for the Widget.",
      "!data": {
@@ -23255,7 +24371,7 @@
      }
     },
     "getByNode": {
-     "!type": "fn(node: +node.Node) -> +widget.Widget",
+     "!type": "fn(node: +node.Node|string) -> +widget.Widget",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#method_getByNode",
      "!doc": "Returns the widget instance whose bounding box contains, or is, the given node.\n<p>\nIn the case of nested widgets, the nearest bounding box ancestor is used to\nreturn the widget instance.\n</p>",
      "!data": {
@@ -23263,7 +24379,7 @@
      }
     },
     "HTML_PARSER": {
-     "!type": "+yui.Object",
+     "!type": "+Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Widget.html#property_HTML_PARSER",
      "!doc": "Object hash, defining how attribute values are to be parsed from\nmarkup contained in the widgets content box. e.g.:\n<pre>\n  {\n      // Set single Node references using selector syntax\n      // (selector is run through node.one)\n      titleNode: \"span.yui-title\",\n      // Set NodeList references using selector syntax\n      // (array indicates selector is to be run through node.all)\n      listNodes: [\"li.yui-item\"],\n      // Set other attribute types, using a parse function.\n      // Context is set to the widget instance.\n      label: function(contentBox) {\n          return contentBox.one(\"span.title\").get(\"innerHTML\");\n      }\n  }\n</pre>",
      "!data": {
@@ -23312,7 +24428,7 @@
     }
    },
    "YQLRequest": {
-    "!type": "fn(sql: string, callback: fn(), params: +yui.Object, opts: +yui.Object)",
+    "!type": "fn(sql: string, callback: fn(), params: +Object, opts: +Object)",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/YQLRequest.html",
     "prototype": {
      "send": {
@@ -23370,7 +24486,7 @@
       }
      },
      "cached": {
-      "!type": "fn(source: fn(), cache?: +yui.Object, refetch?: ?) -> fn()",
+      "!type": "fn(source: fn(), cache?: +Object, refetch?: ?) -> fn()",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_cached",
       "!doc": "Returns a wrapper for a function which caches the return value of that function,\nkeyed off of the combined string representation of the argument values provided\nwhen the wrapper is called.\n\nCalling this function again with the same arguments will return the cached value\nrather than executing the wrapped function.\n\nNote that since the cache is keyed off of the string representation of arguments\npassed to the wrapper function, arguments that arent strings and dont provide\na meaningful `toString()` method may result in unexpected caching behavior. For\nexample, the objects `{}` and `{foo: bar}` would both be converted to the\nstring `[object Object]` when used as a cache key.",
       "!data": {
@@ -23386,7 +24502,7 @@
       }
      },
      "merge": {
-      "!type": "fn(objects: +yui.Object) -> +yui.Object",
+      "!type": "fn(objects: +Object) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_merge",
       "!doc": "Returns a new object containing all of the properties of all the supplied\nobjects. The properties from later objects will overwrite those in earlier\nobjects.\n\nPassing in a single object will create a shallow copy of it. For a deep copy,\nuse `clone()`.",
       "!data": {
@@ -23402,7 +24518,7 @@
       }
      },
      "later": {
-      "!type": "fn(when: number, o: ?, fn: fn(), data: ?, periodic: bool) -> +yui.Object",
+      "!type": "fn(when: number, o: ?, fn: fn(), data: ?, periodic: bool) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_later",
       "!doc": "Executes the supplied function in the context of the supplied\nobject when milliseconds later.  Executes the function a\nsingle time unless periodic is set to true.",
       "!data": {
@@ -23442,7 +24558,7 @@
       }
      },
      "applyTo": {
-      "!type": "fn(id: string, method: string, args: +yui.Array) -> +Mixed",
+      "!type": "fn(id: string, method: string, args: [?]) -> +Mixed",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_applyTo",
       "!doc": "Executes the named method on the specified YUI instance if that method is\nwhitelisted.",
       "!data": {
@@ -23450,7 +24566,7 @@
       }
      },
      "add": {
-      "!type": "fn(name: string, fn: fn(Y: +yui.YUI, name: string), version: string, details?: +yui.Object) -> +yui.YUI",
+      "!type": "fn(name: string, fn: fn(Y: +yui.YUI, name: string), version: string, details?: +config.YUIAddConfig) -> +yui.YUI",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_add",
       "!doc": "Registers a YUI module and makes it available for use in a `YUI().use()` call or\nas a dependency for other modules.\n\nThe easiest way to create a first-class YUI module is to use\n<a href=\"http://yui.github.com/shifter/\">Shifter</a>, the YUI component build\ntool.\n\nShifter will automatically wrap your module code in a `YUI.add()` call along\nwith any configuration info required for the module.",
       "!data": {
@@ -23478,7 +24594,7 @@
       }
      },
      "namespace": {
-      "!type": "fn(namespace: string) -> +yui.Object",
+      "!type": "fn(namespace: string) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_namespace",
       "!doc": "Utility method for safely creating namespaces if they dont already exist.\nMay be called statically on the YUI global object or as a method on a YUI\ninstance.\n\nWhen called statically, a namespace will be created on the YUI global\nobject:\n\n    // Create `YUI.your.namespace.here` as nested objects, preserving any\n    // objects that already exist instead of overwriting them.\n    YUI.namespace(your.namespace.here);\n\nWhen called as a method on a YUI instance, a namespace will be created on\nthat instance:\n\n    // Creates `Y.property.package`.\n    Y.namespace(property.package);\n\nDots in the input string cause `namespace` to create nested objects for each\ntoken. If any part of the requested namespace already exists, the current\nobject will be left in place and will not be overwritten. This allows\nmultiple calls to `namespace` to preserve existing namespaced properties.\n\nIf the first token in the namespace string is \"YAHOO\", that token is\ndiscarded. This is legacy behavior for backwards compatibility with YUI 2.\n\nBe careful with namespace tokens. Reserved words may work in some browsers\nand not others. For instance, the following will fail in some browsers\nbecause the supported version of JavaScript reserves the word \"long\":\n\n    Y.namespace(really.long.nested.namespace);\n\nNote: If you pass multiple arguments to create multiple namespaces, only the\nlast one created is returned from this function.",
       "!data": {
@@ -23486,7 +24602,7 @@
       }
      },
      "error": {
-      "!type": "fn(msg: string, e?: +Error, src?: string) -> !this",
+      "!type": "fn(msg: string, e?: +Error|string, src?: string) -> !this",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_error",
       "!doc": "Reports an error.\n\nThe reporting mechanism is controlled by the `throwFail` configuration\nattribute. If `throwFail` is falsy, the message is logged. If `throwFail` is\ntruthy, a JS exception is thrown.\n\nIf an `errorFn` is specified in the config it must return `true` to indicate\nthat the exception was handled and keep it from being thrown.",
       "!data": {
@@ -23502,7 +24618,7 @@
       }
      },
      "stamp": {
-      "!type": "fn(o: +yui.Object, readOnly: bool) -> string",
+      "!type": "fn(o: +Object, readOnly: bool) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_stamp",
       "!doc": "Returns a unique id associated with the given object and (if *readOnly* is\nfalsy) stamps the object with that id so it can be identified in the future.\n\nStamping an object involves adding a `_yuid` property to it that contains\nthe objects id. One exception to this is that in Internet Explorer, DOM\nnodes have a `uniqueID` property that contains a browser-generated unique\nid, which will be used instead of a YUI-generated id when available.",
       "!data": {
@@ -23518,7 +24634,7 @@
       }
      },
      "instanceOf": {
-      "!type": "fn(o: +yui.Object, type: +yui.Object)",
+      "!type": "fn(o: +Object, type: +Object)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_instanceOf",
       "!doc": "Safe `instanceof` wrapper that works around a memory leak in IE when the\nobject being tested is `window` or `document`.\n\nUnless you are testing objects that may be `window` or `document`, you\nshould use the native `instanceof` operator instead of this method.",
       "!data": {
@@ -23572,7 +24688,7 @@
       }
      },
      "add": {
-      "!type": "fn(item: +MIXED) -> +yui.Object",
+      "!type": "fn(item: +MIXED) -> +Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Queue.html#method_add",
       "!doc": "Add 0..n items to the end of the queue.",
       "!data": {
@@ -23590,10 +24706,10 @@
     }
    },
    "Array": {
-    "!type": "fn(thing: ?, startIndex?: number, force?: bool) -> +yui.Array",
+    "!type": "fn(thing: ?, startIndex?: number, force?: bool) -> [?]",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html",
     "dedupe": {
-     "!type": "fn(array: [string]) -> +yui.Array",
+     "!type": "fn(array: [string]|[number]) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_dedupe",
      "!doc": "Dedupes an array of strings, returning an array thats guaranteed to contain\nonly one copy of a given string.\n\nThis method differs from `Array.unique()` in that its optimized for use only\nwith arrays consisting entirely of strings or entirely of numbers, whereas\n`unique` may be used with other value types (but is slower).\n\nUsing `dedupe()` with values other than strings or numbers, or with arrays\ncontaining a mix of strings and numbers, may result in unexpected behavior.",
      "!data": {
@@ -23601,7 +24717,7 @@
      }
     },
     "each": {
-     "!type": "fn(array: +yui.Array, fn: fn(item: ?, index: number, array: +yui.Array), thisObj?: +yui.Object) -> +yui.YUI",
+     "!type": "fn(array: [?], fn: fn(item: ?, index: number, array: [?]), thisObj?: +Object) -> +yui.YUI",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_each",
      "!doc": "Executes the supplied function on each item in the array. This method wraps\nthe native ES5 `Array.forEach()` method if available.",
      "!data": {
@@ -23617,7 +24733,7 @@
      }
     },
     "hash": {
-     "!type": "fn(keys: [string], values?: +yui.Array) -> +yui.Object",
+     "!type": "fn(keys: [string], values?: [?]) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_hash",
      "!doc": "Returns an object using the first array as keys and the second as values. If\nthe second array is not provided, or if it doesnt contain the same number of\nvalues as the first array, then `true` will be used in place of the missing\nvalues.",
      "!data": {
@@ -23625,7 +24741,7 @@
      }
     },
     "indexOf": {
-     "!type": "fn(array: +yui.Array, value: ?, from?: number) -> number",
+     "!type": "fn(array: [?], value: ?, from?: number) -> number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_indexOf",
      "!doc": "Returns the index of the first item in the array thats equal (using a strict\nequality check) to the specified _value_, or `-1` if the value isnt found.\n\nThis method wraps the native ES5 `Array.indexOf()` method if available.",
      "!data": {
@@ -23641,7 +24757,7 @@
      }
     },
     "some": {
-     "!type": "fn(array: +yui.Array, fn: fn(value: ?, index: number, array: +yui.Array), thisObj?: +yui.Object) -> bool",
+     "!type": "fn(array: [?], fn: fn(value: ?, index: number, array: [?]), thisObj?: +Object) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_some",
      "!doc": "Executes the supplied function on each item in the array. Returning a truthy\nvalue from the function will stop the processing of remaining items.",
      "!data": {
@@ -23649,7 +24765,7 @@
      }
     },
     "test": {
-     "!type": "fn(obj: +yui.Object) -> number",
+     "!type": "fn(obj: +Object) -> number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Array.html#method_test",
      "!doc": "Evaluates _obj_ to determine if its an array, an array-like collection, or\nsomething else. This is useful when working with the function `arguments`\ncollection and `HTMLElement` collections.\n\nNote: This implementation doesnt consider elements that are also\ncollections, such as `<form>` and `<select>`, to be array-like.",
      "!data": {
@@ -23757,7 +24873,7 @@
      }
     },
     "sub": {
-     "!type": "fn(s: string, o: +yui.Object) -> string",
+     "!type": "fn(s: string, o: +Object) -> string",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Lang.html#method_sub",
      "!doc": "Performs `{placeholder}` substitution on a string. The object passed as the\nsecond parameter provides values to replace the `{placeholder}`s.\n`{placeholder}` token names must match property names of the object. For example,\n\n`var greeting = Y.Lang.sub(\"Hello, {who}!\", { who: \"World\" });`\n\n`{placeholder}` tokens that are undefined on the object map will be left\nin tact (leaving unsightly `{placeholder}`s in the output string).",
      "!data": {
@@ -23801,7 +24917,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html",
     "()": {
-     "!type": "fn(obj: +yui.Object) -> +yui.Object",
+     "!type": "fn(obj: +Object) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_()",
      "!doc": "Returns a new object that uses _obj_ as its prototype. This method wraps the\nnative ES5 `Object.create()` method if available, but doesnt currently\npass through `Object.create()`s second argument (properties) in order to\nensure compatibility with older browsers.",
      "!data": {
@@ -23809,7 +24925,7 @@
      }
     },
     "owns": {
-     "!type": "fn(obj: +yui.Object, key: string) -> bool",
+     "!type": "fn(obj: +Object, key: string) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_owns",
      "!doc": "Returns `true` if _key_ exists on _obj_, `false` if _key_ doesnt exist or\nexists only on _obj_s prototype. This is essentially a safer version of\n`obj.hasOwnProperty()`.",
      "!data": {
@@ -23817,7 +24933,7 @@
      }
     },
     "hasKey": {
-     "!type": "fn(obj: +yui.Object, key: string) -> bool",
+     "!type": "fn(obj: +Object, key: string) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_hasKey",
      "!doc": "Alias for `owns()`.",
      "!data": {
@@ -23825,7 +24941,7 @@
      }
     },
     "keys": {
-     "!type": "fn(obj: +yui.Object) -> [string]",
+     "!type": "fn(obj: +Object) -> [string]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_keys",
      "!doc": "Returns an array containing the objects enumerable keys. Does not include\nprototype keys or non-enumerable keys.\n\nNote that keys are returned in enumeration order (that is, in the same order\nthat they would be enumerated by a `for-in` loop), which may not be the same\nas the order in which they were defined.\n\nThis method is an alias for the native ES5 `Object.keys()` method if\navailable and non-buggy. The Opera 11.50 and Android 2.3.x versions of\n`Object.keys()` have an inconsistency as they consider `prototype` to be\nenumerable, so a non-native shim is used to rectify the difference.",
      "!data": {
@@ -23833,7 +24949,7 @@
      }
     },
     "values": {
-     "!type": "fn(obj: +yui.Object) -> +yui.Array",
+     "!type": "fn(obj: +Object) -> [?]",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_values",
      "!doc": "Returns an array containing the values of the objects enumerable keys.\n\nNote that values are returned in enumeration order (that is, in the same\norder that they would be enumerated by a `for-in` loop), which may not be the\nsame as the order in which they were defined.",
      "!data": {
@@ -23841,7 +24957,7 @@
      }
     },
     "size": {
-     "!type": "fn(obj: +yui.Object) -> number",
+     "!type": "fn(obj: +Object) -> number",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_size",
      "!doc": "Returns the number of enumerable keys owned by an object.",
      "!data": {
@@ -23849,7 +24965,7 @@
      }
     },
     "hasValue": {
-     "!type": "fn(obj: +yui.Object, value: ?) -> bool",
+     "!type": "fn(obj: +Object, value: ?) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_hasValue",
      "!doc": "Returns `true` if the object owns an enumerable property with the specified\nvalue.",
      "!data": {
@@ -23857,7 +24973,7 @@
      }
     },
     "each": {
-     "!type": "fn(obj: +yui.Object, fn: fn(value: +Mixed, key: string, obj: +yui.Object), thisObj?: +yui.Object, proto?: bool) -> !this",
+     "!type": "fn(obj: +Object, fn: fn(value: +Mixed, key: string, obj: +Object), thisObj?: +Object, proto?: bool) -> !this",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_each",
      "!doc": "Executes a function on each enumerable property in _obj_. The function\nreceives the value, the key, and the object itself as parameters (in that\norder).\n\nBy default, only properties owned by _obj_ are enumerated. To include\nprototype properties, set the _proto_ parameter to `true`.",
      "!data": {
@@ -23865,7 +24981,7 @@
      }
     },
     "some": {
-     "!type": "fn(obj: +yui.Object, fn: fn(value: +Mixed, key: string, obj: +yui.Object), thisObj?: +yui.Object, proto?: bool) -> bool",
+     "!type": "fn(obj: +Object, fn: fn(value: +Mixed, key: string, obj: +Object), thisObj?: +Object, proto?: bool) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_some",
      "!doc": "Executes a function on each enumerable property in _obj_, but halts if the\nfunction returns a truthy value. The function receives the value, the key,\nand the object itself as paramters (in that order).\n\nBy default, only properties owned by _obj_ are enumerated. To include\nprototype properties, set the _proto_ parameter to `true`.",
      "!data": {
@@ -23873,7 +24989,7 @@
      }
     },
     "getValue": {
-     "!type": "fn(o: ?, path: +yui.Array) -> ?",
+     "!type": "fn(o: ?, path: [?]) -> ?",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_getValue",
      "!doc": "Retrieves the sub value at the provided path,\nfrom the value object provided.",
      "!data": {
@@ -23881,7 +24997,7 @@
      }
     },
     "setValue": {
-     "!type": "fn(o: ?, path: +yui.Array, val: ?) -> +yui.Object",
+     "!type": "fn(o: ?, path: [?], val: ?) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_setValue",
      "!doc": "Sets the sub-attribute value at the provided path on the\nvalue object.  Returns the modified value object, or\nundefined if the path is invalid.",
      "!data": {
@@ -23889,7 +25005,7 @@
      }
     },
     "isEmpty": {
-     "!type": "fn(obj: +yui.Object) -> bool",
+     "!type": "fn(obj: +Object) -> bool",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Object.html#method_isEmpty",
      "!doc": "Returns `true` if the object has no enumerable properties of its own.",
      "!data": {
@@ -23901,7 +25017,7 @@
     "!type": "fn()",
     "!url": "http://yuilibrary.com/yui/docs/api/classes/UA.html",
     "parseUA": {
-     "!type": "fn(subUA?: string) -> +yui.Object",
+     "!type": "fn(subUA?: string) -> +Object",
      "!url": "http://yuilibrary.com/yui/docs/api/classes/UA.html#method_parseUA",
      "!doc": "Static method on `YUI.Env` for parsing a UA string.  Called at instantiation\nto populate `Y.UA`.",
      "!data": {
@@ -23990,7 +25106,7 @@
       }
      },
      "compareVersions": {
-      "!type": "fn(a: number, b: number) -> ?",
+      "!type": "fn(a: number|string, b: number|string) -> ?",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/UA.html#method_compareVersions",
       "!doc": "Performs a simple comparison between two version numbers, accounting for\nstandard versioning logic such as the fact that \"535.8\" is a lower version than\n\"535.24\", even though a simple numerical comparison would indicate that its\ngreater. Also accounts for cases such as \"1.1\" vs. \"1.1.0\", which are\nconsidered equivalent.\n\nReturns -1 if version _a_ is lower than version _b_, 0 if theyre equivalent,\n1 if _a_ is higher than _b_.\n\nVersions may be numbers or strings containing numbers and dots. For example,\nboth `535` and `\"535.8.10\"` are acceptable. A version string containing\nnon-numeric characters, like `\"535.8.beta\"`, may produce unexpected results.",
       "!data": {
@@ -24148,7 +25264,7 @@
       }
      },
      "logInclude": {
-      "!type": "+object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_logInclude",
       "!doc": "A hash of log sources that should be logged. If specified, only messages from\nthese sources will be logged. Others will be discarded.",
       "!data": {
@@ -24156,7 +25272,7 @@
       }
      },
      "logExclude": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_logExclude",
       "!doc": "A hash of log sources that should be not be logged. If specified, all sources\nwill be logged *except* those on this list.",
       "!data": {
@@ -24180,7 +25296,7 @@
       }
      },
      "global": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_global",
       "!doc": "Reference to the global object for this execution context.\n\nIn a browser, this is the current `window` object. In Node.js, this is the\nNode.js `global` object.",
       "!data": {
@@ -24204,7 +25320,7 @@
       }
      },
      "core": {
-      "!type": "+yui.Array",
+      "!type": "[?]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_core",
       "!doc": "A list of modules that defines the YUI core (overrides the default list).",
       "!data": {
@@ -24212,7 +25328,7 @@
       }
      },
      "lang": {
-      "!type": "string",
+      "!type": "string|[string]",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_lang",
       "!doc": "A list of languages to use in order of preference.\n\nThis list is matched against the list of available languages in modules that the\nYUI instance uses to determine the best possible localization of language\nsensitive modules.\n\nLanguages are represented using BCP 47 language tags, such as \"en-GB\" for\nEnglish as used in the United Kingdom, or \"zh-Hans-CN\" for simplified Chinese as\nused in China. The list may be provided as a comma-separated string or as an\narray.",
       "!data": {
@@ -24284,7 +25400,7 @@
       }
      },
      "filter": {
-      "!type": "+yui.Object",
+      "!type": "+Object|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_filter",
       "!doc": "Filter to apply to module urls. This filter will modify the default path for all\nmodules.\n\nThe default path for the YUI library is the minified version of the files (e.g.,\nevent-min.js). The filter property can be a predefined filter or a custom\nfilter. The valid predefined filters are:\n\n  - **debug**: Loads debug versions of modules (e.g., event-debug.js).\n  - **raw**: Loads raw, non-minified versions of modules without debug logging\n    (e.g., event.js).\n\nYou can also define a custom filter, which must be an object literal containing\na search regular expression and a replacement string:\n\n    myFilter: {\n        searchExp : \"-min\\\\.js\",\n        replaceStr: \"-debug.js\"\n    }",
       "!data": {
@@ -24292,7 +25408,7 @@
       }
      },
      "skin": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_skin",
       "!doc": "Skin configuration and customizations.",
       "!data": {
@@ -24300,7 +25416,7 @@
       }
      },
      "filters": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_filters",
       "!doc": "Hash of per-component filter specifications. If specified for a given component,\nthis overrides the global `filter` config.",
       "!data": {
@@ -24332,7 +25448,7 @@
       }
      },
      "insertBefore": {
-      "!type": "+HTMLElement",
+      "!type": "+HTMLElement|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_insertBefore",
       "!doc": "DOM element or id that should be used as the insertion point for dynamically\nadded `<script>` and `<link>` nodes.",
       "!data": {
@@ -24340,7 +25456,7 @@
       }
      },
      "jsAttributes": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_jsAttributes",
       "!doc": "Object hash containing attributes to add to dynamically added `<script>` nodes.",
       "!data": {
@@ -24348,7 +25464,7 @@
       }
      },
      "cssAttributes": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_cssAttributes",
       "!doc": "Object hash containing attributes to add to dynamically added `<link>` nodes.",
       "!data": {
@@ -24364,7 +25480,7 @@
       }
      },
      "modules": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_modules",
       "!doc": "A hash of module definitions to add to the list of available YUI modules. These\nmodules can then be dynamically loaded via the `use()` method.\n\nThis is a hash in which keys are module names and values are objects containing\nmodule metadata.\n\nSee `Loader.addModule()` for the supported module metadata fields. Also see\n`groups`, which provides a way to configure the base and combo spec for a set of\nmodules.",
       "!data": {
@@ -24372,7 +25488,7 @@
       }
      },
      "aliases": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_aliases",
       "!doc": "Aliases are dynamic groups of modules that can be used as shortcuts.",
       "!data": {
@@ -24380,7 +25496,7 @@
       }
      },
      "groups": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_groups",
       "!doc": "A hash of module group definitions.\n\nFor each group you can specify a list of modules and the base path and\ncombo spec to use when dynamically loading the modules.",
       "!data": {
@@ -24396,7 +25512,7 @@
       }
      },
      "fetchCSS": {
-      "!type": "bool",
+      "!type": "bool|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_fetchCSS",
       "!doc": "If `true`, YUI will attempt to load CSS dependencies and skins. Set this to\n`false` to prevent YUI from loading any CSS, or set it to the string `\"force\"`\nto force CSS dependencies to be loaded even if their associated JS modules are\nalready loaded.",
       "!data": {
@@ -24500,7 +25616,7 @@
       }
      },
      "delayUntil": {
-      "!type": "+yui.Object",
+      "!type": "+Object|string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/config.html#property_delayUntil",
       "!doc": "Delay the `use` callback until a specific event has passed (`load`, `domready`, `contentready` or `available`)",
       "!data": {
@@ -24516,22 +25632,22 @@
     "!url": "http://yuilibrary.com/yui/docs/api/classes/Features.html",
     "prototype": {
      "tests": {
-      "!type": "+yui.Object",
+      "!type": "+Object",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Features.html#property_tests",
       "!doc": "Object hash of all registered feature tests"
      },
      "add": {
-      "!type": "fn(cat: string, name: string, o: +yui.Object)",
+      "!type": "fn(cat: string, name: string, o: +config.FeaturesAddConfig)",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Features.html#method_add",
       "!doc": "Add a test to the system\n\n  ```\n  Y.Features.add(\"load\", \"1\", {});\n  ```"
      },
      "all": {
-      "!type": "fn(cat: string, args: +yui.Array) -> string",
+      "!type": "fn(cat: string, args: [?]) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Features.html#method_all",
       "!doc": "Execute all tests of a given category and return the serialized results\n\n  ```\n  caps=1:1;2:1;3:0\n  ```"
      },
      "test": {
-      "!type": "fn(cat: string, name: string, args: +yui.Array) -> bool",
+      "!type": "fn(cat: string, name: string, args: [?]) -> bool",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Features.html#method_test",
       "!doc": "Run a specific test and return a Boolean response.\n\n  ```\n  Y.Features.test(\"load\", \"1\");\n  ```"
      }
@@ -24547,7 +25663,7 @@
     },
     "prototype": {
      "lookupBestLang": {
-      "!type": "fn(preferredLanguages: [string], availableLanguages: [string]) -> string",
+      "!type": "fn(preferredLanguages: [string]|string, availableLanguages: [string]) -> string",
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Intl.html#method_lookupBestLang",
       "!doc": "Returns the language among those available that\nbest matches the preferred language list, using the Lookup\nalgorithm of BCP 47.\nIf none of the available languages meets the users preferences,\nthen \"\" is returned.\nExtended language ranges are not supported."
      }
