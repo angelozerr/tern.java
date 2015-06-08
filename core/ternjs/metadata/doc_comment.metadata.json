@@ -11,5 +11,17 @@
  },
  "bugs": {
   "url": "https://github.com/marijnh/tern/issues"
- }
+ },
+ "options": [
+  {
+   "name": "strong",
+   "description": "Can be set to true to assign a higher-than-default weight to the types it finds in comments, and thus overrides inferred types.",
+   "type": "boolean"
+  },
+  {
+   "name": "fullDocs",
+   "description": "Can be set to true to return the full comment text instead of the first sentence.",
+   "type": "boolean"
+  }
+ ]
 }
