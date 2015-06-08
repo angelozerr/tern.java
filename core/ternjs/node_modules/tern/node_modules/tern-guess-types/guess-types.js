@@ -17,6 +17,19 @@
     return {};
   });  
   
+  function init(quessTypes, type) {
+    var argType = infer.toString(type);
+    quessTypes[argType] = [];
+    if (argType == "bool") {
+      quessTypes[argType].push("true");
+      quessTypes[argType].push("false");
+    } else if (argType == "string") {
+      quessTypes[argType].push("\"\"");
+      quessTypes[argType].push("''");
+    }
+    return argType;
+  }
+  
   tern.defineQueryType("guess-types", {
     takesFile: true,
     run: function(server, query, file) {
@@ -39,27 +52,36 @@
     	exprAt.node = exprAt.node.object;
         var objType = infer.expressionType(exprAt);
         if (objType && objType.getType && objType.getType()) {
-          prop = objType.getType().hasProp(query.property);
+          prop = objType.getType().hasProp ? objType.getType().hasProp(query.property) : objType.getType().proto.hasProp(query.property);
         }
       } else {
-    	  prop = file.scope.hasProp(query.property);    	  
+        prop = file.scope.hasProp(query.property);    	  
       }
       
       if (prop && prop.getFunctionType) {
     	quessTypes.args = [];
       	var fnType = prop.getFunctionType(), args = fnType.args;
       	for (var i = 0; i < args.length; i++) {
-			var arg = args[i], argType = infer.toString(arg.getType());
-			quessTypes.args.push(argType)
-			quessTypes[argType] = [];
-			if (argType == "bool") {
-				quessTypes[argType].push("true");
-				quessTypes[argType].push("false");
-			}
+          var arg = args[i];
+          if (arg.types) {
+            // argument types is an array of types
+            var argTypes = "";
+            for (var j = 0; j < arg.types.length; j++) {
+              var type = arg.types[j];
+              var argType = init(quessTypes, type);
+              if (j > 0) argTypes += "|";
+              argTypes += argType;
+            }
+			quessTypes.args.push(argTypes);
+          } else {
+            // one type
+            var argType = init(quessTypes, arg.getType());
+            quessTypes.args.push(argType);
+          }
 		}
       	infer.forAllLocalsAt(file.ast, wordStart, file.scope, gather);
       }
-      
+        
       return quessTypes;
     }
   });

@@ -20,21 +20,26 @@ public class TernGuessTypesResultProcessor implements
 
 	public static final TernGuessTypesResultProcessor INSTANCE = new TernGuessTypesResultProcessor();
 
+	private static final String ARGS_FIELD_NAME = "args";
+	
 	@Override
 	public void process(TernDoc doc, IJSONObjectHelper jsonObjectHelper,
 			Object jsonObject, ITernGuessTypesCollector collector) {
-		Iterable<Object> args = jsonObjectHelper.getList(jsonObject, "args"); //$NON-NLS-1$
+		Iterable<Object> args = jsonObjectHelper.getList(jsonObject, ARGS_FIELD_NAME); //$NON-NLS-1$
 		if (args != null) {
 			Iterable<Object> namesForArg;
-			String argType = null;
+			String[] argTypes = null;
 			int argIndex = 0;
 			for (Object arg : args) {
-				argType = jsonObjectHelper.getText(arg);
-				namesForArg = jsonObjectHelper.getList(jsonObject, argType);
-				for (Object name : namesForArg) {
-					collector.addProposal(argIndex,
-							jsonObjectHelper.getText(name));
-				}
+				// argument can have multiple types separated with '|'.
+				argTypes = jsonObjectHelper.getText(arg).split("[|]");
+				for (int i = 0; i < argTypes.length; i++) {
+					namesForArg = jsonObjectHelper.getList(jsonObject, argTypes[i]);
+					for (Object name : namesForArg) {
+						collector.addProposal(argIndex,
+								jsonObjectHelper.getText(name));
+					}	
+				}				
 				argIndex++;
 			}
 		}
