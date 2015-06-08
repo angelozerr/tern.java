@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -46,7 +46,7 @@ public abstract class AbstractTernServerGuessTypesTest extends
 		// first arg is string type
 		Collection<String> names = collector.get(0);
 		Assert.assertNotNull(names);
-		Assert.assertArrayEquals(new String[] { "name", "s", "y" },
+		Assert.assertArrayEquals(new String[] { "\"\"", "''", "name", "s", "y" },
 				names.toArray());
 
 		// second arg has none suggestion
