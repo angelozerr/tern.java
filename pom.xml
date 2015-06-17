@@ -205,7 +205,7 @@
 						<artifactId>tycho-maven-plugin</artifactId>
 						<version>${tycho-version}</version>
 						<configuration>
-							<test>skip</test>
+							<strictVersions>false</strictVersions>
 						</configuration>
 					</plugin>
 				</plugins>
