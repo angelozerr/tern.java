@@ -141,7 +141,7 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
-					<releaseProfiles>release</releaseProfiles>
+					<releaseProfiles>lax</releaseProfiles>
 				</configuration>
 			</plugin>
 			<plugin>
