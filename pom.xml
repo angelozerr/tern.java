@@ -202,7 +202,7 @@
 				<plugins>
 					<plugin>
 						<groupId>org.eclipse.tycho</groupId>
-						<artifactId>tycho-maven-plugin</artifactId>
+						<artifactId>tycho-packaging-plugin</artifactId>
 						<version>${tycho-version}</version>
 						<configuration>
 							<strictVersions>false</strictVersions>
