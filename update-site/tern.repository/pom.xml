@@ -7,6 +7,12 @@
 	</parent>
 	<artifactId>tern.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
+	<!-- https://github.com/jutzig/github-release-plugin/issues/14 -->
+	<scm>
+		<url>https://github.com/angelozerr/tern.java</url>
+		<connection>scm:git:https://github.com/angelozerr/tern.java.git</connection>
+		<developerConnection>scm:git:https://github.com/angelozerr/tern.java.git</developerConnection>
+	</scm>
 	<build>
 		<extensions>
 			<!-- Enabling the use of FTP -->
@@ -75,8 +81,8 @@
 						</executions>
 						<configuration>
 							<overwriteArtifact>true</overwriteArtifact>
-							<tag>${project.artifactId}-${project.version}</tag>
-							<releaseName>${project.artifactId}-${project.version}</releaseName>
+							<tag>tern.java-${project.version}</tag>
+							<releaseName>tern.java-${project.version}</releaseName>
 							<artifact>${project.build.directory}/${project.artifactId}-${project.version}.zip</artifact>
 						</configuration>
 					</plugin>

@@ -197,7 +197,7 @@
 	</scm>
 	<profiles>
 		<profile>
-			<id>release</id>
+			<id>lax</id>
 			<build>
 				<plugins>
 					<plugin>
