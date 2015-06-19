@@ -27,7 +27,7 @@ import tern.ITernProject;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.scriptpath.ITernScriptResource;
-import tern.scriptpath.impl.AbstractTernScriptPath;
+import tern.scriptpath.impl.ContainerTernScriptPath;
 import tern.scriptpath.impl.JSFileScriptResource;
 
 /**
@@ -37,13 +37,14 @@ import tern.scriptpath.impl.JSFileScriptResource;
  * their subfolders.
  * 
  */
-public class FolderScriptPath extends AbstractTernScriptPath {
+public class FolderScriptPath extends ContainerTernScriptPath {
 
 	private IContainer container;
 
 	public FolderScriptPath(ITernProject project, IContainer container,
-			String external) {
-		super(project, ScriptPathsType.FOLDER, external);
+			String[] inclusionPatterns, String[] exclusionPatterns, String external) {
+		super(project, ScriptPathsType.FOLDER, inclusionPatterns,
+				exclusionPatterns, external);
 		this.container = container;
 	}
 
@@ -119,7 +120,7 @@ public class FolderScriptPath extends AbstractTernScriptPath {
 				if (TernResourcesManager.isJSFile(filename)) {
 					IResource resource = proxy.requestResource();
 					ITernFile file = TernResourcesManager.getTernFile(resource);
-					if (file != null) {
+					if (FolderScriptPath.this.accept(file)) {
 						resources.add(new JSFileScriptResource(
 								getOwnerProject(), file));
 					}

@@ -56,10 +56,12 @@ public interface IIDETernProject extends ITernProject {
 	 */
 	ITernScriptPath getScriptPath(String path);
 
-	ITernScriptPath createScriptPath(IResource resource, ScriptPathsType type);
+	ITernScriptPath createScriptPath(IResource resource, ScriptPathsType type,
+			String[] inclusionPatterns, String[] exclusionPatterns);
 
 	ITernScriptPath addExternalScriptPath(IResource resource,
-			ScriptPathsType type, String external) throws IOException;
+			ScriptPathsType type, String[] inclusionPatterns,
+			String[] exclusionPatterns, String external) throws IOException;
 
 	void removeExternalScriptPaths(String external);
 

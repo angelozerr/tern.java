@@ -54,6 +54,7 @@ import tern.resources.TernFileSynchronizer;
 import tern.resources.TernProject;
 import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;
+import tern.scriptpath.ITernScriptPathContainer;
 import tern.scriptpath.impl.JSFileScriptPath;
 import tern.scriptpath.impl.ProjectScriptPath;
 import tern.scriptpath.impl.dom.DOMElementsScriptPath;
@@ -82,6 +83,10 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	private static final String PATH_JSON_FIELD = "path"; //$NON-NLS-1$
 
 	private static final String TYPE_JSON_FIELD = "type"; //$NON-NLS-1$
+
+	private static final String INCLUSION_PATTERNS_JSON_FIELD = "inclusionPatterns"; //$NON-NLS-1$
+
+	private static final String EXCLUSION_PATTERNS_JSON_FIELD = "exclusionPatterns"; //$NON-NLS-1$
 
 	private static final String SCRIPT_PATHS_JSON_FIELD = "scriptPaths"; //$NON-NLS-1$
 
@@ -243,12 +248,19 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 							pathType = ScriptPathsType.FILE;
 						}
 						if (pathType != null) {
+							String[] inclusionPatterns = getPatterns(JsonHelper
+									.getString(jsonScript,
+											INCLUSION_PATTERNS_JSON_FIELD));
+							String[] exclusionPatterns = getPatterns(JsonHelper
+									.getString(jsonScript,
+											EXCLUSION_PATTERNS_JSON_FIELD));
 							// script path type exists.
 							IResource resource = getResource(path, pathType);
 							if (resource != null && resource.exists()) {
 								// the script path exists, add it.
 								this.scriptPaths.add(createScriptPath(resource,
-										pathType));
+										pathType, inclusionPatterns,
+										exclusionPatterns));
 							}
 						}
 					}
@@ -256,6 +268,13 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			}
 
 		}
+	}
+
+	private String[] getPatterns(String patterns) {
+		if (StringUtils.isEmpty(patterns)) {
+			return null;
+		}
+		return patterns.split(",");
 	}
 
 	/*
@@ -369,12 +388,39 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 					jsonScript
 							.add(TYPE_JSON_FIELD, scriptPath.getType().name());
 					jsonScript.add(PATH_JSON_FIELD, scriptPath.getPath());
+					if (scriptPath instanceof ITernScriptPathContainer) {
+						ITernScriptPathContainer container = (ITernScriptPathContainer) scriptPath;
+						String exclusionPatterns = toString(container
+								.getExclusionPatterns());
+						if (exclusionPatterns != null) {
+							jsonScript.add(EXCLUSION_PATTERNS_JSON_FIELD, exclusionPatterns);
+						}
+						String inclusionPatterns = toString(container
+								.getInclusionPatterns());
+						if (inclusionPatterns != null) {
+							jsonScript.add(INCLUSION_PATTERNS_JSON_FIELD, inclusionPatterns);
+						}
+					}
 					jsonScripts.add(jsonScript);
 				}
 			}
 			ide.add(SCRIPT_PATHS_JSON_FIELD, jsonScripts);
 		}
 		super.set(IDE_JSON_FIELD, ide);
+	}
+
+	private String toString(String[] patterns) {
+		if (patterns == null) {
+			return null;
+		}
+		StringBuilder result = new StringBuilder();
+		for (int i = 0; i < patterns.length; i++) {
+			if (i > 0) {
+				result.append(",");
+			}
+			result.append(patterns[i]);
+		}
+		return result.toString();
 	}
 
 	/**
@@ -394,18 +440,27 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	 *            the root resource.
 	 * @param type
 	 *            of the script path.
+	 * @param inclusionPatterns
+	 *            include patterns or null
+	 * @param exclusionPatterns
+	 *            exclude patterns or null
 	 * @return
 	 */
+	@Override
 	public ITernScriptPath createScriptPath(IResource resource,
-			ScriptPathsType type) {
-		return createScriptPath(resource, type, null);
+			ScriptPathsType type, String[] inclusionPatterns,
+			String[] exclusionPatterns) {
+		return createScriptPath(resource, type, inclusionPatterns,
+				exclusionPatterns, null);
 	}
 
 	private ITernScriptPath createScriptPath(IResource resource,
-			ScriptPathsType type, String external) {
+			ScriptPathsType type, String[] inclusionPatterns,
+			String[] exclusionPatterns, String external) {
 		switch (type) {
 		case FOLDER:
-			return new FolderScriptPath(this, (IFolder) resource, external);
+			return new FolderScriptPath(this, (IFolder) resource,
+					inclusionPatterns, exclusionPatterns, external);
 		case FILE:
 			ITernFile file = getFile(resource);
 			if (file == null) {
@@ -420,7 +475,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			try {
 				project = TernCorePlugin.getTernProject((IProject) resource);
 				if (project != null) {
-					return new ProjectScriptPath(project, this, external);
+					return new ProjectScriptPath(project, this,
+							inclusionPatterns, exclusionPatterns, external);
 				}
 			} catch (CoreException e) {
 				Trace.trace(Trace.SEVERE, "Project " + resource.getName()
@@ -446,8 +502,10 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	@Override
 	public ITernScriptPath addExternalScriptPath(IResource resource,
-			ScriptPathsType type, String external) throws IOException {
-		ITernScriptPath path = createScriptPath(resource, type, external);
+			ScriptPathsType type, String[] inclusionPatterns,
+			String[] exclusionPatterns, String external) throws IOException {
+		ITernScriptPath path = createScriptPath(resource, type,
+				inclusionPatterns, exclusionPatterns, external);
 		scriptPaths.add(path);
 		return path;
 	}

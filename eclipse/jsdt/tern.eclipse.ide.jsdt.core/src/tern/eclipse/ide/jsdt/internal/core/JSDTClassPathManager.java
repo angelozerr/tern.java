@@ -17,6 +17,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -249,10 +250,13 @@ public class JSDTClassPathManager implements IElementChangedListener,
 						IFolder folder = ResourcesPlugin.getWorkspace()
 								.getRoot().getFolder(entry.getPath());
 						try {
-							ternProject
-									.addExternalScriptPath(folder,
-											ScriptPathsType.FOLDER,
-											JSDT_EXTERNAL_LABEL);
+							String[] inclusionPatterns = toTernPatterns(entry
+									.getInclusionPatterns());
+							String[] exclusionPatterns = toTernPatterns(entry
+									.getExclusionPatterns());
+							ternProject.addExternalScriptPath(folder,
+									ScriptPathsType.FOLDER, inclusionPatterns,
+									exclusionPatterns, JSDT_EXTERNAL_LABEL);
 						} catch (IOException e) {
 							Trace.trace(Trace.SEVERE,
 									"Error while adding external tern script path for project "
@@ -274,6 +278,17 @@ public class JSDTClassPathManager implements IElementChangedListener,
 		}
 	}
 
+	private String[] toTernPatterns(IPath[] paths) {
+		if (paths == null || paths.length < 1) {
+			return null;
+		}
+		String[] patterns = new String[paths.length];
+		for (int i = 0; i < paths.length; i++) {
+			patterns[i] = paths[i].toString();
+		}
+		return patterns;
+	}
+
 	/**
 	 * Synchronize tern project script paths with JSDT "Include Path"
 	 * 
@@ -286,8 +301,12 @@ public class JSDTClassPathManager implements IElementChangedListener,
 		IProject project = ResourcesPlugin.getWorkspace().getRoot()
 				.getProject(entry.getPath().lastSegment());
 		try {
+			String[] inclusionPatterns = toTernPatterns(entry
+					.getInclusionPatterns());
+			String[] exclusionPatterns = toTernPatterns(entry
+					.getExclusionPatterns());
 			ternProject.addExternalScriptPath(project, ScriptPathsType.PROJECT,
-					JSDT_EXTERNAL_LABEL);
+					inclusionPatterns, exclusionPatterns, JSDT_EXTERNAL_LABEL);
 		} catch (IOException e) {
 			Trace.trace(Trace.SEVERE,
 					"Error while adding external tern script path for project "

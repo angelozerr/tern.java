@@ -58,12 +58,12 @@ public interface ITernScriptPath extends ITernAdaptable {
 	 * @return
 	 */
 	String getPath();
-	
+
 	/**
 	 * Returns label
 	 */
 	String getLabel();
-	
+
 	/**
 	 * Returns the script path type.
 	 */
@@ -91,5 +91,5 @@ public interface ITernScriptPath extends ITernAdaptable {
 	 * @return
 	 */
 	List<ITernScriptResource> getScriptResources();
-	
+
 }

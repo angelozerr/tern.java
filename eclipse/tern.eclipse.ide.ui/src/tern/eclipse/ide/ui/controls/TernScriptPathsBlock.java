@@ -114,7 +114,8 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 
 		treeViewer = new TreeViewer(tree);
 		treeViewer.setLabelProvider(TernScriptPathLabelProvider.getInstance());
-		treeViewer.setContentProvider(TernScriptPathContentProvider.getInstance());
+		treeViewer.setContentProvider(TernScriptPathContentProvider
+				.getInstance());
 
 		// Add tree selection listener to enable "Remove" button when a script
 		// path is selected.
@@ -234,8 +235,10 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 						firstExistingScriptPath = scriptPath;
 				} else {
 					// Create a script path and add it.
+					String[] includesPattern = null;
+					String[] excludesPattern = null;
 					ternScriptPaths.add(ternProject.createScriptPath(resource,
-							type));
+							type, includesPattern, excludesPattern));
 				}
 			}
 
@@ -340,8 +343,7 @@ public class TernScriptPathsBlock extends AbstractTreeBlock {
 		return fControl;
 	}
 
-	public void setTernScriptPaths(
-			Collection<ITernScriptPath> ternScriptPaths) {
+	public void setTernScriptPaths(Collection<ITernScriptPath> ternScriptPaths) {
 		this.ternScriptPaths.clear();
 		this.ternScriptPaths.addAll(ternScriptPaths);
 		treeViewer.setInput(this.ternScriptPaths);

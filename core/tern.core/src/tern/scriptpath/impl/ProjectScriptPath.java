@@ -25,14 +25,16 @@ import tern.scriptpath.ITernScriptPath;
  * project.
  * 
  */
-public class ProjectScriptPath extends AbstractTernScriptPath {
+public class ProjectScriptPath extends ContainerTernScriptPath {
 
 	private final ITernProject project;
 	private final List<ITernScriptResource> scripts;
 
 	public ProjectScriptPath(ITernProject project, ITernProject ownerProject,
+			String[] inclusionPatterns, String[] exclusionPatterns,
 			String external) {
-		super(ownerProject, ScriptPathsType.PROJECT, external);
+		super(ownerProject, ScriptPathsType.PROJECT, inclusionPatterns,
+				exclusionPatterns, external);
 		this.project = project;
 		this.scripts = new ArrayList<ITernScriptResource>();
 	}
@@ -40,7 +42,7 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 	public ITernProject getProject() {
 		return project;
 	}
-	
+
 	@Override
 	public String getLabel() {
 		if (getExternalLabel() != null) {
@@ -59,8 +61,8 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 	public List<ITernScriptResource> getScriptResources() {
 		this.scripts.clear();
 		for (ITernScriptPath scriptPath : project.getScriptPaths()) {
-			if (scriptPath.getType() != ScriptPathsType.PROJECT ||
-					!scriptPath.getOwnerProject().equals(project)) {
+			if (scriptPath.getType() != ScriptPathsType.PROJECT
+					|| !scriptPath.getOwnerProject().equals(project)) {
 				this.scripts.addAll(scriptPath.getScriptResources());
 			}
 		}
@@ -71,17 +73,17 @@ public class ProjectScriptPath extends AbstractTernScriptPath {
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class clazz) {
 		return project.getAdapter(clazz);
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return super.hashCode()*17 + project.hashCode();
+		return super.hashCode() * 17 + project.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof ProjectScriptPath) {
-			return super.equals(obj) &&
-					project.equals(((ProjectScriptPath) obj).project);
+			return super.equals(obj)
+					&& project.equals(((ProjectScriptPath) obj).project);
 		}
 		return false;
 	}
