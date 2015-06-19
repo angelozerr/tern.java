@@ -14,7 +14,7 @@
  -->
 <plugin>
 
-	<!-- Completion Proposal for Javascript (inside Javascript file) -->
+	<!-- Completion Proposal for JavaScript (inside JavaScript file) -->
 	
 	<extension point="org.eclipse.wst.jsdt.ui.javaCompletionProposalComputer"
 	   id="TernCompletionProposalCategory"
@@ -30,7 +30,7 @@
 	   </javaCompletionProposalComputer>
 	 </extension>
 
-	<!-- Completion Proposal for Javascript (inside HTML) -->
+	<!-- Completion Proposal for JavaScript (inside HTML) -->
 	 
 	 <extension point="org.eclipse.wst.sse.ui.completionProposal">
 	  <proposalCategory
@@ -75,6 +75,8 @@
 		</proposalComputerExtendedActivation>
 	</extension>
 		 
+	<!-- Text Hover for JavaScript (inside JavaScript file) -->
+			 
 	<extension
          point="org.eclipse.wst.jsdt.ui.javaEditorTextHovers">
       <hover
@@ -91,13 +93,49 @@
       </hover>
 	</extension>
 	      		 
+	<!-- Text Hover for JavaScript (inside HTML file) -->
+		      		 
 	<extension point="org.eclipse.wst.sse.ui.editorConfiguration">
   		<documentationTextHover
         	class="tern.eclipse.ide.jsdt.internal.ui.hover.JSDTTernHover"
         	target="org.eclipse.wst.html.SCRIPT,org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
   		</documentationTextHover>
     </extension>			          		
-        		 
+        
+	<!-- Hyperlink for JavaScript (inside JavaScript file) -->
+        
+   <extension
+         point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+      <hyperlinkDetector
+            class="tern.eclipse.ide.ui.hyperlink.TernHyperLinkDetector"
+            id="tern.eclipse.ide.ui.hyperlink.TernHyperLinkDetector"
+            name="%ternHyperLinkDetector"
+            activate="true"
+            targetId="org.eclipse.wst.jsdt.ui.javaCode">
+      </hyperlinkDetector>
+   </extension>
+           
+	<!-- Hyperlink for JavaScript (inside HTML file) -->
+	        
+    <extension
+         point="org.eclipse.ui.workbench.texteditor.hyperlinkDetectors">
+      <hyperlinkDetector 
+            class="tern.eclipse.ide.ui.hyperlink.TernHyperLinkDetector"
+            id="tern.eclipse.ide.ui.hyperlink.TernHyperlinkDetector.SCRIPT"
+            name="%ternHyperLinkDetector"
+            targetId="org.eclipse.wst.html.SCRIPT"/>
+      <hyperlinkDetector
+            class="tern.eclipse.ide.ui.hyperlink.TernHyperLinkDetector"
+            id="tern.eclipse.ide.ui.hyperlink.TernHyperlinkDetector.SCRIPT.events"
+            name="%ternHyperLinkDetector"
+            targetId="org.eclipse.wst.html.SCRIPT.EVENTHANDLER"/>  
+      <hyperlinkDetector
+			class="tern.eclipse.ide.ui.hyperlink.TernHyperLinkDetector"
+			id="tern.eclipse.ide.ui.hyperlink.TernHyperlinkDetector.HTML"
+			name="%ternHyperLinkDetector"
+			targetId="org.eclipse.wst.html.core.htmlsource"/>
+   	</extension>
+           		 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension
 	       point="org.eclipse.ui.startup">	
