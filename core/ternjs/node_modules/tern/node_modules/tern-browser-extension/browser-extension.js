@@ -12,10 +12,19 @@
       "UnknownElementId" : {"severity" : "warning"}
   };
   
+  var startsWith = function (s, searchString, position) {
+    position = position || 0;
+    return s.indexOf(searchString, position) === position;
+  };
+  
   // DOM Document
     
   function isScriptTag(tagName) {
     return tagName.toLowerCase() == "script";
+  }
+  
+  function isScriptEvent(attrName) {
+    return startsWith(attrName, "on");
   }
   
   function spaces(text, from, to) {
@@ -60,13 +69,19 @@
       }
     };
     parser.onattribute = function (attr) {
+      var startVal = this.position - attr.value.length - 1, endVal = this.position - 1; 
       if (attr.name.toLowerCase() == "id") {
         var originNode = new acorn.Node();
-        originNode.start = this.position - attr.value.length - 1;
-        originNode.end = this.position - 1;
+        originNode.start = startVal;
+        originNode.end = endVal;
         originNode.sourceFile = file;
         originNode.ownerElement = this.tagName;
         ids[attr.value] = originNode;
+      } else if (isScriptEvent(attr.name)) {
+        scripts = scripts + spaces(xml, from, startVal);
+        scripts = scripts + attr.value;
+        from = this.position - 1;
+        to =  xml.length;
       }
     };
     parser.write(xml);
