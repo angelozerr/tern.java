@@ -33,6 +33,9 @@ import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
 import tern.server.protocol.TernQuery;
+import tern.server.protocol.completions.TernCompletionsQuery;
+import tern.server.protocol.definition.TernDefinitionQuery;
+import tern.server.protocol.type.TernTypeQuery;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;
@@ -238,18 +241,19 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 		try {
 			try {
 				TernQuery query = doc.getQuery();
-				if (query != null && TernResourcesManager.isJSFile(file)) {
-					addJSFile(doc, file);
-					return;
-				} else if (query != null
-						&& TernResourcesManager.isHTMLFile(file)) {
-					// This is HTML file case: never keep the file on the server
-					String queryType = query.getType();
-					if (queryType.equals("completions") || //$NON-NLS-1$
-							queryType.equals("definition") || //$NON-NLS-1$
-							queryType.equals("type")) { //$NON-NLS-1$
-						addHTMLFile(doc, file);
+				if (query != null) {
+					if (TernResourcesManager.isJSFile(file)) {
+						addJSFile(doc, file);
 						return;
+					} else if (TernResourcesManager.isHTMLFile(file)) {
+						// This is HTML file case: never keep the file on the server
+						String queryType = query.getType();
+						if (TernCompletionsQuery.isQueryType(queryType) ||
+								TernDefinitionQuery.isQueryType(queryType) ||
+								TernTypeQuery.isQueryType(queryType)) {
+							addHTMLFile(doc, file);
+							return;
+						}	
 					}
 				}
 				TernFile tf = file.toTernServerFile(getProject());

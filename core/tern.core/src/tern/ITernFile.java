@@ -102,6 +102,6 @@ public interface ITernFile extends ITernAdaptable {
 	 * JavaScript content. 
 	 * @return
 	 */
-	ScriptTagRegion[] getScriptTags();
+	ScriptTagRegion[] getScriptTags(ITernProject context);
 	
 }

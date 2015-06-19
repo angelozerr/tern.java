@@ -83,4 +83,15 @@ public class TernTypeQuery extends TernQuery {
 		return JsonHelper.getBoolean(this, ORIGINS_FIELD_NAME, false);
 	}
 
+	/**
+	 * Returns true if the given query type is "type" and false otherwise.
+	 * 
+	 * @param queryType
+	 *            the query type.
+	 * @return true if the given query type is "type" and false otherwise.
+	 */
+	public static boolean isQueryType(String queryType) {
+		return TYPE_TYPE_QUERY.equals(queryType);
+	}
+
 }

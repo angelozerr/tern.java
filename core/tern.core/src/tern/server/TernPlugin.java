@@ -25,7 +25,8 @@ public enum TernPlugin implements ITernPlugin {
 
 	aui15("aui", "1.5.x"),
 	aui2("aui", "2.0.x"), 
-	angular("tern/plugin/angular"), 
+	angular("tern/plugin/angular"),
+	browser_extension("browser-extension", "browser-extension", null, null),
 	chrome_apps("chrome-apps", "chrome-apps", null, null), 
 	component("tern/plugin/component"), 
 	ckeditor_4_4_x("ckeditor", "4.4.x"), 

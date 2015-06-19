@@ -1,0 +1,19 @@
+{
+ "name": "browser-extension",
+ "label": "Browser Extension",
+ "icon": "browser.gif",
+ "homepage": "https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Browser extension support to use Tern inside HTML and provides completion for HTML elements.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-browser-extension.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-browser-extension/issues"
+ }
+}

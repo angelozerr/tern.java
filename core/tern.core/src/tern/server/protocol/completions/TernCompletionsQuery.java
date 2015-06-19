@@ -174,4 +174,17 @@ public class TernCompletionsQuery extends TernQuery {
 	public boolean isGuess() {
 		return JsonHelper.getBoolean(this, GUESS_FIELD_NAME, true);
 	}
+
+	/**
+	 * Returns true if the given query type is "completions" and false
+	 * otherwise.
+	 * 
+	 * @param queryType
+	 *            the query type.
+	 * @return true if the given query type is "completions" and false
+	 *         otherwise.
+	 */
+	public static boolean isQueryType(String queryType) {
+		return COMPLETIONS_TYPE_QUERY.equals(queryType);
+	}
 }

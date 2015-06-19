@@ -64,10 +64,10 @@ public class MapTernFile implements ITernFile {
 	}
 
 	@Override
-	public ScriptTagRegion[] getScriptTags() {
+	public ScriptTagRegion[] getScriptTags(ITernProject context) {
 		return null;
 	}
-
+	
 	@Override
 	public boolean isAccessible() {
 		return true;
