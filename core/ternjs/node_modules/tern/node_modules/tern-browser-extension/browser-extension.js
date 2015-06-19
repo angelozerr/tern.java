@@ -260,17 +260,11 @@
           var rec = wrapAsObjs ? {name: name} : name;
           completions.push(rec);
 
-          /*if (query.types || query.docs || query.urls || query.origins) {
-            var val = modules[name];          
-            if (query.types)
-              rec.type = isSubModule ? "submodule" : "module";
-            if (query.docs)
-              maybeSet(rec, "doc", val.doc);
-            if (query.urls)
-              maybeSet(rec, "url", val.url);
+          if (query.types || query.origins) {         
+            if (query.types) rec.type = "Attr";
             if (query.origins)
-              maybeSet(rec, "origin", val.origin);
-          }*/
+              maybeSet(rec, "origin", file.name);
+          }
         }
       }
     }
