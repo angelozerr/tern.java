@@ -1,0 +1,23 @@
+{
+ "name": "delite",
+ "label": "Delite",
+ "icon": "delite.png",
+ "homepage": "http://ibm-js.github.io/delite/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Delite support. Delite provides you with a core UI infrastructure for building multi channel, enterprise class Web Components to be used in Web & Mobile Hybrid applications.",
+ "dependencies": [
+  "ecma5",
+  "browser",
+  "requirejs"
+  ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-delite.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-delite/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Delite-support"
+ }
+}
