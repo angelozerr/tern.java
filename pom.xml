@@ -188,6 +188,10 @@
 			<url>http://download.eclipse.org/cbi/updates/license/</url>
 			<layout>p2</layout>
 		</repository>
+		<repository>
+			<id>cloudbees</id>
+			<url>http://repository-opensagres.forge.cloudbees.com/snapshot/</url>
+		</repository>
 	</repositories>
 	<scm>
 		<url>https://github.com/angelozerr/tern.java</url>
