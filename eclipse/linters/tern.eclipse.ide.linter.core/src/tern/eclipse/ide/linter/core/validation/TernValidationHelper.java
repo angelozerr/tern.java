@@ -16,18 +16,18 @@ public class TernValidationHelper {
 
 	public static void validate(IResource resource,
 			IIDETernProject ternProject, boolean needsLineNumber,
-			IReporter reporter, IValidator validator) {
+			boolean synch, IReporter reporter, IValidator validator) {
 		ITernPlugin[] lintPlugins = ternProject.getLinters();
 		if (lintPlugins.length > 0) {
 			ITernFile ternFile = ternProject.getFile(resource);
-			validate(ternFile, ternProject, needsLineNumber, reporter,
+			validate(ternFile, ternProject, needsLineNumber, synch, reporter,
 					validator);
 		}
 	}
 
 	public static void validate(ITernFile ternFile,
 			IIDETernProject ternProject, boolean needsLineNumber,
-			IReporter reporter, IValidator validator) {
+			boolean synch, IReporter reporter, IValidator validator) {
 		ITernPlugin[] lintPlugins = ternProject.getLinters();
 		try {
 			ITernLintCollector collector = new TernReporterCollector(
@@ -37,7 +37,7 @@ public class TernValidationHelper {
 				if (needsLineNumber) {
 					query.setLineNumber(true);
 				}
-				ternProject.request(query, ternFile, collector);
+				ternProject.request(query, ternFile, synch, collector);
 			}
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error while tern validation.", e);

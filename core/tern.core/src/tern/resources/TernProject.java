@@ -89,7 +89,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	private final File projectDir;
 	private File ternProjectFile;
 	private ITernRepository repository;
-	
+
 	private ITernPlugin[] linters;
 
 	/**
@@ -100,7 +100,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	private String lastTernProjectFileContent;
 
 	private Object libLock = new Object();
-	
+
 	/**
 	 * Tern project constructor.
 	 * 
@@ -162,11 +162,11 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public void addLib(String lib) {
-	  synchronized(libLock) {
-		if (!hasLib(lib)) {
-			getLibs().add(lib);
+		synchronized (libLock) {
+			if (!hasLib(lib)) {
+				getLibs().add(lib);
+			}
 		}
-	  }
 	}
 
 	/**
@@ -177,16 +177,16 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public boolean hasLib(String lib) {
-	  synchronized(libLock) {
-		JsonArray libs = getLibs();
-		if (libs != null) {
-			for (JsonValue l : libs) {
-				if (l.isString() && l.asString().equals(lib))
-					return true;
+		synchronized (libLock) {
+			JsonArray libs = getLibs();
+			if (libs != null) {
+				for (JsonValue l : libs) {
+					if (l.isString() && l.asString().equals(lib))
+						return true;
+				}
 			}
+			return false;
 		}
-		return false;
-	  }
 	}
 
 	/**
@@ -216,14 +216,14 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public JsonArray getLibs() {
-	  synchronized(libLock) {
-		JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
-		if (libs == null) {
-			libs = new JsonArray();
-			add(LIBS_FIELD_NAME, libs);
+		synchronized (libLock) {
+			JsonArray libs = (JsonArray) super.get(LIBS_FIELD_NAME);
+			if (libs == null) {
+				libs = new JsonArray();
+				add(LIBS_FIELD_NAME, libs);
+			}
+			return libs;
 		}
-		return libs;
-	  }
 	}
 
 	/**
@@ -231,9 +231,9 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public void clearLibs() {
-	  synchronized(libLock) {
-		remove(LIBS_FIELD_NAME);
-	  }
+		synchronized (libLock) {
+			remove(LIBS_FIELD_NAME);
+		}
 	}
 
 	/**
@@ -326,7 +326,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		remove(PLUGINS_FIELD_NAME);
 		this.linters = null;
 	}
-	
+
 	@Override
 	public ITernPlugin[] getLinters() {
 		if (linters == null) {
@@ -571,10 +571,16 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	@Override
-	public void request(TernQuery query, ITernFile file,
+	public void request(TernQuery query, ITernFile file, boolean synch,
 			ITernLintCollector collector) throws IOException, TernException {
 		TernDoc doc = new TernDoc(query);
-		synchronize(doc, null, null, null, file);
+		if (synch) {
+			synchronize(doc, null, null, null, file);
+		} else if (file != null) {
+			if (doc.getQuery() != null) {
+				doc.getQuery().setFile(file.getFullName(this));
+			}
+		}
 		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
@@ -582,7 +588,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	@Override
 	public void request(TernQuery query, ITernLintCollector collector)
 			throws IOException, TernException {
-		request(query, null, collector);
+		request(query, null, true, collector);
 	}
 
 	@Override
@@ -604,7 +610,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	public void setRepository(ITernRepository repository) {
 		this.repository = repository;
 	}
-	
+
 	public boolean isDirty() {
 		return !toString().equals(lastTernProjectFileContent);
 	}

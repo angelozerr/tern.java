@@ -70,7 +70,7 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 			if (lintPlugins.length > 0) {
 				ITernFile ternFile = new TernDocumentFile(file, document);
 				TernValidationHelper.validate(ternFile, ternProject, false,
-						reporter, this);
+						true, reporter, this);
 			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while tern validation.", e);

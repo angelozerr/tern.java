@@ -19,7 +19,13 @@ import tern.eclipse.ide.core.IIDETernProject;
  */
 public class TernValidatorContext {
 
+	private boolean synch;
+
 	private IIDETernProject ternProject;
+
+	public TernValidatorContext() {
+		setSynch(true);
+	}
 
 	public IIDETernProject getTernProject() {
 		return ternProject;
@@ -27,5 +33,13 @@ public class TernValidatorContext {
 
 	public void setTernProject(IIDETernProject ternProject) {
 		this.ternProject = ternProject;
+	}
+
+	public boolean isSynch() {
+		return synch;
+	}
+
+	public void setSynch(boolean synch) {
+		this.synch = synch;
 	}
 }

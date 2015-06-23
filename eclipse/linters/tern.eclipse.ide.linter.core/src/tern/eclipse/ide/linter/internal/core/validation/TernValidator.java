@@ -51,13 +51,23 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 		if (context != null) {
 			// It's a tern project
 			IIDETernProject ternProject = context.getTernProject();
-			if (ternProject.isInScope(resource)) {
+			if (isInScope(resource, ternProject)) {
 				IReporter reporter = result.getReporter(monitor);
+				// validate is called for each file, the synchronization of tern
+				// file must be done for teh first file which must be validated.
 				TernValidationHelper.validate(resource, ternProject, true,
-						reporter, this);
+						context.isSynch(), reporter, this);
+				context.setSynch(false);
 			}
 		}
 		return result;
+	}
+
+	private boolean isInScope(IResource resource, IIDETernProject ternProject) {
+		boolean inScope = ternProject.isInScope(resource);
+		System.err.println((inScope ? "Do" : "Ignore")
+				+ (" validation for " + resource.getFullPath()));
+		return inScope;
 	}
 
 	@Override
