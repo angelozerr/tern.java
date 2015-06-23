@@ -263,8 +263,8 @@ public interface ITernProject extends ITernAdaptable {
 			throws IOException, TernException;
 
 	// ---------- Lint
-	void request(TernQuery query, ITernFile file, ITernLintCollector collector)
-			throws IOException, TernException;
+	void request(TernQuery query, ITernFile file, boolean synch,
+			ITernLintCollector collector) throws IOException, TernException;
 
 	void request(TernQuery query, ITernLintCollector collector)
 			throws IOException, TernException;

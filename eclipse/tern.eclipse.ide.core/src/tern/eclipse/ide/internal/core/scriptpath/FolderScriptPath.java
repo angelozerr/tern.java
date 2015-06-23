@@ -18,17 +18,13 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceProxy;
-import org.eclipse.core.resources.IResourceProxyVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 
-import tern.ITernFile;
 import tern.ITernProject;
-import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.scriptpath.ITernScriptResource;
 import tern.scriptpath.impl.ContainerTernScriptPath;
-import tern.scriptpath.impl.JSFileScriptResource;
 
 /**
  * Folder script path. This script path implementation gives the capability to
@@ -37,12 +33,14 @@ import tern.scriptpath.impl.JSFileScriptResource;
  * their subfolders.
  * 
  */
-public class FolderScriptPath extends ContainerTernScriptPath {
+public class FolderScriptPath extends ContainerTernScriptPath implements
+		IIDETernScriptPath {
 
 	private IContainer container;
 
 	public FolderScriptPath(ITernProject project, IContainer container,
-			String[] inclusionPatterns, String[] exclusionPatterns, String external) {
+			String[] inclusionPatterns, String[] exclusionPatterns,
+			String external) {
 		super(project, ScriptPathsType.FOLDER, inclusionPatterns,
 				exclusionPatterns, external);
 		this.container = container;
@@ -50,7 +48,9 @@ public class FolderScriptPath extends ContainerTernScriptPath {
 
 	@Override
 	public List<ITernScriptResource> getScriptResources() {
-		ScriptResourceProxyVisitor visitor = new ScriptResourceProxyVisitor();
+		List<ITernScriptResource> resources = new ArrayList<ITernScriptResource>();
+		ScriptResourceProxyVisitor visitor = new ScriptResourceProxyVisitor(
+				this, resources);
 		try {
 			if (container.exists()) {
 				container.accept(visitor, IResource.NONE);
@@ -60,7 +60,7 @@ public class FolderScriptPath extends ContainerTernScriptPath {
 					"Error while retrieving script resources from the folder script path "
 							+ container.getName(), e);
 		}
-		return visitor.resources;
+		return resources;
 	}
 
 	public String getLabel() {
@@ -104,30 +104,19 @@ public class FolderScriptPath extends ContainerTernScriptPath {
 		return false;
 	}
 
-	private class ScriptResourceProxyVisitor implements IResourceProxyVisitor {
-
-		public List<ITernScriptResource> resources = new ArrayList<ITernScriptResource>();
-
-		@Override
-		public boolean visit(IResourceProxy proxy) throws CoreException {
-			int type = proxy.getType();
-			switch (type) {
-			case IResource.PROJECT:
-			case IResource.FOLDER:
+	@Override
+	public boolean isInScope(IPath path, int resourceType) {
+		if (resourceType == IResource.FOLDER) {
+			if (getFullPath().equals(path)) {
 				return true;
-			case IResource.FILE:
-				String filename = proxy.getName();
-				if (TernResourcesManager.isJSFile(filename)) {
-					IResource resource = proxy.requestResource();
-					ITernFile file = TernResourcesManager.getTernFile(resource);
-					if (FolderScriptPath.this.accept(file)) {
-						resources.add(new JSFileScriptResource(
-								getOwnerProject(), file));
-					}
-				}
 			}
-			return false;
+			return true;
 		}
+		return isInScope(path.makeRelativeTo(container.getFullPath()),
+				EclipsePathAdapter.INSTANCE);
 	}
 
+	public IPath getFullPath() {
+		return container.getFullPath();
+	}
 }

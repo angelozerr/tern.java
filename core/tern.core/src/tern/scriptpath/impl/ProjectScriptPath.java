@@ -60,13 +60,17 @@ public class ProjectScriptPath extends ContainerTernScriptPath {
 	@Override
 	public List<ITernScriptResource> getScriptResources() {
 		this.scripts.clear();
+		collect(scripts);
+		return scripts;
+	}
+
+	protected void collect(List<ITernScriptResource> scripts) {
 		for (ITernScriptPath scriptPath : project.getScriptPaths()) {
 			if (scriptPath.getType() != ScriptPathsType.PROJECT
-					|| !scriptPath.getOwnerProject().equals(project)) {
+					&& !scriptPath.getOwnerProject().equals(project)) {
 				this.scripts.addAll(scriptPath.getScriptResources());
 			}
 		}
-		return scripts;
 	}
 
 	@Override

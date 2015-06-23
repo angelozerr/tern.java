@@ -65,8 +65,9 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 
 	private boolean isInScope(IResource resource, IIDETernProject ternProject) {
 		boolean inScope = ternProject.isInScope(resource);
-		System.err.println((inScope ? "Do" : "Ignore")
-				+ (" validation for " + resource.getFullPath()));
+		/* TODO : trace isInScope 
+		 * System.err.println((inScope ? "Do" : "Ignore")
+				+ (" validation for " + resource.getFullPath()));*/
 		return inScope;
 	}
 

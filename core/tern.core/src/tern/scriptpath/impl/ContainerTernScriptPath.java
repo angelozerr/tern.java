@@ -10,9 +10,14 @@
  */
 package tern.scriptpath.impl;
 
-import tern.ITernFile;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import minimatch.Minimatch;
+import minimatch.PathAdapter;
 import tern.ITernProject;
 import tern.scriptpath.ITernScriptPathContainer;
+import tern.utils.StringUtils;
 
 /**
  * Abstract class for container tern script path.
@@ -21,8 +26,8 @@ import tern.scriptpath.ITernScriptPathContainer;
 public abstract class ContainerTernScriptPath extends AbstractTernScriptPath
 		implements ITernScriptPathContainer {
 
-	//private final Collection<Minimatch> inclusionMinimatchs;
-	//private final Collection<Minimatch> exclusionMinimatchs;
+	private final Collection<Minimatch> inclusionMinimatchs;
+	private final Collection<Minimatch> exclusionMinimatchs;
 	private String[] inclusionPatterns;
 	private String[] exclusionPatterns;
 
@@ -32,11 +37,11 @@ public abstract class ContainerTernScriptPath extends AbstractTernScriptPath
 		super(project, type, externalLabel);
 		this.inclusionPatterns = inclusionPatterns;
 		this.exclusionPatterns = exclusionPatterns;
-		//this.inclusionMinimatchs = create(inclusionPatterns);
-		//this.exclusionMinimatchs = create(exclusionPatterns);
+		this.inclusionMinimatchs = create(inclusionPatterns);
+		this.exclusionMinimatchs = create(exclusionPatterns);
 	}
 
-	/*private Collection<Minimatch> create(String[] patterns) {
+	private Collection<Minimatch> create(String[] patterns) {
 		if (patterns == null || patterns.length < 1) {
 			return null;
 		}
@@ -45,34 +50,33 @@ public abstract class ContainerTernScriptPath extends AbstractTernScriptPath
 			minimatchs.add(new Minimatch(patterns[i]));
 		}
 		return minimatchs;
-	}*/
+	}
 
-	protected boolean accept(ITernFile file) {
-		if (file == null) {
+	public <T> boolean isInScope(T filename, PathAdapter<T> adapter) {
+		if (filename == null) {
 			return false;
 		}
-		/*if (inclusionMinimatchs == null && exclusionMinimatchs == null) {
+		if (inclusionMinimatchs == null && exclusionMinimatchs == null) {
 			return true;
-		}*/
-		boolean exclude = false;
-		String filename = file.getFullName(getOwnerProject());
-		/*if (exclusionMinimatchs != null) {
-			for (Minimatch minimatch : exclusionMinimatchs) {
-				if (minimatch.match(filename)) {
-					exclude = true;
+		}		
+		if (inclusionMinimatchs != null) {
+			boolean include = false;
+			for (Minimatch minimatch : inclusionMinimatchs) {
+				if (minimatch.match(filename, adapter)) {
+					include = true;
 					break;
 				}
 			}
+			if (!include) return false;
 		}
-		if (inclusionMinimatchs != null) {
-			for (Minimatch minimatch : inclusionMinimatchs) {
-				if (minimatch.match(filename)) {
-					return true;
+		if (exclusionMinimatchs != null) {
+			for (Minimatch minimatch : exclusionMinimatchs) {
+				if (minimatch.match(filename, adapter)) {
+					return false;
 				}
 			}
-			return false;
-		}*/ 
-		return !exclude;
+		}		
+		return true;
 	}
 
 	@Override
@@ -80,8 +84,18 @@ public abstract class ContainerTernScriptPath extends AbstractTernScriptPath
 		return inclusionPatterns;
 	}
 
+	public boolean hasInclusionPatterns() {
+		return getInclusionPatterns() != null
+				&& getInclusionPatterns().length > 0;
+	}
+
 	@Override
 	public String[] getExclusionPatterns() {
 		return exclusionPatterns;
+	}
+
+	public boolean hasExclusionPatterns() {
+		return getExclusionPatterns() != null
+				&& getExclusionPatterns().length > 0;
 	}
 }

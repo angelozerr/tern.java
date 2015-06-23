@@ -28,6 +28,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.QualifiedName;
 
 import tern.ITernFile;
@@ -48,7 +49,9 @@ import tern.eclipse.ide.internal.core.TernRepositoryManager;
 import tern.eclipse.ide.internal.core.Trace;
 import tern.eclipse.ide.internal.core.WorkingCopy;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
+import tern.eclipse.ide.internal.core.scriptpath.EclipseProjectScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
+import tern.eclipse.ide.internal.core.scriptpath.IIDETernScriptPath;
 import tern.repository.ITernRepository;
 import tern.resources.TernFileSynchronizer;
 import tern.resources.TernProject;
@@ -56,7 +59,6 @@ import tern.scriptpath.ITernScriptPath;
 import tern.scriptpath.ITernScriptPath.ScriptPathsType;
 import tern.scriptpath.ITernScriptPathContainer;
 import tern.scriptpath.impl.JSFileScriptPath;
-import tern.scriptpath.impl.ProjectScriptPath;
 import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernModule;
 import tern.server.ITernServer;
@@ -393,12 +395,14 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 						String exclusionPatterns = toString(container
 								.getExclusionPatterns());
 						if (exclusionPatterns != null) {
-							jsonScript.add(EXCLUSION_PATTERNS_JSON_FIELD, exclusionPatterns);
+							jsonScript.add(EXCLUSION_PATTERNS_JSON_FIELD,
+									exclusionPatterns);
 						}
 						String inclusionPatterns = toString(container
 								.getInclusionPatterns());
 						if (inclusionPatterns != null) {
-							jsonScript.add(INCLUSION_PATTERNS_JSON_FIELD, inclusionPatterns);
+							jsonScript.add(INCLUSION_PATTERNS_JSON_FIELD,
+									inclusionPatterns);
 						}
 					}
 					jsonScripts.add(jsonScript);
@@ -475,7 +479,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			try {
 				project = TernCorePlugin.getTernProject((IProject) resource);
 				if (project != null) {
-					return new ProjectScriptPath(project, this,
+					return new EclipseProjectScriptPath(project, this,
 							inclusionPatterns, exclusionPatterns, external);
 				}
 			} catch (CoreException e) {
@@ -747,7 +751,6 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		if (resource == null) {
 			return false;
 		}
-		// TODO : use tern script paths
 		do {
 			if (resource.isDerived() || resource.isTeamPrivateMember()
 					|| !resource.isAccessible()
@@ -756,6 +759,21 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			}
 			resource = resource.getParent();
 		} while ((resource.getType() & IResource.PROJECT) == 0);
+		return isInScope(resource.getFullPath(), resource.getType());
+	}
+
+	@Override
+	public boolean isInScope(IPath path, int resourceType) {
+		// Folder, etc script paths
+		for (ITernScriptPath scriptPath : scriptPaths) {
+			if (scriptPath instanceof IIDETernScriptPath) {
+				if (((IIDETernScriptPath) scriptPath).isInScope(path,
+						resourceType)) {
+					return true;
+				}
+			}
+		}
+		// Project, etc script paths
 		return true;
 	}
 
