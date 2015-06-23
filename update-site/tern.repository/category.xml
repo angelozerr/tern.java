@@ -34,6 +34,10 @@
       <category name="Tern IDE"/>
    </bundle>
    
+   <bundle id="minimatch.java" >
+      <category name="Tern IDE"/>
+   </bundle>
+   
    <category-def name="Tern - Embed Node.js" label="Tern - Embed Node.js">
       <description>
          Embed Node.js switch OS

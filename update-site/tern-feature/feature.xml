@@ -21,7 +21,7 @@
 
    <requires>
       <import plugin="minimal-json"/>
-      <import plugin="fr.opensagres.oss.minimatch.java"/>
+      <import plugin="minimatch.java"/>
    </requires>
 
    <plugin
