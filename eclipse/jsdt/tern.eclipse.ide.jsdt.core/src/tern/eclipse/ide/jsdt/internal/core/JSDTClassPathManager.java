@@ -72,10 +72,11 @@ public class JSDTClassPathManager implements IElementChangedListener,
 	}
 
 	private class ConfigureJob extends WorkspaceJob {
-		IJavaScriptProject fJsProject;
+		private final IJavaScriptProject jsProject;
 
 		private ConfigureJob(IJavaScriptProject jsProject) {
 			super("Tern Project configuration job");
+			this.jsProject = jsProject;
 		}
 
 		@Override
@@ -86,8 +87,8 @@ public class JSDTClassPathManager implements IElementChangedListener,
 			}
 			monitor.beginTask("Confuguring the project", 1);
 			// JSDT "Includes Path", has changed.
-			if (fJsProject != null) {
-				IProject project = fJsProject.getProject();
+			if (jsProject != null) {
+				IProject project = jsProject.getProject();
 				if (TernCorePlugin.hasTernNature(project)) {
 					// It's a tern project
 					try {
@@ -95,7 +96,7 @@ public class JSDTClassPathManager implements IElementChangedListener,
 								.getTernProject(project);
 						// Synchronize tern script paths with JSDT
 						// "Include Path"
-						synchTernScriptPaths(fJsProject, ternProject);
+						synchTernScriptPaths(jsProject, ternProject);
 					} catch (Exception e) {
 						Trace.trace(Trace.SEVERE,
 								"Error while JSDT ClassPath changed.", e);
