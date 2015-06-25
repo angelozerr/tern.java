@@ -809,7 +809,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	@Override
 	public IIDETernScriptPathReporter getScriptPathReporter() {
-		return SysErrScriptPathReporter.INSTANCE;
+		// Uncomment to have trace for include/exclude files.
+		return null; //SysErrScriptPathReporter.INSTANCE;
 	}
 
 }
