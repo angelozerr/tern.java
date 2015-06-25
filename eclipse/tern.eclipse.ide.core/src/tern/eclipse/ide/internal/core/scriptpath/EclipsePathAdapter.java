@@ -1,3 +1,13 @@
+/**
+ *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  All rights reserved. This program and the accompanying materials
+ *  are made available under the terms of the Eclipse Public License v1.0
+ *  which accompanies this distribution, and is available at
+ *  http://www.eclipse.org/legal/epl-v10.html
+ *
+ *  Contributors:
+ *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ */
 package tern.eclipse.ide.internal.core.scriptpath;
 
 import minimatch.PathAdapter;
@@ -5,6 +15,10 @@ import minimatch.PathAdapter;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 
+/**
+ * Minimatch path adapter to use Minimatch with Eclipse {@link IPath}.
+ *
+ */
 public class EclipsePathAdapter implements PathAdapter<IPath> {
 
 	public static final PathAdapter<IPath> INSTANCE = new EclipsePathAdapter();

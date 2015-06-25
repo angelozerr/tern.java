@@ -26,6 +26,7 @@ import org.eclipse.wst.validation.internal.provisional.core.IValidationContext;
 import org.eclipse.wst.validation.internal.provisional.core.IValidatorJob;
 
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.IIDETernScriptPathReporter;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.linter.core.validation.TernValidationHelper;
 import tern.eclipse.ide.linter.internal.core.Trace;
@@ -65,9 +66,12 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 
 	private boolean isInScope(IResource resource, IIDETernProject ternProject) {
 		boolean inScope = ternProject.isInScope(resource);
-		/* TODO : trace isInScope 
-		 * System.err.println((inScope ? "Do" : "Ignore")
-				+ (" validation for " + resource.getFullPath()));*/
+		IIDETernScriptPathReporter reporter = ternProject.getScriptPathReporter();
+		if (reporter != null) {
+			// TODO : trace isInScope 
+		  System.err.println((inScope ? "Do" : "Ignore")
+				+ (" validation for " + resource.getFullPath()));
+		}
 		return inScope;
 	}
 

@@ -119,4 +119,11 @@ public interface IIDETernProject extends ITernProject {
 	 *         and false otherwise.
 	 */
 	boolean isInScope(IPath path, int resourceType);
+
+	/**
+	 * Returns the tern script path reporter and null otherwise.
+	 * 
+	 * @return the tern script path reporter and null otherwise.
+	 */
+	IIDETernScriptPathReporter getScriptPathReporter();
 }

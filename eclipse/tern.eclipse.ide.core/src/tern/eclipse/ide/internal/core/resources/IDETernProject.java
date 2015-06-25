@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import tern.ITernProject;
 import tern.TernException;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.IIDETernScriptPathReporter;
 import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener.LifecycleEventType;
 import tern.eclipse.ide.core.ITernServerPreferencesListener;
@@ -52,6 +54,8 @@ import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.EclipseProjectScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.IIDETernScriptPath;
+import tern.eclipse.ide.internal.core.scriptpath.SysErrScriptPathReporter;
+import tern.eclipse.ide.internal.core.scriptpath.TernScriptPathComparator;
 import tern.repository.ITernRepository;
 import tern.resources.TernFileSynchronizer;
 import tern.resources.TernProject;
@@ -102,6 +106,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	private Object serverLock = new Object();
 
 	private final List<ITernScriptPath> scriptPaths;
+	private List<ITernScriptPath> sortedScriptPaths;
 
 	private final Map<String, Object> data;
 
@@ -113,6 +118,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		super(project.getLocation().toFile());
 		this.project = project;
 		this.scriptPaths = new ArrayList<ITernScriptPath>();
+		this.sortedScriptPaths = Collections.emptyList();
 		this.data = new HashMap<String, Object>();
 		this.listeners = new ArrayList<ITernServerListener>();
 		this.workingCopy = new WorkingCopy(this);
@@ -270,6 +276,11 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			}
 
 		}
+		resetSortScriptPaths();
+	}
+
+	private void resetSortScriptPaths() {
+		this.sortedScriptPaths = null;
 	}
 
 	private String[] getPatterns(String patterns) {
@@ -501,6 +512,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			throws IOException {
 		this.scriptPaths.clear();
 		this.scriptPaths.addAll(scriptPaths);
+		resetSortScriptPaths();
 		save();
 	}
 
@@ -511,6 +523,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		ITernScriptPath path = createScriptPath(resource, type,
 				inclusionPatterns, exclusionPatterns, external);
 		scriptPaths.add(path);
+		resetSortScriptPaths();
 		return path;
 	}
 
@@ -523,6 +536,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 				scriptPaths.remove(scriptPath);
 			}
 		}
+		resetSortScriptPaths();
 	}
 
 	@Override
@@ -751,6 +765,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		if (resource == null) {
 			return false;
 		}
+		IPath path = resource.getFullPath();
 		do {
 			if (resource.isDerived() || resource.isTeamPrivateMember()
 					|| !resource.isAccessible()
@@ -759,22 +774,42 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			}
 			resource = resource.getParent();
 		} while ((resource.getType() & IResource.PROJECT) == 0);
-		return isInScope(resource.getFullPath(), resource.getType());
+		return isInScope(path, resource.getType());
 	}
 
 	@Override
 	public boolean isInScope(IPath path, int resourceType) {
 		// Folder, etc script paths
-		for (ITernScriptPath scriptPath : scriptPaths) {
+		IIDETernScriptPath s = null;
+		for (ITernScriptPath scriptPath : getSortedScriptPaths()) {
 			if (scriptPath instanceof IIDETernScriptPath) {
-				if (((IIDETernScriptPath) scriptPath).isInScope(path,
-						resourceType)) {
-					return true;
+				s = (IIDETernScriptPath) scriptPath;
+				if (s.isBelongToContainer(path)) {
+					if (!s.isInScope(path,
+							resourceType)) {
+						return false;
+					}	
 				}
 			}
 		}
-		// Project, etc script paths
 		return true;
+	}
+	
+	private List<ITernScriptPath> getSortedScriptPaths() {
+		if (sortedScriptPaths == null) {
+			if (!scriptPaths.isEmpty()) {
+				sortedScriptPaths = new ArrayList<ITernScriptPath>(scriptPaths);
+				Collections.sort(sortedScriptPaths, TernScriptPathComparator.INSTANCE);
+			} else {
+				sortedScriptPaths = Collections.emptyList();
+			}
+		}
+		return sortedScriptPaths;
+	}
+
+	@Override
+	public IIDETernScriptPathReporter getScriptPathReporter() {
+		return SysErrScriptPathReporter.INSTANCE;
 	}
 
 }
