@@ -111,7 +111,7 @@ public class FolderScriptPath extends ContainerTernScriptPath implements IIDETer
 	public boolean isInScope(IPath path, int resourceType) {
 		IPath folderPath = getFullPath();
 		IPath relativePath = PathUtils.getRelativePath(path, folderPath, resourceType);
-		return isInScope(path.makeRelativeTo(relativePath), EclipsePathAdapter.INSTANCE);
+		return isInScope(relativePath, EclipsePathAdapter.INSTANCE);
 	}
 
 	public IPath getFullPath() {

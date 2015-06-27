@@ -27,6 +27,7 @@ import org.eclipse.wst.validation.internal.provisional.core.IValidatorJob;
 
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.IIDETernScriptPathReporter;
+import tern.eclipse.ide.core.IScopeContext;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.linter.core.validation.TernValidationHelper;
 import tern.eclipse.ide.linter.internal.core.Trace;
@@ -45,43 +46,37 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 	 * Perform the validation using version 2 of the validation framework.
 	 */
 	@Override
-	public ValidationResult validate(IResource resource, int kind,
-			ValidationState state, IProgressMonitor monitor) {
+	public ValidationResult validate(IResource resource, int kind, ValidationState state, IProgressMonitor monitor) {
 		ValidationResult result = new ValidationResult();
 		TernValidatorContext context = getTernContext(state, false);
 		if (context != null) {
 			// It's a tern project
 			IIDETernProject ternProject = context.getTernProject();
-			if (isInScope(resource, ternProject)) {
+			if (isInScope(resource, ternProject, context)) {
 				IReporter reporter = result.getReporter(monitor);
 				// validate is called for each file, the synchronization of tern
-				// file must be done for teh first file which must be validated.
-				TernValidationHelper.validate(resource, ternProject, true,
-						context.isSynch(), reporter, this);
+				// file must be done for the first file which must be validated.
+				TernValidationHelper.validate(resource, ternProject, true, context.isSynch(), reporter, this);
 				context.setSynch(false);
 			}
 		}
 		return result;
 	}
 
-	private boolean isInScope(IResource resource, IIDETernProject ternProject) {
-		boolean inScope = ternProject.isInScope(resource);
+	private boolean isInScope(IResource resource, IIDETernProject ternProject, IScopeContext context) {
+		boolean inScope = ternProject.isInScope(resource, context);
 		IIDETernScriptPathReporter reporter = ternProject.getScriptPathReporter();
 		if (reporter != null) {
-			// TODO : trace isInScope 
-		  System.err.println((inScope ? "Do" : "Ignore")
-				+ (" validation for " + resource.getFullPath()));
+			reporter.validate(resource.getFullPath(), inScope);
 		}
 		return inScope;
 	}
 
 	@Override
-	public void validationStarting(IProject project, ValidationState state,
-			IProgressMonitor monitor) {
+	public void validationStarting(IProject project, ValidationState state, IProgressMonitor monitor) {
 		if (project != null && TernCorePlugin.hasTernNature(project)) {
 			try {
-				IIDETernProject ternProject = TernCorePlugin.getTernProject(
-						project, false);
+				IIDETernProject ternProject = TernCorePlugin.getTernProject(project, false);
 				if (ternProject.getLinters().length > 0) {
 					TernValidatorContext context = getTernContext(state, true);
 					setupValidation(context, ternProject);
@@ -89,15 +84,13 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 					super.validationStarting(project, state, monitor);
 				}
 			} catch (CoreException e) {
-				Trace.trace(Trace.SEVERE, "Error while tern start validation.",
-						e);
+				Trace.trace(Trace.SEVERE, "Error while tern start validation.", e);
 			}
 		}
 	}
 
 	@Override
-	public void validationFinishing(IProject project, ValidationState state,
-			IProgressMonitor monitor) {
+	public void validationFinishing(IProject project, ValidationState state, IProgressMonitor monitor) {
 		if (project != null && TernCorePlugin.hasTernNature(project)) {
 			super.validationFinishing(project, state, monitor);
 			TernValidatorContext context = getTernContext(state, false);
@@ -113,8 +106,7 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 	}
 
 	@Override
-	public void validate(IValidationContext context, IReporter reporter)
-			throws ValidationException {
+	public void validate(IValidationContext context, IReporter reporter) throws ValidationException {
 		// It seems that it is never called?
 	}
 
@@ -124,15 +116,13 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 	}
 
 	@Override
-	public IStatus validateInJob(IValidationContext helper, IReporter reporter)
-			throws ValidationException {
+	public IStatus validateInJob(IValidationContext helper, IReporter reporter) throws ValidationException {
 		IStatus status = Status.OK_STATUS;
 		validate(helper, reporter);
 		return status;
 	}
 
-	protected void setupValidation(TernValidatorContext context,
-			IIDETernProject ternProject) {
+	protected void setupValidation(TernValidatorContext context, IIDETernProject ternProject) {
 		context.setTernProject(ternProject);
 	}
 
@@ -145,10 +135,8 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 	 *            when true, a new context will be created if one is not found
 	 * @return the nested validation context.
 	 */
-	protected TernValidatorContext getTernContext(ValidationState state,
-			boolean create) {
-		TernValidatorContext context = (TernValidatorContext) state
-				.get(TERN_VALIDATOR_CONTEXT);
+	protected TernValidatorContext getTernContext(ValidationState state, boolean create) {
+		TernValidatorContext context = (TernValidatorContext) state.get(TERN_VALIDATOR_CONTEXT);
 		if (context != null) {
 			return context;
 		}

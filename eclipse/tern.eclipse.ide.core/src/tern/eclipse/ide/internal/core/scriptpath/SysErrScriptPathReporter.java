@@ -27,8 +27,13 @@ public class SysErrScriptPathReporter implements IIDETernScriptPathReporter {
 		err(include ? "Include " : "Exclude ", path, scriptPath, message);
 	}
 
-	protected void err(String prefix, IPath path, IIDETernScriptPath scriptPath, String message) {
+	private void err(String prefix, IPath path, IIDETernScriptPath scriptPath, String message) {
 		System.err.println(prefix + path.toString() + " by " + scriptPath + " (" + message + ")");
+	}
+
+	@Override
+	public void validate(IPath path, boolean validate) {
+		System.err.println((validate ? "Do" : "Ignore") + (" validation for " + path));
 	}
 
 }

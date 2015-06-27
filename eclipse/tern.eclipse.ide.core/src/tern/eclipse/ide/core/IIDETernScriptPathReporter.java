@@ -22,4 +22,6 @@ public interface IIDETernScriptPathReporter {
 
 	void report(IPath path, IIDETernScriptPath scriptPath, String message, boolean include);
 
+	void validate(IPath fullPath, boolean validate);
+
 }

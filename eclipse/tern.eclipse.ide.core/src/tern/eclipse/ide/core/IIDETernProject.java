@@ -17,7 +17,6 @@ import java.util.List;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
 
 import tern.ITernProject;
 import tern.TernException;
@@ -104,21 +103,13 @@ public interface IIDETernProject extends ITernProject {
 	 * Returns true if the given resource is in the scope of the tern script
 	 * paths and false otherwise.
 	 * 
-	 * @param resource
+	 * @param resource to check
+	 * @param context scope context which maintains include/exclude containers and null otherwise.
+	 * 
 	 * @return true if the given resource is in the scope of the tern script
 	 *         paths and false otherwise.
 	 */
-	boolean isInScope(IResource resource);
-
-	/**
-	 * Returns true if the given path is in the scope of the tern script paths
-	 * and false otherwise.
-	 * 
-	 * @param path
-	 * @return true if the given path is in the scope of the tern script paths
-	 *         and false otherwise.
-	 */
-	boolean isInScope(IPath path, int resourceType);
+	boolean isInScope(IResource resource, IScopeContext context);
 
 	/**
 	 * Returns the tern script path reporter and null otherwise.

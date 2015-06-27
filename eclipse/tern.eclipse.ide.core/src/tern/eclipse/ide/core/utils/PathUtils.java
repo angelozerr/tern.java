@@ -58,5 +58,12 @@ public class PathUtils {
 		}
 		return relativePath;
 	}
+	
+	public static IPath getParentPath(IPath path) {
+		if (path.isRoot()) {
+			return null;
+		}
+		return path.removeFirstSegments(1);
+	}
 
 }

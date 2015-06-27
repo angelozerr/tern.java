@@ -32,18 +32,24 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.QualifiedName;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+
 import tern.ITernFile;
 import tern.ITernProject;
 import tern.TernException;
 import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.IIDETernScriptPathReporter;
+import tern.eclipse.ide.core.IScopeContext;
 import tern.eclipse.ide.core.ITernConsoleConnector;
 import tern.eclipse.ide.core.ITernProjectLifecycleListener.LifecycleEventType;
 import tern.eclipse.ide.core.ITernServerPreferencesListener;
 import tern.eclipse.ide.core.ITernServerType;
 import tern.eclipse.ide.core.IWorkingCopy;
+import tern.eclipse.ide.core.ScopeContext;
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.utils.FileUtils;
 import tern.eclipse.ide.internal.core.TernConsoleConnectorManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
@@ -54,7 +60,6 @@ import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.scriptpath.EclipseProjectScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.FolderScriptPath;
 import tern.eclipse.ide.internal.core.scriptpath.IIDETernScriptPath;
-import tern.eclipse.ide.internal.core.scriptpath.SysErrScriptPathReporter;
 import tern.eclipse.ide.internal.core.scriptpath.TernScriptPathComparator;
 import tern.repository.ITernRepository;
 import tern.resources.TernFileSynchronizer;
@@ -73,18 +78,14 @@ import tern.utils.IOUtils;
 import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-
 /**
  * Eclipse IDE Tern project.
  * 
  */
-public class IDETernProject extends TernProject implements IIDETernProject,
-		ITernServerPreferencesListener {
+public class IDETernProject extends TernProject implements IIDETernProject, ITernServerPreferencesListener {
 
-	private static final QualifiedName TERN_PROJECT = new QualifiedName(
-			TernCorePlugin.PLUGIN_ID + ".sessionprops", "TernProject"); //$NON-NLS-1$ //$NON-NLS-2$
+	private static final QualifiedName TERN_PROJECT = new QualifiedName(TernCorePlugin.PLUGIN_ID + ".sessionprops", //$NON-NLS-1$
+			"TernProject"); //$NON-NLS-1$
 
 	private static final String PATH_JSON_FIELD = "path"; //$NON-NLS-1$
 
@@ -122,8 +123,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		this.data = new HashMap<String, Object>();
 		this.listeners = new ArrayList<ITernServerListener>();
 		this.workingCopy = new WorkingCopy(this);
-		TernCorePlugin.getTernServerTypeManager().addServerPreferencesListener(
-				this);
+		TernCorePlugin.getTernServerTypeManager().addServerPreferencesListener(this);
 		project.setSessionProperty(TERN_PROJECT, this);
 	}
 
@@ -156,31 +156,24 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		synchronized (serverLock) {
 			if (isServerDisposed()) {
 				try {
-					ITernServerType type = TernCorePreferencesSupport
-							.getInstance().getServerType();
+					ITernServerType type = TernCorePreferencesSupport.getInstance().getServerType();
 					this.ternServer = type.createServer(this);
-					this.ternServer
-							.setLoadingLocalPlugins(TernCorePreferencesSupport
-									.getInstance().isLoadingLocalPlugins(
-											project));
+					this.ternServer.setLoadingLocalPlugins(
+							TernCorePreferencesSupport.getInstance().isLoadingLocalPlugins(project));
 					this.ternServer.addServerListener(new TernServerAdapter() {
 						@Override
 						public void onStop(ITernServer server) {
 							getFileSynchronizer().cleanIndexedFiles();
 						}
 					});
-					if (!TernCorePreferencesSupport.getInstance()
-							.isDisableAsynchronousReques(project)) {
-						this.ternServer
-								.setRequestProcessor(new IDETernServerAsyncReqProcessor(
-										ternServer));
+					if (!TernCorePreferencesSupport.getInstance().isDisableAsynchronousReques(project)) {
+						this.ternServer.setRequestProcessor(new IDETernServerAsyncReqProcessor(ternServer));
 					}
 					copyListeners();
 					configureConsole();
 				} catch (Exception e) {
 					// should be improved?
-					Trace.trace(Trace.SEVERE,
-							"Error while creating tern server", e);
+					Trace.trace(Trace.SEVERE, "Error while creating tern server", e);
 				}
 
 			}
@@ -211,9 +204,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	protected void doLoad() throws IOException {
 		try {
 			disposeServer();
-			TernProjectLifecycleManager.getManager()
-					.fireTernProjectLifeCycleListenerChanged(this,
-							LifecycleEventType.onLoadBefore);
+			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+					LifecycleEventType.onLoadBefore);
 			super.doLoad();
 			// Load IDE informations of the tern project.
 			loadIDEInfos();
@@ -222,9 +214,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			// modules and save .tern-project.
 			initAdaptedNaturesInfos();
 		} finally {
-			TernProjectLifecycleManager.getManager()
-					.fireTernProjectLifeCycleListenerChanged(this,
-							LifecycleEventType.onLoadAfter);
+			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+					LifecycleEventType.onLoadAfter);
 		}
 	}
 
@@ -237,8 +228,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		JsonObject ide = (JsonObject) super.get(IDE_JSON_FIELD);
 		if (ide != null) {
 			// There is ide information.
-			JsonArray jsonScripts = (JsonArray) ide
-					.get(SCRIPT_PATHS_JSON_FIELD);
+			JsonArray jsonScripts = (JsonArray) ide.get(SCRIPT_PATHS_JSON_FIELD);
 			if (jsonScripts != null) {
 				// There is scriptPaths defined.
 				JsonObject jsonScript = null;
@@ -250,25 +240,21 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 					type = JsonHelper.getString(jsonScript, TYPE_JSON_FIELD);
 					path = JsonHelper.getString(jsonScript, PATH_JSON_FIELD);
 					if (type != null && path != null) {
-						ScriptPathsType pathType = ScriptPathsType
-								.getType(type);
+						ScriptPathsType pathType = ScriptPathsType.getType(type);
 						if (pathType == null) {
 							pathType = ScriptPathsType.FILE;
 						}
 						if (pathType != null) {
-							String[] inclusionPatterns = getPatterns(JsonHelper
-									.getString(jsonScript,
-											INCLUSION_PATTERNS_JSON_FIELD));
-							String[] exclusionPatterns = getPatterns(JsonHelper
-									.getString(jsonScript,
-											EXCLUSION_PATTERNS_JSON_FIELD));
+							String[] inclusionPatterns = getPatterns(
+									JsonHelper.getString(jsonScript, INCLUSION_PATTERNS_JSON_FIELD));
+							String[] exclusionPatterns = getPatterns(
+									JsonHelper.getString(jsonScript, EXCLUSION_PATTERNS_JSON_FIELD));
 							// script path type exists.
 							IResource resource = getResource(path, pathType);
 							if (resource != null && resource.exists()) {
 								// the script path exists, add it.
-								this.scriptPaths.add(createScriptPath(resource,
-										pathType, inclusionPatterns,
-										exclusionPatterns));
+								this.scriptPaths.add(
+										createScriptPath(resource, pathType, inclusionPatterns, exclusionPatterns));
 							}
 						}
 					}
@@ -298,8 +284,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 		try {
 			TernNatureAdaptersManager.getManager().addDefaultModules(this);
 		} catch (CoreException e) {
-			Trace.trace(Trace.SEVERE,
-					"Error while configuring default tern project modules", e);
+			Trace.trace(Trace.SEVERE, "Error while configuring default tern project modules", e);
 			return;
 		}
 
@@ -329,8 +314,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			return ResourcesPlugin.getWorkspace().getRoot().getProject(path);
 		}
 		throw new UnsupportedOperationException(
-				"Cannot retrieve resource from the type=" + pathType
-						+ " of the path=" + path);
+				"Cannot retrieve resource from the type=" + pathType + " of the path=" + path);
 	}
 
 	@Override
@@ -345,9 +329,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	@Override
 	protected void doSave() throws IOException {
 		try {
-			TernProjectLifecycleManager.getManager()
-					.fireTernProjectLifeCycleListenerChanged(this,
-							LifecycleEventType.onSaveBefore);
+			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+					LifecycleEventType.onSaveBefore);
 			// Store IDE tern project info.
 			saveIDEInfos();
 
@@ -356,8 +339,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 				IFile file = project.getFile(TERN_PROJECT_FILE);
 				InputStream content = null;
 				try {
-					content = IOUtils.toInputStream(super.toString(), file
-							.exists() ? file.getCharset() : StringUtils.UTF_8);
+					content = IOUtils.toInputStream(super.toString(),
+							file.exists() ? file.getCharset() : StringUtils.UTF_8);
 					if (!file.exists()) {
 						file.create(content, IResource.NONE, null);
 					} else {
@@ -374,9 +357,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 				disposeServer();
 			}
 		} finally {
-			TernProjectLifecycleManager.getManager()
-					.fireTernProjectLifeCycleListenerChanged(this,
-							LifecycleEventType.onSaveAfter);
+			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+					LifecycleEventType.onSaveAfter);
 		}
 	}
 
@@ -398,22 +380,17 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			for (ITernScriptPath scriptPath : scriptPaths) {
 				if (!scriptPath.isExternal()) {
 					JsonObject jsonScript = new JsonObject();
-					jsonScript
-							.add(TYPE_JSON_FIELD, scriptPath.getType().name());
+					jsonScript.add(TYPE_JSON_FIELD, scriptPath.getType().name());
 					jsonScript.add(PATH_JSON_FIELD, scriptPath.getPath());
 					if (scriptPath instanceof ITernScriptPathContainer) {
 						ITernScriptPathContainer container = (ITernScriptPathContainer) scriptPath;
-						String exclusionPatterns = toString(container
-								.getExclusionPatterns());
+						String exclusionPatterns = toString(container.getExclusionPatterns());
 						if (exclusionPatterns != null) {
-							jsonScript.add(EXCLUSION_PATTERNS_JSON_FIELD,
-									exclusionPatterns);
+							jsonScript.add(EXCLUSION_PATTERNS_JSON_FIELD, exclusionPatterns);
 						}
-						String inclusionPatterns = toString(container
-								.getInclusionPatterns());
+						String inclusionPatterns = toString(container.getInclusionPatterns());
 						if (inclusionPatterns != null) {
-							jsonScript.add(INCLUSION_PATTERNS_JSON_FIELD,
-									inclusionPatterns);
+							jsonScript.add(INCLUSION_PATTERNS_JSON_FIELD, inclusionPatterns);
 						}
 					}
 					jsonScripts.add(jsonScript);
@@ -462,20 +439,16 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	 * @return
 	 */
 	@Override
-	public ITernScriptPath createScriptPath(IResource resource,
-			ScriptPathsType type, String[] inclusionPatterns,
+	public ITernScriptPath createScriptPath(IResource resource, ScriptPathsType type, String[] inclusionPatterns,
 			String[] exclusionPatterns) {
-		return createScriptPath(resource, type, inclusionPatterns,
-				exclusionPatterns, null);
+		return createScriptPath(resource, type, inclusionPatterns, exclusionPatterns, null);
 	}
 
-	private ITernScriptPath createScriptPath(IResource resource,
-			ScriptPathsType type, String[] inclusionPatterns,
+	private ITernScriptPath createScriptPath(IResource resource, ScriptPathsType type, String[] inclusionPatterns,
 			String[] exclusionPatterns, String external) {
 		switch (type) {
 		case FOLDER:
-			return new FolderScriptPath(this, (IFolder) resource,
-					inclusionPatterns, exclusionPatterns, external);
+			return new FolderScriptPath(this, (IFolder) resource, inclusionPatterns, exclusionPatterns, external);
 		case FILE:
 			ITernFile file = getFile(resource);
 			if (file == null) {
@@ -490,16 +463,13 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 			try {
 				project = TernCorePlugin.getTernProject((IProject) resource);
 				if (project != null) {
-					return new EclipseProjectScriptPath(project, this,
-							inclusionPatterns, exclusionPatterns, external);
+					return new EclipseProjectScriptPath(project, this, inclusionPatterns, exclusionPatterns, external);
 				}
 			} catch (CoreException e) {
-				Trace.trace(Trace.SEVERE, "Project " + resource.getName()
-						+ " is not a Tern project", e);
+				Trace.trace(Trace.SEVERE, "Project " + resource.getName() + " is not a Tern project", e);
 			}
 		}
-		throw new UnsupportedOperationException(
-				"Cannot create script path for the given type " + type);
+		throw new UnsupportedOperationException("Cannot create script path for the given type " + type);
 	}
 
 	/**
@@ -508,8 +478,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	 * @param scriptPaths
 	 * @throws IOException
 	 */
-	public void setScriptPaths(List<ITernScriptPath> scriptPaths)
-			throws IOException {
+	public void setScriptPaths(List<ITernScriptPath> scriptPaths) throws IOException {
 		this.scriptPaths.clear();
 		this.scriptPaths.addAll(scriptPaths);
 		resetSortScriptPaths();
@@ -517,11 +486,9 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	}
 
 	@Override
-	public ITernScriptPath addExternalScriptPath(IResource resource,
-			ScriptPathsType type, String[] inclusionPatterns,
+	public ITernScriptPath addExternalScriptPath(IResource resource, ScriptPathsType type, String[] inclusionPatterns,
 			String[] exclusionPatterns, String external) throws IOException {
-		ITernScriptPath path = createScriptPath(resource, type,
-				inclusionPatterns, exclusionPatterns, external);
+		ITernScriptPath path = createScriptPath(resource, type, inclusionPatterns, exclusionPatterns, external);
 		scriptPaths.add(path);
 		resetSortScriptPaths();
 		return path;
@@ -529,8 +496,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	@Override
 	public void removeExternalScriptPaths(String external) {
-		List<ITernScriptPath> initialScriptPaths = new ArrayList<ITernScriptPath>(
-				scriptPaths);
+		List<ITernScriptPath> initialScriptPaths = new ArrayList<ITernScriptPath>(scriptPaths);
 		for (ITernScriptPath scriptPath : initialScriptPaths) {
 			if (external.equals(scriptPath.getExternalLabel())) {
 				scriptPaths.remove(scriptPath);
@@ -541,8 +507,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
-		if (adapterClass == IProject.class || adapterClass == IContainer.class
-				|| adapterClass == IResource.class) {
+		if (adapterClass == IProject.class || adapterClass == IContainer.class || adapterClass == IResource.class) {
 			return project;
 		}
 		return super.getAdapter(adapterClass);
@@ -579,8 +544,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	 * @return
 	 */
 	public boolean isTraceOnConsole() {
-		return TernCorePreferencesSupport.getInstance().isTraceOnConsole(
-				project);
+		return TernCorePreferencesSupport.getInstance().isTraceOnConsole(project);
 	}
 
 	/**
@@ -592,8 +556,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 				// There is a tern server instance., Retrieve the well connector
 				// the
 				// the eclipse console.
-				ITernConsoleConnector connector = TernConsoleConnectorManager
-						.getManager().getConnector(ternServer);
+				ITernConsoleConnector connector = TernConsoleConnectorManager.getManager().getConnector(ternServer);
 				if (connector != null) {
 					if (isTraceOnConsole()) {
 						// connect the tern server to the eclipse console.
@@ -613,8 +576,8 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 				if (ternServer != null) {
 					// notify uploader that we are going to dispose the server,
 					// so that it can finish gracefully
-					((IDETernFileUploader) ((TernFileSynchronizer) getFileSynchronizer())
-							.getTernFileUploader()).serverToBeDisposed();
+					((IDETernFileUploader) ((TernFileSynchronizer) getFileSynchronizer()).getTernFileUploader())
+							.serverToBeDisposed();
 					ternServer.dispose();
 					ternServer = null;
 				}
@@ -679,21 +642,17 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	@Override
 	public List<ITernModule> getProjectModules() {
 		final List<ITernModule> modules = new ArrayList<ITernModule>();
-		if (project.isAccessible()
-				&& TernCorePreferencesSupport.getInstance()
-						.isLoadingLocalPlugins(project)) {
+		if (project.isAccessible() && TernCorePreferencesSupport.getInstance().isLoadingLocalPlugins(project)) {
 			try {
 				project.accept(new IResourceVisitor() {
 
 					@Override
-					public boolean visit(IResource resource)
-							throws CoreException {
+					public boolean visit(IResource resource) throws CoreException {
 						switch (resource.getType()) {
 						case IResource.PROJECT:
 							return true;
 						case IResource.FILE:
-							ITernModule module = TernModuleHelper
-									.getModule(resource.getName());
+							ITernModule module = TernModuleHelper.getModule(resource.getName());
 							if (module != null) {
 								modules.add(module);
 							}
@@ -704,10 +663,7 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 					}
 				});
 			} catch (CoreException e) {
-				Trace.trace(
-						Trace.SEVERE,
-						"Error while collecting tern plugin from the project root",
-						e);
+				Trace.trace(Trace.SEVERE, "Error while collecting tern plugin from the project root", e);
 			}
 		}
 		return modules;
@@ -720,31 +676,27 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 
 	public void dispose() throws CoreException {
 		try {
-			TernProjectLifecycleManager.getManager()
-					.fireTernProjectLifeCycleListenerChanged(this,
-							LifecycleEventType.onDisposeBefore);
+			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+					LifecycleEventType.onDisposeBefore);
 			disposeServer();
 			getFileSynchronizer().dispose();
 			if (project.isAccessible()) {
 				project.setSessionProperty(TERN_PROJECT, null);
 			}
 		} finally {
-			TernProjectLifecycleManager.getManager()
-					.fireTernProjectLifeCycleListenerChanged(this,
-							LifecycleEventType.onDisposeAfter);
+			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+					LifecycleEventType.onDisposeAfter);
 		}
 	}
 
-	protected static IDETernProject getTernProject(IProject project)
-			throws CoreException {
+	protected static IDETernProject getTernProject(IProject project) throws CoreException {
 		return (IDETernProject) project.getSessionProperty(TERN_PROJECT);
 	}
 
 	@Override
 	public List<ITernModule> getAllModules() throws TernException {
 		// Add global tern module from the repository
-		List<ITernModule> allModules = new ArrayList<ITernModule>(
-				Arrays.asList(getRepository().getModules()));
+		List<ITernModule> allModules = new ArrayList<ITernModule>(Arrays.asList(getRepository().getModules()));
 		// Add local tern modules
 		List<ITernModule> projectModules = getProjectModules();
 		allModules.addAll(projectModules);
@@ -761,40 +713,101 @@ public class IDETernProject extends TernProject implements IIDETernProject,
 	}
 
 	@Override
-	public boolean isInScope(IResource resource) {
-		if (resource == null) {
+	public boolean isInScope(IResource resource, IScopeContext context) {
+		if (context == null) {
+			context = ScopeContext.DEFAULT;
+		}
+
+		// check if the resource is valid
+		if (!checkValidResource(resource, context)) {
 			return false;
 		}
-		IPath path = resource.getFullPath();
-		do {
-			if (resource.isDerived() || resource.isTeamPrivateMember()
-					|| !resource.isAccessible()
-					|| resource.getName().charAt(0) == '.') {
-				return false;
-			}
-			resource = resource.getParent();
-		} while ((resource.getType() & IResource.PROJECT) == 0);
-		return isInScope(path, resource.getType());
+
+		// check if the resource is in scope with script paths.
+		return checkInScopeResource(resource, context);
 	}
 
-	@Override
-	public boolean isInScope(IPath path, int resourceType) {
-		// Folder, etc script paths
+	/**
+	 * Returns true if the resource is valid and false otherwise.
+	 * 
+	 * @param resource
+	 * @param context
+	 * @return true if the resource is valid and false otherwise.
+	 */
+	private boolean checkValidResource(IResource resource, IScopeContext context) {
+		if (!FileUtils.isValidResource(resource)) {
+			return false;
+		}
+		IContainer parent = resource.getParent();
+		while ((parent.getType() & IResource.PROJECT) == 0) {
+			if (context.isExclude(parent)) {
+				return false;
+			}
+			if (context.isInclude(parent)) {
+				return true;
+			}
+			if (!FileUtils.isValidResource(parent)) {
+				context.addExclude(parent);
+				return false;
+			}
+			parent = parent.getParent();
+		}
+		return true;
+	}
+
+	/**
+	 * Returns true if the given resource is in the scope of tern script path
+	 * and false otherwise.
+	 * 
+	 * @param resource
+	 * @param context
+	 * @return true if the given resource is in the scope of tern script path
+	 *         and false otherwise.
+	 */
+	private boolean checkInScopeResource(IResource resource, IScopeContext context) {
+		List<ITernScriptPath> scriptPaths = getSortedScriptPaths();
+		if (scriptPaths.isEmpty()) {
+			// none script path, we consider that resource is in the scope?
+			return true;
+		}
+		
+		// Loop for each tern script path
+		int resourceType = resource.getType();
+		IPath path = resource.getFullPath();
 		IIDETernScriptPath s = null;
-		for (ITernScriptPath scriptPath : getSortedScriptPaths()) {
+		IContainer parent = null;
+		for (ITernScriptPath scriptPath : scriptPaths) {
 			if (scriptPath instanceof IIDETernScriptPath) {
+				// script path is an Eclipse Project or Folder
 				s = (IIDETernScriptPath) scriptPath;
 				if (s.isBelongToContainer(path)) {
-					if (!s.isInScope(path,
-							resourceType)) {
+					// the resource path belongs to the Project/folder of the tern script path
+					if (!s.isInScope(path, resourceType)) {
+						// the tern script exclude or don't include the resource
 						return false;
-					}	
+					} else if (resourceType == IResource.FILE) {
+						// None exclusion, check if the parent folder exclude the file
+						parent = resource.getParent();
+						while ((parent.getType() & IResource.PROJECT) == 0) {
+							if (context.isInclude(parent)) {
+								return true;
+							}
+							if (!s.isInScope(parent.getFullPath(), parent.getType())) {
+								context.addExclude(parent);
+								return false;
+							}
+							parent = parent.getParent();
+						}
+					}
+					// The parent folder of the resource 
+					context.addInclude(resource.getParent());
+					return true;
 				}
 			}
 		}
 		return true;
 	}
-	
+
 	private List<ITernScriptPath> getSortedScriptPaths() {
 		if (sortedScriptPaths == null) {
 			if (!scriptPaths.isEmpty()) {
