@@ -8,7 +8,8 @@
  "dependencies": [
   "ecma5",
   "browser",
-  "requirejs"
+  "requirejs",
+  "lint"
  ],
  "repository": {
   "type": "git",
