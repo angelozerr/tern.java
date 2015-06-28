@@ -1,0 +1,20 @@
+{
+ "name": "requirejs-extension",
+ "label": "RequireJS Extension",
+ "icon": "requirejs.png",
+ "homepage": "https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "RequireJS extension",
+ "dependencies": [
+  "ecma5",
+  "browser",
+  "requirejs"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-requirejs-extension.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-requirejs-extension/issues"
+ }
+}
