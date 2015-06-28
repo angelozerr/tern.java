@@ -29,6 +29,7 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.hyperlink.TernHyperlink;
+import tern.eclipse.ide.ui.JavaWordFinder;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 
 /**
@@ -56,7 +57,8 @@ public class TernHyperLinkDetector extends AbstractHyperlinkDetector {
 				IIDETernProject ternProject = TernCorePlugin
 						.getTernProject(project);
 				IDocument document = textViewer.getDocument();
-				TernHyperlink hyperlink = new TernHyperlink(document, region,
+				IRegion wordRegion= JavaWordFinder.findWord(document, region.getOffset());
+				TernHyperlink hyperlink = new TernHyperlink(document, wordRegion,
 						resource, ternProject);
 				IHyperlink[] hyperlinks = new IHyperlink[1];
 				hyperlinks[0] = hyperlink;
