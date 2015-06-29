@@ -149,16 +149,17 @@
     }
     
     function checkPropsInObject(node, expectedArg, actualObj, invalidArgument) {
-      var properties = node.properties, expectedObj = expectedArg.getType().proto;
+      var properties = node.properties, expectedObj = expectedArg.getType();
       for (var i = 0; i < properties.length; i++) {
         var property = properties[i], key = property.key, prop = key && key.name, value = property.value;
         if (prop) {
-          if (!expectedObj.hasProp(prop)) {
+          var expectedType = expectedObj.hasProp(prop);
+          if (!expectedType) {
             // key doesn't exists
             addMessage(key, "Invalid property at " + (i+1) + ": " + prop + " is not a property in " + getTypeName(expectedArg), invalidArgument.severity);
           } else {
             // test that each object literal prop is the correct type
-            var expectedType = expectedObj.props[prop], actualType = actualObj.props[prop];
+            var actualType = actualObj.props[prop];
             if (!compareType(expectedType, actualType)) {
               addMessage(value, "Invalid property at " + (i+1) + ": cannot convert from " + getTypeName(actualType) + " to " + getTypeName(expectedType), invalidArgument.severity);
             }
