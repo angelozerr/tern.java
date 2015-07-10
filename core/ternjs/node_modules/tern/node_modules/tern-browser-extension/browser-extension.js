@@ -28,8 +28,11 @@
   
   // DOM Document
     
-  function isScriptTag(tagName) {
-    return tagName.toLowerCase() == "script";
+  function isScriptTag(tagName, scriptTags) {
+    for (var i = 0; i < scriptTags.length; i++) {
+      if (tagName.toLowerCase() == scriptTags[i]) return true;
+    }
+    return false;
   }
   
   function isScriptEvent(attrName) {
@@ -53,12 +56,13 @@
     return spaces;
   }
   
-  var DOMDocument = exports.DOMDocument= function(xml, file) {
+  var DOMDocument = exports.DOMDocument= function(xml, file, scriptTags) {
+    if (!scriptTags) scriptTags = ["script"];
     var ids = this.ids = {};
     var scripts = "", scriptParsing = false, from = 0, to = xml.length, 
     parser = sax.parser(true);
     parser.onopentag = function (node) {
-      if (isScriptTag(node.name)) {
+      if (isScriptTag(node.name, scriptTags)) {
         scriptParsing = true;
         to = this.position;          
         scripts = scripts + spaces(xml, from, to);
@@ -67,7 +71,7 @@
       }
     };
     parser.onclosetag = function (tagName) {
-      if (isScriptTag(tagName)) {
+      if (isScriptTag(tagName, scriptTags)) {
         scriptParsing = false;
         to = this.position;
         var endElement = "</" + tagName + ">";
@@ -145,7 +149,10 @@
   // Plugin
   
   tern.registerPlugin("browser-extension", function(server, options) {
-    registerLints();
+    server._browserExtension = {
+        scriptTags: (options && options.scriptTags) ? options.scriptTags : ["script"]  
+    };
+    registerLints();    
     return {passes: {
              preLoadDef: preLoadDef,
              preParse: preParse,             
@@ -193,7 +200,7 @@
             var modifier = ids[i], id = modifier.text, attr = getAttr(argNode, id.slice(1, id.length));
             if (!attr) {
               var n = {start: argNode.start + modifier.col, end: argNode.start + modifier.col + modifier.text.length};
-              addMessage(n, "Unknown element id '" + argNode.value + "'", defaultRules.UnknownElementId.severity);
+              addMessage(n, "Unknown element id '" + id + "'", defaultRules.UnknownElementId.severity);
             }
           }
         }
@@ -285,7 +292,8 @@
   function preParse(text, options) {
     var file = options.directSourceFile;
     if (!isHTML(file)) return;
-    var dom = file.dom = new DOMDocument(text, file);          
+    var cx = infer.cx(), server = cx.parent, scriptTags = server._browserExtension.scriptTags;
+    var dom = file.dom = new DOMDocument(text, file, scriptTags);          
     return dom.scripts;
   }
 
@@ -340,21 +348,13 @@
     if (!completionType.expr) {
       wordStart = argNode.start + 1;
       wordEnd = argNode.end - 1;
-      //if (text.charAt(0) == quote) wordStart++;
     } else {
       while (wordStart && acorn.isIdentifierChar(fileText.charCodeAt(wordStart - 1))) --wordStart;
       if (query.expandWordForward !== false)
         while (wordEnd < fileText.length && acorn.isIdentifierChar(fileText.charCodeAt(wordEnd))) ++wordEnd;
-      
-      /*var i = fileText.length - 1;
-      while (i > 0 && (acorn.isIdentifierChar(fileText.charCodeAt(--i)))) --wordStart;
-      before = text.slice(1, i + 1);
-      if (query.expandWordForward !== false)
-        while (wordEnd < file.text.length && acorn.isIdentifierChar(file.text.charCodeAt(wordEnd - wordStart))) ++wordEnd;*/
     }
     var word = fileText.slice(wordStart, wordEnd), 
         before = fileText.slice(argNode.start + 1, wordStart), after = fileText.slice(wordEnd, argNode.end - 1);
-    //var word = text.slice(1, wordEnd - wordStart + (completionType.expr ? 1 : 0));
     if (after && after.charAt(word.length - 1) == quote)
       after = after.slice(0, word.length - 1);
     
@@ -399,7 +399,7 @@
     }
   }
   
-  function completeElementIds(completions, query, file, word, withHash, hasHash) {    
+  function completeElementIds(completions, query, file, word, withHash, addHash) {    
     var cx = infer.cx(), server = cx.parent, dom = file.dom, attrs = dom ? dom.ids : null;
     if (!attrs) return completions;
     var wrapAsObjs = query.types || query.depths || query.docs || query.urls || query.origins;
@@ -409,21 +409,20 @@
     }
     
     function gather(attrs) {
-      for (var attrName in attrs) {
-        if (!attrName) continue;
-        var name = withHash ? "#" + attrName : attrName;
+      for (var name in attrs) {
+        if (!name) continue;
         if (name &&
             !(query.filter !== false && word &&
               (query.caseInsensitive ? name.toLowerCase() : name).indexOf(word) !== 0)) {
-          name = hasHash ?  attrName : name;
-          var rec = wrapAsObjs ? {name: name} : name;
+          var key = addHash ?  "#" + name : name;
+          var rec = wrapAsObjs ? {name: key} : key;
           completions.push(rec);
 
           if (query.types || query.origins) {         
             if (query.types) rec.type = "Attr";
             if (query.origins)
               maybeSet(rec, "origin", file.name);
-            rec.displayName = withHash ? "#" + attrName : attrName;
+            rec.displayName = withHash ? "#" + name : name;
           }
         }
       }
@@ -440,7 +439,7 @@
   
   function completeCSSSelectors(completions, query, file, word, wordStart) {
     var hasHash = file.text.charAt(wordStart - 1) == "#";
-    completeElementIds(completions, query, file, word, true, hasHash);
+    completeElementIds(completions, query, file, word, true, !hasHash);
   }
   
 })

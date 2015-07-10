@@ -50,9 +50,34 @@
   
   function preLoadDef(data) {    
     var cx = infer.cx();
-    if (data["!name"] == "jQuery") {      
-      selector(data["jQuery"]);
-      data["jQuery"]["!type"] = "fn(selector: string|+Node|[+Node], context?: frameElement) -> jQuery.fn"
+    if (data["!name"] == "jQuery") {
+      var jQuery = data["jQuery"], fn = jQuery.fn;
+      selector(jQuery);
+      jQuery["!type"] = "fn(selector: string|+Node|[+Node], context?: frameElement) -> jQuery.fn"
+      selector(fn.add);
+      selector(fn.addBack);
+      selector(fn.children);
+      selector(fn.closest);
+      selector(fn.delegate);
+      selector(fn.detach);
+      selector(fn.filter);
+      selector(fn.find);
+      selector(fn.has);
+      selector(fn.index);
+      selector(fn.is);
+      selector(fn.live);
+      selector(fn.next);
+      selector(fn.nextAll);
+      selector(fn.nextUntil);
+      selector(fn.not);
+      selector(fn.parent);
+      selector(fn.parents);
+      selector(fn.parentsUntil);
+      selector(fn.prev);
+      selector(fn.prevAll);
+      selector(fn.prevUntil);
+      selector(fn.remove);
+      selector(fn.siblings);
     }
   }
   

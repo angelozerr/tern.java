@@ -19091,9 +19091,13 @@
      },
      "one": {
       "!type": "fn(selector: string) -> +node.Node",
+      "!effects": [
+       "custom Browser_querySelector 0"
+      ],
       "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_one",
       "!doc": "Retrieves a single Node instance, the first element matching the given\nCSS selector.\nReturns null if no match found.",
       "!data": {
+       "!lint": "Browser_validateCSSSelectors",
        "submodule": "node-core"
       }
      },
@@ -19705,9 +19709,13 @@
     },
     "one": {
      "!type": "fn(node: string|+HTMLElement) -> +node.Node",
+     "!effects": [
+      "custom Browser_querySelector 0"
+     ],
      "!url": "http://yuilibrary.com/yui/docs/api/classes/Node.html#method_one",
      "!doc": "Returns a single Node instance bound to the node or the\nfirst element matching the given selector. Returns null if no match found.\n<strong>Note:</strong> For chaining purposes you may want to\nuse <code>Y.all</code>, which returns a NodeList when no match is found.",
      "!data": {
+      "!lint": "Browser_validateCSSSelectors",
       "submodule": "node-core"
      }
     },
@@ -20280,9 +20288,13 @@
      },
      "one": {
       "!type": "fn(node: string|+HTMLElement) -> +node.Node",
+      "!effects": [
+       "custom Browser_querySelector 0"
+      ],
       "!url": "http://yuilibrary.com/yui/docs/api/classes/YUI.html#method_one",
       "!doc": "Returns a single Node instance bound to the node or the\nfirst element matching the given selector. Returns null if no match found.\n<strong>Note:</strong> For chaining purposes you may want to\nuse <code>Y.all</code>, which returns a NodeList when no match is found.",
       "!data": {
+       "!lint": "Browser_validateCSSSelectors",
        "submodule": "node-core"
       }
      }
