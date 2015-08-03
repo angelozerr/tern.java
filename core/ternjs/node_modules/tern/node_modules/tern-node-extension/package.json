@@ -1,10 +1,10 @@
 {
   "name": "tern-node-extension",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "node-extension.js",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
-  "description": "Tern node lint.",
+  "description": "Extension for Tern NodeJS to provide validation.",
   "repository": {
     "type": "git",
     "url": "git://github.com/angelozerr/tern-node-extension.git"

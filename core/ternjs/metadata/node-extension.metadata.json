@@ -1,0 +1,23 @@
+{
+ "name": "node-extension",
+ "label": "Node Extension",
+ "icon": "node.png",
+ "homepage": "http://www.nodeclipse.org/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add validation for node required module.",
+ "dependencies": [
+  "ecma5",
+  "node",
+  "lint"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-node-extension.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-node-extension/issues"
+ },
+ "help": {
+  "url": "://github.com/angelozerr/tern.java/wiki/Tern-&-Node-Extension-support"
+ }
+}
