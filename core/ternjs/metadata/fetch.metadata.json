@@ -1,0 +1,22 @@
+{
+ "name": "fetch",
+ "label": "Fetch",
+ "homepage": "https://developers.google.com/web/updates/2015/03/introduction-to-fetch",
+ "author": "othree <othree@gmail.com>",
+ "description": "The fetch() API is landing in the window object and is looking to replace XHRs",
+ "def": true,
+ "dependencies": [
+  "ecma5",
+  "ecma6"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/othree/tern-fetch.git"
+ },
+ "bugs": {
+  "url": "https://github.com/othree/tern-fetch/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Fetch-support"
+ }
+}
