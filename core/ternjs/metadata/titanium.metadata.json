@@ -5,6 +5,7 @@
  "homepage": "http://www.appcelerator.com/",
  "author": "Denis Parchenko",
  "description": "Adds Titanium support.",
+ "def": true,
  "dependencies": [
   "ecma5"
  ],

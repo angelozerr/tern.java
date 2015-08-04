@@ -23,6 +23,10 @@ public class BasicTernPlugin extends AbstractBasicTernModule implements
 		super(name, ModuleType.Plugin);
 	}
 
+	public BasicTernPlugin(TernModuleInfo info) {
+		super(info, ModuleType.Plugin);
+	}
+
 	@Override
 	public boolean isLinter() {
 		TernModuleMetadata metadata = getMetadata();

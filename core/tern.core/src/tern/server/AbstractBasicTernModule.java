@@ -29,6 +29,11 @@ public abstract class AbstractBasicTernModule extends TernModuleInfo implements
 		this.moduleType = moduleType;
 	}
 
+	public AbstractBasicTernModule(TernModuleInfo info, ModuleType moduleType) {
+		super(info);
+		this.moduleType = moduleType;
+	}
+
 	@Override
 	public String getPath() {
 		return null;

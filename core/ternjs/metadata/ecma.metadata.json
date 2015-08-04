@@ -5,6 +5,7 @@
  "homepage": "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "Adds ECMAScript support.",
+ "def": true,
  "dependencies": {
   "6": [
    "ecma5"

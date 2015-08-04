@@ -5,6 +5,7 @@
  "homepage": "https://developer.mozilla.org/en-US/docs/Web/Guide/API/DOM",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
  "description": "Adds Browser support.",
+ "def": true,
  "dependencies": [
   "ecma5"
  ],

@@ -32,6 +32,12 @@ public class TernModuleInfo {
 		}
 	}
 
+	public TernModuleInfo(TernModuleInfo info) {
+		this.name = info.getName();
+		this.type = info.getType();
+		this.version = info.getVersion();
+	}
+
 	private static int getVersionIndex(String name) {
 		char[] chars = name.toCharArray();
 		for (int i = 0; i < chars.length; i++) {

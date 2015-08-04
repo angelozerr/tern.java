@@ -46,6 +46,7 @@ public class TernModuleMetadata {
 	private static final String BUGS_FIELD = "bugs";
 	private static final String HELP_FIELD = "help";
 	private static final String LINTER_FIELD = "linter";
+	private static final String DEF_FIELD = "def";
 	private static final String URL_FIELD = "url";
 	private static final String DEPENDENCIES_FIELD = "dependencies";
 	private static final String OPTIONS_FIELD = "options";
@@ -61,6 +62,7 @@ public class TernModuleMetadata {
 	private final String bugsURL;
 	private final String helpURL;
 	private final boolean linter;
+	private final boolean def;
 	private final Map<String, Collection<String>> dependencies;
 	private final Map<String, Collection<String>> requiredDependencies;
 	private final Collection<TernModuleMetadataOption> options;
@@ -85,6 +87,7 @@ public class TernModuleMetadata {
 		this.bugsURL = getURL(json, BUGS_FIELD);
 		this.helpURL = getURL(json, HELP_FIELD);
 		this.linter = json.getBoolean(LINTER_FIELD, false);
+		this.def = json.getBoolean(DEF_FIELD, false);
 		// dependencies
 		JsonValue dependencies = json.get(DEPENDENCIES_FIELD);
 		if (dependencies != null) {
@@ -337,6 +340,10 @@ public class TernModuleMetadata {
 
 	public boolean isLinter() {
 		return linter;
+	}
+	
+	public boolean isDef() {
+		return def;
 	}
 
 	public boolean hasOptions() {
