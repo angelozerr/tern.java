@@ -1,0 +1,22 @@
+{
+ "name": "webidl",
+ "label": "WebIDL",
+ "homepage": "https://heycam.github.io/webidl/",
+ "author": "othree <othree@gmail.com>",
+ "description": "TernJS definition based on WebIDL from Mozilla Firefox.",
+ "def": true,
+ "dependencies": [
+  "ecma5",
+  "ecma6"
+ ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/othree/tern-webidl.git"
+ },
+ "bugs": {
+  "url": "https://github.com/othree/tern-webidl/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-WebIDL-support"
+ }
+}
