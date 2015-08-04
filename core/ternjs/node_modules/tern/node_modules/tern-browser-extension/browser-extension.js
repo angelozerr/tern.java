@@ -56,6 +56,8 @@
     return spaces;
   }
   
+  var dummyAcornParser = {options: {}};
+  
   var DOMDocument = exports.DOMDocument= function(xml, file, scriptTags) {
     if (!scriptTags) scriptTags = ["script"];
     var ids = this.ids = {};
@@ -84,7 +86,7 @@
     parser.onattribute = function (attr) {
       var startVal = this.position - attr.value.length - 1, endVal = this.position - 1; 
       if (attr.name.toLowerCase() == "id") {
-        var originNode = new acorn.Node();
+        var originNode = new acorn.Node(dummyAcornParser);
         originNode.start = startVal;
         originNode.end = endVal;
         originNode.sourceFile = file;
