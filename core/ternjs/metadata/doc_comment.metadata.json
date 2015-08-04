@@ -1,6 +1,6 @@
 {
  "name": "doc_comment",
- "label": "JSDoc Support",
+ "label": "JSDoc",
  "icon": "ecma.png",
  "homepage": "http://usejsdoc.org/",
  "author": "Marijn Haverbeke <marijnh@gmail.com>",
