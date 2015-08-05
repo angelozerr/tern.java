@@ -203,6 +203,8 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	@Override
 	protected void doLoad() throws IOException {
 		try {
+			
+			
 			disposeServer();
 			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
 					LifecycleEventType.onLoadBefore);
@@ -213,10 +215,17 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 			// the tern project is loaded on the first time, load default
 			// modules and save .tern-project.
 			initAdaptedNaturesInfos();
+			
 		} finally {
 			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
 					LifecycleEventType.onLoadAfter);
 		}
+	}
+	
+	@Override
+	protected void onLintersChanged() {
+		TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
+				LifecycleEventType.onLintersChanged);
 	}
 
 	/**
@@ -329,6 +338,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	@Override
 	protected void doSave() throws IOException {
 		try {
+
 			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
 					LifecycleEventType.onSaveBefore);
 			// Store IDE tern project info.

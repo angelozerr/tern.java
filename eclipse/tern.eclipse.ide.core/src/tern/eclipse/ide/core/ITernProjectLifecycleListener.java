@@ -21,15 +21,15 @@ public interface ITernProjectLifecycleListener {
 	 *
 	 */
 	public enum LifecycleEventType {
-		onLoadBefore, onLoadAfter, onSaveBefore, onSaveAfter, onDisposeBefore, onDisposeAfter;
+		onLoadBefore, onLoadAfter, onSaveBefore, onSaveAfter, onDisposeBefore, onDisposeAfter, onLintersChanged;
 	}
 
 	/**
 	 * Handle event type;
 	 * 
 	 * @param project
-	 * @param sate
+	 * @param state
 	 */
-	void handleEvent(IIDETernProject project, LifecycleEventType sate);
+	void handleEvent(IIDETernProject project, LifecycleEventType state);
 
 }

@@ -25,8 +25,6 @@ import tern.eclipse.ide.linter.internal.ui.TernLinterUIPlugin;
 import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.ui.properties.AbstractTernPropertyPage;
 
-import com.eclipsesource.json.JsonObject;
-
 /**
  * Abstract class for Linter property page.
  *

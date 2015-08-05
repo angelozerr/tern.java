@@ -74,7 +74,7 @@ public class WorkingCopy implements IWorkingCopy {
 	public boolean isDirty() {
 		return callers.size() == 0;
 	}
-
+	
 	@Override
 	public void commit(Object caller) throws IOException {
 		removeCaller(caller);
@@ -184,4 +184,5 @@ public class WorkingCopy implements IWorkingCopy {
 	public IIDETernProject getProject() {
 		return project;
 	}
+	
 }

@@ -101,6 +101,8 @@ public class TernProject extends JsonObject implements ITernProject {
 
 	private Object libLock = new Object();
 
+	private List<ITernPlugin> lastLinters;
+
 	/**
 	 * Tern project constructor.
 	 * 
@@ -331,17 +333,21 @@ public class TernProject extends JsonObject implements ITernProject {
 	public ITernPlugin[] getLinters() {
 		if (linters == null) {
 			Collection<ITernPlugin> plugins = new ArrayList<ITernPlugin>();
-			// dynamic linter coming from repository
-			ITernRepository repository = getRepository();
-			if (repository != null) {
-				addLinter(plugins, repository.getLinters());
-			} else {
-				// known linters
-				addLinter(plugins, TernPlugin.getLinters());
-			}
+			collectLinters(plugins);
 			linters = plugins.toArray(ITernPlugin.EMPTY_PLUGIN);
 		}
 		return linters;
+	}
+
+	protected void collectLinters(Collection<ITernPlugin> plugins) {
+		// dynamic linter coming from repository
+		ITernRepository repository = getRepository();
+		if (repository != null) {
+			addLinter(plugins, repository.getLinters());
+		} else {
+			// known linters
+			addLinter(plugins, TernPlugin.getLinters());
+		}
 	}
 
 	private void addLinter(Collection<ITernPlugin> plugins,
@@ -375,7 +381,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		try {
 			doSave();
 		} finally {
-			this.lastTernProjectFileContent = toString();
+			reset();
 		}
 	}
 
@@ -405,10 +411,53 @@ public class TernProject extends JsonObject implements ITernProject {
 	 * @throws IOException
 	 */
 	public final void load() throws IOException {
-		doLoad();
-		this.lastTernProjectFileContent = toString();
+		try {
+			Collection<ITernPlugin> lastLinters = getLastLinters();
+			doLoad();			
+			if (lastLinters != null) {
+				ITernPlugin[] newLinters = getLinters();
+				if (isLintersChanged(lastLinters, newLinters)) {
+					onLintersChanged();
+				}
+			}
+		} finally {
+			reset();
+			this.lastLinters = new ArrayList<ITernPlugin>();
+			collectLinters(lastLinters);
+		}
+	}
+	
+	/**
+	 * Listener lanched when linter is added or removed from the .tern-project.
+	 */
+	protected void onLintersChanged() {
+
 	}
 
+	/**
+	 * Returns true if linters has changed and false otherwise.
+	 * 
+	 * @param oldLinters
+	 * @param newLinters
+	 * @return true if linters has changed and false otherwise.
+	 */
+	private boolean isLintersChanged(Collection<ITernPlugin> oldLinters, ITernPlugin[] newLinters) {
+		if (oldLinters.size() != newLinters.length) {
+			return true;
+		}
+		// TODO : implement changes of linter options
+		return false;
+	}
+
+	protected void reset() {
+		this.lastTernProjectFileContent = toString();		
+		this.linters = null;
+	}
+	
+	public List<ITernPlugin> getLastLinters() {
+		return lastLinters;
+	}
+	
 	/**
 	 * Load the tern project from the .tern-project of the project base dir.
 	 * 
@@ -424,7 +473,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		} else {
 			createEmptyTernProjectFile();
 		}
-		this.lastTernProjectFileContent = toString();
+		reset();
 	}
 
 	/**

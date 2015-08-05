@@ -116,4 +116,5 @@ public interface IWorkingCopy {
 	 * @return the owner tern project.
 	 */
 	IIDETernProject getProject();
+
 }

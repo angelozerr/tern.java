@@ -25,4 +25,13 @@
 		</validator>
 	</extension>
 
+	<extension
+	      point="tern.eclipse.ide.core.ternProjectLifecycleListeners">
+	   <provider
+	         class="tern.eclipse.ide.linter.internal.ui.validation.RefreshTernValidator"
+	         id="tern.eclipse.ide.linter.ui.validation.RefreshTernValidator"
+	         name="Tern Validation">
+	   </provider>
+	</extension>
+	
 </plugin>

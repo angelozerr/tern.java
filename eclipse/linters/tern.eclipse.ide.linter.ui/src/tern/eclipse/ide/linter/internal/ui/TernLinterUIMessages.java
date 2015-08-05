@@ -32,6 +32,10 @@ public final class TernLinterUIMessages extends NLS {
 	public static String TernLinterOptionsBlock_enable;
 	public static String TernLinterOptionsBlock_useConfigFiles;
 
+	public static String Validation_jobName;
+	public static String Validation_Project;
+	public static String Validation_Title;
+
 	private TernLinterUIMessages() {
 	}
 
