@@ -240,5 +240,64 @@
          class="tern.eclipse.ide.internal.ui.descriptors.options.LintRulesTernModuleOptionFactory" >         
       </optionFactory>
    </extension>   
-         	       	 
+
+	<!--======================================================================================-->
+	<!-- tern Explorer View                                      						             -->
+	<!--======================================================================================-->
+	
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="%TernExplorerView.name"
+            icon="$nl$/icons/full/eview16/tern-explorer.png"
+            category="org.eclipse.wst.jsdt.ui.java"
+            class="tern.eclipse.ide.internal.ui.views.TernExplorerView"
+            id="tern.eclipse.ide.ui.views.TernExplorerView">
+      </view>
+  </extension>
+   
+  <!--        
+  <extension
+			point="org.eclipse.ui.navigator.navigatorContent">
+		<navigatorContent
+				activeByDefault="true"
+				contentProvider="tern.eclipse.ide.internal.ui.views.TernExplorerContentProvider"
+				id="tern.eclipse.ide.internal.views.TernExplorerContent"
+				labelProvider="tern.eclipse.ide.internal.ui.views.TernExplorerLabelProvider"
+				name="%commonNavigatorContentName"
+				priority="low">
+			<triggerPoints>
+			     <or>
+					<and>
+                 		<instanceof	value="org.eclipse.core.resources.IResource" />						
+					</and>
+				</or>
+			</triggerPoints>
+			<possibleChildren>
+				<or>
+					<and>
+                 		<instanceof	value="org.eclipse.core.resources.IResource" />
+					</and>
+				</or>
+			</possibleChildren> 
+		</navigatorContent>
+   </extension>
+              
+  <extension
+      point="org.eclipse.ui.navigator.viewer">
+    <viewer
+         viewerId="tern.eclipse.ide.ui.views.TernExplorerView">
+    </viewer>
+    <viewerContentBinding
+         viewerId="tern.eclipse.ide.ui.views.TernExplorerView">
+      <includes>
+         <contentExtension
+               isRoot="false"
+               pattern="tern.eclipse.ide.internal.views.TernExplorerContent">
+         </contentExtension>
+      </includes>
+    </viewerContentBinding>
+  </extension>
+  --> 
+              	       	 
 </plugin>        

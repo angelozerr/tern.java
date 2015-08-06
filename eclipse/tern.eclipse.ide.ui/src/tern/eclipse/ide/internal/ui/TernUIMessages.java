@@ -128,6 +128,10 @@ public final class TernUIMessages extends NLS {
 	public static String TimeoutProposal_longCalculate;
 	public static String TimeoutProposal_serverProcessing;
 
+	// Tern Explorer View
+	public static String TerminateTernServerAction_text;
+	public static String TerminateTernServerAction_tooltip;
+
 	private TernUIMessages() {
 	}
 
