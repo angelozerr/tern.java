@@ -1,3 +1,4 @@
+
 package tern.server.protocol.outline;
 
 public class TernOutlineCollector implements ITernOutlineCollector {

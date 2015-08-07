@@ -25,7 +25,7 @@ public class MinimalJSONHelper implements IJSONObjectHelper {
 	@Override
 	public Iterable<Object> getList(Object jsonObj, String name) {
 		JsonValue val = ((JsonObject) jsonObj).get(name);
-		if (val.isArray()) {
+		if (val != null && val.isArray()) {
 			return (Iterable<Object>) val;
 		}
 		return null;
@@ -59,10 +59,8 @@ public class MinimalJSONHelper implements IJSONObjectHelper {
 	}
 
 	@Override
-	public boolean getBoolean(Object jsonObject, String name,
-			boolean defaultValue) {
-		return JsonHelper.getBoolean((JsonObject) jsonObject, name,
-				defaultValue);
+	public boolean getBoolean(Object jsonObject, String name, boolean defaultValue) {
+		return JsonHelper.getBoolean((JsonObject) jsonObject, name, defaultValue);
 	}
 
 }

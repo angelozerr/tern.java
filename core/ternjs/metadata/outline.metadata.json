@@ -1,0 +1,18 @@
+{
+ "name": "outline",
+ "label": "Outline",
+ "icon": "outline.png",  
+ "homepage": "https://github.com/angelozerr/tern-outline",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Tern plugin used to fill the Tern Explorer View.",
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-outline.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-outline/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Tern-&-Outline"
+ }
+}

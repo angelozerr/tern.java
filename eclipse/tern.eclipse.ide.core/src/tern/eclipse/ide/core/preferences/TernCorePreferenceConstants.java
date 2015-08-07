@@ -61,6 +61,7 @@ public class TernCorePreferenceConstants {
 	 */
 	private static String getDefaultModules() {
 		return TernModuleHelper.getModulesAsString(TernDef.ecma5,
-				TernPlugin.guess_types);
+				TernPlugin.guess_types,
+				TernPlugin.outline);
 	}
 }

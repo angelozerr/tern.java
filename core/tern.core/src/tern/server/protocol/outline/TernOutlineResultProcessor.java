@@ -19,6 +19,7 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 	public static final TernOutlineResultProcessor INSTANCE = new TernOutlineResultProcessor();
 
 	private static final String OUTLINE_FIELD_NAME = "outline";
+	private static final String CHILDREN_FIELD_NAME = "children";
 
 	@Override
 	public void process(TernDoc doc, IJSONObjectHelper jsonObjectHelper, Object jsonObject,
@@ -36,11 +37,15 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 		String nodeType = null;
 		String type = null;
 		JSNode node = null;
+		Iterable<Object> jsonChildren;
 		for (Object jsonNode : jsonNodes) {
 			nodeName = helper.getText(jsonNode, "name");
 			nodeType = helper.getText(jsonNode, "type");
-			node = new JSNode(nodeName, nodeType, type);
-			parent.addChild(node);
+			node = new JSNode(nodeName, nodeType, type, parent);
+			jsonChildren = helper.getList(jsonNode, CHILDREN_FIELD_NAME); // $NON-NLS-1$
+			if (jsonChildren != null) {
+				addChildren(jsonChildren, node, helper);
+			}
 		}
 	}
 

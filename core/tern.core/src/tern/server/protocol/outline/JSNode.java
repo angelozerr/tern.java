@@ -15,15 +15,19 @@ public class JSNode {
 	private JSNode parent;
 	private final List<JSNode> children;
 
-	public JSNode(String name, NodeType nodeType, String type) {
-		this(name, nodeType.name(), type);
+	public JSNode(String name, NodeType nodeType, String type, JSNode parent) {
+		this(name, nodeType.name(), type, parent);
 	}
 
-	public JSNode(String name, String nodeType, String type) {
+	public JSNode(String name, String nodeType, String type, JSNode parent) {
 		this.name = name;
 		this.nodeType = nodeType;
 		this.type = type;
 		this.children = new ArrayList<JSNode>();
+		if (parent != null) {
+			this.parent = parent;
+			parent.addChild(this);
+		}
 	}
 
 	public String getName() {

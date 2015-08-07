@@ -41,12 +41,6 @@ public class TernExplorerView extends ContentOutline {
 					if (document != null) {
 						return new TernContentOutlinePage(new TernDocumentFile(file, document));
 					}
-					/*
-					 * try { IIDETernProject ternProject =
-					 * TernCorePlugin.getTernProject(project); ITernFile
-					 * ternFile = ternProject.getFile(file); } catch (Exception
-					 * e) { e.printStackTrace(); }
-					 */
 				}
 			}
 		}
