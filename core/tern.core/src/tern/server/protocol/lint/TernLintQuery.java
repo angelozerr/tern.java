@@ -26,6 +26,8 @@ import tern.utils.TernModuleHelper;
  */
 public class TernLintQuery extends TernQuery {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final String FULL_EXTENSION = "-full";
 	private static final String GROUP_BY_FILES_NAME = "groupByFiles";
 	private static final String LINE_NUMBER_NAME = "lineNumber";

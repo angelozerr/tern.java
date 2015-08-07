@@ -132,6 +132,9 @@ public final class TernUIMessages extends NLS {
 	public static String TerminateTernServerAction_text;
 	public static String TerminateTernServerAction_tooltip;
 
+	// Refresh outline
+	public static String refreshOutline;
+
 	private TernUIMessages() {
 	}
 

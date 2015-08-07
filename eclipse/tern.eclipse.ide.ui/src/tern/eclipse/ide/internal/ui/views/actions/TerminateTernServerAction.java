@@ -14,7 +14,7 @@ import org.eclipse.jface.action.Action;
 
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.views.TernExplorerView;
+import tern.eclipse.ide.internal.ui.views.TernExplorerViewOLD;
 import tern.eclipse.ide.ui.ImageResource;
 
 /**
@@ -23,9 +23,9 @@ import tern.eclipse.ide.ui.ImageResource;
  */
 public class TerminateTernServerAction extends Action {
 
-	private final TernExplorerView explorer;
+	private final TernExplorerViewOLD explorer;
 
-	public TerminateTernServerAction(TernExplorerView explorer) {
+	public TerminateTernServerAction(TernExplorerViewOLD explorer) {
 		this.explorer = explorer;
 		super.setText(TernUIMessages.TerminateTernServerAction_text);
 		super.setToolTipText(TernUIMessages.TerminateTernServerAction_tooltip);

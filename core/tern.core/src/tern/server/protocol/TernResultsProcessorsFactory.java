@@ -23,6 +23,8 @@ import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesResultProcessor;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.lint.TernLintResultProcessor;
+import tern.server.protocol.outline.ITernOutlineCollector;
+import tern.server.protocol.outline.TernOutlineResultProcessor;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.server.protocol.type.TernTypeResultProcessor;
 
@@ -54,6 +56,8 @@ public class TernResultsProcessorsFactory {
 			return (ITernResultProcessor<T>) TernLintResultProcessor.INSTANCE;
 		} else if (collector instanceof ITernGuessTypesCollector) {
 			return (ITernResultProcessor<T>) TernGuessTypesResultProcessor.INSTANCE;
+		}else if (collector instanceof ITernOutlineCollector) {
+			return (ITernResultProcessor<T>) TernOutlineResultProcessor.INSTANCE;
 		} else {
 			throw new TernException(
 					MessageFormat

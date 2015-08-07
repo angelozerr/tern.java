@@ -24,6 +24,8 @@ import com.eclipsesource.json.JsonObject;
  */
 public class TernQuery extends JsonObject {
 
+	private static final long serialVersionUID = 1L;
+	
 	private static final String FILE_FIELD_NAME = "file";
 	private static final String TYPE_QUERY = "type";
 	private static final String LINE_CHAR_POSITIONS_FIELD_NAME = "lineCharPositions";
@@ -34,7 +36,7 @@ public class TernQuery extends JsonObject {
 	}
 
 	public void setFile(String file) {
-		super.add(FILE_FIELD_NAME, file);
+		super.set(FILE_FIELD_NAME, file);
 	}
 
 	public String getFile() {

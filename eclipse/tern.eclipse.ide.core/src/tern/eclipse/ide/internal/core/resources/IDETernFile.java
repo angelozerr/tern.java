@@ -107,4 +107,7 @@ public class IDETernFile extends AbstractTernFile implements ITernFile {
 		return iFile.isAccessible();
 	}
 	
+	public IFile getFile() {
+		return iFile;
+	}
 }

@@ -25,6 +25,11 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+import com.eclipsesource.json.ParseException;
+
 import tern.ITernFile;
 import tern.ITernFileSynchronizer;
 import tern.ITernProject;
@@ -45,13 +50,10 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.outline.ITernOutlineCollector;
+import tern.server.protocol.outline.TernOutlineQuery;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.IOUtils;
-
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
-import com.eclipsesource.json.ParseException;
 
 /**
  * Tern project configuration.
@@ -650,6 +652,16 @@ public class TernProject extends JsonObject implements ITernProject {
 		server.request(doc, collector);
 	}
 
+	@Override
+	public void request(TernOutlineQuery query, ITernFile file,
+			ITernOutlineCollector collector) throws IOException,
+			TernException {
+		TernDoc doc = new TernDoc(query);
+		synchronize(doc, null, null, null, file);
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
+	}
+	
 	@Override
 	public ITernRepository getRepository() {
 		return repository;

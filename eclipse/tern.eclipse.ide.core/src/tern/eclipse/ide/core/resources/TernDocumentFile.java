@@ -20,29 +20,43 @@ import tern.eclipse.ide.internal.core.resources.IDETernFile;
 
 public class TernDocumentFile extends IDETernFile implements ITernFile {
 
-	private IDocument document;
-	
+	private final IDocument document;
+
 	public TernDocumentFile(IFile file, IDocument document) {
 		super(file);
 		this.document = document;
 	}
-	
+
 	@Override
 	public String getContents() throws IOException {
 		return document.get();
 	}
-	
+
 	@Override
 	public String toString() {
 		return super.toString() + " [DOCUMENT]"; //$NON-NLS-1$
 	}
-	
+
 	@Override
 	public Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass) {
 		if (adapterClass == IDocument.class) {
 			return document;
 		}
 		return super.getAdapter(adapterClass);
+	}
+
+	public IDocument getDocument() {
+		return document;
+	}
+
+	@Override
+	public IFile getFile() {
+		return super.getFile();
+	}
+
+	@Override
+	public String getFileName() {
+		return super.getFileName();
 	}
 
 }

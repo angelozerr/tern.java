@@ -28,6 +28,7 @@ Export-Package: tern,
  tern.server.protocol.guesstypes,
  tern.server.protocol.html,
  tern.server.protocol.lint,
+ tern.server.protocol.outline,
  tern.server.protocol.type,
  tern.utils
 Import-Package: minimatch,com.eclipsesource.json;version="[0.9.2,0.9.3)",

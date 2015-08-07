@@ -17,6 +17,9 @@ import java.util.List;
 
 import org.w3c.dom.Node;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+
 import tern.repository.ITernRepository;
 import tern.scriptpath.ITernScriptPath;
 import tern.server.ITernDef;
@@ -28,10 +31,9 @@ import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
 import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.outline.ITernOutlineCollector;
+import tern.server.protocol.outline.TernOutlineQuery;
 import tern.server.protocol.type.ITernTypeCollector;
-
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
 
 /**
  * Tern project API.
@@ -273,6 +275,12 @@ public interface ITernProject extends ITernAdaptable {
 
 	void request(TernGuessTypesQuery query, ITernFile file,
 			ITernGuessTypesCollector collector) throws IOException,
+			TernException;
+
+	// ---------- Outline
+
+	void request(TernOutlineQuery query, ITernFile file,
+			ITernOutlineCollector collector) throws IOException,
 			TernException;
 
 	/**

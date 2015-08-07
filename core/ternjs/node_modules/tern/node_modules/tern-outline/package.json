@@ -1,0 +1,26 @@
+{
+  "name": "tern-outline",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "outline.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin for outline.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-outline.git"
+  },
+  "scripts": {
+    "test": "node ./test/all.js"
+  },  
+  "dependencies": {
+    "tern": ">=0.10.0",
+    "acorn": ">=1.0.0"
+  },
+  "devDependencies": { 
+    "test": ">=0.0.5",
+    "codemirror": ">=5.3.0"
+  },  
+  "keywords": [
+    "tern"
+  ]
+}

@@ -38,7 +38,6 @@ public enum TernPlugin implements ITernPlugin {
 	dojotoolkit_1_9("dojotoolkit", "1.9", true), 
 	extjs_4_2_1("extjs", "4.2.1", true), 
 	extjs_5_0_0("extjs", "5.0.0", true), 
-	guess_types("guess-types", "guess-types", null, null), 
 	grunt("tern/plugin/grunt"),
 	gulp("tern/plugin/gulp"),
 	gas("tern/plugin/gas"), 
@@ -57,7 +56,11 @@ public enum TernPlugin implements ITernPlugin {
 	lint(null, null, null, null, true),
 	eslint(null, null, null, null, true),
 	jshint(null, null, null, null, true),
-	jscs(null, null, null, null, true);
+	jscs(null, null, null, null, true), 
+	
+	// other
+	guess_types("guess-types", "guess-types", null, null),
+	outline("outline", "outline", null, null);
 
 	private static final ITernPlugin[] linters = createLinters();
 	
