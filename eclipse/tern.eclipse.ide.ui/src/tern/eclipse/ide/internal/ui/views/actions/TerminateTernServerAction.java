@@ -12,9 +12,7 @@ package tern.eclipse.ide.internal.ui.views.actions;
 
 import org.eclipse.jface.action.Action;
 
-import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.views.TernExplorerViewOLD;
 import tern.eclipse.ide.ui.ImageResource;
 
 /**
@@ -23,10 +21,10 @@ import tern.eclipse.ide.ui.ImageResource;
  */
 public class TerminateTernServerAction extends Action {
 
-	private final TernExplorerViewOLD explorer;
+	//private final TernExplorerViewOLD explorer;
 
-	public TerminateTernServerAction(TernExplorerViewOLD explorer) {
-		this.explorer = explorer;
+	public TerminateTernServerAction(Object explorer) {
+		//this.explorer = explorer;
 		super.setText(TernUIMessages.TerminateTernServerAction_text);
 		super.setToolTipText(TernUIMessages.TerminateTernServerAction_tooltip);
 		super.setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_STOP_ENABLED));
@@ -34,9 +32,9 @@ public class TerminateTernServerAction extends Action {
 
 	@Override
 	public void run() {
-		IIDETernProject ternProject = explorer.getCurrentTernProject();
-		if (ternProject != null) {
-			ternProject.disposeServer();
-		}
+//		IIDETernProject ternProject = explorer.getCurrentTernProject();
+//		if (ternProject != null) {
+//			ternProject.disposeServer();
+//		}
 	}
 }
