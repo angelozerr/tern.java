@@ -92,15 +92,13 @@ public class TernImagesRegistry {
 		return imageRegistry.getDescriptor(key);
 	}
 
-	public static String getJSType(TernCompletionItem item,
-			boolean returnNullIfUnknown) {
-		if (item.isFunction()) {
+	public static String getJSType(String jsType, boolean isFunction, boolean isArray, boolean returnNullIfUnknown) {
+		if (isFunction) {
 			return TernImagesRegistry.IMG_FN;
 		}
-		if (item.isArray()) {
+		if (isArray) {
 			return TernImagesRegistry.IMG_ARRAY;
 		}
-		String jsType = item.getJsType();
 		if (TernTypeHelper.isStringType(jsType)) {
 			return TernImagesRegistry.IMG_STRING;
 		} else if (TernTypeHelper.isNumberType(jsType)) {
@@ -116,7 +114,16 @@ public class TernImagesRegistry {
 		}
 		return TernImagesRegistry.IMG_UNKNOWN;
 	}
-
+	
+	public static Image getImage(String jsType, boolean isFunction, boolean isArray, boolean returnNullIfUnknown) {
+		String key = getJSType(jsType, isFunction, isArray, returnNullIfUnknown);
+		return key != null ? getImage(key) : null;
+	}
+	
+	public static String getJSType(TernCompletionItem item, boolean returnNullIfUnknown) {
+		return getJSType(item.getJsType(), item.isFunction(), item.isArray(), returnNullIfUnknown);
+	}
+	
 	public static Image getImage(TernCompletionItem item,
 			boolean returnNullIfUnknown) {
 		String key = getJSType(item, returnNullIfUnknown);
