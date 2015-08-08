@@ -4,6 +4,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -35,7 +36,7 @@ public class TernContentOutlinePage extends ContentOutlinePage {
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 		getTreeViewer().setContentProvider(new TernExplorerContentProvider(this));
-		getTreeViewer().setLabelProvider(new TernExplorerLabelProvider());
+		getTreeViewer().setLabelProvider(new DelegatingStyledCellLabelProvider(new TernExplorerLabelProvider()));
 		getTreeViewer().setAutoExpandLevel(TreeViewer.ALL_LEVELS);
 		refreshOutline();
 	}

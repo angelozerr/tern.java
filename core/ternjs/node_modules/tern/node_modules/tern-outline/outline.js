@@ -32,7 +32,7 @@
       return getNodeName(node.property);
     } else if(node.id) {
       // This is a Function
-      return getNodeName(node.id);
+      return node.id.name ? node.id.name : "function";
     } else {
       return node.name;
     }
@@ -88,6 +88,7 @@
     Function: function(node, st, c) {
       var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
       var fn = addChild(node, type, parent);
+      if (!node.id) fn.name = "function";
       parent = fn.children = [];
       var scope = {parent: parent, scope: node.body.scope};
       //var scope = node.body.scope;
