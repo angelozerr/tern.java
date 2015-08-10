@@ -259,6 +259,11 @@ public class RhinoTernServer extends AbstractTernServer {
 			}
 			return text.toString();
 		}
+		
+		@Override
+		public Long getLong(Object jsonObject, String name) {
+			return null;
+		}
 
 		@Override
 		public boolean isString(Object value) {

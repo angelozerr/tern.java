@@ -1,10 +1,14 @@
 package tern.eclipse.ide.internal.ui.views;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -15,7 +19,9 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.TernPlugin;
+import tern.server.protocol.outline.JSNode;
 import tern.server.protocol.outline.TernOutlineQuery;
 
 public class TernContentOutlinePage extends ContentOutlinePage {
@@ -37,6 +43,27 @@ public class TernContentOutlinePage extends ContentOutlinePage {
 		super.createControl(parent);
 		getTreeViewer().setContentProvider(new TernExplorerContentProvider(this));
 		getTreeViewer().setLabelProvider(new DelegatingStyledCellLabelProvider(new TernExplorerLabelProvider()));
+		getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
+
+			@Override
+			public void doubleClick(DoubleClickEvent event) {
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				if (!selection.isEmpty()) {
+					if (selection.getFirstElement() instanceof JSNode) {
+						JSNode node = (JSNode) selection.getFirstElement();
+						IFile file = outline.getTernFile().getFile();
+						Long start = node.getStart();
+						Long end = node.getEnd();
+						EditorUtils.openInEditor(
+								file,
+								start != null ? start.intValue() : -1,
+								start != null && end != null ? end.intValue()
+										- start.intValue() : -1, true);
+
+					}
+				}
+			}
+		});
 		getTreeViewer().setAutoExpandLevel(TreeViewer.ALL_LEVELS);
 		refreshOutline();
 	}

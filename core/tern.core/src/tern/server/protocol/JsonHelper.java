@@ -58,7 +58,7 @@ public class JsonHelper {
 		JsonValue value = json.get(name);
 		return value == null ? null : value.asLong();
 	}
-
+	
 	public static Object getValue(JsonValue value) {
 		if (value == null) {
 			return null;

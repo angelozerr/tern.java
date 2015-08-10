@@ -33,6 +33,8 @@
     } else if(node.id) {
       // This is a Function
       return node.id.name ? node.id.name : "function";
+    } else if(node.value) {
+      return node.value;
     } else {
       return node.name;
     }
@@ -64,15 +66,22 @@
         for (var i = 0, len = node.declarations.length; i < len; i++) {
           var decl = node.declarations[i];
           var parent = st.parent, scope = st.scope, type = infer.expressionType({node: decl.id, state: scope});
-          addChild(decl.id, type, parent);
+          if (isObjectLiteral(type) || isFunctionType(type)) {
+            var obj = parent[parent.length -1];
+            if (obj) {
+              obj.name = getNodeName(decl.id);
+              obj.start = Number(node.start);
+              obj.end = Number(node.end);
+            }
+          } else {
+            addChild(decl.id, type, parent);
+          }
         }
       },
-      MemberExpression: function (node, scope) {
-        //console.log(node)
-        /*collect(node.id, 'FunctionDeclaration');
-        for (var i = 0, len = node.params.length; i < len; i++) {
-          collect(node.params[i], 'ArgumentDeclaration');
-        }*/
+      Property: function (node, st) {
+        var parent = st.parent, scope = st.scope;        
+        var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
+        addChild(node.key, type, parent);
       }
     }
   }
@@ -96,6 +105,14 @@
       for (var i = 0; i < node.params.length; ++i)
         c(node.params[i], scope);
       c(node.body, scope, "ScopeBody");
+    },
+    ObjectExpression: function (node, st, c) {
+      var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
+      var obj = addChild(node, type, parent);
+      parent = obj.children = [];
+      var scope = {parent: parent, scope: st.scope};
+      for (var i = 0; i < node.properties.length; ++i)
+        c(node.properties[i], scope);
     }
   });
 

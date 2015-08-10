@@ -24,4 +24,5 @@ public interface IJSONObjectHelper {
 
 	boolean getBoolean(Object jsonObj, String name, boolean defaultValue);
 
+	Long getLong(Object jsonObject, String name);
 }

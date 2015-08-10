@@ -34,7 +34,7 @@ public class TernExplorerLabelProvider extends LabelProvider implements IStyledL
 	public StyledString getStyledText(Object element) {
 		if (element instanceof JSNode) {
 			JSNode node = ((JSNode) element);
-			StyledString buff = new StyledString(node.getName());
+			StyledString buff = new StyledString(StringUtils.isEmpty(node.getName()) ? "" : node.getName());
 			String type = node.getType();
 			if (!StringUtils.isEmpty(type)) {
 				buff.append(" : ", StyledString.DECORATIONS_STYLER);
