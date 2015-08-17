@@ -82,7 +82,7 @@ public abstract class AbstractAngularModuleDefinitionTest extends
 	@Test
 	public void definitionWithModuleCheckFiles() throws TernException {
 		server.addFile("myfile.js", "angular.module('phonecatAnimations');");
-		server.addFile("myfile2.js", "angular.module('phonecatAnimations');");
+		server.addFile("myfile2.js", "angular.module('phonecatApp');");
 
 		TernDoc doc = createDocForDefinitionModuleCheckFiles();
 		MockTernDefinitionCollector collector = new MockTernDefinitionCollector();
