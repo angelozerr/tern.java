@@ -173,7 +173,7 @@
 		<dependency>
 			<groupId>fr.opensagres.js</groupId>
 			<artifactId>minimatch.java</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 
@@ -193,10 +193,11 @@
 			<url>http://download.eclipse.org/cbi/updates/license/</url>
 			<layout>p2</layout>
 		</repository>
-		<repository>
+		<!-- only for SNAPSHOT versions of minimatch
+		 <repository>
 			<id>cloudbees</id>
 			<url>http://repository-opensagres.forge.cloudbees.com/snapshot/</url>
-		</repository>
+		</repository> -->
 	</repositories>
 	<scm>
 		<url>https://github.com/angelozerr/tern.java</url>
