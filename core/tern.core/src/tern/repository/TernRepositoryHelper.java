@@ -25,13 +25,13 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonObject.Member;
+
 import tern.TernException;
 import tern.server.ITernModule;
 import tern.utils.IOUtils;
 import tern.utils.StringUtils;
-
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonObject.Member;
 
 /**
  * Helper for tern repository.
@@ -54,8 +54,7 @@ public class TernRepositoryHelper {
 	 * @throws ClientProtocolException
 	 * @throws TernException
 	 */
-	public static List<ITernModule> loadModules(String repositoryURL)
-			throws IOException, TernException {
+	public static List<ITernModule> loadModules(String repositoryURL) throws IOException, TernException {
 		// load repository.json with HTTP client.
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(repositoryURL);
@@ -78,8 +77,7 @@ public class TernRepositoryHelper {
 		ITernModule module = null;
 		List<ITernModule> modules = new ArrayList<ITernModule>();
 		for (Member member : repository) {
-			module = new TernModuleToDownload(member.getName(),
-					(JsonObject) member.getValue());
+			module = new TernModuleToDownload(member.getName(), (JsonObject) member.getValue());
 			modules.add(module);
 		}
 		return modules;

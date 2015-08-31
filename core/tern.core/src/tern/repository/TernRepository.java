@@ -31,7 +31,7 @@ public class TernRepository implements ITernRepository {
 
 	private static final String DEFS_FOLDER = "defs";
 	private static final String PLUGIN_FOLDER = "plugin";
-	private static final String NODE_MODULES_FOLDER = "node_modules";
+	private static final String NODE_MODULES_FOLDER = "..";
 
 	private final String name;
 	private File ternBaseDir;
