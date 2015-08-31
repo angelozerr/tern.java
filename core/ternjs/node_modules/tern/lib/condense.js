@@ -20,7 +20,7 @@
     if (typeof origins == "string") origins = [origins];
     var state = new State(origins, name || origins[0], options || {});
 
-    runPass(state.passes.preCondenseReach, state);
+    state.server.signal("preCondenseReach", state)
 
     state.cx.topScope.path = "<top>";
     state.cx.topScope.reached("", state);
@@ -29,7 +29,7 @@
     for (var i = 0; i < state.patchUp.length; ++i)
       patchUpSimpleInstance(state.patchUp[i], state);
 
-    runPass(state.passes.postCondenseReach, state);
+    state.server.signal("postCondenseReach", state)
 
     for (var path in state.types)
       store(createPath(path.split("."), state), state.types[path], state);
@@ -39,7 +39,7 @@
     for (var _def in state.output["!define"]) { hasDef = true; break; }
     if (!hasDef) delete state.output["!define"];
 
-    runPass(state.passes.postCondense, state);
+    state.server.signal("postCondense", state)
 
     return simplify(state.output, state.options.sortOutput);
   };
@@ -47,7 +47,7 @@
   function State(origins, name, options) {
     this.origins = origins;
     this.cx = infer.cx();
-    this.passes = options.passes || this.cx.parent && this.cx.parent.passes || {};
+    this.server = options.server || this.cx.parent || {signal: function() {}}
     this.maxOrigin = -Infinity;
     for (var i = 0; i < origins.length; ++i)
       this.maxOrigin = Math.max(this.maxOrigin, this.cx.origins.indexOf(origins[i]));
@@ -130,7 +130,13 @@
   infer.Prim.prototype.reached = function() {return true;};
 
   infer.Arr.prototype.reached = function(path, state, concrete) {
-    if (!concrete) reachByName(this.getProp("<i>"), path, "<i>", state);
+    if (concrete) return true
+    if (this.tuple) {
+      for (var i = 0; i < this.tuple; i++)
+        reachByName(this.getProp(String(i)), path, String(i), state)
+    } else {
+      reachByName(this.getProp("<i>"), path, "<i>", state)
+    }
     return true;
   };
 
@@ -240,12 +246,18 @@
 
   infer.Prim.prototype.typeName = function() { return this.name; };
 
+  infer.Sym.prototype.typeName = function() { return this.asPropName }
+
   infer.Arr.prototype.typeName = function() {
-    return "[" + typeName(this.getProp("<i>")) + "]";
+    if (!this.tuple) return "[" + typeName(this.getProp("<i>")) + "]"
+    var content = []
+    for (var i = 0; i < this.tuple; i++)
+      content.push(typeName(this.getProp(String(i))))
+    return "[" + content.join(", ") + "]"
   };
 
   infer.Fn.prototype.typeName = function() {
-    var out = "fn(";
+    var out = this.generator ? "fn*(" : "fn(";
     for (var i = 0; i < this.args.length; ++i) {
       if (i) out += ", ";
       var name = this.argNames[i];
@@ -288,10 +300,5 @@
       out[prop] = obj[prop];
     }
     return out;
-  }
-
-  function runPass(functions) {
-    if (functions) for (var i = 0; i < functions.length; ++i)
-      functions[i].apply(null, Array.prototype.slice.call(arguments, 1));
   }
 });

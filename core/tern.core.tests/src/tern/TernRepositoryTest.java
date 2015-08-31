@@ -36,7 +36,6 @@ public class TernRepositoryTest {
 		assertHasModule(repository, "underscore");
 		assertHasModule(repository, "angular");
 		assertHasModule(repository, "ckeditor4.4.x", "ckeditor", "4.4.x");
-		assertHasModule(repository, "component");
 		assertHasModule(repository, "dojotoolkit_1.6", "dojotoolkit", "1.6");
 		assertHasModule(repository, "dojotoolkit_1.8", "dojotoolkit", "1.8");
 		assertHasModule(repository, "dojotoolkit_1.9", "dojotoolkit", "1.9");

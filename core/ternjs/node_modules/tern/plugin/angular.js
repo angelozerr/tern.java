@@ -64,7 +64,7 @@
 
   function applyWithInjection(mod, fnType, node, asNew) {
     var deps = [];
-    if (node.type == "FunctionExpression") {
+    if (/FunctionExpression/.test(node.type)) {
       for (var i = 0; i < node.params.length; ++i) {
         var elt = node.params[i], dep = getInclude(mod, elt.name);
         deps.push(dep);
@@ -84,8 +84,8 @@
           deps.push(infer.ANull);
       }
       var last = node.elements[node.elements.length - 1];
-      if (last && last.type == "FunctionExpression")
-        fnType = last.body.scope.fnType;
+      if (last && /FunctionExpression/.test(last.type))
+        fnType = last.scope.fnType;
     }
     var result = new infer.AVal;
     if (asNew) {
@@ -101,7 +101,7 @@
   }
   
   function getModule(name) {
-    return infer.cx().parent._angular.modules[name];  
+    return infer.cx().parent.mod.angular.modules[name];  
   }  
 
   infer.registerFunction("angular_callInject", function(argN) {
@@ -258,7 +258,7 @@
   }
 
   function declareMod(name, includes, node) {
-    var cx = infer.cx(), data = cx.parent._angular;
+    var cx = infer.cx(), data = cx.parent.mod.angular;
     var proto = moduleProto(cx);
     var mod = new infer.Obj(proto || true);
     if (!proto) data.nakedModules.push(mod);
@@ -343,7 +343,7 @@
   
   function baseUrl() {
     var cx = infer.cx(), server = cx.parent; 
-    return server._angular.options.baseURL || "";    
+    return server.mod.angular.options.baseURL || "";    
   }
   
   function relativePath(from, to) {
@@ -399,7 +399,7 @@
   function postLoadDef(json) {
     var cx = infer.cx(), defName = json["!name"], defs = cx.definitions[defName];
     if (defName == "angular") {
-      var proto = moduleProto(cx), naked = cx.parent._angular.nakedModules;
+      var proto = moduleProto(cx), naked = cx.parent.mod.angular.nakedModules;
       if (proto) for (var i = 0; i < naked.length; ++i) naked[i].proto = proto;
       return;
     }
@@ -422,7 +422,7 @@
   }
 
   function preCondenseReach(state) {
-    var mods = infer.cx().parent._angular.modules;
+    var mods = infer.cx().parent.mod.angular.modules;
     var modObj = new infer.Obj(null), found = 0;
     for (var name in mods) {
       var mod = mods[name];
@@ -441,7 +441,7 @@
   }
 
   function postCondenseReach(state) {
-    var mods = infer.cx().parent._angular.modules;
+    var mods = infer.cx().parent.mod.angular.modules;
     for (var path in state.types) {
       var m;
       if (m = path.match(/^!ng\.([^\.]+)\._inject_([^\.]+)^/)) {
@@ -455,7 +455,7 @@
   }
 
   function initServer(server, options) {
-    server._angular = {
+    server.mod.angular = {
       modules: Object.create(null),
       pendingImports: Object.create(null),
       nakedModules: [],
@@ -466,16 +466,15 @@
   tern.registerPlugin("angular", function(server, options) {
     initServer(server, options);
     server.on("reset", function() { initServer(server, options); });
-    return {defs: defs,
-            passes: {postParse: postParse,
-                     postLoadDef: postLoadDef,
-                     preCondenseReach: preCondenseReach,
-                     postCondenseReach: postCondenseReach,
-                     preInfer: preInfer,
-                     postInfer: postInfer,
-                     typeAt: findTypeAt,
-                     completion: findCompletions},
-            loadFirst: true};
+    server.on("postParse", postParse)
+    server.on("postLoadDef", postLoadDef)
+    server.on("preCondenseReach", preCondenseReach)
+    server.on("postCondenseReach", postCondenseReach)
+    server.on("preInfer", preInfer)
+    server.on("postInfer", postInfer)
+    server.on("typeAt", findTypeAt)
+    server.on("completion", findCompletions)
+    server.addDefs(defs, true)    
   });
   
   function copyTypeInfo(from, to) {
@@ -599,7 +598,7 @@
 
   function completeModuleName(query, file, node, word) {
     var completions = [];
-    var cx = infer.cx(), server = cx.parent, data = server._angular;
+    var cx = infer.cx(), server = cx.parent, data = server.mod.angular;
     
     function gather(modules) {
       for (var name in modules) {
@@ -694,7 +693,7 @@
   function preInfer(ast, scope) {
     // marks the angular modules of the current file as disabled.
     // module are enabled inside the angular_module tern function.
-    var filename = ast.sourceFile.name, mods = infer.cx().parent._angular.modules;
+    var filename = ast.sourceFile.name, mods = infer.cx().parent.mod.angular.modules;
     if (mods) {      
       for (var name in mods) {
         var mod = mods[name];
@@ -706,7 +705,7 @@
   
   function postInfer(ast, scope) {
     // delete the angular modules of the current file which are marked as disabled.
-    var filename = ast.sourceFile.name, mods = infer.cx().parent._angular.modules;
+    var filename = ast.sourceFile.name, mods = infer.cx().parent.mod.angular.modules;
     if (mods) {      
       for (var name in mods) {
         var mod = mods[name];
@@ -1674,7 +1673,7 @@
       var expression = query.expression;
       if (expression == null) throw ternError("missing .query.expression field");
       var scope = query.scope;
-      var _angular = server.cx.parent._angular;
+      var _angular = server.cx.parent.mod.angular;
       if (_angular == null) throw ternError("missing server.cx.parent._angular");
       
       var files = [];
