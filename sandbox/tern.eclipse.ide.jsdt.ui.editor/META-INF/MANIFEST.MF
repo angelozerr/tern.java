@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JSDT Tern Scanner
+Bundle-SymbolicName: tern.eclipse.ide.jsdt.ui.editor;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: tern.eclipse.ide.jsdt.ui.editor.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ tern.eclipse;bundle-version="1.1.0",
+ tern.eclipse.ide.core;bundle-version="1.1.0",
+ org.eclipse.wst.jsdt.ui,
+ org.eclipse.jface.text;bundle-version="3.10.0",
+ org.eclipse.core.resources;bundle-version="3.10.0",
+ tern.eclipse.ide.ui,
+ tern.core
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
