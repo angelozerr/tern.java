@@ -29,6 +29,8 @@ import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
+import tern.server.protocol.highlight.ITernHighlightCollector;
+import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.outline.ITernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineQuery;
@@ -296,6 +298,10 @@ public interface ITernProject extends ITernAdaptable {
 			ITernOutlineCollector collector) throws IOException,
 			TernException;
 
+	// ---------- Highlight
+	
+	void request(TernHighlightQuery query, ITernHighlightCollector collector) throws IOException, TernException;
+	
 	/**
 	 * Returns the tern repository used by the tern project.
 	 * 
@@ -309,4 +315,5 @@ public interface ITernProject extends ITernAdaptable {
 	 * @param repository
 	 */
 	void setRepository(ITernRepository repository);
+
 }

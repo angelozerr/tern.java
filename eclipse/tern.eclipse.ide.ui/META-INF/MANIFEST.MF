@@ -33,6 +33,7 @@ Export-Package: tern.eclipse.ide.ui,
  tern.eclipse.ide.ui.hyperlink,
  tern.eclipse.ide.ui.preferences,
  tern.eclipse.ide.ui.properties,
+ tern.eclipse.ide.ui.text,
  tern.eclipse.ide.ui.utils,
  tern.eclipse.ide.ui.viewers
 Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"

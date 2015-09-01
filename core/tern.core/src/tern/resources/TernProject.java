@@ -47,6 +47,8 @@ import tern.server.protocol.completions.ITernCompletionCollector;
 import tern.server.protocol.definition.ITernDefinitionCollector;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 import tern.server.protocol.guesstypes.TernGuessTypesQuery;
+import tern.server.protocol.highlight.ITernHighlightCollector;
+import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.outline.ITernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineQuery;
@@ -651,6 +653,13 @@ public class TernProject extends JsonObject implements ITernProject {
 		server.request(doc, collector);
 	}
 
+	@Override
+	public void request(TernHighlightQuery query, ITernHighlightCollector collector) throws IOException, TernException {
+		TernDoc doc = new TernDoc(query);
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
+	}
+	
 	@Override
 	public ITernRepository getRepository() {
 		return repository;
