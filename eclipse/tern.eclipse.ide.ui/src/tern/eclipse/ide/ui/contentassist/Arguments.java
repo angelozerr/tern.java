@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import tern.ITernProject;
+import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.server.protocol.IJSONObjectHelper;
+import tern.server.protocol.completions.TernCompletionItem;
 import tern.server.protocol.completions.TernCompletionProposalRec;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 
@@ -24,10 +27,14 @@ import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
  */
 public class Arguments extends ArrayList<Arg>implements ITernGuessTypesCollector {
 
-	private Map<Integer, Arg> parameters;
+	private static final long serialVersionUID = 1L;
 
-	public Arguments() {
+	private final ITernProject ternProject;
+	private final Map<Integer, Arg> parameters;
+
+	public Arguments(ITernProject ternProject) {
 		this.parameters = new HashMap<Integer, Arg>();
+		this.ternProject = ternProject;
 	}
 
 	public void addParameter(int offset, int length, String paramName, int paramIndex) {
@@ -45,7 +52,10 @@ public class Arguments extends ArrayList<Arg>implements ITernGuessTypesCollector
 			IJSONObjectHelper jsonManager) {
 		Arg arg = parameters.get(paramIndex);
 		if (arg != null) {
-			arg.addProposal(proposal.name, proposal.displayName);
+			TernCompletionItem item = new TernCompletionItem(proposal);
+			item.setTernProject(ternProject);
+			arg.addProposal(item.getName(), item.getDisplayName(),
+					TernUIPlugin.getTernDescriptorManager().getImage(item), item.getDoc());
 		}
 	}
 

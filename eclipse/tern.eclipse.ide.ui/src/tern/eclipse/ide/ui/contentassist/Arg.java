@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * Position for argument.
@@ -47,13 +48,12 @@ public class Arg extends Position {
 		return proposals.toArray(EMPTY_PROPOSALS);
 	}
 
-	public void addProposal(String name, String displayName) {
+	public void addProposal(String name, String displayName, Image image, String doc) {
 		if (proposals == null) {
 			proposals = new ArrayList<ICompletionProposal>();
 		}
 
-		proposals.add(new PositionBasedCompletionProposal(name, this,
-				getLength(), null, displayName, null, name));
+		proposals.add(new PositionBasedCompletionProposal(name, this, getLength(), image, displayName, null, doc));
 	}
 
 	public void updateOffset(int baseOffset) {

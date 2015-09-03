@@ -281,7 +281,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		}
 
 		String indentation = getIndentation(document, offset);
-		arguments = new Arguments();
+		arguments = new Arguments(getTernProject());
 
 		StringBuilder replacement = new StringBuilder(super.getName());
 		replacement.append(LPAREN);
