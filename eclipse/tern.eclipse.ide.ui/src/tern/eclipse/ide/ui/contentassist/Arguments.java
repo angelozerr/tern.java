@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -14,14 +14,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import tern.server.protocol.IJSONObjectHelper;
+import tern.server.protocol.completions.TernCompletionProposalRec;
 import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
 
 /**
  * List of {@link Arg}
  *
  */
-public class Arguments extends ArrayList<Arg> implements
-		ITernGuessTypesCollector {
+public class Arguments extends ArrayList<Arg>implements ITernGuessTypesCollector {
 
 	private Map<Integer, Arg> parameters;
 
@@ -29,8 +30,7 @@ public class Arguments extends ArrayList<Arg> implements
 		this.parameters = new HashMap<Integer, Arg>();
 	}
 
-	public void addParameter(int offset, int length, String paramName,
-			int paramIndex) {
+	public void addParameter(int offset, int length, String paramName, int paramIndex) {
 		Arg arg = new Arg(offset, length, paramName);
 		parameters.put(paramIndex, arg);
 		super.add(arg);
@@ -41,10 +41,11 @@ public class Arguments extends ArrayList<Arg> implements
 	}
 
 	@Override
-	public void addProposal(int paramIndex, String name) {
+	public void addProposal(int paramIndex, TernCompletionProposalRec proposal, Object completion,
+			IJSONObjectHelper jsonManager) {
 		Arg arg = parameters.get(paramIndex);
 		if (arg != null) {
-			arg.addProposal(name);
+			arg.addProposal(proposal.name, proposal.displayName);
 		}
 	}
 

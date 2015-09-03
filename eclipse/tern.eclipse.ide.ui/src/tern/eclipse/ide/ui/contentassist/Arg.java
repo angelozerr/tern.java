@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -47,13 +47,13 @@ public class Arg extends Position {
 		return proposals.toArray(EMPTY_PROPOSALS);
 	}
 
-	public void addProposal(String name) {
+	public void addProposal(String name, String displayName) {
 		if (proposals == null) {
 			proposals = new ArrayList<ICompletionProposal>();
 		}
 
 		proposals.add(new PositionBasedCompletionProposal(name, this,
-				getLength(), null, name, null, name));
+				getLength(), null, displayName, null, name));
 	}
 
 	public void updateOffset(int baseOffset) {
