@@ -362,7 +362,7 @@ public class TernCompletionProposal extends TernCompletionItem implements
 	public boolean validate(IDocument document, int offset, DocumentEvent event) {
 		if (offset < fReplacementOffset)
 			return false;
-		boolean validated = startsWith(document, offset, fDisplayString);
+		boolean validated = startsWith(document, offset, fReplacementString);
 
 		if (fUpdateLengthOnValidate && event != null) {
 			fReplacementLength += event.fText.length() - event.fLength; // adjust
