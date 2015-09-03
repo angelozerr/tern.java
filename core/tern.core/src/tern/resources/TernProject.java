@@ -20,6 +20,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.print.attribute.HashDocAttributeSet;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -28,6 +30,7 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.eclipsesource.json.ParseException;
 
+import tern.EcmaVersion;
 import tern.ITernFile;
 import tern.ITernFileSynchronizer;
 import tern.ITernProject;
@@ -39,6 +42,7 @@ import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.ITernServer;
+import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
@@ -81,6 +85,8 @@ import tern.utils.IOUtils;
  * @see http://ternjs.net/doc/manual.html#configuration
  */
 public class TernProject extends JsonObject implements ITernProject {
+
+	private static final String ECMA_VERSION_FIELD_NAME = "ecmaVersion";
 
 	private static final long serialVersionUID = 1L;
 
@@ -137,14 +143,28 @@ public class TernProject extends JsonObject implements ITernProject {
 		return ternProjectFile;
 	}
 
+	
 	@Override
-	public void setEcmaVersion(int ecmaVersion) {
-		super.set("ecmaVersion", ecmaVersion);
+	public void setEcmaVersion(EcmaVersion ecmaVersion) {
+		super.set(ECMA_VERSION_FIELD_NAME, ecmaVersion.getVersion());
 	}
 
 	@Override
-	public Integer getEcmaVersion() {
-		return super.getInt("ecmaVersion", -1);
+	public EcmaVersion getEcmaVersion() {
+		int version = super.getInt(ECMA_VERSION_FIELD_NAME, -1);
+		if (version == -1) {
+			// Search if .tern-project contains ecma5.json, etc
+			if (hasLib(TernDef.ecma7)) {
+				return EcmaVersion.ES7;
+			}
+			if (hasLib(TernDef.ecma6)) {
+				return EcmaVersion.ES6;
+			}
+			if (hasLib(TernDef.ecma5)) {
+				return EcmaVersion.ES5;
+			}
+		}
+		return EcmaVersion.get(version);
 	}
 	
 	/**

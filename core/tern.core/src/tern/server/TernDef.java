@@ -19,7 +19,8 @@ public enum TernDef implements ITernDef {
 	browser("tern/defs/browser.json"), 
 	chai("tern/defs/chai.json"), 
 	ecma5(null, "ecma", "5", "tern/defs/ecma5.json"), 
-	ecma6(null, "ecma", "6", "tern/defs/ecma5.json"),
+	ecma6(null, "ecma", "6", "tern/defs/ecma6.json"),
+	ecma7(null, "ecma", "7", "tern/defs/ecma7.json"),
 	jquery("tern/defs/jquery.json"), 
 	underscore("tern/defs/underscore.json"),
 	

@@ -53,7 +53,17 @@ public final class TernUIMessages extends NLS {
 	public static String PropertyPreferencePage_02;
 	public static String PropertyPreferencePage_01;
 
-	// Properties page
+	// ---------- Properties page
+
+	// Tern Main property page
+	public static String TernMainPropertyPage_ecmaGroup_label;
+	public static String TernMainPropertyPage_ecmaVersion;
+	public static String TernMainPropertyPage_useESModules;
+	public static String TernMainPropertyPage_jsdocGroup_label;
+	public static String TernMainPropertyPage_useJSDoc;
+	public static String TernMainPropertyPage_JSDocStrong;
+	
+	// Tern Modules property page
 	public static String TernModulesPropertyPage_desc;
 	public static String TernModulesBlock_moduleName;
 	public static String TernModulesBlock_moduleVersion;

@@ -72,14 +72,14 @@ public interface ITernProject extends ITernAdaptable {
 	 * 
 	 * @param ecmaVersion the ECMAScript version 
 	 */
-	void setEcmaVersion(int ecmaVersion);
+	void setEcmaVersion(EcmaVersion ecmaVersion);
 
 	/**
-	 * Returns ECMAScript version and -1 otherwise.
+	 * Returns ECMAScript version.
 	 * 
-	 * @return ECMAScript version and -1 otherwise.
+	 * @return ECMAScript version.
 	 */
-	Integer getEcmaVersion();
+	EcmaVersion getEcmaVersion();
 	
 	// --------------------- JSON Type Definitions
 

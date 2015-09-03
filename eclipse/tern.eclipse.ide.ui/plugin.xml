@@ -122,7 +122,7 @@
          point="org.eclipse.ui.propertyPages">		      
       <page
             name="%TernMainPropertyPage.name"        
-            class="tern.eclipse.ide.internal.ui.properties.TernMainPropertyPage"
+            class="tern.eclipse.ide.ui.properties.TernMainPropertyPage"
             id="tern.eclipse.ide.ui.properties">
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
