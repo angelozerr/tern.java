@@ -7,56 +7,44 @@
 })(function(infer, tern, require) {
   "use strict";
   
-  
-  // TODO : remove this function when PR https://github.com/marijnh/tern/pull/621 will be accepted
-  function getModType(node, me) {
-    var modName = me.isModName(node), imp, prop
-    if (imp = me.isImport(node)) {
-      modName = imp.name
-      prop = imp.prop
-    }
-    if (!modName) return
-
-    var modType = me.resolveModule(modName, node.sourceFile.name)
-    return (prop ? modType.getProp(prop) : modType).getType()
-  }
+  var preferedQuote = '"';
   
   var nodeRequire_lint = function(node, addMessage, getRule) {
     var rule = getRule("UnknownModule");
     if (!rule) return;
     var cx = infer.cx(), server = cx.parent, data = server._node;
     var argNodes = node.arguments;
-    if (argNodes && argNodes.length && argNodes[0].type == "Literal" || typeof argNodes[0].value == "string") {
+    if (argNodes && argNodes.length && argNodes[0].type == "Literal" && typeof argNodes[0].value == "string") {
       var me = infer.cx().parent.mod.modules
-      var modType = getModType(argNodes[0], me);
+      var modType = me.getModType(argNodes[0]);
       if (!modType) addMessage(argNodes[0], "Unknown module '" + argNodes[0].value + "'", rule.severity);
-    }
+    } else return true;
   };
   
-  var nodeRequire_guessType = function(arg, i, file, setType, addValueType) {
-    var cx = infer.cx(), server = cx.parent, data = server._node;
-    //var currentFile = data.currentFile || data.resolveProjectPath(server, file.name);
-
-    function addModules(modules, addValueType) {
-      for (var name in modules) {
-        //if (name == currentFile) continue;
-        //var moduleName = data.resolveModulePath(name, currentFile);
-        //addValueType("requiredModule", '"' + moduleName + '"');
-        addValueType("requiredModule", '"' + name + '"');
-      }
-    }
+  var nodeRequire_guessType = function(arg, i, file) {
     if (i == 0) {
-      setType("requiredModule");
-      addModules(cx.definitions.node, addValueType);
-      addModules(data.modules, addValueType);
-      return true;
+      var completions = [], query = {docs: true, types: true, origins: true}, me = infer.cx().parent.mod.modules, quote = preferedQuote;
+      // known modules
+      me.completeModuleName(completions, query, "");
+      // local file
+      me.completeFileName(completions, query, file.name, "");
+      return {
+        type: "requiredModule",
+        completions: completions.map(function(rec) {
+          var name = typeof rec == "string" ? rec : rec.name
+          var string = JSON.stringify(name)
+          if (quote == "'") string = quote + string.slice(1, string.length -1).replace(/'/g, "\\'") + quote
+          if (typeof rec == "string") return string
+          rec.displayName = name
+          rec.name = string
+          return rec
+        })
+      }  
     }
   };
   
   tern.registerPlugin("node-extension", function(server, options) {
-    return {
-      passes: {postLoadDef: postLoadDef}  
-    };
+    server.on("postLoadDef", postLoadDef);
   });
   
   function postLoadDef(json) {
