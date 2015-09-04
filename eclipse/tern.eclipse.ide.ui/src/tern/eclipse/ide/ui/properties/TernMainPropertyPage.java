@@ -136,7 +136,11 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 	private void updateUseESModules(IWorkingCopy workingCopy) {
 		EcmaVersion ecmaVersion = getEcmaVersion();
 		useESModules.setEnabled(ecmaVersion.getVersion() >= 6);
+		if (!useESModules.isEnabled()) {
+			useESModules.setSelection(false);
+		}
 		workingCopy.setEcmaVersion(ecmaVersion);
+		
 	}
 
 	protected EcmaVersion getEcmaVersion() {
