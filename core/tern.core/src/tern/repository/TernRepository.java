@@ -12,8 +12,10 @@ package tern.repository;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import tern.TernException;
@@ -32,7 +34,8 @@ public class TernRepository implements ITernRepository {
 	private static final String DEFS_FOLDER = "defs";
 	private static final String PLUGIN_FOLDER = "plugin";
 	private static final String NODE_MODULES_FOLDER = "..";
-
+	private static final List<String> IGNORE_PLUGINS = Arrays.asList(new String[]{"commonjs", "modules", "node_resolve"});
+	
 	private final String name;
 	private File ternBaseDir;
 	private final boolean defaultRepository;
@@ -107,15 +110,15 @@ public class TernRepository implements ITernRepository {
 			Map<String, ITernModule> modules,
 			Map<String, ITernModule> modulesByOrigin) throws TernException {
 		// defs
-		loadModules(modules, modulesByOrigin, DEFS_FOLDER);
+		loadModules(modules, modulesByOrigin, DEFS_FOLDER, null);
 		// plugin
-		loadModules(modules, modulesByOrigin, PLUGIN_FOLDER);
+		loadModules(modules, modulesByOrigin, PLUGIN_FOLDER, IGNORE_PLUGINS);
 		// node_modules
-		loadModules(modules, modulesByOrigin, NODE_MODULES_FOLDER);
+		loadModules(modules, modulesByOrigin, NODE_MODULES_FOLDER, null);
 	}
 
 	private void loadModules(Map<String, ITernModule> modules,
-			Map<String, ITernModule> modulesByOrigin, String dir)
+			Map<String, ITernModule> modulesByOrigin, String dir, List<String> ignoreModules)
 			throws TernException {
 		File baseDir = new File(getTernBaseDir(), dir);
 		if (baseDir.exists()) {
@@ -125,12 +128,19 @@ public class TernRepository implements ITernRepository {
 			for (int i = 0; i < files.length; i++) {
 				file = files[i];
 				module = TernModuleHelper.getModule(file.getName());
-				if (module != null) {
+				if (module != null && !isIgnoreModule(module, ignoreModules)) {
 					modules.put(module.getName(), module);
 					modulesByOrigin.put(module.getOrigin(), module);
 				}
 			}
 		}
+	}
+
+	private boolean isIgnoreModule(ITernModule module, List<String> ignoreModules) {
+		if (ignoreModules == null) {
+			return false;
+		}
+		return ignoreModules.contains(module.getName());
 	}
 
 	@Override

@@ -32,15 +32,13 @@ import tern.scriptpath.ITernScriptPath;
  * Tern script paths property page.
  * 
  */
-public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
-		implements IWorkbenchPreferencePage {
+public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage implements IWorkbenchPreferencePage {
 
 	private TernScriptPathsBlock scriptPathsBlock;
 
 	public TernScriptPathsPropertyPage() {
 		super();
-		setImageDescriptor(ImageResource
-				.getImageDescriptor(ImageResource.IMG_LOGO));
+		setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	public void init(IWorkbench workbench) {
@@ -79,19 +77,17 @@ public class TernScriptPathsPropertyPage extends AbstractTernPropertyPage
 	}
 
 	@Override
-	public boolean performOk() {
+	protected void doPerformOk() throws Exception {
 		// save column settings
 		scriptPathsBlock.saveColumnSettings();
 		// save the checked scriptPaths in the tern project
-		List<ITernScriptPath> scriptPaths = scriptPathsBlock
-				.getTernScriptPaths();
+		List<ITernScriptPath> scriptPaths = scriptPathsBlock.getTernScriptPaths();
 		try {
 			IIDETernProject ternProject = getTernProject();
 			ternProject.setScriptPaths(scriptPaths);
 		} catch (Exception e) {
 			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
 		}
-		return super.performOk();
 	}
 
 	/**

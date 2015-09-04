@@ -32,8 +32,8 @@ import tern.server.ITernModule;
  * Tern Modules (Plugins + JSON Type Definitions) property page.
  * 
  */
-public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
-		IWorkbenchPreferencePage, IWorkingCopyListener {
+public class TernModulesPropertyPage extends AbstractTernPropertyPage
+		implements IWorkbenchPreferencePage, IWorkingCopyListener {
 
 	public static final String PAGE_ID = "tern.eclipse.ide.ui.properties.modules";
 
@@ -41,8 +41,7 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 
 	public TernModulesPropertyPage() {
 		super();
-		setImageDescriptor(ImageResource
-				.getImageDescriptor(ImageResource.IMG_LOGO));
+		setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	@Override
@@ -65,8 +64,7 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 
 		// create UI modules
 		IResource resource = getResource();
-		modulesBlock = new TernModulesBlock(
-				resource != null ? resource.getProject() : null,
+		modulesBlock = new TernModulesBlock(resource != null ? resource.getProject() : null,
 				TernUIMessages.TernModulesPropertyPage_desc);
 		Control control = modulesBlock.createControl(parent);
 		GridData data = new GridData(GridData.FILL_BOTH);
@@ -84,23 +82,16 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		try {
 			IWorkingCopy workingCopy = getWorkingCopy();
 			workingCopy.addWorkingCopyListener(this);
-			modulesBlock.refresh(workingCopy.getAllModules(),
-					workingCopy.getCheckedModules());
+			modulesBlock.refresh(workingCopy.getFilteredModules(), workingCopy.getCheckedModules());
 		} catch (Throwable e) {
 			Trace.trace(Trace.SEVERE, "Error while loading tern project", e);
 		}
 	}
 
 	@Override
-	public boolean performOk() {
+	protected void doPerformOk() throws Exception {
 		// save column settings
 		modulesBlock.saveColumnSettings();
-		try {
-			saveWorkingCopy();
-		} catch (Exception e) {
-			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
-		}
-		return super.performOk();
 	}
 
 	@Override
@@ -110,12 +101,4 @@ public class TernModulesPropertyPage extends AbstractTernPropertyPage implements
 		}
 	}
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		try {
-			getWorkingCopy().removeWorkingCopyListener(this);
-		} catch (Throwable e) {
-		}
-	}
 }

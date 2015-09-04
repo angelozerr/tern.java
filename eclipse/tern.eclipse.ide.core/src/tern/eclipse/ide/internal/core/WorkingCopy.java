@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import tern.EcmaVersion;
 import tern.TernException;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.IWorkingCopy;
@@ -23,6 +24,8 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.metadata.TernModuleMetadata;
 import tern.repository.ITernRepository;
 import tern.server.ITernModule;
+import tern.server.TernDef;
+import tern.server.TernPlugin;
 import tern.utils.TernModuleHelper;
 
 /**
@@ -35,6 +38,8 @@ public class WorkingCopy implements IWorkingCopy {
 	private final List<Object> callers;
 	private List<ITernModule> checkedModules;
 	private List<ITernModule> workingCopyModules;
+	private EcmaVersion ecmaVersion;
+	private List<ITernModule> filteredModules;
 
 	public WorkingCopy(IIDETernProject project) {
 		this.project = project;
@@ -48,11 +53,24 @@ public class WorkingCopy implements IWorkingCopy {
 		List<ITernModule> allModules = project.getAllModules();
 		// Group by type
 		workingCopyModules = TernModuleHelper.groupByType(allModules);
+		// Filtered modules
+		filteredModules = new ArrayList<ITernModule>();
+		for (ITernModule module : workingCopyModules) {
+			if (!(isIgnoreModule(module, TernDef.ecma5.getType())
+					|| isIgnoreModule(module, TernPlugin.es_modules.getType())
+					|| isIgnoreModule(module, TernPlugin.doc_comment.getType()))) {
+				filteredModules.add(module);
+			}
+		}
 		// checked modules
 		List<ITernModule> checkedModules = new WorkingCopyModuleList(this,
-				TernCorePlugin.getTernRepositoryManager().getCheckedModules(
-						project, workingCopyModules));
+				TernCorePlugin.getTernRepositoryManager().getCheckedModules(project, workingCopyModules));
 		this.setCheckedModules(checkedModules);
+		setEcmaVersion(project.getEcmaVersion());
+	}
+	
+	private boolean isIgnoreModule(ITernModule module, String type) {
+		return type.equals(module.getType());
 	}
 
 	public List<ITernModule> getCheckedModules() {
@@ -74,7 +92,7 @@ public class WorkingCopy implements IWorkingCopy {
 	public boolean isDirty() {
 		return callers.size() == 0;
 	}
-	
+
 	@Override
 	public void commit(Object caller) throws IOException {
 		removeCaller(caller);
@@ -95,13 +113,10 @@ public class WorkingCopy implements IWorkingCopy {
 						// add required dependencies (ex : if ecma6 is checked,
 						// ecma5 must
 						// be added too).
-						requiredDependencies = metadata
-								.getRequiredDependencies(module.getVersion());
+						requiredDependencies = metadata.getRequiredDependencies(module.getVersion());
 						for (String dependency : requiredDependencies) {
 							dependencyModule = repository.getModule(dependency);
-							if (dependencyModule != null
-									&& !sortedModules
-											.contains(dependencyModule)) {
+							if (dependencyModule != null && !sortedModules.contains(dependencyModule)) {
 								sortedModules.add(dependencyModule);
 							}
 						}
@@ -114,6 +129,9 @@ public class WorkingCopy implements IWorkingCopy {
 				TernModuleHelper.sort(sortedModules);
 				for (ITernModule m : sortedModules) {
 					TernModuleHelper.update(m, project);
+				}
+				if (ecmaVersion != null) {
+					project.setEcmaVersion(ecmaVersion);
 				}
 				project.save();
 
@@ -181,8 +199,22 @@ public class WorkingCopy implements IWorkingCopy {
 	}
 
 	@Override
+	public List<ITernModule> getFilteredModules() {
+		return filteredModules;
+	}
+
+	@Override
 	public IIDETernProject getProject() {
 		return project;
 	}
-	
+
+	@Override
+	public void setEcmaVersion(EcmaVersion ecmaVersion) {
+		this.ecmaVersion = ecmaVersion;
+	}
+
+	@Override
+	public EcmaVersion getEcmaVersion() {
+		return ecmaVersion;
+	}
 }

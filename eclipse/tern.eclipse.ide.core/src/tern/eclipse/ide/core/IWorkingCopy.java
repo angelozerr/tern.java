@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+import tern.EcmaVersion;
 import tern.TernException;
 import tern.server.ITernModule;
 
@@ -111,10 +112,21 @@ public interface IWorkingCopy {
 	List<ITernModule> getAllModules();
 
 	/**
+	 * Returns the all modules without ECMAScript and JSDoc.
+	 * 
+	 * @return the all modules without ECMAScript and JSDoc.
+	 */
+	List<ITernModule> getFilteredModules();
+	
+	/**
 	 * Returns the owner tern project.
 	 * 
 	 * @return the owner tern project.
 	 */
 	IIDETernProject getProject();
+
+	EcmaVersion getEcmaVersion();
+	
+	void setEcmaVersion(EcmaVersion ecmaVersion);
 
 }

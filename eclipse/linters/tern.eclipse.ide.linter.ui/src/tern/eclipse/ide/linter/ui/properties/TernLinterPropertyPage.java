@@ -29,8 +29,7 @@ import tern.eclipse.ide.ui.properties.AbstractTernPropertyPage;
  * Abstract class for Linter property page.
  *
  */
-public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
-		implements IWorkbenchPreferencePage {
+public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage implements IWorkbenchPreferencePage {
 
 	private final String linterId;
 	private TernLinterOptionsBlock linterConfigBlock;
@@ -75,29 +74,20 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage
 	}
 
 	@Override
-	public boolean performOk() {
-		// save column settings
+	protected void doPerformOk() throws Exception {
 		linterConfigBlock.saveColumnSettings();
-		try {
-			// create options and store it .tern-project or config file
-			// name.
-			linterConfigBlock.updateTenProject();
-			// save working copy.
-			saveWorkingCopy();
-		} catch (Exception e) {
-			Trace.trace(Trace.SEVERE, "Error while saving tern project", e);
-		}
-		return super.performOk();
+		// create options and store it .tern-project or config file
+		// name.
+		linterConfigBlock.updateTenProject();
 	}
-	
+
 	/**
 	 * Load linter config.
 	 */
 	private void loadLinterConfig() {
 		try {
 			// Create instance of linter config
-			ITernLinterConfig config = TernLinterCorePlugin.getDefault()
-					.getTernLinterConfigurationsManager()
+			ITernLinterConfig config = TernLinterCorePlugin.getDefault().getTernLinterConfigurationsManager()
 					.createLinterConfig(linterId);
 			// refresh the tree options
 			linterConfigBlock.setLinterConfig(config);
