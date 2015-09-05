@@ -122,7 +122,7 @@ public class TernModuleOptionsPanel extends AbstractTernModulePanel {
 	}
 
 	protected JsonObject getOptions(ITernModuleConfigurable module) {
-		JsonObject options = module.getOptions();
+		JsonObject options = module.getOptionsObject();
 		if (options == null) {
 			options = new JsonObject();
 			module.setOptions(options);

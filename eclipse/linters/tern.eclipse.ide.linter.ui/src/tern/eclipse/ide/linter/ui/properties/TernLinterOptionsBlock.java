@@ -347,7 +347,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		if (workingCopy.hasCheckedTernModule(linterId)) {
 			ITernModuleConfigurable module = (ITernModuleConfigurable) workingCopy
 					.getTernModule(linterId);
-			JsonObject jsonOptions = module.getOptions();
+			JsonObject jsonOptions = module.getOptionsObject();
 			if (jsonOptions != null) {
 				JsonValue jsonConfig = jsonOptions.get(CONFIG_FIELD);
 				if (jsonConfig != null && jsonConfig.isObject()) {

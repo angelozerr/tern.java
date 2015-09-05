@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import tern.TernException;
 import tern.metadata.TernModuleMetadata;
@@ -34,7 +35,7 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 
 	private ITernModule wrappedModule;
 	private final Map<String, ITernModule> modules;
-	private JsonObject options;
+	private JsonValue options;
 
 	public TernModuleConfigurable(ITernModule module) {
 		this.modules = new LinkedHashMap<String, ITernModule>();
@@ -46,7 +47,7 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	public String getName() {
 		return wrappedModule.getName();
 	}
-	
+
 	@Override
 	public String getOrigin() {
 		return wrappedModule.getOrigin();
@@ -87,8 +88,7 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	public ITernModule setVersion(String version) throws TernException {
 		ITernModule module = modules.get(version);
 		if (module == null) {
-			throw new TernException("Unsupported version " + version
-					+ " for type " + getType());
+			throw new TernException("Unsupported version " + version + " for type " + getType());
 		}
 		wrappedModule = module;
 		return module;
@@ -105,12 +105,18 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	}
 
 	@Override
-	public JsonObject getOptions() {
-		return options;
+	public JsonObject getOptionsObject() {
+		return options != null && options.isObject() ? (JsonObject) options : null;
 	}
 
+	
 	@Override
-	public void setOptions(JsonObject options) {
+	public JsonValue getOptions() {
+		return options;
+	}
+	
+	@Override
+	public void setOptions(JsonValue options) {
 		this.options = options;
 	}
 
@@ -128,14 +134,14 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	public Collection<ITernModule> getModules() {
 		return modules.values();
 	}
-	
+
 	@Override
 	public boolean hasVersion() {
 		return !modules.isEmpty();
 	}
-	
+
 	@Override
-	public String toString() {		
+	public String toString() {
 		return getType();
 	}
 

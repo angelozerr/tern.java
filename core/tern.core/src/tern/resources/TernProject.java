@@ -300,7 +300,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	 *            plugin options.
 	 */
 	@Override
-	public void addPlugin(ITernPlugin plugin, JsonObject options) {
+	public void addPlugin(ITernPlugin plugin, JsonValue options) {
 		JsonObject plugins = getPlugins();
 		if (options == null)
 			options = new JsonObject();

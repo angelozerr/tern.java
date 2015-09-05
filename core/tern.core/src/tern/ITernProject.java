@@ -18,6 +18,7 @@ import org.w3c.dom.Node;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import tern.repository.ITernRepository;
 import tern.scriptpath.ITernScriptPath;
@@ -147,7 +148,7 @@ public interface ITernProject extends ITernAdaptable {
 	 * @param options
 	 *            plugin options.
 	 */
-	void addPlugin(ITernPlugin module, JsonObject options);
+	void addPlugin(ITernPlugin module, JsonValue options);
 
 	/**
 	 * Returns true if the given plugin exists and false otherwise.

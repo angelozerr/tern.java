@@ -115,7 +115,7 @@ public class TernModuleHelper {
 	 * @param plugins
 	 *            to update.
 	 */
-	private static void update(List<ITernDef> defs, List<ITernPlugin> plugins, JsonObject options, ITernModule module) {
+	private static void update(List<ITernDef> defs, List<ITernPlugin> plugins, JsonValue options, ITernModule module) {
 		switch (module.getModuleType()) {
 		case Def:
 			defs.add((ITernDef) module);
@@ -125,7 +125,7 @@ public class TernModuleHelper {
 			break;
 		case Configurable:
 			ITernModule wrappedModule = ((ITernModuleConfigurable) module).getWrappedModule();
-			JsonObject wrappedOptions = ((ITernModuleConfigurable) module).getOptions();
+			JsonValue wrappedOptions = ((ITernModuleConfigurable) module).getOptions();
 			update(defs, plugins, wrappedOptions, wrappedModule);
 			break;
 		}
@@ -147,7 +147,7 @@ public class TernModuleHelper {
 	 * @param module
 	 * @param ternProject
 	 */
-	public static void update(ITernModule module, JsonObject options, ITernProject ternProject) {
+	public static void update(ITernModule module, JsonValue options, ITernProject ternProject) {
 		switch (module.getModuleType()) {
 		case Def:
 			ternProject.addLib((ITernDef) module);
@@ -157,7 +157,7 @@ public class TernModuleHelper {
 			break;
 		case Configurable:
 			ITernModule wrappedModule = ((ITernModuleConfigurable) module).getWrappedModule();
-			JsonObject wrappedOptions = ((ITernModuleConfigurable) module).getOptions();
+			JsonValue wrappedOptions = ((ITernModuleConfigurable) module).getOptions();
 			update(wrappedModule, wrappedOptions, ternProject);
 			break;
 		}
@@ -176,15 +176,21 @@ public class TernModuleHelper {
 	public static ITernModuleConfigurable findConfigurable(ITernModule module, JsonValue options,
 			List<ITernModule> allModules) throws TernException {
 		String version = module.getVersion();
+		ITernModuleConfigurable c;
 		for (ITernModule f : allModules) {
 			if (f.getModuleType() == ModuleType.Configurable && f.getType().equals(module.getType())) {
+				c = ((ITernModuleConfigurable) f);
 				if (!StringUtils.isEmpty(version)) {
-					((ITernModuleConfigurable) f).setVersion(version);
+					c.setVersion(version);
 				}
-				if (options instanceof JsonObject) {
-					// set a copy of the options.
-					((ITernModuleConfigurable) f).setOptions(new JsonObject((JsonObject) options));
-				}
+				if (options != null) {
+					if (options.isObject()) {
+						// set a copy of the options.
+						c.setOptions(new JsonObject((JsonObject) options));
+					} else if (options.isNull()) {
+						c.setOptions(options);
+					}
+				}				
 				return (ITernModuleConfigurable) f;
 			}
 		}

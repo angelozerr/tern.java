@@ -10,7 +10,6 @@
  */
 package tern.eclipse.ide.ui.properties;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -29,10 +28,10 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import tern.EcmaVersion;
 import tern.TernException;
-import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.IWorkingCopy;
 import tern.eclipse.ide.core.IWorkingCopyListener;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -140,7 +139,7 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 			useESModules.setSelection(false);
 		}
 		workingCopy.setEcmaVersion(ecmaVersion);
-		
+
 	}
 
 	protected EcmaVersion getEcmaVersion() {
@@ -175,10 +174,14 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				boolean enabled = useJSDoc.getSelection();
+				ITernModuleConfigurable docComment = getDocComment(workingCopy);
+				if (!workingCopy.hasCheckedTernModule(TernPlugin.doc_comment.getName())) {
+					workingCopy.getCheckedModules().add(docComment);
+				}
 				if (enabled) {
-					workingCopy.getCheckedModules().add(getDocComment(workingCopy));
+					docComment.setOptions(null);
 				} else {
-					workingCopy.getCheckedModules().remove(getDocComment(workingCopy));
+					docComment.setOptions(JsonValue.NULL);
 				}
 				jsdocStrong.setEnabled(enabled);
 			}
@@ -198,16 +201,29 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 			}
 		});
 
-		if (workingCopy.hasCheckedTernModule(TernPlugin.doc_comment.getName())) {
+		if (isJSDocEnabled(workingCopy)) {
 			useJSDoc.setSelection(true);
 			jsdocStrong.setEnabled(true);
-			JsonObject options = getDocComment(workingCopy).getOptions();
+			JsonObject options = getDocComment(workingCopy).getOptionsObject();
 			if (options != null) {
 				jsdocStrong.setSelection(options.getBoolean(STRONG_OPTION, false));
 			}
 		} else {
 			jsdocStrong.setEnabled(false);
 		}
+	}
+
+	private boolean isJSDocEnabled(IWorkingCopy workingCopy) {
+		if (workingCopy.hasCheckedTernModule(TernPlugin.doc_comment.getName())) {
+			ITernModuleConfigurable docComment = getDocComment(workingCopy);
+			JsonValue value = docComment.getOptions();
+			if (value != null && (value.isNull() || value.isFalse())) {
+				return false;
+			}
+		}
+		// By default (when doc_comment is not definied in the .tern-project),
+		// tern uses doc_comment
+		return true;
 	}
 
 	@Override

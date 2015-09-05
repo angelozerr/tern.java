@@ -105,7 +105,7 @@ public class JsonHelper {
 		}
 	}
 
-	public static boolean isSameJson(JsonValue value1, JsonObject value2) {
+	public static boolean isSameJson(JsonValue value1, JsonValue value2) {
 		if (value1 == null) {
 			return value2 == null;
 		}

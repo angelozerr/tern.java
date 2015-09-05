@@ -16,6 +16,7 @@ import java.util.Set;
 import tern.TernException;
 
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 /**
  * Wrapper for {@link ITernModule} used to configure {@link ITernModule} :
@@ -48,14 +49,21 @@ public interface ITernModuleConfigurable extends ITernModule {
 	 * 
 	 * @param options
 	 */
-	void setOptions(JsonObject options);
+	void setOptions(JsonValue options);
 
 	/**
 	 * Returns the tern plugin options.
 	 * 
 	 * @return the tern plugin options.
 	 */
-	JsonObject getOptions();
+	JsonValue getOptions();
+
+	/**
+	 * Returns the tern plugin options as object.
+	 * 
+	 * @return the tern plugin options as object.
+	 */
+	JsonObject getOptionsObject();
 
 	/**
 	 * Returns the module by name and null otherwise.
