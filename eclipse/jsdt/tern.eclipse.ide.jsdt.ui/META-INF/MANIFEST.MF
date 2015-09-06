@@ -24,4 +24,4 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.eclipse.ide.jsdt.core
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.jsdt.internal.ui.JSDTTernUIPlugin
-Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"
+Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"

@@ -17,4 +17,4 @@ Require-Bundle: org.eclipse.ui,
  tern.eclipse.ide.linter.core,
  tern.eclipse.ide.linter.jscs.core
 Bundle-Activator: tern.eclipse.ide.linter.jscs.internal.ui.TernJSCSUIPlugin
-Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"
+Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"

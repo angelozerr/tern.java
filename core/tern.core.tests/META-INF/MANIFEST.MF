@@ -7,6 +7,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: tern.core,
  tern.server.nodejs,
  org.junit;bundle-version="4.11.0"
-Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)",
+Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)",
  org.apache.commons.logging
 

@@ -19,5 +19,5 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jface.text,
  org.eclipse.ui.ide
 Bundle-Activator: tern.eclipse.ide.linter.internal.ui.TernLinterUIPlugin
-Import-Package: com.eclipsesource.json;version="[0.9.2,0.9.3)"
+Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"
 Export-Package: tern.eclipse.ide.linter.ui.properties

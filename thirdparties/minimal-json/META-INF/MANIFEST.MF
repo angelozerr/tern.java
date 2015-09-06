@@ -1,16 +1,16 @@
 Manifest-Version: 1.0
-Export-Package: com.eclipsesource.json;version="0.9.2"
-Built-By: Ralf Sternberg
-Tool: Bnd-0.0.238
-Bundle-Name: minimal-json
-Created-By: Apache Maven Bundle Plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Build-Jdk: 1.7.0_51
-Bundle-Version: 0.9.2
-Bnd-LastModified: 1419976890143
-Bundle-ManifestVersion: 2
-Bundle-License: http://opensource.org/licenses/MIT
 Bundle-Description: A Minimal JSON Parser and Writer
+Bundle-License: http://opensource.org/licenses/MIT
 Bundle-SymbolicName: minimal-json
-Bundle-ClassPath: minimal-json-0.9.2.jar,
+Built-By: Ralf Sternberg
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1437327188796
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Tool: Bnd-0.0.238
+Export-Package: com.eclipsesource.json;version="0.9.4"
+Bundle-Name: minimal-json
+Bundle-Version: 0.9.4
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_45
+Bundle-ClassPath: minimal-json-0.9.4.jar,
  .
