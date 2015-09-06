@@ -33,6 +33,7 @@ import org.eclipse.core.runtime.QualifiedName;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.WriterConfig;
 
 import tern.ITernFile;
 import tern.ITernProject;
@@ -348,7 +349,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 				IFile file = project.getFile(TERN_PROJECT_FILE);
 				InputStream content = null;
 				try {
-					content = IOUtils.toInputStream(super.toString(),
+					content = IOUtils.toInputStream(super.toString(WriterConfig.PRETTY_PRINT),
 							file.exists() ? file.getCharset() : StringUtils.UTF_8);
 					if (!file.exists()) {
 						file.create(content, IResource.NONE, null);

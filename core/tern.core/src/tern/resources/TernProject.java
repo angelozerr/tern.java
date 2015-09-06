@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javax.print.attribute.HashDocAttributeSet;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -29,6 +27,8 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.eclipsesource.json.ParseException;
+import com.eclipsesource.json.PrettyPrint;
+import com.eclipsesource.json.WriterConfig;
 
 import tern.EcmaVersion;
 import tern.ITernFile;
@@ -86,14 +86,13 @@ import tern.utils.IOUtils;
  */
 public class TernProject extends JsonObject implements ITernProject {
 
-	private static final String ECMA_VERSION_FIELD_NAME = "ecmaVersion";
-
 	private static final long serialVersionUID = 1L;
 
+	private static final String ECMA_VERSION_FIELD_NAME = "ecmaVersion"; //$NON-NLS-1$
 	private static final String PLUGINS_FIELD_NAME = "plugins"; //$NON-NLS-1$
 	private static final String LIBS_FIELD_NAME = "libs"; //$NON-NLS-1$
 	private static final String LOAD_EAGERLY_FIELD_NAME = "loadEagerly"; //$NON-NLS-1$
-
+			
 	private final File projectDir;
 	private File ternProjectFile;
 	private ITernRepository repository;
@@ -425,7 +424,7 @@ public class TernProject extends JsonObject implements ITernProject {
 			Writer writer = null;
 			try {
 				writer = new FileWriter(ternProjectFile);
-				super.writeTo(writer);
+				super.writeTo(writer, WriterConfig.PRETTY_PRINT);
 			} finally {
 				if (writer != null) {
 					IOUtils.closeQuietly(writer);
