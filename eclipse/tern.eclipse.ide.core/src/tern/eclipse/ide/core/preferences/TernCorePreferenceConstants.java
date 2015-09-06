@@ -10,7 +10,7 @@
  */
 package tern.eclipse.ide.core.preferences;
 
-import tern.server.TernDef;
+import tern.EcmaVersion;
 import tern.server.TernPlugin;
 import tern.utils.TernModuleHelper;
 
@@ -49,6 +49,13 @@ public class TernCorePreferenceConstants {
 	 * Default tern modules to add to .tern-project when project is converted to
 	 * tern project.
 	 */
+	public static final String DEFAULT_ECMA_VERSION = "ecmaVersion"; //$NON-NLS-1$
+	public static final int DEFAULT_ECMA_VERSION_VALUE = EcmaVersion.ES5.getVersion(); //$NON-NLS-1$
+
+	/**
+	 * Default tern modules to add to .tern-project when project is converted to
+	 * tern project.
+	 */
 	public static final String DEFAULT_TERN_MODULES = "defaultTernModules"; //$NON-NLS-1$
 	public static final String DEFAULT_TERN_MODULES_VALUE = getDefaultModules(); //$NON-NLS-1$
 
@@ -60,8 +67,7 @@ public class TernCorePreferenceConstants {
 	 *         converted to tern project.
 	 */
 	private static String getDefaultModules() {
-		return TernModuleHelper.getModulesAsString(TernDef.ecma5,
-				TernPlugin.guess_types,
+		return TernModuleHelper.getModulesAsString(TernPlugin.guess_types,
 				TernPlugin.outline);
 	}
 }
