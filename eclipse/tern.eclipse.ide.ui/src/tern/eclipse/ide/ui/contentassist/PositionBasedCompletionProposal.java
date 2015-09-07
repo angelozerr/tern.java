@@ -184,12 +184,18 @@ public class PositionBasedCompletionProposal implements ICompletionProposal,
 	 * (org.eclipse.jface.text.IDocument, int,
 	 * org.eclipse.jface.text.DocumentEvent)
 	 */
+	@Override
 	public boolean validate(IDocument document, int offset, DocumentEvent event) {
 		try {
-			String content = document.get(fReplacementPosition.getOffset(),
-					offset - fReplacementPosition.getOffset());
-			if (fReplacementString.startsWith(content))
+			String content = document.get(fReplacementPosition.getOffset(), offset - fReplacementPosition.getOffset());
+			if (fReplacementString.startsWith(content)) {
 				return true;
+			} else if (fReplacementString.length() > 0) {
+				char c = fReplacementString.charAt(0);
+				if ((c == '"' || c == '\'') && fReplacementString.startsWith(c + content)) {
+					return true;
+				}
+			}
 		} catch (BadLocationException e) {
 			// ignore concurrently modified document
 		}
