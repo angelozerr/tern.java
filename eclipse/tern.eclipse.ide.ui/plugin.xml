@@ -119,11 +119,12 @@
 	</extension>
 
 	<extension
-         point="org.eclipse.ui.propertyPages">		      
+         point="org.eclipse.ui.propertyPages">
       <page
             name="%TernMainPropertyPage.name"        
             class="tern.eclipse.ide.ui.properties.TernMainPropertyPage"
-            id="tern.eclipse.ide.ui.properties">
+            id="tern.eclipse.ide.ui.properties"
+            category="org.eclipse.wst.jsdt.internal.ui.preferences.JavaScriptMainPage" >
          <enabledWhen>
 		     <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
