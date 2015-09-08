@@ -380,10 +380,10 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	/**
 	 * Save IDE informations in the JSON file .tern-project.
 	 */
-	private void saveIDEInfos() {
-		JsonObject ide = new JsonObject();
+	private void saveIDEInfos() {		
 		// script path
 		if (scriptPaths.size() > 0) {
+			JsonObject ide = new JsonObject();
 			JsonArray jsonScripts = new JsonArray();
 			// Loop for each script path and save it in the JSON file
 			// .tern-project.
@@ -407,8 +407,10 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 				}
 			}
 			ide.add(SCRIPT_PATHS_JSON_FIELD, jsonScripts);
+			super.set(IDE_JSON_FIELD, ide);
+		} else {
+			super.remove(IDE_JSON_FIELD);
 		}
-		super.set(IDE_JSON_FIELD, ide);
 	}
 
 	private String toString(String[] patterns) {
