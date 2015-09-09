@@ -92,33 +92,33 @@
 			class="tern.eclipse.ide.internal.ui.preferences.TernUIPreferenceInitializer" />
 	</extension>
 			 
-	<!--Preferences:-->
+    <!--Preferences:-->
     <extension
        point="org.eclipse.ui.preferencePages">  
        <!-- Tern Global preferences page -->  
        <page
-	          name="%TernPreferencePage.name"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
-	          id="tern.eclipse.ide.preferences" />
-	   <page  name="%TernContentAssistPropertyPage.name"
+              name="%TernPreferencePage.name"
+              class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
+              id="tern.eclipse.ide.preferences" />
+       <page  name="%TernContentAssistPropertyPage.name"
               category="tern.eclipse.ide.preferences"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.contentassist" />		          	  
+              class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
+              id="tern.eclipse.ide.ui.preferences.contentassist" />                        
        <page  name="%TernDevelopmentPropertyPage.name"
               category="tern.eclipse.ide.preferences"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.development" />
+              class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
+              id="tern.eclipse.ide.ui.preferences.development" />
        <page  name="%TernRepositoryPropertyPage.name"
               category="tern.eclipse.ide.ui.preferences.development"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.repository" />
-	   <page  name="%TernValidationPropertyPage.name"
+              class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
+              id="tern.eclipse.ide.ui.preferences.repository" />
+       <page  name="%TernValidationPropertyPage.name"
               category="tern.eclipse.ide.preferences"
-	          class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"
-	          id="tern.eclipse.ide.ui.preferences.validation" />
-	</extension>
+              class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"
+              id="tern.eclipse.ide.ui.preferences.validation" />
+    </extension>
 
-	<extension
+    <extension
          point="org.eclipse.ui.propertyPages">
       <page
             name="%TernMainPropertyPage.name"        
@@ -126,78 +126,78 @@
             id="tern.eclipse.ide.ui.properties"
             category="org.eclipse.wst.jsdt.internal.ui.preferences.JavaScriptMainPage" >
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>
-	  <page
+      <page
             name="%TernContentAssistPropertyPage.name"
             category="tern.eclipse.ide.ui.properties"        
             class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
             id="tern.eclipse.ide.ui.properties.contentassist">
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>          
-	  <page
+      <page
             name="%TernModulesPropertyPage.name"
             category="tern.eclipse.ide.ui.properties"        
             class="tern.eclipse.ide.ui.properties.TernModulesPropertyPage"
             id="tern.eclipse.ide.ui.properties.modules">
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>     
-	  <page
+      <page
             name="%TernScriptPathsPropertyPage.name"
             category="tern.eclipse.ide.ui.properties"        
             class="tern.eclipse.ide.internal.ui.properties.TernScriptPathsPropertyPage"
             id="tern.eclipse.ide.ui.properties.scriptpaths">
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>
-	  <page
+      <page
             name="%TernDevelopmentPropertyPage.name"
             category="tern.eclipse.ide.ui.properties"        
             class="tern.eclipse.ide.internal.ui.preferences.TernDevelopmentPreferencesPage"
             id="tern.eclipse.ide.ui.properties.development">
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>
-	  <page
+      <page
             name="%TernRepositoryPropertyPage.name"
             category="tern.eclipse.ide.ui.properties.development"        
             class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
             id="tern.eclipse.ide.ui.properties.repository">
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>      
-	  <page
+      <page
             name="%TernValidationPropertyPage.name"
             category="tern.eclipse.ide.ui.properties"        
             class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"
             id="tern.eclipse.ide.ui.properties.validation">
          <enabledWhen>
-		     <adapt type="org.eclipse.core.resources.IProject">
+             <adapt type="org.eclipse.core.resources.IProject">
                   <test property="tern.eclipse.ide.ui.isTernProject" />
-		     </adapt>         
+             </adapt>         
          </enabledWhen>
       </page>
-	</extension>
+    </extension>
      
     <!-- Tern Console -->
  	<extension
