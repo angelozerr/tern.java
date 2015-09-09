@@ -61,7 +61,9 @@ public final class TernUIMessages extends NLS {
 	public static String TernMainPropertyPage_useESModules;
 	public static String TernMainPropertyPage_jsdocGroup_label;
 	public static String TernMainPropertyPage_useJSDoc;
+	public static String TernMainPropertyPage_useJSDoc_tooltipText;
 	public static String TernMainPropertyPage_JSDocStrong;
+	public static String TernMainPropertyPage_JSDocStrong_tooltipText;
 	
 	// Tern Modules property page
 	public static String TernModulesPropertyPage_desc;

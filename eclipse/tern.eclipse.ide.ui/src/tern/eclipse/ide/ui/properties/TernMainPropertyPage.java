@@ -115,7 +115,7 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 		useESModules = new Button(ecmaGroup, SWT.CHECK);
 		useESModules.setText(TernUIMessages.TernMainPropertyPage_useESModules);
 		useESModules.setEnabled(false);
-
+		
 		// Update ES version
 		ecmaVersionViewer.setSelection(new StructuredSelection(workingCopy.getEcmaVersion()));
 		// Update use ES modules?
@@ -164,12 +164,14 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 		useJSDoc = new Button(jsdocGroup, SWT.CHECK);
 		useJSDoc.setText(TernUIMessages.TernMainPropertyPage_useJSDoc);
 		useJSDoc.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
+		useJSDoc.setToolTipText(TernUIMessages.TernMainPropertyPage_useJSDoc_tooltipText);
+		
 		// Strong.
 		jsdocStrong = new Button(jsdocGroup, SWT.CHECK);
 		jsdocStrong.setText(TernUIMessages.TernMainPropertyPage_JSDocStrong);
 		jsdocStrong.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
+		jsdocStrong.setToolTipText(TernUIMessages.TernMainPropertyPage_JSDocStrong_tooltipText);
+		
 		useJSDoc.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
