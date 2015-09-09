@@ -99,7 +99,8 @@
        <page
               name="%TernPreferencePage.name"
               class="tern.eclipse.ide.internal.ui.preferences.TernGlobalPreferencesPage"
-              id="tern.eclipse.ide.preferences" />
+              id="tern.eclipse.ide.preferences"
+              category="org.eclipse.wst.jsdt.ui.preferences.JavaBasePreferencePage" />
        <page  name="%TernContentAssistPropertyPage.name"
               category="tern.eclipse.ide.preferences"
               class="tern.eclipse.ide.internal.ui.preferences.TernContentAssistPreferencesPage"
