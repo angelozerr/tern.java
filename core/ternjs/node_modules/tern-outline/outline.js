@@ -72,6 +72,8 @@
               obj.name = getNodeName(decl.id);
               obj.start = Number(node.start);
               obj.end = Number(node.end);
+            } else {
+              addChild(decl.id, type, parent);
             }
           } else {
             addChild(decl.id, type, parent);
