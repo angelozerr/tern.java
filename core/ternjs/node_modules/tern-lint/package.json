@@ -1,7 +1,7 @@
 {
   "name": "tern-lint",
   "license": "MIT",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "main": "lint.js",
   "bin": "./bin/lint",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
