@@ -455,6 +455,9 @@
       for (var i = 0; i < node.params.length; ++i)
         c(node.params[i], scope);
       c(node.body, scope, "ScopeBody");
+    },
+    Statement: function(node, st, c) {
+      c(node, node.scope || st)
     }
   });
 
