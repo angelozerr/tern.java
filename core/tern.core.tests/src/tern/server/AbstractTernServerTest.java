@@ -16,6 +16,7 @@ import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
 
+import tern.EcmaVersion;
 import tern.ITernProject;
 import tern.TernException;
 import tern.TernResourcesManager;
@@ -33,6 +34,7 @@ public abstract class AbstractTernServerTest {
 
 	protected ITernProject createProject() {
 		ITernProject project = TernResourcesManager.getTernProject(new File("."));
+		project.setEcmaVersion(EcmaVersion.ES5);
 		return project;
 	}
 

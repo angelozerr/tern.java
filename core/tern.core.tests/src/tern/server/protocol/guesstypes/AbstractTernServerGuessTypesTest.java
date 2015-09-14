@@ -29,7 +29,6 @@ public abstract class AbstractTernServerGuessTypesTest extends
 	protected ITernProject createProject() {
 		ITernProject project = super.createProject();
 		project.addPlugin(TernPlugin.guess_types);
-		project.addLib(TernDef.ecma5);
 		project.addLib(TernDef.browser);
 		return project;
 	}

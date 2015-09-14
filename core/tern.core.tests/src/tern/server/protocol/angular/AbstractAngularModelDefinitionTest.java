@@ -138,9 +138,9 @@ public abstract class AbstractAngularModelDefinitionTest extends
 		Assert.assertNotNull(collector.getFile());
 		Assert.assertEquals("myfile.js", collector.getFile());
 		Assert.assertNotNull(collector.getStart());
-		Assert.assertEquals(80, collector.getStart().longValue());
+		Assert.assertEquals(172, collector.getStart().longValue());
 		Assert.assertNotNull(collector.getEnd());
-		Assert.assertEquals(121, collector.getEnd().longValue());
+		Assert.assertEquals(206, collector.getEnd().longValue());
 	}
 
 	private TernDoc createDocForDefinitionTodo() {
@@ -167,9 +167,9 @@ public abstract class AbstractAngularModelDefinitionTest extends
 		Assert.assertNotNull(collector.getFile());
 		Assert.assertEquals("myfile.js", collector.getFile());
 		Assert.assertNotNull(collector.getStart());
-		Assert.assertEquals(110, collector.getStart().longValue());
+		Assert.assertEquals(195, collector.getStart().longValue());
 		Assert.assertNotNull(collector.getEnd());
-		Assert.assertEquals(114, collector.getEnd().longValue());
+		Assert.assertEquals(199, collector.getEnd().longValue());
 	}
 
 	private TernDoc createDocForDefinitionTodoDone() {
