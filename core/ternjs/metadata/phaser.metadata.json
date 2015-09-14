@@ -1,6 +1,6 @@
 {
  "name": "phaser",
- "label": "Delite",
+ "label": "Phaser",
  "icon": "phaser.png",
  "homepage": "http://ibm-js.github.io/phaser/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
@@ -17,6 +17,6 @@
   "url": "https://github.com/angelozerr/tern-phaser/issues"
  },
  "help": {
-  "url": "https://github.com/angelozerr/tern.java/wiki/Delite-support"
+  "url": "https://github.com/angelozerr/tern.java/wiki/Phaser-support"
  }
 }
