@@ -12,7 +12,7 @@
   });
   
   var defs = {
-		  "!name": "delite",
+		  "!name": "phaser",
 		  "!define": {
 		   "PhaserTextStyle": {
 		    "font": {
