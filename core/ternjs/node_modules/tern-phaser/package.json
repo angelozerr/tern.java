@@ -1,0 +1,30 @@
+{
+  "name": "tern-phaser",
+  "license": "MIT",
+  "version": "0.4.0",
+  "main": "phaser.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding support for phaser.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-phaser.git"
+  },
+  "scripts": {
+    "publish": "node ./scripts/git-tag.js",
+    "test": "node ./test/all.js"
+  },
+  "dependencies": {
+    "tern": "^0.15.0",
+    "tern-lint": "^0.5.0"
+  },
+  "devDependencies": {
+  	"test": ">=0.0.5",
+  	"codemirror": "^5.6.0",
+  	"codemirror-extension": "^0.1.0",
+  	"codemirror-javascript": "^0.1.0"
+  },
+  "keywords": [
+    "tern",
+    "phaser"
+  ]
+}
