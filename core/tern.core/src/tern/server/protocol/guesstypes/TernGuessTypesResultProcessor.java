@@ -37,17 +37,19 @@ public class TernGuessTypesResultProcessor implements ITernResultProcessor<ITern
 		if (args != null) {
 			Iterable<Object> namesForArg;
 			String[] argTypes = null;
+			String argType = null;
 			int argIndex = 0;
 			for (Object arg : args) {
 				// argument can have multiple types separated with '|'.
 				argTypes = objectHelper.getText(arg).split("[|]");
 				for (int i = 0; i < argTypes.length; i++) {
-					namesForArg = objectHelper.getList(jsonObject, argTypes[i]);
+					argType= argTypes[i];
+					namesForArg = objectHelper.getList(jsonObject, argType);
 					for (Object argValue : namesForArg) {
 						if (objectHelper.isString(argValue)) {
 							collector.addProposal(argIndex,
 									new TernCompletionProposalRec(objectHelper.getText(argValue),
-											objectHelper.getText(argValue), null, null, null, null, 0, 0, false, false),
+											objectHelper.getText(argValue), argType, null, null, null, 0, 0, false, false),
 									argValue, objectHelper);
 						} else {
 							addProposal(argIndex, objectHelper, argValue, collector);

@@ -49,7 +49,7 @@ public class Arguments extends ArrayList<Arg>implements ITernGuessTypesCollector
 
 	@Override
 	public void addProposal(int paramIndex, TernCompletionProposalRec proposal, Object completion,
-			IJSONObjectHelper jsonManager) {
+			IJSONObjectHelper helper) {
 		Arg arg = parameters.get(paramIndex);
 		if (arg != null) {
 			TernCompletionItem item = new TernCompletionItem(proposal);
