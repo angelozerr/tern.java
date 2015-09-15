@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -18,7 +18,35 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class UnZip {
+/**
+ * Zip Utilities.
+ *
+ */
+public class ZipUtils {
+
+	private static final String ZIP_EXTENSION = ".zip";
+	private static final String JAR_EXTENSION = ".jar";
+	private static final String BIN_FOLDER = "/bin";
+
+	/**
+	 * Returns true if the given file is a zip file and false otherwise.
+	 * 
+	 * @param file
+	 * @return true if the given file is a zip file and false otherwise.
+	 */
+	public static boolean isZipFile(File file) {
+		return file.isFile() && file.getName().endsWith(ZIP_EXTENSION);
+	}
+
+	/**
+	 * Returns true if the given file is a jar file and false otherwise.
+	 * 
+	 * @param file
+	 * @return true if the given file is a jar file and false otherwise.
+	 */
+	public static boolean isJarFile(File file) {
+		return file.isFile() && file.getName().endsWith(JAR_EXTENSION);
+	}
 
 	/**
 	 * Extract zip file to destination folder.
@@ -26,7 +54,7 @@ public class UnZip {
 	 * @param file
 	 *            zip file to extract
 	 * @param destination
-	 *            destinatin folder
+	 *            destination folder
 	 */
 	public static void extract(File file, File destination) throws IOException {
 		ZipInputStream in = null;
@@ -46,6 +74,12 @@ public class UnZip {
 				if (entry.isDirectory()) {
 					extracted.mkdirs();
 				} else {
+					// Be sure that parent file exists
+					File baseDir = extracted.getParentFile();
+					if (!baseDir.exists()) {
+						baseDir.mkdirs();
+					}
+					
 					out = new FileOutputStream(extracted);
 
 					// Transfer bytes from the ZIP file to the output file
@@ -58,7 +92,7 @@ public class UnZip {
 
 					// Close the stream
 					out.close();
-					if (extracted.getParent().contains("/bin")) {
+					if (extracted.getParent().contains(BIN_FOLDER)) {
 						extracted.setExecutable(true);
 					}
 				}

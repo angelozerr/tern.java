@@ -24,6 +24,8 @@
 		schema="schema/ternProjectLifecycleListeners.exsd" />		
 	<extension-point id="ternServerTypes" name="%ternServerTypes.name"
 		schema="schema/ternServerTypes.exsd" />								
+	<extension-point id="ternModuleInstalls" name="%ternModuleInstalls.name"
+		schema="schema/ternModuleInstalls.exsd" />								
 	
 	<!-- Preferences initialization -->
 	<extension

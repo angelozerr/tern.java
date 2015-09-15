@@ -24,6 +24,7 @@ import org.osgi.framework.BundleContext;
 
 import tern.TernResourcesManager;
 import tern.eclipse.ide.internal.core.TernFileConfigurationManager;
+import tern.eclipse.ide.internal.core.TernModuleInstallManager;
 import tern.eclipse.ide.internal.core.TernNatureAdaptersManager;
 import tern.eclipse.ide.internal.core.TernProjectLifecycleManager;
 import tern.eclipse.ide.internal.core.TernRepositoryManager;
@@ -62,7 +63,8 @@ public class TernCorePlugin extends Plugin {
 		IDETernProjectSynchronizer.getInstance().initialize();
 		TernModuleMetadataManager.getInstance().init(getTernCoreBaseDir());
 		TernFileConfigurationManager.getManager().initialize();
-
+		TernModuleInstallManager.getManager().initialize();
+		
 		// set up resource management for IDE
 		InternalTernResourcesManager resMan = InternalTernResourcesManager
 				.getInstance();
@@ -90,7 +92,8 @@ public class TernCorePlugin extends Plugin {
 		TernNatureAdaptersManager.getManager().destroy();
 		TernFileConfigurationManager.getManager().destroy();
 		IDETernProjectSynchronizer.getInstance().dispose();
-
+		TernModuleInstallManager.getManager().destroy();
+		
 		plugin = null;
 		super.stop(context);
 	}

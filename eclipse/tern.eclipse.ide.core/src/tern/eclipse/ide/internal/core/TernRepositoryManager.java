@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -76,13 +76,36 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	/**
 	 * Load tern repositories.
 	 */
-	private void loadRepositories() {
-		synchronized (repositories) {
-			repositories.clear();
-			// default repositories
-			loadDefaultRepositories();
-			// custom repositories
-			loadCustomRepositories();
+	private synchronized void loadRepositories() {
+		if (repositories.size() > 0) {
+			// already loaded.
+			return;
+		}
+		repositories.clear();
+		// default repositories
+		loadDefaultRepositories();
+		// custom repositories
+		loadCustomRepositories();
+		// install external modules
+		installExternalModules();
+	}
+
+	/**
+	 * Deploy module contributions declared with extension point
+	 * "tern.eclipse.ide.core.ternModuleContributions" in each tern
+	 * repositories.
+	 */
+	private void installExternalModules() {
+		TernModuleInstall[] modules = TernModuleInstallManager.getManager().getTernModuleInstalls();
+		for (TernModuleInstall module : modules) {
+			Collection<ITernRepository> reps = repositories.values();
+			for (ITernRepository repository : reps) {
+				try {
+					repository.install(module.getSrc());
+				} catch (Throwable e) {
+					Trace.trace(Trace.SEVERE, "Cannot install module" + module.getName(), e);
+				}
+			}
 		}
 	}
 
@@ -97,9 +120,8 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	 * Load custom tern repositories.
 	 */
 	private void loadCustomRepositories() {
-		String values = new InstanceScope().getNode(
-				TernCorePlugin.getDefault().getBundle().getSymbolicName()).get(
-				TernCorePreferenceConstants.REPOSITORIES, null);
+		String values = new InstanceScope().getNode(TernCorePlugin.getDefault().getBundle().getSymbolicName())
+				.get(TernCorePreferenceConstants.REPOSITORIES, null);
 		if (!StringUtils.isEmpty(values)) {
 			String[] s = values.split(REPOSITORY_SEPARATOR);
 			String name = null;
@@ -119,23 +141,19 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		try {
 			DEFAULT_REPOSITORY = createDefaultRepository();
 		} catch (Throwable e) {
-			Trace.trace(Trace.SEVERE,
-					"Cannot load the default tern repository.", e);
+			Trace.trace(Trace.SEVERE, "Cannot load the default tern repository.", e);
 		}
 		return DEFAULT_REPOSITORY;
 	}
 
-	private synchronized TernRepository createDefaultRepository()
-			throws TernException, IOException {
+	private synchronized TernRepository createDefaultRepository() throws TernException, IOException {
 		if (DEFAULT_REPOSITORY != null) {
 			return DEFAULT_REPOSITORY;
 		}
-		return new TernRepository(DEFAULT_REPOSITORY_NAME,
-				TernCorePlugin.getTernBaseDir(), true);
+		return new TernRepository(DEFAULT_REPOSITORY_NAME, TernCorePlugin.getTernBaseDir(), true);
 	}
 
-	private void addRepository(TernRepository repository,
-			Map<String, ITernRepository> repositories) {
+	private void addRepository(TernRepository repository, Map<String, ITernRepository> repositories) {
 		if (repository != null) {
 			repositories.put(repository.getName(), repository);
 		}
@@ -148,15 +166,13 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	}
 
 	private ITernRepository getRepository(IIDETernProject ternProject) {
-		return getRepository(ternProject != null ? ternProject.getProject()
-				: null);
+		return getRepository(ternProject != null ? ternProject.getProject() : null);
 	}
 
 	@Override
 	public ITernRepository getRepository(IProject project) {
 		loadRepositoriesIfNeeded();
-		String name = TernCorePreferencesSupport.getInstance()
-				.getUsedTernRepositoryName(project);
+		String name = TernCorePreferencesSupport.getInstance().getUsedTernRepositoryName(project);
 		if (!StringUtils.isEmpty(name)) {
 			ITernRepository repository = getRepository(name);
 			if (repository != null) {
@@ -179,15 +195,13 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 				value.append(repository.getTernBaseDirAsString());
 			}
 		}
-		new InstanceScope().getNode(
-				TernCorePlugin.getDefault().getBundle().getSymbolicName()).put(
-				TernCorePreferenceConstants.REPOSITORIES, value.toString());
+		new InstanceScope().getNode(TernCorePlugin.getDefault().getBundle().getSymbolicName())
+				.put(TernCorePreferenceConstants.REPOSITORIES, value.toString());
 		loadRepositories();
 	}
 
 	@Override
-	public List<ITernModule> getCheckedModules(IIDETernProject ternProject,
-			List<ITernModule> allModules) {
+	public List<ITernModule> getCheckedModules(IIDETernProject ternProject, List<ITernModule> allModules) {
 		List<ITernModule> checkedModules = new ArrayList<ITernModule>();
 		// Tern Plugins
 		JsonValue options = null;
@@ -208,8 +222,8 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	}
 
 	@Override
-	public List<ITernModule> getCheckedModules(String[] moduleNames,
-			List<ITernModule> allModules, List<ITernModule> groupedModules) {
+	public List<ITernModule> getCheckedModules(String[] moduleNames, List<ITernModule> allModules,
+			List<ITernModule> groupedModules) {
 		List<ITernModule> checkedModules = new ArrayList<ITernModule>();
 		for (String name : moduleNames) {
 			ITernModule module = findTernModule(name, allModules);
@@ -226,18 +240,16 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	 * @param allModules
 	 * @param checkedModules
 	 */
-	private void updateCheckedModule(ITernModule module, JsonValue options,
-			List<ITernModule> allModules, List<ITernModule> checkedModules) {
+	private void updateCheckedModule(ITernModule module, JsonValue options, List<ITernModule> allModules,
+			List<ITernModule> checkedModules) {
 		if (module != null) {
 			if (!TernModuleHelper.isConfigurableModule(module)) {
 				addModule(module, checkedModules);
 			} else {
 				try {
-					addModule(TernModuleHelper.findConfigurable(module,
-							options, allModules), checkedModules);
+					addModule(TernModuleHelper.findConfigurable(module, options, allModules), checkedModules);
 				} catch (TernException e) {
-					Trace.trace(Trace.SEVERE,
-							"Error while finding configurable module.", e);
+					Trace.trace(Trace.SEVERE, "Error while finding configurable module.", e);
 				}
 			}
 		}
@@ -263,8 +275,7 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		return null;
 	}
 
-	private ITernModule findTernModule(String name,
-			List<ITernModule> projectModules) {
+	private ITernModule findTernModule(String name, List<ITernModule> projectModules) {
 		if (projectModules != null) {
 			for (ITernModule module : projectModules) {
 				if (module.getName().equals(name)) {
@@ -276,8 +287,7 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	}
 
 	@Override
-	public ITernModule[] getTernModules(String moduleNames,
-			IDETernProject ternProject) {
+	public ITernModule[] getTernModules(String moduleNames, IDETernProject ternProject) {
 		ITernModule module = null;
 		List<ITernModule> modules = new ArrayList<ITernModule>();
 		String[] names = moduleNames.split(",");

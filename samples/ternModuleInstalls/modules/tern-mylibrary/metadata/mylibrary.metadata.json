@@ -1,0 +1,20 @@
+{
+ "name": "mylibrary",
+ "label": "mylibrary",
+ "icon": "mylibrary.png",
+ "homepage": "http://mylibrary/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add My Library support",
+ "dependencies": [
+  "browser"
+  ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-mylibrary.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-mylibrary/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/mylibrary-support"
+ }

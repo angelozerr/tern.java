@@ -1,0 +1,12 @@
+{
+  "name": "tern-mylibrary",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "mylibrary.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A sample tern plugin for My Library.",
+  "dependencies": {
+    "tern": "^0.15.0",
+    "acorn": "^2.4.0"
+  }
+}

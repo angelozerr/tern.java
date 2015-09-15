@@ -13,7 +13,7 @@ package tern.server.nodejs.process;
 import java.io.File;
 import java.io.IOException;
 
-import tern.utils.UnZip;
+import tern.utils.ZipUtils;
 
 public class PathHelper {
 
@@ -76,7 +76,7 @@ public class PathHelper {
 			
 			File zipFile = new File(folderName+".zip");
 			try {
-				UnZip.extract(zipFile,zipFile.getParentFile());
+				ZipUtils.extract(zipFile,zipFile.getParentFile());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

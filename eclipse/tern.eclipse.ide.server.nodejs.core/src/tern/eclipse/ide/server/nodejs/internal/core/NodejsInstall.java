@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
 
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
-import tern.utils.UnZip;
+import tern.utils.ZipUtils;
 
 public class NodejsInstall implements INodejsInstall {
 
@@ -53,7 +53,7 @@ public class NodejsInstall implements INodejsInstall {
 
 				if (zipFile.exists()) {
 					if (zipFile.getName().toLowerCase().endsWith(".zip")) {
-						UnZip.extract(zipFile, baseDir);
+						ZipUtils.extract(zipFile, baseDir);
 					}
 
 					if(this.path.exists()) {

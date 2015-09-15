@@ -11,6 +11,7 @@
 package tern.repository;
 
 import java.io.File;
+import java.io.IOException;
 
 import tern.TernException;
 import tern.server.ITernModule;
@@ -111,4 +112,15 @@ public interface ITernRepository {
 	 * @return the list fo tern plugin which are linter.
 	 */
 	ITernPlugin[] getLinters();
+
+	/**
+	 * Install the given module file to the repository.
+	 * 
+	 * @param moduleFile
+	 *            module file which is a zip/jar or folder which contains tern
+	 *            module.
+	 * @throws IOException
+	 * @throws TernException
+	 */
+	void install(File moduleFile) throws IOException, TernException;
 }
