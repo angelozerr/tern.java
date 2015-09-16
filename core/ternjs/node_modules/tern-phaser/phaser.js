@@ -11917,6 +11917,174 @@
     }
    }
   },
+  "VERSION": {
+   "!type": "string",
+   "!doc": "The Phaser version number."
+  },
+  "GAMES": {
+   "!type": "+array",
+   "!doc": "An array of Phaser game instances."
+  },
+  "AUTO": {
+   "!type": "number",
+   "!doc": "AUTO renderer - picks between WebGL or Canvas based on device."
+  },
+  "CANVAS": {
+   "!type": "number",
+   "!doc": "Canvas Renderer."
+  },
+  "WEBGL": {
+   "!type": "number",
+   "!doc": "WebGL Renderer."
+  },
+  "HEADLESS": {
+   "!type": "number",
+   "!doc": "Headless renderer (not visual output)"
+  },
+  "NONE": {
+   "!type": "number",
+   "!doc": "Direction constant."
+  },
+  "LEFT": {
+   "!type": "number",
+   "!doc": "Direction constant."
+  },
+  "RIGHT": {
+   "!type": "number",
+   "!doc": "Direction constant."
+  },
+  "UP": {
+   "!type": "number",
+   "!doc": "Direction constant."
+  },
+  "DOWN": {
+   "!type": "number",
+   "!doc": "Direction constant."
+  },
+  "SPRITE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "BUTTON": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "IMAGE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "GRAPHICS": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "TEXT": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "TILESPRITE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "BITMAPTEXT": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "GROUP": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "RENDERTEXTURE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "TILEMAP": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "TILEMAPLAYER": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "EMITTER": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "POLYGON": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "BITMAPDATA": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "CANVAS_FILTER": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "WEBGL_FILTER": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "ELLIPSE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "SPRITEBATCH": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "RETROFONT": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "POINTER": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "ROPE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "CIRCLE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "RECTANGLE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "LINE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "MATRIX": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "POINT": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "ROUNDEDRECTANGLE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "CREATURE": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "VIDEO": {
+   "!type": "number",
+   "!doc": "Game Object type."
+  },
+  "blendModes": {
+   "!type": "?",
+   "!doc": "Various blend modes supported by Pixi.\n\nIMPORTANT: The WebGL renderer only supports the NORMAL, ADD, MULTIPLY and SCREEN blend modes."
+  },
+  "scaleModes": {
+   "!type": "?",
+   "!doc": "The scale modes that are supported by Pixi.\n\nThe DEFAULT scale mode affects the default scaling mode of future operations.\nIt can be re-assigned to either LINEAR or NEAREST, depending upon suitability."
+  },
   "Physics": {
    "Arcade": {
     "Body": {
