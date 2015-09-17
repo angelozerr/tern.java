@@ -1266,6 +1266,7 @@
      "!doc": "The previous position of the pointer (we don't update the uniform if the same)"
     },
     "uniforms": {
+     "!type": "?",
      "!doc": "Default uniform mappings. Compatible with ShaderToy and GLSLSandbox."
     },
     "fragmentSrc": {
@@ -1373,6 +1374,7 @@
      "!doc": "A reference to the FlexGrid that owns this layer."
     },
     "persist": {
+     "!type": "bool",
      "!doc": "Should the FlexLayer remain through a State swap?"
     },
     "position": {
@@ -1438,7 +1440,9 @@
     "pendingDestroy": {
      "!type": "bool"
     },
-    "classType": {},
+    "classType": {
+     "!type": "?"
+    },
     "cursor": {
      "!type": "+DisplayObject"
     },
@@ -1738,7 +1742,9 @@
     "alpha": {
      "!type": "number"
     },
-    "children": {}
+    "children": {
+     "!type": "[?]"
+    }
    }
   },
   "Game": {
@@ -1750,9 +1756,11 @@
      "!doc": "Phaser Game ID (for when Pixi supports multiple instances)."
     },
     "config": {
+     "!type": "?",
      "!doc": "The Phaser.Game configuration object."
     },
     "physicsConfig": {
+     "!type": "?",
      "!doc": "The Phaser.Physics.World configuration object."
     },
     "parent": {
@@ -2038,7 +2046,9 @@
     "pendingDestroy": {
      "!type": "bool"
     },
-    "classType": {},
+    "classType": {
+     "!type": "?"
+    },
     "cursor": {
      "!type": "+DisplayObject"
     },
@@ -2338,7 +2348,9 @@
     "alpha": {
      "!type": "number"
     },
-    "children": {}
+    "children": {
+     "!type": "[?]"
+    }
    },
    "RETURN_NONE": {
     "!type": "number",
@@ -2756,6 +2768,7 @@
    "!doc": "Object that represents a binding between a Signal and a listener function.\nThis is an internal constructor and shouldn't be created directly.\nInspired by Joa Ebert AS3 SignalBinding and Robert Penner's Slot classes.",
    "prototype": {
     "context": {
+     "!type": "?",
      "!doc": "Context on which listener will be executed (object that should represent the `this` variable inside listener function)."
     },
     "callCount": {
@@ -2773,7 +2786,7 @@
      "!doc": "Call listener passing arbitrary parameters.\nIf binding was added using `Signal.addOnce()` it will be automatically removed from signal dispatch queue, this method is used internally for the signal dispatch."
     },
     "detach": {
-     "!type": "fn() -> fn()|+null",
+     "!type": "fn() -> +null|fn()",
      "!doc": "Detach binding from signal.\nalias to: @see mySignal.remove(myBinding.getListener());"
     },
     "isBound": {
@@ -2999,6 +3012,7 @@
      "!doc": "A reference to the currently running game."
     },
     "states": {
+     "!type": "?",
      "!doc": "The object containing Phaser.States."
     },
     "current": {
@@ -3234,7 +3248,9 @@
     "pendingDestroy": {
      "!type": "bool"
     },
-    "classType": {},
+    "classType": {
+     "!type": "?"
+    },
     "cursor": {
      "!type": "+DisplayObject"
     },
@@ -3534,7 +3550,9 @@
     "alpha": {
      "!type": "number"
     },
-    "children": {}
+    "children": {
+     "!type": "[?]"
+    }
    }
   },
   "BitmapData": {
@@ -3945,14 +3963,18 @@
     "smoothed": {
      "!type": "bool"
     },
-    "children": {},
+    "children": {
+     "!type": "[?]"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -4185,19 +4207,33 @@
      "!type": "fn()",
      "!doc": "Automatically called by World.preUpdate."
     },
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {},
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -4465,7 +4501,9 @@
      "name": {
       "!type": "string"
      },
-     "components": {},
+     "components": {
+      "!type": "?"
+     },
      "z": {
       "!type": "number"
      },
@@ -4734,7 +4772,9 @@
      "transformCallback": {
       "!type": "fn()"
      },
-     "transformCallbackContext": {},
+     "transformCallbackContext": {
+      "!type": "?"
+     },
      "scaleMin": {
       "!type": "+Phaser.Point"
      },
@@ -4914,14 +4954,18 @@
      "!type": "bool",
      "!doc": "Should the _current_ animation loop or not?"
     },
-    "children": {},
+    "children": {
+     "!type": "[?]"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -5258,7 +5302,9 @@
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -5395,19 +5441,33 @@
      "!type": "fn()",
      "!doc": "Automatically called by World.preUpdate."
     },
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {},
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -5630,19 +5690,33 @@
      "!type": "fn() -> bool",
      "!doc": "Automatically called by World.preUpdate."
     },
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {},
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -5843,7 +5917,9 @@
     "transformCallback": {
      "!type": "fn()"
     },
-    "transformCallbackContext": {},
+    "transformCallbackContext": {
+     "!type": "?"
+    },
     "scaleMin": {
      "!type": "+Phaser.Point"
     },
@@ -6108,7 +6184,9 @@
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -6297,7 +6375,9 @@
     "transformCallback": {
      "!type": "fn()"
     },
-    "transformCallbackContext": {},
+    "transformCallbackContext": {
+     "!type": "?"
+    },
     "scaleMin": {
      "!type": "+Phaser.Point"
     },
@@ -6329,19 +6409,33 @@
      "!type": "fn() -> bool",
      "!doc": "Automatically called by World.preUpdate."
     },
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {},
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -6550,7 +6644,9 @@
     "transformCallback": {
      "!type": "fn()"
     },
-    "transformCallbackContext": {},
+    "transformCallbackContext": {
+     "!type": "?"
+    },
     "scaleMin": {
      "!type": "+Phaser.Point"
     },
@@ -6599,7 +6695,9 @@
     "pendingDestroy": {
      "!type": "bool"
     },
-    "classType": {},
+    "classType": {
+     "!type": "?"
+    },
     "cursor": {
      "!type": "+DisplayObject"
     },
@@ -6899,7 +6997,9 @@
     "alpha": {
      "!type": "number"
     },
-    "children": {}
+    "children": {
+     "!type": "[?]"
+    }
    }
   },
   "Text": {
@@ -7033,6 +7133,7 @@
      "!type": "string"
     },
     "fill": {
+     "!type": "?",
      "!doc": "A canvas fillstyle that will be used on the text eg 'red', '#00FF00'."
     },
     "align": {
@@ -7102,19 +7203,33 @@
      "!type": "number",
      "!doc": "The height of the Text. Setting this will modify the scale to achieve the value requested."
     },
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {},
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -7315,7 +7430,9 @@
     "transformCallback": {
      "!type": "fn()"
     },
-    "transformCallbackContext": {},
+    "transformCallbackContext": {
+     "!type": "?"
+    },
     "scaleMin": {
      "!type": "+Phaser.Point"
     },
@@ -7363,26 +7480,54 @@
      "!type": "fn(x: number, y: number) -> ?",
      "!doc": "Resets the TileSprite. This places the TileSprite at the given x/y world coordinates, resets the tilePosition and then\nsets alive, exists, visible and renderable all to true. Also resets the outOfBounds state.\nIf the TileSprite has a physics body that too is reset."
     },
-    "_width": {},
-    "_height": {},
-    "tileScale": {},
-    "tileScaleOffset": {},
-    "tilePosition": {},
-    "renderable": {},
-    "tint": {},
-    "textureDebug": {},
-    "blendMode": {},
-    "canvasBuffer": {},
-    "tilingTexture": {},
-    "tilePattern": {},
-    "refreshTexture": {},
+    "_width": {
+     "!type": "number"
+    },
+    "_height": {
+     "!type": "number"
+    },
+    "tileScale": {
+     "!type": "+Phaser.Point"
+    },
+    "tileScaleOffset": {
+     "!type": "+Phaser.Point"
+    },
+    "tilePosition": {
+     "!type": "+Phaser.Point"
+    },
+    "renderable": {
+     "!type": "bool"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "textureDebug": {
+     "!type": "bool"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "canvasBuffer": {
+     "!type": "+PIXI.CanvasBuffer"
+    },
+    "tilingTexture": {
+     "!type": "+PIXI.Texture"
+    },
+    "tilePattern": {
+     "!type": "+PIXI.Texture"
+    },
+    "refreshTexture": {
+     "!type": "bool"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -7810,7 +7955,7 @@
      "!doc": "Adjusts the location of the Circle object, as determined by its center coordinate, by the specified amounts."
     },
     "offsetPoint": {
-     "!type": "fn(point: +Point) -> +Circle",
+     "!type": "fn(point: +Phaser.Point) -> +Circle",
      "!doc": "Adjusts the location of the Circle object using a Point object as a parameter. This method is similar to the Circle.offset() method, except that it takes a Point object as a parameter."
     },
     "diameter": {
@@ -8647,7 +8792,7 @@
     "!doc": "Determines whether the two Rectangles are equal.\nThis method compares the x, y, width and height properties of each Rectangle."
    },
    "sameDimensions": {
-    "!type": "fn(a: Rectangle, b: Rectangle) -> bool",
+    "!type": "fn(a: +Rectangle, b: +Rectangle) -> bool",
     "!doc": "Determines if the two objects (either Rectangles or Rectangle-like) have the same width and height values under strict equality."
    },
    "intersection": {
@@ -8718,6 +8863,7 @@
      "!doc": "A reference to the currently running game."
     },
     "event": {
+     "!type": "?",
      "!doc": "The DOM event that caused the change in button state."
     },
     "isDown": {
@@ -8810,6 +8956,7 @@
      "!type": "bool"
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context under which the callbacks are run."
     },
     "onConnectCallback": {
@@ -9453,6 +9600,7 @@
      "!doc": "A reference to the currently running game."
     },
     "event": {
+     "!type": "?",
      "!doc": "Stores the most recent DOM event."
     },
     "isDown": {
@@ -9504,6 +9652,7 @@
      "!doc": "A callback that is called while this Key is held down. Warning: Depending on refresh rate that could be 60+ times per second."
     },
     "onHoldContext": {
+     "!type": "?",
      "!doc": "The context under which the onHoldCallback will be called."
     },
     "onUp": {
@@ -9548,12 +9697,15 @@
      "!type": "bool"
     },
     "event": {
+     "!type": "?",
      "!doc": "The most recent DOM event from keydown or keyup. This is updated every time a new key is pressed or released."
     },
     "pressEvent": {
+     "!type": "?",
      "!doc": "The most recent DOM event from keypress."
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context under which the callbacks are run."
     },
     "onDownCallback": {
@@ -9667,6 +9819,7 @@
      "!doc": "A reference to the Phaser Input Manager."
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context under which callbacks are called."
     },
     "mouseDownCallback": {
@@ -9804,6 +9957,7 @@
      "!doc": "A reference to the Phaser Input Manager."
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context under which callbacks are called (defaults to game)."
     },
     "pointerDownCallback": {
@@ -10133,6 +10287,7 @@
      "!doc": "Whether or not this particular gamepad is connected or not."
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context under which the callbacks are run."
     },
     "onConnectCallback": {
@@ -10248,6 +10403,7 @@
      "!type": "+array"
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context under which callbacks are called."
     },
     "touchStartCallback": {
@@ -10761,7 +10917,9 @@
     "hasLoaded": {
      "!type": "bool"
     },
-    "preloadSprite": {},
+    "preloadSprite": {
+     "!type": "?"
+    },
     "crossOrigin": {
      "!type": "bool|string"
     },
@@ -11227,6 +11385,7 @@
      "!doc": "The current level."
     },
     "bounds": {
+     "!type": "?",
      "!doc": "Object that contains the quadtree bounds."
     },
     "objects": {
@@ -11599,7 +11758,9 @@
       "pendingDestroy": {
        "!type": "bool"
       },
-      "classType": {},
+      "classType": {
+       "!type": "?"
+      },
       "cursor": {
        "!type": "+DisplayObject"
       },
@@ -11885,7 +12046,9 @@
       "alpha": {
        "!type": "number"
       },
-      "children": {}
+      "children": {
+       "!type": "[?]"
+      }
      }
     }
    },
@@ -11897,6 +12060,7 @@
      "!doc": "A reference to the currently running Game."
     },
     "emitters": {
+     "!type": "?",
      "!doc": "Internal emitters store."
     },
     "ID": {
@@ -12263,15 +12427,19 @@
        "!doc": "Should the Body collide with the World bounds?"
       },
       "checkCollision": {
+       "!type": "?",
        "!doc": "An object containing allowed collision."
       },
       "touching": {
+       "!type": "?",
        "!doc": "An object containing touching results."
       },
       "wasTouching": {
+       "!type": "?",
        "!doc": "An object containing previous touching results."
       },
       "blocked": {
+       "!type": "?",
        "!doc": "An object containing on which faces this Body is blocked from moving, if any."
       },
       "tilePadding": {
@@ -12401,6 +12569,7 @@
       "!doc": "The bounds inside of which the physics world exists. Defaults to match the world bounds."
      },
      "checkCollision": {
+      "!type": "?",
       "!doc": "An object containing allowed collision flags."
      },
      "maxObjects": {
@@ -12623,6 +12792,7 @@
        "!doc": "The velocity of this object."
       },
       "aabbTileProjections": {
+       "!type": "?",
        "!doc": "All of the collision response handlers."
       },
       "integrate": {
@@ -12732,6 +12902,7 @@
        "!doc": "The Circle object this body is using for collision."
       },
       "shape": {
+       "!type": "?",
        "!doc": "A local reference to the body shape."
       },
       "drag": {
@@ -12767,12 +12938,15 @@
        "!doc": "Should the Body collide with the World bounds?"
       },
       "checkCollision": {
+       "!type": "?",
        "!doc": "An object containing allowed collision."
       },
       "touching": {
+       "!type": "?",
        "!doc": "An object containing touching results."
       },
       "wasTouching": {
+       "!type": "?",
        "!doc": "An object containing previous touching results."
       },
       "maxSpeed": {
@@ -12898,6 +13072,7 @@
        "!doc": "The velocity of this object."
       },
       "circleTileProjections": {
+       "!type": "?",
        "!doc": "All of the collision response handlers."
       },
       "integrate": {
@@ -13521,9 +13696,15 @@
        "!doc": "Should the Body collide with the World bounds?"
       }
      },
-     "DYNAMIC": {},
-     "STATIC": {},
-     "KINEMATIC": {}
+     "DYNAMIC": {
+      "!type": "number"
+     },
+     "STATIC": {
+      "!type": "number"
+     },
+     "KINEMATIC": {
+      "!type": "number"
+     }
     },
     "BodyDebug": {
      "!type": "fn(game: +Phaser.Game, body: +Phaser.Physics.P2.Body, settings: ?)",
@@ -13577,7 +13758,9 @@
       "pendingDestroy": {
        "!type": "bool"
       },
-      "classType": {},
+      "classType": {
+       "!type": "?"
+      },
       "cursor": {
        "!type": "+DisplayObject"
       },
@@ -13877,7 +14060,9 @@
       "alpha": {
        "!type": "number"
       },
-      "children": {}
+      "children": {
+       "!type": "[?]"
+      }
      }
     },
     "CollisionGroup": {
@@ -14103,6 +14288,7 @@
       "!doc": "Local reference to game."
      },
      "config": {
+      "!type": "?",
       "!doc": "The p2 World configuration object."
      },
      "world": {
@@ -14130,6 +14316,7 @@
       "!doc": "The gravity applied to all bodies each step."
      },
      "walls": {
+      "!type": "?",
       "!doc": "An object containing the 4 wall bodies that bound the physics world."
      },
      "onBodyAdded": {
@@ -14161,6 +14348,7 @@
       "!doc": "A postBroadphase callback."
      },
      "callbackContext": {
+      "!type": "?",
       "!doc": "The context under which the callbacks are fired."
      },
      "onBeginContact": {
@@ -14452,6 +14640,7 @@
      "!doc": "Local reference to game."
     },
     "config": {
+     "!type": "?",
      "!doc": "The physics configuration object as passed to the game on creation."
     },
     "arcade": {
@@ -14562,14 +14751,18 @@
     "key": {
      "!type": "string"
     },
-    "config": {},
+    "config": {
+     "!type": "?"
+    },
     "autoplayKey": {
      "!type": "string"
     },
     "autoplay": {
      "!type": "bool"
     },
-    "sounds": {},
+    "sounds": {
+     "!type": "?"
+    },
     "play": {
      "!type": "fn(marker: string, volume: number) -> +Phaser.Sound",
      "!doc": "Play a sound with the given name."
@@ -14608,6 +14801,7 @@
      "!doc": "Gets or sets the volume of this sound, a value between 0 and 1."
     },
     "markers": {
+     "!type": "?",
      "!doc": "The sound markers."
     },
     "context": {
@@ -14691,12 +14885,15 @@
      "!doc": "true if the sound is being played via the Audio tag."
     },
     "externalNode": {
+     "!type": "?",
      "!doc": "If defined this Sound won't connect to the SoundManager master gain node, but will instead connect to externalNode."
     },
     "masterGainNode": {
+     "!type": "?",
      "!doc": "The master gain node in a Web Audio system."
     },
     "gainNode": {
+     "!type": "?",
      "!doc": "The gain node in a Web Audio system."
     },
     "onDecoded": {
@@ -15349,6 +15546,7 @@
     }
    },
    "onInitialized": {
+    "!type": "+Phaser.Signal",
     "!doc": "This signal is dispatched after device initialization occurs but before any of the ready\ncallbacks (see {@link Phaser.Device.whenReady whenReady}) have been invoked.\n\nLocal \"patching\" for a particular device can/should be done in this event.\n\n_Note_: This signal is removed after the device has been readied; if a handler has not been\nadded _before_ `new Phaser.Game(..)` it is probably too late."
    },
    "whenReady": {
@@ -15508,7 +15706,9 @@
     "imageSpacing": {
      "!type": "number"
     },
-    "properties": {},
+    "properties": {
+     "!type": "?"
+    },
     "images": {
      "!type": "+array"
     },
@@ -15530,6 +15730,7 @@
    "!doc": "A Tile is a representation of a single tile within the Tilemap.",
    "prototype": {
     "layer": {
+     "!type": "?",
      "!doc": "The layer in the Tilemap data that this tile belongs to."
     },
     "index": {
@@ -15581,6 +15782,7 @@
      "!doc": "The alpha value at which this tile is drawn to the canvas."
     },
     "properties": {
+     "!type": "?",
      "!doc": "Tile specific properties."
     },
     "scanned": {
@@ -15624,6 +15826,7 @@
      "!doc": "Tile collision callback."
     },
     "collisionCallbackContext": {
+     "!type": "?",
      "!doc": "The context in which the collision callback will be called."
     },
     "containsPoint": {
@@ -15725,6 +15928,7 @@
      "!doc": "The version of the map data (as specified in Tiled, usually 1)."
     },
     "properties": {
+     "!type": "?",
      "!doc": "Map specific properties as specified in Tiled."
     },
     "widthInPixels": {
@@ -15989,7 +16193,9 @@
     "index": {
      "!type": "number"
     },
-    "layer": {},
+    "layer": {
+     "!type": "?"
+    },
     "canvas": {
      "!type": "+HTMLCanvasElement"
     },
@@ -16083,19 +16289,33 @@
      "!type": "fn()",
      "!doc": "Renders the tiles to the layer canvas and pushes to the display."
     },
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {},
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    },
     "game": {
      "!type": "+Phaser.Game"
     },
     "name": {
      "!type": "string"
     },
-    "components": {},
+    "components": {
+     "!type": "?"
+    },
     "z": {
      "!type": "number"
     },
@@ -16290,7 +16510,9 @@
     "transformCallback": {
      "!type": "fn()"
     },
-    "transformCallbackContext": {},
+    "transformCallbackContext": {
+     "!type": "?"
+    },
     "scaleMin": {
      "!type": "+Phaser.Point"
     },
@@ -16352,8 +16574,12 @@
     "tileSpacing": {
      "!type": "number"
     },
-    "properties": {},
-    "image": {},
+    "properties": {
+     "!type": "?"
+    },
+    "image": {
+     "!type": "?"
+    },
     "rows": {
      "!type": "number"
     },
@@ -16656,6 +16882,7 @@
      "!doc": "The callback that will be called when the TimerEvent occurs."
     },
     "callbackContext": {
+     "!type": "?",
      "!doc": "The context in which the callback will be called."
     },
     "args": {
@@ -16871,6 +17098,7 @@
      "!doc": "A reference to the currently running Game."
     },
     "target": {
+     "!type": "?",
      "!doc": "The target object, such as a Phaser.Sprite or property like Phaser.Sprite.scale."
     },
     "manager": {
@@ -16919,6 +17147,7 @@
      "!doc": "The current Tween child being run."
     },
     "properties": {
+     "!type": "?",
      "!doc": "Target property cache used when building the child data values."
     },
     "chainedTween": {
@@ -16933,11 +17162,11 @@
      "!type": "bool"
     },
     "to": {
-     "!type": "fn(properties: ?, duration: number, ease: fn()|string, autoStart: bool, delay: number, repeat: number, yoyo: bool) -> +Phaser.Tween",
+     "!type": "fn(properties: ?, duration: number, ease: string|fn(), autoStart: bool, delay: number, repeat: number, yoyo: bool) -> +Phaser.Tween",
      "!doc": "Sets this tween to be a `to` tween on the properties given. A `to` tween starts at the current value and tweens to the destination value given.\nFor example a Sprite with an `x` coordinate of 100 could be tweened to `x` 200 by giving a properties object of `{ x: 200 }`.\nThe ease function allows you define the rate of change. You can pass either a function such as Phaser.Easing.Circular.Out or a string such as \"Circ\".\n\".easeIn\", \".easeOut\" and \"easeInOut\" variants are all supported for all ease types."
     },
     "from": {
-     "!type": "fn(properties: ?, duration: number, ease: fn()|string, autoStart: bool, delay: number, repeat: number, yoyo: bool) -> +Phaser.Tween",
+     "!type": "fn(properties: ?, duration: number, ease: string|fn(), autoStart: bool, delay: number, repeat: number, yoyo: bool) -> +Phaser.Tween",
      "!doc": "Sets this tween to be a `from` tween on the properties given. A `from` tween sets the target to the destination value and tweens to its current value.\nFor example a Sprite with an `x` coordinate of 100 tweened from `x` 500 would be set to `x` 500 and then tweened to `x` 100 by giving a properties object of `{ x: 500 }`.\nThe ease function allows you define the rate of change. You can pass either a function such as Phaser.Easing.Circular.Out or a string such as \"Circ\".\n\".easeIn\", \".easeOut\" and \"easeInOut\" variants are all supported for all ease types."
     },
     "start": {
@@ -16973,7 +17202,7 @@
      "!doc": "Sets the delay in milliseconds before this tween will run a yoyo (only applies if yoyo is enabled).\nThe repeatDelay is invoked as soon as you call `Tween.start`. If the tween is already running this method doesn't do anything for the current active tween.\nIf you have not yet called `Tween.to` or `Tween.from` at least once then this method will do nothing, as there are no tweens to set repeatDelay on.\nIf you have child tweens and pass -1 as the index value it sets the repeatDelay across all of them."
     },
     "easing": {
-     "!type": "fn(ease: fn()|string, index: number) -> +Phaser.Tween",
+     "!type": "fn(ease: string|fn(), index: number) -> +Phaser.Tween",
      "!doc": "Set easing function this tween will use, i.e. Phaser.Easing.Linear.None.\nThe ease function allows you define the rate of change. You can pass either a function such as Phaser.Easing.Circular.Out or a string such as \"Circ\".\n\".easeIn\", \".easeOut\" and \"easeInOut\" variants are all supported for all ease types.\nIf you have child tweens and pass -1 as the index value it sets the easing function defined here across all of them."
     },
     "interpolation": {
@@ -17083,6 +17312,7 @@
      "!doc": "The interpolation function used for the Tween."
     },
     "interpolationContext": {
+     "!type": "?",
      "!doc": "The interpolation function context used for the Tween."
     },
     "isRunning": {
@@ -17669,10 +17899,18 @@
    "!type": "fn()",
    "!doc": "A basic Linked List data structure.\n\nThis implementation _modifies_ the `prev` and `next` properties of each item added:\n- The `prev` and `next` properties must be writable and should not be used for any other purpose.\n- Items _cannot_ be added to multiple LinkedLists at the same time.\n- Only objects can be added.",
    "prototype": {
-    "next": {},
-    "prev": {},
-    "first": {},
-    "last": {},
+    "next": {
+     "!type": "?"
+    },
+    "prev": {
+     "!type": "?"
+    },
+    "first": {
+     "!type": "?"
+    },
+    "last": {
+     "!type": "?"
+    },
     "total": {
      "!type": "number"
     },
@@ -18768,19 +19006,29 @@
  },
  "<anonymous>~Polygon": {
   "prototype": {
-   "vertices": {}
+   "vertices": {
+    "!type": "[?]"
+   }
   }
  },
  "<anonymous>~AABB": {
   "prototype": {
-   "lowerBound": {},
-   "upperBound": {}
+   "lowerBound": {
+    "!type": "[?]"
+   },
+   "upperBound": {
+    "!type": "[?]"
+   }
   }
  },
  "<anonymous>~Broadphase": {
   "prototype": {
-   "result": {},
-   "world": {},
+   "result": {
+    "!type": "[?]"
+   },
+   "world": {
+    "!type": "+World"
+   },
    "boundingVolumeType": {
     "!type": "number"
    }
@@ -18794,12 +19042,24 @@
  },
  "<anonymous>~Narrowphase": {
   "prototype": {
-   "contactEquations": {},
-   "frictionEquations": {},
-   "enableFriction": {},
-   "enabledEquations": {},
-   "slipForce": {},
-   "frictionCoefficient": {},
+   "contactEquations": {
+    "!type": "[?]"
+   },
+   "frictionEquations": {
+    "!type": "[?]"
+   },
+   "enableFriction": {
+    "!type": "bool"
+   },
+   "enabledEquations": {
+    "!type": "bool"
+   },
+   "slipForce": {
+    "!type": "number"
+   },
+   "frictionCoefficient": {
+    "!type": "number"
+   },
    "surfaceVelocity": {
     "!type": "number"
    },
@@ -18809,16 +19069,24 @@
    "frictionEquationPool": {
     "!type": "+FrictionEquationPool"
    },
-   "restitution": {},
+   "restitution": {
+    "!type": "number"
+   },
    "stiffness": {
     "!type": "number"
    },
    "relaxation": {
     "!type": "number"
    },
-   "frictionStiffness": {},
-   "frictionRelaxation": {},
-   "enableFrictionReduction": {},
+   "frictionStiffness": {
+    "!type": "number"
+   },
+   "frictionRelaxation": {
+    "!type": "number"
+   },
+   "enableFrictionReduction": {
+    "!type": "bool"
+   },
    "contactSkinSize": {
     "!type": "number"
    }
@@ -18891,8 +19159,12 @@
  },
  "<anonymous>~SAPBroadphase": {
   "prototype": {
-   "axisList": {},
-   "axisIndex": {}
+   "axisList": {
+    "!type": "[?]"
+   },
+   "axisIndex": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~Constraint": {
@@ -18900,10 +19172,18 @@
    "type": {
     "!type": "number"
    },
-   "equations": {},
-   "bodyA": {},
-   "bodyB": {},
-   "collideConnected": {}
+   "equations": {
+    "!type": "[?]"
+   },
+   "bodyA": {
+    "!type": "+Body"
+   },
+   "bodyB": {
+    "!type": "+Body"
+   },
+   "collideConnected": {
+    "!type": "bool"
+   }
   },
   "DISTANCE": {
    "!type": "number"
@@ -18923,9 +19203,15 @@
  },
  "<anonymous>~DistanceConstraint": {
   "prototype": {
-   "localAnchorA": {},
-   "localAnchorB": {},
-   "distance": {},
+   "localAnchorA": {
+    "!type": "[?]"
+   },
+   "localAnchorB": {
+    "!type": "[?]"
+   },
+   "distance": {
+    "!type": "number"
+   },
    "maxForce": {
     "!type": "number"
    },
@@ -18948,8 +19234,12 @@
  },
  "<anonymous>~GearConstraint": {
   "prototype": {
-   "ratio": {},
-   "angle": {}
+   "ratio": {
+    "!type": "number"
+   },
+   "angle": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~LockConstraint": {
@@ -18964,17 +19254,39 @@
  },
  "<anonymous>~PrismaticConstraint": {
   "prototype": {
-   "localAnchorA": {},
-   "localAnchorB": {},
-   "localAxisA": {},
-   "position": {},
-   "lowerLimitEnabled": {},
-   "upperLimitEnabled": {},
-   "lowerLimit": {},
-   "upperLimit": {},
-   "motorEquation": {},
-   "motorEnabled": {},
-   "motorSpeed": {}
+   "localAnchorA": {
+    "!type": "[?]"
+   },
+   "localAnchorB": {
+    "!type": "[?]"
+   },
+   "localAxisA": {
+    "!type": "[?]"
+   },
+   "position": {
+    "!type": "number"
+   },
+   "lowerLimitEnabled": {
+    "!type": "bool"
+   },
+   "upperLimitEnabled": {
+    "!type": "bool"
+   },
+   "lowerLimit": {
+    "!type": "number"
+   },
+   "upperLimit": {
+    "!type": "number"
+   },
+   "motorEquation": {
+    "!type": "+Equation"
+   },
+   "motorEnabled": {
+    "!type": "bool"
+   },
+   "motorSpeed": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~RevoluteConstraint": {
@@ -18988,37 +19300,77 @@
    "motorEnabled": {
     "!type": "bool"
    },
-   "angle": {},
-   "lowerLimitEnabled": {},
-   "upperLimitEnabled": {},
-   "lowerLimit": {},
-   "upperLimit": {}
+   "angle": {
+    "!type": "number"
+   },
+   "lowerLimitEnabled": {
+    "!type": "bool"
+   },
+   "upperLimitEnabled": {
+    "!type": "bool"
+   },
+   "lowerLimit": {
+    "!type": "bool"
+   },
+   "upperLimit": {
+    "!type": "bool"
+   }
   }
  },
  "<anonymous>~ContactEquation": {
   "prototype": {
-   "contactPointA": {},
-   "contactPointB": {},
-   "normalA": {},
-   "restitution": {},
-   "firstImpact": {},
-   "shapeA": {},
-   "shapeB": {}
+   "contactPointA": {
+    "!type": "[?]"
+   },
+   "contactPointB": {
+    "!type": "[?]"
+   },
+   "normalA": {
+    "!type": "[?]"
+   },
+   "restitution": {
+    "!type": "number"
+   },
+   "firstImpact": {
+    "!type": "bool"
+   },
+   "shapeA": {
+    "!type": "+Shape"
+   },
+   "shapeB": {
+    "!type": "+Shape"
+   }
   }
  },
  "<anonymous>~Equation": {
   "prototype": {
-   "minForce": {},
-   "maxForce": {},
-   "bodyA": {},
-   "bodyB": {},
-   "stiffness": {},
-   "relaxation": {},
-   "G": {},
+   "minForce": {
+    "!type": "number"
+   },
+   "maxForce": {
+    "!type": "number"
+   },
+   "bodyA": {
+    "!type": "+Body"
+   },
+   "bodyB": {
+    "!type": "+Body"
+   },
+   "stiffness": {
+    "!type": "number"
+   },
+   "relaxation": {
+    "!type": "number"
+   },
+   "G": {
+    "!type": "[?]"
+   },
    "needsUpdate": {
     "!type": "bool"
    },
-   "multiplier": {},
+   "multiplier": {
+    "!type": "number"
+   },
    "relativeVelocity": {
     "!type": "number"
    },
@@ -19035,13 +19387,27 @@
  },
  "<anonymous>~FrictionEquation": {
   "prototype": {
-   "contactPointA": {},
-   "contactPointB": {},
-   "t": {},
-   "contactEquations": {},
-   "shapeA": {},
-   "shapeB": {},
-   "frictionCoefficient": {}
+   "contactPointA": {
+    "!type": "[?]"
+   },
+   "contactPointB": {
+    "!type": "[?]"
+   },
+   "t": {
+    "!type": "[?]"
+   },
+   "contactEquations": {
+    "!type": "+ContactEquation"
+   },
+   "shapeA": {
+    "!type": "+Shape"
+   },
+   "shapeB": {
+    "!type": "+Shape"
+   },
+   "frictionCoefficient": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~RotationalLockEquation": {
@@ -19053,64 +19419,146 @@
  },
  "<anonymous>~ContactMaterial": {
   "prototype": {
-   "id": {},
-   "materialA": {},
-   "materialB": {},
-   "friction": {},
-   "restitution": {},
-   "stiffness": {},
-   "relaxation": {},
-   "frictionStiffness": {},
-   "frictionRelaxation": {},
+   "id": {
+    "!type": "number"
+   },
+   "materialA": {
+    "!type": "+Material"
+   },
+   "materialB": {
+    "!type": "+Material"
+   },
+   "friction": {
+    "!type": "number"
+   },
+   "restitution": {
+    "!type": "number"
+   },
+   "stiffness": {
+    "!type": "number"
+   },
+   "relaxation": {
+    "!type": "number"
+   },
+   "frictionStiffness": {
+    "!type": "number"
+   },
+   "frictionRelaxation": {
+    "!type": "number"
+   },
    "surfaceVelocity": {
     "!type": "number"
    },
-   "contactSkinSize": {}
+   "contactSkinSize": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~Material": {
   "prototype": {
-   "id": {}
+   "id": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~Body": {
   "prototype": {
-   "id": {},
-   "world": {},
-   "shapes": {},
-   "mass": {},
-   "invMass": {},
-   "inertia": {},
-   "invInertia": {},
-   "fixedRotation": {},
+   "id": {
+    "!type": "number"
+   },
+   "world": {
+    "!type": "+World"
+   },
+   "shapes": {
+    "!type": "[?]"
+   },
+   "mass": {
+    "!type": "number"
+   },
+   "invMass": {
+    "!type": "number"
+   },
+   "inertia": {
+    "!type": "number"
+   },
+   "invInertia": {
+    "!type": "number"
+   },
+   "fixedRotation": {
+    "!type": "bool"
+   },
    "fixedX": {
     "!type": "bool"
    },
    "fixedY": {
     "!type": "bool"
    },
-   "position": {},
-   "interpolatedPosition": {},
-   "interpolatedAngle": {},
-   "previousPosition": {},
-   "previousAngle": {},
-   "velocity": {},
-   "vlambda": {},
-   "wlambda": {},
-   "angle": {},
-   "angularVelocity": {},
-   "force": {},
-   "angularForce": {},
-   "damping": {},
-   "angularDamping": {},
-   "type": {},
-   "boundingRadius": {},
-   "aabb": {},
-   "aabbNeedsUpdate": {},
-   "allowSleep": {},
-   "sleepState": {},
-   "sleepSpeedLimit": {},
-   "sleepTimeLimit": {},
+   "position": {
+    "!type": "[?]"
+   },
+   "interpolatedPosition": {
+    "!type": "[?]"
+   },
+   "interpolatedAngle": {
+    "!type": "number"
+   },
+   "previousPosition": {
+    "!type": "[?]"
+   },
+   "previousAngle": {
+    "!type": "number"
+   },
+   "velocity": {
+    "!type": "[?]"
+   },
+   "vlambda": {
+    "!type": "[?]"
+   },
+   "wlambda": {
+    "!type": "[?]"
+   },
+   "angle": {
+    "!type": "number"
+   },
+   "angularVelocity": {
+    "!type": "number"
+   },
+   "force": {
+    "!type": "[?]"
+   },
+   "angularForce": {
+    "!type": "number"
+   },
+   "damping": {
+    "!type": "number"
+   },
+   "angularDamping": {
+    "!type": "number"
+   },
+   "type": {
+    "!type": "number"
+   },
+   "boundingRadius": {
+    "!type": "number"
+   },
+   "aabb": {
+    "!type": "+AABB"
+   },
+   "aabbNeedsUpdate": {
+    "!type": "bool"
+   },
+   "allowSleep": {
+    "!type": "bool"
+   },
+   "sleepState": {
+    "!type": "number"
+   },
+   "sleepSpeedLimit": {
+    "!type": "number"
+   },
+   "sleepTimeLimit": {
+    "!type": "number"
+   },
    "gravityScale": {
     "!type": "number"
    },
@@ -19127,31 +19575,59 @@
     "!type": "number"
    }
   },
-  "DYNAMIC": {},
-  "STATIC": {},
-  "KINEMATIC": {},
-  "AWAKE": {},
-  "SLEEPY": {},
-  "SLEEPING": {}
+  "DYNAMIC": {
+   "!type": "number"
+  },
+  "STATIC": {
+   "!type": "number"
+  },
+  "KINEMATIC": {
+   "!type": "number"
+  },
+  "AWAKE": {
+   "!type": "number"
+  },
+  "SLEEPY": {
+   "!type": "number"
+  },
+  "SLEEPING": {
+   "!type": "number"
+  }
  },
  "<anonymous>~LinearSpring": {
   "prototype": {
-   "localAnchorA": {},
-   "localAnchorB": {},
-   "restLength": {}
+   "localAnchorA": {
+    "!type": "[?]"
+   },
+   "localAnchorB": {
+    "!type": "[?]"
+   },
+   "restLength": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~RotationalSpring": {
   "prototype": {
-   "restAngle": {}
+   "restAngle": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~Spring": {
   "prototype": {
-   "stiffness": {},
-   "damping": {},
-   "bodyA": {},
-   "bodyB": {}
+   "stiffness": {
+    "!type": "number"
+   },
+   "damping": {
+    "!type": "number"
+   },
+   "bodyA": {
+    "!type": "+Body"
+   },
+   "bodyB": {
+    "!type": "+Body"
+   }
   }
  },
  "<anonymous>~TopDownVehicle": {
@@ -19192,16 +19668,28 @@
  },
  "<anonymous>~Circle": {
   "prototype": {
-   "radius": {}
+   "radius": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~Convex": {
   "prototype": {
-   "vertices": {},
-   "axes": {},
-   "centerOfMass": {},
-   "triangles": {},
-   "boundingRadius": {}
+   "vertices": {
+    "!type": "[?]"
+   },
+   "axes": {
+    "!type": "[?]"
+   },
+   "centerOfMass": {
+    "!type": "[?]"
+   },
+   "triangles": {
+    "!type": "[?]"
+   },
+   "boundingRadius": {
+    "!type": "number"
+   }
   }
  },
  "<anonymous>~Heightfield": {
@@ -19241,15 +19729,27 @@
    "type": {
     "!type": "number"
    },
-   "id": {},
-   "boundingRadius": {},
-   "collisionGroup": {},
+   "id": {
+    "!type": "number"
+   },
+   "boundingRadius": {
+    "!type": "number"
+   },
+   "collisionGroup": {
+    "!type": "number"
+   },
    "collisionResponse": {
     "!type": "bool"
    },
-   "collisionMask": {},
-   "material": {},
-   "area": {},
+   "collisionMask": {
+    "!type": "number"
+   },
+   "material": {
+    "!type": "+Material"
+   },
+   "area": {
+    "!type": "number"
+   },
    "sensor": {
     "!type": "bool"
    }
@@ -19281,10 +19781,18 @@
  },
  "<anonymous>~GSSolver": {
   "prototype": {
-   "iterations": {},
-   "tolerance": {},
-   "useZeroRHS": {},
-   "frictionIterations": {},
+   "iterations": {
+    "!type": "number"
+   },
+   "tolerance": {
+    "!type": "number"
+   },
+   "useZeroRHS": {
+    "!type": "bool"
+   },
+   "frictionIterations": {
+    "!type": "number"
+   },
    "usedIterations": {
     "!type": "number"
    }
@@ -19292,8 +19800,12 @@
  },
  "<anonymous>~Solver": {
   "prototype": {
-   "equations": {},
-   "equationSortFunction": {}
+   "equations": {
+    "!type": "[?]"
+   },
+   "equationSortFunction": {
+    "!type": "bool|fn()"
+   }
   }
  },
  "<anonymous>~OverlapKeeperRecord": {
@@ -19321,7 +19833,9 @@
  },
  "<anonymous>~TupleDictionary": {
   "prototype": {
-   "data": {},
+   "data": {
+    "!type": "?"
+   },
    "keys": {
     "!type": "[?]"
    }
@@ -19329,14 +19843,22 @@
  },
  "<anonymous>~Island": {
   "prototype": {
-   "equations": {},
-   "bodies": {}
+   "equations": {
+    "!type": "[?]"
+   },
+   "bodies": {
+    "!type": "[?]"
+   }
   }
  },
  "<anonymous>~IslandManager": {
   "prototype": {
-   "nodePool": {},
-   "islandPool": {},
+   "nodePool": {
+    "!type": "+IslandNodePool"
+   },
+   "islandPool": {
+    "!type": "+IslandPool"
+   },
    "equations": {
     "!type": "[?]"
    },
@@ -19359,23 +19881,31 @@
    "equations": {
     "!type": "[?]"
    },
-   "visited": {}
+   "visited": {
+    "!type": "bool"
+   }
   }
  },
  "<anonymous>~World": {
   "prototype": {
-   "springs": {},
+   "springs": {
+    "!type": "[?]"
+   },
    "bodies": {
     "!type": "[?]"
    },
    "solver": {
     "!type": "+Solver"
    },
-   "narrowphase": {},
+   "narrowphase": {
+    "!type": "+Narrowphase"
+   },
    "islandManager": {
     "!type": "+IslandManager"
    },
-   "gravity": {},
+   "gravity": {
+    "!type": "[?]"
+   },
    "frictionGravity": {
     "!type": "number"
    },
@@ -19385,29 +19915,51 @@
    "useFrictionGravityOnZeroGravity": {
     "!type": "bool"
    },
-   "broadphase": {},
-   "constraints": {},
+   "broadphase": {
+    "!type": "+Broadphase"
+   },
+   "constraints": {
+    "!type": "[?]"
+   },
    "defaultMaterial": {
     "!type": "+Material"
    },
    "defaultContactMaterial": {
     "!type": "+ContactMaterial"
    },
-   "lastTimeStep": {},
-   "applySpringForces": {},
-   "applyDamping": {},
-   "applyGravity": {},
-   "solveConstraints": {},
-   "contactMaterials": {},
-   "time": {},
+   "lastTimeStep": {
+    "!type": "number"
+   },
+   "applySpringForces": {
+    "!type": "bool"
+   },
+   "applyDamping": {
+    "!type": "bool"
+   },
+   "applyGravity": {
+    "!type": "bool"
+   },
+   "solveConstraints": {
+    "!type": "bool"
+   },
+   "contactMaterials": {
+    "!type": "[?]"
+   },
+   "time": {
+    "!type": "number"
+   },
    "stepping": {
     "!type": "bool"
    },
    "islandSplit": {
     "!type": "bool"
    },
-   "emitImpactEvent": {},
-   "sleepMode": {},
+   "emitImpactEvent": {
+    "!type": "bool"
+   },
+   "sleepMode": {
+    "!type": "number"
+   },
    "overlapKeeper": {
     "!type": "+OverlapKeeper"
    }
@@ -19434,42 +19986,90 @@
    "!type": "fn()",
    "!doc": "The base class for all objects that are rendered on the screen.\nThis is an abstract class and should not be used on its own rather it should be extended.",
    "prototype": {
-    "position": {},
-    "scale": {},
-    "transformCallback": {},
-    "transformCallbackContext": {},
-    "pivot": {},
-    "rotation": {},
-    "alpha": {},
-    "visible": {},
-    "hitArea": {},
-    "renderable": {},
-    "parent": {},
-    "stage": {},
-    "worldAlpha": {},
-    "worldPosition": {},
-    "worldScale": {},
-    "worldRotation": {},
-    "filterArea": {}
+    "position": {
+     "!type": "+Phaser.Point"
+    },
+    "scale": {
+     "!type": "+Phaser.Point"
+    },
+    "transformCallback": {
+     "!type": "fn()"
+    },
+    "transformCallbackContext": {
+     "!type": "?"
+    },
+    "pivot": {
+     "!type": "+Phaser.Point"
+    },
+    "rotation": {
+     "!type": "number"
+    },
+    "alpha": {
+     "!type": "number"
+    },
+    "visible": {
+     "!type": "bool"
+    },
+    "hitArea": {
+     "!type": "+Rectangle|+Circle|+Ellipse|+Polygon"
+    },
+    "renderable": {
+     "!type": "bool"
+    },
+    "parent": {
+     "!type": "+DisplayObjectContainer"
+    },
+    "stage": {
+     "!type": "+Stage"
+    },
+    "worldAlpha": {
+     "!type": "number"
+    },
+    "worldPosition": {
+     "!type": "+Phaser.Point"
+    },
+    "worldScale": {
+     "!type": "+Phaser.Point"
+    },
+    "worldRotation": {
+     "!type": "number"
+    },
+    "filterArea": {
+     "!type": "+Rectangle"
+    }
    }
   },
   "DisplayObjectContainer": {
    "!type": "fn()",
    "!doc": "A DisplayObjectContainer represents a collection of display objects.\nIt is the base class of all display objects that act as a container for other objects.",
    "prototype": {
-    "children": {}
+    "children": {
+     "!type": "[?]"
+    }
    }
   },
   "Sprite": {
    "!type": "fn(texture: +Texture)",
    "!doc": "The Sprite object is the base for all textured objects that are rendered to the screen",
    "prototype": {
-    "anchor": {},
-    "texture": {},
-    "tint": {},
-    "tintedTexture": {},
-    "blendMode": {},
-    "shader": {}
+    "anchor": {
+     "!type": "+Phaser.Point"
+    },
+    "texture": {
+     "!type": "+Texture"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "tintedTexture": {
+     "!type": "+Canvas"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "shader": {
+     "!type": "+AbstractFilter"
+    }
    }
   },
   "SpriteBatch": {
@@ -19486,12 +20086,21 @@
   "Strip": {
    "!type": "fn(texture: +Texture, width: number, height: number)",
    "prototype": {
-    "texture": {},
-    "dirty": {},
-    "blendMode": {},
-    "canvasPadding": {}
+    "texture": {
+     "!type": "+Texture"
+    },
+    "dirty": {
+     "!type": "bool"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "canvasPadding": {
+     "!type": "number"
+    }
    },
    "DrawModes": {
+    "!type": "?",
     "!doc": "Different drawing buffer modes supported"
    }
   },
@@ -19499,27 +20108,57 @@
    "!type": "fn(texture: +Texture, width: number, height: number)",
    "!doc": "A tiling sprite is a fast way of rendering a tiling image",
    "prototype": {
-    "_width": {},
-    "_height": {},
-    "tileScale": {},
-    "tileScaleOffset": {},
-    "tilePosition": {},
-    "renderable": {},
-    "tint": {},
-    "textureDebug": {},
-    "blendMode": {},
-    "canvasBuffer": {},
-    "tilingTexture": {},
-    "tilePattern": {},
-    "refreshTexture": {}
+    "_width": {
+     "!type": "number"
+    },
+    "_height": {
+     "!type": "number"
+    },
+    "tileScale": {
+     "!type": "+Phaser.Point"
+    },
+    "tileScaleOffset": {
+     "!type": "+Phaser.Point"
+    },
+    "tilePosition": {
+     "!type": "+Phaser.Point"
+    },
+    "renderable": {
+     "!type": "bool"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "textureDebug": {
+     "!type": "bool"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "canvasBuffer": {
+     "!type": "+PIXI.CanvasBuffer"
+    },
+    "tilingTexture": {
+     "!type": "+PIXI.Texture"
+    },
+    "tilePattern": {
+     "!type": "+PIXI.Texture"
+    },
+    "refreshTexture": {
+     "!type": "bool"
+    }
    }
   },
   "AbstractFilter": {
    "!type": "fn(fragmentSrc: [?], uniforms: ?)",
    "!doc": "This is the base class for creating a PIXI filter. Currently only webGL supports filters.\nIf you want to make a custom filter this should be your base class.",
    "prototype": {
-    "dirty": {},
-    "padding": {}
+    "dirty": {
+     "!type": "bool"
+    },
+    "padding": {
+     "!type": "number"
+    }
    }
   },
   "GraphicsData": {
@@ -19555,22 +20194,38 @@
   "RETINA_PREFIX": {
    "!type": "string"
   },
-  "defaultRenderOptions": {},
+  "defaultRenderOptions": {
+   "!type": "?"
+  },
   "Graphics": {
    "!type": "fn()",
    "!doc": "The Graphics class contains methods used to draw primitive shapes such as lines, circles and rectangles to the display, and color and fill them.",
    "prototype": {
-    "fillAlpha": {},
-    "lineWidth": {},
-    "lineColor": {},
-    "tint": {},
-    "blendMode": {},
-    "isMask": {},
-    "boundsPadding": {}
+    "fillAlpha": {
+     "!type": "number"
+    },
+    "lineWidth": {
+     "!type": "number"
+    },
+    "lineColor": {
+     "!type": "string"
+    },
+    "tint": {
+     "!type": "number"
+    },
+    "blendMode": {
+     "!type": "number"
+    },
+    "isMask": {
+     "!type": "bool"
+    },
+    "boundsPadding": {
+     "!type": "number"
+    }
    }
   },
   "Graphics#containsPoint": {
-   "!type": "fn(point: +Point) -> bool",
+   "!type": "fn(point: +Phaser.Point) -> bool",
    "!doc": "Tests if a point is inside this graphics object"
   },
   "GraphicsData#clone": {
@@ -19581,19 +20236,45 @@
    "!type": "fn(width: number, height: number, options: ?)",
    "!doc": "The CanvasRenderer draws the Stage and all its content onto a 2d canvas. This renderer should be used for browsers that do not support webGL.\nDon't forget to add the CanvasRenderer.view to your DOM or you will not see anything :)",
    "prototype": {
-    "type": {},
-    "resolution": {},
-    "clearBeforeRender": {},
-    "transparent": {},
-    "autoResize": {},
-    "width": {},
-    "height": {},
-    "view": {},
-    "context": {},
-    "refresh": {},
-    "count": {},
-    "maskManager": {},
-    "renderSession": {}
+    "type": {
+     "!type": "number"
+    },
+    "resolution": {
+     "!type": "number"
+    },
+    "clearBeforeRender": {
+     "!type": "bool"
+    },
+    "transparent": {
+     "!type": "bool"
+    },
+    "autoResize": {
+     "!type": "bool"
+    },
+    "width": {
+     "!type": "number"
+    },
+    "height": {
+     "!type": "number"
+    },
+    "view": {
+     "!type": "+HTMLCanvasElement"
+    },
+    "context": {
+     "!type": "+CanvasRenderingContext2D"
+    },
+    "refresh": {
+     "!type": "bool"
+    },
+    "count": {
+     "!type": "number"
+    },
+    "maskManager": {
+     "!type": "+CanvasMaskManager"
+    },
+    "renderSession": {
+     "!type": "?"
+    }
    }
   },
   "CanvasRenderer#renderSession": {
@@ -19605,10 +20286,18 @@
    "!type": "fn(width: number, height: number)",
    "!doc": "Creates a Canvas element of the given size.",
    "prototype": {
-    "width": {},
-    "height": {},
-    "canvas": {},
-    "context": {}
+    "width": {
+     "!type": "number"
+    },
+    "height": {
+     "!type": "number"
+    },
+    "canvas": {
+     "!type": "+HTMLCanvasElement"
+    },
+    "context": {
+     "!type": "+CanvasRenderingContext2D"
+    }
    }
   },
   "CanvasMaskManager": {
@@ -19616,125 +20305,259 @@
    "!doc": "A set of functions used to handle masking."
   },
   "CanvasTinter": {
-   "canHandleAlpha": {},
-   "canUseMultiply": {}
+   "canHandleAlpha": {
+    "!type": "bool"
+   },
+   "canUseMultiply": {
+    "!type": "bool"
+   }
   },
   "ComplexPrimitiveShader": {
    "!type": "fn(gl: +WebGLContext)",
    "prototype": {
-    "gl": {},
-    "program": {},
-    "fragmentSrc": {},
-    "vertexSrc": {}
+    "gl": {
+     "!type": "+WebGLContext"
+    },
+    "program": {
+     "!type": "+Any"
+    },
+    "fragmentSrc": {
+     "!type": "[?]"
+    },
+    "vertexSrc": {
+     "!type": "[?]"
+    }
    }
   },
   "PixiFastShader": {
    "!type": "fn(gl: +WebGLContext)",
    "prototype": {
-    "gl": {},
-    "program": {},
-    "fragmentSrc": {},
-    "vertexSrc": {},
-    "textureCount": {}
+    "gl": {
+     "!type": "+WebGLContext"
+    },
+    "program": {
+     "!type": "+Any"
+    },
+    "fragmentSrc": {
+     "!type": "[?]"
+    },
+    "vertexSrc": {
+     "!type": "[?]"
+    },
+    "textureCount": {
+     "!type": "number"
+    }
    }
   },
   "PixiShader": {
    "!type": "fn(gl: +WebGLContext)",
    "prototype": {
-    "gl": {},
-    "program": {},
-    "fragmentSrc": {},
-    "textureCount": {},
-    "dirty": {}
+    "gl": {
+     "!type": "+WebGLContext"
+    },
+    "program": {
+     "!type": "+Any"
+    },
+    "fragmentSrc": {
+     "!type": "[?]"
+    },
+    "textureCount": {
+     "!type": "number"
+    },
+    "dirty": {
+     "!type": "bool"
+    }
    }
   },
-  "PixiShader.defaultVertexSrc": {},
+  "PixiShader.defaultVertexSrc": {
+   "!type": "string"
+  },
   "PrimitiveShader": {
    "!type": "fn(gl: +WebGLContext)",
    "prototype": {
-    "gl": {},
-    "program": {},
-    "fragmentSrc": {},
-    "vertexSrc": {}
+    "gl": {
+     "!type": "+WebGLContext"
+    },
+    "program": {
+     "!type": "+Any"
+    },
+    "fragmentSrc": {
+     "!type": "[?]"
+    },
+    "vertexSrc": {
+     "!type": "[?]"
+    }
    }
   },
   "StripShader": {
    "!type": "fn(gl: +WebGLContext)",
    "prototype": {
-    "gl": {},
-    "program": {},
-    "fragmentSrc": {},
-    "vertexSrc": {}
+    "gl": {
+     "!type": "+WebGLContext"
+    },
+    "program": {
+     "!type": "+Any"
+    },
+    "fragmentSrc": {
+     "!type": "[?]"
+    },
+    "vertexSrc": {
+     "!type": "[?]"
+    }
    }
   },
   "FilterTexture": {
    "!type": "fn(gl: +WebGLContext, width: number, height: number, scaleMode: number)",
    "prototype": {
-    "gl": {},
-    "frameBuffer": {},
-    "texture": {}
+    "gl": {
+     "!type": "+WebGLContext"
+    },
+    "frameBuffer": {
+     "!type": "+Any"
+    },
+    "texture": {
+     "!type": "+Any"
+    }
    }
   },
   "WebGLBlendModeManager": {
    "!type": "fn(gl: +WebGLContext)",
    "prototype": {
-    "currentBlendMode": {}
+    "currentBlendMode": {
+     "!type": "number"
+    }
    }
   },
   "WebGLFastSpriteBatch": {
    "!type": "fn()",
    "prototype": {
-    "vertSize": {},
-    "maxSize": {},
-    "size": {},
-    "vertices": {},
-    "indices": {},
-    "vertexBuffer": {},
-    "indexBuffer": {},
-    "lastIndexCount": {},
-    "drawing": {},
-    "currentBatchSize": {},
-    "currentBaseTexture": {},
-    "currentBlendMode": {},
-    "renderSession": {},
-    "shader": {},
-    "matrix": {}
+    "vertSize": {
+     "!type": "number"
+    },
+    "maxSize": {
+     "!type": "number"
+    },
+    "size": {
+     "!type": "number"
+    },
+    "vertices": {
+     "!type": "+Float32Array"
+    },
+    "indices": {
+     "!type": "+Uint16Array"
+    },
+    "vertexBuffer": {
+     "!type": "?"
+    },
+    "indexBuffer": {
+     "!type": "?"
+    },
+    "lastIndexCount": {
+     "!type": "number"
+    },
+    "drawing": {
+     "!type": "bool"
+    },
+    "currentBatchSize": {
+     "!type": "number"
+    },
+    "currentBaseTexture": {
+     "!type": "+BaseTexture"
+    },
+    "currentBlendMode": {
+     "!type": "number"
+    },
+    "renderSession": {
+     "!type": "?"
+    },
+    "shader": {
+     "!type": "?"
+    },
+    "matrix": {
+     "!type": "+Matrix"
+    }
    }
   },
   "WebGLFilterManager": {
    "!type": "fn()",
    "prototype": {
-    "filterStack": {},
-    "offsetX": {},
-    "offsetY": {}
+    "filterStack": {
+     "!type": "[?]"
+    },
+    "offsetX": {
+     "!type": "number"
+    },
+    "offsetY": {
+     "!type": "number"
+    }
    }
   },
   "WebGLShaderManager": {
    "prototype": {
-    "maxAttibs": {},
-    "attribState": {},
-    "tempAttribState": {},
-    "stack": {}
+    "maxAttibs": {
+     "!type": "number"
+    },
+    "attribState": {
+     "!type": "[?]"
+    },
+    "tempAttribState": {
+     "!type": "[?]"
+    },
+    "stack": {
+     "!type": "[?]"
+    }
    }
   },
   "WebGLSpriteBatch": {
    "prototype": {
-    "vertSize": {},
-    "size": {},
-    "vertices": {},
-    "positions": {},
-    "colors": {},
-    "indices": {},
-    "lastIndexCount": {},
-    "drawing": {},
-    "currentBatchSize": {},
-    "currentBaseTexture": {},
-    "dirty": {},
-    "textures": {},
-    "blendModes": {},
-    "shaders": {},
-    "sprites": {},
-    "defaultShader": {}
+    "vertSize": {
+     "!type": "number"
+    },
+    "size": {
+     "!type": "number"
+    },
+    "vertices": {
+     "!type": "[?]"
+    },
+    "positions": {
+     "!type": "+Float32Array"
+    },
+    "colors": {
+     "!type": "+Uint32Array"
+    },
+    "indices": {
+     "!type": "+Uint16Array"
+    },
+    "lastIndexCount": {
+     "!type": "number"
+    },
+    "drawing": {
+     "!type": "bool"
+    },
+    "currentBatchSize": {
+     "!type": "number"
+    },
+    "currentBaseTexture": {
+     "!type": "+BaseTexture"
+    },
+    "dirty": {
+     "!type": "bool"
+    },
+    "textures": {
+     "!type": "[?]"
+    },
+    "blendModes": {
+     "!type": "[?]"
+    },
+    "shaders": {
+     "!type": "[?]"
+    },
+    "sprites": {
+     "!type": "[?]"
+    },
+    "defaultShader": {
+     "!type": "+AbstractFilter"
+    }
    }
   },
   "glContexts": {},
@@ -19742,24 +20565,60 @@
    "!type": "fn(width: number, height: number, options: ?)",
    "!doc": "The WebGLRenderer draws the stage and all its content onto a webGL enabled canvas. This renderer\nshould be used for browsers that support webGL. This Render works by automatically managing webGLBatchs.\nSo no need for Sprite Batches or Sprite Clouds.\nDon't forget to add the view to your DOM or you will not see anything :)",
    "prototype": {
-    "type": {},
-    "resolution": {},
-    "transparent": {},
-    "autoResize": {},
-    "preserveDrawingBuffer": {},
-    "clearBeforeRender": {},
-    "width": {},
-    "height": {},
-    "view": {},
-    "projection": {},
-    "offset": {},
-    "shaderManager": {},
-    "spriteBatch": {},
-    "maskManager": {},
-    "filterManager": {},
-    "stencilManager": {},
-    "blendModeManager": {},
-    "renderSession": {}
+    "type": {
+     "!type": "number"
+    },
+    "resolution": {
+     "!type": "number"
+    },
+    "transparent": {
+     "!type": "bool"
+    },
+    "autoResize": {
+     "!type": "bool"
+    },
+    "preserveDrawingBuffer": {
+     "!type": "bool"
+    },
+    "clearBeforeRender": {
+     "!type": "bool"
+    },
+    "width": {
+     "!type": "number"
+    },
+    "height": {
+     "!type": "number"
+    },
+    "view": {
+     "!type": "+HTMLCanvasElement"
+    },
+    "projection": {
+     "!type": "+Phaser.Point"
+    },
+    "offset": {
+     "!type": "+Phaser.Point"
+    },
+    "shaderManager": {
+     "!type": "+WebGLShaderManager"
+    },
+    "spriteBatch": {
+     "!type": "+WebGLSpriteBatch"
+    },
+    "maskManager": {
+     "!type": "+WebGLMaskManager"
+    },
+    "filterManager": {
+     "!type": "+WebGLFilterManager"
+    },
+    "stencilManager": {
+     "!type": "+WebGLStencilManager"
+    },
+    "blendModeManager": {
+     "!type": "+WebGLBlendModeManager"
+    },
+    "renderSession": {
+     "!type": "?"
+    }
    }
   },
   "BaseTextureCache": {},
@@ -19767,54 +20626,113 @@
    "!type": "fn(source: string, scaleMode: number)",
    "!doc": "A texture stores the information that represents an image. All textures have a base texture.",
    "prototype": {
-    "resolution": {},
-    "width": {},
-    "height": {},
-    "scaleMode": {},
-    "hasLoaded": {},
-    "source": {},
-    "premultipliedAlpha": {},
-    "mipmap": {},
-    "imageUrl": {}
+    "resolution": {
+     "!type": "number"
+    },
+    "width": {
+     "!type": "number"
+    },
+    "height": {
+     "!type": "number"
+    },
+    "scaleMode": {
+     "!type": "number"
+    },
+    "hasLoaded": {
+     "!type": "bool"
+    },
+    "source": {
+     "!type": "+Image"
+    },
+    "premultipliedAlpha": {
+     "!type": "bool"
+    },
+    "mipmap": {
+     "!type": "bool"
+    },
+    "imageUrl": {
+     "!type": "string"
+    }
    }
   },
   "RenderTexture": {
    "!type": "fn(width: number, height: number, renderer: +CanvasRenderer|+WebGLRenderer, scaleMode: number, resolution: number)",
    "!doc": "A RenderTexture is a special texture that allows any Pixi display object to be rendered to it.\n\n__Hint__: All DisplayObjects (i.e. Sprites) that render to a RenderTexture should be preloaded otherwise black rectangles will be drawn instead.\n\nA RenderTexture takes a snapshot of any Display Object given to its render method. The position and rotation of the given Display Objects is ignored. For example:\n\n   var renderTexture = new PIXI.RenderTexture(800, 600);\n   var sprite = PIXI.Sprite.fromImage(\"spinObj_01.png\");\n   sprite.position.x = 800/2;\n   sprite.position.y = 600/2;\n   sprite.anchor.x = 0.5;\n   sprite.anchor.y = 0.5;\n   renderTexture.render(sprite);\n\nThe Sprite in this case will be rendered to a position of 0,0. To render this sprite at its actual position a DisplayObjectContainer should be used:\n\n   var doc = new PIXI.DisplayObjectContainer();\n   doc.addChild(sprite);\n   renderTexture.render(doc);  // Renders to center of renderTexture",
    "prototype": {
-    "width": {},
-    "height": {},
-    "resolution": {},
-    "frame": {},
-    "crop": {},
-    "baseTexture": {},
-    "renderer": {},
-    "valid": {}
+    "width": {
+     "!type": "number"
+    },
+    "height": {
+     "!type": "number"
+    },
+    "resolution": {
+     "!type": "number"
+    },
+    "frame": {
+     "!type": "+Rectangle"
+    },
+    "crop": {
+     "!type": "+Rectangle"
+    },
+    "baseTexture": {
+     "!type": "+BaseTexture"
+    },
+    "renderer": {
+     "!type": "+CanvasRenderer|+WebGLRenderer"
+    },
+    "valid": {
+     "!type": "bool"
+    }
    }
   },
   "TextureCache": {},
   "TextureSilentFail": {
+   "!type": "bool",
    "!doc": "TextureSilentFail is a boolean that defaults to `false`. \nIf `true` then `PIXI.Texture.setFrame` will no longer throw an error if the texture dimensions are incorrect. \nInstead `Texture.valid` will be set to `false` (#1556)"
   },
   "Texture": {
    "!type": "fn(baseTexture: +BaseTexture, frame: +Rectangle, crop: +Rectangle, trim: +Rectangle)",
    "!doc": "A texture stores the information that represents an image or part of an image. It cannot be added\nto the display list directly. Instead use it as the texture for a PIXI.Sprite. If no frame is provided then the whole image is used.",
    "prototype": {
-    "noFrame": {},
-    "baseTexture": {},
-    "frame": {},
-    "trim": {},
-    "valid": {},
-    "isTiling": {},
-    "requiresUpdate": {},
-    "requiresReTint": {},
-    "width": {},
-    "height": {},
-    "crop": {}
+    "noFrame": {
+     "!type": "bool"
+    },
+    "baseTexture": {
+     "!type": "+BaseTexture"
+    },
+    "frame": {
+     "!type": "+Rectangle"
+    },
+    "trim": {
+     "!type": "+Rectangle"
+    },
+    "valid": {
+     "!type": "bool"
+    },
+    "isTiling": {
+     "!type": "bool"
+    },
+    "requiresUpdate": {
+     "!type": "bool"
+    },
+    "requiresReTint": {
+     "!type": "bool"
+    },
+    "width": {
+     "!type": "number"
+    },
+    "height": {
+     "!type": "number"
+    },
+    "crop": {
+     "!type": "+Rectangle"
+    }
    }
   },
   "CanvasPool": {
-   "pool": {}
+   "pool": {
+    "!type": "[?]"
+   }
   },
   "EventTarget": {
    "call": {
@@ -19826,10 +20744,18 @@
    "!type": "fn(target: ?, name: string, data: ?)",
    "!doc": "Creates an homogenous object for tracking events so users can know what to expect.",
    "prototype": {
-    "target": {},
-    "type": {},
-    "data": {},
-    "timeStamp": {}
+    "target": {
+     "!type": "?"
+    },
+    "type": {
+     "!type": "string"
+    },
+    "data": {
+     "!type": "?"
+    },
+    "timeStamp": {
+     "!type": "number"
+    }
    }
   }
  }
