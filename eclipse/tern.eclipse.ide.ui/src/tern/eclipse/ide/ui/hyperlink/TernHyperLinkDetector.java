@@ -60,9 +60,12 @@ public class TernHyperLinkDetector extends AbstractHyperlinkDetector {
 				IRegion wordRegion= JavaWordFinder.findWord(document, region.getOffset());
 				TernHyperlink hyperlink = new TernHyperlink(document, wordRegion,
 						resource, ternProject);
-				IHyperlink[] hyperlinks = new IHyperlink[1];
-				hyperlinks[0] = hyperlink;
-				return hyperlinks;
+				if (hyperlink.isValid()) {
+					IHyperlink[] hyperlinks = new IHyperlink[1];
+					hyperlinks[0] = hyperlink;
+					return hyperlinks;
+				}
+				return null;
 
 			} catch (CoreException e) {
 				Trace.trace(Trace.WARNING, "Error while tern hyperlink", e);
