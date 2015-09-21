@@ -77,9 +77,8 @@ public class TernModuleMetadata {
 	public TernModuleMetadata(JsonObject json, File file) {
 		this.name = JsonHelper.getString(json, NAME_FIELD);
 		this.label = JsonHelper.getString(json, LABEL_FIELD);
-		this.origin = !StringUtils.isEmpty(JsonHelper.getString(json,
-				ORIGIN_FIELD)) ? JsonHelper.getString(json, ORIGIN_FIELD)
-				: null;
+		this.origin = !StringUtils.isEmpty(JsonHelper.getString(json, ORIGIN_FIELD))
+				? JsonHelper.getString(json, ORIGIN_FIELD) : null;
 		this.description = JsonHelper.getString(json, DESCRIPTION_FIELD);
 		this.homepage = JsonHelper.getString(json, HOMEPAGE_FIELD);
 		this.author = JsonHelper.getString(json, AUTHOR_FIELD);
@@ -126,8 +125,7 @@ public class TernModuleMetadata {
 		String version = null;
 		Collection<String> dependencies = null;
 		TernModuleInfo info = null;
-		for (Map.Entry<String, Collection<String>> entry : this.dependencies
-				.entrySet()) {
+		for (Map.Entry<String, Collection<String>> entry : this.dependencies.entrySet()) {
 			version = entry.getKey();
 			dependencies = entry.getValue();
 			for (String dependency : dependencies) {
@@ -137,8 +135,7 @@ public class TernModuleMetadata {
 					requiredDependencies = requiredDependenciesMap.get(version);
 					if (requiredDependencies == null) {
 						requiredDependencies = new ArrayList<String>();
-						requiredDependenciesMap.put(version,
-								requiredDependencies);
+						requiredDependenciesMap.put(version, requiredDependencies);
 					}
 					requiredDependencies.add(dependency);
 				}
@@ -155,8 +152,7 @@ public class TernModuleMetadata {
 		return null;
 	}
 
-	private Map<String, Collection<String>> parseDependencies(
-			JsonValue jsonDependencies) {
+	private Map<String, Collection<String>> parseDependencies(JsonValue jsonDependencies) {
 		if (jsonDependencies instanceof JsonArray) {
 			return parseDependencies((JsonArray) jsonDependencies);
 		} else if (jsonDependencies instanceof JsonObject) {
@@ -165,8 +161,7 @@ public class TernModuleMetadata {
 		return Collections.emptyMap();
 	}
 
-	private Map<String, Collection<String>> parseDependencies(
-			JsonArray jsonDependencies) {
+	private Map<String, Collection<String>> parseDependencies(JsonArray jsonDependencies) {
 		List<String> dependencies = new ArrayList<String>();
 		for (JsonValue jsonDependency : jsonDependencies) {
 			dependencies.add(JsonHelper.getString(jsonDependency));
@@ -185,17 +180,14 @@ public class TernModuleMetadata {
 		dependenciesMap.put(version, dependencies);
 	}
 
-	private Map<String, Collection<String>> parseDependencies(
-			JsonObject jsonDependencies) {
+	private Map<String, Collection<String>> parseDependencies(JsonObject jsonDependencies) {
 		Map<String, Collection<String>> dependenciesMap = new HashMap<String, Collection<String>>();
-		Iterator<com.eclipsesource.json.JsonObject.Member> a = jsonDependencies
-				.iterator();
+		Iterator<com.eclipsesource.json.JsonObject.Member> a = jsonDependencies.iterator();
 		while (a.hasNext()) {
 			JsonObject.Member member = (JsonObject.Member) a.next();
 			String version = member.getName();
 			if (member.getValue() instanceof JsonArray) {
-				parseDependencies((JsonArray) member.getValue(), version,
-						dependenciesMap);
+				parseDependencies((JsonArray) member.getValue(), version, dependenciesMap);
 			}
 			if (!StringUtils.isEmpty(version) && !ANY_VERSION.equals(version)) {
 				Collection<String> commons = dependenciesMap.get(ANY_VERSION);
@@ -207,8 +199,7 @@ public class TernModuleMetadata {
 		return dependenciesMap;
 	}
 
-	private Collection<TernModuleMetadataOption> parseOptions(
-			JsonArray jsonOptions) {
+	private Collection<TernModuleMetadataOption> parseOptions(JsonArray jsonOptions) {
 		List<TernModuleMetadataOption> options = new ArrayList<TernModuleMetadataOption>();
 		for (JsonValue jsonOption : jsonOptions) {
 			options.add(new TernModuleMetadataOption((JsonObject) jsonOption));
@@ -313,13 +304,11 @@ public class TernModuleMetadata {
 	 */
 	@SuppressWarnings("unchecked")
 	public Collection<String> getDependencies(String version) {
-		Collection<String> deps = dependencies
-				.get(StringUtils.isEmpty(version) ? ANY_VERSION : version);
+		Collection<String> deps = dependencies.get(StringUtils.isEmpty(version) ? ANY_VERSION : version);
 		if (deps == null) {
 			deps = dependencies.get(ANY_VERSION);
 		}
-		return (Collection<String>) (deps != null ? deps : Collections
-				.emptyList());
+		return (Collection<String>) (deps != null ? deps : Collections.emptyList());
 	}
 
 	/**
@@ -329,27 +318,47 @@ public class TernModuleMetadata {
 	 */
 	@SuppressWarnings("unchecked")
 	public Collection<String> getRequiredDependencies(String version) {
-		Collection<String> deps = requiredDependencies.get(StringUtils
-				.isEmpty(version) ? ANY_VERSION : version);
+		Collection<String> deps = requiredDependencies.get(StringUtils.isEmpty(version) ? ANY_VERSION : version);
 		if (deps == null) {
 			deps = requiredDependencies.get(ANY_VERSION);
 		}
-		return (Collection<String>) (deps != null ? deps : Collections
-				.emptyList());
+		return (Collection<String>) (deps != null ? deps : Collections.emptyList());
 	}
 
+	/**
+	 * Returns true if the plugin is a linter and false otherwise.
+	 * 
+	 * @return true if the plugin is a linter and false otherwise.
+	 */
 	public boolean isLinter() {
 		return linter;
 	}
-	
+
+	/**
+	 * Returns true if the the module is a JSON Type Definition and false
+	 * otherwise( it is a plugin)
+	 * 
+	 * @return true if the the module is a JSON Type Definition and false
+	 *         otherwise( it is a plugin)
+	 */
 	public boolean isDef() {
 		return def;
 	}
 
+	/**
+	 * Returns true if the module has options and false otherwise.
+	 * 
+	 * @return true if the module has options and false otherwise.
+	 */
 	public boolean hasOptions() {
 		return options != null && options.size() > 0;
 	}
 
+	/**
+	 * Returns the file icon and null otherwise.
+	 * 
+	 * @return the file icon and null otherwise.
+	 */
 	public File getFileIcon() {
 		return fileIcon;
 	}

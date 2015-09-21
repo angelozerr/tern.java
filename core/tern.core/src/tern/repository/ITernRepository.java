@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import tern.TernException;
+import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;
 
@@ -123,4 +124,21 @@ public interface ITernRepository {
 	 * @throws TernException
 	 */
 	void install(File moduleFile) throws IOException, TernException;
+
+	/**
+	 * Returns the {@link TernModuleMetadata} from the given module name and
+	 * null otherwise.
+	 * 
+	 * @param moduleName
+	 * @return the {@link TernModuleMetadata} from the given module name and
+	 *         null otherwise.
+	 */
+	TernModuleMetadata getDefaultMetadata(String moduleName);
+	
+	/**
+	 * Returns the node_modules directory.
+	 * 
+	 * @return the node_modules directory.
+	 */
+	File getNodeModulesDir();
 }

@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -15,9 +15,9 @@ import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 
-import tern.TernException;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.repository.ITernRepository;
+import tern.repository.TernRepository;
 import tern.server.ITernModule;
 
 /**
@@ -39,6 +39,13 @@ public interface ITernRepositoryManager {
 	 */
 	Collection<ITernRepository> getRepositories();
 
+	/**
+	 * Returns the default repository.
+	 * 
+	 * @return the default repository.
+	 */
+	TernRepository getDefaultRepository();
+	
 	/**
 	 * Returns the repository by name and null otherwise.
 	 * 

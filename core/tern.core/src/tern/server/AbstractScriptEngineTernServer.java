@@ -33,12 +33,12 @@ import com.eclipsesource.json.JsonValue;
 public abstract class AbstractScriptEngineTernServer extends AbstractTernServer {
 
 	private final String[] ACORN_SCRIPTS = {
-			"node_modules/acorn/dist/acorn.js",
-			"node_modules/acorn/dist/acorn_loose.js",
-			"node_modules/acorn/dist/walk.js" };
+			"acorn/dist/acorn.js",
+			"acorn/dist/acorn_loose.js",
+			"acorn/dist/walk.js" };
 
-	private final String[] TERN_SCRIPTS = { "lib/signal.js", "lib/tern.js",
-			"lib/def.js", "lib/comment.js", "lib/infer.js" };
+	private final String[] TERN_SCRIPTS = { "tern/lib/signal.js", "tern/lib/tern.js",
+			"tern/lib/def.js", "tern/lib/comment.js", "tern/lib/infer.js" };
 
 	protected class TernResource {
 
@@ -93,6 +93,16 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 		super(project);
 	}
 
+	@Override
+	public void addDef(ITernDef def) throws TernException {
+		getProject().addLib(def);
+	}
+
+	@Override
+	public void addPlugin(ITernPlugin plugin) throws TernException {
+		getProject().addPlugin(plugin);
+	}
+	
 	protected TernResources loadTern() throws TernException {
 		ITernRepository repository = getProject().getRepository();
 		if (repository == null) {
@@ -105,12 +115,12 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 
 			// Load acorn
 			for (int i = 0; i < ACORN_SCRIPTS.length; i++) {
-				scripts.add(getResource(new File(repository.getTernBaseDir(),
+				scripts.add(getResource(new File(repository.getNodeModulesDir(),
 						ACORN_SCRIPTS[i])));
 			}
 			// Load ternjs
 			for (int i = 0; i < TERN_SCRIPTS.length; i++) {
-				scripts.add(getResource(new File(repository.getTernBaseDir(),
+				scripts.add(getResource(new File(repository.getNodeModulesDir(),
 						TERN_SCRIPTS[i])));
 			}
 			// Load defs

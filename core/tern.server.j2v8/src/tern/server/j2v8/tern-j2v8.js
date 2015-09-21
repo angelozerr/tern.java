@@ -70,8 +70,8 @@ function J2V8TernServer(defs, plugins) {
 }
 
 var verbose = true;
-var projectDir;
-var stripCRs;
+var projectDir = "/";
+var stripCRs = false;
 
 var defaultConfig = {
   libs: [],

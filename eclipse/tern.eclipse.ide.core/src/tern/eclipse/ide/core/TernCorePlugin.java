@@ -61,7 +61,6 @@ public class TernCorePlugin extends Plugin {
 		super.start(context);
 
 		IDETernProjectSynchronizer.getInstance().initialize();
-		TernModuleMetadataManager.getInstance().init(getTernCoreBaseDir());
 		TernFileConfigurationManager.getManager().initialize();
 		TernModuleInstallManager.getManager().initialize();
 		

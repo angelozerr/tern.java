@@ -1,0 +1,22 @@
+{
+ "name": "phaser",
+ "label": "Phaser",
+ "icon": "phaser.png",
+ "homepage": "http://ibm-js.github.io/phaser/",
+ "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+ "description": "Add Phaser support. Phaser is a fun, free and fast 2D game framework for making HTML5 games for desktop and mobile web browsers, supporting Canvas and WebGL rendering.",
+ "dependencies": [
+  "ecma5",
+  "browser"
+  ],
+ "repository": {
+  "type": "git",
+  "url": "https://github.com/angelozerr/tern-phaser.git"
+ },
+ "bugs": {
+  "url": "https://github.com/angelozerr/tern-phaser/issues"
+ },
+ "help": {
+  "url": "https://github.com/angelozerr/tern.java/wiki/Phaser-support"
+ }
+}

@@ -24,6 +24,7 @@ import tern.doc.IJSDocument;
 import tern.eclipse.jface.TernLabelProvider;
 import tern.eclipse.jface.fieldassist.TernContentProposalProvider;
 import tern.eclipse.swt.JSDocumentText;
+import tern.eclipse.swt.samples.TernProjectFactory;
 import tern.repository.ITernRepository;
 import tern.repository.TernRepository;
 import tern.repository.TernRepositoryHelper;
@@ -46,24 +47,15 @@ public class J2V8TernEditor {
 
 	private void createUI() throws TernException, IOException,
 			InterruptedException {
-
-		File ternBaseDir = new File("../../core/ternjs/node_modules/tern");
-		ITernRepository repository = new TernRepository("ternjs", ternBaseDir);
-		
-		File projectDir = new File(".");
-		ITernProject project = TernResourcesManager.getTernProject(projectDir);
-		project.setRepository(repository);
+		ITernProject project = TernProjectFactory.create();
+		project.addLib(TernDef.browser);
 		
 		ITernServer server = new J2V8TernServer(project);
+		
 //		((NodejsTernServer) server).addInterceptor(LoggingInterceptor
 //				.getInstance());
 //		((NodejsTernServer) server)
 //				.addProcessListener(PrintNodejsProcessListener.getInstance());
-
-		server.addDef(TernDef.browser);
-		server.addDef(TernDef.ecma5);
-		server.addPlugin(TernPlugin.node);
-		server.addPlugin(TernPlugin.angular);
 		
 		Display display = new Display();
 		Shell shell = new Shell(display);

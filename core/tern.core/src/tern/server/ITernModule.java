@@ -52,13 +52,6 @@ public interface ITernModule {
 	String getVersion();
 
 	/**
-	 * Return the def or plugin path.
-	 * 
-	 * @return
-	 */
-	String getPath();
-
-	/**
 	 * Returns the module type.
 	 * 
 	 * @return

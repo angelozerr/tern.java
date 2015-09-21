@@ -64,11 +64,6 @@ public class TernModuleConfigurable implements ITernModuleConfigurable {
 	}
 
 	@Override
-	public String getPath() {
-		return wrappedModule.getPath();
-	}
-
-	@Override
 	public ModuleType getModuleType() {
 		return ModuleType.Configurable;
 	}

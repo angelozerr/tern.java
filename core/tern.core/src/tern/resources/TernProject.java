@@ -27,7 +27,6 @@ import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
 import com.eclipsesource.json.ParseException;
-import com.eclipsesource.json.PrettyPrint;
 import com.eclipsesource.json.WriterConfig;
 
 import tern.EcmaVersion;
@@ -92,7 +91,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	private static final String PLUGINS_FIELD_NAME = "plugins"; //$NON-NLS-1$
 	private static final String LIBS_FIELD_NAME = "libs"; //$NON-NLS-1$
 	private static final String LOAD_EAGERLY_FIELD_NAME = "loadEagerly"; //$NON-NLS-1$
-			
+
 	private final File projectDir;
 	private File ternProjectFile;
 	private ITernRepository repository;
@@ -142,7 +141,6 @@ public class TernProject extends JsonObject implements ITernProject {
 		return ternProjectFile;
 	}
 
-	
 	@Override
 	public void setEcmaVersion(EcmaVersion ecmaVersion) {
 		super.set(ECMA_VERSION_FIELD_NAME, ecmaVersion.getVersion());
@@ -165,7 +163,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		}
 		return EcmaVersion.get(version);
 	}
-	
+
 	/**
 	 * Returns true if lib or plugins exists and false otheriwse.
 	 * 
@@ -199,6 +197,10 @@ public class TernProject extends JsonObject implements ITernProject {
 				getLibs().add(lib);
 			}
 		}
+	}
+
+	public boolean hasLib(TernDef lib) {
+		return hasLib(lib.getName());
 	}
 
 	/**
@@ -374,9 +376,6 @@ public class TernProject extends JsonObject implements ITernProject {
 		ITernRepository repository = getRepository();
 		if (repository != null) {
 			addLinter(plugins, repository.getLinters());
-		} else {
-			// known linters
-			addLinter(plugins, TernPlugin.getLinters());
 		}
 	}
 
@@ -678,7 +677,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
-	
+
 	@Override
 	public ITernRepository getRepository() {
 		return repository;

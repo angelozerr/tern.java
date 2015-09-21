@@ -123,10 +123,11 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 		useESModules.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				ITernModule esModules = getESModules(workingCopy);
 				if (useESModules.getSelection()) {
-					workingCopy.getCheckedModules().add(TernPlugin.es_modules);
+					workingCopy.getCheckedModules().add(esModules);
 				} else {
-					workingCopy.getCheckedModules().remove(TernPlugin.es_modules);
+					workingCopy.getCheckedModules().remove(esModules);
 				}
 			}
 		});
@@ -193,6 +194,9 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				ITernModuleConfigurable docComment = getDocComment(workingCopy);
+				if (!workingCopy.hasCheckedTernModule(TernPlugin.doc_comment.getName())) {
+					workingCopy.getCheckedModules().add(docComment);
+				}
 				JsonObject options = null;
 				if (jsdocStrong.getSelection()) {
 					options = new JsonObject();
@@ -242,7 +246,7 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 		}
 	}
 
-	protected ITernModuleConfigurable getDocComment(IWorkingCopy workingCopy) {
+	private ITernModuleConfigurable getDocComment(IWorkingCopy workingCopy) {
 		try {
 			return (ITernModuleConfigurable) workingCopy.getTernModule(TernPlugin.doc_comment.getName());
 		} catch (TernException e) {
@@ -251,4 +255,12 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 		return null;
 	}
 
+	private ITernModule getESModules(IWorkingCopy workingCopy) {
+		try {
+			return (ITernModule) workingCopy.getTernModule(TernPlugin.es_modules.getName());
+		} catch (TernException e) {
+			Trace.trace(Trace.SEVERE, "Error while getting tern module from working copy", e);
+		}
+		return null;
+	}
 }

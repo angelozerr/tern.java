@@ -24,19 +24,22 @@ import tern.utils.TernModuleHelper;
 
 public class TernModulesHelperSortTest {
 
+	private TernModuleMetadataManager manager;
+
 	@Before
 	public void init() {
-		TernModuleMetadataManager.getInstance().init(new File("../ternjs"));
+		manager = new TernModuleMetadataManager(new File("../ternjs"));
 	}
 
 	@Test
 	public void sort() {
+
 		// AlloyUI depends on YUI3, aui2 must be loaded after yui3.
 		List<ITernModule> modules = new ArrayList<ITernModule>();
 		modules.add(TernPlugin.aui15);
 		modules.add(TernPlugin.yui3);
 
-		TernModuleHelper.sort(modules);
+		TernModuleHelper.sort(modules, manager);
 
 		Assert.assertEquals(TernPlugin.yui3, modules.get(0));
 		Assert.assertEquals(TernPlugin.aui15, modules.get(1));
@@ -50,10 +53,9 @@ public class TernModulesHelperSortTest {
 		modules.add(TernPlugin.liferay);
 		modules.add(TernPlugin.yui3);
 
-		TernModuleHelper.sort(modules);
+		TernModuleHelper.sort(modules, manager);
 
-		Assert.assertTrue(modules.indexOf(TernPlugin.yui3) < modules
-				.indexOf(TernPlugin.aui15));
+		Assert.assertTrue(modules.indexOf(TernPlugin.yui3) < modules.indexOf(TernPlugin.aui15));
 
 	}
 }

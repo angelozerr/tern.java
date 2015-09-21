@@ -21,6 +21,10 @@ import java.util.Map;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
+import com.eclipsesource.json.JsonArray;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+
 import tern.TernException;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.ITernRepositoryManager;
@@ -34,10 +38,6 @@ import tern.server.ITernModule;
 import tern.server.ITernPlugin;
 import tern.utils.StringUtils;
 import tern.utils.TernModuleHelper;
-
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
 /**
  * Manager of tern repository.
@@ -134,7 +134,8 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		}
 	}
 
-	private TernRepository getDefaultRepository() {
+	@Override
+	public TernRepository getDefaultRepository() {
 		if (DEFAULT_REPOSITORY != null) {
 			return DEFAULT_REPOSITORY;
 		}

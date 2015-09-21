@@ -21,11 +21,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
+
 import tern.ITernProject;
 import tern.TernException;
 import tern.metadata.ModuleDependenciesComparator;
 import tern.metadata.TernModuleMetadata;
 import tern.metadata.TernModuleMetadataManager;
+import tern.repository.ITernRepository;
 import tern.server.BasicTernDef;
 import tern.server.BasicTernPlugin;
 import tern.server.ITernDef;
@@ -33,13 +37,8 @@ import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.server.ITernPlugin;
 import tern.server.ModuleType;
-import tern.server.TernDef;
 import tern.server.TernModuleConfigurable;
 import tern.server.TernModuleInfo;
-import tern.server.TernPlugin;
-
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
 /**
  * Helper for {@link ITernModule}.
@@ -190,7 +189,7 @@ public class TernModuleHelper {
 					} else if (options.isNull()) {
 						c.setOptions(options);
 					}
-				}				
+				}
 				return (ITernModuleConfigurable) f;
 			}
 		}
@@ -210,69 +209,89 @@ public class TernModuleHelper {
 		return module.getMetadata().hasOptions();
 	}
 
-	public static ITernModule getModule(String filename) {
-		if (filename.startsWith(TERN_SUFFIX)) {
-			String name = filename.substring(TERN_SUFFIX.length(), filename.length());
-			return getPluginOrDef(name);
-		}
-		int index = filename.lastIndexOf('.');
-		if (index == -1) {
-			return null;
-		}
-		String fileExtension = filename.substring(index + 1, filename.length());
-		if (fileExtension.equals(JSON_EXTENSION)) {
-			String name = filename.substring(0, index);
-			return getDef(name);
-		} else if (fileExtension.equals(JS_EXTENSION)) {
-			String name = filename.substring(0, index);
-			return getPlugin(name);
+	public static ITernModule createModule(File file, ITernRepository repository, ITernRepository defaultRepository) {
+		String filename = file.getName();
+		if (file.isDirectory()) {
+			if (filename.startsWith(TERN_SUFFIX)) {
+				// the folder follows the syntax tern-{name} where name is the
+				// tern plugin name.
+				TernModuleInfo info = new TernModuleInfo(filename.substring(TERN_SUFFIX.length(), filename.length()));
+				// try to get local or repository metadata.
+				TernModuleMetadata metadata = getMetadata(info.getType(), file, repository, defaultRepository);
+				if (metadata != null && metadata.isDef()) {
+					return new BasicTernDef(info, metadata);
+				}
+				return new BasicTernPlugin(info, metadata);
+			}
+		} else if (file.isFile()) {
+			// the module is (local file), try and guess the module type (*.json
+			// or *.js)
+			return createModule(filename, repository, defaultRepository);
 		}
 		return null;
 	}
 
-	private static ITernDef getDef(String name) {
-		ITernDef def = TernDef.getTernDef(name);
-		if (def != null) {
-			return def;
+	/**
+	 * Create tern module from the given file name and null if it's not a tern
+	 * module.
+	 * 
+	 * @param filename
+	 * @return tern module from the given file name and null if it's not a tern
+	 *         module.
+	 */
+	public static ITernModule createModule(String filename, ITernRepository repository,
+			ITernRepository defaultRepository) {
+		int index = filename.lastIndexOf('.');
+		if (index == -1) {
+			// the file has none file extension, it's not a tern plugin.
+			return null;
 		}
-		return new BasicTernDef(name);
+		String fileExtension = filename.substring(index + 1, filename.length());
+		filename = filename.substring(0, index);
+		if (fileExtension.equals(JSON_EXTENSION)) {
+			// the file is JSON file, it's a tern JSON Type Definition
+			TernModuleInfo info = new TernModuleInfo(filename);
+			TernModuleMetadata metadata = getMetadata(info.getType(), null, repository, defaultRepository);
+			return new BasicTernDef(info, metadata);
+		} else if (fileExtension.equals(JS_EXTENSION)) {
+			// the file is JavaScript file, it's a tern plugin
+			TernModuleInfo info = new TernModuleInfo(filename);
+			TernModuleMetadata metadata = getMetadata(info.getType(), null, repository, defaultRepository);
+			return new BasicTernPlugin(info, metadata);
+		}
+		// it's not a tern module
+		return null;
 	}
 
 	/**
-	 * Return the tern plugin by name.
+	 * Retrieve module metadata from the given module type and null otherwise.
 	 * 
-	 * @param name
-	 * @return
+	 * @param moduleName
+	 * @param moduleDir
+	 *            search file metadata/${moduleName}.metadata.json
+	 * @param repository
+	 *            otherwise search in the repository of the module
+	 * @param defaultRepository
+	 *            otherwise search in the default repository.
+	 * @return module metadata from the given module type and null otherwise.
 	 */
-	private static ITernPlugin getPlugin(String name) {
-		// tern plugin
-		ITernPlugin plugin = TernPlugin.getTernPlugin(name);
-		if (plugin != null) {
-			return plugin;
+	private static TernModuleMetadata getMetadata(String moduleName, File moduleDir, ITernRepository repository,
+			ITernRepository defaultRepository) {
+		TernModuleMetadata metadata = null;
+		if (moduleDir != null && moduleDir.isDirectory()) {
+			try {
+				metadata = TernModuleMetadataManager.loadMetadata(moduleDir, moduleName);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		return new BasicTernPlugin(name);
-	}
-
-	/**
-	 * Return the tern plugin or def by name.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	private static ITernModule getPluginOrDef(String name) {
-		// tern plugin?
-		ITernPlugin plugin = TernPlugin.getTernPlugin(name);
-		if (plugin != null) {
-			return plugin;
+		if (metadata == null && repository != null) {
+			metadata = repository.getDefaultMetadata(moduleName);
 		}
-		// tern def?
-		ITernDef def = TernDef.getTernDef(name);
-		if (def != null) {
-			return def;
+		if (metadata == null && defaultRepository != null) {
+			metadata = defaultRepository.getDefaultMetadata(moduleName);
 		}
-		TernModuleInfo info = new TernModuleInfo(name);
-		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance().getMetadata(info.getType());
-		return metadata != null && metadata.isDef() ? new BasicTernDef(info) : new BasicTernPlugin(info);
+		return metadata;
 	}
 
 	/**
@@ -310,7 +329,11 @@ public class TernModuleHelper {
 	 * @param modules
 	 */
 	public static void sort(List<ITernModule> modules) {
-		new ModuleDependenciesComparator(modules);
+		sort(modules, null);
+	}
+	
+	public static void sort(List<ITernModule> modules, TernModuleMetadataManager manager) {
+		new ModuleDependenciesComparator(modules, manager);
 	}
 
 	/**
@@ -336,10 +359,16 @@ public class TernModuleHelper {
 	 * @return the label of the given module.
 	 */
 	public static String getLabel(ITernModule module) {
-		TernModuleMetadata metadata = module.getMetadata();
-		if (metadata != null && !StringUtils.isEmpty(metadata.getLabel())) {
-			return metadata.getLabel();
+		try {
+			TernModuleMetadata metadata = module.getMetadata();
+			if (metadata != null && !StringUtils.isEmpty(metadata.getLabel())) {
+				return metadata.getLabel();
+			}
+		} catch (Exception e) {
+			// Exception can be thrown if TernPlugin enum is used.
 		}
 		return module.getName();
 	}
+
+	
 }

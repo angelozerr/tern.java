@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -10,20 +10,17 @@
  */
 package tern.server;
 
+import tern.metadata.TernModuleMetadata;
+
 /**
  * Basic JSON Type Definition.
  * 
- * @author azerr
  *
  */
 public class BasicTernDef extends AbstractBasicTernModule implements ITernDef {
 
-	public BasicTernDef(String name) {
-		super(name, ModuleType.Def);
-	}
-
-	public BasicTernDef(TernModuleInfo info) {
-		super(info, ModuleType.Def);
+	public BasicTernDef(TernModuleInfo info, TernModuleMetadata metadata) {
+		super(info, ModuleType.Def, metadata);
 	}
 
 }

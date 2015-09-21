@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Map;
 
 import tern.TernException;
+import tern.metadata.TernModuleMetadata;
+import tern.metadata.TernModuleMetadataManager;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;
 import tern.server.ModuleType;
@@ -45,6 +47,7 @@ public class TernRepository implements ITernRepository {
 	private Map<String, ITernModule> modules;
 	private Map<String, ITernModule> modulesByOrigin;
 	private ITernPlugin[] linters;
+	private final TernModuleMetadataManager metadataManager;
 
 	public TernRepository(String name, File ternBaseDir) {
 		this(name, ternBaseDir, false);
@@ -54,6 +57,7 @@ public class TernRepository implements ITernRepository {
 		this.name = name;
 		this.ternBaseDir = ternFile;
 		this.defaultRepository = defaultRepository;
+		this.metadataManager = new TernModuleMetadataManager(this);
 	}
 
 	@Override
@@ -118,7 +122,8 @@ public class TernRepository implements ITernRepository {
 		loadModules(modules, modulesByOrigin, getNodeModulesDir(), null);
 	}
 
-	private File getNodeModulesDir() {
+	@Override
+	public File getNodeModulesDir() {
 		return getTernBaseDir().getParentFile();
 	}
 
@@ -130,7 +135,7 @@ public class TernRepository implements ITernRepository {
 			ITernModule module = null;
 			for (int i = 0; i < files.length; i++) {
 				file = files[i];
-				module = TernModuleHelper.getModule(file.getName());
+				module = TernModuleHelper.createModule(file, this, null);
 				if (module != null && !isIgnoreModule(module, ignoreModules)) {
 					modules.put(module.getName(), module);
 					modulesByOrigin.put(module.getOrigin(), module);
@@ -230,5 +235,10 @@ public class TernRepository implements ITernRepository {
 					+ ">. It must be a folder or a zip/jar file.");
 		}
 
+	}
+
+	@Override
+	public TernModuleMetadata getDefaultMetadata(String moduleName) {
+		return metadataManager.getMetadata(moduleName);
 	}
 }

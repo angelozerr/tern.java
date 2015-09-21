@@ -19,14 +19,16 @@ import org.junit.Test;
 
 public class TernModuleMetadataManagerTest {
 
+	private TernModuleMetadataManager manager;
+	
 	@Before
 	public void init() {
-		TernModuleMetadataManager.getInstance().init(new File("../ternjs"));
+		manager = new TernModuleMetadataManager(new File("../ternjs"));
 	}
 
 	@Test
 	public void metadataExists() {
-		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance()
+		TernModuleMetadata metadata = manager
 				.getMetadata("jquery");
 		Assert.assertNotNull(metadata);
 		Assert.assertEquals("jquery", metadata.getName());
@@ -35,7 +37,7 @@ public class TernModuleMetadataManagerTest {
 
 	@Test
 	public void jQueryDependencies() {
-		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance()
+		TernModuleMetadata metadata = manager
 				.getMetadata("jquery");
 		Assert.assertNotNull(metadata);
 		Assert.assertEquals("jquery", metadata.getName());
@@ -48,7 +50,7 @@ public class TernModuleMetadataManagerTest {
 
 	@Test
 	public void AlloyUIDependencies() {
-		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance()
+		TernModuleMetadata metadata = manager
 				.getMetadata("aui");
 		Assert.assertNotNull(metadata);
 		Assert.assertEquals("aui", metadata.getName());
@@ -63,7 +65,7 @@ public class TernModuleMetadataManagerTest {
 
 	@Test
 	public void ECMADependencies() {
-		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance()
+		TernModuleMetadata metadata = manager
 				.getMetadata("ecma");
 		Assert.assertNotNull(metadata);
 		Assert.assertEquals("ecma", metadata.getName());
@@ -81,7 +83,7 @@ public class TernModuleMetadataManagerTest {
 
 	@Test
 	public void ECMARequiredDependencies() {
-		TernModuleMetadata metadata = TernModuleMetadataManager.getInstance()
+		TernModuleMetadata metadata = manager
 				.getMetadata("ecma");
 		Assert.assertNotNull(metadata);
 		Assert.assertEquals("ecma", metadata.getName());

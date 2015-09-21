@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -11,32 +11,21 @@
 package tern.server;
 
 import tern.metadata.TernModuleMetadata;
-import tern.metadata.TernModuleMetadataManager;
 import tern.utils.StringUtils;
 
 /**
- * Abstract class for basic tern moduleµ.
+ * Abstract class for basic tern module.
  * 
  */
-public abstract class AbstractBasicTernModule extends TernModuleInfo implements
-		ITernModule {
+public abstract class AbstractBasicTernModule extends TernModuleInfo implements ITernModule {
 
 	private final ModuleType moduleType;
-	private TernModuleMetadata metadata;
+	private final TernModuleMetadata metadata;
 
-	public AbstractBasicTernModule(String name, ModuleType moduleType) {
-		super(name);
-		this.moduleType = moduleType;
-	}
-
-	public AbstractBasicTernModule(TernModuleInfo info, ModuleType moduleType) {
+	public AbstractBasicTernModule(TernModuleInfo info, ModuleType moduleType, TernModuleMetadata metadata) {
 		super(info);
 		this.moduleType = moduleType;
-	}
-
-	@Override
-	public String getPath() {
-		return null;
+		this.metadata = metadata;
 	}
 
 	@Override
@@ -46,10 +35,6 @@ public abstract class AbstractBasicTernModule extends TernModuleInfo implements
 
 	@Override
 	public TernModuleMetadata getMetadata() {
-		if (metadata == null) {
-			metadata = TernModuleMetadataManager.getInstance().getMetadata(
-					getType());
-		}
 		return metadata;
 	}
 

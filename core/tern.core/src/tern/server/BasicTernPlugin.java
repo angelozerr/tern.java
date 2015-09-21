@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -16,15 +16,10 @@ import tern.metadata.TernModuleMetadata;
  * Basic tern plugin.
  *
  */
-public class BasicTernPlugin extends AbstractBasicTernModule implements
-		ITernPlugin {
+public class BasicTernPlugin extends AbstractBasicTernModule implements ITernPlugin {
 
-	public BasicTernPlugin(String name) {
-		super(name, ModuleType.Plugin);
-	}
-
-	public BasicTernPlugin(TernModuleInfo info) {
-		super(info, ModuleType.Plugin);
+	public BasicTernPlugin(TernModuleInfo info, TernModuleMetadata metadata) {
+		super(info, ModuleType.Plugin, metadata);
 	}
 
 	@Override

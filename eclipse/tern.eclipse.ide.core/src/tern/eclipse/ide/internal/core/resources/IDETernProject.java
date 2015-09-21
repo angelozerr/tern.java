@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -654,6 +654,8 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	@Override
 	public List<ITernModule> getProjectModules() {
 		final List<ITernModule> modules = new ArrayList<ITernModule>();
+		final ITernRepository projectRepository = getRepository();
+		final ITernRepository defaultRepository = TernRepositoryManager.getManager().getDefaultRepository();
 		if (project.isAccessible() && TernCorePreferencesSupport.getInstance().isLoadingLocalPlugins(project)) {
 			try {
 				project.accept(new IResourceVisitor() {
@@ -664,7 +666,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 						case IResource.PROJECT:
 							return true;
 						case IResource.FILE:
-							ITernModule module = TernModuleHelper.getModule(resource.getName());
+							ITernModule module = TernModuleHelper.createModule(resource.getName(), projectRepository, defaultRepository);
 							if (module != null) {
 								modules.add(module);
 							}
