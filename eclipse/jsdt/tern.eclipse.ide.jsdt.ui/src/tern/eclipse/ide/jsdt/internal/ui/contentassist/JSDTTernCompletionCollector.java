@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genutiec.com> - asynchronous request processing and 
+ *  									refactoring of collectors API
  */
 package tern.eclipse.ide.jsdt.internal.ui.contentassist;
 

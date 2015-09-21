@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2014 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,8 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genutiec.com> - asynchronous request processing and 
+- *  									refactoring of collectors API 
  */
 package tern.server.nodejs;
 
@@ -14,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.eclipsesource.json.JsonObject;
 
 import tern.ITernProject;
 import tern.TernException;
@@ -29,13 +33,9 @@ import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessException;
 import tern.server.nodejs.process.NodejsProcessManager;
 import tern.server.protocol.IJSONObjectHelper;
-import tern.server.protocol.JsonHelper;
 import tern.server.protocol.MinimalJSONHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.html.ScriptTagRegion;
-
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
 
 /**
  * Tern server implemented with node.js
