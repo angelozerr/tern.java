@@ -1,7 +1,7 @@
 {
  "name": "mylibrary",
- "label": "mylibrary",
- "icon": "mylibrary.png",
+ "label": "My Library",
+ "icon": "mylibrary.gif",
  "homepage": "http://mylibrary/",
  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
  "description": "Add My Library support",
@@ -18,3 +18,4 @@
  "help": {
   "url": "https://github.com/angelozerr/tern.java/wiki/mylibrary-support"
  }
+}
