@@ -2,7 +2,7 @@ package tern;
 
 public enum EcmaVersion {
 
-	ES5(), ES6(), ES7();
+	ES5(), ES6();
 
 	private final String versionLabel;
 	private final int version;
