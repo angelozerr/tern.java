@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -167,7 +167,7 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 		// to avoid exception of acorn.js loading :
 		// ternjs\node_modules\tern\node_modules\acorn\dist\acorn.js:877:
 		// SyntaxError: Invalid regular expression:
-		// /[ÂªÂµÂºÃ€-Ã–Ã˜-Ã¶Ã¸-Ë?Ë†-Ë‘Ë -Ë¤Ë¬Ë®Í°-Í´Í¶Í·Íº-Í½Í¿Î†Îˆ-ÎŠÎŒÎŽ-Î¡Î£-ÏµÏ·-Ò?ÒŠ-Ô¯Ô±-Õ–Õ™Õ¡-Ö‡×?-×ª×°-×²Ø -ÙŠÙ®Ù¯Ù±-Û“Û•Û¥Û¦Û®Û¯Ûº-Û¼Û¿Ü?Ü’-Ü¯Ý?-Þ¥Þ±ßŠ-ßªß´ßµßºà €-à •à šà ¤à ¨à¡€-à¡˜à¢ -à¢²à¤„-à¤¹à¤½à¥?à¥˜-à¥¡à¥±-à¦€à¦…-à¦Œà¦?à¦?à¦“-à¦¨à¦ª...<omitted>...œ]/:
+		// /[Ã‚ÂªÃ‚ÂµÃ‚ÂºÃƒâ‚¬-Ãƒâ€“ÃƒËœ-ÃƒÂ¶ÃƒÂ¸-Ã‹?Ã‹â€ -Ã‹â€˜Ã‹Â -Ã‹Â¤Ã‹Â¬Ã‹Â®Ã�Â°-Ã�Â´Ã�Â¶Ã�Â·Ã�Âº-Ã�Â½Ã�Â¿ÃŽâ€ ÃŽË†-ÃŽÅ ÃŽÅ’ÃŽÅ½-ÃŽÂ¡ÃŽÂ£-Ã�ÂµÃ�Â·-Ã’?Ã’Å -Ã”Â¯Ã”Â±-Ã•â€“Ã•â„¢Ã•Â¡-Ã–â€¡Ã—?-Ã—ÂªÃ—Â°-Ã—Â²Ã˜Â -Ã™Å Ã™Â®Ã™Â¯Ã™Â±-Ã›â€œÃ›â€¢Ã›Â¥Ã›Â¦Ã›Â®Ã›Â¯Ã›Âº-Ã›Â¼Ã›Â¿Ãœ?Ãœâ€™-ÃœÂ¯Ã�?-ÃžÂ¥ÃžÂ±ÃŸÅ -ÃŸÂªÃŸÂ´ÃŸÂµÃŸÂºÃ Â â‚¬-Ã Â â€¢Ã Â Å¡Ã Â Â¤Ã Â Â¨Ã Â¡â‚¬-Ã Â¡ËœÃ Â¢Â -Ã Â¢Â²Ã Â¤â€ž-Ã Â¤Â¹Ã Â¤Â½Ã Â¥?Ã Â¥Ëœ-Ã Â¥Â¡Ã Â¥Â±-Ã Â¦â‚¬Ã Â¦â€¦-Ã Â¦Å’Ã Â¦?Ã Â¦?Ã Â¦â€œ-Ã Â¦Â¨Ã Â¦Âª...<omitted>...Å“]/:
 		// Range out of order in character class
 		String script = getScriptContent(scriptFile);
 		String filename = getFilename(scriptFile);
