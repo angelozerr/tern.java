@@ -69,15 +69,15 @@ public class NodejsTernEditorWithAngularJS {
 
 		File projectDir = new File(".");
 		ITernProject project = TernResourcesManager.getTernProject(projectDir);
+		project.addLib(TernDef.browser);
+		project.addLib(TernDef.ecma5);
+		project.addPlugin(TernPlugin.angular);
+		
 		this.server = new NodejsTernServer(project);
 		((NodejsTernServer) server).addInterceptor(LoggingInterceptor
 				.getInstance());
 		((NodejsTernServer) server)
 				.addProcessListener(PrintNodejsProcessListener.getInstance());
-
-		server.addDef(TernDef.browser);
-		server.addDef(TernDef.ecma5);
-		server.addPlugin(TernPlugin.angular);
 
 		Display display = new Display();
 		Shell shell = new Shell(display);

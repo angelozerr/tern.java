@@ -25,8 +25,6 @@ import tern.TernResourcesManager;
 import tern.server.AbstractTernServer;
 import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
-import tern.server.ITernDef;
-import tern.server.ITernPlugin;
 import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcess;
 import tern.server.nodejs.process.NodejsProcessAdapter;
@@ -108,28 +106,6 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private String computeBaseURL(Integer port) {
 		return new StringBuilder(BASE_URL).append(port).append("/").toString();
-	}
-
-	@Override
-	public void addDef(ITernDef def) throws TernException {
-		ITernProject project = getProject();
-		project.addLib(def);
-		try {
-			project.save();
-		} catch (IOException e) {
-			throw new TernException(e);
-		}
-	}
-
-	@Override
-	public void addPlugin(ITernPlugin plugin) throws TernException {
-		ITernProject project = getProject();
-		project.addPlugin(plugin);
-		try {
-			project.save();
-		} catch (IOException e) {
-			throw new TernException(e);
-		}
 	}
 
 	@Override

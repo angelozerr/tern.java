@@ -42,9 +42,10 @@ public class RhinoTernEditor {
 	private void createUI() throws TernException, IOException {
 
 		ITernProject project = TernProjectFactory.create();
+		project.addLib(TernDef.browser);
+		project.addLib(TernDef.ecma5);
+
 		ITernServer server = new RhinoTernServer(project);
-		server.addDef(TernDef.browser);
-		server.addDef(TernDef.ecma5);
 
 		Display display = new Display();
 		Shell shell = new Shell(display);

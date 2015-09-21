@@ -38,6 +38,7 @@ import tern.eclipse.swt.samples.FileTreeLabelProvider;
 import tern.eclipse.swt.samples.TernProjectFactory;
 import tern.server.ITernServer;
 import tern.server.TernDef;
+import tern.server.TernPlugin;
 import tern.server.rhino.RhinoTernServer;
 import tern.utils.IOUtils;
 
@@ -60,10 +61,11 @@ public class RhinoTernEditorWithFiles {
 	private void createUI() throws TernException, IOException {
 
 		ITernProject project = TernProjectFactory.create();
+		project.addLib(TernDef.browser);
+		project.addLib(TernDef.ecma5);
+		
 		this.server = new RhinoTernServer(project);
-		server.addDef(TernDef.browser);
-		server.addDef(TernDef.ecma5);
-
+		
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setSize(500, 500);

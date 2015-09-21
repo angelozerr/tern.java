@@ -10,8 +10,6 @@
  */
 package tern.server;
 
-import java.io.IOException;
-
 import tern.ITernFileSynchronizer;
 import tern.TernException;
 import tern.server.protocol.IJSONObjectHelper;
@@ -24,24 +22,6 @@ import tern.server.protocol.html.ScriptTagRegion;
  * 
  */
 public interface ITernServer {
-
-	/**
-	 * Add Tern JSON Type Definition.
-	 * 
-	 * @param def
-	 *            the Tern JSON Type Defition to add to the server.
-	 * @throws IOException
-	 */
-	void addDef(ITernDef def) throws TernException;
-
-	/**
-	 * Add Tern plugin.
-	 * 
-	 * @param plugin
-	 *            the Tern plugin to add to the server.
-	 * @throws IOException
-	 */
-	void addPlugin(ITernPlugin plugin) throws TernException;
 
 	/**
 	 * Register a file with the server. Note that files can also be included in

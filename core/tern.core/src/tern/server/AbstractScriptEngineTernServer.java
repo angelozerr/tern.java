@@ -92,16 +92,6 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 	public AbstractScriptEngineTernServer(ITernProject project) {
 		super(project);
 	}
-
-	@Override
-	public void addDef(ITernDef def) throws TernException {
-		getProject().addLib(def);
-	}
-
-	@Override
-	public void addPlugin(ITernPlugin plugin) throws TernException {
-		getProject().addPlugin(plugin);
-	}
 	
 	protected TernResources loadTern() throws TernException {
 		ITernRepository repository = getProject().getRepository();

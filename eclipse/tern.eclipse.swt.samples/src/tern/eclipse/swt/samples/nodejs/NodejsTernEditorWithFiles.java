@@ -68,14 +68,14 @@ public class NodejsTernEditorWithFiles {
 
 		File projectDir = new File(".");
 		ITernProject project = TernResourcesManager.getTernProject(projectDir);
+		project.addLib(TernDef.ecma5);
+		project.addLib(TernDef.browser);
+		
 		this.server = new NodejsTernServer(project);
 		((NodejsTernServer) server).addInterceptor(LoggingInterceptor
 				.getInstance());
 		((NodejsTernServer) server)
 				.addProcessListener(PrintNodejsProcessListener.getInstance());
-
-		server.addDef(TernDef.browser);
-		server.addDef(TernDef.ecma5);
 
 		Display display = new Display();
 		Shell shell = new Shell(display);
