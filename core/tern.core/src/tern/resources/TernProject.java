@@ -152,9 +152,6 @@ public class TernProject extends JsonObject implements ITernProject {
 		int version = super.getInt(ECMA_VERSION_FIELD_NAME, -1);
 		if (version == -1) {
 			// Search if .tern-project contains ecma5.json, etc
-			if (hasLib(TernDef.ecma7)) {
-				return EcmaVersion.ES7;
-			}
 			if (hasLib(TernDef.ecma6)) {
 				return EcmaVersion.ES6;
 			}

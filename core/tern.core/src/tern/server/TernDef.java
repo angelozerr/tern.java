@@ -19,7 +19,6 @@ public enum TernDef implements ITernDef {
 	chai("chai"), 
 	ecma5("ecma5"), 
 	ecma6("ecma6"), 
-	ecma7("ecma7"), 
 	
 	jquery("jquery"), 
 	underscore("underscore"),
