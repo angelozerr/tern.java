@@ -27,15 +27,16 @@ import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.eclipse.jface.text.TernBrowserInformationControlInput;
+import tern.server.protocol.DocFormat;
 import tern.server.protocol.type.TernTypeQuery;
+import tern.utils.StringUtils;
 
 /**
  * Tern Hover.
  *
  */
-public class TernHover extends AbstractTernHover implements
-		ITextHoverExtension, ITextHoverExtension2,
-		IInformationProviderExtension2, ITernHoverInfoProvider {
+public class TernHover extends AbstractTernHover
+		implements ITextHoverExtension, ITextHoverExtension2, IInformationProviderExtension2, ITernHoverInfoProvider {
 
 	private IInformationControlCreator fHoverControlCreator;
 	private IInformationControlCreator fPresenterControlCreator;
@@ -45,8 +46,8 @@ public class TernHover extends AbstractTernHover implements
 
 	@Override
 	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
-		TernBrowserInformationControlInput info = (TernBrowserInformationControlInput) getHoverInfo2(
-				textViewer, hoverRegion);
+		TernBrowserInformationControlInput info = (TernBrowserInformationControlInput) getHoverInfo2(textViewer,
+				hoverRegion);
 		return info != null ? info.getHtml() : null;
 	}
 
@@ -64,19 +65,19 @@ public class TernHover extends AbstractTernHover implements
 			try {
 				// project has tern nature, get hover info with tern.
 				this.ternProject = TernCorePlugin.getTernProject(project);
-				this.file = new TernDocumentFile(scriptFile,
-						textViewer.getDocument());
+				this.file = new TernDocumentFile(scriptFile, textViewer.getDocument());
 				String filename = file.getFullName(ternProject);
 				this.offset = hoverRegion.getOffset();
 				TernTypeQuery query = new TernTypeQuery(filename, offset);
 				query.setDocs(true);
 				query.setUrls(true);
 				query.setTypes(true);
+				// query.setDocFormat(DocFormat.full);
 
 				HTMLTernTypeCollector collector = new HTMLTernTypeCollector(ternProject);
 				ternProject.request(query, file, collector);
-				return new TernBrowserInformationControlInput(null,
-						collector.getInfo(), 20);
+				String text = collector.getInfo();
+				return StringUtils.isEmpty(text) ? null : new TernBrowserInformationControlInput(null, text, 20);
 			} catch (Exception e) {
 				Trace.trace(Trace.WARNING, "Error while tern hyperlink", e);
 			}
@@ -96,8 +97,7 @@ public class TernHover extends AbstractTernHover implements
 	@Override
 	public IInformationControlCreator getHoverControlCreator() {
 		if (fHoverControlCreator == null)
-			fHoverControlCreator = new IDEHoverControlCreator(
-					getInformationPresenterControlCreator(), this);
+			fHoverControlCreator = new IDEHoverControlCreator(getInformationPresenterControlCreator(), this);
 		return fHoverControlCreator;
 	}
 
