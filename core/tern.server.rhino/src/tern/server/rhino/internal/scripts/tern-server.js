@@ -1,191 +1,147 @@
-(function() {
-  "use strict";
-  
-  TernServer = function() {
-    var self = this;
-    //this.options = options || {};
-    
-    this.docs = Object.create(null);
-    this.trackChange = function(doc, change) { trackChange(self, doc, change); };
+/**
+ * console support
+ */
+var console = {
+  error: function(msg) {
+	callJavaConsole(msg, 1);  
+  },
+  log: function(msg) {
+	callJavaConsole(msg, 2);
+  },  
+  info: function(msg) {
+	callJavaConsole(msg, 3);
+  }
+}
 
-    this.cachedArgHints = null;
-    this.activeArgHints = null;
-    this.jumpStack = [];
-    
-    this.defs = [];
-    this.plugins = [];
-    this.server = null;
-    this.getServer = function() {
-      if (self.server == null) {
-        self.server = new tern.Server({
-          getFile: function(name, c) { return getMyFile(name); },
-          async: true,
-          defs: self.defs || [],
-          plugins: self.plugins || []
-        });
-      }
-      return self.server;
-    }
-  };
+function callJavaConsole(msg, level) {
+  var s = ((typeof msg) == "object") ? JSON.stringify(msg) : String(msg);
+  //_javaConsole(s, level);	
+}
 
-  TernServer.prototype = {
-    addDoc: function(name, doc) {
-      //var data = {doc: doc, name: name, changed: null};
-      this.getServer().addFile(name, doc.getValue());
-      //CodeMirror.on(doc, "change", this.trackChange);
-      return this.docs[name] = doc;
-    },
+/**
+ * Tern support
+ */
 
-    delDoc: function(name) {
-      var found = this.docs[name];
-      if (!found) return;
-      //CodeMirror.off(found.doc, "change", this.trackChange);
-      delete this.docs[name];
-      this.getServer().delFile(name);
-    },
-
-    hideDoc: function(name) {
-      closeArgHints(this);
-      var found = this.docs[name];
-      if (found && found.changed) sendDoc(this, found);
-    },
-
-    sendDoc: function(doc, handler) {
-	  this.getServer().request({files: [{type: "full", name: String(doc.name), text: String(doc.getValue())}]}, function(error) {
-	      if (error) 
-			return handler.onError(error.message || String(error));
-	      else doc.changed = false;
+function J2V8TernServer(defs, plugins) {
+	
+	var server = null;	
+	function startServer(dir, config) {
+	//  var defs = findDefs(dir, config);
+	  //var plugins = {};//loadPlugins(dir, config.plugins);
+	  var server = new tern.Server({
+	    /*getFile: function(name, c) {
+	      //if (config.dontLoad && config.dontLoad.some(function(pat) {return minimatch(name, pat)}))
+	      //  c(null, "");
+	      //else
+	        //fs.readFile(path.resolve(dir, name), "utf8", c);
+	    },*/
+	    //async: true,
+	    defs: defs,
+	    plugins: plugins,
+	    debug: verbose,
+	    projectDir: dir,
+	    ecmaVersion: config.ecmaVersion,
+	    dependencyBudget: config.dependencyBudget,
+	    stripCRs: stripCRs
 	  });
-	},
-  	
-    complete: function(cm, handler, dataAsJson) {
-      this.request(cm, {type: "completions", types: true, docs: true, urls: true}, handler, dataAsJson);
-    },
 
-    getHint: function(cm, c) { return hint(this, cm, c); },
+	  if (config.loadEagerly) config.loadEagerly.forEach(function(pat) {
+	    glob.sync(pat, { cwd: dir }).forEach(function(file) {
+	      server.addFile(file);
+	    });
+	  });
+	  return server;
+	}
 
-    showType: function(cm) { showType(this, cm); },
-
-    updateArgHints: function(cm) { updateArgHints(this, cm); },
-
-    jumpToDef: function(cm) { jumpToDef(this, cm); },
-
-    jumpBack: function(cm) { jumpBack(this, cm); },
-
-    rename: function(cm) { rename(this, cm); },
-
-    request: function (cm, query, handler, dataAsJson) {
-      var self = this;
-      var request = buildRequest(this, cm, query);
-      var server = this.getServer();
-      this.server.request(request, function (error, data) {
-        if (error)
-          return handler.onError(error.message || String(error));
+	function getServer() {
+	  if (server == null) server = startServer(projectDir, config);
+	  return server;
+	}
+	
+    this.request = function(doc) {
+      if (verbose) console.log("Request: " + JSON.stringify(doc, null, 2));	
+	  var _this = this;
+	  getServer().request(doc, function(err, data) {
+		_this.err = err;
+		_this.data = data;
+	  });
+	  if (_this.err) throw _this.err;
+	  if (verbose) console.log("Response: " + JSON.stringify(_this.data, null, 2));
+	  return JSON.stringify(_this.data);
+    }
+    
+    this.request2 = function(doc, handler, dataAsJson) {
+      doc = JSON.parse(doc)
+      if (verbose) console.log("Request: " + JSON.stringify(doc, null, 2)); 
+      var _this = this;
+      getServer().request(doc, function(err, data) {
+        if (err)
+          return handler.onError(err.message || String(err));
+        if (verbose) console.log("Response: " + JSON.stringify(data, null, 2));
         var json = null;
-        if (dataAsJson)
-          json = JSON.stringify(data);
+        if (dataAsJson) json = JSON.stringify(data);
         handler.onSuccess(data, json);
       });
-    
-    },
-    
-    request2: function (request, handler, dataAsJson) {
-        var self = this;
-        var server = this.getServer();
-        this.server.request(request, function (error, data) {
-          if (error)
-            return handler.onError(error.message || String(error));
-          var json = null;
-          if (dataAsJson)
-            json = JSON.stringify(data);
-          handler.onSuccess(data, json);
-        });      
-      }
-  };
-
-  function buildRequest(ts, cm, query, allowFragments) {
-    var files = [], offsetLines = 0;
-    if (typeof query == "string")
-      query = {
-        type : query
-      };
-    query.lineCharPositions = true;
-    if (query.end == null) {
-      query.end = cm.getCursor("end");
-      if (cm.somethingSelected())
-        query.start = cm.getCursor("start");
     }
-    var startPos = query.start || query.end;
-    /*
-     * if (curDoc.changed) { if (cm.lineCount() > bigDoc && allowFragments !==
-     * false && curDoc.changed.to - curDoc.changed.from < 100 &&
-     * curDoc.changed.from <= startPos.line && curDoc.changed.to > query.end.line) {
-     * files.push(getFragmentAround(cm, startPos, query.end)); query.file = "#0";
-     * var offsetLines = files[0].offsetLines; if (query.start != null)
-     * query.start = incLine(-offsetLines, query.start); query.end =
-     * incLine(-offsetLines, query.end); } else { files.push({type: "full", name:
-     * curDoc.name, text: cm.getValue()}); query.file = curDoc.name;
-     * curDoc.changed = null; } } else { query.file = curDoc.name; }
-     */
+    
+}
 
-    query.file = cm.name;
+var verbose = true;
+var projectDir = "/";
+var stripCRs = false;
 
-	var doc = cm;
-	files.push({
-          type : "full",
-          name : doc.name,
-          text : doc.getValue()
-        });
-        
-    /*for ( var i = 0; i < ts.docs.length; ++i) {
-      var doc = ts.docs[i];
-      if (doc.changed) {// && doc != curDoc) {
-        files.push({
-          type : "full",
-          name : doc.name,
-          text : doc.getValue()
-        });
-        // java.lang.System.out.println(files[0].text)
-        // doc.changed = false;
+var defaultConfig = {
+  libs: [],
+  loadEagerly: false,
+  plugins: {},
+  ecmaScript: true,
+  ecmaVersion: 6,
+  dependencyBudget: tern.defaultOptions.dependencyBudget
+};
+
+var config = defaultConfig;
+
+
+//function findDefs(projectDir, config) {
+//  var defs = [], src = config.libs;
+//  if (src.indexOf("ecma5") == -1 && config.ecmaScript) src = ["ecma5"].concat(src);
+//  for (var i = 0; i < src.length; ++i) {
+//    var file = src[i];
+//    if (!/\.json$/.test(file)) file = file + ".json";
+//    var found = findFile(file, projectDir, path.resolve(distDir, "defs"));
+//    if (found) defs.push(readJSON(found));
+//    else process.stderr.write("Failed to find library " + src[i] + ".\n");
+//  }
+//  return defs;
+//}
+//
+
+var defaultPlugins = ["doc_comment"];
+
+function loadPlugins(projectDir, plugins) {
+  var options = {};
+  for (var plugin in plugins) {
+    var val = plugins[plugin];
+    if (!val) continue;
+    var found = findFile(plugin + ".js", projectDir, path.resolve(distDir, "plugin"));
+    if (!found) {
+      try {
+        found = require.resolve("tern-" + plugin);
+      } catch (e) {
+        process.stderr.write("Failed to find plugin " + plugin + ".\n");
+        continue;
       }
-    }*/
-
-    return {
-      query : query,
-      files : files
-    };
+    }
+    var mod = require(found);
+    if (mod.hasOwnProperty("initialize")) mod.initialize(distDir);
+    options[path.basename(plugin)] = val;
   }
 
-})();
-    
-var server = new TernServer();
-
-function addDef(def) {
-  server.defs.push(def);
-}
-
-function addPlugin(plugin) {
-  server.plugins.push({plugin : "./"});
-}
-
-function registerDoc(doc) {
-  var name = doc.name;
-  server.addDoc(name, doc);
-}
-
-function ternHints(cm, handler, dataAsJson) {
-  server.complete(cm, handler, dataAsJson);
-}
-
-function addFile(name, text) {
-	server.getServer().addFile(name, text);
-}
-
-function sendDoc(doc, handler) {
-  var d = server.docs[doc.name];
-  server.sendDoc(d, handler);
-}
-
-function request2(request, handler, dataAsJson) {
-	server.request2(JSON.parse(request), handler, dataAsJson)
+  defaultPlugins.forEach(function(name) {
+    if (!plugins.hasOwnProperty(name)) {
+      options[name] = true;
+      require("../plugin/" + name);
+    }
+  });
+  return options;
 }

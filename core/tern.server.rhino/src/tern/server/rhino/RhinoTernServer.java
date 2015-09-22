@@ -41,24 +41,27 @@ public class RhinoTernServer extends AbstractScriptEngineTernServer {
 
 	@Override
 	public void addFile(String name, String text, ScriptTagRegion[] tags) {
-		Context cx = Context.enter();
-		try {
-			// tern.js checks if file.text is typeof string
-			// set java primitive wrap to false, otherwise tern.js throws error
-			// ".files[n].text must be a string"
-			cx.getWrapFactory().setJavaPrimitiveWrap(false);
-
-			Scriptable ternScope = getTernSope();
-			Object functionArgs[] = { name, text };
-			Object fObj = ternScope.get("addFile", ternScope);
-			Function f = (Function) fObj;
-			f.call(cx, ternScope, ternScope, functionArgs);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			// Exit from the context.
-			Context.exit();
-		}
+		TernDoc doc = new TernDoc();
+		doc.addFile(name, text, tags, null);
+		request(doc, new IResponseHandler() {
+			
+			@Override
+			public void onSuccess(Object data, String dataAsJsonString) {
+				//System.err.println(data);
+			}
+			
+			@Override
+			public void onError(String error, Throwable t) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean isDataAsJsonString() {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
 	}
 
 	@Override
@@ -71,11 +74,9 @@ public class RhinoTernServer extends AbstractScriptEngineTernServer {
 			cx.getWrapFactory().setJavaPrimitiveWrap(false);
 
 			Scriptable ternScope = getTernSope();
-			// Object jsObject = NativeJSON.parse(cx, ternScope,
-			// doc.toJSONString(), null);
 			Object jsObject = Context.javaToJS(doc.toString(), ternScope);
 			Object functionArgs[] = { jsObject, handler, handler.isDataAsJsonString() };
-			Object fObj = ternScope.get("request2", ternScope);
+			Object fObj = ((Scriptable)ternScope.get("server", ternScope)).get("request2", ternScope);
 			Function f = (Function) fObj;
 			f.call(cx, ternScope, ternScope, functionArgs);
 		} catch (Exception e) {
@@ -121,10 +122,20 @@ public class RhinoTernServer extends AbstractScriptEngineTernServer {
 			for (TernResource script : scripts) {
 				cx.evaluateString(ternScope, script.getContent(), script.getFilename(), 0, null);
 			}
+			
 			// tern-server
+			String defs = resources.getDefsAsString();
 			loadScripts(cx, ternScope, AFTER_SCRIPTS);
-
-			ternScope.put("_server", ternScope, this);
+			StringBuilder script = new StringBuilder(
+					"var server = new J2V8TernServer(");
+			script.append("[");
+			script.append(defs.toString());
+			script.append("],");
+			script.append(getProject().getPlugins() != null ? getProject()
+					.getPlugins().toString() : "");
+			script.append(");");
+			cx.evaluateString(ternScope, script.toString(), "init", 0, null);
+			
 		} finally {
 			// Exit from the context.
 			Context.exit();

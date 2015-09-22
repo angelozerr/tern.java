@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import tern.EcmaVersion;
 import tern.ITernProject;
 import tern.TernException;
 import tern.repository.ITernRepository;
@@ -32,13 +33,10 @@ import com.eclipsesource.json.JsonValue;
  */
 public abstract class AbstractScriptEngineTernServer extends AbstractTernServer {
 
-	private final String[] ACORN_SCRIPTS = {
-			"acorn/dist/acorn.js",
-			"acorn/dist/acorn_loose.js",
-			"acorn/dist/walk.js" };
+	private final String[] ACORN_SCRIPTS = { "acorn/dist/acorn.js", "acorn/dist/acorn_loose.js", "acorn/dist/walk.js" };
 
-	private final String[] TERN_SCRIPTS = { "tern/lib/signal.js", "tern/lib/tern.js",
-			"tern/lib/def.js", "tern/lib/comment.js", "tern/lib/infer.js" };
+	private final String[] TERN_SCRIPTS = { "tern/lib/signal.js", "tern/lib/tern.js", "tern/lib/def.js",
+			"tern/lib/comment.js", "tern/lib/infer.js" };
 
 	protected class TernResource {
 
@@ -92,7 +90,7 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 	public AbstractScriptEngineTernServer(ITernProject project) {
 		super(project);
 	}
-	
+
 	protected TernResources loadTern() throws TernException {
 		ITernRepository repository = getProject().getRepository();
 		if (repository == null) {
@@ -105,27 +103,32 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 
 			// Load acorn
 			for (int i = 0; i < ACORN_SCRIPTS.length; i++) {
-				scripts.add(getResource(new File(repository.getNodeModulesDir(),
-						ACORN_SCRIPTS[i])));
+				scripts.add(getResource(new File(repository.getNodeModulesDir(), ACORN_SCRIPTS[i])));
 			}
 			// Load ternjs
 			for (int i = 0; i < TERN_SCRIPTS.length; i++) {
-				scripts.add(getResource(new File(repository.getNodeModulesDir(),
-						TERN_SCRIPTS[i])));
+				scripts.add(getResource(new File(repository.getNodeModulesDir(), TERN_SCRIPTS[i])));
 			}
+			// load ECMAScript defs
+			EcmaVersion ecmaVersion = super.getProject().getEcmaVersion();
+			if (ecmaVersion == null) {
+				ecmaVersion = EcmaVersion.ES5;
+			}
+			switch (ecmaVersion) {
+			case ES5:
+				addDef(TernDef.ecma5.getName(), repository, defs, false);
+				break;
+			case ES6:
+				addDef(TernDef.ecma5.getName(), repository, defs, false);
+				addDef(TernDef.ecma6.getName(), repository, defs, false);
+				break;
+			}
+
 			// Load defs
 			JsonArray libs = getProject().getLibs();
 			if (libs != null) {
-				ITernModule module = null;
-				File defFile = null;
 				for (JsonValue lib : libs) {
-					module = repository.getModule(lib.asString());
-					if (module != null) {
-						defFile = repository.getFile(module);
-						if (defFile != null && defFile.exists()) {
-							defs.add(getResource(defFile));
-						}
-					}
+					addDef(lib.asString(), repository, defs, true);
 				}
 			}
 			// Load plugins
@@ -150,7 +153,19 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 		}
 	}
 
-	// protected abstract void addDef(String def);
+	protected void addDef(String def, ITernRepository repository, List<TernResource> defs, boolean ignoreEcma)
+			throws IOException {
+		if (ignoreEcma && (def.equals(TernDef.ecma5.getName()) || def.equals(TernDef.ecma6.getName()))) {
+			return;
+		}
+		ITernModule module = repository.getModule(def);
+		if (module != null) {
+			File defFile = repository.getFile(module);
+			if (defFile != null && defFile.exists()) {
+				defs.add(getResource(defFile));
+			}
+		}
+	}
 
 	protected TernResource getResource(File scriptFile) throws IOException {
 		// Use FileInputStream (instead of FileReader) to set encoding to UTF-8,
@@ -164,8 +179,7 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 		return new TernResource(script, filename);
 	}
 
-	protected String getScriptContent(File scriptFile) throws IOException,
-			FileNotFoundException {
+	protected String getScriptContent(File scriptFile) throws IOException, FileNotFoundException {
 		return IOUtils.toString(new FileInputStream(scriptFile), "UTF-8");
 	}
 

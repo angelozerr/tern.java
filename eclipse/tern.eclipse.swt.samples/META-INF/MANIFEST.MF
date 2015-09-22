@@ -13,6 +13,7 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
  tern.eclipse,
  tern.server.nodejs,
  tern.server.rhino,
- tern.server.j2v8
+ tern.server.j2v8,
+ org.apache.commons.logging
 Import-Package: org.mozilla.javascript,
  com.eclipsesource.json;version="[0.9.4,0.9.5)"

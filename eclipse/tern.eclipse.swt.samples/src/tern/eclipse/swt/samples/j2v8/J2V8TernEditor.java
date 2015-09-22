@@ -52,11 +52,6 @@ public class J2V8TernEditor {
 		
 		ITernServer server = new J2V8TernServer(project);
 		
-//		((NodejsTernServer) server).addInterceptor(LoggingInterceptor
-//				.getInstance());
-//		((NodejsTernServer) server)
-//				.addProcessListener(PrintNodejsProcessListener.getInstance());
-		
 		Display display = new Display();
 		Shell shell = new Shell(display);
 		shell.setSize(500, 500);
