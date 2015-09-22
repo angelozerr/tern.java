@@ -35,7 +35,8 @@ public class TernImagesRegistry {
 	public static final String IMG_STRING = "tern.eclipse.jface.IMG_STRING";
 	public static final String IMG_BOOLEAN = "tern.eclipse.jface.IMG_BOOLEAN";
 	public static final String IMG_UNKNOWN = "tern.eclipse.jface.IMG_UNKNOWN";
-
+	public static final String IMG_CLASS = "tern.eclipse.jface.IMG_CLASS";
+	
 	static {
 		registerImageDescriptor(IMG_FN, ImageDescriptor.createFromFile(
 				TernImagesRegistry.class, "fn.gif"));
@@ -66,6 +67,9 @@ public class TernImagesRegistry {
 		registerImageDescriptor(getOvr(IMG_UNKNOWN),
 				ImageDescriptor.createFromFile(TernImagesRegistry.class,
 						"unknown_ovr.gif"));
+		registerImageDescriptor(IMG_CLASS, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "class.gif"));
+		
 	}
 
 	/**

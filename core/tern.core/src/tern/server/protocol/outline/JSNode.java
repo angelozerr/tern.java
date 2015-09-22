@@ -13,14 +13,24 @@ package tern.server.protocol.outline;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * JavaScript node used for the Outline.
+ *
+ */
 public class JSNode {
-
+	
+	private static final String FN_TYPE = "fn(";
+	private static final String ARRAY_TYPE = "[";
+	
 	private final String name;
 	private final String type;
 	private final Long start;
 	private final Long end;
 	private final JSNode parent;
 	private final List<JSNode> children;
+	private final boolean isClass;
+	private final boolean isFunction;
+	private final boolean isArray;
 
 	public JSNode(String name, String type, Long start, Long end, JSNode parent) {
 		this.name = name;
@@ -33,6 +43,15 @@ public class JSNode {
 			parent.addChild(this);
 		} else {
 			this.parent = null;
+		}
+		if (type != null) {
+			isClass = "class".equals(type);
+			isFunction = type.startsWith(FN_TYPE);
+			isArray = type.startsWith(ARRAY_TYPE);
+		} else {
+			isClass = false;
+			isFunction = false;
+			isArray = false;
 		}
 	}
 
@@ -67,4 +86,17 @@ public class JSNode {
 	public Long getEnd() {
 		return end;
 	}
+
+	public boolean isFunction() {
+		return isFunction;
+	}
+
+	public boolean isArray() {
+		return isArray;
+	}
+
+	public boolean isClass() {
+		return isClass;
+	}
+
 }

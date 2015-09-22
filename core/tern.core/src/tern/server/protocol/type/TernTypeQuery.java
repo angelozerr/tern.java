@@ -10,6 +10,7 @@
  */
 package tern.server.protocol.type;
 
+import tern.server.protocol.DocFormat;
 import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernQuery;
 
@@ -34,6 +35,8 @@ public class TernTypeQuery extends TernQuery {
 	private static final String URLS_FIELD_NAME = "urls";
 
 	private static final String ORIGINS_FIELD_NAME = "origins";
+
+	private static final String DOCS_FORMAT_NAME = "docFormat";
 
 	public TernTypeQuery(String file, Integer pos) {
 		super(TYPE_TYPE_QUERY);
@@ -83,6 +86,14 @@ public class TernTypeQuery extends TernQuery {
 		return JsonHelper.getBoolean(this, ORIGINS_FIELD_NAME, false);
 	}
 
+	public void setDocFormat(DocFormat docFormat) {
+		super.add(DOCS_FORMAT_NAME, docFormat.name());
+	}
+
+	public String getDocFormat() {
+		return JsonHelper.getString(this, DOCS_FORMAT_NAME);
+	}
+	
 	/**
 	 * Returns true if the given query type is "type" and false otherwise.
 	 * 
