@@ -8,14 +8,13 @@
     "use strict";
     
   tern.registerPlugin("node-mongoose", function(server, options) {
-    server._mongoose = {};
-    return { defs : defs };
+    server.addDefs(defs);
   });
     
   var defs = {
  "!name": "node-mongoose",
  "!define": {
-  "!node": {
+  "!known_modules": {
    "mongoose": {
     "!type": "+index.Mongoose"
    }

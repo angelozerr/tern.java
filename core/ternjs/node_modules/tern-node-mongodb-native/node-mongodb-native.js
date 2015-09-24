@@ -37,14 +37,13 @@
   }
     
   tern.registerPlugin("node-mongodb-native", function(server, options) {
-    server._mongoose = {};
-    return { defs : defs };
+    server.addDefs(defs);
   });
     
   var defs = {
  "!name": "node-mongodb-native",
  "!define": {
-  "!node": {
+  "!known_modules": {
    "mongodb": {
     "MongoClient": "mongoclient.MongoClient",
     "Db": "db.Db",
