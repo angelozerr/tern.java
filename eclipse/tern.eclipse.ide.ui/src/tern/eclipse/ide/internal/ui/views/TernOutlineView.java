@@ -24,7 +24,7 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 
-public class TernExplorerView extends ContentOutline {
+public class TernOutlineView extends ContentOutline {
 
 	@Override
 	protected PageRec doCreatePage(IWorkbenchPart part) {

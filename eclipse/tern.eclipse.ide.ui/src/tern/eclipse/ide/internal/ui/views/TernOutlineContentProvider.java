@@ -18,13 +18,13 @@ import org.eclipse.jface.viewers.Viewer;
 
 import tern.server.protocol.outline.JSNode;
 
-public class TernExplorerContentProvider implements ITreeContentProvider, IDocumentListener {
+public class TernOutlineContentProvider implements ITreeContentProvider, IDocumentListener {
 
 	private static final Object[] EMPTY_ARRAY = new Object[0];
 
 	private final TernContentOutlinePage outlinePage;
 
-	public TernExplorerContentProvider(TernContentOutlinePage outlinePage) {
+	public TernOutlineContentProvider(TernContentOutlinePage outlinePage) {
 		this.outlinePage = outlinePage;
 	}
 

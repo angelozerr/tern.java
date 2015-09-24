@@ -51,8 +51,8 @@ public class TernContentOutlinePage extends ContentOutlinePage {
 	@Override
 	public void createControl(Composite parent) {
 		super.createControl(parent);
-		getTreeViewer().setContentProvider(new TernExplorerContentProvider(this));
-		getTreeViewer().setLabelProvider(new DelegatingStyledCellLabelProvider(new TernExplorerLabelProvider()));
+		getTreeViewer().setContentProvider(new TernOutlineContentProvider(this));
+		getTreeViewer().setLabelProvider(new DelegatingStyledCellLabelProvider(new TernOutlineLabelProvider()));
 		getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
 
 			@Override

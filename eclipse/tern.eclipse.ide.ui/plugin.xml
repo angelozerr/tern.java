@@ -244,17 +244,17 @@
    </extension>   
 
 	<!--======================================================================================-->
-	<!-- tern Explorer View                                      						             -->
+	<!-- tern Outline View                                      						             -->
 	<!--======================================================================================-->
 	
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="%TernExplorerView.name"
-            icon="$nl$/icons/full/eview16/tern-explorer.png"
+            name="%TernOutlineView.name"
+            icon="$nl$/icons/full/eview16/tern-outline.png"
             category="org.eclipse.wst.jsdt.ui.java"
-            class="tern.eclipse.ide.internal.ui.views.TernExplorerView"
-            id="tern.eclipse.ide.ui.views.TernExplorerView">
+            class="tern.eclipse.ide.internal.ui.views.TernOutlineView"
+            id="tern.eclipse.ide.ui.views.TernOutlineView">
       </view>
   </extension>
    
@@ -263,9 +263,9 @@
 			point="org.eclipse.ui.navigator.navigatorContent">
 		<navigatorContent
 				activeByDefault="true"
-				contentProvider="tern.eclipse.ide.internal.ui.views.TernExplorerContentProvider"
-				id="tern.eclipse.ide.internal.views.TernExplorerContent"
-				labelProvider="tern.eclipse.ide.internal.ui.views.TernExplorerLabelProvider"
+				contentProvider="tern.eclipse.ide.internal.ui.views.TernOutlineContentProvider"
+				id="tern.eclipse.ide.internal.views.TernOutlineContent"
+				labelProvider="tern.eclipse.ide.internal.ui.views.TernOutlineLabelProvider"
 				name="%commonNavigatorContentName"
 				priority="low">
 			<triggerPoints>
@@ -288,14 +288,14 @@
   <extension
       point="org.eclipse.ui.navigator.viewer">
     <viewer
-         viewerId="tern.eclipse.ide.ui.views.TernExplorerView">
+         viewerId="tern.eclipse.ide.ui.views.TernOutlineView">
     </viewer>
     <viewerContentBinding
-         viewerId="tern.eclipse.ide.ui.views.TernExplorerView">
+         viewerId="tern.eclipse.ide.ui.views.TernOutlineView">
       <includes>
          <contentExtension
                isRoot="false"
-               pattern="tern.eclipse.ide.internal.views.TernExplorerContent">
+               pattern="tern.eclipse.ide.internal.views.TernOutlineContent">
          </contentExtension>
       </includes>
     </viewerContentBinding>

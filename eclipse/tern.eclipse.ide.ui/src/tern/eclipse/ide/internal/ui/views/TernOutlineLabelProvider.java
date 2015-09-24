@@ -19,7 +19,7 @@ import tern.eclipse.jface.images.TernImagesRegistry;
 import tern.server.protocol.outline.JSNode;
 import tern.utils.StringUtils;
 
-public class TernExplorerLabelProvider extends LabelProvider implements IStyledLabelProvider {
+public class TernOutlineLabelProvider extends LabelProvider implements IStyledLabelProvider {
 
 	@Override
 	public String getText(Object element) {
