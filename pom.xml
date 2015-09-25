@@ -193,11 +193,11 @@
 			<url>http://download.eclipse.org/cbi/updates/license/</url>
 			<layout>p2</layout>
 		</repository>
-		<!-- only for SNAPSHOT versions of minimatch
+		<!-- only for SNAPSHOT versions of minimatch  -->
 		 <repository>
 			<id>cloudbees</id>
 			<url>http://repository-opensagres.forge.cloudbees.com/snapshot/</url>
-		</repository> -->
+		</repository>
 	</repositories>
 	<scm>
 		<url>https://github.com/angelozerr/tern.java</url>
