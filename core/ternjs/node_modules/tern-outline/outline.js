@@ -56,6 +56,14 @@
         start: Number(node.start),
         end: Number(node.end)
     };
+    if (!(children instanceof Array)) {
+      if (children.children) {
+        children = children.children;
+      } else {
+        children = children.children = []; 
+      } 
+    }
+    
     children.push(child);
     return child;
   }
@@ -98,9 +106,11 @@
   var scopeVisitor = walk.make({
     Function: function(node, st, c) {
       var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
-      var fn = addChild(node, type, parent);
-      if (!node.id) fn.name = "function";
-      parent = fn.children = [];
+      if (parent.kind != "method") {
+        var fn = addChild(node, type, parent);
+        if (!node.id) fn.name = "function";
+        parent = fn;
+      }
       var scope = {parent: parent, scope: node.scope};
       if (node.id) c(node.id, scope);
       for (var i = 0; i < node.params.length; ++i)
@@ -110,21 +120,29 @@
     ObjectExpression: function (node, st, c) {
       var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
       var obj = addChild(node, type, parent);
-      parent = obj.children = [];
-      var scope = {parent: parent, scope: st.scope};
+      var scope = {parent: obj, scope: st.scope};
       for (var i = 0; i < node.properties.length; ++i)
         c(node.properties[i], scope);
     },
     ClassDeclaration: function (node, st, c) {
-      var parent = st.parent, scope = st.scope, type = "class"; //infer.expressionType({node: node.id ? node.id : node, state: scope});
+      var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
       var obj = addChild(node, type, parent);
-      parent = obj.children = [];
-      var scope = {parent: parent, scope: st.scope};
+      obj.kind = "class";
+      var scope = {parent: obj, scope: st.scope};
       if (node.superClass) c(node.superClass, scope, "Expression");
       for (var i = 0; i < node.body.body.length; i++) {
         c(node.body.body[i], scope);
       }
     },
+    MethodDefinition: function (node, st, c) {
+      var parent = st.parent, scope = st.scope;        
+      var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
+      var meth = addChild(node.key, type, parent);
+      meth.kind = "method";
+      var scope = {parent: meth, scope: st.scope};
+      if (node.computed) c(node.key, scope, "Expression");
+      c(node.value, scope, "Expression");
+    }
   });
 
   // Other alternative bases:

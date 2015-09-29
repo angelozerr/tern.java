@@ -35,6 +35,7 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 	protected void addChildren(Iterable<Object> jsonNodes, JSNode parent, IJSONObjectHelper helper) {
 		String name = null;
 		String type = null;
+		String kind = null;
 		Long start = null;
 		Long end = null;
 		JSNode node = null;
@@ -42,9 +43,10 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 		for (Object jsonNode : jsonNodes) {
 			name = helper.getText(jsonNode, "name");
 			type = helper.getText(jsonNode, "type");
+			kind = helper.getText(jsonNode, "kind");
 			start = helper.getLong(jsonNode, "start");
 			end = helper.getLong(jsonNode, "end");
-			node = new JSNode(name, type, start, end, parent);
+			node = new JSNode(name, type, kind, start, end, parent);
 			jsonChildren = helper.getList(jsonNode, CHILDREN_FIELD_NAME); // $NON-NLS-1$
 			if (jsonChildren != null) {
 				addChildren(jsonChildren, node, helper);

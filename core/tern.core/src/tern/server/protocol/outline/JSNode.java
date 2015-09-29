@@ -18,12 +18,13 @@ import java.util.List;
  *
  */
 public class JSNode {
-	
+
 	private static final String FN_TYPE = "fn(";
 	private static final String ARRAY_TYPE = "[";
-	
+
 	private final String name;
 	private final String type;
+	private final String kind;
 	private final Long start;
 	private final Long end;
 	private final JSNode parent;
@@ -32,7 +33,7 @@ public class JSNode {
 	private final boolean isFunction;
 	private final boolean isArray;
 
-	public JSNode(String name, String type, Long start, Long end, JSNode parent) {
+	public JSNode(String name, String type, String kind, Long start, Long end, JSNode parent) {
 		this.name = name;
 		this.type = type;
 		this.start = start;
@@ -45,13 +46,17 @@ public class JSNode {
 			this.parent = null;
 		}
 		if (type != null) {
-			isClass = "class".equals(type);
 			isFunction = type.startsWith(FN_TYPE);
 			isArray = type.startsWith(ARRAY_TYPE);
 		} else {
-			isClass = false;
 			isFunction = false;
 			isArray = false;
+		}
+		this.kind = kind;
+		if (kind != null) {
+			isClass = "class".equals(kind);
+		} else {
+			isClass = false;
 		}
 	}
 
@@ -61,6 +66,10 @@ public class JSNode {
 
 	public String getType() {
 		return type;
+	}
+
+	public String getKind() {
+		return kind;
 	}
 
 	public List<JSNode> getChildren() {
