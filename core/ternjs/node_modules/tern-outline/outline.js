@@ -32,7 +32,7 @@
       return getNodeName(node.property);
     } else if(node.id) {
       // This is a Function
-      return node.id.name ? node.id.name : "function";
+      return node.id.name ? node.id.name : "<anonymous>";
     } else if(node.value) {
       return node.value;
     } else {
@@ -73,7 +73,7 @@
       VariableDeclaration: function (node, st) {
         for (var i = 0, len = node.declarations.length; i < len; i++) {
           var decl = node.declarations[i];
-          var parent = st.parent, scope = st.scope, type = infer.expressionType({node: decl.id, state: scope});
+          var parent = st.parent, scope = st.scope, type = infer.expressionType({node: decl.id, state: scope}), child;
           if (isObjectLiteral(type) || isFunctionType(type)) {
             var obj = parent[parent.length -1];
             if (obj) {
@@ -81,10 +81,14 @@
               obj.start = Number(node.start);
               obj.end = Number(node.end);
             } else {
-              addChild(decl.id, type, parent);
+              child = addChild(decl.id, type, parent);
             }
           } else {
-            addChild(decl.id, type, parent);
+            child = addChild(decl.id, type, parent);
+          }
+          if (child && node.kind) {
+            // is it interesting to have var, const, let kind?
+            // child.kind = node.kind; 
           }
         }
       },
@@ -100,17 +104,28 @@
     return {};
   });  
   
+  var classDeclaration = function (node, st, c) {
+    var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
+    var obj = addChild(node, type, parent);
+    obj.kind = "class";
+    var scope = {parent: obj, scope: st.scope};
+    if (node.superClass) c(node.superClass, scope, "Expression");
+    for (var i = 0; i < node.body.body.length; i++) {
+      c(node.body.body[i], scope);
+    }
+  };
+  
   // Adapted from infer.searchVisitor.
   // Record the scope and pass it through in the state.
   // VariableDeclaration in infer.searchVisitor breaks things for us.
   var scopeVisitor = walk.make({
     Function: function(node, st, c) {
-      var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
-      if (parent.kind != "method") {
+      var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id && node.type != "FunctionExpression" ? node.id : node, state: scope});
+      if (!st.ignoreFirstFn) {
         var fn = addChild(node, type, parent);
-        if (!node.id) fn.name = "function";
+        if (!node.id) fn.name = "<anonymous>";
         parent = fn;
-      }
+      } else delete(st.ignoreFirstFn);
       var scope = {parent: parent, scope: node.scope};
       if (node.id) c(node.id, scope);
       for (var i = 0; i < node.params.length; ++i)
@@ -124,22 +139,14 @@
       for (var i = 0; i < node.properties.length; ++i)
         c(node.properties[i], scope);
     },
-    ClassDeclaration: function (node, st, c) {
-      var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
-      var obj = addChild(node, type, parent);
-      obj.kind = "class";
-      var scope = {parent: obj, scope: st.scope};
-      if (node.superClass) c(node.superClass, scope, "Expression");
-      for (var i = 0; i < node.body.body.length; i++) {
-        c(node.body.body[i], scope);
-      }
-    },
+    ClassExpression: classDeclaration,
+    ClassDeclaration: classDeclaration,
     MethodDefinition: function (node, st, c) {
       var parent = st.parent, scope = st.scope;        
       var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
       var meth = addChild(node.key, type, parent);
       meth.kind = "method";
-      var scope = {parent: meth, scope: st.scope};
+      var scope = {parent: meth, scope: st.scope, ignoreFirstFn: true};
       if (node.computed) c(node.key, scope, "Expression");
       c(node.value, scope, "Expression");
     }
