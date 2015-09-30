@@ -41,7 +41,7 @@
 	  <proposalComputer
 	      activate="true"
 	      categoryId="tern.eclipse.ide.jsdt.ui.contentassist.TernContentAssistProcessor"
-	      class="tern.eclipse.ide.jsdt.internal.ui.contentassist.TernContentAssistProcessor"
+	      class="tern.eclipse.ide.jsdt.internal.ui.contentassist.TernCompletionProposalComputer"
 	      id="tern.eclipse.ide.jsdt.ui.contentassist.TernContentAssistProcessor">
 	     <contentType
 	        id="org.eclipse.wst.html.core.htmlsource">
