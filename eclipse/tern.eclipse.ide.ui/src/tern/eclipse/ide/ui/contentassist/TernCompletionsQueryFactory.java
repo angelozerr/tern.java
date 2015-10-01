@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - unified completion proposals calculation
  */
 package tern.eclipse.ide.ui.contentassist;
 
@@ -38,9 +39,15 @@ public class TernCompletionsQueryFactory {
 
 		IPreferencesService preferencesService = Platform
 				.getPreferencesService();
-		IScopeContext[] lookupOrder = new IScopeContext[] {
-				new ProjectScope(project), new InstanceScope(),
-				new DefaultScope() };
+		IScopeContext[] lookupOrder;
+
+		if (project != null) {
+			lookupOrder = new IScopeContext[] { new ProjectScope(project),
+					InstanceScope.INSTANCE, DefaultScope.INSTANCE };
+		} else {
+			lookupOrder = new IScopeContext[] { InstanceScope.INSTANCE,
+					DefaultScope.INSTANCE };
+		}
 
 		boolean omitObjectPrototype = getBoolean(
 				TernUIPreferenceConstants.OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST,

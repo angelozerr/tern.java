@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,11 +7,15 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - unified completion proposals calculation
  */
 package tern.eclipse.ide.jsdt.internal.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import tern.eclipse.ide.jsdt.internal.ui.contentassist.ITernContextProvider;
+import tern.eclipse.ide.jsdt.internal.ui.contentassist.JSDTTernContextProvider;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -23,6 +27,8 @@ public class JSDTTernUIPlugin extends AbstractUIPlugin {
 
 	// The shared instance
 	private static JSDTTernUIPlugin plugin;
+
+	private static ITernContextProvider contextProvider = new JSDTTernContextProvider();
 
 	/**
 	 * The constructor
@@ -62,5 +68,13 @@ public class JSDTTernUIPlugin extends AbstractUIPlugin {
 	public static JSDTTernUIPlugin getDefault() {
 		return plugin;
 	}
-
+	
+	public static ITernContextProvider getContextProvider() {
+		return contextProvider;
+	}
+	
+	public static void setContextProvider(ITernContextProvider projectProvider) {
+		contextProvider = projectProvider;
+	}
+	
 }
