@@ -93,10 +93,17 @@
         }
       },
       Property: function (node, st) {
-        var parent = st.parent, scope = st.scope;        
+        var parent = st.parent, scope = st.scope;
         var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
         addChild(node.key, type, parent);
-      }
+      },
+      AssignmentExpression: function (node, st) {
+        if(node.left && node.left.object && node.left.object.type == "ThisExpression") {
+          var parent = st.parent, scope = st.scope;
+          var type = infer.expressionType({node: node.left, state: scope});
+          addChild(node.left, type, parent);
+        }
+      }      
     }
   }
   
@@ -145,7 +152,7 @@
       var parent = st.parent, scope = st.scope;        
       var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
       var meth = addChild(node.key, type, parent);
-      meth.kind = "method";
+      meth.kind = node.kind;
       var scope = {parent: meth, scope: st.scope, ignoreFirstFn: true};
       if (node.computed) c(node.key, scope, "Expression");
       c(node.value, scope, "Expression");
