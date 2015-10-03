@@ -69,8 +69,13 @@ public class TernReporterCollector implements ITernLintCollector {
 	 * Try to retrieve the line number.
 	 */
 	private Integer getLineNumber(Long line, int start, IResource resource) {
-		return line != null ? line.intValue() : FileUtils.getLineOfOffset(
-				start, (IFile) resource);
+		if (line != null) {
+			return line.intValue();
+		}
+		if (start >= 0) {
+			return FileUtils.getLineOfOffset(start, (IFile) resource);
+		}
+		return null;
 	}
 
 	private int getSeverity(String severity) {
