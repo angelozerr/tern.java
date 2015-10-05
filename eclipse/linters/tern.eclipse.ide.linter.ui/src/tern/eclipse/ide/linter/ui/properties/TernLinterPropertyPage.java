@@ -60,7 +60,7 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage im
 
 		IWorkingCopy workingCopy = getWorkingCopy();
 		// create UI linter config
-		linterConfigBlock = new TernLinterOptionsBlock(linterId, workingCopy);
+		linterConfigBlock = new TernLinterOptionsBlock(linterId, workingCopy, this);
 		Control control = linterConfigBlock.createControl(parent);
 		GridData data = new GridData(GridData.FILL_BOTH);
 		data.horizontalSpan = 1;

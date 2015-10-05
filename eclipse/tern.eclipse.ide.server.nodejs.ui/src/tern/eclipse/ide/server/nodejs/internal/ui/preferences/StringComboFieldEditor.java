@@ -118,6 +118,7 @@ public class StringComboFieldEditor extends FieldEditor {
 		return true;
 	}
 
+	@Override
 	protected void doFillIntoGrid(Composite parent, int numColumns) {
 		getLabelControl(parent);
 
@@ -139,6 +140,7 @@ public class StringComboFieldEditor extends FieldEditor {
 		this.textField.setLayoutData(gd);
 	}
 
+	@Override
 	protected void doLoad() {
 		if (this.textField != null) {
 			String value = getPreferenceStore().getString(getPreferenceName());
@@ -148,6 +150,7 @@ public class StringComboFieldEditor extends FieldEditor {
 		}
 	}
 
+	@Override
 	protected void doLoadDefault() {
 		if (this.textField != null) {
 			String value = getPreferenceStore().getDefaultString(
@@ -158,6 +161,7 @@ public class StringComboFieldEditor extends FieldEditor {
 		valueChanged();
 	}
 
+	@Override
 	protected void doStore() {
 		getPreferenceStore().setValue(getPreferenceName(),
 				this.textField.getText());
@@ -238,10 +242,12 @@ public class StringComboFieldEditor extends FieldEditor {
 		return this.emptyStringAllowed;
 	}
 
+	@Override
 	public boolean isValid() {
 		return this.isValid;
 	}
 
+	@Override
 	protected void refreshValidState() {
 		this.isValid = checkState();
 	}

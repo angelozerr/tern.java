@@ -10,12 +10,16 @@
  */
 package tern.eclipse.ide.linter.ui.properties;
 
+import java.io.File;
 import java.util.Collection;
 
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -27,6 +31,8 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Font;
@@ -35,9 +41,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
+
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import tern.TernException;
 import tern.eclipse.ide.core.IWorkingCopy;
@@ -57,9 +68,6 @@ import tern.server.ITernModule;
 import tern.server.ITernModuleConfigurable;
 import tern.utils.StringUtils;
 
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
-
 /**
  * Block which hosts the Tree of the Tern linter options.
  * 
@@ -67,12 +75,16 @@ import com.eclipsesource.json.JsonValue;
 public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		IWorkingCopyListener {
 
+	// JSON field for linter config.
 	private static final String CONFIG_FILE_FIELD = "configFile";
 	private static final String CONFIG_FIELD = "config";
+	
 	private final String linterId;
 	private String linterConfigFilename;
 
 	private final IWorkingCopy workingCopy;
+	private final PreferencePage preferencePage;
+	
 	private TreeViewer treeViewer;
 
 	private TernLinterOptionsPanel optionsPanel;
@@ -81,16 +93,19 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 
 	// Use config
 	private Text linterConfigFileText;
-	private Button linterConfigFileButton;
-
+	private Button projectBrowserButton;
+	private Button workspaceBrowserButton;
+	private Button filesystemBrowserButton;
+	
 	// Composite panel stack.
 	private Composite contentPanel;
 	private Composite configPage;
 	private Composite configFilePage;
 
-	public TernLinterOptionsBlock(String linterId, IWorkingCopy workingCopy) {
+	public TernLinterOptionsBlock(String linterId, IWorkingCopy workingCopy, PreferencePage preferencePage) {
 		this.linterId = linterId;
 		this.workingCopy = workingCopy;
+		this.preferencePage = preferencePage;
 		this.linterConfigFilename = TernLinterCorePlugin.getDefault()
 				.getTernLinterConfigurationsManager().getFilename(linterId);
 		workingCopy.addWorkingCopyListener(this);
@@ -194,7 +209,9 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		}
 		if (linterConfigFileText != null) {
 			linterConfigFileText.setEnabled(checked);
-			linterConfigFileButton.setEnabled(checked);
+			projectBrowserButton.setEnabled(checked);
+			workspaceBrowserButton.setEnabled(checked);
+			filesystemBrowserButton.setEnabled(checked);
 		}
 		if (optionsPanel != null) {
 			optionsPanel.updateEnabled(checked);
@@ -205,7 +222,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	protected Composite createBody(Composite parent) {
 		Composite contentPanel = new Composite(parent, SWT.NONE);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		data.heightHint = 400;
+		data.minimumHeight = 400;
 		contentPanel.setLayoutData(data);
 		StackLayout layout = new StackLayout();
 		contentPanel.setLayout(layout);
@@ -312,21 +329,52 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		Composite page = new Composite(parent, SWT.NONE);
 		page.setLayoutData(new GridData(GridData.FILL_BOTH));
 		page.setLayout(new GridLayout(3, false));
+		
+		createConfigFileText(page);		
+		createBrowseButtons(page);
+		
+		return page;
+	}
 
-		Label linterConfigFileLabel = new Label(page, SWT.NONE);
+	protected void createConfigFileText(Composite parent) {
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(new GridLayout(2, false));
+		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		data.verticalAlignment = SWT.BEGINNING; 
+		container.setLayoutData(data);
+		
+		Label linterConfigFileLabel = new Label(container, SWT.NONE);
 		linterConfigFileLabel.setText(new StringBuilder(linterConfigFilename)
 				.append(":").toString());
-		linterConfigFileText = new Text(page, SWT.BORDER);
+		linterConfigFileText = new Text(container, SWT.BORDER);
+		linterConfigFileText.addModifyListener(new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				validate();
+			}			
+		});
 		linterConfigFileText.setLayoutData(new GridData(
 				GridData.FILL_HORIZONTAL));
-		linterConfigFileButton = new Button(page, SWT.NONE);
-		linterConfigFileButton.setText(TernLinterUIMessages.Button_browse);
-		linterConfigFileButton.addSelectionListener(new SelectionAdapter() {
+	}
+
+	private void createBrowseButtons(Composite parent) {
+		Composite container = new Composite(parent, SWT.NONE);
+		container.setLayout(new GridLayout(1, true));
+		container.setLayoutData(new GridData());
+		
+		final Shell shell = parent.getShell();
+		final IProject project = workingCopy
+				.getProject().getProject();
+		
+		// Browse files config of Project
+		projectBrowserButton = new Button(container, SWT.NONE);
+		projectBrowserButton.setText(TernLinterUIMessages.Button_browse_project);
+		projectBrowserButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				OpenResourceDialog dialog = new OpenResourceDialog(
-						linterConfigFileButton.getShell(), false, workingCopy
-								.getProject().getProject(), IResource.FILE);
+						shell, false, project, IResource.FILE);
 				dialog.setInitialPattern(linterConfigFilename);
 				if (dialog.open() != Window.OK) {
 					return;
@@ -339,7 +387,46 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 				}
 			}
 		});
-		return page;
+		projectBrowserButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		
+		// Browse files config of Workspace
+		workspaceBrowserButton = new Button(container, SWT.NONE);
+		workspaceBrowserButton.setText(TernLinterUIMessages.Button_browse_workspace);
+		workspaceBrowserButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				OpenResourceDialog dialog = new OpenResourceDialog(
+						shell, false, ResourcesPlugin.getWorkspace().getRoot(), IResource.FILE);
+				dialog.setInitialPattern(linterConfigFilename);
+				if (dialog.open() != Window.OK) {
+					return;
+				}
+				IResource result = (IResource) dialog.getFirstResult();
+				if (result != null
+						&& linterConfigFilename.equals(result.getName())) {					
+					linterConfigFileText.setText(result.getFullPath().makeRelativeTo(project.getFullPath()).toString());
+				}
+			}
+		});
+		
+		// Browse files config of File System
+		filesystemBrowserButton = new Button(container, SWT.NONE);
+		filesystemBrowserButton.setText(TernLinterUIMessages.Button_browse_filesystem);
+		filesystemBrowserButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				FileDialog dialog = new FileDialog(shell, SWT.NONE);
+				dialog.setFileName(linterConfigFileText.getText());
+				dialog.setFileName(linterConfigFilename);
+				String file = dialog.open();
+				if (file != null) {
+					file = file.trim();
+					if (file.length() > 0) {
+						linterConfigFileText.setText(file);
+					}
+				}
+			}
+		});
 	}
 
 	public void setLinterConfig(ITernLinterConfig config) throws TernException {
@@ -488,5 +575,27 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	private boolean isUseConfigFiles() {
 		return useConfigFilesCheckbox != null
 				&& useConfigFilesCheckbox.getSelection();
+	}
+	
+	private void validate() {
+		preferencePage.setErrorMessage(null);
+		if (linterConfigFileText != null) {
+			String fileConfig = linterConfigFileText.getText();
+			// Validate if file config is valid.
+			if (!isProjectFile(fileConfig) && !(new File(fileConfig).exists())) {
+				preferencePage.setErrorMessage(fileConfig + " is not a valid path.");
+			}		
+		}
+	}
+	
+	private boolean isProjectFile(String fileConfig) {
+		try {
+			IProject project = workingCopy
+					.getProject().getProject();
+			return project.getFile(fileConfig).exists();
+		}
+		catch(Throwable e) {
+			return false;
+		}
 	}
 }
