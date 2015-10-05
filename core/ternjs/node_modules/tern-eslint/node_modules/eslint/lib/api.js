@@ -7,6 +7,7 @@
 
 module.exports = {
     linter: require("./eslint"),
-    cli: require("./cli"),
-    CLIEngine: require("./cli-engine")
+    CLIEngine: require("./cli-engine"),
+    RuleTester: require("./testers/rule-tester"),
+    SourceCode: require("./util/source-code")
 };
