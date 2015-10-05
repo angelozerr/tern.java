@@ -271,7 +271,6 @@
 	eslint.reset();
 
 	var config = getConfig(), text = file.text;
-	console.log(config)
 	var errors = eslint.verify(text, config, file.name);
 	for (var i = 0; i < errors.length; i++) {	    
 	  messages.push(makeError(errors[i]));	
