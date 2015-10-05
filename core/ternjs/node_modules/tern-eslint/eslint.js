@@ -197,7 +197,7 @@
   }
   
   var eslintConfig = null;
-  if (require) try {eslintConfig = require("eslint/lib/config");} catch(e) {};
+  eslintConfig = require("eslint/lib/config");
   
   tern.registerPlugin("eslint", function(server, options) {
     server.mod.eslint = {
@@ -229,11 +229,12 @@
       return tern.resolvePos(file, {line: line, ch: ch});
     }
         
+    function normPath(name) { return name.replace(/\\/g, "/"); }
+    
     function loadConfig(file) {
-      var options = {
-        configFile: file
-      }
-      return new eslintConfig.Config(options);
+      var filePath = normPath(server.options.projectDir) + "/" + normPath(file);
+      defaultConfig.configFile = filePath;
+      return new eslintConfig(defaultConfig).getConfig(filePath);
     }
     
     function getConfig() {
@@ -270,6 +271,7 @@
 	eslint.reset();
 
 	var config = getConfig(), text = file.text;
+	console.log(config)
 	var errors = eslint.verify(text, config, file.name);
 	for (var i = 0; i < errors.length; i++) {	    
 	  messages.push(makeError(errors[i]));	
