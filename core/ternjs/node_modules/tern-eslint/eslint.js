@@ -203,6 +203,40 @@
     }
   });
   
+  
+  // copied from eslint\lib\cli-engine.js
+  var loadedPlugins = Object.create(null);
+  
+  /**
+   * Load the given plugins if they are not loaded already.
+   * @param {string[]} pluginNames An array of plugin names which should be loaded.
+   * @returns {void}
+   */
+  function loadPlugins(pluginNames) {
+      var util = require("eslint/lib/util");
+      var rules = require("eslint/lib/rules");
+      if (pluginNames) {
+          pluginNames.forEach(function(pluginName) {
+              var pluginNamespace = util.getNamespace(pluginName),
+                  pluginNameWithoutNamespace = util.removeNameSpace(pluginName),
+                  pluginNameWithoutPrefix = util.removePluginPrefix(pluginNameWithoutNamespace),
+                  plugin;
+
+              if (!loadedPlugins[pluginNameWithoutPrefix]) {
+                  //debug("Load plugin " + pluginNameWithoutPrefix);
+
+                  plugin = require(pluginNamespace + util.PLUGIN_NAME_PREFIX + pluginNameWithoutPrefix);
+                  // if this plugin has rules, import them
+                  if (plugin.rules) {
+                      rules.import(plugin.rules, pluginNameWithoutPrefix);
+                  }
+
+                  loadedPlugins[pluginNameWithoutPrefix] = plugin;
+              }
+          });
+      }
+  }
+  
   function validate(server, query, file, messages) {
 
     function getPos(error, from) {
@@ -276,6 +310,7 @@
 	eslint.reset();
 
 	var config = getConfig(), text = file.text;
+	loadPlugins(config.plugins);
 	var errors = eslint.verify(text, config, file.name);
 	for (var i = 0; i < errors.length; i++) {	    
 	  messages.push(makeError(errors[i]));	
