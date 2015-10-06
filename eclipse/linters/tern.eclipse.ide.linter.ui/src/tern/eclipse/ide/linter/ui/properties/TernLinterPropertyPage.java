@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.linter.ui.properties;
 
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -18,12 +19,17 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
+import tern.TernException;
 import tern.eclipse.ide.core.IWorkingCopy;
 import tern.eclipse.ide.linter.core.ITernLinterConfig;
 import tern.eclipse.ide.linter.core.TernLinterCorePlugin;
 import tern.eclipse.ide.linter.internal.ui.TernLinterUIPlugin;
 import tern.eclipse.ide.linter.internal.ui.Trace;
+import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.properties.AbstractTernPropertyPage;
+import tern.metadata.TernModuleMetadata;
+import tern.server.ITernModule;
+import tern.utils.StringUtils;
 
 /**
  * Abstract class for Linter property page.
@@ -69,6 +75,17 @@ public abstract class TernLinterPropertyPage extends AbstractTernPropertyPage im
 		// load linter config
 		loadLinterConfig();
 
+		// Display icon of linter
+		try {
+			ITernModule module = workingCopy.getTernModule(linterId);
+			ImageDescriptor desc = TernUIPlugin.getTernDescriptorManager().getImageDescriptor(
+					module);
+			if (desc != null) {
+				super.setImageDescriptor(desc);
+			}
+		} catch (TernException e) {
+			
+		}
 		applyDialogFont(parent);
 		return parent;
 	}

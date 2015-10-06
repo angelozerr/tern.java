@@ -37,7 +37,6 @@ import tern.eclipse.ide.ui.descriptors.ITernModuleDescriptorManager;
 import tern.eclipse.ide.ui.descriptors.ITernModuleImage;
 import tern.eclipse.ide.ui.descriptors.options.ITernModuleOptionFactory;
 import tern.eclipse.jface.images.TernImagesRegistry;
-import tern.metadata.TernModuleMetadata;
 import tern.server.ITernModule;
 import tern.server.protocol.completions.TernCompletionItem;
 
@@ -91,6 +90,11 @@ public class TernModuleDescriptorManager implements
 		return TernImagesRegistry.getImage(module);
 	}
 
+	@Override
+	public ImageDescriptor getImageDescriptor(ITernModule module) {
+		return TernImagesRegistry.getImageDescriptor(module);
+	}
+	
 	@Override
 	public Composite createOptionsPanel(Composite parent, ITernModule module,
 			IProject project) {

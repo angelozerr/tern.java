@@ -33,6 +33,15 @@ public interface ITernModuleDescriptorManager {
 	Image getImage(ITernModule module);
 
 	/**
+	 * Returns the image descriptor for the given module name.
+	 * 
+	 * @param id
+	 *            module name.
+	 * @return the image descriptor for the given module name.
+	 */
+	ImageDescriptor getImageDescriptor(ITernModule module);
+	
+	/**
 	 * Returns the image for the given tern completion item.
 	 * 
 	 * @param item

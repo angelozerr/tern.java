@@ -222,7 +222,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	protected Composite createBody(Composite parent) {
 		Composite contentPanel = new Composite(parent, SWT.NONE);
 		GridData data = new GridData(GridData.FILL_HORIZONTAL);
-		data.minimumHeight = 400;
+		data.heightHint = 400;
 		contentPanel.setLayoutData(data);
 		StackLayout layout = new StackLayout();
 		contentPanel.setLayout(layout);
@@ -255,6 +255,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	 */
 	private void createOptionsMaster(Composite ancestor) {
 		Composite parent = new Composite(ancestor, SWT.NONE);
+		parent.setLayoutData(new GridData(GridData.FILL_BOTH));
 		TreeColumnLayout layout = new TreeColumnLayout();
 		parent.setLayout(layout);
 		Font font = ancestor.getFont();
@@ -268,9 +269,8 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 		tree.setLinesVisible(true);
 
 		GridData data = new GridData(GridData.FILL_BOTH);
-		data.heightHint = 400;
+		data.minimumHeight= 400;
 		tree.setLayoutData(data);
-		// tree.setFont(parent.getFont());
 
 		treeViewer
 				.setContentProvider(LinterConfigContentProvider.getInstance());
@@ -339,7 +339,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	protected void createConfigFileText(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new GridLayout(2, false));
-		GridData data = new GridData(GridData.FILL_HORIZONTAL);
+		GridData data = new GridData(GridData.FILL_BOTH);
 		data.verticalAlignment = SWT.BEGINNING; 
 		container.setLayoutData(data);
 		
@@ -361,7 +361,7 @@ public class TernLinterOptionsBlock extends AbstractTreeBlock implements
 	private void createBrowseButtons(Composite parent) {
 		Composite container = new Composite(parent, SWT.NONE);
 		container.setLayout(new GridLayout(1, true));
-		container.setLayoutData(new GridData());
+		container.setLayoutData(new GridData(GridData.FILL_VERTICAL));
 		
 		final Shell shell = parent.getShell();
 		final IProject project = workingCopy
