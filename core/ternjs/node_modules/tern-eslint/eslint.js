@@ -29,8 +29,11 @@
           "no-div-regex": 0,
           "no-dupe-class-members": 0,
           "no-dupe-keys": 2,
+          "no-dupe-args": 2,
+          "no-duplicate-case": 2,
           "no-else-return": 0,
           "no-empty": 2,
+          "no-empty-character-class": 2,
           "no-empty-label": 0,
           "no-eq-null": 0,
           "no-eval": 0,
@@ -123,6 +126,7 @@
           "brace-style": [0, "1tbs"],
           "callback-return": 0,
           "camelcase": 0,
+          "comma-dangle": [2, "never"],
           "comma-spacing": 0,
           "comma-style": 0,
           "complexity": [0, 11],
@@ -195,11 +199,38 @@
           "yoda": [0, "never"]
       }
   }
-    
+
+  
+  function normPath(name) { return name.replace(/\\/g, "/"); }
+  
+  function loadConfig(file) {
+    var eslintConfig = require("eslint/lib/config");
+    try {
+      // try to load eslint.json hosted inside project
+      var filePath = normPath(server.options.projectDir) + "/" + normPath(file);
+      defaultConfig.configFile = filePath;
+      return new eslintConfig(defaultConfig).getConfig(filePath);
+    } catch (e) {}
+    // try to load eslint.json hosted anywhere in the file system.
+    var filePath = normPath(file);
+    defaultConfig.configFile = filePath;
+    return new eslintConfig(defaultConfig).getConfig(filePath);
+  }
+  
+  function getConfig(server, options) {
+    if (options.config) return options.config;
+    if (options.configFile) {
+      var config = loadConfig(options.configFile);
+      loadPlugins(config.plugins);
+      return config;
+    }
+    return defaultConfig;
+  }
+  
   tern.registerPlugin("eslint", function(server, options) {
+    var config = getConfig(server, options);    
     server.mod.eslint = {
-      config: options.config,
-      configFile: options.configFile,
+      config: config
     }
   });
   
@@ -258,30 +289,7 @@
         else if (ch >= file.text.length) ch = file.text.length;
       }        
       return tern.resolvePos(file, {line: line, ch: ch});
-    }
-        
-    function normPath(name) { return name.replace(/\\/g, "/"); }
-    
-    function loadConfig(file) {
-      var eslintConfig = require("eslint/lib/config");
-      try {
-        // try to load eslint.json hosted inside project
-        var filePath = normPath(server.options.projectDir) + "/" + normPath(file);
-        defaultConfig.configFile = filePath;
-        return new eslintConfig(defaultConfig).getConfig(filePath);
-      } catch (e) {}
-      // try to load eslint.json hosted anywhere in the file system.
-      var filePath = normPath(file);
-      defaultConfig.configFile = filePath;
-      return new eslintConfig(defaultConfig).getConfig(filePath);
-    }
-    
-    function getConfig() {
-      var eslint = server.mod.eslint;
-      if (eslint.config) return eslint.config;
-      if (eslint.configFile) return loadConfig(eslint.configFile);
-      return defaultConfig;
-    }
+    }        
     
     function getSeverity(error) {
       switch(error.severity) {
@@ -309,8 +317,7 @@
 	//clear all existing settings for a new file
 	eslint.reset();
 
-	var config = getConfig(), text = file.text;
-	loadPlugins(config.plugins);
+	var text = file.text, config = server.mod.eslint.config;
 	var errors = eslint.verify(text, config, file.name);
 	for (var i = 0; i < errors.length; i++) {	    
 	  messages.push(makeError(errors[i]));	
