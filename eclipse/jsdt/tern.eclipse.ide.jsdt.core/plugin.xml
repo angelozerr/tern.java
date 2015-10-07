@@ -22,5 +22,15 @@
 	         name="JSDT Class Path Manager Provider">
 	   </provider>
 	</extension>
+ <extension
+       point="org.eclipse.core.runtime.adapters">
+    <factory
+          adaptableType="org.eclipse.wst.jsdt.core.IJavaScriptProject"
+          class="tern.eclipse.ide.jsdt.internal.core.JSDTToTernAdapter">
+       <adapter
+             type="tern.eclipse.ide.core.IIDETernProject">
+       </adapter>
+    </factory>
+ </extension>
 
 </plugin>        

@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench.texteditor,
  tern.eclipse,
  org.eclipse.core.expressions,
- org.eclipse.ui.views
+ org.eclipse.ui.views,
+ org.eclipse.ui.navigator
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.ui.TernUIPlugin
 Export-Package: tern.eclipse.ide.ui,

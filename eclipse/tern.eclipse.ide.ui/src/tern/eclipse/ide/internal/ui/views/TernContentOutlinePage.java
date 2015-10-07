@@ -11,57 +11,74 @@
 package tern.eclipse.ide.internal.ui.views;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
+import org.eclipse.ui.navigator.CommonViewer;
+import org.eclipse.ui.part.Page;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import tern.eclipse.ide.core.IIDETernProject;
-import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
-import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.utils.EditorUtils;
-import tern.server.TernPlugin;
 import tern.server.protocol.outline.JSNode;
-import tern.server.protocol.outline.TernOutlineQuery;
 
-public class TernContentOutlinePage extends ContentOutlinePage {
+public class TernContentOutlinePage extends Page implements IContentOutlinePage {
 
-	private static final int UPDATE_DELAY = 200;
-
-	private final TernOutline outline;
-	private Boolean updating;
-	private Boolean redone;
+	private final TernDocumentFile ternFile;
+	private CommonViewer viewer;
 
 	public TernContentOutlinePage(TernDocumentFile ternFile) {
-		this.outline = new TernOutline(ternFile);
-		this.updating = false;
-		this.redone = false;
+		this.ternFile = ternFile;
+	}
+
+	@Override
+	public void addSelectionChangedListener(ISelectionChangedListener listener) {
+		this.viewer.addSelectionChangedListener(listener);
+	}
+
+	@Override
+	public ISelection getSelection() {
+		return this.viewer.getSelection();
+	}
+
+	@Override
+	public void removeSelectionChangedListener(ISelectionChangedListener listener) {
+		this.viewer.removePostSelectionChangedListener(listener);
+	}
+
+	@Override
+	public void setSelection(ISelection selection) {
+		this.viewer.setSelection(selection);
+	}
+
+	@Override
+	public Control getControl() {
+		return this.viewer.getControl();
+	}
+
+	@Override
+	public void setFocus() {
+		getControl().setFocus();
 	}
 
 	@Override
 	public void createControl(Composite parent) {
-		super.createControl(parent);
-		getTreeViewer().setContentProvider(new TernOutlineContentProvider(this));
-		getTreeViewer().setLabelProvider(new DelegatingStyledCellLabelProvider(new TernOutlineLabelProvider()));
-		getTreeViewer().addDoubleClickListener(new IDoubleClickListener() {
-
+		viewer = new CommonViewer(TernUIPlugin.PLUGIN_ID + ".outline", parent, SWT.MULTI); 
+		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
 				if (!selection.isEmpty()) {
 					if (selection.getFirstElement() instanceof JSNode) {
 						JSNode node = (JSNode) selection.getFirstElement();
-						IFile file = outline.getTernFile().getFile();
+						IFile file = ternFile.getFile();
 						Long start = node.getStart();
 						Long end = node.getEnd();
 						EditorUtils.openInEditor(
@@ -74,70 +91,8 @@ public class TernContentOutlinePage extends ContentOutlinePage {
 				}
 			}
 		});
-		getTreeViewer().setAutoExpandLevel(TreeViewer.ALL_LEVELS);
-		refreshOutline();
-	}
-
-	void refreshOutline() {
-		if (updating) {
-			redone = true;
-			return;
-		}
-		synchronized (updating) {
-			updating = true;
-		}
-		Job refresh = new Job(TernUIMessages.refreshOutline) {
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				try {
-					final TreeViewer viewer = getTreeViewer();
-					TernDocumentFile ternFile = outline.getTernFile();
-					IIDETernProject ternProject = TernCorePlugin.getTernProject(ternFile.getFile().getProject());
-					if (ternProject != null && ternProject.hasPlugin(TernPlugin.outline)) {
-
-						if (redone) {
-							return Status.CANCEL_STATUS;
-						}
-						// Call tern-outline
-						TernOutlineQuery query = new TernOutlineQuery(ternFile.getFileName());
-						ternProject.request(query, ternFile, outline);
-
-						// Refresh UI Tree
-						Display.getDefault().syncExec(new Runnable() {
-
-							@Override
-							public void run() {
-								Control refreshControl = viewer.getControl();
-								if ((refreshControl != null) && !refreshControl.isDisposed() && !redone) {
-									if (viewer.getInput() == null) {
-										viewer.setInput(outline);
-									} else {
-										viewer.refresh();
-										viewer.expandAll();
-									}
-								}
-							}
-						});
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					synchronized (updating) {
-						updating = false;
-					}
-					if (redone) {
-						redone = false;
-						refreshOutline();
-					}
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		refresh.setSystem(true);
-		refresh.setPriority(Job.SHORT);
-		refresh.schedule(UPDATE_DELAY);
-
+		viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
+		viewer.setInput(ternFile);
 	}
 
 }

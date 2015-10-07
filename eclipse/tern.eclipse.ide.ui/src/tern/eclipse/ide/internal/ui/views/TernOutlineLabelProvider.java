@@ -15,6 +15,9 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 
+import tern.eclipse.ide.internal.ui.TernUIMessages;
+import tern.eclipse.ide.ui.ImageResource;
+import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.jface.images.TernImagesRegistry;
 import tern.server.protocol.outline.JSNode;
 import tern.utils.StringUtils;
@@ -23,6 +26,9 @@ public class TernOutlineLabelProvider extends LabelProvider implements IStyledLa
 
 	@Override
 	public String getText(Object element) {
+		if (element == TernOutlineContentProvider.COMPUTING_NODE) {
+			return TernUIMessages.TernOutline_computing;
+		}
 		if (element instanceof JSNode) {
 			return ((JSNode) element).getName();
 		}
@@ -31,6 +37,9 @@ public class TernOutlineLabelProvider extends LabelProvider implements IStyledLa
 
 	@Override
 	public Image getImage(Object element) {
+		if (element == TernOutlineContentProvider.COMPUTING_NODE) {
+			return ImageResource.getImage(ImageResource.IMG_LOGO);
+		}
 		if (element instanceof JSNode) {
 			JSNode jsNode = (JSNode) element;
 			String jsType = jsNode.getType();
@@ -46,6 +55,9 @@ public class TernOutlineLabelProvider extends LabelProvider implements IStyledLa
 
 	@Override
 	public StyledString getStyledText(Object element) {
+		if (element == TernOutlineContentProvider.COMPUTING_NODE) {
+			return new StyledString(TernUIMessages.TernOutline_computing);
+		}
 		if (element instanceof JSNode) {
 			JSNode node = ((JSNode) element);
 			StyledString buff = new StyledString(StringUtils.isEmpty(node.getName()) ? "" : node.getName());
@@ -56,6 +68,6 @@ public class TernOutlineLabelProvider extends LabelProvider implements IStyledLa
 			}
 			return buff;
 		}
-		return null;
+		return new StyledString(getText(element));
 	}
 }
