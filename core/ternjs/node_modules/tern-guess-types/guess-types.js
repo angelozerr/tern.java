@@ -17,6 +17,14 @@
     return guessTypes[name];
   }
   
+  function getFunctionGuessType(fnType) {
+    if (fnType.guessType) return fnType.guessType;
+    if (fnType.metaData) {
+      fnType.guessType = getGuessType(fnType.metaData["!guess-type"]);
+      return fnType.guessType;
+    };
+  }
+  
   function ternError(msg) {
     var err = new Error(msg);
     err.name = "TernError";
@@ -24,7 +32,7 @@
   }
   
   tern.registerPlugin("guess-types", function(server, options) {
-    return {};
+    
   });  
   
   function init(quessTypes, type) {
@@ -69,7 +77,7 @@
           // one type
           argTypes = init(quessTypes, arg.getType ? arg.getType() : arg);
         }
-        quessTypes.args.push(argTypes);
+        quessTypes["!args"].push(argTypes);
       }
       
       function addValueType(type, value) {
@@ -78,10 +86,10 @@
       }
       
       var prop = null;
-      var exprAt = infer.findExpressionAround(file.ast, null, wordStart, file.scope);
+      var exprAt = infer.findExpressionAround(file.ast, null, wordStart, file.scope), objType;
       if (exprAt && exprAt.node.object) {
     	exprAt.node = exprAt.node.object;
-        var objType = infer.expressionType(exprAt);
+        objType = infer.expressionType(exprAt);
         if (objType && objType.getType && objType.getType()) {
           prop = objType.getType().hasProp ? objType.getType().hasProp(query.property) : objType.getType().proto.hasProp(query.property);
         }
@@ -90,11 +98,11 @@
       }
       
       if (prop && prop.getFunctionType) {
-        var findLocal = false;
-    	quessTypes.args = [];
+	    var findLocal = false;
+    	quessTypes["!args"] = [];
       	var fnType = prop.getFunctionType(), args = fnType.args;
       	for (var i = 0; i < args.length; i++) {
-          var arg = args[i], guessType = fnType.guessType && fnType.guessType(arg, i, file);
+          var arg = args[i], fnGuessType = getFunctionGuessType(fnType), guessType = fnGuessType && fnGuessType(arg, i, file, objType);
           if (guessType) {
             var type = guessType.type;
             setArgType(type);

@@ -23,7 +23,7 @@ public class TernGuessTypesResultProcessor implements ITernResultProcessor<ITern
 	/**
 	 * Properties for JSON guess types result.
 	 */
-	private static final String ARGS_FIELD_NAME = "args";
+	private static final String ARGS_FIELD_NAME = "!args";
 	private static final String NAME_PROPERTY = "name"; //$NON-NLS-1$
 	private static final String DISPLAY_NAME_PROPERTY = "displayName"; //$NON-NLS-1$
 	private static final String TYPE_PROPERTY = "type"; //$NON-NLS-1$
