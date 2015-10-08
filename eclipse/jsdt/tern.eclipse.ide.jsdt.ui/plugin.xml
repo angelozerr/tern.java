@@ -136,6 +136,19 @@
 			targetId="org.eclipse.wst.html.core.htmlsource"/>
    	</extension>
            		 
+	
+	<!-- JavaScript search references (Ctrl+Shift+G --> 
+	
+	<extension
+         point="org.eclipse.wst.jsdt.ui.queryParticipants">
+      <queryParticipant
+	      name="Tern Query Participant"
+            nature="org.eclipse.wst.jsdt.core.jsNature"
+            class="tern.eclipse.ide.jsdt.internal.ui.search.TernQueryParticipant"
+            id="tern.eclipse.ide.jsdt.ui.search.TernQueryParticipant">
+      </queryParticipant>
+   </extension>
+              		 
 	 <!-- I don't know why, but startup should be done, otherwise TernCompletionProposalComputer is not registered? -->
 	 <extension
 	       point="org.eclipse.ui.startup">	

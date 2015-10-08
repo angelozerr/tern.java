@@ -56,6 +56,8 @@ import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.outline.ITernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineQuery;
+import tern.server.protocol.refs.ITernRefCollector;
+import tern.server.protocol.refs.TernRefsQuery;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.IOUtils;
 
@@ -676,6 +678,16 @@ public class TernProject extends JsonObject implements ITernProject {
 		server.request(doc, collector);
 	}
 
+	@Override
+	public void request(TernRefsQuery query, ITernFile file, ITernRefCollector collector) throws IOException, TernException {
+		TernDoc doc = new TernDoc(query);
+		if (file != null) {
+			synchronize(doc, null, null, null, file);
+		}
+		ITernServer server = getTernServer();
+		server.request(doc, collector);
+	}
+	
 	@Override
 	public ITernRepository getRepository() {
 		return repository;

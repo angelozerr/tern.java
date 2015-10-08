@@ -22,14 +22,15 @@ public class TernCompletionsResultProcessor implements
 	/**
 	 * Properties for JSON completion result.
 	 */
-	protected static final String NAME_PROPERTY = "name"; //$NON-NLS-1$
-	protected static final String DISPLAY_NAME_PROPERTY = "displayName"; //$NON-NLS-1$
-	protected static final String TYPE_PROPERTY = "type"; //$NON-NLS-1$
-	protected static final String DOC_PROPERTY = "doc"; //$NON-NLS-1$
-	protected static final String URL_PROPERTY = "url"; //$NON-NLS-1$
-	protected static final String ORIGIN_PROPERTY = "origin"; //$NON-NLS-1$
-	protected static final String IS_PROPERTY_PROPERTY = "isProperty"; //$NON-NLS-1$
-	protected static final String IS_OBJECT_KEY_PROPERTY = "isObjectKey"; //$NON-NLS-1$
+	private static final String COMPLETIONS_PROPERTY = "completions";
+	private static final String NAME_PROPERTY = "name"; //$NON-NLS-1$
+	private static final String DISPLAY_NAME_PROPERTY = "displayName"; //$NON-NLS-1$
+	private static final String TYPE_PROPERTY = "type"; //$NON-NLS-1$
+	private static final String DOC_PROPERTY = "doc"; //$NON-NLS-1$
+	private static final String URL_PROPERTY = "url"; //$NON-NLS-1$
+	private static final String ORIGIN_PROPERTY = "origin"; //$NON-NLS-1$
+	private static final String IS_PROPERTY_PROPERTY = "isProperty"; //$NON-NLS-1$
+	private static final String IS_OBJECT_KEY_PROPERTY = "isObjectKey"; //$NON-NLS-1$
 
 	public static final TernCompletionsResultProcessor INSTANCE = new TernCompletionsResultProcessor();
 
@@ -48,7 +49,7 @@ public class TernCompletionsResultProcessor implements
 				.asBoolean(objectHelper.getText(jsonObject,
 						IS_OBJECT_KEY_PROPERTY), false);
 		Iterable<Object> completions = objectHelper.getList(jsonObject,
-				"completions"); //$NON-NLS-1$
+				COMPLETIONS_PROPERTY); //$NON-NLS-1$
 		if (completions != null) {
 			for (Object value : completions) {
 				if (objectHelper.isString(value)) {

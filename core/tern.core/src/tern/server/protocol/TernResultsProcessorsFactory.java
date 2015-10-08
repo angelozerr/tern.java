@@ -27,6 +27,8 @@ import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.lint.TernLintResultProcessor;
 import tern.server.protocol.outline.ITernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineResultProcessor;
+import tern.server.protocol.refs.ITernRefCollector;
+import tern.server.protocol.refs.TernRefsResultProcessor;
 import tern.server.protocol.type.ITernTypeCollector;
 import tern.server.protocol.type.TernTypeResultProcessor;
 
@@ -50,6 +52,8 @@ public class TernResultsProcessorsFactory {
 			T collector) throws TernException {
 		if (collector instanceof ITernCompletionCollector) {
 			return (ITernResultProcessor<T>) TernCompletionsResultProcessor.INSTANCE;
+		} else if (collector instanceof ITernRefCollector) {
+			return (ITernResultProcessor<T>) TernRefsResultProcessor.INSTANCE;						
 		} else if (collector instanceof ITernDefinitionCollector) {
 			return (ITernResultProcessor<T>) TernDefinitionResultProcessor.INSTANCE;
 		} else if (collector instanceof ITernTypeCollector) {
@@ -58,9 +62,9 @@ public class TernResultsProcessorsFactory {
 			return (ITernResultProcessor<T>) TernLintResultProcessor.INSTANCE;
 		} else if (collector instanceof ITernGuessTypesCollector) {
 			return (ITernResultProcessor<T>) TernGuessTypesResultProcessor.INSTANCE;
-		}else if (collector instanceof ITernOutlineCollector) {
+		} else if (collector instanceof ITernOutlineCollector) {
 			return (ITernResultProcessor<T>) TernOutlineResultProcessor.INSTANCE;
-		}else if (collector instanceof ITernHighlightCollector) {
+		} else if (collector instanceof ITernHighlightCollector) {
 			return (ITernResultProcessor<T>) TernHighlightResultProcessor.INSTANCE;
 		} else {
 			throw new TernException(
