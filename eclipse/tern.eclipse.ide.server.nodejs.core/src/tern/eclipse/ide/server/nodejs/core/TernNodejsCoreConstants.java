@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - support for tern.js debugging
  */
 package tern.eclipse.ide.server.nodejs.core;
 
@@ -25,6 +26,10 @@ public class TernNodejsCoreConstants {
 	public static final String NODEJS_PATH = "nodeJSPath"; //$NON-NLS-1$
 
 	public static final String NODEJS_PERSISTENT = "nodeJSPersistent"; //$NON-NLS-1$
+
+	public static final String NODEJS_DEBUGGER = "nodeJSDebugger"; //$NON-NLS-1$
+
+	public static final String NODEJS_TERN_SERVER_DEBUG_FILE = "ternServerDebugFile"; //$NON-NLS-1$
 
 	public static final String NODEJS_REMOTE_ACCESS = "nodejsRemoteAccess"; //$NON-NLS-1$
 

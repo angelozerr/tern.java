@@ -9,7 +9,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  tern.eclipse.ide.core,
  tern.core,
- tern.server.nodejs
+ tern.server.nodejs,
+ org.eclipse.debug.core
 Bundle-ActivationPolicy: lazy
 Export-Package: tern.eclipse.ide.server.nodejs.core
 Bundle-Activator: tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin

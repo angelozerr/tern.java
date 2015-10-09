@@ -28,14 +28,14 @@ public interface INodejsProcessListener {
 	 * @param commands
 	 * @param projectDir
 	 */
-	void onCreate(NodejsProcess process, List<String> commands, File projectDir);
+	void onCreate(INodejsProcess process, List<String> commands, File projectDir);
 
 	/**
 	 * Callback called when the given node.js process start.
 	 * 
 	 * @param process
 	 */
-	void onStart(NodejsProcess process);
+	void onStart(INodejsProcess process);
 
 	/**
 	 * Callback called when the given node.js process send data.
@@ -44,14 +44,14 @@ public interface INodejsProcessListener {
 	 * @param line
 	 *            the data.
 	 */
-	void onData(NodejsProcess process, String line);
+	void onData(INodejsProcess process, String line);
 
 	/**
 	 * Callback called when the given node.js process stop.
 	 * 
 	 * @param process
 	 */
-	void onStop(NodejsProcess process);
+	void onStop(INodejsProcess process);
 
 	/**
 	 * Callback called when the given node.js throws error.
@@ -60,6 +60,6 @@ public interface INodejsProcessListener {
 	 * @param line
 	 *            the error.
 	 */
-	void onError(NodejsProcess process, String line);
+	void onError(INodejsProcess process, String line);
 
 }

@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - support for tern.js debugging
  */
 package tern.server.nodejs.process;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tern.TernException;
+import tern.server.nodejs.process.internal.NodejsProcess;
 
 /**
  * {@link NodejsProcess} manager.
@@ -36,7 +38,7 @@ public class NodejsProcessManager {
 	/**
 	 * List of node.js tern processes created.
 	 */
-	private final List<NodejsProcess> processes;
+	private final List<INodejsProcess> processes;
 
 	/**
 	 * The base dir where node.js Tern server is hosted.
@@ -49,7 +51,7 @@ public class NodejsProcessManager {
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
-		public void onStart(NodejsProcess server) {
+		public void onStart(INodejsProcess server) {
 			synchronized (NodejsProcessManager.this.processes) {
 				// here the process is started, add it to the list of processes.
 				NodejsProcessManager.this.processes.add(server);
@@ -57,7 +59,7 @@ public class NodejsProcessManager {
 		}
 
 		@Override
-		public void onStop(NodejsProcess server) {
+		public void onStop(INodejsProcess server) {
 			synchronized (NodejsProcessManager.this.processes) {
 				// here the process is stopped, remove it to the list of
 				// processes.
@@ -68,7 +70,7 @@ public class NodejsProcessManager {
 	};
 
 	public NodejsProcessManager() {
-		this.processes = new ArrayList<NodejsProcess>();
+		this.processes = new ArrayList<INodejsProcess>();
 	}
 
 	/**
@@ -82,7 +84,7 @@ public class NodejsProcessManager {
 	 * @return an instance of the node tern process.
 	 * @throws TernException
 	 */
-	public NodejsProcess create(File projectDir) throws TernException {
+	public INodejsProcess create(File projectDir) throws TernException {
 		return create(projectDir, null, nodejsTernBaseDir);
 	}
 
@@ -99,7 +101,7 @@ public class NodejsProcessManager {
 	 * @return an instance of the node tern process.
 	 * @throws TernException
 	 */
-	public NodejsProcess create(File projectDir, File nodejsBaseDir)
+	public INodejsProcess create(File projectDir, File nodejsBaseDir)
 			throws TernException {
 		return create(projectDir, nodejsBaseDir, nodejsTernBaseDir);
 	}
@@ -117,9 +119,9 @@ public class NodejsProcessManager {
 	 * @return an instance of the node tern process.
 	 * @throws TernException
 	 */
-	public NodejsProcess create(File projectDir, File nodejsBaseDir,
+	public INodejsProcess create(File projectDir, File nodejsBaseDir,
 			File nodejsTernBaseDir) throws TernException {
-		NodejsProcess process = new NodejsProcess(nodejsBaseDir,
+		INodejsProcess process = new NodejsProcess(nodejsBaseDir,
 				nodejsTernBaseDir, projectDir);
 		process.addProcessListener(listener);
 		return process;
@@ -149,7 +151,7 @@ public class NodejsProcessManager {
 	 */
 	public void dispose() {
 		synchronized (processes) {
-			for (NodejsProcess server : processes) {
+			for (INodejsProcess server : processes) {
 				try {
 					server.kill();
 				} catch (Throwable e) {
