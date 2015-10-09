@@ -146,6 +146,7 @@ public final class TernUIMessages extends NLS {
 
 	// Refresh outline
 	public static String refreshOutline;
+	public static String TernOutline_computing;
 
 	private TernUIMessages() {
 	}

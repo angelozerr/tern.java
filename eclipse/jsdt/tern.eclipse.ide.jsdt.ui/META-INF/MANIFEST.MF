@@ -22,7 +22,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.wst.sse.ui,
  org.eclipse.wst.xml.ui,
  tern.eclipse.ide.jsdt.core,
- org.eclipse.search
+ org.eclipse.search,
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.ide
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.jsdt.internal.ui.JSDTTernUIPlugin
 Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"

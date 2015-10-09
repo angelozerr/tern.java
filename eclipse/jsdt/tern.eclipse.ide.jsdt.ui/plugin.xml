@@ -154,5 +154,57 @@
 	       point="org.eclipse.ui.startup">	
 	       <startup class="tern.eclipse.ide.jsdt.internal.ui.JSDTTernStartup" />       
 	 </extension>
+      
+     <extension
+         point="org.eclipse.ui.navigator.linkHelper">
+      <linkHelper
+            class="tern.eclipse.ide.jsdt.internal.ui.JSDTTernLinkHelper"
+            id="tern.eclipse.ide.jsdt.ui.linkHelper">
+         <editorInputEnablement>
+            <instanceof
+                  value="java.lang.Object">
+            </instanceof></editorInputEnablement>
+         <selectionEnablement>
+            <instanceof
+                  value="java.lang.Object">
+            </instanceof>
+         </selectionEnablement>
+      </linkHelper>
+   </extension>
+   <extension
+       point="org.eclipse.ui.navigator.navigatorContent">
+      <commonFilter
+          activeByDefault="true"
+          class="tern.eclipse.ide.jsdt.internal.ui.JSDTElementsFilter"
+          description="%jsdtElementFilter_desc"
+          id="tern.eclipse.ide.jsdt.ui.JSDTElementFilter"
+          name="%jsdtElementFilter"
+          visibleInUI="true">
+      </commonFilter>
+    </extension>
+    <extension
+           point="org.eclipse.core.runtime.adapters">
+        <factory
+              adaptableType="org.eclipse.wst.jsdt.core.IJavaScriptUnit"
+              class="tern.eclipse.ide.jsdt.internal.ui.JsdtUiToTernUiAdapter">
+           <adapter
+                 type="tern.eclipse.ide.core.resources.TernDocumentFile">
+           </adapter>
+        </factory>
+     </extension>
 	 
+	<extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerContentBinding
+            viewerId="org.eclipse.wst.jsdt.ui.outline">
+         <includes>
+            <contentExtension
+                  pattern="tern.eclipse.ide.ui.navigatorContent"/>
+            <contentExtension
+                  pattern="tern.eclipse.ide.jsdt.ui.linkHelper"/>
+            <contentExtension
+                  pattern="tern.eclipse.ide.jsdt.ui.JSDTElementFilter"/>
+         </includes>
+      </viewerContentBinding>
+   </extension>
 </plugin>        
