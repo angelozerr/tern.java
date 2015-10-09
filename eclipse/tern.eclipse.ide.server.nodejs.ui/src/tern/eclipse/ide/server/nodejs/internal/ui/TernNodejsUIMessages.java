@@ -29,6 +29,8 @@ public final class TernNodejsUIMessages extends NLS {
 	// Preferences
 	public static String TernNodejsPreferencesPage_desc;
 
+	public static String TernNodejsPreferencesPage_debugger_err_not_installed;
+	public static String TernNodejsPreferencesPage_debugger_err_not_selected;
 	public static String TernNodejsPreferencesPage_debugger_label;
 	public static String TernNodejsPreferencesPage_debugger_none;
 	public static String TernNodejsPreferencesPage_debugger_not_installed;

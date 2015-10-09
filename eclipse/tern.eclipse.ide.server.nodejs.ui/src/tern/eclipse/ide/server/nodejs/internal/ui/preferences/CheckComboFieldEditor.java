@@ -195,6 +195,14 @@ public class CheckComboFieldEditor extends FieldEditor {
 		}
 		getPreferenceStore().setValue(getPreferenceName(), fValue);
 	}
+	
+	public String getValue() {
+		return fValue;
+	}
+	
+	public int getSelection() {
+		return fCombo.getSelectionIndex();
+	}
 
 	@Override
 	public int getNumberOfControls() {
@@ -255,6 +263,10 @@ public class CheckComboFieldEditor extends FieldEditor {
 			}
 			fCombo.setText(fEntryNamesAndValues[0][0]);
 		}
+		refreshValidState();
+		if (!isValid()) {
+			fireStateChanged(IS_VALID, true, false);
+		}
 	}
 
 	public boolean isCheckboxSelected() {
@@ -284,11 +296,23 @@ public class CheckComboFieldEditor extends FieldEditor {
 			fValue = unselectedValue;
 		}
 		setPresentsDefaultValue(false);
-		fireValueChanged(VALUE, oldValue, fValue);
+		boolean oldState = isValid(); 
+		refreshValidState();
+		if (isValid() != oldState) {
+			fireStateChanged(IS_VALID, oldState, isValid());
+		}
+		if (!fValue.equals(oldValue)) {
+			fireValueChanged(VALUE, oldValue, fValue);
+		}
 	}
 
 	protected void updateComboBoxEnablement(Composite parent, boolean enabled) {
 		getComboBoxControl(parent).setEnabled(enabled);
+		boolean oldState = isValid(); 
+		refreshValidState();
+		if (isValid() != oldState) {
+			fireStateChanged(IS_VALID, oldState, isValid());
+		}
 	}
 
 	private Button getCheckControl(final Composite parent) {

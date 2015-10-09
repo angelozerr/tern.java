@@ -165,6 +165,31 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				TernNodejsCoreConstants.NODEJS_DEBUGGER,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_label,
 				debuggers, "", parent) { //$NON-NLS-1$
+			
+			private boolean isValid = true;
+			
+			@Override
+			protected void refreshValidState() {
+				if (isCheckboxSelected()) {
+					if (getSelection() == 0) {
+						isValid = false;
+						setErrorMessage(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_err_not_selected);
+						return;
+					} else if ("".equals(getValue())) { //$NON-NLS-1$)
+						isValid = false;
+						setErrorMessage(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_err_not_installed);
+						return;
+					}
+				}
+				isValid = true;
+				clearErrorMessage();
+			}
+			
+			@Override
+			public boolean isValid() {
+				return isValid;
+			}
+			
 			@Override
 			protected void updateComboBoxEnablement(Composite parent,
 					boolean enabled) {
