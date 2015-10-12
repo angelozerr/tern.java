@@ -256,13 +256,6 @@
             class="tern.eclipse.ide.internal.ui.views.TernOutlineView"
             id="tern.eclipse.ide.ui.views.TernOutlineView">
       </view>
-      <view
-            category="org.eclipse.wst.jsdt.ui.java"
-            class="tern.eclipse.ide.internal.ui.views.TernOutlineView2"
-            icon="$nl$/icons/full/eview16/tern-outline.png"
-            id="tern.eclipse.ide.ui.views.TernOutlineView2"
-            name="tern.eclipse.ide.ui.views.TernOutlineView2">
-      </view>
   </extension>
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">
