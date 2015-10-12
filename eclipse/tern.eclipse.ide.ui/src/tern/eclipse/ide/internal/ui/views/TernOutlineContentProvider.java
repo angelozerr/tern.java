@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR, and others
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,8 +7,12 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Mickael Istria (Red Hat Inc.) - reduce coupling to TernOutlineView
  */
 package tern.eclipse.ide.internal.ui.views;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -18,6 +22,8 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.DocumentEvent;
 import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreePath;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -28,6 +34,7 @@ import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.server.TernPlugin;
 import tern.server.protocol.outline.JSNode;
+import tern.server.protocol.outline.JSNodeRoot;
 import tern.server.protocol.outline.TernOutlineQuery;
 
 public class TernOutlineContentProvider implements ITreeContentProvider, IDocumentListener {
@@ -58,15 +65,19 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 						outline = new TernOutline(document);
 						ternProject.request(query, document, outline);
 						parsed = true;
-						// Refresh UI Tree
 						Display.getDefault().syncExec(new Runnable() {
-
 							@Override
 							public void run() {
 								Control refreshControl = viewer.getControl();
 								if ((refreshControl != null) && !refreshControl.isDisposed()) {
+									TreePath[] expendedPaths = null;
+									if (viewer instanceof TreeViewer) {
+										 expendedPaths = ((TreeViewer)viewer).getExpandedTreePaths();
+									}
 									viewer.refresh();
-									//viewer.expandAll();
+									if (viewer instanceof TreeViewer && expendedPaths != null) {
+										((TreeViewer)viewer).setExpandedTreePaths(toNewTreePaths(expendedPaths, outline.getRoot()));
+									}
 								}
 							}
 						});
@@ -79,6 +90,55 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 		};
 		refreshJob.setSystem(true);
 		refreshJob.setPriority(Job.SHORT);
+	}
+	
+	private TreePath[] toNewTreePaths(TreePath[] originExpandedPaths, JSNodeRoot newRoot) {
+		List<TreePath> res = new ArrayList<TreePath>();
+		for (TreePath originExpanded : originExpandedPaths) {
+			int i = 0;
+			List<Object> newPathItems = new ArrayList<Object>();
+			JSNode previousJSNode = null;
+			while (i < originExpanded.getSegmentCount()) {
+				Object originSegment = originExpanded.getSegment(i);
+				if (originSegment instanceof JSNode) {
+					JSNode originNode = (JSNode)originSegment;
+					JSNode matchingNode = null;
+					if (previousJSNode == null) {
+						if (originNode instanceof JSNodeRoot) {
+							matchingNode = newRoot;
+						} else {
+							matchingNode = findSimilarChild(newRoot, originNode);
+						}
+					} else {
+						matchingNode = findSimilarChild(previousJSNode, originNode);
+					}
+					if (matchingNode != null) {
+						newPathItems.add(matchingNode);
+						previousJSNode = matchingNode;
+					}
+				} else {
+					newPathItems.add(originSegment);
+				}
+				i++;
+			}
+			res.add(new TreePath(newPathItems.toArray()));
+		}
+		return res.toArray(new TreePath[res.size()]);
+	}
+
+	private JSNode findSimilarChild(JSNode newParentNode, JSNode originChildNode) {
+		JSNode matchingNode = null;
+		// First search node with same name
+		for (JSNode child : newParentNode.getChildren()) {
+			if (child.getName().equals(originChildNode.getName())) {
+				matchingNode = child;
+			}
+		}
+		// If not found, fail back to index
+		if (matchingNode == null) {
+			matchingNode = newParentNode.getChildren().get(originChildNode.getParent().getChildren().indexOf(originChildNode));
+		}
+		return matchingNode;
 	}
 	
 
