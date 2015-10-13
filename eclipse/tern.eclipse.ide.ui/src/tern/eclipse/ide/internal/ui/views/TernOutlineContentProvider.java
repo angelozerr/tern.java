@@ -129,9 +129,11 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 	private JSNode findSimilarChild(JSNode newParentNode, JSNode originChildNode) {
 		JSNode matchingNode = null;
 		// First search node with same name
-		for (JSNode child : newParentNode.getChildren()) {
-			if (child.getName().equals(originChildNode.getName())) {
-				matchingNode = child;
+		if (originChildNode.getName() != null) {
+			for (JSNode child : newParentNode.getChildren()) {
+				if (child.getName() != null && child.getName().equals(originChildNode.getName())) {
+					matchingNode = child;
+				}
 			}
 		}
 		// If not found, fail back to index
