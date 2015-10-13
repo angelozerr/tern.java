@@ -241,7 +241,6 @@
                   }
                 }
               } else { 
-                //console.error(file.name)
                 var actualArg = infer.expressionType({node: actualNode, state: state});
                 // if actual type is an Object literal and expected type is an object, we ignore 
                 // the comparison type since object literal properties validation is done inside "ObjectExpression".
@@ -255,6 +254,16 @@
           }
         }
       }
+    }
+    
+    function validateAssignement(nodeLeft, nodeRight, rule, state) {
+      if (!nodeLeft || !nodeRight) return;      
+      if (!rule) return;
+      var leftType = infer.expressionType({node: nodeLeft, state: state}), 
+          rightType = infer.expressionType({node: nodeRight, state: state});
+      if (!compareType(leftType, rightType)) {
+        addMessage(nodeRight, "Type mismatch: cannot convert from " + getTypeName(leftType) + " to " + getTypeName(rightType), rule.severity);
+      }        
     }
     
     function validateDeclaration(node, state, c) {
@@ -291,18 +300,25 @@
         return hasRef;
       }
       
-      var rule = getRule("UnusedVariable");
-      if (!rule) return;
+      var unusedRule = getRule("UnusedVariable"), mismatchRule = getRule("TypeMismatch");
+      if (!unusedRule && !mismatchRule) return;
       switch(node.type) {
         case "VariableDeclaration":
           for (var i = 0; i < node.declarations.length; ++i) {
             var decl = node.declarations[i], varNode = decl.id;
-            if (varNode.name != "✖" && !isUsedVariable(varNode, state, file, server)) addMessage(varNode, "Unused variable '" + getNodeName(varNode) + "'", rule.severity);
+            if (varNode.name != "✖") {
+              // unused variable
+              if (unusedRule && !isUsedVariable(varNode, state, file, server)) addMessage(varNode, "Unused variable '" + getNodeName(varNode) + "'", unusedRule.severity);
+              // type mismatch?
+              if (mismatchRule) validateAssignement(varNode, decl.init, mismatchRule, state);
+            } 
           }
           break;
         case "FunctionDeclaration":
-          var varNode = node.id;
-          if (varNode.name != "✖" && !isUsedVariable(varNode, state, file, server)) addMessage(varNode, "Unused function '" + getNodeName(varNode) + "'", rule.severity);
+          if (unusedRule) {
+            var varNode = node.id;
+            if (varNode.name != "✖" && !isUsedVariable(varNode, state, file, server)) addMessage(varNode, "Unused function '" + getNodeName(varNode) + "'", unusedRule.severity);
+          }
           break;          
       }      
     }
@@ -401,14 +417,8 @@
       NewExpression: validateCallExpression,
       CallExpression: validateCallExpression,
       AssignmentExpression: function(node, state, c) {
-        if (!node.left || !node.right) return;
         var rule = getRule("TypeMismatch");
-        if (!rule) return;
-        var leftType = infer.expressionType({node: node.left, state: state}), 
-            rightType = infer.expressionType({node: node.right, state: state});
-        if (!compareType(leftType, rightType)) {
-          addMessage(node.right, "Type mismatch: cannot convert from " + getTypeName(leftType) + " to " + getTypeName(rightType), rule.severity);
-        }        
+        validateAssignement(node.left, node.right, rule, state);
       },
       ObjectExpression: function(node, state, c) {
         // validate properties of the object literal
