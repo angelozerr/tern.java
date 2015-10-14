@@ -13,8 +13,8 @@
     "test": "node ./test/all.js"
   },    
   "dependencies": {
-    "tern": ">=0.15.0",
-    "jshint": ">=2.6.0"
+    "tern": "^0.15.0",
+    "jshint": "^2.8.0"
   }, 
   "devDependencies": { 
   	"test": ">=0.0.5" 
