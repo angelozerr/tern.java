@@ -10,10 +10,16 @@
  */
 package tern.server.protocol.outline;
 
+/**
+ * JavaScript node root.
+ *
+ */
 public class JSNodeRoot extends JSNode {
 
+	private static final String ROOT = "#Root";
+
 	public JSNodeRoot() {
-		super("#Root", null, null, null, null, null);
+		super(ROOT, null, null, null, null, null, null);
 	}
 
 }

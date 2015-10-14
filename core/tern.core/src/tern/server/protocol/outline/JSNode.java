@@ -13,6 +13,8 @@ package tern.server.protocol.outline;
 import java.util.ArrayList;
 import java.util.List;
 
+import tern.utils.StringUtils;
+
 /**
  * JavaScript node used for the Outline.
  *
@@ -27,17 +29,19 @@ public class JSNode {
 	private final String kind;
 	private final Long start;
 	private final Long end;
+	private final String file;
 	private final JSNode parent;
 	private final List<JSNode> children;
 	private final boolean isClass;
 	private final boolean isFunction;
 	private final boolean isArray;
 
-	public JSNode(String name, String type, String kind, Long start, Long end, JSNode parent) {
+	public JSNode(String name, String type, String kind, Long start, Long end, String file, JSNode parent) {
 		this.name = name;
 		this.type = type;
 		this.start = start;
 		this.end = end;
+		this.file = file;
 		this.children = new ArrayList<JSNode>();
 		if (parent != null) {
 			this.parent = parent;
@@ -61,7 +65,7 @@ public class JSNode {
 	}
 
 	public String getName() {
-		return name;
+		return StringUtils.isEmpty(file) ? name : file;
 	}
 
 	public String getType() {
@@ -108,4 +112,11 @@ public class JSNode {
 		return isClass;
 	}
 
+	public String getFile() {
+		return file;
+	}
+
+	public boolean isFile() {
+		return !StringUtils.isEmpty(file);
+	}
 }

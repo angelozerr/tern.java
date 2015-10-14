@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+- *  Copyright (c) 2013-2015 Angelo ZERR.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -11,6 +11,8 @@
 package tern.eclipse.ide.internal.ui.views;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -24,7 +26,10 @@ import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
+import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.protocol.outline.JSNode;
@@ -78,21 +83,35 @@ public class TernContentOutlinePage extends Page implements IContentOutlinePage 
 				if (!selection.isEmpty()) {
 					if (selection.getFirstElement() instanceof JSNode) {
 						JSNode node = (JSNode) selection.getFirstElement();
-						IFile file = ternFile.getFile();
-						Long start = node.getStart();
-						Long end = node.getEnd();
-						EditorUtils.openInEditor(
-								file,
-								start != null ? start.intValue() : -1,
-								start != null && end != null ? end.intValue()
-										- start.intValue() : -1, true);
-
+						IFile file = getFile(node);
+						if (file != null && file.exists()) {
+							Long start = node.getStart();
+							Long end = node.getEnd();
+							EditorUtils.openInEditor(
+									file,
+									start != null ? start.intValue() : -1,
+									start != null && end != null ? end.intValue()
+											- start.intValue() : -1, true);
+						}
 					}
 				}
 			}
 		});
 		viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
 		viewer.setInput(ternFile);
+	}
+
+	private IFile getFile(JSNode node) {
+		if (node.isFile()) {
+			IProject project = ternFile.getFile().getProject();
+			try {
+				IIDETernProject ternProject = TernCorePlugin.getTernProject(project);
+				return ternProject.getIDEFile(node.getFile());
+			} catch (CoreException e) {
+				Trace.trace(Trace.SEVERE, "Error while getting tern project", e);
+			}
+		}
+		return ternFile.getFile();
 	}
 
 }

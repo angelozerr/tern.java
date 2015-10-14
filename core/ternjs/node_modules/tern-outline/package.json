@@ -18,7 +18,9 @@
   },
   "devDependencies": { 
     "test": ">=0.0.5",
-    "codemirror": ">=5.3.0"
+    "codemirror": "^5.6.0",
+  	"codemirror-extension": "^0.1.0",
+  	"codemirror-javascript": "^0.1.0"
   },  
   "keywords": [
     "tern"

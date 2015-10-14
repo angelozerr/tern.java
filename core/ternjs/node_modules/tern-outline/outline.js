@@ -7,6 +7,13 @@
 })(this, function(exports, infer, tern, walk) {
   "use strict";
 
+  var ANONYMOUS_FN = "<anonymous>";
+  
+  var suboutlines = Object.create(null);
+  tern.registerSubOutline = function(id, label, fillOutline) {
+    suboutlines[id] = {label: label || id, fillOutline: fillOutline};
+  };
+  
   function isObjectLiteral(type) {
     var objType = type.getObjType();
     return objType && objType.proto && objType.proto.name == "Object.prototype"; 
@@ -32,7 +39,7 @@
       return getNodeName(node.property);
     } else if(node.id) {
       // This is a Function
-      return node.id.name ? node.id.name : "<anonymous>";
+      return node.id.name ? node.id.name : ANONYMOUS_FN;
     } else if(node.value) {
       return node.value;
     } else {
@@ -47,23 +54,25 @@
     return type.toString();
   }
   
-  function addChild(node, type, children) {
+  function addChildNode(node, type, children) {
     if (!node || node.name == "✖") { return; }
-
-    var child = {
-        name: getNodeName(node),
-        type: getStringType(type),
-        start: Number(node.start),
-        end: Number(node.end)
-    };
+    return addChild(getNodeName(node), getStringType(type), children, Number(node.start), Number(node.end));
+  }
+  
+  function addChild(name, type, children, start, end, file) {
+    var child = {};
+    if (name) child.name = name;
+    if (type) child.type = type;
+    if (start) child.start = start;
+    if (end) child.end = end;
+    if (file) child.file = file;
     if (!(children instanceof Array)) {
       if (children.children) {
         children = children.children;
       } else {
         children = children.children = []; 
       } 
-    }
-    
+    }    
     children.push(child);
     return child;
   }
@@ -81,10 +90,10 @@
               obj.start = Number(node.start);
               obj.end = Number(node.end);
             } else {
-              child = addChild(decl.id, type, parent);
+              child = addChildNode(decl.id, type, parent);
             }
           } else {
-            child = addChild(decl.id, type, parent);
+            child = addChildNode(decl.id, type, parent);
           }
           if (child && node.kind) {
             // is it interesting to have var, const, let kind?
@@ -95,25 +104,30 @@
       Property: function (node, st) {
         var parent = st.parent, scope = st.scope;
         var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
-        addChild(node.key, type, parent);
+        addChildNode(node.key, type, parent);
       },
       AssignmentExpression: function (node, st) {
         if(node.left && node.left.object && node.left.object.type == "ThisExpression") {
           var parent = st.parent, scope = st.scope;
           var type = infer.expressionType({node: node.left, state: scope});
-          addChild(node.left, type, parent);
+          addChildNode(node.left, type, parent);
         }
       }      
     }
   }
   
   tern.registerPlugin("outline", function(server, options) {
-    return {};
+    /*tern.registerSubOutline("files", "Files", function(addChild, parent) {
+      var files = server.files;
+      for (var i = 0; i < files.length; i++) {
+        addChild(null, null, parent, null, null, files[i].name);
+      }
+    });*/  
   });  
   
   var classDeclaration = function (node, st, c) {
     var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
-    var obj = addChild(node, type, parent);
+    var obj = addChildNode(node, type, parent);
     obj.kind = "class";
     var scope = {parent: obj, scope: st.scope};
     if (node.superClass) c(node.superClass, scope, "Expression");
@@ -129,8 +143,8 @@
     Function: function(node, st, c) {
       var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id && node.type != "FunctionExpression" ? node.id : node, state: scope});
       if (!st.ignoreFirstFn) {
-        var fn = addChild(node, type, parent);
-        if (!node.id) fn.name = "<anonymous>";
+        var fn = addChildNode(node, type, parent);
+        if (!node.id) fn.name = ANONYMOUS_FN;
         parent = fn;
       } else delete(st.ignoreFirstFn);
       var scope = {parent: parent, scope: node.scope};
@@ -141,7 +155,7 @@
     },
     ObjectExpression: function (node, st, c) {
       var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
-      var obj = addChild(node, type, parent);
+      var obj = addChildNode(node, type, parent);
       var scope = {parent: obj, scope: st.scope};
       for (var i = 0; i < node.properties.length; ++i)
         c(node.properties[i], scope);
@@ -149,13 +163,16 @@
     ClassExpression: classDeclaration,
     ClassDeclaration: classDeclaration,
     MethodDefinition: function (node, st, c) {
-      var parent = st.parent, scope = st.scope;        
+      var parent = st.parent, scope = st.scope;
       var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
-      var meth = addChild(node.key, type, parent);
+      var meth = addChildNode(node.key, type, parent);
       meth.kind = node.kind;
       var scope = {parent: meth, scope: st.scope, ignoreFirstFn: true};
       if (node.computed) c(node.key, scope, "Expression");
       c(node.value, scope, "Expression");
+    },
+    ExportNamedDeclaration: function (node, st, c) {
+      
     }
   });
 
@@ -172,6 +189,13 @@
         var outline = [], ast = file.ast;
         var visitors = makeVisitors(server, query, file);
         walk.simple(ast, visitors, base, {parent: outline, scope: file.scope});
+        // suboutlines
+        for (var id in suboutlines) {
+          var suboutline = suboutlines[id];
+          var category = addChild(suboutline.label, null, outline);
+          category.kind = "category";
+          suboutline.fillOutline(addChild, category);
+        }
         return {outline: outline};
       } catch(err) {
         console.error(err.stack);
