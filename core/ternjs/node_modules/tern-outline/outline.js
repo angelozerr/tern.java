@@ -60,11 +60,10 @@
   }
   
   function addChild(name, type, children, start, end, file) {
-    var child = {};
-    if (name) child.name = name;
+    var child = {name: name};
     if (type) child.type = type;
-    if (start) child.start = start;
-    if (end) child.end = end;
+    if (start != null) child.start = start;
+    if (end  != null) child.end = end;
     if (file) child.file = file;
     if (!(children instanceof Array)) {
       if (children.children) {
