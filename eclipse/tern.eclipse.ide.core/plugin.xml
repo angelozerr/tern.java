@@ -27,6 +27,15 @@
 	<extension-point id="ternModuleInstalls" name="%ternModuleInstalls.name"
 		schema="schema/ternModuleInstalls.exsd" />								
 	
+	<!-- .tern-project content type -->	
+    <extension point="org.eclipse.core.contenttype.contentTypes"> 
+      <content-type id="tern.eclipse.ide.core.ternProject"
+       base-type="org.eclipse.core.runtime.text"
+       file-names=".tern-project"
+       name="Tern Project"
+       priority="high" />
+    </extension>
+   	
 	<!-- Preferences initialization -->
 	<extension
 		point="org.eclipse.core.runtime.preferences">

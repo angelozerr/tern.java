@@ -280,5 +280,22 @@
          </includes>
       </viewerContentBinding>
    </extension>
-              	       	 
+
+	<!--======================================================================================-->
+	<!-- .tern-project editor						             -->
+	<!--======================================================================================-->
+        
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            default="true"
+            name="%editors.ternProject.name"
+            icon="icons/full/obj16/logo.png"
+            class="tern.eclipse.ide.internal.ui.editors.TernProjectEditor"
+            contributorClass="tern.eclipse.ide.internal.ui.editors.TernProjectEditorContributor"
+            id="tern.eclipse.ide.ui.editors.TernProjectEditor">
+            <contentTypeBinding contentTypeId="tern.eclipse.ide.core.ternProject"/>            
+      </editor>
+   </extension>
+   
 </plugin>        

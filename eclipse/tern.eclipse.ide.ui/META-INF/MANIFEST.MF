@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  tern.eclipse,
  org.eclipse.core.expressions,
  org.eclipse.ui.views,
- org.eclipse.ui.navigator
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.forms
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: tern.eclipse.ide.ui.TernUIPlugin
 Export-Package: tern.eclipse.ide.ui,
