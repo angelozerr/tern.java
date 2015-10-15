@@ -7,12 +7,13 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.search.ui.text.Match;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.wst.jsdt.core.IJavaScriptElement;
 import org.eclipse.wst.jsdt.core.ILocalVariable;
 import org.eclipse.wst.jsdt.core.ISourceRange;
+import org.eclipse.wst.jsdt.core.ISourceReference;
+import org.eclipse.wst.jsdt.core.JavaScriptModelException;
 import org.eclipse.wst.jsdt.ui.search.ElementQuerySpecification;
 import org.eclipse.wst.jsdt.ui.search.IMatchPresentation;
 import org.eclipse.wst.jsdt.ui.search.IQueryParticipant;
@@ -47,30 +48,26 @@ public class TernQueryParticipant implements IQueryParticipant, IMatchPresentati
 				IDocument document = EditorUtils.getDocument(file);
 				ITernFile ternFile = document != null ? new TernDocumentFile(file, document) : null;
 
-				Integer end = null;
-				if (jsElement instanceof ILocalVariable) {
-					ISourceRange range = ((ILocalVariable) jsElement).getNameRange();
-					end = range.getOffset() + range.getLength();
-				}
+				Integer end = getEnd(jsElement);
+				if (end != null) {
+					String filename = ternFile.getFullName(ternProject);
+					TernRefsQuery query = new TernRefsQuery(filename, end);
+					ITernRefCollector collector = new ITernRefCollector() {
 
-				String filename = ternFile.getFullName(ternProject);
-				TernRefsQuery query = new TernRefsQuery(filename, end);
-				ITernRefCollector collector = new ITernRefCollector() {
-
-					@Override
-					public void setDefinition(String filename, Long start, Long end) {
-						IFile file = ternProject.getIDEFile(filename);
-						Match match = new Match(new TernRef(file), start.intValue(),
-								(end.intValue() - start.intValue()));
-						requestor.reportMatch(match);
+						@Override
+						public void setDefinition(String filename, Long start, Long end) {
+							IFile file = ternProject.getIDEFile(filename);
+							Match match = new Match(new TernRef(file), start.intValue(),
+									(end.intValue() - start.intValue()));
+							requestor.reportMatch(match);
+						}
+					};
+					try {
+						ternProject.request(query, ternFile, collector);
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-				};
-				try {
-					ternProject.request(query, ternFile, collector);
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
-
 				// IWorkbenchWindow[] windows =
 				// JSDTTernUIPlugin.getDefault().getWorkbench().getWorkbenchWindows();
 				// for (int i = 0; i < windows.length; i++) {
@@ -92,6 +89,23 @@ public class TernQueryParticipant implements IQueryParticipant, IMatchPresentati
 			}
 		}
 
+	}
+
+	protected Integer getEnd(IJavaScriptElement jsElement) {
+		ISourceRange range = null;
+		if (jsElement instanceof ILocalVariable) {
+			range = ((ILocalVariable) jsElement).getNameRange();
+		} else if (jsElement instanceof ISourceReference) {
+			try {
+				range = ((ISourceReference) jsElement).getSourceRange();
+			} catch (JavaScriptModelException e) {				
+				e.printStackTrace();
+			}
+		}
+		if (range != null) {
+			return range.getOffset() + range.getLength();
+		}
+		return null;
 	}
 
 	@Override
