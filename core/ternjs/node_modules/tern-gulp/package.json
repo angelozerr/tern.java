@@ -13,11 +13,13 @@
     "test": "node ./test/all.js"
   },  
   "dependencies": {
-    "tern": ">=0.10.0",
-    "acorn": ">=1.0.0"
+    "tern": "^0.16.0"
   },
   "devDependencies": { 
-    "test": ">=0.0.5" 
+    "test": ">=0.0.5",
+    "codemirror": "^5.8.0",
+    "codemirror-extension": "^0.2.0",
+  	"codemirror-javascript": "^0.2.0" 
   },
   "keywords": [
     "tern",

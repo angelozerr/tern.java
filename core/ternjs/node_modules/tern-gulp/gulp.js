@@ -12,7 +12,7 @@
   }
   
   function getTasks(filename) {
-    var server = infer.cx().parent, data = server && server._gulp, gulpFile = filename && data[filename];
+    var server = infer.cx().parent, data = server && server.mod.gulp, gulpFile = filename && data[filename];
     return gulpFile ? gulpFile.tasks : null;
   }
   
@@ -24,18 +24,14 @@
   });
   
   tern.registerPlugin("gulp", function(server, options) {
-    server._gulp = Object.create(null);
-    return {
-      defs : defs,
-      passes: {
-          preInfer: preInfer          
-      }
-    };
+    server.mod.gulp = Object.create(null);
+    server.on("preInfer", preInfer);
+    server.addDefs(defs);
   });
 
   function preInfer(ast, scope) {
     var filename = ast.sourceFile.name;
-    if (isGulpfile(filename)) infer.cx().parent._gulp[filename] = {tasks: Object.create(null)};
+    if (isGulpfile(filename)) infer.cx().parent.mod.gulp[filename] = {tasks: Object.create(null)};
   }
 
   tern.defineQueryType("gulp-task", {
@@ -88,7 +84,7 @@
   var defs = {
     "!name": "gulp",
     "!define": {
-      "!node": {
+      "!known_modules": {
         gulp: {
           "!type": "+Gulp",
           "!url": "https://github.com/gulpjs/gulp/blob/master/docs/API.md#gulp-api-docs"          
