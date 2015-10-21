@@ -10,14 +10,17 @@
     "url": "git://github.com/angelozerr/tern-grunt.git"
   },
   "scripts": {
-    "test": "node ./test/all.js"
+    "test": "node ./test/all.js",
+    "publish": "node ./scripts/git-tag.js"
   },  
   "dependencies": {
-    "tern": ">=0.10.0",
-    "acorn": ">=1.0.0"
+    "tern": ">=0.15.0"
   },
   "devDependencies": { 
-  	"test": ">=0.0.5" 
+  	"test": ">=0.0.5",
+  	"codemirror": "^5.8.0",
+  	"codemirror-extension": "^0.2.0",
+    "codemirror-javascript": "^0.2.0"
   },   
   "keywords": [
     "tern",
