@@ -26,7 +26,7 @@ import tern.server.AbstractTernServer;
 import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
 import tern.server.nodejs.process.INodejsProcessListener;
-import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.INodejsProcess;
 import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessException;
 import tern.server.nodejs.process.NodejsProcessManager;
@@ -47,7 +47,7 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private List<IInterceptor> interceptors;
 
-	private NodejsProcess process;
+	private INodejsProcess process;
 	private List<INodejsProcessListener> listeners;
 
 	private long timeout = NodejsTernHelper.DEFAULT_TIMEOUT;
@@ -57,12 +57,12 @@ public class NodejsTernServer extends AbstractTernServer {
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
-		public void onStart(NodejsProcess server) {
+		public void onStart(INodejsProcess server) {
 			NodejsTernServer.this.fireStartServer();
 		}
 
 		@Override
-		public void onStop(NodejsProcess server) {
+		public void onStop(INodejsProcess server) {
 			dispose();
 			fireEndServer();
 		}
@@ -97,7 +97,7 @@ public class NodejsTernServer extends AbstractTernServer {
 				project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
 	}
 
-	public NodejsTernServer(ITernProject project, NodejsProcess process) {
+	public NodejsTernServer(ITernProject project, INodejsProcess process) {
 		super(project);
 		this.process = process;
 		process.addProcessListener(listener);
@@ -212,7 +212,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 	}
 
-	private NodejsProcess getProcess() throws TernException {
+	private INodejsProcess getProcess() throws TernException {
 		if (process == null) {
 			ITernProject project = super.getProject();
 			process = NodejsProcessManager.getInstance().create(
@@ -223,7 +223,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		return process;
 	}
 
-	private void initProcess(NodejsProcess process) {
+	private void initProcess(INodejsProcess process) {
 		process.setPersistent(persistent);
 		process.setLoadingLocalPlugins(isLoadingLocalPlugins());
 	}

@@ -27,7 +27,7 @@ public class PrintNodejsProcessListener extends NodejsProcessAdapter {
 	}
 
 	@Override
-	public void onCreate(NodejsProcess process, List<String> commands,
+	public void onCreate(INodejsProcess process, List<String> commands,
 			File projectDir) {
 		StringBuilder commandsAsString = new StringBuilder();
 		int i = 0;
@@ -54,23 +54,23 @@ public class PrintNodejsProcessListener extends NodejsProcessAdapter {
 	}
 
 	@Override
-	public void onStart(NodejsProcess process) {
+	public void onStart(INodejsProcess process) {
 		System.out.println("Server started at " + process.getPort() + " on "
 				+ process.getElapsedStartTime());
 	}
 
 	@Override
-	public void onData(NodejsProcess process, String line) {
+	public void onData(INodejsProcess process, String line) {
 		System.out.println(line);
 	}
 
 	@Override
-	public void onStop(NodejsProcess process) {
+	public void onStop(INodejsProcess process) {
 		System.out.println("Server stopped at " + process.getPort());
 	}
 
 	@Override
-	public void onError(NodejsProcess process, String line) {
+	public void onError(INodejsProcess process, String line) {
 		System.err.println(line);
 	}
 }

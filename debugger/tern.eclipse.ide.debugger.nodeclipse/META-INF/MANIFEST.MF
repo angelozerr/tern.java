@@ -3,16 +3,15 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-SymbolicName: tern.eclipse.ide.server.nodejs.core;singleton:=true
+Bundle-SymbolicName: tern.eclipse.ide.debugger.nodeclipse;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  tern.eclipse.ide.core,
  tern.core,
  tern.server.nodejs,
- org.eclipse.debug.core
+ org.eclipse.debug.core,
+ tern.eclipse.ide.server.nodejs.core
 Bundle-ActivationPolicy: lazy
-Export-Package: tern.eclipse.ide.server.nodejs.core,
- tern.eclipse.ide.server.nodejs.core.debugger
-Bundle-Activator: tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin
-Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"
+Bundle-Activator: tern.eclipse.ide.debugger.nodeclipse.NodeclipseDebuggerCorePlugin
+Export-Package: tern.eclipse.ide.debugger.nodeclipse

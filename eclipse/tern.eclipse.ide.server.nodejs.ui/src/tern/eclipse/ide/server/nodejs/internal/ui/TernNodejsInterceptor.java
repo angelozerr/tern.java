@@ -26,7 +26,7 @@ import tern.eclipse.ide.ui.console.ITernConsole;
 import tern.eclipse.ide.ui.console.LineType;
 import tern.server.LoggingInterceptor;
 import tern.server.nodejs.process.INodejsProcessListener;
-import tern.server.nodejs.process.NodejsProcess;
+import tern.server.nodejs.process.INodejsProcess;
 import tern.utils.IOUtils;
 
 public class TernNodejsInterceptor extends LoggingInterceptor implements
@@ -72,7 +72,7 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 	}
 
 	@Override
-	public void onCreate(final NodejsProcess process,
+	public void onCreate(final INodejsProcess process,
 			final List<String> commands, final File projectDir) {
 		if (Display.getDefault().getThread() != Thread.currentThread()) {
 			Display.getDefault().asyncExec(new Runnable() {
@@ -121,23 +121,23 @@ public class TernNodejsInterceptor extends LoggingInterceptor implements
 	}
 
 	@Override
-	public void onStart(NodejsProcess process) {
+	public void onStart(INodejsProcess process) {
 		outProcessPrintln("Server started at " + process.getPort() + " in "
 				+ process.getElapsedStartTime() + "ms");
 	}
 
 	@Override
-	public void onData(NodejsProcess process, String line) {
+	public void onData(INodejsProcess process, String line) {
 		outProcessPrintln(line);
 	}
 
 	@Override
-	public void onStop(NodejsProcess process) {
+	public void onStop(INodejsProcess process) {
 		outProcessPrintln("Server stopped at " + process.getPort());
 	}
 
 	@Override
-	public void onError(NodejsProcess process, String line) {
+	public void onError(INodejsProcess process, String line) {
 		errPrintln(line);
 	}
 

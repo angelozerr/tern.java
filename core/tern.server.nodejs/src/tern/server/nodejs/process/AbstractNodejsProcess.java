@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2014 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,40 +7,36 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - support for tern.js debugging
  */
 package tern.server.nodejs.process;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import tern.TernException;
 import tern.server.nodejs.NodejsTernHelper;
+import tern.server.nodejs.process.INodejsProcess;
+import tern.server.nodejs.process.INodejsProcessListener;
+import tern.server.nodejs.process.NodejsProcessException;
 
 /**
  * node.js process which starts tern server with node.js
  */
-public class NodejsProcess {
+public abstract class AbstractNodejsProcess implements INodejsProcess {
 
 	/**
 	 * The node.js base dir.
 	 */
-	private final File nodejsBaseDir;
-
-	/**
-	 * The node.js tern file.
-	 */
-	private final File nodejsTernFile;
+	protected final File nodejsBaseDir;
 
 	/**
 	 * The project dir where .tern-project is hosted.
 	 */
-	private final File projectDir;
+	protected final File projectDir;
 
 	/**
 	 * Port of the node.js server.
@@ -76,119 +72,17 @@ public class NodejsProcess {
 	private boolean loadingLocalPlugins;
 
 	/**
-	 * node.js process.
-	 */
-	private Process process;
-
-	/**
-	 * StdOut thread.
-	 */
-	private Thread outThread;
-
-	/**
-	 * StdErr thread.
-	 */
-	private Thread errThread;
-
-	/**
 	 * Process listeners.
 	 */
-	private final List<INodejsProcessListener> listeners;
+	protected final List<INodejsProcessListener> listeners;
 
 	/**
 	 * Lock used to wait the start of the server to retrieve port in the getPort
 	 * method.
 	 */
-	private final Object lock = new Object();
+	protected final Object lock = new Object();
 
 	private boolean hasError;
-
-	/**
-	 * StdOut of the node.js process.
-	 */
-	private class StdOut implements Runnable {
-
-		@Override
-		public void run() {
-			try {
-
-				long startTime = System.nanoTime();
-				// start the node.js process with tern.
-				Integer port = null;
-				String line = null;
-				InputStream is = process.getInputStream();
-				InputStreamReader isr = new InputStreamReader(is);
-				BufferedReader br = new BufferedReader(isr);
-				try {
-					while ((line = br.readLine()) != null) {
-						if (port == null) {
-							// port was not getted, try to get it.
-							if (line.startsWith("Listening on port ")) {
-								port = Integer.parseInt(line.substring(
-										"Listening on port ".length(),
-										line.length()));
-
-								// port is getted, notify that process is
-								// started.
-								setPort(port);
-
-								synchronized (lock) {
-									lock.notifyAll();
-								}
-								notifyStartProcess(startTime);
-							}
-						} else {
-							// notify data
-							notifyDataProcess(line);
-						}
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-				if (process != null) {
-					process.waitFor();
-				}
-				notifyStopProcess();
-				kill();
-			} catch (InterruptedException e) {
-				Thread.currentThread().interrupt();
-			}
-		}
-	};
-
-	/**
-	 * StdErr of the node.js process.
-	 */
-	private class StdErr implements Runnable {
-		@Override
-		public void run() {
-			String line = null;
-			InputStream is = process.getErrorStream();
-			InputStreamReader isr = new InputStreamReader(is);
-			BufferedReader br = new BufferedReader(isr);
-			try {
-				while ((line = br.readLine()) != null) {
-					notifyErrorProcess(line);
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * Nodejs process constructor which uses the installed node.js.
-	 * 
-	 * @param nodejsTernBaseDir
-	 *            the node.js tern base dir.
-	 * @param projectDir
-	 *            the project base dir where .tern-project is hosted.
-	 * @throws TernException
-	 */
-	NodejsProcess(File nodejsTernBaseDir, File projectDir) throws TernException {
-		this(null, nodejsTernBaseDir, projectDir);
-	}
 
 	/**
 	 * Nodejs process constructor.
@@ -201,125 +95,36 @@ public class NodejsProcess {
 	 *            the project base dir where .tern-project is hosted.
 	 * @throws TernException
 	 */
-	NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir)
+	public AbstractNodejsProcess(File nodejsBaseDir, File projectDir)
 			throws TernException {
-		this.nodejsBaseDir = nodejsBaseDir;
-		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 		this.projectDir = projectDir;
+		this.nodejsBaseDir = nodejsBaseDir;
 		this.listeners = new ArrayList<INodejsProcessListener>();
 		this.hasError = false;
 		setNoPortFile(true);
 	}
 
-	/**
-	 * Returns the node.js tern file.
-	 * 
-	 * @param nodejsTernBaseDir
-	 *            tern base dir.
-	 * @return the node.js tern file.
-	 * @throws TernException
-	 */
-	private File getNodejsTernFile(File nodejsTernBaseDir) throws TernException {
-		if (nodejsTernBaseDir == null) {
-			throw new TernException(
-					"You must initialize the base dir of the tern node.js server.");
-		}
-		File ternServerFile = new File(nodejsTernBaseDir,
-				"bin/tern");
-		if (!ternServerFile.exists()) {
-			try {
-				throw new TernException("Cannot find tern node.js server at "
-						+ ternServerFile.getCanonicalPath());
-			} catch (IOException e) {
-				throw new TernException("Cannot find tern node.js server at "
-						+ ternServerFile.getPath());
-			}
-		}
-		return ternServerFile;
-	}
-
-	/**
-	 * Create process commands to start tern with node.js
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	protected List<String> createCommands() {
-		List<String> commands = new LinkedList<String>();
-		if (nodejsBaseDir == null) {
-			// for osx, path of node.js should be setted?
-			if (new File("/usr/local/bin/node").exists()) {
-				commands.add("/usr/local/bin/node");
-			}
-			if (new File("/opt/local/bin/node").exists()) {
-				commands.add("/opt/local/bin/node");
-			} else {
-				commands.add("node");
-			}
-		} else {
-			commands.add(nodejsBaseDir.getPath());
-		}
-		try {
-			commands.add(nodejsTernFile.getCanonicalPath());
-		} catch (IOException e) {
-			commands.add(nodejsTernFile.getPath());
-		}
+	protected List<String> createTernServerArgs() {
+		List<String> args = new LinkedList<String>();
 		Integer port = getPort();
 		if (port != null) {
-			commands.add("--port");
-			commands.add(port.toString());
+			args.add("--port");
+			args.add(port.toString());
 		}
 		if (isVerbose()) {
-			commands.add("--verbose");
-			commands.add("1");
+			args.add("--verbose");
+			args.add("1");
 		}
 		if (isNoPortFile()) {
-			commands.add("--no-port-file");
+			args.add("--no-port-file");
 		}
 		if (isPersistent()) {
-			commands.add("--persistent");
+			args.add("--persistent");
 		}
 		if (!isLoadingLocalPlugins()) {
-			commands.add("--disable-loading-local");
+			args.add("--disable-loading-local");
 		}
-		return commands;
-	}
-
-	/**
-	 * Start process.
-	 * 
-	 * @throws IOException
-	 * @throws InterruptedException
-	 */
-	public void start() throws NodejsProcessException {
-		if (isStarted()) {
-			notifyErrorProcess("Nodejs tern Server is already started.");
-			throw new NodejsProcessException(
-					"Nodejs tern Server is already started.");
-		}
-
-		try {
-			List<String> commands = createCommands();
-			ProcessBuilder builder = new ProcessBuilder(commands);
-			// builder.redirectErrorStream(true);
-			builder.directory(getProjectDir());
-			notifyCreateProcess(commands, projectDir);
-
-			this.process = builder.start();
-
-			outThread = new Thread(new StdOut());
-			outThread.setDaemon(true);
-			outThread.start();
-
-			errThread = new Thread(new StdErr());
-			errThread.setDaemon(true);
-			errThread.start();
-
-		} catch (Throwable e) {
-			notifyErrorProcess(e.getMessage());
-			notifyErrorProcess("");
-			throw new NodejsProcessException(e);
-		}
+		return args;
 	}
 
 	/**
@@ -380,33 +185,6 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * Return true id process is started and false otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isStarted() {
-		return process != null;
-	}
-
-	/**
-	 * Kill the process.
-	 */
-	public void kill() {
-		if (process != null) {
-			process.destroy();
-			process = null;
-		}
-		if (outThread != null) {
-			outThread.interrupt();
-			outThread = null;
-		}
-		if (errThread != null) {
-			errThread.interrupt();
-			errThread = null;
-		}
-	}
-
-	/**
 	 * Return the node.js port and null if not started.
 	 * 
 	 * @return
@@ -420,7 +198,7 @@ public class NodejsProcess {
 	 * 
 	 * @param port
 	 */
-	void setPort(Integer port) {
+	protected void setPort(Integer port) {
 		this.port = port;
 	}
 
@@ -523,17 +301,6 @@ public class NodejsProcess {
 	}
 
 	/**
-	 * Joint to the stdout thread;
-	 * 
-	 * @throws InterruptedException
-	 */
-	public void join() throws InterruptedException {
-		if (outThread != null) {
-			outThread.join();
-		}
-	}
-
-	/**
 	 * Add the given process listener.
 	 * 
 	 * @param listener
@@ -558,7 +325,7 @@ public class NodejsProcess {
 	/**
 	 * Notify start process.
 	 */
-	private void notifyCreateProcess(List<String> commands, File projectDir) {
+	protected void notifyCreateProcess(List<String> commands, File projectDir) {
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
 				listener.onCreate(this, commands, projectDir);
@@ -572,7 +339,7 @@ public class NodejsProcess {
 	 * @param startTime
 	 *            time when node.js process is started.
 	 */
-	private void notifyStartProcess(long startTime) {
+	protected void notifyStartProcess(long startTime) {
 		this.elapsedSartTime = NodejsTernHelper.getElapsedTimeInMs(startTime);
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
@@ -584,7 +351,7 @@ public class NodejsProcess {
 	/**
 	 * Notify stop process.
 	 */
-	private void notifyStopProcess() {
+	protected void notifyStopProcess() {
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
 				listener.onStop(this);
@@ -597,7 +364,7 @@ public class NodejsProcess {
 	 * 
 	 * @param line
 	 */
-	private void notifyDataProcess(String line) {
+	protected void notifyDataProcess(String line) {
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
 				listener.onData(this, line);
@@ -608,11 +375,11 @@ public class NodejsProcess {
 	/**
 	 * Notify error process.
 	 */
-	private void notifyErrorProcess(String line) {
+	protected void notifyErrorProcess(String line) {
 		this.hasError = true;
 		synchronized (listeners) {
 			for (INodejsProcessListener listener : listeners) {
-				listener.onError(NodejsProcess.this, line);
+				listener.onError(AbstractNodejsProcess.this, line);
 			}
 		}
 	}

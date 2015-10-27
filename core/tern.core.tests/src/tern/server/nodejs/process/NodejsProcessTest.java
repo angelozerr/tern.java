@@ -49,12 +49,12 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
-		NodejsProcess process = NodejsProcessManager.getInstance().create(
+		INodejsProcess process = NodejsProcessManager.getInstance().create(
 				projectDir, nodejsBaseDir, nodejsTernBaseDir);
 		process.addProcessListener(new NodejsProcessAdapter() {
 
 			@Override
-			public void onData(NodejsProcess server, String line) {
+			public void onData(INodejsProcess server, String line) {
 				System.err.println(line);
 			}
 		});
@@ -91,14 +91,14 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
-		NodejsProcess process = NodejsProcessManager.getInstance().create(
+		INodejsProcess process = NodejsProcessManager.getInstance().create(
 				projectDir, nodejsBaseDir, nodejsTernBaseDir);
 
 		final StringBuilder error = new StringBuilder();
 		process.addProcessListener(new NodejsProcessAdapter() {
 
 			@Override
-			public void onError(NodejsProcess server, String line) {
+			public void onError(INodejsProcess server, String line) {
 				error.append(line);
 			}
 		});

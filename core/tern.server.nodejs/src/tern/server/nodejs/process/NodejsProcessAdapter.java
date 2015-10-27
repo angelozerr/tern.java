@@ -24,24 +24,24 @@ import java.util.List;
 public class NodejsProcessAdapter implements INodejsProcessListener {
 
 	@Override
-	public void onCreate(NodejsProcess process, List<String> commands,
+	public void onCreate(INodejsProcess process, List<String> commands,
 			File projectDir) {
 	}
 
 	@Override
-	public void onStart(NodejsProcess process) {
+	public void onStart(INodejsProcess process) {
 	}
 
 	@Override
-	public void onData(NodejsProcess process, String line) {
+	public void onData(INodejsProcess process, String line) {
 	}
 
 	@Override
-	public void onStop(NodejsProcess process) {
+	public void onStop(INodejsProcess process) {
 	}
 
 	@Override
-	public void onError(NodejsProcess process, String line) {
+	public void onError(INodejsProcess process, String line) {
 	}
 
 }

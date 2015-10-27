@@ -3,7 +3,9 @@
 <plugin>
 		
 	<extension-point id="nodeJSInstalls" name="%nodeJSInstallsContribution.name"
-		schema="schema/nodeJSInstalls.exsd" />		
+		schema="schema/nodeJSInstalls.exsd" />
+	<extension-point id="nodeJSDebuggers" name="NodeJS Debuggers" 
+ 		schema="schema/nodeJSDebuggers.exsd"/>		
 	
 	<!-- Tern Nodejs server type -->
 	<extension

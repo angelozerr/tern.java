@@ -1,5 +1,5 @@
 /**
- *  Copyright (c) 2013-2015 Angelo ZERR.
+ *  Copyright (c) 2013-2015 Angelo ZERR and Genuitec LLC.
  *  All rights reserved. This program and the accompanying materials
  *  are made available under the terms of the Eclipse Public License v1.0
  *  which accompanies this distribution, and is available at
@@ -7,11 +7,15 @@
  *
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
+ *  Piotr Tomiak <piotr@genuitec.com> - support for tern.js debugging
  */
 package tern.eclipse.ide.server.nodejs.internal.core.preferences;
 
 import java.io.File;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Preferences;
 
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
@@ -19,14 +23,13 @@ import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.server.nodejs.NodejsTernHelper;
-import tern.server.nodejs.process.NodejsProcess;
-import tern.server.nodejs.process.NodejsProcessHelper;
 import tern.utils.StringUtils;
 
 /**
  * Support for tern core node.js preferences.
  * 
  */
+@SuppressWarnings("deprecation")
 public class TernNodejsCorePreferencesSupport {
 
 	private static final String NODES_QUALIFIER = TernNodejsCorePlugin.PLUGIN_ID;
@@ -160,6 +163,25 @@ public class TernNodejsCorePreferencesSupport {
 		} catch (Throwable e) {
 			return NodejsTernHelper.DEFAULT_REMOTE_PORT;
 		}
+	}
+
+	public String getDebugger() {
+		return preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_DEBUGGER);
+	}
+
+	public IFile getTernServerDebugFile() {
+		String fileName = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TERN_SERVER_DEBUG_FILE);
+		if (fileName != null) {
+			try {
+				return ResourcesPlugin.getWorkspace().getRoot()
+						.getFile(new Path(fileName));
+			} catch (Exception e) {
+				// ignore
+			}
+		}
+		return null;
 	}
 
 }
