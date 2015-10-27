@@ -18,8 +18,8 @@ import org.eclipse.core.resources.IProject;
 
 import tern.ITernProject;
 import tern.eclipse.ide.core.ITernServerFactory;
-import tern.eclipse.ide.server.nodejs.core.INodejsDebugger;
-import tern.eclipse.ide.server.nodejs.core.NodejsDebuggersManager;
+import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebugger;
+import tern.eclipse.ide.server.nodejs.core.debugger.NodejsDebuggersManager;
 import tern.eclipse.ide.server.nodejs.internal.core.preferences.TernNodejsCorePreferencesSupport;
 import tern.server.ITernServer;
 import tern.server.nodejs.NodejsTernServer;

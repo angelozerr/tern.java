@@ -11,6 +11,7 @@
  */
 package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 
+import java.net.URL;
 import java.util.Collection;
 
 import org.eclipse.core.resources.IContainer;
@@ -19,7 +20,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.ComboFieldEditor;
@@ -36,19 +39,22 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
-import tern.eclipse.ide.server.nodejs.core.INodejsDebugger;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
-import tern.eclipse.ide.server.nodejs.core.NodejsDebuggersManager;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
+import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebugger;
+import tern.eclipse.ide.server.nodejs.core.debugger.NodejsDebuggersManager;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
+import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin;
 import tern.eclipse.ide.server.nodejs.internal.ui.preferences.WorkspaceResourceSelectionDialog.Mode;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.utils.StringUtils;
@@ -69,6 +75,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	private BooleanFieldEditor persistentField;
 	private CheckComboFieldEditor debuggerField;
 	private StringButtonFieldEditor ternServerFile;
+	private Link debuggerWikiLink;
 	private ComboFieldEditor nodeJSInstallField;
 	private Label nodePathTitle;
 	private FileComboFieldEditor nativeNodePath;
@@ -165,9 +172,9 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				TernNodejsCoreConstants.NODEJS_DEBUGGER,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_label,
 				debuggers, "", parent) { //$NON-NLS-1$
-			
+
 			private boolean isValid = true;
-			
+
 			@Override
 			protected void refreshValidState() {
 				if (isCheckboxSelected()) {
@@ -184,17 +191,18 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				isValid = true;
 				clearErrorMessage();
 			}
-			
+
 			@Override
 			public boolean isValid() {
 				return isValid;
 			}
-			
+
 			@Override
 			protected void updateComboBoxEnablement(Composite parent,
 					boolean enabled) {
 				super.updateComboBoxEnablement(parent, enabled);
 				ternServerFile.setEnabled(enabled, parent);
+				debuggerWikiLink.setEnabled(enabled);
 			}
 		};
 		addField(debuggerField);
@@ -270,6 +278,35 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		GridData gd = new GridData();
 		gd.horizontalIndent = 25;
 		ternServerFile.getLabelControl(parent).setLayoutData(gd);
+
+		debuggerWikiLink = new Link(parent, SWT.NONE);
+		debuggerWikiLink
+				.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_wiki_link);
+		debuggerWikiLink.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				try {
+					PlatformUI
+							.getWorkbench()
+							.getBrowserSupport()
+							.getExternalBrowser()
+							.openURL(
+									new URL(
+											"https://github.com/angelozerr/tern.java/wiki/Debugging-Tern.js-on-Node.js")); //$NON-NLS-1$
+				} catch (Exception e1) {
+					TernNodejsUIPlugin
+							.getDefault()
+							.getLog()
+							.log(new Status(IStatus.ERROR,
+									TernNodejsUIPlugin.PLUGIN_ID, e1
+											.getMessage(), e1));
+				}
+			}
+		});
+
+		gd = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+		gd.horizontalIndent = 25;
+		debuggerWikiLink.setLayoutData(gd);
 
 		// Tern Server type combo
 		INodejsInstall[] installs = TernNodejsCorePlugin

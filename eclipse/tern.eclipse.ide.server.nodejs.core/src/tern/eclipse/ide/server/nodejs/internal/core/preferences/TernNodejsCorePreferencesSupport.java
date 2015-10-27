@@ -174,8 +174,12 @@ public class TernNodejsCorePreferencesSupport {
 		String fileName = preferencesSupport
 				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TERN_SERVER_DEBUG_FILE);
 		if (fileName != null) {
-			return ResourcesPlugin.getWorkspace().getRoot()
-					.getFile(new Path(fileName));
+			try {
+				return ResourcesPlugin.getWorkspace().getRoot()
+						.getFile(new Path(fileName));
+			} catch (Exception e) {
+				// ignore
+			}
 		}
 		return null;
 	}

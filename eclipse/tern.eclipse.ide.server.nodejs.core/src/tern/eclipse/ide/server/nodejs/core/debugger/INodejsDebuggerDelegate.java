@@ -8,7 +8,7 @@
  *  Contributors:
  *  Piotr Tomiak <piotr@genuitec.com> - initial API and implementation
  */
-package tern.eclipse.ide.server.nodejs.core;
+package tern.eclipse.ide.server.nodejs.core.debugger;
 
 import java.io.File;
 
@@ -17,11 +17,7 @@ import org.eclipse.core.resources.IFile;
 import tern.TernException;
 import tern.server.nodejs.process.INodejsProcess;
 
-public interface INodejsDebugger {
-
-	String getName();
-
-	String getId();
+public interface INodejsDebuggerDelegate {
 
 	boolean isInstalled();
 

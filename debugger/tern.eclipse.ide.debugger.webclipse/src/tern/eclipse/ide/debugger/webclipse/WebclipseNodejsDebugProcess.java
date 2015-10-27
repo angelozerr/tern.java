@@ -8,7 +8,7 @@
  *  Contributors:
  *  Piotr Tomiak <piotr@genuitec.com> - initial API and implementation
  */
-package tern.eclipse.ide.server.nodejs.internal.core.debugging.webclipse;
+package tern.eclipse.ide.debugger.webclipse;
 
 import java.io.File;
 import java.util.ArrayList;

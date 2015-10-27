@@ -8,7 +8,7 @@
  *  Contributors:
  *  Piotr Tomiak <piotr@genuitec.com> - initial API and implementation
  */
-package tern.eclipse.ide.server.nodejs.internal.core.debugging.webclipse;
+package tern.eclipse.ide.debugger.webclipse;
 
 import java.io.File;
 
@@ -16,22 +16,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.debug.core.DebugPlugin;
 
 import tern.TernException;
-import tern.eclipse.ide.server.nodejs.core.INodejsDebugger;
+import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebuggerDelegate;
 import tern.server.nodejs.process.INodejsProcess;
 
-public class WebclipseDebugger implements INodejsDebugger {
+public class WebclipseDebugger implements INodejsDebuggerDelegate {
 
 	static final String LAUNCH_CONFIG_ID = "com.genuitec.eclipse.javascript.debug.core.jsStandaloneAppLaunchConfigurationType"; //$NON-NLS-1$
-
-	@Override
-	public String getName() {
-		return "Webclipse JavaScript Debugger";
-	}
-
-	@Override
-	public String getId() {
-		return "webclipse"; //$NON-NLS-1$
-	}
 
 	@Override
 	public boolean isInstalled() {
