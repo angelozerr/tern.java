@@ -18,18 +18,23 @@
    <feature id="tern-server-nodejs-feature"><category name="Tern IDE"/></feature>
    <feature url="features/tern-server-nodejs-feature.source_0.0.0.jar" id="tern-server-nodejs-feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
-   </feature>
-   
-   <feature id="tern.eclipse.ide.tools.feature"><category name="Tern Tooling"/></feature>
-   <feature url="features/tern.eclipse.ide.tools.feature.source_0.0.0.jar" id="tern.eclipse.ide.tools.feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
-   </feature>
+   </feature>   
    
    <feature id="tern-linters-feature"><category name="Tern IDE"/></feature>
    <feature url="features/tern-linters-feature.source_0.0.0.jar" id="tern-linters-feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
    </feature>
-      
+
+   <feature id="tern.eclipse.ide.tools.feature"><category name="Tern Tooling"/></feature>
+   <feature url="features/tern.eclipse.ide.tools.feature.source_0.0.0.jar" id="tern.eclipse.ide.tools.feature.source" version="0.0.0">
+      <category name="Tern Tooling Development Resources"/>
+   </feature>
+   
+   <feature id="tern-debuggers-feature"><category name="Tern Tooling"/></feature>
+   <feature url="features/tern-debuggers-feature.source_0.0.0.jar" id="tern-debuggers-feature.source" version="0.0.0">
+      <category name="Tern Tooling Development Resources"/>
+   </feature>
+         
    <bundle id="minimal-json" >
       <category name="Tern IDE"/>
    </bundle>

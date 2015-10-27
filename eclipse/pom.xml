@@ -19,5 +19,6 @@
 		<module>jsdt</module>
 		<module>linters</module>
 		<module>embed</module>
+		<module>debuggers</module>
 	</modules>
 </project>
