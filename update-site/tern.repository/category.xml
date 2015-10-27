@@ -29,11 +29,6 @@
    <feature url="features/tern.eclipse.ide.tools.feature.source_0.0.0.jar" id="tern.eclipse.ide.tools.feature.source" version="0.0.0">
       <category name="Tern Tooling Development Resources"/>
    </feature>
-   
-   <feature id="tern-debuggers-feature"><category name="Tern Tooling"/></feature>
-   <feature url="features/tern-debuggers-feature.source_0.0.0.jar" id="tern-debuggers-feature.source" version="0.0.0">
-      <category name="Tern Tooling Development Resources"/>
-   </feature>
          
    <bundle id="minimal-json" >
       <category name="Tern IDE"/>
@@ -42,13 +37,38 @@
    <bundle id="minimatch.java" >
       <category name="Tern IDE"/>
    </bundle>
-   
+
+   <bundle id="tern.eclipse.ide.debugger.nodeclipse" >
+      <category name="Tern Debuggers"/>
+   </bundle>
+      <bundle id="tern.eclipse.ide.debugger.webclipse" >
+      <category name="Tern Debuggers"/>
+   </bundle>
+      
+   <category-def name="Tern IDE" label="Tern IDE">
+     <description>
+         Tern IDE to use tern with Eclipse IDE.
+     </description>
+   </category-def>
    <category-def name="Tern - Embed Node.js" label="Tern - Embed Node.js">
       <description>
          Embed Node.js switch OS
       </description>
    </category-def>
-   <category-def name="Tern IDE" label="Tern IDE"/>
-   <category-def name="Tern Tooling" label="Tern Tooling"/>
-   <category-def name="Tern Tooling Development Resources" label="Tern Tooling Development Resources"/>
+   <category-def name="Tern Tooling" label="Tern Tooling">
+     <description>
+         Provides wizards to create tern modules.
+     </description>
+   </category-def>
+   <category-def name="Tern Debuggers" label="Tern Debuggers">
+     <description>
+         Provides JavaScript debuggers to debug tern server and modules.
+     </description>
+   </category-def>   
+   <category-def name="Tern Tooling Development Resources" label="Tern Tooling Development Resources">
+     <description>
+         Java sources of Eclipse Tern plugins. 
+     </description>
+   </category-def>
+   
 </site>
