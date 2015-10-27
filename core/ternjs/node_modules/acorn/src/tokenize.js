@@ -376,13 +376,13 @@ pp.finishOp = function(type, size) {
 // Parse a regular expression. Some context-awareness is necessary,
 // since a '/' inside a '[]' set does not end the expression.
 
-function tryCreateRegexp(src, flags, throwErrorAt) {
+function tryCreateRegexp(src, flags, throwErrorAt, parser) {
   try {
     return new RegExp(src, flags);
   } catch (e) {
     if (throwErrorAt !== undefined) {
-      if (e instanceof SyntaxError) this.raise(throwErrorAt, "Error parsing regular expression: " + e.message)
-      this.raise(e)
+      if (e instanceof SyntaxError) parser.raise(throwErrorAt, "Error parsing regular expression: " + e.message)
+      throw e
     }
   }
 }
@@ -422,7 +422,7 @@ pp.readRegexp = function() {
       // negatives in unlikely scenarios. For example, `[\u{61}-b]` is a
       // perfectly valid pattern that is equivalent to `[a-b]`, but it would
       // be replaced by `[x-b]` which throws an error.
-      tmp = tmp.replace(/\\u\{([0-9a-fA-F]+)\}/g, (match, code, offset) => {
+      tmp = tmp.replace(/\\u\{([0-9a-fA-F]+)\}/g, (_match, code, offset) => {
         code = Number("0x" + code)
         if (code > 0x10FFFF) this.raise(start + offset + 3, "Code point out of bounds")
         return "x"
@@ -435,7 +435,7 @@ pp.readRegexp = function() {
   // Rhino's regular expression parser is flaky and throws uncatchable exceptions,
   // so don't do detection if we are running under Rhino
   if (!isRhino) {
-    tryCreateRegexp(tmp, undefined, start);
+    tryCreateRegexp(tmp, undefined, start, this);
     // Get a regular expression object for this pattern-flag pair, or `null` in
     // case the current environment doesn't support the flags it uses.
     value = tryCreateRegexp(content, mods)
@@ -676,7 +676,7 @@ pp.readWord1 = function() {
 pp.readWord = function() {
   let word = this.readWord1()
   let type = tt.name
-  if ((this.options.ecmaVersion >= 6 || !this.containsEsc) && this.isKeyword(word))
+  if ((this.options.ecmaVersion >= 6 || !this.containsEsc) && this.keywords.test(word))
     type = keywordTypes[word]
   return this.finishToken(type, word)
 }
