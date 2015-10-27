@@ -17,6 +17,12 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
@@ -56,7 +62,7 @@ public class WebclipseNodejsDebugProcess extends AbstractNodejsProcess {
 		try {
 			ILaunchConfigurationType type = manager
 					.getLaunchConfigurationType(WebclipseDebugger.LAUNCH_CONFIG_ID);
-			ILaunchConfigurationWorkingCopy lcwc = type
+			final ILaunchConfigurationWorkingCopy lcwc = type
 					.newInstance(
 							null,
 							manager.generateLaunchConfigurationName("tern.js for " + getProjectDir().getName())); //$NON-NLS-1$
@@ -104,19 +110,36 @@ public class WebclipseNodejsDebugProcess extends AbstractNodejsProcess {
 					}
 				}
 			});
+			
+			Job launchJS = new Job("Launching Node.js in debug mode...") {
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					notifyCreateProcess(Collections.<String> emptyList(), projectDir);
+					try {
+						launch = lcwc.launch("debug", null); //$NON-NLS-1$
+					} catch (CoreException e) {
+						return e.getStatus();
+					}
 
-			launch = lcwc.launch("debug", null); //$NON-NLS-1$
-
-			// setup std and err listeners
-			for (IProcess process : launch.getProcesses()) {
-				if ("javascript".equals(process.getAttribute(IProcess.ATTR_PROCESS_TYPE))) { //$NON-NLS-1$
-					new StdOut(process.getStreamsProxy()
-							.getOutputStreamMonitor());
-					new StdErr(process.getStreamsProxy()
-							.getErrorStreamMonitor());
+					// setup std and err listeners
+					for (IProcess process : launch.getProcesses()) {
+						if ("javascript".equals(process.getAttribute(IProcess.ATTR_PROCESS_TYPE))) { //$NON-NLS-1$
+							new StdOut(process.getStreamsProxy()
+									.getOutputStreamMonitor());
+							new StdErr(process.getStreamsProxy()
+									.getErrorStreamMonitor());
+						}
+					}
+					return Status.OK_STATUS;
 				}
+			};
+			launchJS.setRule(ResourcesPlugin.getWorkspace().getRoot());
+			launchJS.schedule();
+			Job job = Job.getJobManager().currentJob();
+			if (job != null) {
+				//yield rule and allow for the launchJS job to take the rule
+				job.yieldRule(null);
 			}
-
 		} catch (Exception e) {
 			throw new NodejsProcessException(e);
 		}
