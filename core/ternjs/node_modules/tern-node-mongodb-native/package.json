@@ -9,11 +9,19 @@
     "type": "git",
     "url": "git://github.com/angelozerr/tern-node-mongodb-native.git"
   },
+  "scripts": {
+  	"publish": "node ./scripts/git-tag.js",
+    "test": "node ./test/run.js"
+  },  
   "dependencies": {
     "tern": "^0.16.0"
-  },  
-  "devDependencies": { 
-  	"dox": "0.4.4" 
+  },
+  "devDependencies": {
+    "dox": "0.4.4", 
+  	"test": ">=0.0.5",
+  	"codemirror": "^5.8.0",
+  	"codemirror-extension": "^0.2.0",
+  	"codemirror-javascript": "^0.2.0"
   },
   "keywords": [
     "tern",
