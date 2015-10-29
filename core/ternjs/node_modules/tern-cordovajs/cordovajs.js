@@ -8,7 +8,7 @@
   "use strict";
 
   function preCondenseReach(state) {
-    var interfaces = infer.cx().parent._cordovaJS.interfaces;
+    var interfaces = infer.cx().parent.mod.cordovaJS.interfaces;
     var rjs = state.roots["!cordovajs"] = new infer.Obj(null);
     for (var name in interfaces) {
       var prop = rjs.defProp(name.replace(/\./g, "`"));
@@ -19,14 +19,14 @@
 
   function postLoadDef(data) {
     var cx = infer.cx(), interfaces = cx.definitions[data["!name"]]["!cordovajs"];
-    var data = cx.parent._cordovaJS;
+    var data = cx.parent.mod.cordovaJS;
     if (interfaces) for (var name in interfaces.props) {
       interfaces.props[name].propagate(getInterface(name, data));
     }
   }
 
   tern.registerPlugin("cordovajs", function(server, options) {
-    server._cordovaJS = {
+    server.mod.cordovaJS = {
       interfaces: Object.create(null),
       options: options || {},
       currentFile: null,
@@ -34,19 +34,20 @@
     };
 
     server.on("beforeLoad", function(file) {
-      this._cordovaJS.currentFile = file.name;
+      this.mod.cordovaJS.currentFile = file.name;
     });
     server.on("reset", function() {
-      this._cordovaJS.interfaces = Object.create(null);
-      this._cordovaJS.require = null;
+      this.mod.cordovaJS.interfaces = Object.create(null);
+      this.mod.cordovaJS.require = null;
     });
-    return {
-      defs: defs,
-      passes: {
-        preCondenseReach: preCondenseReach,
-        postLoadDef: postLoadDef
-      },
-    };
+    
+    server.on("preCondenseReach", preCondenseReach)
+    server.on("postLoadDef", postLoadDef)
+    // server.on("typeAt", findTypeAt);
+    // server.on("completion", findCompletions);
+
+    server.addDefs(defs);
+    
   });
 
   var defs = {
