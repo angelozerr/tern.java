@@ -18,8 +18,10 @@
   
   infer.registerFunction("gulp_task", function(self, args, argNodes) {
     var name = argNodes && argNodes[0] && argNodes[0].type == "Literal" && argNodes[0].value;
-    if (typeof name == "string")
-      getTasks(argNodes[0].sourceFile.name)[name] = {"node": argNodes[0]};
+    if (typeof name == "string") {
+      var tasks = getTasks(argNodes[0].sourceFile.name);
+      if (tasks) tasks[name] = {"node": argNodes[0]};
+    }
     return infer.ANull;
   });
   
@@ -43,7 +45,7 @@
           taskName = taskName.substring(0, index); 
           targetName = name.substring(index+1, name.length);
         }
-        var filename = file.name, tasks = getTasks(filename), task = tasks[taskName];
+        var filename = file.name, tasks = getTasks(filename), task = tasks ? tasks[taskName] : null;
         if (task) {
           if (targetName && task.targets) task = task.targets[targetName];
           var node = task && task.node;                    
