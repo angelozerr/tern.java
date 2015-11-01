@@ -1,0 +1,29 @@
+{
+  "name": "tern-cordovajs",
+  "license": "MIT",
+  "version": "0.2.0",
+  "main": "cordovajs.js",
+  "author": "Victor V. Rubezhny <vrubezhny@exadel.com>",
+  "description": "A Tern plugin adding support for CordovaJS.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vrubezhny/tern-cordovajs.git"
+  },
+  "scripts": {
+    "publish": "node ./scripts/git-tag.js",
+    "test": "node ./test/all.js"
+  },
+  "dependencies": {
+    "tern": "^0.16.0"
+  },
+  "devDependencies": {
+  	"test": ">=0.0.5",
+  	"codemirror": "^5.8.0",
+  	"codemirror-extension": "^0.2.0",
+  	"codemirror-javascript": "^0.2.0"
+  },
+  "keywords": [
+    "tern",
+    "cordova"
+  ]
+}
