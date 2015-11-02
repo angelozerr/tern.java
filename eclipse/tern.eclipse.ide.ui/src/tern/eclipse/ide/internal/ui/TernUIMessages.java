@@ -44,7 +44,9 @@ public final class TernUIMessages extends NLS {
 	public static String TernGlobalPreferencesPage_desc;
 
 	public static String TernGlobalPreferencesPage_disable_async_reqs;
-	public static String TernGlobalPreferencesPage_serverType;
+	
+	public static String TernServerPreferencesPage_desc;
+	public static String TernServerPreferencesPage_serverType;
 
 	// Commons Property preferences
 	public static String EnableProjectSettings;
@@ -147,6 +149,7 @@ public final class TernUIMessages extends NLS {
 	// Refresh outline
 	public static String refreshOutline;
 	public static String TernOutline_computing;
+
 
 	private TernUIMessages() {
 	}

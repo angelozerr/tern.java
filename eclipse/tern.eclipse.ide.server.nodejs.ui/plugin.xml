@@ -7,7 +7,7 @@
        point="org.eclipse.ui.preferencePages">  
        <!-- Tern Global preferences page -->  
        <page
-       		  category="tern.eclipse.ide.preferences"
+       		  category="tern.eclipse.ide.ui.preferences.server"
 	          class="tern.eclipse.ide.server.nodejs.internal.ui.preferences.TernNodejsPreferencesPage"
 	          id="tern.eclipse.ide.server.nodejs.preferences"
 	          name="%TernNodejsPreferencesPage.name"/>
