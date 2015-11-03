@@ -1,7 +1,7 @@
 {
   "name": "tern-tabris",
   "license": "MIT",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "main": "tabris.js",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
   "description": "A Tern plugin adding support for tabris.",

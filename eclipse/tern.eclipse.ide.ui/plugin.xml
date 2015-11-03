@@ -113,6 +113,10 @@
               category="tern.eclipse.ide.ui.preferences.development"
               class="tern.eclipse.ide.internal.ui.preferences.TernRepositoryPreferencesPage"
               id="tern.eclipse.ide.ui.preferences.repository" />
+       <page  name="%TernServerPropertyPage.name"
+              category="tern.eclipse.ide.preferences"
+              class="tern.eclipse.ide.internal.ui.preferences.TernServerPreferencesPage"
+              id="tern.eclipse.ide.ui.preferences.server" />              
        <page  name="%TernValidationPropertyPage.name"
               category="tern.eclipse.ide.preferences"
               class="tern.eclipse.ide.internal.ui.preferences.TernValidationPreferencesPage"
