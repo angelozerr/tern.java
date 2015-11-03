@@ -81,7 +81,8 @@ public class TernCorePlugin extends Plugin {
 
 	public static File getTernBaseDir() throws IOException {
 		return new File(FileLocator.getBundleFile(Platform
-				.getBundle(ternjs.Activator.PLUGIN_ID)), "node_modules/tern");
+				.getBundle(ternjs.Activator.PLUGIN_ID)), "node_modules/tern")
+				.getCanonicalFile();
 	}
 
 	@Override
