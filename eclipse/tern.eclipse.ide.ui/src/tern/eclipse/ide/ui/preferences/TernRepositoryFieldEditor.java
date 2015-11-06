@@ -26,8 +26,9 @@ import tern.utils.StringUtils;
 
 public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 
+	private static final int NB_BUTTONS = 1;
+	
 	private final IWorkbench workbench;
-	private boolean isValid = true;
 	private Button importButton;
 	private Button addButton;
 
@@ -43,12 +44,12 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 
 	@Override
 	protected void adjustForNumColumns(int numColumns) {
-		super.adjustForNumColumns(numColumns - 2);
+		super.adjustForNumColumns(numColumns - NB_BUTTONS);
 	}
 
 	@Override
 	public int getNumberOfControls() {
-		return super.getNumberOfControls() + 2;
+		return super.getNumberOfControls() + NB_BUTTONS;
 	}
 
 	@Override
@@ -61,12 +62,12 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 		gd.widthHint = Math.max(widthHint, importButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true).x);
 		importButton.setLayoutData(gd);
 
-		addButton = getAddButtonControl(parent);
+		/*addButton = getAddButtonControl(parent);
 		gd = new GridData();
 		gd.horizontalAlignment = GridData.FILL;
 		widthHint = convertHorizontalDLUsToPixels(addButton, IDialogConstants.BUTTON_WIDTH);
 		gd.widthHint = Math.max(widthHint, addButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true).x);
-		addButton.setLayoutData(gd);
+		addButton.setLayoutData(gd);*/
 	}
 
 	protected Button getImportButtonControl(Composite parent) {
@@ -77,7 +78,7 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 			importButton.addSelectionListener(new SelectionAdapter() {
 				public void widgetSelected(SelectionEvent evt) {
 					boolean oldValid = isValid();
-					openImportDialogIfNeeded();					
+					openImportDialogIfNeeded();
 					refreshValidState();
 					boolean newValid = isValid();
 					if (oldValid != newValid) {
@@ -143,8 +144,6 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 		Object selectedRepository = getSelectedValue();
 		if (selectedRepository == null || selectedRepository instanceof String) {
 			importButton.setEnabled(false);
-			//isValid = false;
-			//showErrorMessage(TernUIMessages.TernRepositoryFieldEditor_ternRepository_err_not_selected);
 			return;
 		}
 		IIDETernRepository repository = (IIDETernRepository) selectedRepository;
@@ -156,21 +155,12 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 			dialog.open();
 			if (!repository.isImported()) {
 				importButton.setEnabled(true);
-				//isValid = false;
-				//showErrorMessage(TernUIMessages.TernRepositoryFieldEditor_ternRepository_err_not_imported);
 				return;
 			}
 			getViewer().refresh(true);
 		}
 		importButton.setEnabled(false);
-		//isValid = true;
-		//clearErrorMessage();
 	}
-
-//	@Override
-//	public boolean isValid() {
-//		return isValid;
-//	}
 
 	@Override
 	public void setEnabled(boolean enabled, Composite parent) {
@@ -219,7 +209,7 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 	@Override
 	protected Object getValueFromPreference(String preferenceValue) {
 		if (StringUtils.isEmpty(preferenceValue)) {
-			return null;
+			return TernUIMessages.TernRepositoryFieldEditor_ternRepository_none;
 		}
 		return TernCorePlugin.getTernRepositoryManager().getRepository(preferenceValue);
 	}
@@ -230,5 +220,12 @@ public class TernRepositoryFieldEditor extends ComboViewerFieldEditor {
 		setImportButtonEnabled(true);
 	}
 
-	
+	@Override
+	public boolean isValid() {
+		if (!getLabelControl().isEnabled()) {
+			return true;
+		}
+		return super.isValid();
+	}
+
 }

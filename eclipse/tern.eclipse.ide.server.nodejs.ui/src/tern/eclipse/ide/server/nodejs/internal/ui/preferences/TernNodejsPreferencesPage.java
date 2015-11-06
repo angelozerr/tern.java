@@ -142,6 +142,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage impleme
 				debuggers[j][1] = ""; //$NON-NLS-1$
 			}
 		}
+		
 		debuggerField = new CheckComboFieldEditor(TernNodejsCoreConstants.NODEJS_DEBUGGER,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_label, debuggers, "", parent) { //$NON-NLS-1$
 
@@ -291,7 +292,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage impleme
 		testNumberField.setEnabled(!isRemote, parent);
 		persistentField.setEnabled(!isRemote, parent);
 		debuggerField.setEnabled(!isRemote, parent);
-		ternRepositoryField.setEnabled(!isRemote, parent);
+		ternRepositoryField.setEnabled(debuggerField.isCheckboxSelected() , parent);
 		nodeJSInstallField.setEnabled(!isRemote, parent);
 		nodePathTitle.setEnabled(!isRemote);
 		nativeNodePath.setEnabled(!isRemote, parent);

@@ -50,8 +50,8 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 				server = new NodejsTernServer(project, debugger.createProcess(
 						project.getProjectDir(), installPath, ternServerFile));
 			} else {
-				File ternFile = project.getRepository().getTernBaseDir();
-				server = new NodejsTernServer(project, installPath, ternFile);
+				File ternBaseDir = project.getRepository().getTernBaseDir();
+				server = new NodejsTernServer(project, installPath, ternBaseDir);
 			}
 		}
 		server.setTimeout(getTimeout());
