@@ -12,7 +12,7 @@ public class TernProjectFactory {
 
 	public static ITernProject create() {
 		// Create tern repository.
-		File ternBaseDir = new File("../../core/ternjs/node_modules/tern");
+		File ternBaseDir = new File("../../core/ternjs");
 		ITernRepository repository = new TernRepository("ternjs", ternBaseDir);
 		// Create tern project by setting the tern repository
 		File projectDir = new File(".");
