@@ -1,0 +1,6 @@
+{
+  "ecmaVersion": 5,
+  "libs": [
+    "browser"
+  ]
+}
