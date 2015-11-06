@@ -53,20 +53,6 @@ You can play with Ctrl+Space to open tern completion :
 * implement basic console.log. I think J2V8 should provide that.
  
 # Limitation
-
-* cannot be used with Eclipse IDE, because of async tern completion (with thread) and https://github.com/eclipsesource/J2V8/issues/33 , it throws error : 
-
-```
-java.lang.Error: Invalid V8 thread access.
-	at com.eclipsesource.v8.V8.checkThread(V8.java:246)
-	at com.eclipsesource.v8.V8.executeStringScript(V8.java:187)
-	at com.eclipsesource.v8.V8.executeStringScript(V8.java:183)
-	at tern.server.j2v8.J2V8TernServer.request(J2V8TernServer.java:79)
-	at tern.server.j2v8.J2V8TernServer.request(J2V8TernServer.java:69)
-	at tern.server.protocol.TernResultsProcessorsFactory.makeRequestAndProcess(TernResultsProcessorsFactory.java:36)
-	at tern.eclipse.ide.internal.core.resources.IDETernServerAsyncReqProcessor.run(IDETernServerAsyncReqProcessor.java:104)
-	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
-```
 	
 * not tested, but is it working if there are several J2V8 tern server (several v8 instances)? Because in Eclipse IDE, there are a tern server per Eclipse project.
 * some tern plugin requires **require** node function to support their features like : 
@@ -78,4 +64,4 @@ java.lang.Error: Invalid V8 thread access.
 # TODO
 
 * clean code!
-* integrate the thern server J2v8 inside Eclipse IDE 
+* integrate the thern server J2V8 inside Eclipse IDE 
