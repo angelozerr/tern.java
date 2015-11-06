@@ -25,7 +25,7 @@ tern.server.j2v8
  
 ## Sample with SWT
  
-[tern.eclipse.swt.samples](https://github.com/angelozerr/tern.java/tree/master/eclipse/tern.eclipse.swt.samples) provides a sample with a simple SWT Text & the J2V8 tern server implementation. To use it : 
+[tern.eclipse.swt.samples](https://github.com/angelozerr/tern.java/tree/master/samples/tern.eclipse.swt.samples) provides a sample with a simple SWT Text & the J2V8 tern server implementation. To use it : 
 
 * import the following projects in your workspace :
  
@@ -37,7 +37,7 @@ tern.server.j2v8
  * tern.server.j2v8
  * ternjs
  
-* Run the main https://github.com/angelozerr/tern.java/blob/master/eclipse/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/j2v8/J2V8TernEditor.java
+* Run the main https://github.com/angelozerr/tern.java/blob/master/samples/tern.eclipse.swt.samples/src/tern/eclipse/swt/samples/j2v8/J2V8TernEditor.java
 
 You can play with Ctrl+Space to open tern completion :
 
