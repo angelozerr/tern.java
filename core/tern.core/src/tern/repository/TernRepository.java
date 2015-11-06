@@ -42,6 +42,8 @@ public class TernRepository implements ITernRepository {
 			.asList(new String[] { "commonjs", "modules", "node_resolve" });
 
 	private final String name;
+	private File baseDir;
+	private File nodeModulesDir;
 	private File ternBaseDir;
 	private final boolean defaultRepository;
 	private Map<String, ITernModule> modules;
@@ -49,13 +51,13 @@ public class TernRepository implements ITernRepository {
 	private ITernPlugin[] linters;
 	private final TernModuleMetadataManager metadataManager;
 
-	public TernRepository(String name, File ternBaseDir) {
-		this(name, ternBaseDir, false);
+	public TernRepository(String name, File baseDir) {
+		this(name, baseDir, false);
 	}
 
-	public TernRepository(String name, File ternFile, boolean defaultRepository) {
+	public TernRepository(String name, File baseDir, boolean defaultRepository) {
 		this.name = name;
-		this.ternBaseDir = ternFile;
+		this.setBaseDir(baseDir);
 		this.defaultRepository = defaultRepository;
 		this.metadataManager = new TernModuleMetadataManager(this);
 	}
@@ -122,11 +124,6 @@ public class TernRepository implements ITernRepository {
 		loadModules(modules, modulesByOrigin, getNodeModulesDir(), null);
 	}
 
-	@Override
-	public File getNodeModulesDir() {
-		return getTernBaseDir().getParentFile();
-	}
-
 	private void loadModules(Map<String, ITernModule> modules, Map<String, ITernModule> modulesByOrigin, File baseDir,
 			List<String> ignoreModules) throws TernException {
 		if (baseDir.exists()) {
@@ -155,7 +152,24 @@ public class TernRepository implements ITernRepository {
 	public void refresh() {
 		this.modules = null;
 	}
-
+	
+	@Override
+	public File getBaseDir() {
+		return baseDir;
+	}
+	
+	@Override
+	public void setBaseDir(File baseDir) {
+		this.baseDir = baseDir;
+		this.nodeModulesDir = new File(baseDir, "node_modules");
+		this.ternBaseDir = new File(nodeModulesDir, "tern");
+	}
+	
+	@Override
+	public File getNodeModulesDir() {
+		return nodeModulesDir;
+	}
+	
 	@Override
 	public File getTernBaseDir() {
 		return ternBaseDir;
@@ -164,11 +178,6 @@ public class TernRepository implements ITernRepository {
 	@Override
 	public String getTernBaseDirAsString() {
 		return TernModuleHelper.getPath(getTernBaseDir());
-	}
-
-	@Override
-	public void setTernBaseDir(File ternBaseDir) {
-		this.ternBaseDir = ternBaseDir;
 	}
 
 	@Override

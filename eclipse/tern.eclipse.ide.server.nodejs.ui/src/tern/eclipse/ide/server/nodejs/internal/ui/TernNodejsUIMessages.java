@@ -36,6 +36,8 @@ public final class TernNodejsUIMessages extends NLS {
 	public static String TernNodejsPreferencesPage_debugger_not_installed;
 	public static String TernNodejsPreferencesPage_debugger_wiki_link;
 	
+	public static String TernNodejsPreferencesPage_ternRepository_label;
+	
 	public static String TernNodejsPreferencesPage_nodeJSRemoteAccess;
 	public static String TernNodejsPreferencesPage_nodeJSRemotePort;
 	
@@ -47,12 +49,6 @@ public final class TernNodejsUIMessages extends NLS {
 	public static String TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
 	public static String TernNodejsPreferencesPage_nativeNodeJSPath;
 	public static String TernNodejsPreferencesPage_nodeJSPath;
-
-	public static String TernNodejsPreferencesPage_ternServerFile_browse;
-	public static String TernNodejsPreferencesPage_ternServerFile_dialog_msg;
-	public static String TernNodejsPreferencesPage_ternServerFile_dialog_title;
-	public static String TernNodejsPreferencesPage_ternServerFile_error;
-	public static String TernNodejsPreferencesPage_ternServerFile_label;
 
 	private TernNodejsUIMessages() {
 	}

@@ -91,7 +91,15 @@ public class PathHelper {
 	 * @return
 	 */
 	public static File getNodejsTernBaseDir() {
-
-		return new File("../ternjs/node_modules/tern");
+		return new File(getTernRepositoryDir(), "node_modules/tern");
+	}
+	
+	/**
+	 * Return tern base dir.
+	 *
+	 * @return
+	 */
+	public static File getTernRepositoryDir() {
+		return new File("../ternjs");
 	}
 }

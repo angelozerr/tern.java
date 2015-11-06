@@ -23,8 +23,8 @@ public class TernRepositoryTest {
 
 	@Test
 	public void defaultRepository() throws TernException {
-		File ternFile = PathHelper.getNodejsTernBaseDir();
-		TernRepository repository = new TernRepository("default", ternFile);
+		File ternBaseDir = PathHelper.getTernRepositoryDir();
+		TernRepository repository = new TernRepository("default", ternBaseDir);
 		ITernModule[] modules = repository.getModules();
 		for (int i = 0; i < modules.length; i++) {
 			System.err.println(modules[i].getName());

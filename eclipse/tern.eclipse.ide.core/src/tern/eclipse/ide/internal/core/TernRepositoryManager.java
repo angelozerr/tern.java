@@ -19,6 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
 import com.eclipsesource.json.JsonArray;
@@ -27,13 +34,12 @@ import com.eclipsesource.json.JsonValue;
 
 import tern.TernException;
 import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.IIDETernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.core.preferences.TernCorePreferencesSupport;
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
-import tern.repository.ITernRepository;
-import tern.repository.TernRepository;
 import tern.server.ITernModule;
 import tern.server.ITernPlugin;
 import tern.utils.StringUtils;
@@ -43,23 +49,31 @@ import tern.utils.TernModuleHelper;
  * Manager of tern repository.
  *
  */
-public class TernRepositoryManager implements ITernRepositoryManager {
+public class TernRepositoryManager implements ITernRepositoryManager, IResourceChangeListener, IResourceDeltaVisitor {
 
 	private static final TernRepositoryManager INSTANCE = new TernRepositoryManager();
-	private static TernRepository DEFAULT_REPOSITORY;
+	private static IIDETernRepository DEFAULT_REPOSITORY;
 
 	public static TernRepositoryManager getManager() {
 		return INSTANCE;
 	}
 
-	private final Map<String, ITernRepository> repositories;
+	private final Map<String, IIDETernRepository> repositories;
 
 	public TernRepositoryManager() {
-		this.repositories = new HashMap<String, ITernRepository>();
+		this.repositories = new HashMap<String, IIDETernRepository>();
+	}
+
+	public void initialize() {
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(this);
+	}
+
+	public void dispose() {
+		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
 	}
 
 	@Override
-	public Collection<ITernRepository> getRepositories() {
+	public Collection<IIDETernRepository> getRepositories() {
 		loadRepositoriesIfNeeded();
 		return repositories.values();
 	}
@@ -98,8 +112,8 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	private void installExternalModules() {
 		TernModuleInstall[] modules = TernModuleInstallManager.getManager().getTernModuleInstalls();
 		for (TernModuleInstall module : modules) {
-			Collection<ITernRepository> reps = repositories.values();
-			for (ITernRepository repository : reps) {
+			Collection<IIDETernRepository> reps = repositories.values();
+			for (IIDETernRepository repository : reps) {
 				try {
 					repository.install(module.getSrc());
 				} catch (Throwable e) {
@@ -125,17 +139,26 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		if (!StringUtils.isEmpty(values)) {
 			String[] s = values.split(REPOSITORY_SEPARATOR);
 			String name = null;
-			File ternFile = null;
+			File baseDir = null;
 			for (int i = 0; i < s.length / 2; i++) {
 				name = s[i];
-				ternFile = new File(s[i + 1]);
-				addRepository(new TernRepository(name, ternFile), repositories);
+				baseDir = new File(s[i + 1]);
+				addRepository(createRepository(name, baseDir), repositories);
 			}
 		}
 	}
 
 	@Override
-	public TernRepository getDefaultRepository() {
+	public IIDETernRepository createRepository(String name, File baseDir) {
+		return createRepository(name, baseDir, false);
+	}
+
+	private IIDETernRepository createRepository(String name, File baseDir, boolean isDefault) {
+		return new IDETernRepository(name, baseDir, isDefault);
+	}
+
+	@Override
+	public IIDETernRepository getDefaultRepository() {
 		if (DEFAULT_REPOSITORY != null) {
 			return DEFAULT_REPOSITORY;
 		}
@@ -147,35 +170,35 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 		return DEFAULT_REPOSITORY;
 	}
 
-	private synchronized TernRepository createDefaultRepository() throws TernException, IOException {
+	private synchronized IIDETernRepository createDefaultRepository() throws TernException, IOException {
 		if (DEFAULT_REPOSITORY != null) {
 			return DEFAULT_REPOSITORY;
 		}
-		return new TernRepository(DEFAULT_REPOSITORY_NAME, TernCorePlugin.getTernBaseDir(), true);
+		return createRepository(DEFAULT_REPOSITORY_NAME, TernCorePlugin.getTernRepositoryBaseDir(), true);
 	}
 
-	private void addRepository(TernRepository repository, Map<String, ITernRepository> repositories) {
+	private void addRepository(IIDETernRepository repository, Map<String, IIDETernRepository> repositories) {
 		if (repository != null) {
 			repositories.put(repository.getName(), repository);
 		}
 	}
 
 	@Override
-	public ITernRepository getRepository(String name) {
+	public IIDETernRepository getRepository(String name) {
 		loadRepositoriesIfNeeded();
 		return repositories.get(name);
 	}
 
-	private ITernRepository getRepository(IIDETernProject ternProject) {
+	private IIDETernRepository getRepository(IIDETernProject ternProject) {
 		return getRepository(ternProject != null ? ternProject.getProject() : null);
 	}
 
 	@Override
-	public ITernRepository getRepository(IProject project) {
+	public IIDETernRepository getRepository(IProject project) {
 		loadRepositoriesIfNeeded();
 		String name = TernCorePreferencesSupport.getInstance().getUsedTernRepositoryName(project);
 		if (!StringUtils.isEmpty(name)) {
-			ITernRepository repository = getRepository(name);
+			IIDETernRepository repository = getRepository(name);
 			if (repository != null) {
 				return repository;
 			}
@@ -184,9 +207,9 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 	}
 
 	@Override
-	public void setRepositories(Collection<ITernRepository> repositories) {
+	public void setRepositories(Collection<IIDETernRepository> repositories) {
 		StringBuilder value = new StringBuilder();
-		for (ITernRepository repository : repositories) {
+		for (IIDETernRepository repository : repositories) {
 			if (!repository.isDefault()) {
 				if (value.length() > 0) {
 					value.append(REPOSITORY_SEPARATOR);
@@ -264,7 +287,7 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 
 	@Override
 	public ITernModule findTernModule(String name, IIDETernProject ternProject) {
-		ITernRepository repository = getRepository(ternProject);
+		IIDETernRepository repository = getRepository(ternProject);
 		ITernModule m = repository.getModule(name);
 		if (m != null) {
 			return m;
@@ -299,6 +322,70 @@ public class TernRepositoryManager implements ITernRepositoryManager {
 			}
 		}
 		return modules.toArray(ITernPlugin.EMPTY_MODULE);
+	}
+
+	@Override
+	public void resourceChanged(IResourceChangeEvent event) {
+		try {
+			IResource resource = event.getResource();
+			switch (event.getType()) {
+			case IResourceChangeEvent.PRE_DELETE:
+				// called when project is deleted.
+			case IResourceChangeEvent.PRE_CLOSE:
+				// called when project is closed.
+				if (resource != null && resource.getType() == IResource.PROJECT) {
+					IProject project = (IProject) resource;
+					disconnectProject(project);
+				}
+				break;
+			case IResourceChangeEvent.POST_CHANGE:
+				IResourceDelta delta = event.getDelta();
+				if (delta != null) {
+					delta.accept(this);
+				}
+				break;
+			}
+		} catch (Throwable e) {
+			Trace.trace(Trace.SEVERE, "Error while tern repository synchronization", e);
+		}
+	}
+
+	private void connectProject(IProject project) {
+		for (IIDETernRepository repository : repositories.values()) {
+			if (project.getLocation().equals(repository.getLocation())) {
+				((IDETernRepository) repository).setProject(project);
+			}
+		}
+	}
+
+	private void disconnectProject(IProject project) {
+		for (IIDETernRepository repository : repositories.values()) {
+			if (project.equals(repository.getProject())) {
+				((IDETernRepository) repository).setProject(null);
+			}
+		}
+	}
+
+	@Override
+	public boolean visit(IResourceDelta delta) throws CoreException {
+		IResource resource = delta.getResource();
+		if (resource == null) {
+			return false;
+		}
+		switch (resource.getType()) {
+		case IResource.ROOT:
+			return true;
+		case IResource.PROJECT:
+			IProject project = (IProject) resource;
+			if (project.isOpen()
+					&& (delta.getKind() == IResourceDelta.CHANGED || delta.getKind() == IResourceDelta.ADDED)
+					&& (delta.getFlags() & IResourceDelta.OPEN) != 0) {
+				connectProject(project);
+			}
+			return false;
+		}
+
+		return false;
 	}
 
 }

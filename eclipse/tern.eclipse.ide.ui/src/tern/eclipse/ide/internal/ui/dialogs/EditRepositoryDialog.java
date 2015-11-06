@@ -31,10 +31,11 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import tern.eclipse.ide.core.IIDETernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.repository.ITernRepository;
-import tern.repository.TernRepository;
 import tern.utils.StringUtils;
 
 /**
@@ -45,16 +46,16 @@ public class EditRepositoryDialog extends TitleAreaDialog {
 
 	private Text nameText;
 	private Text ternBaseDirText;
-	private final Collection<ITernRepository> repositories;
-	private ITernRepository repository;
+	private final Collection<IIDETernRepository> repositories;
+	private IIDETernRepository repository;
 
 	public EditRepositoryDialog(Shell parentShell,
-			Collection<ITernRepository> repositories) {
+			Collection<IIDETernRepository> repositories) {
 		this(parentShell, repositories, null);
 	}
 
 	public EditRepositoryDialog(Shell parentShell,
-			Collection<ITernRepository> repositories, ITernRepository repository) {
+			Collection<IIDETernRepository> repositories, IIDETernRepository repository) {
 		super(parentShell);
 		this.repository = repository;
 		this.repositories = repositories;
@@ -224,9 +225,9 @@ public class EditRepositoryDialog extends TitleAreaDialog {
 		if (!dir.isDirectory()) {
 			return TernUIMessages.EditRepositoryDialog_ternBaseDir_notDir;
 		}
-		if (!(exists(dir, "defs") && exists(dir, "plugin"))) {
+		/*if (!(exists(dir, "defs") && exists(dir, "plugin"))) {
 			return TernUIMessages.EditRepositoryDialog_ternBaseDir_notValid;
-		}
+		}*/
 		return null;
 	}
 
@@ -239,14 +240,14 @@ public class EditRepositoryDialog extends TitleAreaDialog {
 		String name = nameText.getText();
 		String file = ternBaseDirText.getText();
 		if (repository == null) {
-			this.repository = new TernRepository(name, new File(file));
+			this.repository = TernCorePlugin.getTernRepositoryManager().createRepository(name, new File(file));
 		} else {
-			repository.setTernBaseDir(new File(file));
+			repository.setBaseDir(new File(file));
 		}
 		super.okPressed();
 	}
 
-	public ITernRepository getRepository() {
+	public IIDETernRepository getRepository() {
 		return repository;
 	}
 }

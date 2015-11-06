@@ -22,10 +22,18 @@ import tern.server.ITernPlugin;
  * Tern repository is a local base dir which contains the tern.js JS files :
  * 
  * <ul>
- * <li>bin folder</li>
- * <li>defs folder</li>
- * <li>plugin folder</li>
- * <li>node_modules folder</li>
+ * <li>metadata</li>
+ * <li>node_modules
+ *   <ul>
+ *     <li>tern
+ *       <ul>
+ * 			<li>bin</li>
+ * 			<li>defs</li>
+ * 			<li>plugin</li>
+ *       </ul>
+ *     </li>
+ *   </ul>
+ * </li>
  * </ul>
  *
  */
@@ -39,9 +47,30 @@ public interface ITernRepository {
 	String getName();
 
 	/**
-	 * Returns the tern base dir which contains ternjs and their custom plugins.
+	 * Returns the base directory of the tern repository.
 	 * 
-	 * @return the tern base dir which contains ternjs and their custom plugins.
+	 * @return the base directory of the tern repository.
+	 */
+	File getBaseDir();
+
+	/**
+	 * Update the tbase directory of the tern repository.
+	 * 
+	 * @param baseDir
+	 */
+	void setBaseDir(File baseDir);
+	
+	/**
+	 * Returns the node_modules directory.
+	 * 
+	 * @return the node_modules directory.
+	 */
+	File getNodeModulesDir();
+	
+	/**
+	 * Returns the tern base dir (node_modules/tern) which contains ternjs and their custom plugins.
+	 * 
+	 * @return the tern base dir (node_modules/tern) which contains ternjs and their custom plugins.
 	 */
 	File getTernBaseDir();
 
@@ -53,13 +82,6 @@ public interface ITernRepository {
 	 *         as string.
 	 */
 	String getTernBaseDirAsString();
-
-	/**
-	 * Update the tern base dir which contains ternjs and their custom plugins.
-	 * 
-	 * @param ternFile
-	 */
-	void setTernBaseDir(File ternFile);
 
 	/**
 	 * Returns true if the repository is a default repository and false
@@ -135,10 +157,4 @@ public interface ITernRepository {
 	 */
 	TernModuleMetadata getDefaultMetadata(String moduleName);
 	
-	/**
-	 * Returns the node_modules directory.
-	 * 
-	 * @return the node_modules directory.
-	 */
-	File getNodeModulesDir();
 }

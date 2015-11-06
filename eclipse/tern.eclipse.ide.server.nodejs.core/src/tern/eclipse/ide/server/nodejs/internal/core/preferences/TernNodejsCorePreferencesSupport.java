@@ -18,6 +18,8 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Preferences;
 
+import tern.eclipse.ide.core.IIDETernRepository;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.PreferencesSupport;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
@@ -171,12 +173,12 @@ public class TernNodejsCorePreferencesSupport {
 	}
 
 	public IFile getTernServerDebugFile() {
-		String fileName = preferencesSupport
-				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TERN_SERVER_DEBUG_FILE);
-		if (fileName != null) {
+		String repositoryName = preferencesSupport
+				.getWorkspacePreferencesValue(TernNodejsCoreConstants.NODEJS_TERN_REPOSITORY);
+		if (repositoryName != null) {
 			try {
-				return ResourcesPlugin.getWorkspace().getRoot()
-						.getFile(new Path(fileName));
+				IIDETernRepository repository =  TernCorePlugin.getTernRepositoryManager().getRepository(repositoryName);
+				return repository != null ? repository.getTernServerFile() : null;
 			} catch (Exception e) {
 				// ignore
 			}

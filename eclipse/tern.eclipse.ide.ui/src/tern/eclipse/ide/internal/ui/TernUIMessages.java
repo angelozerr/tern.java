@@ -36,6 +36,7 @@ public final class TernUIMessages extends NLS {
 	public static String Button_selectPath;
 	public static String Button_browse;
 	public static String Button_refresh;
+	public static String Button_import;
 
 	// Commands
 	public static String ConvertProjectToTern_converting_project_job_title;
@@ -113,6 +114,11 @@ public final class TernUIMessages extends NLS {
 	public static String TernDevelopmentPreferencesPage_traceOnConsole_label;
 	public static String TernDevelopmentPreferencesPage_loadingLocalPlugin_label;
 
+	public static String TernRepositoryFieldEditor_ternRepository_none;
+	public static String TernRepositoryFieldEditor_ternRepository_not_imported;
+	public static String TernRepositoryFieldEditor_ternRepository_err_not_selected;
+	public static String TernRepositoryFieldEditor_ternRepository_err_not_imported;
+	
 	// Hyperlink
 	public static String TernHyperlink_typeLabel;
 	public static String TernHyperlink_text;
@@ -150,7 +156,15 @@ public final class TernUIMessages extends NLS {
 	public static String refreshOutline;
 	public static String TernOutline_computing;
 
-
+	// Wizards
+	public static String ImportTernRepositoryWizard_title;
+	public static String ImportTernRepositoryWizardPage_name_label;
+	public static String ImportTernRepositoryWizardPage_location_label;
+	public static String ImportTernRepositoryWizardPage_CreateProjectTask;
+	public static String ImportTernRepositoryWizardPage_errorMessage;
+	public static String ImportTernRepositoryWizardPage_title;
+	public static String ImportTernRepositoryWizardPage_description;
+	
 	private TernUIMessages() {
 	}
 

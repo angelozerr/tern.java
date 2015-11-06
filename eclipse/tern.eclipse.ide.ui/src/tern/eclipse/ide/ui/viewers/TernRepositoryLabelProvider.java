@@ -10,8 +10,6 @@
  */
 package tern.eclipse.ide.ui.viewers;
 
-import java.io.IOException;
-
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
