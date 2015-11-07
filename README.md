@@ -12,7 +12,7 @@ tern.java
  * [tern.server.j2v8](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.j2v8) wraps tern.js with Java code by using [J2V8](https://github.com/eclipsesource/J2V8) to create a Tern Server with Java code.
  * [tern.server.rhino](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.rhino) wraps tern.js with Java code by using [Rhino](https://developer.mozilla.org/en-US/docs/Rhino)  to create a Tern Server with Java code.
  * [tern.server.nashorn](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.nashorn) wraps tern.js with Java code by using [Java 8 Nashorn JavaScript engine](https://blogs.oracle.com/nashorn/)  to create a Tern Server with Java code. 
-* [tern.server.nodejs](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.nodejs) wraps tern.js with Java code by using [node.js](http://nodejs.org/) to create a Tern Server with Java code. 
+ * [tern.server.nodejs](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.nodejs) wraps tern.js with Java code by using [node.js](http://nodejs.org/) to create a Tern Server with Java code. 
 
 As  Tern is *very* CPU and memory intensive, the implementation with Rhino is very slow when JavaScript document is big. So it's better to use node.js or javv8. Nashorn is a little slow compare to J2V8 or node.js 
 
