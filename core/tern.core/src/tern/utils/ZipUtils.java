@@ -35,7 +35,7 @@ public class ZipUtils {
 	 * @return true if the given file is a zip file and false otherwise.
 	 */
 	public static boolean isZipFile(File file) {
-		return file.isFile() && file.getName().endsWith(ZIP_EXTENSION);
+		return file.isFile() && file.getName().toLowerCase().endsWith(ZIP_EXTENSION);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class ZipUtils {
 	 * @return true if the given file is a jar file and false otherwise.
 	 */
 	public static boolean isJarFile(File file) {
-		return file.isFile() && file.getName().endsWith(JAR_EXTENSION);
+		return file.isFile() && file.getName().toLowerCase().endsWith(JAR_EXTENSION);
 	}
 
 	/**
