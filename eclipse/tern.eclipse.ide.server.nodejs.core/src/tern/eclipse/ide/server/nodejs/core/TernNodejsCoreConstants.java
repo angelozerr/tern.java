@@ -29,10 +29,10 @@ public class TernNodejsCoreConstants {
 
 	public static final String NODEJS_DEBUGGER = "nodeJSDebugger"; //$NON-NLS-1$
 
-	public static final String NODEJS_TERN_SERVER_DEBUG_FILE = "ternServerDebugFile"; //$NON-NLS-1$
-
 	public static final String NODEJS_REMOTE_ACCESS = "nodejsRemoteAccess"; //$NON-NLS-1$
 
 	public static final String NODEJS_REMOTE_PORT = "nodejsRemotePort"; //$NON-NLS-1$
+
+	public static final String NODEJS_TERN_REPOSITORY = "ternRepository"; //$NON-NLS-1$
 
 }

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.eclipse.swt.samples.java8
+Bundle-Version: 1.2.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
+ org.eclipse.jface;bundle-version="3.7.0",
+ org.eclipse.core.runtime;bundle-version="3.7.0",
+ tern.core,
+ tern.eclipse,
+ org.apache.commons.logging,
+ tern.server.nashorn;bundle-version="1.1.0"
+Import-Package: org.mozilla.javascript,
+ com.eclipsesource.json;version="[0.9.4,0.9.5)"

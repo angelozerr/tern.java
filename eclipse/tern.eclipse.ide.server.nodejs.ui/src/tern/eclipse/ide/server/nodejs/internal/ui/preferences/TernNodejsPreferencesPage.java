@@ -14,14 +14,7 @@ package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 import java.net.URL;
 import java.util.Collection;
 
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.BooleanFieldEditor;
@@ -29,9 +22,6 @@ import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.IntegerFieldEditor;
-import org.eclipse.jface.preference.StringButtonFieldEditor;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -55,16 +45,15 @@ import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebugger;
 import tern.eclipse.ide.server.nodejs.core.debugger.NodejsDebuggersManager;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin;
-import tern.eclipse.ide.server.nodejs.internal.ui.preferences.WorkspaceResourceSelectionDialog.Mode;
 import tern.eclipse.ide.ui.ImageResource;
+import tern.eclipse.ide.ui.preferences.TernRepositoryFieldEditor;
 import tern.utils.StringUtils;
 
 /**
  * Tern Node.js preferences page.
  * 
  */
-public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
-		implements IWorkbenchPreferencePage {
+public class TernNodejsPreferencesPage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	private Button remoteAccessButton;
 	private IntegerFieldEditor remotePortField;
@@ -74,24 +63,23 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	private IntegerFieldEditor testNumberField;
 	private BooleanFieldEditor persistentField;
 	private CheckComboFieldEditor debuggerField;
-	private StringButtonFieldEditor ternServerFile;
 	private Link debuggerWikiLink;
 	private ComboFieldEditor nodeJSInstallField;
 	private Label nodePathTitle;
 	private FileComboFieldEditor nativeNodePath;
 	private Text nodePath;
+	private IWorkbench workbench;
+	private TernRepositoryFieldEditor ternRepositoryField;
 
 	public TernNodejsPreferencesPage() {
 		super(GRID);
 		setDescription(TernNodejsUIMessages.TernNodejsPreferencesPage_desc);
-		setImageDescriptor(ImageResource
-				.getImageDescriptor(ImageResource.IMG_LOGO));
+		setImageDescriptor(ImageResource.getImageDescriptor(ImageResource.IMG_LOGO));
 	}
 
 	@Override
 	protected void createFieldEditors() {
-		boolean isRemote = getPreferenceStore().getBoolean(
-				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		boolean isRemote = getPreferenceStore().getBoolean(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
 		createRemoteAccessContent(getFieldEditorParent(), isRemote);
 		createSeparator(getFieldEditorParent());
 		createDirectAccessContent(getFieldEditorParent(), !isRemote);
@@ -99,9 +87,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	}
 
 	private void createRemoteAccessContent(Composite parent, boolean isRemote) {
-		remoteAccessButton = addRadioButton(
-				parent,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSRemoteAccess,
+		remoteAccessButton = addRadioButton(parent, TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSRemoteAccess,
 				isRemote);
 		remoteAccessButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -110,18 +96,13 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			}
 		});
 		// Remote port field
-		remotePortField = new IntegerFieldEditor(
-				TernNodejsCoreConstants.NODEJS_REMOTE_PORT,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSRemotePort,
-				parent);
+		remotePortField = new IntegerFieldEditor(TernNodejsCoreConstants.NODEJS_REMOTE_PORT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSRemotePort, parent);
 		addField(remotePortField);
 	}
 
-	private void createDirectAccessContent(final Composite parent,
-			boolean isDirect) {
-		directAccessButton = addRadioButton(
-				parent,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSDirectAccess,
+	private void createDirectAccessContent(final Composite parent, boolean isDirect) {
+		directAccessButton = addRadioButton(parent, TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSDirectAccess,
 				isDirect);
 		directAccessButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -130,29 +111,22 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			}
 		});
 		// Start timeout field
-		timeoutField = new IntegerFieldEditor(
-				TernNodejsCoreConstants.NODEJS_TIMEOUT,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTimeout,
-				parent);
+		timeoutField = new IntegerFieldEditor(TernNodejsCoreConstants.NODEJS_TIMEOUT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTimeout, parent);
 		addField(timeoutField);
 
 		// Start timeout field
-		testNumberField = new IntegerFieldEditor(
-				TernNodejsCoreConstants.NODEJS_TEST_NUMBER,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTestNumber,
-				parent);
+		testNumberField = new IntegerFieldEditor(TernNodejsCoreConstants.NODEJS_TEST_NUMBER,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSTestNumber, parent);
 		addField(testNumberField);
 
 		// Persistent (not auto-shutdown)
-		persistentField = new BooleanFieldEditor(
-				TernNodejsCoreConstants.NODEJS_PERSISTENT,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPersistent,
-				parent);
+		persistentField = new BooleanFieldEditor(TernNodejsCoreConstants.NODEJS_PERSISTENT,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPersistent, parent);
 		addField(persistentField);
 
 		// Debugger setup
-		Collection<INodejsDebugger> list = NodejsDebuggersManager
-				.getDebuggers();
+		Collection<INodejsDebugger> list = NodejsDebuggersManager.getDebuggers();
 		String[][] debuggers = new String[list.size() + 1][2];
 		debuggers[0][0] = TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_none;
 		debuggers[0][1] = ""; //$NON-NLS-1$
@@ -168,10 +142,9 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 				debuggers[j][1] = ""; //$NON-NLS-1$
 			}
 		}
-		debuggerField = new CheckComboFieldEditor(
-				TernNodejsCoreConstants.NODEJS_DEBUGGER,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_label,
-				debuggers, "", parent) { //$NON-NLS-1$
+		
+		debuggerField = new CheckComboFieldEditor(TernNodejsCoreConstants.NODEJS_DEBUGGER,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_label, debuggers, "", parent) { //$NON-NLS-1$
 
 			private boolean isValid = true;
 
@@ -182,7 +155,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 						isValid = false;
 						setErrorMessage(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_err_not_selected);
 						return;
-					} else if ("".equals(getValue())) { //$NON-NLS-1$)
+					} else if ("".equals(getValue())) { //$NON-NLS-1$ )
 						isValid = false;
 						setErrorMessage(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_err_not_installed);
 						return;
@@ -198,119 +171,45 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			}
 
 			@Override
-			protected void updateComboBoxEnablement(Composite parent,
-					boolean enabled) {
+			protected void updateComboBoxEnablement(Composite parent, boolean enabled) {
 				super.updateComboBoxEnablement(parent, enabled);
-				ternServerFile.setEnabled(enabled, parent);
+				ternRepositoryField.setEnabled(enabled, parent);
 				debuggerWikiLink.setEnabled(enabled);
 			}
 		};
 		addField(debuggerField);
 
-		ternServerFile = new StringButtonFieldEditor(
-				TernNodejsCoreConstants.NODEJS_TERN_SERVER_DEBUG_FILE,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_ternServerFile_label,
-				parent) {
-
-			@Override
-			protected boolean doCheckState() {
-				String file = getStringValue();
-				return !debuggerField.isCheckboxSelected()
-						|| ResourcesPlugin.getWorkspace().getRoot()
-								.getFile(new Path(file)).exists();
-			}
-
-			@Override
-			protected String changePressed() {
-				WorkspaceResourceSelectionDialog dialog = new WorkspaceResourceSelectionDialog(
-						getShell(),
-						Mode.FILE,
-						TernNodejsUIMessages.TernNodejsPreferencesPage_ternServerFile_dialog_title,
-						TernNodejsUIMessages.TernNodejsPreferencesPage_ternServerFile_dialog_msg);
-				dialog.setAllowMultiple(false);
-				dialog.addFilter(new ViewerFilter() {
-
-					@Override
-					public boolean select(Viewer viewer, Object parentElement,
-							Object element) {
-						if (element instanceof IFile) {
-							IFile file = (IFile) element;
-							return file.getName().equals("tern") //$NON-NLS-1$
-									&& file.getParent().getName().equals("bin"); //$NON-NLS-1$
-						}
-
-						if (element instanceof IProject
-								&& !((IProject) element).isOpen())
-							return false;
-
-						if (element instanceof IContainer) { // i.e. IProject,
-																// IFolder
-							try {
-								IResource[] resources = ((IContainer) element)
-										.members();
-								for (int i = 0; i < resources.length; i++) {
-									if (select(viewer, parent, resources[i]))
-										return true;
-								}
-							} catch (CoreException e) {
-							}
-						}
-						return false;
-					}
-				});
-				dialog.open();
-				Object result = dialog.getFirstResult();
-				if (result instanceof IFile) {
-					IFile file = (IFile) dialog.getFirstResult();
-					return file.getFullPath().toString();
-				}
-				return null;
-			}
-		};
-		ternServerFile.setEmptyStringAllowed(false);
-		ternServerFile
-				.setErrorMessage(TernNodejsUIMessages.TernNodejsPreferencesPage_ternServerFile_error);
-		ternServerFile
-				.setChangeButtonText(TernNodejsUIMessages.TernNodejsPreferencesPage_ternServerFile_browse);
-		ternServerFile.getTextControl(parent).setEditable(false);
-		addField(ternServerFile);
+		// Repository setup
+		ternRepositoryField = new TernRepositoryFieldEditor(TernNodejsCoreConstants.NODEJS_TERN_REPOSITORY,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_ternRepository_label, parent,
+				workbench);
+		addField(ternRepositoryField);
 
 		GridData gd = new GridData();
 		gd.horizontalIndent = 25;
-		ternServerFile.getLabelControl(parent).setLayoutData(gd);
+		ternRepositoryField.getLabelControl(parent).setLayoutData(gd);
 
 		debuggerWikiLink = new Link(parent, SWT.NONE);
-		debuggerWikiLink
-				.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_wiki_link);
+		debuggerWikiLink.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_wiki_link);
 		debuggerWikiLink.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				try {
-					PlatformUI
-							.getWorkbench()
-							.getBrowserSupport()
-							.getExternalBrowser()
-							.openURL(
-									new URL(
-											"https://github.com/angelozerr/tern.java/wiki/Debugging-Tern.js-on-Node.js")); //$NON-NLS-1$
+					PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser().openURL(
+							new URL("https://github.com/angelozerr/tern.java/wiki/Debugging-Tern.js-on-Node.js")); //$NON-NLS-1$
 				} catch (Exception e1) {
-					TernNodejsUIPlugin
-							.getDefault()
-							.getLog()
-							.log(new Status(IStatus.ERROR,
-									TernNodejsUIPlugin.PLUGIN_ID, e1
-											.getMessage(), e1));
+					TernNodejsUIPlugin.getDefault().getLog()
+							.log(new Status(IStatus.ERROR, TernNodejsUIPlugin.PLUGIN_ID, e1.getMessage(), e1));
 				}
 			}
 		});
 
-		gd = new GridData(SWT.FILL, SWT.FILL, false, false, 3, 1);
+		gd = new GridData(SWT.FILL, SWT.FILL, false, false, 5, 1);
 		gd.horizontalIndent = 25;
 		debuggerWikiLink.setLayoutData(gd);
 
 		// Tern Server type combo
-		INodejsInstall[] installs = TernNodejsCorePlugin
-				.getNodejsInstallManager().getNodejsInstalls();
+		INodejsInstall[] installs = TernNodejsCorePlugin.getNodejsInstallManager().getNodejsInstalls();
 		String[][] data = new String[installs.length + 1][2];
 		data[0][0] = TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
 		data[0][1] = ""; //$NON-NLS-1$
@@ -320,16 +219,12 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			data[i + 1][1] = installs[i].getId();
 		}
 
-		nodeJSInstallField = new ComboFieldEditor(
-				TernNodejsCoreConstants.NODEJS_INSTALL,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall,
-				data, parent) {
+		nodeJSInstallField = new ComboFieldEditor(TernNodejsCoreConstants.NODEJS_INSTALL,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall, data, parent) {
 			@Override
-			protected void fireValueChanged(String property, Object oldValue,
-					Object newValue) {
-				INodejsInstall install = TernNodejsCorePlugin
-						.getNodejsInstallManager().findNodejsInstall(
-								newValue.toString());
+			protected void fireValueChanged(String property, Object oldValue, Object newValue) {
+				INodejsInstall install = TernNodejsCorePlugin.getNodejsInstallManager()
+						.findNodejsInstall(newValue.toString());
 				if (install == null || install.isNative()) {
 					nativeNodePath.setEnabled(true, parent);
 					String defaultPath = IDENodejsProcessHelper.getNodejsPath();
@@ -347,13 +242,10 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 
 		// Node.js path
 		String[] defaultPaths = IDENodejsProcessHelper.getDefaultNodejsPaths();
-		nativeNodePath = new FileComboFieldEditor(
-				TernNodejsCoreConstants.NODEJS_PATH,
-				TernNodejsUIMessages.TernNodejsPreferencesPage_nativeNodeJSPath,
-				defaultPaths, parent) {
+		nativeNodePath = new FileComboFieldEditor(TernNodejsCoreConstants.NODEJS_PATH,
+				TernNodejsUIMessages.TernNodejsPreferencesPage_nativeNodeJSPath, defaultPaths, parent) {
 			@Override
-			protected void fireValueChanged(String property, Object oldValue,
-					Object newValue) {
+			protected void fireValueChanged(String property, Object oldValue, Object newValue) {
 				nodePath.setText(newValue.toString());
 				super.fireValueChanged(property, oldValue, newValue);
 			}
@@ -362,8 +254,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 
 		// Node path label
 		nodePathTitle = new Label(parent, SWT.NONE);
-		nodePathTitle
-				.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPath);
+		nodePathTitle.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSPath);
 		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		nodePathTitle.setLayoutData(gridData);
 
@@ -382,8 +273,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		separator.setLayoutData(gd);
 	}
 
-	private Button addRadioButton(Composite parent, String label,
-			boolean selected) {
+	private Button addRadioButton(Composite parent, String label, boolean selected) {
 		GridData gd = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
 		gd.horizontalSpan = 4;
 
@@ -392,8 +282,6 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 
 		button.setLayoutData(gd);
 		button.setSelection(selected);
-		// button.setSelection(value.equals(getPreferenceStore().getString(key)));
-
 		return button;
 	}
 
@@ -404,6 +292,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 		testNumberField.setEnabled(!isRemote, parent);
 		persistentField.setEnabled(!isRemote, parent);
 		debuggerField.setEnabled(!isRemote, parent);
+		ternRepositoryField.setEnabled(debuggerField.isCheckboxSelected() , parent);
 		nodeJSInstallField.setEnabled(!isRemote, parent);
 		nodePathTitle.setEnabled(!isRemote);
 		nativeNodePath.setEnabled(!isRemote, parent);
@@ -414,38 +303,33 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 	protected void initialize() {
 		super.initialize();
 		// Update enable/disable of the nodejs path field.
-		boolean isRemote = getPreferenceStore().getBoolean(
-				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		boolean isRemote = getPreferenceStore().getBoolean(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
 		updateNodePath(false, isRemote);
 	}
 
 	@Override
 	public void init(IWorkbench workbench) {
-
+		this.workbench = workbench;
 	}
 
 	@Override
 	protected IPreferenceStore doGetPreferenceStore() {
-		return new ScopedPreferenceStore(InstanceScope.INSTANCE,
-				TernNodejsCorePlugin.PLUGIN_ID);
+		return new ScopedPreferenceStore(InstanceScope.INSTANCE, TernNodejsCorePlugin.PLUGIN_ID);
 	}
 
 	@Override
 	public boolean performOk() {
 		boolean result = super.performOk();
 		IPreferenceStore store = getPreferenceStore();
-		store.setValue(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS,
-				remoteAccessButton.getSelection());
-		TernCorePlugin.getTernServerTypeManager().fireServerPreferencesChanged(
-				null);
+		store.setValue(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS, remoteAccessButton.getSelection());
+		TernCorePlugin.getTernServerTypeManager().fireServerPreferencesChanged(null);
 		return result;
 	}
 
 	@Override
 	protected void performDefaults() {
 		super.performDefaults();
-		boolean isRemote = getPreferenceStore().getDefaultBoolean(
-				TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
+		boolean isRemote = getPreferenceStore().getDefaultBoolean(TernNodejsCoreConstants.NODEJS_REMOTE_ACCESS);
 		updateNodePath(true, isRemote);
 		remoteAccessButton.setSelection(isRemote);
 		directAccessButton.setSelection(!isRemote);
@@ -463,20 +347,16 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage
 			}
 		}
 		// update enable native node path
-		nativeNodePath.setEnabled(
-				!isRemote && install != null && install.isNative(),
-				getFieldEditorParent());
+		nativeNodePath.setEnabled(!isRemote && install != null && install.isNative(), getFieldEditorParent());
 	}
 
 	private INodejsInstall getNodejsInstall(boolean defaultValue) {
 		INodejsInstall install = null;
-		String installId = defaultValue ? super.getPreferenceStore()
-				.getDefaultString(TernNodejsCoreConstants.NODEJS_INSTALL)
-				: super.getPreferenceStore().getString(
-						TernNodejsCoreConstants.NODEJS_INSTALL);
+		String installId = defaultValue
+				? super.getPreferenceStore().getDefaultString(TernNodejsCoreConstants.NODEJS_INSTALL)
+				: super.getPreferenceStore().getString(TernNodejsCoreConstants.NODEJS_INSTALL);
 		if (!StringUtils.isEmpty(installId)) {
-			install = TernNodejsCorePlugin.getNodejsInstallManager()
-					.findNodejsInstall(installId);
+			install = TernNodejsCorePlugin.getNodejsInstallManager().findNodejsInstall(installId);
 		}
 		return install;
 	}

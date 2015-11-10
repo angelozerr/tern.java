@@ -7,15 +7,14 @@ tern.java
 [tern.js](https://github.com/marijnh/tern) is a stand-alone code-analysis engine for JavaScript written in Javascript.
 
 [tern.java](https://github.com/angelozerr/tern.java) provides the capability to use 
-[tern.js](https://github.com/marijnh/tern) with Java context. It provides several implementation : 
+[tern.js](https://github.com/marijnh/tern) with Java context. It provides several tern server implementation : 
 
- * wraps tern.js with Java code by using [Rhino](https://developer.mozilla.org/en-US/docs/Rhino) to create a Tern Server with Java code. 
- * wraps tern.js with Java code by using [node.js](http://nodejs.org/) to create a Tern Server with Java code. 
- * an other idea is to use [javv8](https://code.google.com/p/jav8/) but it seems the project is dead and [I need win32 implementation](https://code.google.com/p/jav8/issues/detail?id=26).
- * one more idea is to explorer [Java 8 Nashorn JavaScript engine](https://blogs.oracle.com/nashorn/), possibly with [avatar.js](https://avatar-js.java.net/), see [#33](https://github.com/angelozerr/tern.java/issues/33)
- 
-As  Tern is *very* CPU and memory intensive, the implementation with Rhino is very slow when JavaScript document is big. So it's better to use
-node.js or javv8.
+ * [tern.server.j2v8](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.j2v8) wraps tern.js with Java code by using [J2V8](https://github.com/eclipsesource/J2V8) to create a Tern Server with Java code.
+ * [tern.server.rhino](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.rhino) wraps tern.js with Java code by using [Rhino](https://developer.mozilla.org/en-US/docs/Rhino)  to create a Tern Server with Java code.
+ * [tern.server.nashorn](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.nashorn) wraps tern.js with Java code by using [Java 8 Nashorn JavaScript engine](https://blogs.oracle.com/nashorn/)  to create a Tern Server with Java code. 
+ * [tern.server.nodejs](https://github.com/angelozerr/tern.java/tree/master/core/tern.server.nodejs) wraps tern.js with Java code by using [node.js](http://nodejs.org/) to create a Tern Server with Java code. 
+
+As  Tern is *very* CPU and memory intensive, the implementation with Rhino is very slow when JavaScript document is big. So it's better to use node.js or javv8. Nashorn is a little slow compare to J2V8 or node.js 
 
 ## Core Features
 
@@ -72,8 +71,3 @@ See https://www.genuitec.com/tag/tern/ for more informations.
 ## Build
 
 See cloudbees job: https://opensagres.ci.cloudbees.com/job/tern.java/
-
-## Rhino version
-
-As [tern.js](https://github.com/marijnh/tern) uses [ECMAScript5](http://fr.wikipedia.org/wiki/ECMAScript), the Rhino version should support it. The [org.mozilla.javascript](https://github.com/angelozerr/tern.java/tree/master/org.mozilla.javascript) is an OSGi bundle which wraps the JAR
-**Rhino 1.7R4** which supports ECMAScript5.

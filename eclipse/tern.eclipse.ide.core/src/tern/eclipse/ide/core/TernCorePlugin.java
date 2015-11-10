@@ -60,6 +60,7 @@ public class TernCorePlugin extends Plugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 
+		TernRepositoryManager.getManager().initialize();
 		IDETernProjectSynchronizer.getInstance().initialize();
 		TernFileConfigurationManager.getManager().initialize();
 		TernModuleInstallManager.getManager().initialize();
@@ -74,15 +75,15 @@ public class TernCorePlugin extends Plugin {
 
 	}
 
-	public static File getTernCoreBaseDir() throws IOException {
+	/**
+	 * Returns the ternjs repository base directory.
+	 * 
+	 * @return the ternjs repository base directory.
+	 * @throws IOException
+	 */
+	public static File getTernRepositoryBaseDir() throws IOException {
 		return FileLocator.getBundleFile(Platform
 				.getBundle(ternjs.Activator.PLUGIN_ID));
-	}
-
-	public static File getTernBaseDir() throws IOException {
-		return new File(FileLocator.getBundleFile(Platform
-				.getBundle(ternjs.Activator.PLUGIN_ID)), "node_modules/tern")
-				.getCanonicalFile();
 	}
 
 	@Override
@@ -93,6 +94,7 @@ public class TernCorePlugin extends Plugin {
 		TernFileConfigurationManager.getManager().destroy();
 		IDETernProjectSynchronizer.getInstance().dispose();
 		TernModuleInstallManager.getManager().destroy();
+		TernRepositoryManager.getManager().dispose();
 		
 		plugin = null;
 		super.stop(context);

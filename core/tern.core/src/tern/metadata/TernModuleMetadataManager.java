@@ -35,7 +35,7 @@ public class TernModuleMetadataManager {
 	private final File baseDir;
 
 	public TernModuleMetadataManager(ITernRepository repository) {
-		this(repository.getTernBaseDir().getParentFile().getParentFile());
+		this(repository.getBaseDir());
 	}
 
 	public TernModuleMetadataManager(File baseDir) {

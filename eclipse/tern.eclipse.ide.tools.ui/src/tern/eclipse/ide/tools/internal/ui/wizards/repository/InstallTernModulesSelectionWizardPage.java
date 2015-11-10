@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import tern.eclipse.ide.core.IIDETernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.tools.internal.ui.TernToolsUIMessages;
@@ -136,7 +137,7 @@ public class InstallTernModulesSelectionWizardPage extends
 				.getInstance());
 		repositoryViewer.setContentProvider(ArrayContentProvider.getInstance());
 
-		Collection<ITernRepository> repositories = TernCorePlugin
+		Collection<IIDETernRepository> repositories = TernCorePlugin
 				.getTernRepositoryManager().getRepositories();
 		repositoryViewer.setInput(repositories);
 

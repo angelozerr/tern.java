@@ -10,13 +10,13 @@
  */
 package tern.eclipse.ide.core;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 
 import tern.eclipse.ide.internal.core.resources.IDETernProject;
-import tern.repository.ITernRepository;
 import tern.repository.TernRepository;
 import tern.server.ITernModule;
 
@@ -37,14 +37,14 @@ public interface ITernRepositoryManager {
 	 * 
 	 * @return list of tern repository.
 	 */
-	Collection<ITernRepository> getRepositories();
+	Collection<IIDETernRepository> getRepositories();
 
 	/**
 	 * Returns the default repository.
 	 * 
 	 * @return the default repository.
 	 */
-	TernRepository getDefaultRepository();
+	IIDETernRepository getDefaultRepository();
 	
 	/**
 	 * Returns the repository by name and null otherwise.
@@ -53,7 +53,7 @@ public interface ITernRepositoryManager {
 	 *            repository name
 	 * @return the repository by name and null otherwise.
 	 */
-	ITernRepository getRepository(String name);
+	IIDETernRepository getRepository(String name);
 
 	/**
 	 * Returns the repository used by the given project and null otherwise.
@@ -61,14 +61,14 @@ public interface ITernRepositoryManager {
 	 * @param project
 	 * @return the repository used by the given project and null otherwise.
 	 */
-	ITernRepository getRepository(IProject project);
+	IIDETernRepository getRepository(IProject project);
 
 	/**
 	 * Register list of repostories.
 	 * 
 	 * @param repositories
 	 */
-	void setRepositories(Collection<ITernRepository> repositories);
+	void setRepositories(Collection<IIDETernRepository> repositories);
 
 	// -------------------- Modules methods
 
@@ -83,7 +83,7 @@ public interface ITernRepositoryManager {
 	 * comes from :
 	 * 
 	 * <ul>
-	 * <li>the tern repository {@link ITernRepository} linked to the given
+	 * <li>the tern repository {@link IIDETernRepository} linked to the given
 	 * project.</li>
 	 * <li>local modules hosted inside the root project</li>
 	 * </ul>
@@ -101,7 +101,7 @@ public interface ITernRepositoryManager {
 	 * separated with ','. Tern modules comes from :
 	 * 
 	 * <ul>
-	 * <li>the tern repository {@link ITernRepository} linked to the given
+	 * <li>the tern repository {@link IIDETernRepository} linked to the given
 	 * project.</li>
 	 * <li>local modules hosted inside the root project</li>
 	 * </ul>
@@ -112,5 +112,7 @@ public interface ITernRepositoryManager {
 	 *         separated with ','.
 	 */
 	ITernModule[] getTernModules(String moduleNames, IDETernProject ternProject);
+
+	IIDETernRepository createRepository(String name, File file);
 
 }

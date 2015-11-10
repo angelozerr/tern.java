@@ -1,0 +1,31 @@
+#calculator {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  width: 190px;
+  margin: auto;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: #EEE;
+}
+
+#display {
+  border: 1px solid gray;
+  margin-bottom: 15px;
+  text-align: right;
+  font-family: monospace;
+  background-color: black;
+  padding: 5px;
+  color: #90ee90;
+  font-weight: bold;
+}
+
+#keys button {
+  width:40px;
+  margin:2px;
+}
+
+#keys button.wide {
+  width:88px;
+  margin:2px;
+}

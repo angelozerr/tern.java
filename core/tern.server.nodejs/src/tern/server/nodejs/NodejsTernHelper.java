@@ -25,6 +25,10 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.ParseException;
+
 import tern.TernException;
 import tern.server.IInterceptor;
 import tern.server.ITernServer;
@@ -32,9 +36,6 @@ import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
 import tern.utils.IOUtils;
 import tern.utils.StringUtils;
-
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.ParseException;
 
 /**
  * Nodejs Tern helper.
@@ -55,6 +56,9 @@ public class NodejsTernHelper {
 
 	public static final boolean DEFAULT_PERSISTENT = false;
 
+	// tern uses UTF-8 encoding
+	private static final String UTF_8 = "UTF-8";
+	
 	public static JsonObject makeRequest(String baseURL, TernDoc doc,
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)
 			throws IOException, TernException {
@@ -87,8 +91,7 @@ public class NodejsTernHelper {
 			}
 
 			try {
-				JsonObject response = JsonObject
-						.readFrom(new InputStreamReader(in));
+				JsonObject response = (JsonObject) Json.parse(new InputStreamReader(in, UTF_8));
 				if (interceptors != null) {
 					for (IInterceptor interceptor : interceptors) {
 						interceptor.handleResponse(response, server,
@@ -121,7 +124,7 @@ public class NodejsTernHelper {
 	private static HttpPost createHttpPost(String baseURL, JsonObject doc)
 			throws UnsupportedEncodingException {
 		HttpPost httpPost = new HttpPost(baseURL);
-		httpPost.setEntity(new StringEntity(doc.toString()));
+		httpPost.setEntity(new StringEntity(doc.toString(), UTF_8));
 		return httpPost;
 	}
 

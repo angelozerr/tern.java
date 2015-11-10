@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 
+import tern.eclipse.ide.core.IIDETernRepository;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
@@ -47,7 +48,6 @@ import tern.eclipse.ide.internal.ui.dialogs.EditRepositoryDialog;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.viewers.TernRepositoryLabelProvider;
 import tern.repository.ITernRepository;
-import tern.repository.TernRepository;
 import tern.server.ITernModule;
 import tern.utils.TernModuleHelper;
 
@@ -131,7 +131,7 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 
 			@Override
 			public void checkStateChanged(CheckStateChangedEvent event) {
-				ITernRepository repository = (ITernRepository) event
+				IIDETernRepository repository = (IIDETernRepository) event
 						.getElement();
 				// check and select only one tern repository.
 				checkAndSelect(repository);
@@ -202,17 +202,16 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	}
 
 	public void loadRepositories() {
-		ITernRepository checkedRepository = null;
-		ITernRepository currentRepository = TernCorePlugin
+		IIDETernRepository checkedRepository = null;
+		IIDETernRepository currentRepository = TernCorePlugin
 				.getTernRepositoryManager().getRepository(project);
 		// clone the list of tern repository.
-		Collection<ITernRepository> repositories = new ArrayList<ITernRepository>();
-		ITernRepository clonedRepository = null;
-		for (ITernRepository repository : TernCorePlugin
+		Collection<IIDETernRepository> repositories = new ArrayList<IIDETernRepository>();
+		IIDETernRepository clonedRepository = null;
+		for (IIDETernRepository repository : TernCorePlugin
 				.getTernRepositoryManager().getRepositories()) {
 			clonedRepository = repository.isDefault() ? repository
-					: new TernRepository(repository.getName(),
-							repository.getTernBaseDir(), repository.isDefault());
+					: repository.copy();
 			if (repository.equals(currentRepository)) {
 				checkedRepository = clonedRepository;
 			}
@@ -232,7 +231,7 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	 * @param repository
 	 *            the tern repository to check.
 	 */
-	public void setCheckedRepository(ITernRepository repository) {
+	public void setCheckedRepository(IIDETernRepository repository) {
 		if (repository != null) {
 			checkAndSelect(repository);
 		}
@@ -257,7 +256,7 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 		EditRepositoryDialog dialog = new EditRepositoryDialog(parentShell,
 				getRepositories());
 		if (dialog.open() == Window.OK) {
-			ITernRepository newTernRepository = dialog.getRepository();
+			IIDETernRepository newTernRepository = dialog.getRepository();
 			if (newTernRepository != null) {
 				getRepositories().add(newTernRepository);
 				refresh();
@@ -300,7 +299,7 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	 * @param parentShell
 	 */
 	public void editRepository(Shell parentShell) {
-		ITernRepository repository = getCurrentRepository();
+		IIDETernRepository repository = getCurrentRepository();
 		if (repository != null && !repository.isDefault()) {
 			EditRepositoryDialog dialog = new EditRepositoryDialog(parentShell,
 					getRepositories(), repository);
@@ -317,8 +316,8 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	 * 
 	 * @return
 	 */
-	private Collection<ITernRepository> getRepositories() {
-		return (Collection<ITernRepository>) repositoryViewer.getInput();
+	private Collection<IIDETernRepository> getRepositories() {
+		return (Collection<IIDETernRepository>) repositoryViewer.getInput();
 	}
 
 	/**
@@ -358,13 +357,13 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	 * 
 	 * @return the current repository.
 	 */
-	private ITernRepository getCurrentRepository() {
+	private IIDETernRepository getCurrentRepository() {
 		IStructuredSelection selection = (IStructuredSelection) repositoryViewer
 				.getSelection();
 		if (selection.isEmpty()) {
 			return null;
 		}
-		return (ITernRepository) selection.getFirstElement();
+		return (IIDETernRepository) selection.getFirstElement();
 	}
 
 	/**
@@ -373,7 +372,7 @@ public class TernRepositoryBlock extends AbstractTableBlock {
 	 * @param repository
 	 *            the repository to select and check.
 	 */
-	private void checkAndSelect(ITernRepository repository) {
+	private void checkAndSelect(IIDETernRepository repository) {
 		repositoryViewer.setCheckedElements(new Object[] { repository });
 		repositoryViewer.setSelection(new StructuredSelection(repository));
 	}

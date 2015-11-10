@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbench;
 
+import tern.eclipse.ide.core.IIDETernRepository;
 import tern.eclipse.ide.core.ITernRepositoryManager;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.preferences.TernCorePreferenceConstants;
@@ -177,7 +178,7 @@ public class TernRepositoryPreferencesPage extends PropertyPreferencePage {
 		String repositoryName = defaultPreferences.get(
 				TernCorePreferenceConstants.USED_REPOSITORY_NAME,
 				ITernRepositoryManager.DEFAULT_REPOSITORY_NAME);
-		ITernRepository repository = TernCorePlugin.getTernRepositoryManager()
+		IIDETernRepository repository = TernCorePlugin.getTernRepositoryManager()
 				.getRepository(repositoryName);
 		repositoryBlock.setCheckedRepository(repository);
 		repositoryBlock

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.server.nashorn;singleton:=true
+Bundle-Version: 1.2.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: tern.core
+Bundle-ClassPath: .
+Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)",
+ com.eclipsesource.v8,
+ com.eclipsesource.v8.utils,
+ org.osgi.framework
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: tern.server.nashorn.Activator
+Export-Package: tern.server.nashorn
