@@ -19,7 +19,7 @@
 	   <moduleInstall
 	         id="ternModuleInstalls.mylibrary"
 	         name="Install Tern My Library"
-	         src="modules/tern-mylibrary.zip">
+	         src="modules/tern-mylibrary">
 	   </moduleInstall>	   
 	</extension>
 				
