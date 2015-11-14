@@ -30,6 +30,7 @@ Export-Package: tern,
  tern.server.protocol.html,
  tern.server.protocol.lint,
  tern.server.protocol.outline,
+ tern.server.protocol.push,
  tern.server.protocol.refs,
  tern.server.protocol.type,
  tern.utils

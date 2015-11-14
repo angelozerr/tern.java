@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.jface;
+package tern.eclipse.jface.viewers;
 
 import org.eclipse.jface.fieldassist.IContentProposal;
 import org.eclipse.jface.viewers.ILabelProvider;

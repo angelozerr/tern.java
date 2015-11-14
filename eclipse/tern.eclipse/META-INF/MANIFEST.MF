@@ -12,11 +12,11 @@ Require-Bundle: org.eclipse.swt;bundle-version="3.7.0",
  tern.core;bundle-version="0.2.0",
  tern.server.rhino;bundle-version="0.2.0";resolution:=optional,
  org.eclipse.jface.text;resolution:=optional
-Export-Package: tern.eclipse.jface,
- tern.eclipse.jface.contentassist,
+Export-Package: tern.eclipse.jface.contentassist,
  tern.eclipse.jface.fieldassist,
  tern.eclipse.jface.images,
  tern.eclipse.jface.text,
+ tern.eclipse.jface.viewers,
  tern.eclipse.swt
 Bundle-Activator: tern.eclipse.internal.Activator
 Bundle-ActivationPolicy: lazy
