@@ -163,8 +163,9 @@ public class RhinoTernServer extends AbstractScriptEngineTernServer {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Iterable<Object> getList(Object jsonObj, String name) {
-			return (Iterable<Object>) ((NativeObject) jsonObj).get("completions", //$NON-NLS-1$
+			Object result = ((NativeObject) jsonObj).get(name, // $NON-NLS-1$
 					(NativeObject) jsonObj);
+			return (result instanceof Iterable<?>) ? (Iterable<Object>) result : null;
 		}
 
 		@Override
