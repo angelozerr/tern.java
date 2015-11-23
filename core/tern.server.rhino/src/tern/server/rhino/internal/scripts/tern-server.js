@@ -76,7 +76,7 @@ function J2V8TernServer(defs, plugins) {
       var _this = this;
       getServer().request(doc, function(err, data) {
         if (err)
-          return handler.onError(err.message || String(err));
+          return handler.onError(err.message || String(err), null);
         if (verbose) console.log("Response: " + JSON.stringify(data, null, 2));
         var json = null;
         if (dataAsJson) json = JSON.stringify(data);
