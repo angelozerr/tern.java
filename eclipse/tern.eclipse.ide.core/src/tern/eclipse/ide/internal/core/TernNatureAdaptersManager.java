@@ -243,7 +243,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		}
 
 		List<ITernModule> contributedModules = new ArrayList<ITernModule>();
-		Map<ITernModule, JsonObject> moduleOptions = null;
+		Map<ITernModule, JsonObject> moduleOptions = new HashMap<ITernModule, JsonObject>();
 
 		// add default module from preferences
 		ITernModule moduleFromPreferences = null;
@@ -290,7 +290,7 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 		// loop for collected sorted modules
 		JsonObject options = null;
 		for (ITernModule module : contributedModules) {
-			options = moduleOptions != null ? moduleOptions.get(module) : null;
+			options = moduleOptions.get(module);
 			TernModuleHelper.update(module, options, ternProject);
 		}
 
@@ -306,9 +306,6 @@ public class TernNatureAdaptersManager implements IRegistryChangeListener {
 			if (!contributedModules.contains(module)) {
 				contributedModules.add(module);
 				if (defaultModule.getOptions() != null) {
-					if (moduleOptions == null) {
-						moduleOptions = new HashMap<ITernModule, JsonObject>();
-					}
 					moduleOptions.put(module, defaultModule.getOptions());
 				}
 			}
