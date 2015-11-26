@@ -164,8 +164,8 @@
 		</plugins>
 	</build>
 	<dependencies>
+		<!-- OSGi bundle coming from Maven repo -->	
 		<dependency>
-			<!-- OSGi bundle coming from Maven repo -->
 			<groupId>com.eclipsesource.minimal-json</groupId>
 			<artifactId>minimal-json</artifactId>
 			<version>0.9.4</version>
@@ -174,6 +174,11 @@
 			<groupId>fr.opensagres.js</groupId>
 			<artifactId>minimatch.java</artifactId>
 			<version>1.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 

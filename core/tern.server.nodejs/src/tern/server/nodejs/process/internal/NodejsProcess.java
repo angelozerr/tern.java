@@ -251,6 +251,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 	 * 
 	 * @return
 	 */
+	@Override
 	public boolean isStarted() {
 		return process != null;
 	}
@@ -258,6 +259,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 	/**
 	 * Kill the process.
 	 */
+	@Override
 	public void kill() {
 		if (process != null) {
 			process.destroy();

@@ -33,7 +33,12 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 	public ITernServer create(ITernProject project) throws Exception {
 		NodejsTernServer server;
 		if (isRemoteAccess()) {
-			server = new NodejsTernServer(project, getRemotePort());
+			server = new NodejsTernServer(project, getRemotePort()) {
+				@Override
+				protected void onError(String message, Throwable e) {
+					Trace.trace(Trace.SEVERE, message, e);
+				}
+			};
 		} else {
 			INodejsDebugger debugger = NodejsDebuggersManager
 					.getDebugger(getDebugger());
@@ -48,10 +53,20 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 					&& !ternServerFile.getProject().equals(
 							project.getAdapter(IProject.class))) {
 				server = new NodejsTernServer(project, debugger.createProcess(
-						project.getProjectDir(), installPath, ternServerFile));
+						project.getProjectDir(), installPath, ternServerFile)){
+					@Override
+					protected void onError(String message, Throwable e) {
+						Trace.trace(Trace.SEVERE, message, e);
+					}
+				};
 			} else {
 				File ternBaseDir = project.getRepository().getTernBaseDir();
-				server = new NodejsTernServer(project, installPath, ternBaseDir);
+				server = new NodejsTernServer(project, installPath, ternBaseDir) {
+					@Override
+					protected void onError(String message, Throwable e) {
+						Trace.trace(Trace.SEVERE, message, e);
+					}
+				};
 			}
 		}
 		server.setTimeout(getTimeout());

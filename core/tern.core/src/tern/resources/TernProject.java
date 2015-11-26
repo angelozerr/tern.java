@@ -20,7 +20,11 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -43,6 +47,7 @@ import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.ITernServer;
+import tern.server.ITernServerListener;
 import tern.server.TernDef;
 import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
@@ -56,6 +61,7 @@ import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.outline.ITernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineQuery;
+import tern.server.protocol.push.IMessageHandler;
 import tern.server.protocol.refs.ITernRefCollector;
 import tern.server.protocol.refs.TernRefsQuery;
 import tern.server.protocol.type.ITernTypeCollector;
@@ -99,6 +105,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	private File ternProjectFile;
 	private ITernRepository repository;
 
+	protected final Object serverLock = new Object();
 	private ITernPlugin[] linters;
 
 	/**
@@ -112,6 +119,8 @@ public class TernProject extends JsonObject implements ITernProject {
 
 	private List<ITernPlugin> lastLinters;
 
+	private final Map<String, List<IMessageHandler>> messageListeners;
+
 	/**
 	 * Tern project constructor.
 	 * 
@@ -122,6 +131,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		this.projectDir = projectDir;
 		this.ternProjectFile = new File(projectDir, TERN_PROJECT_FILE);
 		this.fileSynchronizer = InternalTernResourcesManager.getInstance().createTernFileSynchronizer(this);
+		this.messageListeners = new HashMap<String, List<IMessageHandler>>();
 	}
 
 	@Override
@@ -679,7 +689,8 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	@Override
-	public void request(TernRefsQuery query, ITernFile file, ITernRefCollector collector) throws IOException, TernException {
+	public void request(TernRefsQuery query, ITernFile file, ITernRefCollector collector)
+			throws IOException, TernException {
 		TernDoc doc = new TernDoc(query);
 		if (file != null) {
 			synchronize(doc, null, null, null, file);
@@ -687,7 +698,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		ITernServer server = getTernServer();
 		server.request(doc, collector);
 	}
-	
+
 	@Override
 	public ITernRepository getRepository() {
 		return repository;
@@ -702,4 +713,58 @@ public class TernProject extends JsonObject implements ITernProject {
 		return !toString().equals(lastTernProjectFileContent);
 	}
 
+	@Override
+	public void on(String type, IMessageHandler handler) {
+		synchronized (messageListeners) {
+			List<IMessageHandler> handlers = messageListeners.get(type);
+			if (handlers == null) {
+				handlers = new ArrayList<IMessageHandler>();
+				messageListeners.put(type, handlers);
+			}
+			if (!handlers.contains(handler)) {
+				handlers.add(handler);
+			}
+		}
+		synchronized (serverLock) {
+			ITernServer ternServer = getTernServer();
+			if (ternServer != null) {
+				ternServer.on(type, handler);
+			}
+		}
+	}
+
+	@Override
+	public void off(String type, IMessageHandler handler) {
+		synchronized (messageListeners) {
+			List<IMessageHandler> handlers = messageListeners.get(type);
+			if (handlers != null) {
+				handlers.remove(handler);
+			}
+		}
+		synchronized (serverLock) {
+			ITernServer ternServer = getTernServer();
+			if (ternServer != null) {
+				ternServer.off(type, handler);
+			}
+		}
+	}
+
+	protected void copyMessageListeners() {
+		synchronized (serverLock) {
+			ITernServer ternServer = getTernServer();
+			if (ternServer != null) {
+				Set<Entry<String, List<IMessageHandler>>> entries = messageListeners.entrySet();
+				String type = null;
+				List<IMessageHandler> handlers;
+				for (Entry<String, List<IMessageHandler>> entry : entries) {
+					type = entry.getKey();
+					handlers = entry.getValue();
+					for (IMessageHandler handler : handlers) {
+						ternServer.on(type, handler);
+					}
+				}
+
+			}
+		}
+	}
 }

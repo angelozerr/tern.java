@@ -36,6 +36,7 @@ import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
 import tern.server.protocol.outline.ITernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineQuery;
+import tern.server.protocol.push.IMessageHandler;
 import tern.server.protocol.refs.ITernRefCollector;
 import tern.server.protocol.refs.TernRefsQuery;
 import tern.server.protocol.type.ITernTypeCollector;
@@ -323,5 +324,21 @@ public interface ITernProject extends ITernAdaptable {
 	 * @param repository
 	 */
 	void setRepository(ITernRepository repository);
+
+	/**
+	 * Add push message listener.
+	 * 
+	 * @type event type
+	 * @param listener
+	 */
+	void on(String type, IMessageHandler listener);
+
+	/**
+	 * Remove server listener.
+	 * 
+	 * @type event type
+	 * @param listener
+	 */
+	void off(String type, IMessageHandler listener);
 
 }

@@ -12,6 +12,7 @@
 		<module>tern.core</module>
 		<module>tern.server.rhino</module>
 		<module>tern.server.nodejs</module>
+		<module>tern.websocket.provider</module>
 		<module>tern.core.tests</module>
 	</modules>
 </project>

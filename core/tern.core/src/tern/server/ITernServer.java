@@ -16,6 +16,7 @@ import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.html.ScriptTagRegion;
+import tern.server.protocol.push.IMessageHandler;
 
 /**
  * Tern server API.
@@ -47,8 +48,7 @@ public interface ITernServer {
 
 	void request(TernDoc doc, IResponseHandler handler);
 
-	void request(TernDoc doc, ITernResultsCollector collector)
-			throws TernException;
+	void request(TernDoc doc, ITernResultsCollector collector) throws TernException;
 
 	/**
 	 * Add server listener.
@@ -105,4 +105,19 @@ public interface ITernServer {
 
 	IJSONObjectHelper getJSONObjectHelper();
 
+	/**
+	 * Add push message listener.
+	 * 
+	 * @type event type
+	 * @param listener
+	 */
+	void on(String type, IMessageHandler listener);
+
+	/**
+	 * Remove server listener.
+	 * 
+	 * @type event type
+	 * @param listener
+	 */
+	void off(String type, IMessageHandler listener);
 }

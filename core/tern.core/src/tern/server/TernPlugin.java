@@ -63,7 +63,8 @@ public enum TernPlugin implements ITernPlugin {
 
 	// other
 	guess_types("guess-types"),
-	outline("outline");
+	outline("outline"),
+	push("push");
 	
 	private final String name;
 	private final String type;

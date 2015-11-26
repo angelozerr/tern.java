@@ -35,6 +35,7 @@ import tern.eclipse.ide.internal.core.resources.IDETernProject;
 import tern.eclipse.ide.internal.core.resources.IDETernProjectSynchronizer;
 import tern.internal.resources.InternalTernResourcesManager;
 import tern.server.nodejs.process.NodejsProcessManager;
+import tern.websocket.provider.WebSocket;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -59,7 +60,8 @@ public class TernCorePlugin extends Plugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-
+		// Force to use Jetty WebSocket implementation.
+		WebSocket.startup();
 		TernRepositoryManager.getManager().initialize();
 		IDETernProjectSynchronizer.getInstance().initialize();
 		TernFileConfigurationManager.getManager().initialize();
@@ -101,13 +103,13 @@ public class TernCorePlugin extends Plugin {
 	}
 
 	/**
-	 * Return true if the given project have tern nature
-	 * "tern.eclipse.ide.core.ternnature" and false otherwise.
+	 * Return true if the given project contains a ".tern-project" file false
+	 * otherwise.
 	 * 
 	 * @param project
 	 *            Eclipse project.
-	 * @return true if the given project have tern nature
-	 *         "tern.eclipse.ide.core.ternnature" and false otherwise.
+	 * @return true if the given project contains a ".tern-project" file and false
+	 *         otherwise.
 	 */
 	public static boolean hasTernNature(IProject project) {
 		return IDETernProject.hasTernNature(project);

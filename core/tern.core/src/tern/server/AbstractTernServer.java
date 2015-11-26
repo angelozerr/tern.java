@@ -13,7 +13,9 @@
 package tern.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import tern.ITernFileSynchronizer;
@@ -21,6 +23,7 @@ import tern.ITernProject;
 import tern.TernException;
 import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.push.IMessageHandler;
 
 /**
  * Abstract tern server.
@@ -30,8 +33,9 @@ public abstract class AbstractTernServer implements ITernServer {
 
 	private final ITernProject project;
 
-	private final List<ITernServerListener> listeners;
-
+	private final List<ITernServerListener> serverListeners;
+	private final Map<String, List<IMessageHandler>> messageListeners;
+	
 	private boolean dataAsJsonString;
 	private boolean dispose;
 	private boolean loadingLocalPlugins;
@@ -42,7 +46,8 @@ public abstract class AbstractTernServer implements ITernServer {
 
 	public AbstractTernServer(ITernProject project) {
 		this.project = project;
-		this.listeners = new ArrayList<ITernServerListener>();
+		this.serverListeners = new ArrayList<ITernServerListener>();
+		this.messageListeners = new HashMap<String, List<IMessageHandler>>();
 		final ITernFileSynchronizer fileSynchronizer = getFileSynchronizer();
 		if (fileSynchronizer != null) {
 			this.addServerListener(new TernServerAdapter() {
@@ -80,29 +85,29 @@ public abstract class AbstractTernServer implements ITernServer {
 
 	@Override
 	public void addServerListener(ITernServerListener listener) {
-		synchronized (listeners) {
-			listeners.add(listener);
+		synchronized (serverListeners) {
+			serverListeners.add(listener);
 		}
 	}
 
 	@Override
 	public void removeServerListener(ITernServerListener listener) {
-		synchronized (listeners) {
-			listeners.remove(listener);
+		synchronized (serverListeners) {
+			serverListeners.remove(listener);
 		}
 	}
 
 	protected void fireStartServer() {
-		synchronized (listeners) {
-			for (ITernServerListener listener : listeners) {
+		synchronized (serverListeners) {
+			for (ITernServerListener listener : serverListeners) {
 				listener.onStart(this);
 			}
 		}
 	}
 
 	protected void fireEndServer() {
-		synchronized (listeners) {
-			for (ITernServerListener listener : listeners) {
+		synchronized (serverListeners) {
+			for (ITernServerListener listener : serverListeners) {
 				listener.onStop(this);
 			}
 		}
@@ -182,6 +187,41 @@ public abstract class AbstractTernServer implements ITernServer {
 	@Override
 	public void setRequestProcessor(ITernServerRequestProcessor reqProcessor) {
 		this.reqProcessor = reqProcessor;
+	}
+
+	@Override
+	public void on(String type, IMessageHandler handler) {
+		synchronized (messageListeners) {
+			List<IMessageHandler> handlers = messageListeners.get(type);
+			if (handlers == null) {
+				handlers = new ArrayList<IMessageHandler>();
+				messageListeners.put(type, handlers);
+			}
+			if (!handlers.contains(handler)) {
+				handlers.add(handler);
+			}
+		}
+	}
+
+	@Override
+	public void off(String type, IMessageHandler handler) {
+		synchronized (messageListeners) {
+			List<IMessageHandler> handlers = messageListeners.get(type);
+			if (handlers != null) {
+				handlers.remove(handler);
+			}
+		}
+	}
+
+	protected void fireOnMessage(String type, Object jsonObject) {
+		synchronized (messageListeners) {
+			List<IMessageHandler> handlers = messageListeners.get(type);
+			if (handlers != null) {
+				for (IMessageHandler handler : handlers) {
+					handler.handleMessage(jsonObject, getJSONObjectHelper());
+				}
+			}
+		}
 	}
 
 }

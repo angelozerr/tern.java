@@ -13,7 +13,8 @@ Require-Bundle: org.eclipse.core.runtime,
  tern.server.nodejs,
  tern.eclipse,
  org.eclipse.jface.text,
- org.eclipse.core.commands
+ org.eclipse.core.commands,
+ tern.websocket.provider
 Export-Package: tern.eclipse.ide.core,
  tern.eclipse.ide.core.preferences,
  tern.eclipse.ide.core.resources,

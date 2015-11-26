@@ -1,0 +1,26 @@
+{
+  "name": "tern-push",
+  "license": "MIT",
+  "version": "0.1.0",
+  "main": "push.js",
+  "author": "Angelo ZERR <angelo.zerr@gmail.com>",
+  "description": "A Tern plugin adding support for using tern serevr with push feature",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angelozerr/tern-push.git"
+  },
+  "scripts": {
+    "test": "node ./test/all.js"
+  },    
+  "dependencies": {
+    "tern": "^0.16.0",
+    "ws": "^0.8.0"
+  },  
+  "devDependencies": { 
+  	"test": ">=0.0.5" 
+  },  
+  "keywords": [
+    "tern",
+    "WebSocket"
+  ]
+}

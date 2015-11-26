@@ -11,7 +11,6 @@
  */
 package tern.eclipse.ide.internal.core.resources;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -105,7 +104,6 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	private final IProject project;
 
 	private ITernServer ternServer;
-	private Object serverLock = new Object();
 
 	private final List<ITernScriptPath> scriptPaths;
 	private List<ITernScriptPath> sortedScriptPaths;
@@ -133,6 +131,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	 * 
 	 * @return
 	 */
+	@Override
 	public IProject getProject() {
 		return project;
 	}
@@ -140,11 +139,6 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	@Override
 	public String getName() {
 		return project.getName();
-	}
-
-	@Override
-	public File getProjectDir() {
-		return project.getLocation().toFile();
 	}
 
 	/**
@@ -171,6 +165,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 						this.ternServer.setRequestProcessor(new IDETernServerAsyncReqProcessor(ternServer));
 					}
 					copyListeners();
+					copyMessageListeners();
 					configureConsole();
 				} catch (Exception e) {
 					// should be improved?

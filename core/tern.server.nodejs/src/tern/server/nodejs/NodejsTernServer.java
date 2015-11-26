@@ -14,10 +14,18 @@ package tern.server.nodejs;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.websocket.ClientEndpoint;
+import javax.websocket.OnMessage;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
+
+import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
+import com.eclipsesource.json.JsonValue;
 
 import tern.ITernProject;
 import tern.TernException;
@@ -25,11 +33,14 @@ import tern.TernResourcesManager;
 import tern.server.AbstractTernServer;
 import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
-import tern.server.nodejs.process.INodejsProcessListener;
+import tern.server.TernPlugin;
+import tern.server.WebSocketContainerProvider;
 import tern.server.nodejs.process.INodejsProcess;
+import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessAdapter;
 import tern.server.nodejs.process.NodejsProcessException;
 import tern.server.nodejs.process.NodejsProcessManager;
+import tern.server.nodejs.process.internal.NodejsProcess;
 import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.MinimalJSONHelper;
 import tern.server.protocol.TernDoc;
@@ -42,6 +53,8 @@ import tern.server.protocol.html.ScriptTagRegion;
 public class NodejsTernServer extends AbstractTernServer {
 
 	private static final String BASE_URL = "http://127.0.0.1:";
+	private static final String HTTP_PROTOCOL = "http:";
+	private static final String WS_PROTOCOL = "ws:";
 
 	private String baseURL;
 
@@ -59,6 +72,26 @@ public class NodejsTernServer extends AbstractTernServer {
 		@Override
 		public void onStart(INodejsProcess server) {
 			NodejsTernServer.this.fireStartServer();
+			// initialize WebSocket client session if "push" tern plugin is declared in the tern-project.
+			initializeWebSocketIfNeeded();
+		}
+
+		private void initializeWebSocketIfNeeded() {
+			ITernProject project = getProject();
+			if (project == null) {
+				return;
+			}
+			if (!project.hasPlugin(TernPlugin.push)) {
+				return;
+			}
+			try {
+				String baseURL = getBaseURL();
+				URI uri = URI.create(baseURL.replace(HTTP_PROTOCOL, WS_PROTOCOL));
+				WebSocketContainer container = WebSocketContainerProvider.getWebSocketContainer();
+				session = container.connectToServer(new WebSocketMessageDispatcher(), uri);
+			} catch (Throwable e) {
+				NodejsTernServer.this.onError("Error while initializing WebSocket client.", e);
+			}
 		}
 
 		@Override
@@ -68,8 +101,24 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 
 	};
+	
+	@ClientEndpoint
+	public class WebSocketMessageDispatcher {
 
+		@OnMessage
+		public void dispatchMessage(String data) {
+			JsonObject value = Json.parse(data).asObject();
+			String type = value.getString("type", null);
+			JsonValue json = value.get("data");
+			if (type != null && json != null) {				
+				NodejsTernServer.this.fireOnMessage(type, json);
+			}
+		}
+	}
+	
 	private boolean persistent;
+	// WebSocket session
+	private Session session;
 
 	public NodejsTernServer(File projectDir, int port) {
 		this(TernResourcesManager.getTernProject(projectDir), port);
@@ -113,10 +162,9 @@ public class NodejsTernServer extends AbstractTernServer {
 		TernDoc t = new TernDoc();
 		t.addFile(name, text, tags, null);
 		try {
-			JsonObject json = makeRequest(t);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			makeRequest(t);
+		} catch (Exception e) {			
+			onError("Error while adding file.", e);
 		}
 
 	}
@@ -271,6 +319,13 @@ public class NodejsTernServer extends AbstractTernServer {
 			}
 			this.baseURL = null;
 			this.process = null;
+			if (session != null) {
+				try {
+					session.close();
+				} catch (Throwable e) {
+					onError("Error while closing WebSocket client session.", e);
+				}
+			}
 		} finally {
 			endWriteState();
 		}
@@ -321,4 +376,9 @@ public class NodejsTernServer extends AbstractTernServer {
 	public boolean isPersistent() {
 		return persistent;
 	}
+	
+	protected void onError(String message, Throwable e) {
+		e.printStackTrace();
+	}
+
 }
