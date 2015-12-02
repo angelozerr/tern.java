@@ -69,6 +69,8 @@ public class TernMainPropertyPage extends AbstractTernPropertyPage implements IW
 
 	@Override
 	protected Control createContents(Composite parent) {
+		noDefaultAndApplyButton();
+		
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayoutData(new GridData(4, 4, true, true));
 		composite.setLayout(new GridLayout());
