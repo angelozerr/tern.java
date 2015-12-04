@@ -74,8 +74,7 @@
     });*/  
   });  
   
-  function getChild(parent, name) {
-    var children = parent.children;
+  function getChild(name, children) {
     if (!children) return null;
     for (var i = 0; i < children.length; i++) {
       var child = children[i];
@@ -83,21 +82,15 @@
     }
   }
   
-  function fillTypes(type, parent, excludeTypes) {
-    if (!type) return;
-    excludeTypes.push(type);
-    infer.forAllPropertiesOf(type, function(prop, obj, depth) {
-      if (depth > 0) return;
-      var t = obj && obj.props[prop];
-      if (t && t.originNode && t.originNode.type != "ClassDeclaration" && excludeTypes.indexOf(t) == -1) {
-        excludeTypes.push(t);
-        var child = getChild(parent, prop);
-        if (!child) {
-          child = addChildNode(t.originNode, t, parent);
-        }
-        fillTypes(t, child, excludeTypes);
+  function getChildProperty(node, parent) {
+    if (node.property) {
+      var p = getChild(node.object.name, parent)
+      if (p) {
+        return getChildProperty(node.property, p.children)
       }
-    })
+    } else if (node.name) {
+      return getChild(node.name, parent);
+    }
   }
   
   function addAnonymousFn(node, type, parent) {
@@ -126,10 +119,12 @@
     },
     AssignmentExpression: function (node, st, c) {
       var parent = st.parent, scope = st.scope;
-      if(node.left && node.left.object && node.left.object.type == "ThisExpression") {
-        var parent = st.parent, scope = st.scope;
+      if(node.left && node.left.object/* && node.left.object.type == "ThisExpression"*/) {
+        var left = node.left.property ? node.left.property : node.left.object;
+        var p = getChildProperty(node.left.property ? node.left.object : node.left, parent);
+        var parent = p ? p: parent, scope = st.scope;
         var type = infer.expressionType({node: node.left, state: scope});
-        var child = addChildNode(node.left, type, parent);
+        var child = addChildNode(left, type, parent);
         st = {parent: child, scope: scope};
       }
       c(node.left, st, "Pattern");
@@ -145,20 +140,21 @@
         }
       } else {
         var parentNode = infer.parentNode(node, node.sourceFile.ast);
-        if (!parentNode || (parentNode.type != "Property" && parentNode.type != "VariableDeclarator" && parentNode.type != "MethodDefinition" && parentNode.type != "AssignmentExpression")) parent = addAnonymousFn(node, type, parent);
+        if (!parentNode || (parentNode.type != "Property" && parentNode.type != "VariableDeclarator" && parentNode.type != "MethodDefinition" && parentNode.type != "AssignmentExpression")) { 
+          parent = addAnonymousFn(node, type, parent);
+        }
       }
       var scope = {parent: parent, scope: node.body.scope ? node.body.scope: node.scope};
       if (node.id) c(node.id, scope);
       for (var i = 0; i < node.params.length; ++i)
         c(node.params[i], scope);
       c(node.body, scope, "ScopeBody");
-      fillTypes(type, parent, []);
     },
     Property: function (node, st, c) {
       var parent = st.parent, scope = st.scope;
       var type = node.value && node.value.name != "✖" ? infer.expressionType({node: node.value, state: scope}) : null;
       parent = addChildNode(node.key, type, parent);
-      var scope = {parent: parent, scope: node.scope};
+      var scope = {parent: parent, scope: scope};
       if (node.computed) c(node.key, scope, "Expression");
       c(node.value, scope, "Expression");
     },
@@ -168,7 +164,7 @@
     },
     ClassDeclaration: function (node, st, c) {
       var parent = st.parent, scope = st.scope, type = infer.expressionType({node: node.id ? node.id : node, state: scope});
-      var obj = addChildNode(node, type, parent);
+      var obj = addChildNode(node.id ? node.id : node, type, parent);
       obj.kind = "class";
       var scope = {parent: obj, scope: st.scope};
       if (node.superClass) c(node.superClass, scope, "Expression");
