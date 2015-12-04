@@ -206,7 +206,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 
 			toRefreshLocal.removeAll(synced);
 			for (String toRemove : toRefreshLocal) {
-				doc.addFile(toRemove, "", null, null); //$NON-NLS-1$
+				doc.delFile(toRemove); //$NON-NLS-1$
 			}
 
 			// perform actual synchronization with the server
