@@ -181,8 +181,20 @@
       if (node.computed) c(node.key, scope, "Expression");
       c(node.value, scope, "Expression");
     },
-    ExportNamedDeclaration: function (node, st, c) {
-      
+    ImportDeclaration: function (node, st, c) {
+      var parent = st.parent, scope = st.scope;
+      var imp = addChildNode(node, null, parent);
+      imp.kind = "import";
+      var scope = {parent: imp, scope: st.scope};
+      for (var i = 0; i < node.specifiers.length; i++) {
+        c(node.specifiers[i], scope);
+      }c(node.source, scope, "Expression");
+    },
+    ImportSpecifier: function (node, st, c) {
+      var parent = st.parent, scope = st.scope;
+      var type = infer.expressionType({node: node.imported, state: scope});
+      var specifier = addChildNode(node.imported, type, parent);
+      specifier.kind = "specifier";
     }
   });
 

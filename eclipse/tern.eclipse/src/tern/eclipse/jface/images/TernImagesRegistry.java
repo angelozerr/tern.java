@@ -29,13 +29,17 @@ import tern.utils.StringUtils;
  */
 public class TernImagesRegistry {
 
+	// ES5
 	public static final String IMG_FN = "tern.eclipse.jface.IMG_FN";
 	public static final String IMG_ARRAY = "tern.eclipse.jface.IMG_ARRAY";
 	public static final String IMG_NUMBER = "tern.eclipse.jface.IMG_NUMBER";
 	public static final String IMG_STRING = "tern.eclipse.jface.IMG_STRING";
 	public static final String IMG_BOOLEAN = "tern.eclipse.jface.IMG_BOOLEAN";
 	public static final String IMG_UNKNOWN = "tern.eclipse.jface.IMG_UNKNOWN";
+	
+	// ES6
 	public static final String IMG_CLASS = "tern.eclipse.jface.IMG_CLASS";
+	public static final String IMG_IMPORT = "tern.eclipse.jface.IMG_IMPORT";
 	
 	static {
 		registerImageDescriptor(IMG_FN, ImageDescriptor.createFromFile(
@@ -69,7 +73,8 @@ public class TernImagesRegistry {
 						"unknown_ovr.gif"));
 		registerImageDescriptor(IMG_CLASS, ImageDescriptor.createFromFile(
 				TernImagesRegistry.class, "class.gif"));
-		
+		registerImageDescriptor(IMG_IMPORT, ImageDescriptor.createFromFile(
+				TernImagesRegistry.class, "import.png"));
 	}
 
 	/**

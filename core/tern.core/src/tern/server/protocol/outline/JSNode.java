@@ -24,6 +24,11 @@ public class JSNode {
 	private static final String FN_TYPE = "fn(";
 	private static final String ARRAY_TYPE = "[";
 
+	// ES6 kinds
+	private static final String IMPORT_KIND = "import";
+	private static final String SPECIFIER_KIND = "specifier";
+	private static final String CLASS_KIND = "class";
+	
 	private final String name;
 	private final String type;
 	private final String kind;
@@ -32,10 +37,14 @@ public class JSNode {
 	private final String file;
 	private final JSNode parent;
 	private final List<JSNode> children;
-	private final boolean isClass;
 	private final boolean isFunction;
 	private final boolean isArray;
-
+	
+	// ES6
+	private final boolean isClass;
+	private final boolean isImport;
+	private final boolean isSpecifier;
+	
 	public JSNode(String name, String type, String kind, Long start, Long end, String file, JSNode parent) {
 		this.name = name;
 		this.type = type;
@@ -58,9 +67,13 @@ public class JSNode {
 		}
 		this.kind = kind;
 		if (kind != null) {
-			isClass = "class".equals(kind);
+			isClass = CLASS_KIND.equals(kind);
+			isImport = IMPORT_KIND.equals(kind);
+			isSpecifier = SPECIFIER_KIND.equals(kind);
 		} else {
 			isClass = false;
+			isImport = false;
+			isSpecifier = false;
 		}
 	}
 
@@ -112,6 +125,14 @@ public class JSNode {
 		return isClass;
 	}
 
+	public boolean isImport() {		
+		return isImport;
+	}
+	
+	public boolean isSpecifier() {
+		return isSpecifier;
+	}
+	
 	public String getFile() {
 		return file;
 	}
@@ -119,4 +140,5 @@ public class JSNode {
 	public boolean isFile() {
 		return !StringUtils.isEmpty(file);
 	}
+
 }

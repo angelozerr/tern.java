@@ -41,13 +41,16 @@ public class TernOutlineLabelProvider extends LabelProvider implements IStyledLa
 			return ImageResource.getImage(ImageResource.IMG_LOGO);
 		}
 		if (element instanceof JSNode) {
-			JSNode jsNode = (JSNode) element;
-			String jsType = jsNode.getType();
+			JSNode jsNode = (JSNode) element;			
 			if (jsNode.isClass()) {
 				return TernImagesRegistry.getImage(TernImagesRegistry.IMG_CLASS);
 			}
+			if (jsNode.isImport()) {
+				return TernImagesRegistry.getImage(TernImagesRegistry.IMG_IMPORT);
+			}
 			boolean isFunction = jsNode.isFunction();
 			boolean isArray = jsNode.isArray();
+			String jsType = jsNode.getType();
 			return TernImagesRegistry.getImage(jsType, isFunction, isArray, false);
 		}
 		return super.getImage(element);
