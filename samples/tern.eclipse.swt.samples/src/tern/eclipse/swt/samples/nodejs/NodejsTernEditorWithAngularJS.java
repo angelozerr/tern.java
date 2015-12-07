@@ -67,7 +67,7 @@ public class NodejsTernEditorWithAngularJS {
 
 		ITernProject project = TernProjectFactory.create();
 		project.addLib(TernDef.browser);
-		project.addPlugin(TernPlugin.angular);
+		project.addPlugin(TernPlugin.angular1);
 		project.save();
 		
 		File nodejsTernBaseDir = new File("../../core/ternjs/node_modules/tern");

@@ -21,7 +21,7 @@ public abstract class AbstractTernServerAngularTest extends
 	@Override
 	protected ITernProject createProject() {
 		ITernProject project = super.createProject();
-		project.addPlugin(TernPlugin.angular);
+		project.addPlugin(TernPlugin.angular1);
 		project.addLib(TernDef.browser);
 		return project;
 	}

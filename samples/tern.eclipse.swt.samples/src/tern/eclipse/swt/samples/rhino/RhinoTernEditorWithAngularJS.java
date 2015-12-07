@@ -63,7 +63,7 @@ public class RhinoTernEditorWithAngularJS {
 		ITernProject project = TernProjectFactory.create();
 		project.addLib(TernDef.browser);
 		project.addLib(TernDef.ecma5);
-		project.addPlugin(TernPlugin.angular);
+		project.addPlugin(TernPlugin.angular1);
 		
 		this.server = new RhinoTernServer(project);
 

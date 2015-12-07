@@ -22,7 +22,7 @@ public enum TernPlugin implements ITernPlugin {
 	aui2("aui2.0.x"), 
 	yui3("yui3"),
 	
-	angular("angular"), 
+	angular1("angular1"), 
 	browser_extension("browser-extension"), 
 	chrome_apps("chrome-apps"), 
 	ckeditor_4_4_x("ckeditor4.4.x"), 
