@@ -27,10 +27,10 @@ public interface ITernCompletionCollector extends ITernResultsCollector {
 	 *            object containing all required information about the proposal
 	 * @param completion
 	 *            object of completion item (ex : JsonObject)
-	 * @param ternServer
-	 *            the tern server.
+	 * @param helper
+	 *            the JSON Object helper to visit the given JSON completion object.
 	 */
 	void addProposal(TernCompletionProposalRec proposal, Object completion,
-			IJSONObjectHelper jsonManager);
+			IJSONObjectHelper helper);
 
 }

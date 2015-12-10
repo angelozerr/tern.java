@@ -22,12 +22,16 @@ import com.eclipsesource.json.JsonValue;
 public class TernLintResultProcessor implements
 		ITernResultProcessor<ITernLintCollector> {
 
+	private static final String MESSAGES_FIELD = "messages";
+	
+	private static final String MESSAGE_FIELD = "message";
+	private static final String MESSAGE_ID_FIELD = "id";
 	private static final String FILE_FIELD = "file";
 	private static final String LINE_NUMBER_FIELD = "lineNumber";
 	private static final String TO_FIELD = "to";
 	private static final String FROM_FIELD = "from";
 	private static final String SEVERITY_FIELD = "severity";
-	private static final String MESSAGE_FIELD = "message";
+	
 	public static final TernLintResultProcessor INSTANCE = new TernLintResultProcessor();
 
 	@Override
@@ -38,7 +42,7 @@ public class TernLintResultProcessor implements
 			return;
 		}
 		JsonArray messages = (JsonArray) ((JsonObject) jsonObject)
-				.get("messages"); //$NON-NLS-1$
+				.get(MESSAGES_FIELD); //$NON-NLS-1$
 		if (messages != null) {
 			TernLintQuery query = (TernLintQuery) doc.getQuery();
 			if (query.isGroupByFiles()) {
@@ -52,7 +56,7 @@ public class TernLintResultProcessor implements
 						collector.startLint(file);
 
 						JsonArray messagesFile = (JsonArray) filesObject
-								.get("messages"); //$NON-NLS-1$
+								.get(MESSAGES_FIELD); //$NON-NLS-1$
 						if (messagesFile != null) {
 							addMessages(jsonObjectHelper, messagesFile, query,
 									collector);
@@ -73,23 +77,26 @@ public class TernLintResultProcessor implements
 		}
 	}
 
-	protected void addMessages(IJSONObjectHelper jsonObjectHelper,
+	protected void addMessages(IJSONObjectHelper helper,
 			JsonArray messages, TernLintQuery query,
 			ITernLintCollector collector) {
+		String messageId = null;
 		String message = null;
 		String severity = null;
 		String file = null;
 		JsonObject messageObject = null;
 		for (JsonValue value : messages) {
 			messageObject = (JsonObject) value;
+			messageId = helper.getText(messageObject.get(MESSAGE_ID_FIELD));
 			message = query.formatMessage(
-					jsonObjectHelper.getText(messageObject.get(MESSAGE_FIELD))); //$NON-NLS-1$
-			severity = jsonObjectHelper.getText(messageObject.get(SEVERITY_FIELD)); //$NON-NLS-1$
-			Long startCh = jsonObjectHelper.getCh(messageObject, FROM_FIELD); //$NON-NLS-1$
-			Long endCh = jsonObjectHelper.getCh(messageObject, TO_FIELD); //$NON-NLS-1$
-			Long line = jsonObjectHelper.getCh(messageObject, LINE_NUMBER_FIELD); //$NON-NLS-1$
-			file = jsonObjectHelper.getText(messageObject.get(FILE_FIELD)); //$NON-NLS-1$
-			collector.addMessage(message, startCh, endCh, line, severity, file);
+					helper.getText(messageObject.get(MESSAGE_FIELD)));
+			severity = helper.getText(messageObject.get(MESSAGE_FIELD));
+			severity = helper.getText(messageObject.get(SEVERITY_FIELD));
+			Long startCh = helper.getCh(messageObject, FROM_FIELD);
+			Long endCh = helper.getCh(messageObject, TO_FIELD);
+			Long line = helper.getCh(messageObject, LINE_NUMBER_FIELD);
+			file = helper.getText(messageObject.get(FILE_FIELD));
+			collector.addMessage(messageId, message, startCh, endCh, line, severity, file, messageObject, helper);
 		}
 	}
 

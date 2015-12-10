@@ -19,6 +19,7 @@ import org.eclipse.wst.validation.internal.provisional.core.IValidator;
 
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.utils.FileUtils;
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.lint.ITernLintCollector;
 
 /**
@@ -48,8 +49,8 @@ public class TernReporterCollector implements ITernLintCollector {
 	}
 
 	@Override
-	public void addMessage(String messageText, Long start, Long end, Long line,
-			String severity, String file) {
+	public void addMessage(String messageId, String messageText, Long start, Long end, Long line, String severity,
+			String file, Object messageObject, IJSONObjectHelper helper) {
 		IResource resource = (IResource) ternProject.getFile(file).getAdapter(
 				IFile.class);
 		LocalizedMessage message = new LocalizedMessage(getSeverity(severity),

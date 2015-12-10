@@ -10,6 +10,7 @@
  */
 package tern.server.protocol.lint;
 
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.lint.ITernLintCollector;
 
 public class MockTernLintCollector implements ITernLintCollector {
@@ -20,8 +21,8 @@ public class MockTernLintCollector implements ITernLintCollector {
 	}
 
 	@Override
-	public void addMessage(String message, Long start, Long end, Long lineNumber,
-			String severity, String file) {
+	public void addMessage(String messageId, String message, Long start, Long end, Long lineNumber, String severity,
+			String file, Object messageObject, IJSONObjectHelper helper) {
 
 	}
 

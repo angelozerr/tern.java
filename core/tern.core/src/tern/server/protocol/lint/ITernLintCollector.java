@@ -11,6 +11,7 @@
  */
 package tern.server.protocol.lint;
 
+import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.ITernResultsCollector;
 
 /**
@@ -31,6 +32,9 @@ public interface ITernLintCollector extends ITernResultsCollector {
 	/**
 	 * Add message.
 	 * 
+	 * @param messageId
+	 *            the id of the message and null if the linter cannot support
+	 *
 	 * @param message
 	 *            the description of the message.
 	 * @param start
@@ -44,9 +48,13 @@ public interface ITernLintCollector extends ITernResultsCollector {
 	 *            the severity of the message.
 	 * @param file
 	 *            the owner file name.
+	 * @param messageObject
+	 *            JSON object of message.
+	 * @param helper
+	 *            the JSON Object helper to visit the given JSON message object.            
 	 */
-	void addMessage(String message, Long start, Long end, Long lineNumber,
-			String severity, String file);
+	void addMessage(String messageId, String message, Long start, Long end, Long lineNumber, String severity,
+			String file, Object messageObject, IJSONObjectHelper helper);
 
 	/**
 	 * This method is call when lint end for the given file after calling the
