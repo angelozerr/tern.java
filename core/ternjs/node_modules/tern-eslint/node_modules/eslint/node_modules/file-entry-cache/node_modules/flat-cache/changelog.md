@@ -1,5 +1,17 @@
 
 # flat-cache - Changelog
+## v1.0.10
+- **Build Scripts Changes**
+  - add eslint-fix task - [fd29e52]( https://github.com/royriojas/flat-cache/commit/fd29e52 ), [royriojas](https://github.com/royriojas), 01/11/2015 18:04:08
+
+    
+  - make sure the test script also verify beautification and linting of files before running tests - [e94e176]( https://github.com/royriojas/flat-cache/commit/e94e176 ), [royriojas](https://github.com/royriojas), 01/11/2015 14:54:48
+
+    
+- **Other changes**
+  - add clearAll for cacheDir - [97383d9]( https://github.com/royriojas/flat-cache/commit/97383d9 ), [xieyaowu](https://github.com/xieyaowu), 31/10/2015 23:02:18
+
+    
 ## v1.0.9
 - **Bug Fixes**
   - wrong default values for changelogx user repo name - [7bb52d1]( https://github.com/royriojas/flat-cache/commit/7bb52d1 ), [royriojas](https://github.com/royriojas), 11/09/2015 17:59:30

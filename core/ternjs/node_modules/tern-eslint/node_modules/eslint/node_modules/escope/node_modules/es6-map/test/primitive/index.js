@@ -50,4 +50,10 @@ module.exports = function (T, a) {
 	a(map.size, 0, "Clear: size");
 	a(map.has('trzy'), false, "Clear: has");
 	a.deep(toArray(map.values()), [], "Clear: Values");
+
+	a.h1("Empty initialization");
+	map = new T();
+	map.set('foo', 'bar');
+	a(map.size, 1);
+	a(map.get('foo'), 'bar');
 };

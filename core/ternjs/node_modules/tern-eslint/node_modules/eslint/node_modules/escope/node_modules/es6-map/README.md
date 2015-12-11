@@ -3,19 +3,19 @@
 
 ### Usage
 
-If you want to make sure your environment implements `Map`, do:
-
-```javascript
-require('es6-map/implement');
-```
-
-If you'd like to use native version when it exists and fallback to polyfill if it doesn't, but without implementing `Map` on global scope, do:
+It’s safest to use *es6-map* as a [ponyfill](http://kikobeats.com/polyfill-ponyfill-and-prollyfill/) – a polyfill which doesn’t touch global objects:
 
 ```javascript
 var Map = require('es6-map');
 ```
 
-If you strictly want to use polyfill even if native `Map` exists, do:
+If you want to make sure your environment implements `Map` globally, do:
+
+```javascript
+require('es6-map/implement');
+```
+
+If you strictly want to use the polyfill even if the native `Map` exists, do:
 
 ```javascript
 var Map = require('es6-map/polyfill');

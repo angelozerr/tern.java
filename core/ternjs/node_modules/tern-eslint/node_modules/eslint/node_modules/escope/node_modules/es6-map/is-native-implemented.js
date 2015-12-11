@@ -5,5 +5,5 @@
 
 module.exports = (function () {
 	if (typeof Map === 'undefined') return false;
-	return (Object.prototype.toString.call(Map.prototype) === '[object Map]');
+	return (Object.prototype.toString.call(new Map()) === '[object Map]');
 }());

@@ -9,6 +9,8 @@ module.exports = {
 	copyDeep:                   require('./copy-deep'),
 	count:                      require('./count'),
 	create:                     require('./create'),
+	ensureNaturalNumber:        require('./ensure-natural-number'),
+	ensureNaturalNumberValue:   require('./ensure-natural-number-value'),
 	eq:                         require('./eq'),
 	every:                      require('./every'),
 	filter:                     require('./filter'),

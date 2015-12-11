@@ -13,7 +13,11 @@
 
 module.exports = function(context) {
 
-    var sourceCode = context.getSourceCode();
+    var sourceCode = context.getSourceCode(),
+        replacements = {
+            "==": "===",
+            "!=": "!=="
+        };
 
     /**
      * Checks if an expression is a typeof expression
@@ -89,7 +93,18 @@ module.exports = function(context) {
                 message: "Expected '{{op}}=' and instead saw '{{op}}'.",
                 data: { op: node.operator },
                 fix: function(fixer) {
-                    return fixer.insertTextAfter(sourceCode.getTokenAfter(node.left), "=");
+                    var tokens = sourceCode.getTokensBetween(node.left, node.right),
+                        opToken,
+                        i;
+
+                    for (i = 0; i < tokens.length; ++i) {
+                        if (tokens[i].value === node.operator) {
+                            opToken = tokens[i];
+                            break;
+                        }
+                    }
+
+                    return fixer.replaceTextRange(opToken.range, replacements[node.operator]);
                 }
             });
 

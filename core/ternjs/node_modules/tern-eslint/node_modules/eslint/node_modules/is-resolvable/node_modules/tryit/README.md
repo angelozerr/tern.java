@@ -51,6 +51,6 @@ Obviously, this is useful any time you're going to attempt to read some unknown 
 In addition, my understanding is that it's hard for JS engines to optimize code in try blocks. By actually passing the code to be executed into a re-used try block, we can avoid having to have more than a single try block in our app. Again, this is not a primary motivation, just a potential side benefit. 
 
 
-## licence
+## license
 
-MIT
+[MIT](http://mit.joreteg.com/)

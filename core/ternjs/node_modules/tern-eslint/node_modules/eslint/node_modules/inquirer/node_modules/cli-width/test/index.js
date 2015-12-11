@@ -25,6 +25,25 @@ test('uses tty.getWindowSize', function (t) {
   t.end();
 });
 
+test('uses custom env var', function (t) {
+  tty.getWindowSize = undefined;
+  process.env.CLI_WIDTH = 30;
+
+  t.equal(lib(), 30, 'equal to mocked, 30');
+
+  delete process.env.CLI_WIDTH;
+  t.end();
+});
+
+test('uses default if env var is not a number', function (t) {
+  process.env.CLI_WIDTH = 'foo';
+
+  t.equal(lib(), 0, 'default unset value, 0');
+
+  delete process.env.CLI_WIDTH;
+  t.end();
+});
+
 test('uses default', function (t) {
   tty.getWindowSize = undefined;
 
