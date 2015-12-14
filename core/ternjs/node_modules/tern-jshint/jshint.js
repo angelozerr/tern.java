@@ -8,6 +8,12 @@
 })(function(infer, tern, JSHINT, cli) {
   "use strict";
   
+  var fs, shjs;
+  if (require) {
+    fs  = require("fs");  
+    shjs = require("jshint/node_modules/shelljs");
+  }
+  
   var bogus = [ "Dangerous comment" ];
 
   var warnings = [ [ "Expected '{'",
@@ -16,6 +22,14 @@
   var errors = [ "Missing semicolon", "Extra comma", "Missing property name",
                  "Unmatched ", " and instead saw", " is not defined",
                  "Unclosed string", "Stopping, unable to continue" ];
+  
+  var slashAtEndRegEx = /\/$/;
+  
+  var pathLastSegmentIsolationRegEx = /([^\/]*)\/*$/;
+  
+  var fileNameRegEx = /([^\\]+)\.[^\\]+$/;
+  
+  var doubleAsteriskAtEndRegEx = /\*\*$/;
   
   function cleanup(error) {
     // All problems are warnings by default
@@ -58,21 +72,25 @@
   function normPath(name) { return name.replace(/\\/g, "//"); }
   
   function JSHintConfig(server, options) {
-    this.validPath = true;
     if (options.config) {
       // JSHint config is stored in the .tern-project
       this.config = options.config;
       this.init();
     } else if (options.configFile) {
       // JSHint config is stored in a .jshintrc config file.      
-      this.validPath = false;
+      this.config = null;
       this.configFile = options.configFile;
-      var filepath = this.filepath = normPath(options.configFile);
       this.projectDir = server.options.projectDir;
+      this.ignorePatterns  = null;
+      this.ignoresFile = ".jshintignore";
       // Override cli.error to avoid calling cli.exit when cli.exit is called in cli.loadConfig.
-      require("jshint/node_modules/cli").error = function(msg) {
-        throw new Error(msg);
-      }
+      var _this = this, cli = require("jshint/node_modules/cli");
+      cli.error = function(msg) {
+        _this.error = msg;
+      };
+      cli.exit = function() {
+        throw new Error();
+    };
     }
   }
   
@@ -88,36 +106,105 @@
   
   JSHintConfig.prototype.update = function() {
     try {
-      var filepath = this.filepath;
+      // load JSHint config
+      var filepath = this.configFile;
       this.config = cli.loadConfig(filepath);
       this.init();
       this.error = null;
     } catch(e) {
-      this.error = String(e);
+      //this.error = String(e);
     }
   }
   
+  JSHintConfig.prototype.isIgnored = function(file) {
+    
+    function loadIgnores(ignoresFile) {
+      // Re-parse .jshintignore file
+      var ignorePatterns = shjs.cat(ignoresFile).split("\n");
+      // Remove empty entries
+      ignorePatterns = ignorePatterns.filter(function(line) {
+        return !!line.trim();
+      }).map(function(line) {
+        if (slashAtEndRegEx.test (line)) {
+          // This is a directory name (it ends with a slash), so help the 
+          // pattern adding the double asterisk at the end
+          return line += "**";
+        } else {
+          // Get only the last segment for this path
+          var lastSegment = line.match(pathLastSegmentIsolationRegEx)[1];
+          // If this is a directory (which we identify by reviewing
+          // it's not a filename (i.e it has no extension), neither
+          // the expresion ends with ** then help improving the 
+          // ignore expression by adding a /** to the pattern
+          if (lastSegment && !fileNameRegEx.test (lastSegment)
+                  && !doubleAsteriskAtEndRegEx.test (lastSegment)) {
+            return line += "/**";
+          }
+        }
+        
+        // Otherwise, just pass the line with no modification
+        // This should be the case for explicit filenames
+        return line;
+      });
+      return ignorePatterns;
+    }
+      
+    if (!this.ignoresFile) return false; // Browser context
+    
+    if (!fs.existsSync(this.ignoresFile)) {
+      if (fs.existsSync(file.name)) return false;
+      // If .jshintignore does not exist, then simply
+      // ask cli.gather if filename should be excluded
+      var gather = cli.gather({
+    	args: [file.name]
+      });
+      return gather.indexOf(file.name) < 0;
+    }
+    
+    // watch the .jshintignore to update the ignore patterns, when file content changes.
+    var _this = this;
+    fs.watch(this.ignoresFile, function(event, filename) {
+      _this.ignorePatterns = null;
+    });
+    // We reach here if .jshintignore actually exists, but it needs special handling because
+    // there is a problem that is caused when a directory wants to be excluded entirely and 
+    // you only know a single filename (as this case). 
+    // For that scenario, the ignore path needs to be explicitly specified as 
+    // "folder/**" in .jshintignore instead just "folder/" or "folder", and given 
+    // tern makes individual file calls, we need to provide a workaround here
+    // for tern.java
+    if (!this.ignorePatterns) {      
+      this.ignorePatterns = loadIgnores(this.ignoresFile);
+    }
+    
+    var gather = cli.gather({
+      args: [file.name],
+      ignores : this.ignorePatterns
+    });
+    	
+    return gather.indexOf(file.name) < 0;
+  }
+  
   JSHintConfig.prototype.getConfig = function() {
-    if (this.validPath) return this.config;
-    var filepath = this.filepath;    
-    var fs = require("fs"), projectDir = this.projectDir;
+    if (this.config || (!this.config && !this.configFile)) return this.config;
+    var filepath = this.configFile, projectDir = this.projectDir, validConfig = false;
     if (!fs.existsSync(filepath)) {
       // try if config file is hosted inside project
-      filepath = normPath(projectDir) + "//" + filepath;
+      filepath = normPath(projectDir + "//" + filepath);
       if (!fs.existsSync(filepath)) {
-        this.error = "Cannot find JSHint config files ['" + this.filepath + "', '" + filepath + "']";
+        this.error = "Cannot find JSHint config files ['" + this.configFile + "', '" + filepath + "']";
       } else {
-       this.filepath = filepath; 
-       this.validPath = true; 
+       this.configFile = filepath; 
+       validConfig = true; 
       }      
     } else {
-      this.validPath = true; 
+      validConfig = true; 
     }
-    if (this.validPath) {
+    if (validConfig) {
       delete[this.error];
       var _this = this;
       // watch the .jshintrc to update the cached .jshintrc config, when file content changes.
-      fs.watch(this.filepath, function(event, filename) {
+      fs.watch(this.configFile, function(event, filename) {
         _this.update();
       });
       this.update();
@@ -221,17 +308,20 @@
         }
       }
     }
-  
+    
 	var text = file.text, jshintCfg = server.mod.jshint.config;
-	var config = jshintCfg.getConfig(), globals = jshintCfg.globals;
-	if (jshintCfg.error) {
+	var config = jshintCfg.getConfig(), globals = jshintCfg.globals;	
+	if (jshintCfg.error) { 
 	  // .jshintrc file doesn't exist
 	  messages.push(makeError({line:1 , start: 0, end: 1, description: jshintCfg.error, severity: "error"}))
-	} else {
-	  JSHINT(text, config, globals);
-	  var errors = JSHINT.data().errors;
-	  if (errors) parseErrors(errors, messages);	  
+	  return;
 	}
+	if (jshintCfg.isIgnored(file)) return; // Just skip, this file does not need to be linted
+	
+	// Validate with JSHint
+	JSHINT(text, config, globals);
+	var errors = JSHINT.data().errors;
+	if (errors) parseErrors(errors, messages);	  	
   }
   
   tern.defineQueryType("jshint", {
