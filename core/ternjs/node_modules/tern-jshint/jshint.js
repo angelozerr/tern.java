@@ -152,7 +152,7 @@
     if (!this.ignoresFile) return false; // Browser context
     
     if (!fs.existsSync(this.ignoresFile)) {
-      if (fs.existsSync(file.name)) return false;
+      if (!fs.existsSync(file.name)) return false;
       // If .jshintignore does not exist, then simply
       // ask cli.gather if filename should be excluded
       var gather = cli.gather({
