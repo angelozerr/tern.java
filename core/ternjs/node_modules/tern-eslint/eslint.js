@@ -329,7 +329,8 @@
 	    message: message.message,
 	    severity: getSeverity(message),
 	    from: tern.outputPos(query, file, from),
-	    to: tern.outputPos(query, file, to)	      
+	    to: tern.outputPos(query, file, to),
+	    lineNumber: message.line
 	  }
 	  if (message.ruleId) error.id = message.ruleId;
 	  if (!query.groupByFiles) error.file = file.name;
