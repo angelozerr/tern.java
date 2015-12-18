@@ -47,24 +47,13 @@ import tern.scriptpath.impl.dom.DOMElementsScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.ITernServer;
-import tern.server.ITernServerListener;
 import tern.server.TernDef;
+import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
-import tern.server.protocol.completions.ITernCompletionCollector;
-import tern.server.protocol.definition.ITernDefinitionCollector;
-import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
-import tern.server.protocol.guesstypes.TernGuessTypesQuery;
-import tern.server.protocol.highlight.ITernHighlightCollector;
-import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.outline.ITernOutlineCollector;
-import tern.server.protocol.outline.TernOutlineQuery;
 import tern.server.protocol.push.IMessageHandler;
-import tern.server.protocol.refs.ITernRefCollector;
-import tern.server.protocol.refs.TernRefsQuery;
-import tern.server.protocol.type.ITernTypeCollector;
 import tern.utils.IOUtils;
 
 /**
@@ -599,44 +588,14 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	@Override
-	public void request(TernQuery query, ITernFile file, ITernCompletionCollector collector)
+	public void request(TernQuery query, ITernFile file, ITernResultsCollector collector)
 			throws IOException, TernException {
 		request(query, null, null, null, file, collector);
 	}
 
 	@Override
 	public void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath, Node domNode, ITernFile file,
-			ITernCompletionCollector collector) throws IOException, TernException {
-		TernDoc doc = new TernDoc(query);
-		synchronize(doc, names, scriptPath, domNode, file);
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, ITernFile file, ITernDefinitionCollector collector)
-			throws IOException, TernException {
-		request(query, null, null, null, file, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath, Node domNode, ITernFile file,
-			ITernDefinitionCollector collector) throws IOException, TernException {
-		TernDoc doc = new TernDoc(query);
-		synchronize(doc, names, scriptPath, domNode, file);
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, ITernFile file, ITernTypeCollector collector)
-			throws IOException, TernException {
-		request(query, null, null, null, file, collector);
-	}
-
-	@Override
-	public void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath, Node domNode, ITernFile file,
-			ITernTypeCollector collector) throws IOException, TernException {
+			ITernResultsCollector collector) throws IOException, TernException {
 		TernDoc doc = new TernDoc(query);
 		synchronize(doc, names, scriptPath, domNode, file);
 		ITernServer server = getTernServer();
@@ -661,42 +620,6 @@ public class TernProject extends JsonObject implements ITernProject {
 	@Override
 	public void request(TernQuery query, ITernLintCollector collector) throws IOException, TernException {
 		request(query, null, true, collector);
-	}
-
-	@Override
-	public void request(TernGuessTypesQuery query, ITernFile file, ITernGuessTypesCollector collector)
-			throws IOException, TernException {
-		TernDoc doc = new TernDoc(query);
-		synchronize(doc, null, null, null, file);
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	@Override
-	public void request(TernOutlineQuery query, ITernFile file, ITernOutlineCollector collector)
-			throws IOException, TernException {
-		TernDoc doc = new TernDoc(query);
-		synchronize(doc, null, null, null, file);
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	@Override
-	public void request(TernHighlightQuery query, ITernHighlightCollector collector) throws IOException, TernException {
-		TernDoc doc = new TernDoc(query);
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
-	}
-
-	@Override
-	public void request(TernRefsQuery query, ITernFile file, ITernRefCollector collector)
-			throws IOException, TernException {
-		TernDoc doc = new TernDoc(query);
-		if (file != null) {
-			synchronize(doc, null, null, null, file);
-		}
-		ITernServer server = getTernServer();
-		server.request(doc, collector);
 	}
 
 	@Override

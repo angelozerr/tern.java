@@ -88,7 +88,7 @@ public abstract class TernTokenScanner implements ITokenScanner {
 		if (ternProject != null) {
 			String text = document.get(collector.getOffset(), collector.getLength());
 			TernHighlightQuery query = new TernHighlightQuery(text);
-			ternProject.request(query, collector);
+			ternProject.request(query, null, collector);
 		}
 	}
 

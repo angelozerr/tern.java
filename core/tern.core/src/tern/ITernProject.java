@@ -26,20 +26,10 @@ import tern.scriptpath.ITernScriptPath;
 import tern.server.ITernDef;
 import tern.server.ITernPlugin;
 import tern.server.ITernServer;
+import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernQuery;
-import tern.server.protocol.completions.ITernCompletionCollector;
-import tern.server.protocol.definition.ITernDefinitionCollector;
-import tern.server.protocol.guesstypes.ITernGuessTypesCollector;
-import tern.server.protocol.guesstypes.TernGuessTypesQuery;
-import tern.server.protocol.highlight.ITernHighlightCollector;
-import tern.server.protocol.highlight.TernHighlightQuery;
 import tern.server.protocol.lint.ITernLintCollector;
-import tern.server.protocol.outline.ITernOutlineCollector;
-import tern.server.protocol.outline.TernOutlineQuery;
 import tern.server.protocol.push.IMessageHandler;
-import tern.server.protocol.refs.ITernRefCollector;
-import tern.server.protocol.refs.TernRefsQuery;
-import tern.server.protocol.type.ITernTypeCollector;
 
 /**
  * Tern project API.
@@ -75,7 +65,8 @@ public interface ITernProject extends ITernAdaptable {
 	/**
 	 * Set ECMAScript version
 	 * 
-	 * @param ecmaVersion the ECMAScript version 
+	 * @param ecmaVersion
+	 *            the ECMAScript version
 	 */
 	void setEcmaVersion(EcmaVersion ecmaVersion);
 
@@ -85,7 +76,7 @@ public interface ITernProject extends ITernAdaptable {
 	 * @return ECMAScript version.
 	 */
 	EcmaVersion getEcmaVersion();
-	
+
 	// --------------------- JSON Type Definitions
 
 	/**
@@ -258,30 +249,12 @@ public interface ITernProject extends ITernAdaptable {
 	 */
 	Object getAdapter(@SuppressWarnings("rawtypes") Class adapterClass);
 
-	// ---------- Completion
+	// ---------- Generic query API
 	void request(TernQuery query, ITernFile file,
-			ITernCompletionCollector collector) throws IOException,
-			TernException;
+			ITernResultsCollector collector) throws IOException, TernException;
 
 	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath,
-			Node domNode, ITernFile file, ITernCompletionCollector collector)
-			throws IOException, TernException;
-
-	// ---------- Definition
-	void request(TernQuery query, ITernFile file,
-			ITernDefinitionCollector collector) throws IOException,
-			TernException;
-
-	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath,
-			Node domNode, ITernFile file, ITernDefinitionCollector collector)
-			throws IOException, TernException;
-
-	// ---------- Type
-	void request(TernQuery query, ITernFile file, ITernTypeCollector collector)
-			throws IOException, TernException;
-
-	void request(TernQuery query, JsonArray names, ITernScriptPath scriptPath,
-			Node domNode, ITernFile file, ITernTypeCollector collector)
+			Node domNode, ITernFile file, ITernResultsCollector collector)
 			throws IOException, TernException;
 
 	// ---------- Lint
@@ -291,26 +264,6 @@ public interface ITernProject extends ITernAdaptable {
 	void request(TernQuery query, ITernLintCollector collector)
 			throws IOException, TernException;
 
-	// ---------- Guess types
-
-	void request(TernGuessTypesQuery query, ITernFile file,
-			ITernGuessTypesCollector collector) throws IOException,
-			TernException;
-
-	// ---------- Outline
-
-	void request(TernOutlineQuery query, ITernFile file,
-			ITernOutlineCollector collector) throws IOException,
-			TernException;
-
-	// ---------- Highlight
-	
-	void request(TernHighlightQuery query, ITernHighlightCollector collector) throws IOException, TernException;
-	
-	// ---------- Refs
-	
-	void request(TernRefsQuery query, ITernFile file, ITernRefCollector collector) throws IOException, TernException;
-	
 	/**
 	 * Returns the tern repository used by the tern project.
 	 * 

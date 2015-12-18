@@ -50,7 +50,9 @@ public class TernResultsProcessorsFactory {
 	@SuppressWarnings("unchecked")
 	private static <T extends ITernResultsCollector> ITernResultProcessor<T> getProcessor(
 			T collector) throws TernException {
-		if (collector instanceof ITernCompletionCollector) {
+		if (collector instanceof ITernCustomResultsCollector) {
+			return (ITernResultProcessor<T>) ((ITernCustomResultsCollector)collector).getResultsProcessor();
+		} else if (collector instanceof ITernCompletionCollector) {
 			return (ITernResultProcessor<T>) TernCompletionsResultProcessor.INSTANCE;
 		} else if (collector instanceof ITernRefCollector) {
 			return (ITernResultProcessor<T>) TernRefsResultProcessor.INSTANCE;						
@@ -69,7 +71,7 @@ public class TernResultsProcessorsFactory {
 		} else {
 			throw new TernException(
 					MessageFormat
-							.format("Tern results collector {0} does not implement any of the supported interfaces", //$NON-NLS-1$
+							.format("Tern results collector {0} does not implement any of the supported interfaces nor does it provide the processor through ITernCustomResultsCollector interface.", //$NON-NLS-1$
 									collector.getClass().getName()));
 		}
 	}
