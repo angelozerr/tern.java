@@ -73,7 +73,6 @@ public abstract class AbstractAngularControllerDefinitionTest extends
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.controller);
 		query.getScope().setModule(module);
-		query.addFile("myfile.js");
 		query.setExpression("PhoneDetailCtrl");
 
 		doc.setQuery(query);
@@ -100,7 +99,6 @@ public abstract class AbstractAngularControllerDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.controller);
-		query.addFile("myfile.js");
 		query.setExpression("TodoCtrl");
 
 		doc.setQuery(query);
@@ -129,7 +127,6 @@ public abstract class AbstractAngularControllerDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.controller);
-		query.addFile("myfile.js");
 		query.setExpression("TodoCtrl");
 
 		doc.setQuery(query);

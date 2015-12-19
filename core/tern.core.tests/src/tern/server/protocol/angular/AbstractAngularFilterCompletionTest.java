@@ -67,7 +67,6 @@ public abstract class AbstractAngularFilterCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.filter);
 		query.getScope().setModule(module);
-		query.addFile("myfile.js");
 		query.setExpression("c");
 
 		doc.setQuery(query);

@@ -45,7 +45,6 @@ public abstract class AbstractAngularModuleDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.module);
-		query.addFile("myfile.js");
 		query.setExpression("m");
 
 		doc.setQuery(query);
@@ -72,7 +71,6 @@ public abstract class AbstractAngularModuleDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.module);
-		query.addFile("myfile.js");
 		query.setExpression("phonecatApp");
 
 		doc.setQuery(query);
@@ -97,7 +95,6 @@ public abstract class AbstractAngularModuleDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.module);
-		query.addFile("myfile.js");
 		query.setExpression("phonecatAnimations");
 
 		doc.setQuery(query);

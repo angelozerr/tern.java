@@ -49,7 +49,6 @@ public abstract class Issue116 extends AbstractTernServerAngularTest {
 		// module is named with the var id.
 		query.getScope().setModule("#id");
 		query.getScope().getControllers().add("StoreController");
-		query.addFile("myfile.js");
 		query.setExpression("product");
 
 		doc.setQuery(query);

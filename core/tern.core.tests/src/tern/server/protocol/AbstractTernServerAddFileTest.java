@@ -15,7 +15,6 @@ import org.junit.Test;
 import tern.TernException;
 import tern.server.AbstractTernServerTest;
 import tern.server.DefaultResponseHandler;
-import tern.server.protocol.TernDoc;
 
 public abstract class AbstractTernServerAddFileTest extends
 		AbstractTernServerTest {

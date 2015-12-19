@@ -48,7 +48,6 @@ public abstract class Issue71 extends AbstractTernServerAngularTest {
 				AngularType.model);
 		query.getScope().setModule("store");
 		query.getScope().getControllers().add("StoreController");
-		query.addFile("myfile.js");
 		query.setExpression("product");
 
 		doc.setQuery(query);

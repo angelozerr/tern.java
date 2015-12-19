@@ -41,7 +41,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl as t");
-		query.addFile("myfile.js");
 		query.setExpression("to");
 
 		doc.setQuery(query);
@@ -65,7 +64,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl as t");
-		query.addFile("myfile.js");
 		query.setExpression("t.to");
 
 		doc.setQuery(query);
@@ -89,7 +87,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl as t");
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);
@@ -117,7 +114,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl as t");
 		query.getScope().addRepeat("todo in t.todos");
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);
@@ -143,7 +139,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl as t");
 		query.getScope().addRepeat("todo in t.todos");
-		query.addFile("myfile.js");
 		query.setExpression("todo.");
 
 		doc.setQuery(query);
@@ -167,7 +162,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 		query.getScope().getControllers().add("TodoCtrl as t");
 		query.getScope().addRepeat("todo in todos"); // bad 'as' it should be
 														// t.todos
-		query.addFile("myfile.js");
 		query.setExpression("todo.");
 
 		doc.setQuery(query);
@@ -195,7 +189,6 @@ public abstract class Issue70 extends AbstractTernServerAngularTest {
 		query.getScope().getControllers().add("TodoCtrl as t");
 		query.getScope().addRepeat("todo in t.todos"); // bad 'as' it should be
 														// t.todos
-		query.addFile("myfile.js");
 		query.setExpression("tod");
 
 		doc.setQuery(query);

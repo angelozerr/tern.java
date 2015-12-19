@@ -69,27 +69,6 @@ public class TernAngularQuery extends TernQuery {
 		return scope.hasModule();
 	}
 
-	public void addFile(String file) {
-		getFiles().add(file);
-	}
-
-	public JsonArray getFiles() {
-		JsonArray files = (JsonArray) super.get("files");
-		if (files == null) {
-			files = new JsonArray();
-			super.add("files", files);
-		}
-		return files;
-	}
-
-	public boolean hasFiles() {
-		JsonArray files = (JsonArray) super.get("files");
-		if (files == null) {
-			return false;
-		}
-		return files.size() > 0;
-	}
-
 	public AngularType getFirstAngularType() {
 		return AngularType.get(((JsonArray) super.get("angularTypes")).get(0)
 				.asString());

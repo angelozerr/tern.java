@@ -53,7 +53,6 @@ public abstract class AbstractAngularDirectiveCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.directive);
 		query.getScope().setModule(module);
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);
@@ -88,7 +87,6 @@ public abstract class AbstractAngularDirectiveCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.directive);
 		query.getScope().setModule(module);
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);
@@ -121,7 +119,6 @@ public abstract class AbstractAngularDirectiveCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.directive);
 		query.getScope().setModule(module);
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);

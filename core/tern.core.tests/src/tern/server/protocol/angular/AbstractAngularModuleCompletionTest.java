@@ -46,7 +46,6 @@ public abstract class AbstractAngularModuleCompletionTest extends
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.module);
-		query.addFile("myfile.js");
 		query.setExpression("m");
 		
 		doc.setQuery(query);
@@ -77,7 +76,6 @@ public abstract class AbstractAngularModuleCompletionTest extends
 
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.module);
-		query.addFile("myfile.js");
 		query.setExpression("");
 		
 		doc.setQuery(query);
@@ -109,35 +107,16 @@ public abstract class AbstractAngularModuleCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.module);
 		query.setExpression("phonecatAn");
-		query.addFile("myfile.js");
 		
 		doc.setQuery(query);
 		return doc;
-	}
-
-	@Test
-	public void completionWithModuleCheckFiles() throws TernException {
-		server.addFile("myfile.js", "angular.module('phonecatAnimations');");
-		server.addFile("myfile2.js", "angular.module('phonecatApp');");
-
-		TernDoc doc = createDocForCompletionModuleCheckFiles();
-		MockTernCompletionCollector collector = new MockTernCompletionCollector();
-		server.request(doc, collector);
-
-		Assert.assertTrue(collector.getCompletions().size() == 1);
-		TernCompletionItem item = collector.get("phonecatAnimations");
-		Assert.assertNotNull(item);
-		Assert.assertEquals("phonecatAnimations", item.getName());
-		Assert.assertEquals("Module", item.getType());
-		Assert.assertEquals("myfile.js", item.getOrigin());
 	}
 
 	private TernDoc createDocForCompletionModuleCheckFiles() {
 		TernDoc doc = new TernDoc();
 		
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
-				AngularType.module);
-		query.addFile("myfile.js");
+				AngularType.module);		
 		query.setExpression("");
 		
 		doc.setQuery(query);

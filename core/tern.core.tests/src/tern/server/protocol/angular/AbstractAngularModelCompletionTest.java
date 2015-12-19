@@ -42,7 +42,6 @@ public abstract class AbstractAngularModelCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl");
-		query.addFile("myfile.js");
 		query.setExpression("xx");
 
 		doc.setQuery(query);
@@ -66,7 +65,6 @@ public abstract class AbstractAngularModelCompletionTest extends
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl");
-		query.addFile("myfile.js");
 		query.setExpression("to");
 
 		doc.setQuery(query);
@@ -92,7 +90,6 @@ public abstract class AbstractAngularModelCompletionTest extends
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("atodo in todos");
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);
@@ -118,7 +115,6 @@ public abstract class AbstractAngularModelCompletionTest extends
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("atodo in todos");
-		query.addFile("myfile.js");
 		query.setExpression("atodo.");
 
 		doc.setQuery(query);
@@ -141,7 +137,6 @@ public abstract class AbstractAngularModelCompletionTest extends
 				AngularType.model);
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("atodo in t.todos"); // bad 
-		query.addFile("myfile.js");
 		query.setExpression("atodo.");
 
 		doc.setQuery(query);
@@ -169,7 +164,6 @@ public abstract class AbstractAngularModelCompletionTest extends
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("atodo in t.todos"); // bad 'as' it should be
 														// t.todos
-		query.addFile("myfile.js");
 		query.setExpression("atod");
 
 		doc.setQuery(query);

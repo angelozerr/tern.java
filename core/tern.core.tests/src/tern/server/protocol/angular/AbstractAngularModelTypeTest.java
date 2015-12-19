@@ -82,7 +82,6 @@ public abstract class AbstractAngularModelTypeTest extends
 		TernDoc doc = createFile();
 
 		TernAngularTypeQuery query = new TernAngularTypeQuery(AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.setExpression("todoText");
 
@@ -106,7 +105,6 @@ public abstract class AbstractAngularModelTypeTest extends
 		TernDoc doc = createFile();
 
 		TernAngularTypeQuery query = new TernAngularTypeQuery(AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.setExpression("todos.length");
 		query.setEnd(2);
@@ -130,7 +128,6 @@ public abstract class AbstractAngularModelTypeTest extends
 		TernDoc doc = createFile();
 
 		TernAngularTypeQuery query = new TernAngularTypeQuery(AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("todo in todos");
 		query.setExpression("todo.");
@@ -155,7 +152,6 @@ public abstract class AbstractAngularModelTypeTest extends
 		TernDoc doc = createFile();
 
 		TernAngularTypeQuery query = new TernAngularTypeQuery(AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("todo in todos");
 		query.setExpression("todo.done");
@@ -194,7 +190,6 @@ public abstract class AbstractAngularModelTypeTest extends
 		TernDoc doc = createFileWithModule();
 
 		TernAngularTypeQuery query = new TernAngularTypeQuery(AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().setModule("MyApp");
 		query.getScope().getControllers().add("SomeCtrl");
 		query.setExpression("save");

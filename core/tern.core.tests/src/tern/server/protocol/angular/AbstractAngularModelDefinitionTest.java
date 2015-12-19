@@ -92,7 +92,6 @@ public abstract class AbstractAngularModelDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.setExpression("todoText");
 
@@ -120,7 +119,6 @@ public abstract class AbstractAngularModelDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.setExpression("todos.length");
 		query.setEnd(2);
@@ -148,7 +146,6 @@ public abstract class AbstractAngularModelDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("todo in todos");
 		query.setExpression("todo.");
@@ -177,7 +174,6 @@ public abstract class AbstractAngularModelDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().getControllers().add("TodoCtrl");
 		query.getScope().addRepeat("todo in todos");
 		query.setExpression("todo.done");
@@ -220,7 +216,6 @@ public abstract class AbstractAngularModelDefinitionTest extends
 
 		TernAngularDefinitionQuery query = new TernAngularDefinitionQuery(
 				AngularType.model);
-		query.addFile("myfile.js");
 		query.getScope().setModule("MyApp");
 		query.getScope().getControllers().add("SomeCtrl");
 		query.setExpression("save");

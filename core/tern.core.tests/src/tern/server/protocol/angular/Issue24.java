@@ -64,7 +64,6 @@ public abstract class Issue24 extends AbstractTernServerAngularTest {
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.module);
 		query.setExpression("store");
-		query.addFile("myfile.js");
 
 		doc.setQuery(query);
 		return doc;
@@ -85,7 +84,6 @@ public abstract class Issue24 extends AbstractTernServerAngularTest {
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.module);
 		query.setExpression("store");
-		query.addFile("myfile.js");
 
 		doc.setQuery(query);
 		return doc;

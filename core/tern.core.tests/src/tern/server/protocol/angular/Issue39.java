@@ -57,7 +57,6 @@ public abstract class Issue39 extends AbstractTernServerAngularTest {
 		TernAngularCompletionsQuery query = new TernAngularCompletionsQuery(
 				AngularType.controller);
 		query.getScope().setModule(module);
-		query.addFile("myfile.js");
 		query.setExpression("");
 
 		doc.setQuery(query);
