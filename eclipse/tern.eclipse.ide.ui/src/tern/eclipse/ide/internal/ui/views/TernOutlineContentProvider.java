@@ -33,7 +33,7 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.server.TernPlugin;
-import tern.server.protocol.outline.JSNode;
+import tern.server.protocol.outline.IJSNode;
 import tern.server.protocol.outline.JSNodeRoot;
 import tern.server.protocol.outline.TernOutlineQuery;
 
@@ -62,7 +62,7 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 					if (ternProject != null && ternProject.hasPlugin(TernPlugin.outline)) {
 						// Call tern-outline
 						TernOutlineQuery query = new TernOutlineQuery(document.getFileName());
-						outline = new TernOutline(document);
+						outline = new TernOutline(document, ternProject);
 						ternProject.request(query, document, outline);
 						parsed = true;
 						Display.getDefault().syncExec(new Runnable() {
@@ -92,17 +92,17 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 		refreshJob.setPriority(Job.SHORT);
 	}
 	
-	private TreePath[] toNewTreePaths(TreePath[] originExpandedPaths, JSNodeRoot newRoot) {
+	private TreePath[] toNewTreePaths(TreePath[] originExpandedPaths, IJSNode newRoot) {
 		List<TreePath> res = new ArrayList<TreePath>();
 		for (TreePath originExpanded : originExpandedPaths) {
 			int i = 0;
 			List<Object> newPathItems = new ArrayList<Object>();
-			JSNode previousJSNode = null;
+			IJSNode previousJSNode = null;
 			while (i < originExpanded.getSegmentCount()) {
 				Object originSegment = originExpanded.getSegment(i);
-				if (originSegment instanceof JSNode) {
-					JSNode originNode = (JSNode)originSegment;
-					JSNode matchingNode = null;
+				if (originSegment instanceof IJSNode) {
+					IJSNode originNode = (IJSNode)originSegment;
+					IJSNode matchingNode = null;
 					if (previousJSNode == null) {
 						if (originNode instanceof JSNodeRoot) {
 							matchingNode = newRoot;
@@ -126,11 +126,11 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 		return res.toArray(new TreePath[res.size()]);
 	}
 
-	private JSNode findSimilarChild(JSNode newParentNode, JSNode originChildNode) {
-		JSNode matchingNode = null;
+	private IJSNode findSimilarChild(IJSNode newParentNode, IJSNode originChildNode) {
+		IJSNode matchingNode = null;
 		// First search node with same name
 		if (originChildNode.getName() != null) {
-			for (JSNode child : newParentNode.getChildren()) {
+			for (IJSNode child : newParentNode.getChildren()) {
 				if (child.getName() != null && child.getName().equals(originChildNode.getName())) {
 					matchingNode = child;
 				}
@@ -154,24 +154,24 @@ public class TernOutlineContentProvider implements ITreeContentProvider, IDocume
 
 	@Override
 	public Object[] getChildren(Object element) {
-		if (element instanceof JSNode) {
-			return ((JSNode) element).getChildren().toArray();
+		if (element instanceof IJSNode) {
+			return ((IJSNode) element).getChildren().toArray();
 		}
 		return EMPTY_ARRAY;
 	}
 
 	@Override
 	public Object getParent(Object element) {
-		if (element instanceof JSNode) {
-			return ((JSNode) element).getParent();
+		if (element instanceof IJSNode) {
+			return ((IJSNode) element).getParent();
 		}
 		return null;
 	}
 
 	@Override
 	public boolean hasChildren(Object element) {
-		if (element instanceof JSNode) {
-			return ((JSNode) element).hasChidren();
+		if (element instanceof IJSNode) {
+			return ((IJSNode) element).hasChidren();
 		}
 		return false;
 	}

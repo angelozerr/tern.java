@@ -16,6 +16,7 @@ import org.eclipse.core.filebuffers.ITextFileBufferManager;
 import org.eclipse.core.filebuffers.LocationKind;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -32,8 +33,13 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+import tern.ITernProject;
+import tern.eclipse.ide.core.IIDETernProject;
+import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.server.protocol.outline.IJSNode;
+import tern.utils.StringUtils;
 
 /**
  * Editor utilities.
@@ -74,6 +80,32 @@ public class EditorUtils {
 			e.printStackTrace();
 		}
 		return editor;
+	}
+	
+	public static void openInEditor(IJSNode node) {
+		IFile file = getFile(node);
+		openInEditor(node, file);
+	}
+	
+	public static void openInEditor(IJSNode node, IFile file) {
+		if (file != null && file.exists()) {
+			Long start = node.getStart();
+			Long end = node.getEnd();
+			EditorUtils.openInEditor(
+					file,
+					start != null ? start.intValue() : -1,
+					start != null && end != null ? end.intValue()
+							- start.intValue() : -1, true);
+		}
+	}
+	
+	private static IFile getFile(IJSNode node) {
+		IIDETernProject ternProject = (IIDETernProject) node.getTernProject();
+		String file = node.getFile();
+		if (StringUtils.isEmpty(file)) {
+			return null;
+		}
+		return ternProject.getIDEFile(node.getFile());
 	}
 
 	/**

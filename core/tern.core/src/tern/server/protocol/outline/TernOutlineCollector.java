@@ -11,16 +11,32 @@
 
 package tern.server.protocol.outline;
 
+import tern.ITernProject;
+
 public class TernOutlineCollector implements ITernOutlineCollector {
 
-	private JSNodeRoot root;
+	private final ITernProject ternProject;
+	private IJSNodeRoot root;
 
-	@Override
-	public void setRoot(JSNodeRoot root) {
-		this.root = root;
+	public TernOutlineCollector(ITernProject ternProject) {
+		this.ternProject = ternProject;
 	}
 
-	public JSNodeRoot getRoot() {
+	@Override
+	public IJSNodeRoot createRoot() {
+		this.root = doCreateRoot();
 		return root;
+	}
+
+	protected IJSNodeRoot doCreateRoot() {
+		return new JSNodeRoot(ternProject);
+	}
+
+	public IJSNode getRoot() {
+		return root;
+	}
+
+	public ITernProject getTernProject() {
+		return ternProject;
 	}
 }

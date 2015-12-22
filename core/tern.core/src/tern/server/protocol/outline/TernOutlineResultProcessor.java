@@ -25,21 +25,20 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 	public void process(TernDoc doc, IJSONObjectHelper jsonObjectHelper, Object jsonObject,
 			ITernOutlineCollector collector) {
 		Iterable<Object> outline = jsonObjectHelper.getList(jsonObject, OUTLINE_FIELD_NAME); // $NON-NLS-1$
-		JSNodeRoot root = new JSNodeRoot();
+		IJSNodeRoot root = collector.createRoot();
 		if (outline != null) {
 			addChildren(outline, root, jsonObjectHelper);
 		}
-		collector.setRoot(root);
 	}
 
-	protected void addChildren(Iterable<Object> jsonNodes, JSNode parent, IJSONObjectHelper helper) {
+	protected void addChildren(Iterable<Object> jsonNodes, IJSNode parent, IJSONObjectHelper helper) {
 		String name = null;
 		String type = null;
 		String kind = null;
 		Long start = null;
 		Long end = null;
 		String file = null;
-		JSNode node = null;
+		IJSNode node = null;
 		Iterable<Object> jsonChildren;
 		for (Object jsonNode : jsonNodes) {
 			name = helper.getText(jsonNode, "name");
@@ -48,12 +47,17 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 			start = helper.getLong(jsonNode, "start");
 			end = helper.getLong(jsonNode, "end");
 			file = helper.getText(jsonNode, "file");
-			node = new JSNode(name, type, kind, start, end, file, parent);
+			node = createNode(name, type, kind, start, end, file, parent, jsonNode, helper);
 			jsonChildren = helper.getList(jsonNode, CHILDREN_FIELD_NAME); // $NON-NLS-1$
 			if (jsonChildren != null) {
 				addChildren(jsonChildren, node, helper);
 			}
 		}
+	}
+
+	protected JSNode createNode(String name, String type, String kind, Long start, Long end, String file,
+			IJSNode parent, Object jsonNode, IJSONObjectHelper helper) {
+		return new JSNode(name, type, kind, start, end, file, parent);
 	}
 
 }

@@ -8,12 +8,22 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.server.protocol.outline;
+package tern.angular.protocol.outline;
 
-import tern.server.protocol.ITernResultsCollector;
+import tern.server.protocol.TernQuery;
 
-public interface ITernOutlineCollector extends ITernResultsCollector {
+/**
+ * Angular Outline Query.
+ *
+ */
+public class AngularOutlineQuery extends TernQuery {
 
-	IJSNodeRoot createRoot();
+	private static final long serialVersionUID = 1L;
+
+	private static final String OUTLINE_TYPE_QUERY = "angular-outline";
+
+	public AngularOutlineQuery() {
+		super(OUTLINE_TYPE_QUERY);
+	}
 
 }
