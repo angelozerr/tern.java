@@ -10,10 +10,10 @@
  */
 package tern.server.protocol;
 
+import com.eclipsesource.json.JsonObject;
+
 import tern.server.protocol.html.HtmlHelper;
 import tern.server.protocol.html.ScriptTagRegion;
-
-import com.eclipsesource.json.JsonObject;
 
 /**
  * Tern file.
@@ -30,7 +30,7 @@ public class TernFile extends JsonObject {
 	private static final String TYPE_FIELD_NAME = "type";
 	private static final String OFFSET_LINES_FIELD_TYPE = "offsetLines";
 
-	private enum FileType {
+	public enum FileType {
 		part, full, delete
 	}
 
@@ -102,5 +102,9 @@ public class TernFile extends JsonObject {
 
 	public String getType() {
 		return JsonHelper.getString(this, TYPE_FIELD_NAME);
+	}
+
+	public boolean isType(FileType type) {
+		return type.name().equals(getType());
 	}
 }

@@ -31,10 +31,12 @@ import tern.scriptpath.ITernScriptPath;
 import tern.server.ITernServer;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernFile;
+import tern.server.protocol.TernFile.FileType;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.TernCompletionsQuery;
 import tern.server.protocol.definition.TernDefinitionQuery;
 import tern.server.protocol.type.TernTypeQuery;
+import tern.utils.StringUtils;
 
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonValue;
@@ -340,9 +342,9 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 		for (JsonValue value : doc.getFiles()) {
 			if (value instanceof TernFile) {
 				TernFile file = (TernFile) value;
-				if (file.getType().equals("full")) { //$NON-NLS-1$
+				if (file.isType(FileType.full)) {
 					String contents = file.getText();
-					if (contents == null || contents.isEmpty()) {
+					if (StringUtils.isEmpty(contents)) {
 						// treat file with empty contents as removed
 						sentFiles.remove(file.getName());
 					} else {
