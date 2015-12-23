@@ -1,9 +1,7 @@
 package tern.server.protocol.outline;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import tern.ITernProject;
 import tern.utils.StringUtils;
@@ -17,7 +15,6 @@ public class BaseJSNode implements IJSNode {
 	private final String file;
 	private final IJSNode parent;
 	private final List<IJSNode> children;
-	private Map<String, Object> data;
 
 	public BaseJSNode(String name, String kind, Long start, Long end, String file, IJSNode parent) {
 		this.name = name;
