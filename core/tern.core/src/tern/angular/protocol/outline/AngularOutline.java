@@ -20,7 +20,7 @@ import tern.server.protocol.outline.JSNodeRoot;
  */
 public class AngularOutline extends JSNodeRoot {
 
-	public static final String ANGULAR_MODEL_CHANGED_EVENT = "angular:moduleChanged";
+	public static final String ANGULAR_MODEL_CHANGED_EVENT = "angular:modelChanged";
 
 	private static final String ROOT = "#Angular";
 

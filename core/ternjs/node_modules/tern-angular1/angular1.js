@@ -806,26 +806,35 @@
   }
     
   function preInfer(ast, scope) {
+    var filename = ast.sourceFile.name, server = infer.cx().parent, angular= server.mod.angular, mods = angular.modules;
     // marks the angular modules of the current file as excluded.
-    // module are enabled inside the angular_module tern function.
-    var filename = ast.sourceFile.name, mods = infer.cx().parent.mod.angular.modules;
+    // module are enabled inside the angular_module tern function.    
     for (var name in mods) mods[name].exclude(filename);
   }
   
   function postInfer(ast, scope) {
-    // delete the angular modules of the current file which are marked as excluded.
-    var filename = ast.sourceFile.name, server = infer.cx().parent, angular = server.mod.angular, mods = angular.modules, changes = false;
-    for (var name in mods) {
-      if (mods[name].update(filename)) changes = true;
+    
+    function updateOutline(ast) {
+      var filename = ast.sourceFile.name, server = infer.cx().parent, angular = server.mod.angular, mods = angular.modules, changes = false;
+      for (var name in mods) {
+        if (mods[name].update(filename)) changes = true;
+      }
+      if (!server.sendToClient) return;
+      if (changes || !angular.outline) return createOutline(server);
+      var oldOutline = angular.outline, newOutline = createOutline(server);
+      if (JSON.stringify(oldOutline) != JSON.stringify(newOutline)) return newOutline;
     }
-    //var changes = purge(mods, filename, "module", null, false);
-    if (changes && server.sendToClient) {
-      var data = {};
-      for (var name in mods) mods[name].toJSON(data);
-      server.sendToClient("angular:modelChanged", data);        
+    
+    // delete the angular modules of the current file which are marked as excluded.
+    var outline = updateOutline(ast);
+    if (outline) {
+      // outline has changed
+      var server = infer.cx().parent, angular = server.mod.angular;
+      angular.outline = outline;
+      server.sendToClient("angular:modelChanged", outline);
     }        
   }
-
+  
   var defs = {
     "!name": "angular",
     "!define": {
@@ -2614,11 +2623,15 @@
 
   // angular "outline" query type
   
+  function createOutline(server) {
+    var angular = server.mod.angular, mods = angular.modules, outline = [];
+    for (var name in mods) mods[name].toJSON(outline);
+    return {outline: outline};
+  }
+
   tern.defineQueryType("angular-outline", {
     run : function(server, query) {
-      var angular = server.mod.angular, mods = angular.modules, outline = [];
-      for (var name in mods) mods[name].toJSON(outline);
-      return {outline: outline};
+      return createOutline(server);
     }    
   });
   
