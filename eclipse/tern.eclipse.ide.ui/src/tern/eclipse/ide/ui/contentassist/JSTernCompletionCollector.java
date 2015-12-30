@@ -110,10 +110,13 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 			// Add the function reference
 			proposals
 					.add(internalCreateProposal(proposalItem.changeType("fn")));
-		}
-		proposals.add(proposal);
-
-		if (expandFunction) {
+			if (!proposalItem.isSpecifier) {
+				proposals.add(proposal);
+			}
+		} else {
+			proposals.add(proposal);
+		}	
+		if (!proposalItem.isSpecifier && expandFunction) {
 			// expand functions if the functions contains several "optionnal"
 			// parameters.
 			// ex : the expansion of
@@ -127,7 +130,7 @@ public class JSTernCompletionCollector implements ITernCompletionCollector {
 							.changeType(functions[i])));
 				}
 			}
-		}
+		}		
 	}
 
 	private JSTernCompletionProposal internalCreateProposal(

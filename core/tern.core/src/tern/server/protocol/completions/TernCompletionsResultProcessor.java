@@ -31,7 +31,8 @@ public class TernCompletionsResultProcessor implements
 	private static final String ORIGIN_PROPERTY = "origin"; //$NON-NLS-1$
 	private static final String IS_PROPERTY_PROPERTY = "isProperty"; //$NON-NLS-1$
 	private static final String IS_OBJECT_KEY_PROPERTY = "isObjectKey"; //$NON-NLS-1$
-
+	private static final String IS_SPECIFIER_PROPERTY = "isSpecifier"; //$NON-NLS-1$
+	
 	public static final TernCompletionsResultProcessor INSTANCE = new TernCompletionsResultProcessor();
 
 	@Override
@@ -48,6 +49,9 @@ public class TernCompletionsResultProcessor implements
 		boolean isObjectKey = StringUtils
 				.asBoolean(objectHelper.getText(jsonObject,
 						IS_OBJECT_KEY_PROPERTY), false);
+		boolean isSpecifier = StringUtils
+				.asBoolean(objectHelper.getText(jsonObject,
+						IS_SPECIFIER_PROPERTY), false);		
 		Iterable<Object> completions = objectHelper.getList(jsonObject,
 				COMPLETIONS_PROPERTY); //$NON-NLS-1$
 		if (completions != null) {
@@ -59,13 +63,13 @@ public class TernCompletionsResultProcessor implements
 									.getText(value), null, null, null, null,
 									startCh != null ? startCh.intValue() : 0,
 									endCh != null ? endCh.intValue() : 0,
-									isProperty, isObjectKey), value,
+									isProperty, isObjectKey, isSpecifier), value,
 							objectHelper);
 				} else {
 					addProposal(objectHelper, value,
 							startCh != null ? startCh.intValue() : 0,
 							endCh != null ? endCh.intValue() : 0, isProperty,
-							isObjectKey, collector);
+							isObjectKey, isSpecifier, collector);
 				}
 			}
 		}
@@ -74,7 +78,7 @@ public class TernCompletionsResultProcessor implements
 
 	protected void addProposal(IJSONObjectHelper objectHelper,
 			Object completion, int start, int end, boolean isProperty,
-			boolean isObjectKey, ITernCompletionCollector collector) {
+			boolean isObjectKey, boolean isSpecifier, ITernCompletionCollector collector) {
 		String name = objectHelper.getText(completion, NAME_PROPERTY);
 		String displayName = objectHelper.getText(completion,
 				DISPLAY_NAME_PROPERTY);
@@ -83,7 +87,7 @@ public class TernCompletionsResultProcessor implements
 		String url = objectHelper.getText(completion, URL_PROPERTY);
 		String origin = objectHelper.getText(completion, ORIGIN_PROPERTY);
 		collector.addProposal(new TernCompletionProposalRec(name, displayName,
-				type, doc, url, origin, start, end, isProperty, isObjectKey),
+				type, doc, url, origin, start, end, isProperty, isObjectKey, isSpecifier),
 				completion, objectHelper);
 	}
 

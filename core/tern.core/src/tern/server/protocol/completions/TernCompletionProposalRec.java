@@ -22,20 +22,21 @@ public class TernCompletionProposalRec {
 	public final int end;
 	public final boolean isProperty;
 	public final boolean isObjectKey;
+	public final boolean isSpecifier;
 
 	public TernCompletionProposalRec(String name, String type, String doc,
 			String url, String origin) {
-		this(name, null, type, doc, url, origin, -1, -1, false, false);
+		this(name, null, type, doc, url, origin, -1, -1, false, false, false);
 	}
 	
 	public TernCompletionProposalRec(String name, String type, String doc,
 			String url, String origin, int start, int end) {
-		this(name, null, type, doc, url, origin, start, end, false, false);
+		this(name, null, type, doc, url, origin, start, end, false, false, false);
 	}
 
 	public TernCompletionProposalRec(String name, String displayName,
 			String type, String doc, String url, String origin, int start,
-			int end, boolean isProperty, boolean isObjectKey) {
+			int end, boolean isProperty, boolean isObjectKey, boolean isSpecifier) {
 		this.name = name;
 		this.displayName = displayName;
 		this.type = type;
@@ -46,11 +47,12 @@ public class TernCompletionProposalRec {
 		this.end = end;
 		this.isProperty = isProperty;
 		this.isObjectKey = isObjectKey;
+		this.isSpecifier = isSpecifier;
 	}
 
 	public TernCompletionProposalRec changeType(String newType) {
 		return new TernCompletionProposalRec(name, displayName, newType, doc,
-				url, origin, start, end, isProperty, isObjectKey);
+				url, origin, start, end, isProperty, isObjectKey, isSpecifier);
 	}
 
 }

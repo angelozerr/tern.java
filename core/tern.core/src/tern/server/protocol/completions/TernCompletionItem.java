@@ -314,6 +314,10 @@ public class TernCompletionItem {
 		return proposal.isObjectKey;
 	}
 
+	public boolean isSpecifier() {
+		return proposal.isSpecifier;
+	}
+	
 	public boolean hasDisplayName() {
 		return hasDisplayName;
 	}
