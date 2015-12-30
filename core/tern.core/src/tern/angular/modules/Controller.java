@@ -8,20 +8,22 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.angular.protocol;
+package tern.angular.modules;
 
-public class Controller {
+import tern.angular.AngularType;
+import tern.server.protocol.outline.IJSNode;
 
-	private final String name;
+public class Controller extends AbstractAngularElement {
+
 	private final String as;
 
 	public Controller(String name, String as) {
-		this.name = name;
-		this.as = as;
+		this(name, as, null, null, null, null);
 	}
 
-	public String getName() {
-		return name;
+	public Controller(String name, String as, Long start, Long end, String file, IJSNode parent) {
+		super(name, AngularType.controller, start, end, file, parent);
+		this.as = as;
 	}
 
 	public String getAs() {

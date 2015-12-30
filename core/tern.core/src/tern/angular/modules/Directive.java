@@ -17,15 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 import tern.angular.AngularType;
+import tern.server.protocol.outline.IJSNode;
 import tern.utils.StringUtils;
 
 /**
  * Angular directive.
  */
-public class Directive {
+public class Directive extends AbstractAngularElement {
 
-	private final String name;
-	private final AngularType type;
 	private final String url;
 	private final String restrict;
 	private final Module module;
@@ -34,22 +33,31 @@ public class Directive {
 	private final DirectiveValue directiveValue;
 	private Map<String, DirectiveParameter> parameters;
 	private final boolean custom;
+	private final AngularType type;
 
-	public Directive(String name, AngularType type, String url,
-			Collection<String> tagNames, String restrict,
-			DirectiveValue directiveValue, Module module) {
-		this(name, type, url, tagNames, restrict, directiveValue, module, true);
+	public Directive(String name, AngularType type, String url, Collection<String> tagNames, String restrict,
+			DirectiveValue directiveValue, IJSNode parent) {
+		this(name, type, url, tagNames, restrict, directiveValue, null, null, null, parent);
 	}
 
-	public Directive(String name, AngularType type, String url,
-			Collection<String> tagNames, String restrict,
-			DirectiveValue directiveValue, Module module, boolean custom) {
-		this.name = name;
+	public Directive(String name, AngularType type, String url, Collection<String> tagNames, String restrict,
+			DirectiveValue directiveValue, Long start, Long end, String file, IJSNode parent) {
+		this(name, type, url, tagNames, restrict, directiveValue, true, start, end, file, parent);
+	}
+
+	public Directive(String name, AngularType type, String url, Collection<String> tagNames, String restrict,
+			DirectiveValue directiveValue, boolean custom, IJSNode parent) {
+		this(name, type, url, tagNames, restrict, directiveValue, custom, null, null, null, parent);
+	}
+
+	public Directive(String name, AngularType type, String url, Collection<String> tagNames, String restrict,
+			DirectiveValue directiveValue, boolean custom, Long start, Long end, String file, IJSNode parent) {
+		super(name, AngularType.directive, start, end, file, parent);
 		this.type = type;
 		this.url = url;
-		this.restrict = StringUtils.isEmpty(restrict) ? Restriction.A.name()
-				: restrict;
+		this.restrict = StringUtils.isEmpty(restrict) ? Restriction.A.name() : restrict;
 		this.directiveValue = directiveValue;
+		Module module = (Module) parent;
 		this.module = module;
 		this.tagNames = tagNames;
 		if (module != null) {
@@ -58,20 +66,12 @@ public class Directive {
 		this.custom = custom;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public AngularType getType() {
-		return type;
-	}
-
 	public Collection<String> getTagNames() {
 		return tagNames;
 	}
 
 	public List<String> getDirectiveNames() {
-		return DirectiveHelper.getDirectiveNames(name);
+		return DirectiveHelper.getDirectiveNames(getName());
 	}
 
 	public Module getModule() {
@@ -142,5 +142,9 @@ public class Directive {
 
 	public String getRestrict() {
 		return restrict;
+	}
+	
+	public AngularType getDirectiveType() {
+		return type;
 	}
 }

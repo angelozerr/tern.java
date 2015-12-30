@@ -62,7 +62,7 @@ public class HTMLTernAngularHelper {
 				Directive directive = provider.getAngularDirective(project,
 						node);
 				if (directive != null) {
-					switch (directive.getType()) {
+					switch (directive.getDirectiveType()) {
 					case module:
 						String module = ((Attr) node).getValue();
 						scope.setModule(module);

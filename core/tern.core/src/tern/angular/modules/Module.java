@@ -15,24 +15,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tern.angular.AngularType;
+import tern.server.protocol.outline.IJSNode;
+
 /**
  * Angular module.
  * 
  */
-public class Module {
+public class Module extends AbstractAngularElement implements IModule {
 
-	private final String name;
 	private final DirectivesByTagName allDirectives;
 	private final Map<String, DirectivesByTagName> directivesByTagName;
 
 	public Module(String name) {
-		this.name = name;
-		this.directivesByTagName = new HashMap<String, DirectivesByTagName>();
-		this.allDirectives = new DirectivesByTagName();
+		this(name, null, null, null, null);
 	}
 
-	public String getName() {
-		return name;
+	public Module(String name, Long start, Long end, String file, IJSNode parent) {
+		super(name, AngularType.module, start, end, file, parent);
+		this.directivesByTagName = new HashMap<String, DirectivesByTagName>();
+		this.allDirectives = new DirectivesByTagName();
 	}
 
 	void addDirective(Directive directive) {
@@ -52,8 +54,7 @@ public class Module {
 		directives.addDirective(directive);
 	}
 
-	private DirectivesByTagName getDirectivesByTagName(String tagName,
-			boolean createIfNotExists) {
+	private DirectivesByTagName getDirectivesByTagName(String tagName, boolean createIfNotExists) {
 		if (tagName == null) {
 			return allDirectives;
 		}
@@ -65,48 +66,39 @@ public class Module {
 		return result;
 	}
 
-	public Directive getDirective(String tagName, String name,
-			Restriction restriction) {
+	public Directive getDirective(String tagName, String name, Restriction restriction) {
 		DirectivesByTagName result = getDirectivesByTagName(tagName, false);
 		Directive directive = null;
 		if (result != null) {
 			directive = result.getDirective(name, restriction);
 		}
 		if (directive == null) {
-			return getDirectivesByTagName(DirectiveHelper.ANY_TAG, false)
-					.getDirective(name, restriction);
+			return getDirectivesByTagName(DirectiveHelper.ANY_TAG, false).getDirective(name, restriction);
 		}
 		return directive;
 	}
 
-	public void collectDirectives(String tagName, String directiveName,
-			IDirectiveSyntax syntax, List<Directive> existingDirectives,
-			Restriction restriction, IDirectiveCollector collector) {
+	public void collectDirectives(String tagName, String directiveName, IDirectiveSyntax syntax,
+			List<Directive> existingDirectives, Restriction restriction, IDirectiveCollector collector) {
 
 		// collect directives from tag names.
 		DirectivesByTagName container = getDirectivesByTagName(tagName, false);
-		collectDirectives(directiveName, syntax, existingDirectives,
-				restriction, collector, container);
+		collectDirectives(directiveName, syntax, existingDirectives, restriction, collector, container);
 		if (!DirectiveHelper.ANY_TAG.equals(tagName)) {
 			// collect directives from 'any' tag names.
 			container = getDirectivesByTagName(DirectiveHelper.ANY_TAG, false);
-			collectDirectives(directiveName, syntax, existingDirectives,
-					restriction, collector, container);
+			collectDirectives(directiveName, syntax, existingDirectives, restriction, collector, container);
 		}
 	}
 
-	private void collectDirectives(String directiveName,
-			IDirectiveSyntax syntax, List<Directive> ignoreDirectives,
-			Restriction restriction, IDirectiveCollector collector,
-			DirectivesByTagName container) {
+	private void collectDirectives(String directiveName, IDirectiveSyntax syntax, List<Directive> ignoreDirectives,
+			Restriction restriction, IDirectiveCollector collector, DirectivesByTagName container) {
 		if (container != null) {
-			container.collectDirectives(directiveName, syntax,
-					ignoreDirectives, restriction, collector);
+			container.collectDirectives(directiveName, syntax, ignoreDirectives, restriction, collector);
 		}
 	}
 
-	protected static boolean isMatch(List<Directive> ignoreDirectives,
-			Restriction restriction, Directive directive) {
+	protected static boolean isMatch(List<Directive> ignoreDirectives, Restriction restriction, Directive directive) {
 		if (directive == null) {
 			return false;
 		}
@@ -116,12 +108,16 @@ public class Module {
 		return directive.isMatch(restriction);
 	}
 
-	private static boolean isIgnore(Directive directive,
-			List<Directive> ignoreDirectives) {
+	private static boolean isIgnore(Directive directive, List<Directive> ignoreDirectives) {
 		if (ignoreDirectives == null) {
 			return false;
 		}
 		return ignoreDirectives.contains(directive);
+	}
+
+	@Override
+	public IModule getModule() {
+		return this;
 	}
 
 }

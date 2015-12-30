@@ -76,7 +76,7 @@ class SAXModuleHandler extends DefaultHandler {
 			DirectiveValue directiveValue = DirectiveValue.get(attributes
 					.getValue("value"));
 			this.directive = new Directive(directiveName, directiveType, url,
-					tagsName, restrict, directiveValue, module, false);
+					tagsName, restrict, directiveValue, false, module);
 		} else if ("description".equals(name)) {
 			this.description = new StringBuilder();
 		} else if ("parameter".equals(name)) {
