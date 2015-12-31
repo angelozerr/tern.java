@@ -11,15 +11,18 @@
 package tern.eclipse.ide.internal.ui.views;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.navigator.CommonViewer;
 
 import tern.eclipse.ide.core.resources.TernDocumentFile;
+import tern.eclipse.ide.internal.ui.views.actions.LexicalSortingAction;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.views.AbstractTernContentOutlinePage;
 
 public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 
 	private final TernDocumentFile ternFile;
+	private LexicalSortingAction sortAction;
 
 	public TernContentOutlinePage(TernDocumentFile ternFile) {
 		this.ternFile = ternFile;
@@ -38,5 +41,12 @@ public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 	@Override
 	protected void init(CommonViewer viewer) {
 		viewer.setInput(ternFile);
+	}
+
+	@Override
+	protected void registerActions(IToolBarManager manager) {
+		sortAction = new LexicalSortingAction(this);
+		manager.add(sortAction);
+		super.registerActions(manager);
 	}
 }

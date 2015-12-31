@@ -164,6 +164,11 @@ public final class TernUIMessages extends NLS {
 	public static String ImportTernRepositoryWizardPage_errorMessage;
 	public static String ImportTernRepositoryWizardPage_title;
 	public static String ImportTernRepositoryWizardPage_description;
+
+	// Actions
+	public static String LexicalSortingAction_text;
+	public static String LexicalSortingAction_tooltip;
+	public static String LexicalSortingAction_description;
 	
 	private TernUIMessages() {
 	}

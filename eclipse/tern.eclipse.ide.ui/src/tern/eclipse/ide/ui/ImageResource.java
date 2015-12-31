@@ -48,6 +48,9 @@ public class ImageResource {
 	public static final String IMG_STOP_ENABLED = "stop_enabled";
 	public static final String IMG_STOP_DISABLED = "stop_disabled";
 
+	// Outline
+	public static final String IMG_ELCL_SORT = "alphab_sort_co";
+	
 	static {
 		try {
 			String pathSuffix = "icons/";
@@ -136,6 +139,7 @@ public class ImageResource {
 
 		registerImage(IMG_STOP_ENABLED, URL_ELCL + "launch_stop.gif");
 		registerImage(IMG_STOP_DISABLED, URL_DLCL + "launch_stop.gif");
+		registerImage(IMG_ELCL_SORT, URL_ELCL + "alphab_sort_co.png");
 	}
 
 	/**
