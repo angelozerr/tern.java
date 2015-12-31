@@ -471,8 +471,8 @@
         for (var i = 0; i < specifiers.length; i++) {
           var specifier = specifiers[i], imported = specifier.imported;
           if (imported) {
-            var name = imported.name;
-            if (!modType.hasProp(name)) addMessage(imported, "Invalid modules specifier '" + getNodeName(imported) + "'", rule.severity);  
+            var name = imported.name, type = modType.getType();
+            if (type && !type.hasProp(name)) addMessage(imported, "Invalid modules specifier '" + getNodeName(imported) + "'", rule.severity);  
           }
         }
       }      
