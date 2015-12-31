@@ -27,6 +27,17 @@ public abstract class AbstractTernOutlineView extends ContentOutline {
 
 	@Override
 	protected PageRec doCreatePage(IWorkbenchPart part) {
+		IFile file = getFile(part);
+		if (file == null) {
+			// The opened file in the given editor cannot be displayed in the
+			// outline
+			return null;
+		}
+
+		PageRec pageRec = getPageRec(part, file);
+		if (pageRec != null) {
+			return pageRec;
+		}
 		// Try to get an outline page.
 		IContentOutlinePage page = getOutlinePage(part);
 		if (page != null) {
@@ -34,17 +45,33 @@ public abstract class AbstractTernOutlineView extends ContentOutline {
 				initPage((IPageBookViewPage) page);
 			}
 			page.createControl(getPageBook());
-			return new PageRec(part, page);
+			return createPageRec(part, page, file);
 		}
 		// There is no content outline
 		return null;
 	}
 
+	protected PageRec getPageRec(IWorkbenchPart part, IFile file) {
+		return null;
+	}
+
+	protected PageRec createPageRec(IWorkbenchPart part, IContentOutlinePage page, IFile file) {
+		return new PageRec(part, page);
+	}
+
 	private IContentOutlinePage getOutlinePage(IWorkbenchPart part) {
+		IFile file = getFile(part);
+		if (file != null) {
+			return createOutlinePage(file);
+		}
+		return null;
+	}
+
+	protected IFile getFile(IWorkbenchPart part) {
 		if (part != null && part instanceof IEditorPart) {
 			IFile file = EditorUtils.getFile((IEditorPart) part);
 			if (file != null && isAdaptFor(file)) {
-				return createOutlinePage(file);
+				return file;
 			}
 		}
 		return null;
