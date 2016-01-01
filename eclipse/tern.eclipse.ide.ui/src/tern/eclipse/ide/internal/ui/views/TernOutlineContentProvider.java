@@ -22,7 +22,6 @@ import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.ui.views.AbstractTernOutlineContentProvider;
 import tern.server.TernPlugin;
-import tern.server.protocol.outline.IJSNodeRoot;
 import tern.server.protocol.outline.TernOutlineCollector;
 import tern.server.protocol.outline.TernOutlineQuery;
 
