@@ -10,6 +10,8 @@ public interface IJSNode {
 
 	String getKind();
 
+	String getValue();
+	
 	Long getStart();
 
 	Long getEnd();

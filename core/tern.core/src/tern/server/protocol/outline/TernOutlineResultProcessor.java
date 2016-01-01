@@ -35,6 +35,7 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 		String name = null;
 		String type = null;
 		String kind = null;
+		String value = null;
 		Long start = null;
 		Long end = null;
 		String file = null;
@@ -44,10 +45,11 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 			name = helper.getText(jsonNode, "name");
 			type = helper.getText(jsonNode, "type");
 			kind = helper.getText(jsonNode, "kind");
+			value = helper.getText(jsonNode, "value");
 			start = helper.getLong(jsonNode, "start");
 			end = helper.getLong(jsonNode, "end");
 			file = helper.getText(jsonNode, "file");
-			node = collector.createNode(name, type, kind, start, end, file, parent, jsonNode, helper);
+			node = collector.createNode(name, type, kind, value, start, end, file, parent, jsonNode, helper);
 			jsonChildren = helper.getList(jsonNode, CHILDREN_FIELD_NAME); // $NON-NLS-1$
 			if (jsonChildren != null) {
 				addChildren(jsonChildren, node, collector, helper);

@@ -10,15 +10,17 @@ public class BaseJSNode implements IJSNode {
 
 	private final String name;
 	private final String kind;
+	private final String value;
 	private final Long start;
 	private final Long end;
 	private final String file;
 	private final IJSNode parent;
 	private final List<IJSNode> children;
 
-	public BaseJSNode(String name, String kind, Long start, Long end, String file, IJSNode parent) {
+	public BaseJSNode(String name, String kind, String value, Long start, Long end, String file, IJSNode parent) {
 		this.name = name;
 		this.kind = kind;
+		this.value = value;
 		this.start = start;
 		this.end = end;
 		this.file = file;
@@ -54,6 +56,11 @@ public class BaseJSNode implements IJSNode {
 	@Override
 	public String getKind() {
 		return kind;
+	}
+
+	@Override
+	public String getValue() {
+		return value;
 	}
 
 	@Override

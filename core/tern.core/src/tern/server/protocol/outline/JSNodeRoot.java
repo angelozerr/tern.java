@@ -27,7 +27,7 @@ public class JSNodeRoot extends JSNode implements IJSNodeRoot {
 	}
 
 	public JSNodeRoot(String name, ITernProject ternProject) {
-		super(name, null, null, null, null, null, null);
+		super(name, null, null, null, null, null, null, null);
 		this.ternProject = ternProject;
 	}
 

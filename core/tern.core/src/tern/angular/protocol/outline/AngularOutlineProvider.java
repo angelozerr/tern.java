@@ -62,7 +62,7 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 	}
 
 	@Override
-	public IJSNode createNode(String name, String type, String kind, Long start, Long end, String file, IJSNode parent,
+	public IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file, IJSNode parent,
 			Object jsonNode, IJSONObjectHelper helper) {
 		if (AngularType.module.name().equals(kind)) {
 			return new Module(name, start, end, file, parent);
@@ -75,7 +75,7 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 			return new Directive(name, AngularType.model, null, tagNames, restrict, directiveValue, start, end, file,
 					parent);
 		}
-		return super.createNode(name, type, kind, start, end, file, parent, jsonNode, helper);
+		return super.createNode(name, type, kind, value, start, end, file, parent, jsonNode, helper);
 	}
 
 	public AngularOutline getOutline() throws IOException, TernException {

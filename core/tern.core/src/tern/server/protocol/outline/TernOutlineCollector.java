@@ -34,9 +34,9 @@ public class TernOutlineCollector implements ITernOutlineCollector {
 	}
 
 	@Override
-	public IJSNode createNode(String name, String type, String kind, Long start, Long end, String file, IJSNode parent,
+	public IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file, IJSNode parent,
 			Object jsonNode, IJSONObjectHelper helper) {
-		return new JSNode(name, type, kind, start, end, file, parent);
+		return new JSNode(name, type, kind, value, start, end, file, parent);
 	}
 
 	public IJSNodeRoot getRoot() {
