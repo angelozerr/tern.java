@@ -11,6 +11,8 @@
 package tern.eclipse.ide.ui.views;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -26,12 +28,18 @@ import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
+import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.internal.ui.views.actions.TerminateTernServerAction;
 import tern.eclipse.ide.ui.utils.EditorUtils;
+import tern.server.ITernServer;
+import tern.server.ITernServerListener;
 import tern.server.protocol.outline.IJSNode;
 
-public abstract class AbstractTernContentOutlinePage extends Page implements IContentOutlinePage {
+public abstract class AbstractTernContentOutlinePage extends Page implements IContentOutlinePage, ITernServerListener {
 
 	private CommonViewer viewer;
+	private TerminateTernServerAction terminateAction;
 
 	@Override
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
@@ -92,16 +100,29 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 
 		});
 		viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
+
+		// Actions
 		registerActions(getSite().getActionBars().getToolBarManager());
 		registerContextMenu(viewer.getControl());
+
+		// Viewer
 		init(viewer);
+		try {
+			IProject project = getProject();
+			TernCorePlugin.getTernProject(project).addServerListener(this);
+		} catch (CoreException e) {
+			Trace.trace(Trace.SEVERE, "error while getting tern project", e);
+		}
+
 		updateEnabledActions();
 	}
 
-	protected void registerContextMenu(Control control) {
+	protected void registerActions(IToolBarManager manager) {
+		this.terminateAction = new TerminateTernServerAction(this);
+		manager.add(terminateAction);
 	}
 
-	protected void registerActions(IToolBarManager manager) {
+	protected void registerContextMenu(Control control) {
 	}
 
 	public CommonViewer getViewer() {
@@ -112,9 +133,32 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 
 	}
 
+	@Override
+	public void onStart(ITernServer server) {
+		terminateAction.setEnabled(true);
+	}
+
+	@Override
+	public void onStop(ITernServer server) {
+		terminateAction.setEnabled(false);
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		try {
+			IProject project = getProject();
+			TernCorePlugin.getTernProject(project).removeServerListener(this);
+		} catch (CoreException e) {
+			Trace.trace(Trace.SEVERE, "error while getting tern project", e);
+		}
+	}
+
 	protected abstract String getViewerId();
 
 	protected abstract void init(CommonViewer viewer);
+
+	public abstract IProject getProject();
 
 	protected abstract IFile getFile();
 

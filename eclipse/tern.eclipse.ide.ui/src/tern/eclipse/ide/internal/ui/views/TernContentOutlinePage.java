@@ -11,6 +11,7 @@
 package tern.eclipse.ide.internal.ui.views;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.ui.navigator.CommonViewer;
 
@@ -36,6 +37,11 @@ public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 	@Override
 	protected IFile getFile() {
 		return ternFile.getFile();
+	}
+
+	@Override
+	public IProject getProject() {
+		return getFile().getProject();
 	}
 
 	@Override
