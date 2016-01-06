@@ -19,5 +19,7 @@ public interface ITernOutlineCollector extends ITernResultsCollector {
 
 	IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file, IJSNode parent,
 			Object jsonNode, IJSONObjectHelper helper);
+	
+	void setChanged(boolean changed);
 
 }

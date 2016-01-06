@@ -57,27 +57,28 @@ public class TernOutlineContentProvider extends AbstractTernOutlineContentProvid
 
 	@Override
 	public void documentChanged(DocumentEvent event) {
-		if (this.refreshJob.getState() != Job.NONE) {
-			this.refreshJob.cancel();
+		Job refreshJob = this.getViewer().getRefreshJob();
+		if (refreshJob.getState() != Job.NONE) {
+			refreshJob.cancel();
 		}
-		this.refreshJob.schedule(UPDATE_DELAY);
+		refreshJob.schedule(UPDATE_DELAY);
 	}
 
 	@Override
 	public void documentAboutToBeChanged(DocumentEvent event) {
 	}
 
-	@Override
-	protected TernOutlineCollector loadOutline() throws Exception {
-		IIDETernProject ternProject = TernCorePlugin.getTernProject(document.getFile().getProject());
-		if (ternProject == null || !ternProject.hasPlugin(TernPlugin.outline)) {
-			return null;
-		}
-		// Call tern-outline
-		TernOutlineQuery query = new TernOutlineQuery(document.getFileName());
-		TernOutline outline = new TernOutline(document, ternProject);
-		ternProject.request(query, document, outline);
-		return outline;
-	}
+//	@Override
+//	protected TernOutlineCollector loadOutline() throws Exception {
+//		IIDETernProject ternProject = TernCorePlugin.getTernProject(document.getFile().getProject());
+//		if (ternProject == null || !ternProject.hasPlugin(TernPlugin.outline)) {
+//			return null;
+//		}
+//		// Call tern-outline
+//		TernOutlineQuery query = new TernOutlineQuery(document.getFileName());
+//		TernOutline outline = new TernOutline(document, ternProject);
+//		ternProject.request(query, document, outline);
+//		return outline;
+//	}
 
 }

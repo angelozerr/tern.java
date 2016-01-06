@@ -4,11 +4,11 @@ import tern.angular.AngularType;
 import tern.server.protocol.outline.BaseJSNode;
 import tern.server.protocol.outline.IJSNode;
 
-public abstract class AbstractAngularElement extends BaseJSNode implements IAngularElement {
+public class AngularElement extends BaseJSNode implements IAngularElement {
 
 	private final AngularType type;
 
-	public AbstractAngularElement(String name, AngularType type, Long start, Long end, String file, IJSNode parent) {
+	public AngularElement(String name, AngularType type, Long start, Long end, String file, IJSNode parent) {
 		super(name, type.name(), null, start, end, file, parent);
 		this.type = type;
 	}

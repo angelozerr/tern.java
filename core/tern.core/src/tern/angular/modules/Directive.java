@@ -23,7 +23,7 @@ import tern.utils.StringUtils;
 /**
  * Angular directive.
  */
-public class Directive extends AbstractAngularElement {
+public class Directive extends AngularElement {
 
 	private final String url;
 	private final String restrict;

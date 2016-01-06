@@ -169,6 +169,10 @@ public final class TernUIMessages extends NLS {
 	public static String LexicalSortingAction_text;
 	public static String LexicalSortingAction_tooltip;
 	public static String LexicalSortingAction_description;
+
+	public static String Link_With_Editor_Job_;
+	public static String LinkEditorActionDelegate_0;
+	public static String LinkEditorActionDelegate_1;
 	
 	private TernUIMessages() {
 	}

@@ -13,7 +13,7 @@ package tern.angular.modules;
 import tern.angular.AngularType;
 import tern.server.protocol.outline.IJSNode;
 
-public class Controller extends AbstractAngularElement {
+public class Controller extends AngularElement {
 
 	private final String as;
 

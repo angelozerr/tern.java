@@ -14,9 +14,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import tern.ITernFile;
 import tern.ITernProject;
 import tern.TernException;
 import tern.angular.AngularType;
+import tern.angular.modules.AngularElement;
 import tern.angular.modules.Controller;
 import tern.angular.modules.Directive;
 import tern.angular.modules.DirectiveValue;
@@ -47,7 +49,11 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 
 	@Override
 	protected IJSNodeRoot doCreateRoot() {
-		outline.clear();
+		if (outline == null) {
+			outline = new AngularOutline(getTernProject());
+		} else {
+			outline.clear();
+		}
 		return outline;
 	}
 
@@ -62,26 +68,34 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 	}
 
 	@Override
-	public IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file, IJSNode parent,
-			Object jsonNode, IJSONObjectHelper helper) {
-		if (AngularType.module.name().equals(kind)) {
-			return new Module(name, start, end, file, parent);
-		} else if (AngularType.controller.name().equals(kind)) {
-			return new Controller(name, null, start, end, file, parent);
-		} else if (AngularType.directive.name().equals(kind)) {
-			List<String> tagNames = new ArrayList<String>();
-			String restrict = null; // helper.getText(completion, "restrict");
-			DirectiveValue directiveValue = DirectiveValue.none;
-			return new Directive(name, AngularType.model, null, tagNames, restrict, directiveValue, start, end, file,
-					parent);
+	public IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file,
+			IJSNode parent, Object jsonNode, IJSONObjectHelper helper) {
+		AngularType angularType = AngularType.get(kind);
+		if (angularType != AngularType.unknown) {
+			switch (angularType) {
+			case module:
+				return new Module(name, start, end, file, parent);
+			case controller:
+				return new Controller(name, null, start, end, file, parent);
+			case directive:
+				List<String> tagNames = new ArrayList<String>();
+				String restrict = null; // helper.getText(completion,
+										// "restrict");
+				DirectiveValue directiveValue = DirectiveValue.none;
+				return new Directive(name, AngularType.model, null, tagNames, restrict, directiveValue, start, end,
+						file, parent);
+			default:
+				return new AngularElement(name, angularType, start, end, file, parent);
+			}
 		}
 		return super.createNode(name, type, kind, value, start, end, file, parent, jsonNode, helper);
 	}
 
 	public AngularOutline getOutline() throws IOException, TernException {
-		if (init() && !getTernProject().hasPlugin(TernPlugin.push)) {
-			loadOutline();
-		}
+		/*
+		 * if (init() && !getTernProject().hasPlugin(TernPlugin.push)) {
+		 * loadOutline(); }
+		 */
 		return outline;
 	}
 
@@ -96,6 +110,16 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 	protected void loadOutline() throws IOException, TernException {
 		TernQuery query = new AngularOutlineQuery();
 		getTernProject().request(query, null, this);
+	}
+
+	public void refresh(ITernFile ternFile) throws IOException, TernException {
+		ITernProject ternProject = getTernProject();
+		if (ternProject.hasPlugin(TernPlugin.push)) {
+			return;
+		}
+		TernQuery query = new AngularOutlineQuery();
+		query.setFile(ternFile.getFileName());
+		ternProject.request(query, ternFile, this);
 	}
 
 	@Override
@@ -129,5 +153,10 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 			e.printStackTrace();
 		}
 		return super.getRoot();
+	}
+
+	@Override
+	public boolean isChanged() {
+		return true;
 	}
 }

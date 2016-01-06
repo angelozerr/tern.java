@@ -13,6 +13,7 @@ package tern.eclipse.ide.ui.views;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -20,7 +21,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -30,16 +30,32 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.internal.ui.Trace;
+import tern.eclipse.ide.internal.ui.views.actions.LinkEditorAction;
 import tern.eclipse.ide.internal.ui.views.actions.TerminateTernServerAction;
-import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 import tern.server.protocol.outline.IJSNode;
+import tern.server.protocol.outline.TernOutlineCollector;
 
+/**
+ * Abstract class for tern outline page.
+ *
+ */
 public abstract class AbstractTernContentOutlinePage extends Page implements IContentOutlinePage, ITernServerListener {
 
-	private CommonViewer viewer;
+	private final AbstractTernOutlineView view;
+	private TernCommonViewer viewer;
+
+	// Commons actions
+	private LinkEditorAction toggleLinkingAction;
 	private TerminateTernServerAction terminateAction;
+
+	// Current file
+	private IFile currentFile;
+
+	public AbstractTernContentOutlinePage(AbstractTernOutlineView view) {
+		this.view = view;
+	}
 
 	@Override
 	public void addSelectionChangedListener(ISelectionChangedListener listener) {
@@ -73,7 +89,7 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 
 	@Override
 	public void createControl(Composite parent) {
-		viewer = new CommonViewer(getViewerId(), parent, SWT.MULTI);
+		viewer = new TernCommonViewer(getViewerId(), parent, SWT.MULTI, this);
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			@Override
 			public void doubleClick(DoubleClickEvent event) {
@@ -81,25 +97,28 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 				if (!selection.isEmpty()) {
 					if (selection.getFirstElement() instanceof IJSNode) {
 						IJSNode node = (IJSNode) selection.getFirstElement();
-						IFile file = getFile();
-						if (file != null) {
-							EditorUtils.openInEditor(node, file);
-						} else {
-							EditorUtils.openInEditor(node);
-						}
+						view.openInEditor(node, true);
 					}
 				}
 			}
+
 		});
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				updateEnabledActions();
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				if (!selection.isEmpty()) {
+					if (selection.getFirstElement() instanceof IJSNode) {
+						IJSNode node = (IJSNode) selection.getFirstElement();
+						view.openInEditor(node, false);
+					}
+				}
 			}
 
 		});
-		viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
+		// viewer.setAutoExpandLevel(TreeViewer.ALL_LEVELS);
 
 		// Actions
 		registerActions(getSite().getActionBars().getToolBarManager());
@@ -118,6 +137,8 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 	}
 
 	protected void registerActions(IToolBarManager manager) {
+		this.toggleLinkingAction = new LinkEditorAction(view, getViewer());
+		manager.add(toggleLinkingAction);
 		this.terminateAction = new TerminateTernServerAction(this);
 		manager.add(terminateAction);
 	}
@@ -125,7 +146,7 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 	protected void registerContextMenu(Control control) {
 	}
 
-	public CommonViewer getViewer() {
+	public TernCommonViewer getViewer() {
 		return viewer;
 	}
 
@@ -135,6 +156,7 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 
 	@Override
 	public void onStart(ITernServer server) {
+		getViewer().getRefreshJob().schedule();
 		terminateAction.setEnabled(true);
 	}
 
@@ -154,12 +176,36 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 		}
 	}
 
+	public void setCurrentFile(IFile file) {
+		this.currentFile = file;
+	}
+
+	public IFile getCurrentFile() {
+		return currentFile;
+	}
+
+	public void refresh() {
+		viewer.refresh(false);
+	}
+
 	protected abstract String getViewerId();
 
 	protected abstract void init(CommonViewer viewer);
 
 	public abstract IProject getProject();
 
-	protected abstract IFile getFile();
+	public abstract IFile getFile();
+
+	public boolean isParsed() {
+		return view.isParsed();
+	}
+
+	public Job getRefreshJob() {
+		return view.getRefreshJob();
+	}
+
+	public TernOutlineCollector getOutline() {
+		return view.getOutline();
+	}
 
 }

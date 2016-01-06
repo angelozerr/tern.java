@@ -19,14 +19,19 @@ public class TernOutlineResultProcessor implements ITernResultProcessor<ITernOut
 	public static final TernOutlineResultProcessor INSTANCE = new TernOutlineResultProcessor();
 
 	private static final String OUTLINE_FIELD_NAME = "outline";
+	private static final String CHANGED_FIELD_NAME = "changed";
 	private static final String CHILDREN_FIELD_NAME = "children";
 
 	@Override
 	public void process(TernDoc doc, IJSONObjectHelper helper, Object jsonObject, ITernOutlineCollector collector) {
-		Iterable<Object> outline = helper.getList(jsonObject, OUTLINE_FIELD_NAME); // $NON-NLS-1$
-		IJSNodeRoot root = collector.createRoot();
-		if (outline != null) {
-			addChildren(outline, root, collector, helper);
+		boolean changed = helper.getBoolean(jsonObject, CHANGED_FIELD_NAME, true);
+		collector.setChanged(changed);
+		if (changed) {			
+			Iterable<Object> outline = helper.getList(jsonObject, OUTLINE_FIELD_NAME); // $NON-NLS-1$
+			IJSNodeRoot root = collector.createRoot();
+			if (outline != null) {
+				addChildren(outline, root, collector, helper);
+			}
 		}
 	}
 

@@ -50,6 +50,7 @@ public class ImageResource {
 
 	// Outline
 	public static final String IMG_ELCL_SORT = "alphab_sort_co";
+	public static final String IMG_ELCL_SYNCED = "synced";
 	
 	static {
 		try {
@@ -140,6 +141,7 @@ public class ImageResource {
 		registerImage(IMG_STOP_ENABLED, URL_ELCL + "launch_stop.gif");
 		registerImage(IMG_STOP_DISABLED, URL_DLCL + "launch_stop.gif");
 		registerImage(IMG_ELCL_SORT, URL_ELCL + "alphab_sort_co.png");
+		registerImage(IMG_ELCL_SYNCED, URL_ELCL + "synced.gif");
 	}
 
 	/**

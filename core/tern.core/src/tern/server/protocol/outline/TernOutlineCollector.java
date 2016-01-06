@@ -18,6 +18,7 @@ public class TernOutlineCollector implements ITernOutlineCollector {
 
 	private final ITernProject ternProject;
 	private IJSNodeRoot root;
+	private boolean changed;
 
 	public TernOutlineCollector(ITernProject ternProject) {
 		this.ternProject = ternProject;
@@ -34,8 +35,8 @@ public class TernOutlineCollector implements ITernOutlineCollector {
 	}
 
 	@Override
-	public IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file, IJSNode parent,
-			Object jsonNode, IJSONObjectHelper helper) {
+	public IJSNode createNode(String name, String type, String kind, String value, Long start, Long end, String file,
+			IJSNode parent, Object jsonNode, IJSONObjectHelper helper) {
 		return new JSNode(name, type, kind, value, start, end, file, parent);
 	}
 
@@ -46,4 +47,13 @@ public class TernOutlineCollector implements ITernOutlineCollector {
 	public ITernProject getTernProject() {
 		return ternProject;
 	}
+
+	public boolean isChanged() {
+		return changed;
+	}
+
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
+
 }

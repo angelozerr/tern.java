@@ -20,12 +20,18 @@ import tern.eclipse.ide.internal.ui.views.actions.LexicalSortingAction;
 import tern.eclipse.ide.ui.TernUIPlugin;
 import tern.eclipse.ide.ui.views.AbstractTernContentOutlinePage;
 
+/**
+ * Tern outline page which displays variable function declarations in a treeview
+ * for the current activated JavaScript editor.
+ *
+ */
 public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 
 	private final TernDocumentFile ternFile;
 	private LexicalSortingAction sortAction;
 
-	public TernContentOutlinePage(TernDocumentFile ternFile) {
+	public TernContentOutlinePage(TernDocumentFile ternFile, TernOutlineView view) {
+		super(view);
 		this.ternFile = ternFile;
 	}
 
@@ -35,8 +41,8 @@ public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 	}
 
 	@Override
-	protected IFile getFile() {
-		return ternFile.getFile();
+	public IFile getFile() {
+		return getCurrentFile();
 	}
 
 	@Override
@@ -54,5 +60,9 @@ public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 		sortAction = new LexicalSortingAction(this);
 		manager.add(sortAction);
 		super.registerActions(manager);
+	}
+
+	public TernDocumentFile getTernFile() {
+		return ternFile;
 	}
 }

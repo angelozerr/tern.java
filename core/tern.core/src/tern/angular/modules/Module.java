@@ -22,7 +22,7 @@ import tern.server.protocol.outline.IJSNode;
  * Angular module.
  * 
  */
-public class Module extends AbstractAngularElement implements IModule {
+public class Module extends AngularElement implements IModule {
 
 	private final DirectivesByTagName allDirectives;
 	private final Map<String, DirectivesByTagName> directivesByTagName;

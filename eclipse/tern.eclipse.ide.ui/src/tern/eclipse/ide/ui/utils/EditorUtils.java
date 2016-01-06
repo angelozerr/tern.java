@@ -99,7 +99,7 @@ public class EditorUtils {
 		}
 	}
 	
-	private static IFile getFile(IJSNode node) {
+	public static IFile getFile(IJSNode node) {
 		IIDETernProject ternProject = (IIDETernProject) node.getTernProject();
 		String file = node.getFile();
 		if (StringUtils.isEmpty(file)) {
@@ -139,7 +139,7 @@ public class EditorUtils {
 	}
 
 	public static IDocument getDocument(ITextEditor editor) {
-		return (editor).getDocumentProvider().getDocument(
+		return editor.getDocumentProvider().getDocument(
 				editor.getEditorInput());
 	}
 
