@@ -24,6 +24,16 @@ import tern.utils.StringUtils;
 public class TernOutlineLabelProvider extends AbstractTernOutlineLabelProvider {
 
 	@Override
+	protected String getUnavailableText() {
+		return TernUIMessages.TernOutline_unavailable;
+	}
+	
+	@Override
+	protected Image getUnavailableImage() {
+		return ImageResource.getImage(ImageResource.IMG_LOGO);
+	}
+	
+	@Override
 	protected String getComputingText() {
 		return TernUIMessages.TernOutline_computing;
 	}

@@ -264,7 +264,7 @@
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
-            contentProvider="tern.eclipse.ide.internal.ui.views.TernOutlineContentProvider"
+            contentProvider="tern.eclipse.ide.ui.views.TernOutlineContentProvider"
             icon="icons/full/obj16/logo.png"
             id="tern.eclipse.ide.ui.navigatorContent"
             labelProvider="tern.eclipse.ide.internal.ui.views.TernOutlineLabelProvider"

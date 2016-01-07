@@ -15,7 +15,6 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Image;
 
-import tern.eclipse.ide.internal.ui.views.TernOutlineContentProvider;
 import tern.server.protocol.outline.IJSNode;
 
 /**
@@ -26,10 +25,11 @@ public abstract class AbstractTernOutlineLabelProvider extends LabelProvider imp
 
 	@Override
 	public String getText(Object element) {
-		if (element == TernOutlineContentProvider.COMPUTING_NODE) {
+		if (element == TernOutlineContentProvider.UNAVAILABLE_NODE) {
+			return getUnavailableText();
+		} else if (element == TernOutlineContentProvider.COMPUTING_NODE) {
 			return getComputingText();
-		}
-		if (element instanceof IJSNode) {
+		} else if (element instanceof IJSNode) {
 			return getText((IJSNode) element);
 		}
 		return super.getText(element);
@@ -37,10 +37,11 @@ public abstract class AbstractTernOutlineLabelProvider extends LabelProvider imp
 
 	@Override
 	public Image getImage(Object element) {
-		if (element == TernOutlineContentProvider.COMPUTING_NODE) {
+		if (element == TernOutlineContentProvider.UNAVAILABLE_NODE) {
+			return getUnavailableImage();
+		} else if (element == TernOutlineContentProvider.COMPUTING_NODE) {
 			return getComputingImage();
-		}
-		if (element instanceof IJSNode) {
+		} else if (element instanceof IJSNode) {
 			return getImage((IJSNode) element);
 		}
 		return super.getImage(element);
@@ -56,6 +57,10 @@ public abstract class AbstractTernOutlineLabelProvider extends LabelProvider imp
 		}
 		return new StyledString(getText(element));
 	}
+
+	protected abstract String getUnavailableText();
+
+	protected abstract Image getUnavailableImage();
 
 	protected abstract String getComputingText();
 

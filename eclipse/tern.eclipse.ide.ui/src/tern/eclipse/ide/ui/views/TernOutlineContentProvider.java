@@ -11,32 +11,37 @@
  */
 package tern.eclipse.ide.ui.views;
 
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.text.DocumentEvent;
-import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 
-import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.server.protocol.outline.IJSNode;
 
-public abstract class AbstractTernOutlineContentProvider implements ITreeContentProvider, IDocumentListener {
+public class TernOutlineContentProvider implements ITreeContentProvider {
 
 	public static final Object COMPUTING_NODE = new Object();
+	private static final Object[] COMPUTING_NODES = { COMPUTING_NODE };
+	public static final Object UNAVAILABLE_NODE = new Object();
+	private static final Object[] ANAVAILABLE_NODES = { UNAVAILABLE_NODE };
+
 	private static final Object[] EMPTY_ARRAY = new Object[0];
-
-	protected TernDocumentFile document;
-	private TernCommonViewer viewer;
-
-	public AbstractTernOutlineContentProvider() {
-	}
 
 	@Override
 	public Object[] getElements(Object element) {
-		if (!viewer.isParsed()) {
-			return new Object[] { COMPUTING_NODE };
+		if (element instanceof IOutlineProvider) {
+			IOutlineProvider provider = (IOutlineProvider) element;
+			switch (provider.getOutlineState()) {
+			case Unavailable:
+				return ANAVAILABLE_NODES;
+			case Computing:
+				return COMPUTING_NODES;
+			case Done:
+				IJSNode root = provider.getRoot();
+				if (root != null) {
+					return root.getChildren().toArray();
+				}
+			}
 		}
-		return viewer.getOutline().getRoot().getChildren().toArray();
+		return EMPTY_ARRAY;
 	}
 
 	@Override
@@ -65,28 +70,11 @@ public abstract class AbstractTernOutlineContentProvider implements ITreeContent
 
 	@Override
 	public final void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		this.viewer = (TernCommonViewer) viewer;
-		if (doInputChanged(viewer, oldInput, newInput)) {
-			this.viewer.refreshOutline();
-		}
-	}
-
-	@Override
-	public void documentChanged(DocumentEvent event) {
-		this.viewer.refreshOutline();
+		// Do nothing
 	}
 
 	@Override
 	public void dispose() {
-		if (this.document != null) {
-			this.document.getDocument().removeDocumentListener(this);
-		}
+		// Do nothing
 	}
-
-	@Override
-	public void documentAboutToBeChanged(DocumentEvent event) {
-	}
-
-	protected abstract boolean doInputChanged(Viewer viewer, Object oldInput, Object newInput);
-
 }

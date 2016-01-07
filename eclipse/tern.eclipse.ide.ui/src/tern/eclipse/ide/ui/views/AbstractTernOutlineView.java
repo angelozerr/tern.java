@@ -10,15 +10,13 @@
  */
 package tern.eclipse.ide.ui.views;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.IPostSelectionProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -27,9 +25,6 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.TreePath;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
@@ -45,10 +40,9 @@ import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.ui.TernUIPlugin;
+import tern.eclipse.ide.internal.ui.views.RefreshOutlineJob;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.protocol.outline.IJSNode;
-import tern.server.protocol.outline.IJSNodeRoot;
 import tern.server.protocol.outline.TernOutlineCollector;
 
 /**
@@ -72,9 +66,6 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 
 	private boolean ignoreEditorActivation;
 	private boolean ignoreSelectionChanged;
-
-	private boolean parsed;
-	private TernOutlineCollector outline;
 
 	private class BestNode {
 		public final IJSNode node;
@@ -131,7 +122,7 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		}
 	};
 
-	private Job refreshJob = createRefreshJob();
+	private Job refreshJob = new RefreshOutlineJob(this);
 
 	@Override
 	protected PageRec doCreatePage(IWorkbenchPart part) {
@@ -360,7 +351,7 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		return null;
 	}
 
-	protected AbstractTernContentOutlinePage getCurrentTernPage() {
+	public AbstractTernContentOutlinePage getCurrentTernPage() {
 		IPage p = getCurrentPage();
 		if (p == null || !(p instanceof AbstractTernContentOutlinePage)) {
 			return null;
@@ -369,7 +360,7 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		return page;
 	}
 
-	protected CommonViewer getCurrentViewer() {
+	public CommonViewer getCurrentViewer() {
 		AbstractTernContentOutlinePage page = getCurrentTernPage();
 		return page != null ? page.getViewer() : null;
 	}
@@ -407,109 +398,6 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		refreshJob.cancel();
 	}
 
-	private Job createRefreshJob() {
-		Job refreshJob = new Job(TernUIMessages.refreshOutline) {
-
-			@Override
-			protected IStatus run(IProgressMonitor monitor) {
-				parsed = false;
-				final CommonViewer viewer = getCurrentViewer();
-				if (viewer == null) {
-					return Status.OK_STATUS;
-				}
-				try {
-					outline = loadOutline();
-					if (outline != null) {
-						parsed = true;
-						Display.getDefault().syncExec(new Runnable() {
-							@Override
-							public void run() {
-								Control refreshControl = viewer.getControl();
-								if ((refreshControl != null) && !refreshControl.isDisposed()) {
-									TreePath[] expendedPaths = null;
-									if (viewer instanceof TreeViewer) {
-										expendedPaths = ((TreeViewer) viewer).getExpandedTreePaths();
-									}
-									viewer.refresh();
-									if (viewer instanceof TreeViewer && expendedPaths != null) {
-										((TreeViewer) viewer)
-												.setExpandedTreePaths(toNewTreePaths(expendedPaths, outline.getRoot()));
-									}
-								}
-							}
-						});
-					}
-				} catch (Exception e) {
-					return new Status(Status.ERROR, TernUIPlugin.PLUGIN_ID, "Error while loading tern outline...", e);
-				}
-				return Status.OK_STATUS;
-			}
-		};
-		refreshJob.setSystem(true);
-		refreshJob.setPriority(Job.SHORT);
-		return refreshJob;
-	}
-
-	private TreePath[] toNewTreePaths(TreePath[] originExpandedPaths, IJSNode newRoot) {
-		List<TreePath> res = new ArrayList<TreePath>();
-		for (TreePath originExpanded : originExpandedPaths) {
-			int i = 0;
-			List<Object> newPathItems = new ArrayList<Object>();
-			IJSNode previousJSNode = null;
-			while (i < originExpanded.getSegmentCount()) {
-				Object originSegment = originExpanded.getSegment(i);
-				if (originSegment instanceof IJSNode) {
-					IJSNode originNode = (IJSNode) originSegment;
-					IJSNode matchingNode = null;
-					if (previousJSNode == null) {
-						if (originNode instanceof IJSNodeRoot) {
-							matchingNode = newRoot;
-						} else {
-							matchingNode = findSimilarChild(newRoot, originNode);
-						}
-					} else {
-						matchingNode = findSimilarChild(previousJSNode, originNode);
-					}
-					if (matchingNode != null) {
-						newPathItems.add(matchingNode);
-						previousJSNode = matchingNode;
-					}
-				} else {
-					newPathItems.add(originSegment);
-				}
-				i++;
-			}
-			res.add(new TreePath(newPathItems.toArray()));
-		}
-		return res.toArray(new TreePath[res.size()]);
-	}
-
-	private IJSNode findSimilarChild(IJSNode newParentNode, IJSNode originChildNode) {
-		IJSNode matchingNode = null;
-		// First search node with same name
-		if (originChildNode.getName() != null) {
-			for (IJSNode child : newParentNode.getChildren()) {
-				if (child.getName() != null && child.getName().equals(originChildNode.getName())) {
-					matchingNode = child;
-				}
-			}
-		}
-		// If not found, fail back to index
-		if (matchingNode == null) {
-			matchingNode = newParentNode.getChildren()
-					.get(originChildNode.getParent().getChildren().indexOf(originChildNode));
-		}
-		return matchingNode;
-	}
-
-	public boolean isParsed() {
-		return parsed;
-	}
-
-	public TernOutlineCollector getOutline() {
-		return outline;
-	}
-
 	/**
 	 * Refresh the outline tree in a job.
 	 */
@@ -520,6 +408,8 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		refreshJob.schedule(UPDATE_DELAY);
 	}
 
-	protected abstract TernOutlineCollector loadOutline() throws Exception;
+	public abstract TernOutlineCollector loadOutline(IFile file, IDocument document) throws Exception;
+
+	public abstract boolean isOutlineAvailable(IFile file);
 
 }

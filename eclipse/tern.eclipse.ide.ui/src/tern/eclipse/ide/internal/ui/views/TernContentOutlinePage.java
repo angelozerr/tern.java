@@ -48,4 +48,12 @@ public class TernContentOutlinePage extends AbstractTernContentOutlinePage {
 		super.registerActions(manager);
 	}
 
+	@Override
+	protected boolean isRefreshOutline(IFile oldFile, IFile newFile) {
+		if (newFile != null) {
+			return !newFile.equals(oldFile);
+		}
+		return false;
+	}
+
 }
