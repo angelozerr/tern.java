@@ -11,8 +11,7 @@
 package tern.eclipse.ide.internal.ui.views;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
@@ -20,7 +19,6 @@ import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
-import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.eclipse.ide.ui.views.AbstractTernOutlineView;
 import tern.server.TernPlugin;
 import tern.server.protocol.outline.TernOutlineCollector;
@@ -38,13 +36,8 @@ public class TernOutlineView extends AbstractTernOutlineView {
 	}
 
 	@Override
-	protected IContentOutlinePage createOutlinePage(IWorkbenchPart part, IFile file) {
-		IDocument document = EditorUtils.getDocument(file);
-		if (document != null) {
-			TernContentOutlinePage page = new TernContentOutlinePage(new TernDocumentFile(file, document), this);
-			return page;
-		}
-		return null;
+	protected IContentOutlinePage createOutlinePage(IProject project) {
+		return new TernContentOutlinePage(project, this);
 	}
 
 	@Override

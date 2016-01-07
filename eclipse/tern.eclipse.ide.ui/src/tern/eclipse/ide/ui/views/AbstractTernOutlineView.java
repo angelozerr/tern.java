@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -58,6 +59,7 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 
 	public static final int IS_LINKING_ENABLED_PROPERTY = 0;
 	private static final int LINK_HELPER_DELAY = 100;
+	private static final int UPDATE_DELAY = 500;
 
 	private ITextEditor textEditor;
 
@@ -140,18 +142,21 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 			return null;
 		}
 
-		IContentOutlinePage page = getOutlinePage(part, file);
+		// Try to get the shared outline for the given project (ex : for angular
+		// explorer)
+		IProject project = file.getProject();
+		IContentOutlinePage page = getOutlinePage(project);
 		if (page == null) {
-			// Try to get an outline page.
-			page = createOutlinePage(part, file);
+			// Create a new instance of the outline page
+			page = createOutlinePage(file.getProject());
 			if (page != null) {
 				if (page instanceof IPageBookViewPage) {
 					initPage((IPageBookViewPage) page);
 				}
+				page.createControl(getPageBook());
 				if (page instanceof AbstractTernContentOutlinePage) {
 					updateCurrentFile(page, part, file);
 				}
-				page.createControl(getPageBook());
 			}
 		} else {
 			if (page instanceof AbstractTernContentOutlinePage) {
@@ -180,7 +185,15 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		super.showPageRec(pageRec);
 	}
 
-	protected IContentOutlinePage getOutlinePage(IWorkbenchPart part, IFile file) {
+	/**
+	 * Returns the shared outline page for the given project or null if a page
+	 * must be created for each file.
+	 * 
+	 * @param project
+	 * @return the shared outline page for the given project or null if a page
+	 *         must be created for each file.
+	 */
+	protected IContentOutlinePage getOutlinePage(IProject project) {
 		return null;
 	}
 
@@ -222,15 +235,13 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 	protected abstract boolean isAdaptFor(IFile file);
 
 	/**
-	 * Create the outline view for the given file.
+	 * Create the outline view for the given project. It can have one page per
+	 * file (see tern outline) or one page per project (see angular outline).
 	 * 
-	 * @param part
-	 * 
-	 * @param file
-	 * @param view
-	 * @return the outline view for the given file.
+	 * @param project
+	 * @return an instance of outline page for the given project.
 	 */
-	protected abstract IContentOutlinePage createOutlinePage(IWorkbenchPart part, IFile file);
+	protected abstract IContentOutlinePage createOutlinePage(IProject project);
 
 	public boolean isLinkingEnabled() {
 		return linkingEnabled;
@@ -406,16 +417,9 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 				if (viewer == null) {
 					return Status.OK_STATUS;
 				}
-				Display.getDefault().syncExec(new Runnable() {
-					@Override
-					public void run() {
-						viewer.refresh();
-					}
-				});
 				try {
 					outline = loadOutline();
-					if (outline != null && outline.isChanged()) {
-						outline.setChanged(false);
+					if (outline != null) {
 						parsed = true;
 						Display.getDefault().syncExec(new Runnable() {
 							@Override
@@ -502,12 +506,18 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		return parsed;
 	}
 
-	public Job getRefreshJob() {
-		return refreshJob;
-	}
-
 	public TernOutlineCollector getOutline() {
 		return outline;
+	}
+
+	/**
+	 * Refresh the outline tree in a job.
+	 */
+	public void refreshOutline() {
+		if (refreshJob.getState() != Job.NONE) {
+			refreshJob.cancel();
+		}
+		refreshJob.schedule(UPDATE_DELAY);
 	}
 
 	protected abstract TernOutlineCollector loadOutline() throws Exception;

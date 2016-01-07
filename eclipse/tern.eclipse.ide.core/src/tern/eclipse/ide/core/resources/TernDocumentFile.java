@@ -59,4 +59,12 @@ public class TernDocumentFile extends IDETernFile implements ITernFile {
 		return super.getFileName();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof TernDocumentFile)) {
+			return false;
+		}
+		TernDocumentFile doc = (TernDocumentFile) obj;
+		return doc.document.equals(this.document) && doc.getFile().equals(getFile());
+	}
 }

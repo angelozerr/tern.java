@@ -155,8 +155,4 @@ public class AngularOutlineProvider extends TernOutlineCollector implements IMes
 		return super.getRoot();
 	}
 
-	@Override
-	public boolean isChanged() {
-		return true;
-	}
 }

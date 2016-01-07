@@ -1,11 +1,14 @@
 package tern.eclipse.ide.ui.views;
 
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.navigator.CommonViewer;
 
 import tern.server.protocol.outline.TernOutlineCollector;
 
+/**
+ * Extension of {@link CommonViewer} for tern outline.
+ *
+ */
 public class TernCommonViewer extends CommonViewer {
 
 	private final AbstractTernContentOutlinePage page;
@@ -15,12 +18,20 @@ public class TernCommonViewer extends CommonViewer {
 		this.page = page;
 	}
 
+	/**
+	 * Returns true if the outline is parsed and false otherwise.
+	 * 
+	 * @return true if the outline is parsed and false otherwise.
+	 */
 	public boolean isParsed() {
 		return page.isParsed();
 	}
 
-	public Job getRefreshJob() {
-		return page.getRefreshJob();
+	/**
+	 * Refresh the outline tree in a job.
+	 */
+	public void refreshOutline() {
+		page.refreshOutline();
 	}
 
 	public TernOutlineCollector getOutline() {

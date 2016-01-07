@@ -13,7 +13,6 @@ package tern.eclipse.ide.ui.views;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
@@ -29,9 +28,11 @@ import org.eclipse.ui.part.Page;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 import tern.eclipse.ide.core.TernCorePlugin;
+import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.internal.ui.views.actions.LinkEditorAction;
 import tern.eclipse.ide.internal.ui.views.actions.TerminateTernServerAction;
+import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.ITernServer;
 import tern.server.ITernServerListener;
 import tern.server.protocol.outline.IJSNode;
@@ -50,10 +51,11 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 	private LinkEditorAction toggleLinkingAction;
 	private TerminateTernServerAction terminateAction;
 
-	// Current file
-	private IFile currentFile;
+	private final IProject project;
+	private TernDocumentFile ternFile;
 
-	public AbstractTernContentOutlinePage(AbstractTernOutlineView view) {
+	public AbstractTernContentOutlinePage(IProject project, AbstractTernOutlineView view) {
+		this.project = project;
 		this.view = view;
 	}
 
@@ -79,7 +81,7 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 
 	@Override
 	public Control getControl() {
-		return this.viewer.getControl();
+		return this.viewer != null ? this.viewer.getControl() : null;
 	}
 
 	@Override
@@ -124,8 +126,6 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 		registerActions(getSite().getActionBars().getToolBarManager());
 		registerContextMenu(viewer.getControl());
 
-		// Viewer
-		init(viewer);
 		try {
 			IProject project = getProject();
 			TernCorePlugin.getTernProject(project).addServerListener(this);
@@ -156,7 +156,7 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 
 	@Override
 	public void onStart(ITernServer server) {
-		getViewer().getRefreshJob().schedule();
+		refreshOutline();
 		terminateAction.setEnabled(true);
 	}
 
@@ -176,23 +176,25 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 		}
 	}
 
-	public void setCurrentFile(IFile file) {
-		this.currentFile = file;
-	}
-
-	public IFile getCurrentFile() {
-		return currentFile;
-	}
-
-	public void refresh() {
-		viewer.refresh(false);
+	public void setCurrentFile(IFile currentFile) {
+		this.ternFile = new TernDocumentFile(currentFile, EditorUtils.getDocument(currentFile));
+		CommonViewer viewer = getViewer();
+		viewer.setInput(ternFile);
 	}
 
 	protected abstract String getViewerId();
 
-	protected abstract void init(CommonViewer viewer);
+	public final IFile getCurrentFile() {
+		return ternFile.getFile();
+	}
 
-	public abstract IProject getProject();
+	public TernDocumentFile getTernFile() {
+		return ternFile;
+	}
+
+	public final IProject getProject() {
+		return project;
+	}
 
 	public abstract IFile getFile();
 
@@ -200,8 +202,11 @@ public abstract class AbstractTernContentOutlinePage extends Page implements ICo
 		return view.isParsed();
 	}
 
-	public Job getRefreshJob() {
-		return view.getRefreshJob();
+	/**
+	 * Refresh the outline tree in a job.
+	 */
+	public void refreshOutline() {
+		view.refreshOutline();
 	}
 
 	public TernOutlineCollector getOutline() {

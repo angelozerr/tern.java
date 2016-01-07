@@ -26,9 +26,4 @@ public class TernOutline extends TernOutlineCollector {
 	public TernDocumentFile getTernFile() {
 		return ternFile;
 	}
-
-	@Override
-	public boolean isChanged() {
-		return true;
-	}
 }

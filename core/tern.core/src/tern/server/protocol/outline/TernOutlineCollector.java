@@ -18,7 +18,6 @@ public class TernOutlineCollector implements ITernOutlineCollector {
 
 	private final ITernProject ternProject;
 	private IJSNodeRoot root;
-	private boolean changed;
 
 	public TernOutlineCollector(ITernProject ternProject) {
 		this.ternProject = ternProject;
@@ -46,14 +45,6 @@ public class TernOutlineCollector implements ITernOutlineCollector {
 
 	public ITernProject getTernProject() {
 		return ternProject;
-	}
-
-	public boolean isChanged() {
-		return changed;
-	}
-
-	public void setChanged(boolean changed) {
-		this.changed = changed;
 	}
 
 }
