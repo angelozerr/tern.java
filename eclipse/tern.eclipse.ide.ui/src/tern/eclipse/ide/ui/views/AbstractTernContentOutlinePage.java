@@ -117,7 +117,10 @@ public abstract class AbstractTernContentOutlinePage extends Page
 				if (!selection.isEmpty()) {
 					if (selection.getFirstElement() instanceof IJSNode) {
 						IJSNode node = (IJSNode) selection.getFirstElement();
-						view.openInEditor(node, false);
+						IFile nodeFile = EditorUtils.getFile(node);
+						if (nodeFile == null || nodeFile.equals(getCurrentFile())) {
+							view.openInEditor(node, false);
+						}
 					}
 				}
 			}
