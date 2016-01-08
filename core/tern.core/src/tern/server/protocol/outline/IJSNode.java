@@ -27,4 +27,6 @@ public interface IJSNode {
 	List<IJSNode> getChildren();
 
 	ITernProject getTernProject();
+
+	boolean isContainer();
 }

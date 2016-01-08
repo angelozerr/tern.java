@@ -87,4 +87,8 @@ public class JSNode extends BaseJSNode {
 		return isProperty;
 	}
 
+	@Override
+	public boolean isContainer() {
+		return isFunction;
+	}
 }

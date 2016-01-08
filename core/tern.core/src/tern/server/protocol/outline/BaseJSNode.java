@@ -91,4 +91,9 @@ public class BaseJSNode implements IJSNode {
 	public ITernProject getTernProject() {
 		return parent != null ? parent.getTernProject() : null;
 	}
+
+	@Override
+	public boolean isContainer() {
+		return false;
+	}
 }

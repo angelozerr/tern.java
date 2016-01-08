@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.internal.ui.views;
+package tern.eclipse.ide.ui.views;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,6 @@ import org.eclipse.ui.navigator.CommonViewer;
 
 import tern.eclipse.ide.internal.ui.TernUIMessages;
 import tern.eclipse.ide.ui.TernUIPlugin;
-import tern.eclipse.ide.ui.views.AbstractTernContentOutlinePage;
-import tern.eclipse.ide.ui.views.AbstractTernOutlineView;
-import tern.eclipse.ide.ui.views.IOutlineProvider;
 import tern.server.protocol.outline.IJSNode;
 import tern.server.protocol.outline.IJSNodeRoot;
 import tern.server.protocol.outline.TernOutlineCollector;
@@ -38,7 +35,9 @@ import tern.server.protocol.outline.TernOutlineCollector;
  * Job used to refresh tern outline.
  *
  */
-public class RefreshOutlineJob extends Job implements IOutlineProvider {
+class RefreshOutlineJob extends Job implements IOutlineProvider {
+
+	private static final int UPDATE_DELAY = 500;
 
 	private final AbstractTernOutlineView view;
 	private State state;
@@ -76,7 +75,7 @@ public class RefreshOutlineJob extends Job implements IOutlineProvider {
 			});
 		}
 		if (state != State.Unavailable) {
-			try {				
+			try {
 				IDocument document = page.getCurrentDocument();
 				outline = view.loadOutline(file, document);
 				if (outline != null) {
@@ -167,6 +166,13 @@ public class RefreshOutlineJob extends Job implements IOutlineProvider {
 	@Override
 	public IJSNode getRoot() {
 		return outline != null ? outline.getRoot() : null;
+	}
+
+	public void refreshOutline() {
+		if (getState() != Job.NONE) {
+			cancel();
+		}
+		schedule(UPDATE_DELAY);
 	}
 
 }

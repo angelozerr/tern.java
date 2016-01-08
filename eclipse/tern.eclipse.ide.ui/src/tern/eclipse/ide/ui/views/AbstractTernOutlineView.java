@@ -12,20 +12,7 @@ package tern.eclipse.ide.ui.views;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.IPostSelectionProvider;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewSite;
@@ -34,13 +21,10 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.navigator.CommonViewer;
 import org.eclipse.ui.part.IPage;
 import org.eclipse.ui.part.IPageBookViewPage;
-import org.eclipse.ui.progress.UIJob;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutline;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
-import tern.eclipse.ide.internal.ui.TernUIMessages;
-import tern.eclipse.ide.internal.ui.views.RefreshOutlineJob;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.server.protocol.outline.IJSNode;
 import tern.server.protocol.outline.TernOutlineCollector;
@@ -49,11 +33,9 @@ import tern.server.protocol.outline.TernOutlineCollector;
  * Abstract class for tern outline view.
  *
  */
-public abstract class AbstractTernOutlineView extends ContentOutline implements ISelectionChangedListener {
+public abstract class AbstractTernOutlineView extends ContentOutline {
 
 	public static final int IS_LINKING_ENABLED_PROPERTY = 0;
-	private static final int LINK_HELPER_DELAY = 100;
-	private static final int UPDATE_DELAY = 500;
 
 	private ITextEditor textEditor;
 
@@ -61,68 +43,19 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 
 	private String LINKING_ENABLED = "AbstractTernOutlineView.LINKING_ENABLED"; //$NON-NLS-1$
 	private boolean linkingEnabled = false;
-	private ISelection currentEditorSelection;
-	private IJSNode currentNodeToOpen;
 
-	private boolean ignoreEditorActivation;
-	private boolean ignoreSelectionChanged;
+	boolean ignoreEditorActivation;
+	boolean ignoreSelectionChanged;
 
-	private class BestNode {
-		public final IJSNode node;
-		public final CommonViewer viewer;
+	// ----------- Jobs
 
-		public BestNode(IJSNode node, CommonViewer viewer) {
-			this.node = node;
-			this.viewer = viewer;
-		}
-	}
-
-	private UIJob activateEditorJob = new UIJob(TernUIMessages.Link_With_Editor_Job_) {
-
-		@Override
-		public IStatus runInUIThread(IProgressMonitor monitor) {
-			AbstractTernContentOutlinePage page = getCurrentTernPage();
-			if (page != null) {
-				try {
-					ignoreEditorActivation = true;
-					IFile file = page.getFile();
-					if (file != null) {
-						EditorUtils.openInEditor(currentNodeToOpen, file);
-					} else {
-						EditorUtils.openInEditor(currentNodeToOpen);
-					}
-				} finally {
-					ignoreEditorActivation = false;
-				}
-			}
-			return Status.OK_STATUS;
-		}
-	};
-
-	private Job updateSelectionJob = new Job(TernUIMessages.Link_With_Editor_Job_) {
-		@Override
-		protected IStatus run(IProgressMonitor monitor) {
-			BestNode bestNode = findBestNode(currentEditorSelection);
-			if (bestNode != null) {
-				try {
-					ignoreSelectionChanged = true;
-					final IJSNode node = bestNode.node;
-					final CommonViewer viewer = bestNode.viewer;
-					Display.getDefault().syncExec(new Runnable() {
-						@Override
-						public void run() {
-							viewer.setSelection(new StructuredSelection(node));
-						}
-					});
-				} finally {
-					ignoreSelectionChanged = false;
-				}
-			}
-			return Status.OK_STATUS;
-		}
-	};
-
-	private Job refreshJob = new RefreshOutlineJob(this);
+	// Job which is executed when the treeview of the tern outline is clicked to
+	// select the well content of the active JavaScript Editor.
+	private ActivateEditorJob activateEditorJob = new ActivateEditorJob(this);
+	// Job which is executed when there is a selection inside JavaScript Editor
+	// to select the well node in the tern outline.
+	private final UpdateSelectionJob updateSelectionJob = new UpdateSelectionJob(this);
+	private final RefreshOutlineJob refreshJob = new RefreshOutlineJob(this);
 
 	@Override
 	protected PageRec doCreatePage(IWorkbenchPart part) {
@@ -215,25 +148,6 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		super.saveState(aMemento);
 	}
 
-	/**
-	 * Returns true if the outline view is adapted for the given file and false
-	 * otherwise.
-	 * 
-	 * @param file
-	 * @return true if the outline view is adapted for the given file and false
-	 *         otherwise.
-	 */
-	protected abstract boolean isAdaptFor(IFile file);
-
-	/**
-	 * Create the outline view for the given project. It can have one page per
-	 * file (see tern outline) or one page per project (see angular outline).
-	 * 
-	 * @param project
-	 * @return an instance of outline page for the given project.
-	 */
-	protected abstract IContentOutlinePage createOutlinePage(IProject project);
-
 	public boolean isLinkingEnabled() {
 		return linkingEnabled;
 	}
@@ -254,104 +168,24 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 	}
 
 	private void setCurrentPart(IWorkbenchPart part) {
-		if (this.textEditor != null) {
-			uninstall(this.textEditor.getSelectionProvider());
-		}
 		if (part instanceof ITextEditor) {
 			this.textEditor = (ITextEditor) part;
-			ISelectionProvider provider = this.textEditor.getSelectionProvider();
-			selectInTreeview(provider.getSelection());
-			install(provider);
 		} else {
 			this.textEditor = null;
 		}
-	}
-
-	private void install(ISelectionProvider selectionProvider) {
-		if (selectionProvider == null) {
-			return;
-		}
-		if (selectionProvider instanceof IPostSelectionProvider) {
-			IPostSelectionProvider provider = (IPostSelectionProvider) selectionProvider;
-			provider.addPostSelectionChangedListener(this);
-		} else {
-			selectionProvider.addSelectionChangedListener(this);
-		}
-	}
-
-	private void uninstall(ISelectionProvider selectionProvider) {
-		if (selectionProvider == null) {
-			return;
-		}
-		if (selectionProvider instanceof IPostSelectionProvider) {
-			IPostSelectionProvider provider = (IPostSelectionProvider) selectionProvider;
-			provider.removePostSelectionChangedListener(this);
-		} else {
-			selectionProvider.removeSelectionChangedListener(this);
-		}
+		updateSelectionJob.setCurrentPart(part);
 	}
 
 	public void openInEditor(IJSNode node, boolean force) {
-		AbstractTernContentOutlinePage page = getCurrentTernPage();
-		if (page == null) {
-			return;
-		}
-		if (!force && (!isLinkingEnabled() || ignoreSelectionChanged)) {
-			return;
-		}
-		this.currentNodeToOpen = node;
-		/*
-		 * Create and schedule a UI Job to activate the editor in a valid
-		 * Display thread
-		 */
-		activateEditorJob.schedule(LINK_HELPER_DELAY);
+		activateEditorJob.openInEditor(node, force);
 	}
 
-	private void selectInTreeview(ISelection selection) {
-		if (ignoreEditorActivation) {
-			return;
-		}
-		this.currentEditorSelection = selection;
-		updateSelectionJob.schedule(LINK_HELPER_DELAY);
-	}
-
-	@Override
-	public void selectionChanged(SelectionChangedEvent event) {
-		selectInTreeview(event.getSelection());
-	}
-
-	private BestNode findBestNode(ISelection selection) {
-		if (!this.isLinkingEnabled() /* && !ignoreSelectionChanged */ ) {
-			return null;
-		}
-		CommonViewer viewer = getCurrentViewer();
-		if (viewer == null) {
-			return null;
-		}
-		IStructuredContentProvider contentProvider = (IStructuredContentProvider) viewer.getContentProvider();
-		if (contentProvider == null || selection == null || selection.isEmpty()
-				|| !(selection instanceof ITextSelection)) {
-			return null;
-		}
-		Object[] elements = contentProvider.getElements(viewer.getInput());
-		IFile currentFile = getCurrentTernPage().getCurrentFile();
-		if (elements != null) {
-			Object elt = null;
-			IJSNode bestNode = null;
-			for (int i = 0; i < elements.length; i++) {
-				elt = elements[i];
-				if (elt instanceof IJSNode) {
-					bestNode = findBestNode((IJSNode) elt, (ITextSelection) selection, currentFile);
-					if (bestNode != null) {
-						return new BestNode(bestNode, viewer);
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	public AbstractTernContentOutlinePage getCurrentTernPage() {
+	/**
+	 * Returns the current tern outline page and null otherwise.
+	 * 
+	 * @return the current tern outline page and null otherwise.
+	 */
+	AbstractTernContentOutlinePage getCurrentTernPage() {
 		IPage p = getCurrentPage();
 		if (p == null || !(p instanceof AbstractTernContentOutlinePage)) {
 			return null;
@@ -360,41 +194,21 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 		return page;
 	}
 
-	public CommonViewer getCurrentViewer() {
+	/**
+	 * Returns the viewer of the current tern outline page and null otherwise.
+	 * 
+	 * @return the viewer of the current tern outline page and null otherwise.
+	 */
+	CommonViewer getCurrentViewer() {
 		AbstractTernContentOutlinePage page = getCurrentTernPage();
 		return page != null ? page.getViewer() : null;
-	}
-
-	private IJSNode findBestNode(IJSNode node, ITextSelection selection, IFile currentFile) {
-		int start = selection.getOffset(), end = start + selection.getLength();
-		if (node.getStart() != null) {
-			if (node.getStart() <= start && node.getEnd() >= end) {
-				if (currentFile != null && !currentFile.equals(EditorUtils.getFile(node))) {
-					// doesn't match the file
-					return null;
-				}
-				return node;
-			}
-		}
-		if (node.hasChidren()) {
-			for (IJSNode child : node.getChildren()) {
-				IJSNode c = findBestNode(child, selection, currentFile);
-				if (c != null) {
-					return c;
-				}
-			}
-		}
-		return null;
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
-		if (this.textEditor != null) {
-			uninstall(this.textEditor.getSelectionProvider());
-		}
 		activateEditorJob.cancel();
-		updateSelectionJob.cancel();
+		updateSelectionJob.dispose();
 		refreshJob.cancel();
 	}
 
@@ -402,11 +216,27 @@ public abstract class AbstractTernOutlineView extends ContentOutline implements 
 	 * Refresh the outline tree in a job.
 	 */
 	public void refreshOutline() {
-		if (refreshJob.getState() != Job.NONE) {
-			refreshJob.cancel();
-		}
-		refreshJob.schedule(UPDATE_DELAY);
+		refreshJob.refreshOutline();
 	}
+
+	/**
+	 * Returns true if the outline view is adapted for the given file and false
+	 * otherwise.
+	 * 
+	 * @param file
+	 * @return true if the outline view is adapted for the given file and false
+	 *         otherwise.
+	 */
+	protected abstract boolean isAdaptFor(IFile file);
+
+	/**
+	 * Create the outline view for the given project. It can have one page per
+	 * file (see tern outline) or one page per project (see angular outline).
+	 * 
+	 * @param project
+	 * @return an instance of outline page for the given project.
+	 */
+	protected abstract IContentOutlinePage createOutlinePage(IProject project);
 
 	public abstract TernOutlineCollector loadOutline(IFile file, IDocument document) throws Exception;
 
