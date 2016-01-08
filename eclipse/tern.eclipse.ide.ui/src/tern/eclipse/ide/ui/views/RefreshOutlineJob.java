@@ -152,8 +152,10 @@ class RefreshOutlineJob extends Job implements IOutlineProvider {
 		}
 		// If not found, fail back to index
 		if (matchingNode == null) {
-			matchingNode = newParentNode.getChildren()
-					.get(originChildNode.getParent().getChildren().indexOf(originChildNode));
+			int index = originChildNode.getParent().getChildren().indexOf(originChildNode);
+			if (newParentNode.getChildren().size() > index) {
+				matchingNode = newParentNode.getChildren().get(index);
+			}
 		}
 		return matchingNode;
 	}
