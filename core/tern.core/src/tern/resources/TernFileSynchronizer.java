@@ -208,7 +208,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 
 			toRefreshLocal.removeAll(synced);
 			for (String toRemove : toRefreshLocal) {
-				doc.delFile(toRemove); //$NON-NLS-1$
+				doc.delFile(toRemove);
 			}
 
 			// perform actual synchronization with the server
@@ -360,6 +360,15 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 			updateSentFiles(doc);
 			// sync is performed asynchronously
 			uploader.request(doc);
+		}
+	}
+	
+	protected String getSentFileContent(String file) {
+		readLock.lock();
+		try {
+			return sentFiles.get(file);
+		} finally {
+			readLock.unlock();
 		}
 	}
 
