@@ -60,70 +60,6 @@ public interface INodejsProcess {
 	public Integer getPort();
 
 	/**
-	 * Set the verbose.
-	 * 
-	 * @param verbose
-	 */
-	public void setVerbose(boolean verbose);
-
-	/**
-	 * Returns true if tern is verbose and false otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isVerbose();
-
-	/**
-	 * Set true if tern server server won't write a .tern-port file and false
-	 * otherwise.
-	 * 
-	 * @param noPortFile
-	 */
-	public void setNoPortFile(boolean noPortFile);
-
-	/**
-	 * return true if tern server server won't write a .tern-port file and false
-	 * otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isNoPortFile();
-
-	/**
-	 * Set false if the server will shut itself down after five minutes of
-	 * inactivity and true otherwise.
-	 * 
-	 * @param persistent
-	 */
-	public void setPersistent(boolean persistent);
-
-	/**
-	 * Returns false if the server will shut itself down after five minutes of
-	 * inactivity and true otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isPersistent();
-
-	/**
-	 * Set true if tern plugins can be loaded from the project root and false
-	 * otherwise.
-	 * 
-	 * @see https://github.com/marijnh/tern/pull/394
-	 */
-	public void setLoadingLocalPlugins(boolean loadingLocalPlugins);
-
-	/**
-	 * Returns true if tern plugins can be loaded from the project root and
-	 * false otherwise.
-	 * 
-	 * @return true if tern plugins can be loaded from the project root and
-	 *         false otherwise.
-	 * @see https://github.com/marijnh/tern/pull/394
-	 */
-	public boolean isLoadingLocalPlugins();
-
-	/**
 	 * return the project dir where .tern-project is hosted.
 	 * 
 	 * @return
@@ -158,4 +94,5 @@ public interface INodejsProcess {
 	 */
 	public void removeProcessListener(INodejsProcessListener listener);
 
+	void setNodejsArgsProvider(INodejsArgsProvider argsProvider);
 }

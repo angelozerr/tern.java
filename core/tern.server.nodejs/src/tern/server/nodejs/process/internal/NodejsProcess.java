@@ -69,9 +69,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 						if (port == null) {
 							// port was not getted, try to get it.
 							if (line.startsWith("Listening on port ")) {
-								port = Integer.parseInt(line.substring(
-										"Listening on port ".length(),
-										line.length()));
+								port = Integer.parseInt(line.substring("Listening on port ".length(), line.length()));
 
 								// port is getted, notify that process is
 								// started.
@@ -131,8 +129,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 	 *            the project base dir where .tern-project is hosted.
 	 * @throws TernException
 	 */
-	public NodejsProcess(File nodejsTernBaseDir, File projectDir)
-			throws TernException {
+	public NodejsProcess(File nodejsTernBaseDir, File projectDir) throws TernException {
 		this(null, nodejsTernBaseDir, projectDir);
 	}
 
@@ -147,8 +144,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 	 *            the project base dir where .tern-project is hosted.
 	 * @throws TernException
 	 */
-	public NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir,
-			File projectDir) throws TernException {
+	public NodejsProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir) throws TernException {
 		super(nodejsBaseDir, projectDir);
 		this.nodejsTernFile = getNodejsTernFile(nodejsTernBaseDir);
 	}
@@ -163,17 +159,14 @@ public class NodejsProcess extends AbstractNodejsProcess {
 	 */
 	private File getNodejsTernFile(File nodejsTernBaseDir) throws TernException {
 		if (nodejsTernBaseDir == null) {
-			throw new TernException(
-					"You must initialize the base dir of the tern node.js server.");
+			throw new TernException("You must initialize the base dir of the tern node.js server.");
 		}
 		File ternServerFile = new File(nodejsTernBaseDir, "bin/tern");
 		if (!ternServerFile.exists()) {
 			try {
-				throw new TernException("Cannot find tern node.js server at "
-						+ ternServerFile.getCanonicalPath());
+				throw new TernException("Cannot find tern node.js server at " + ternServerFile.getCanonicalPath());
 			} catch (IOException e) {
-				throw new TernException("Cannot find tern node.js server at "
-						+ ternServerFile.getPath());
+				throw new TernException("Cannot find tern node.js server at " + ternServerFile.getPath());
 			}
 		}
 		return ternServerFile;
@@ -205,7 +198,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 		} catch (IOException e) {
 			commands.add(nodejsTernFile.getPath());
 		}
-		commands.addAll(createTernServerArgs());
+		commands.addAll(createNodejsArgs());
 		return commands;
 	}
 
@@ -218,8 +211,7 @@ public class NodejsProcess extends AbstractNodejsProcess {
 	public void start() throws NodejsProcessException {
 		if (isStarted()) {
 			notifyErrorProcess("Nodejs tern Server is already started.");
-			throw new NodejsProcessException(
-					"Nodejs tern Server is already started.");
+			throw new NodejsProcessException("Nodejs tern Server is already started.");
 		}
 
 		try {

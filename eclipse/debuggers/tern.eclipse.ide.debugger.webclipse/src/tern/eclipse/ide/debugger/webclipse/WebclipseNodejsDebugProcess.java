@@ -81,7 +81,7 @@ public class WebclipseNodejsDebugProcess extends AbstractNodejsProcess {
 			// Set Tern Server params
 			lcwc.setAttribute(
 					"JS_PROGRAM_ARGUMENTS", DebugPlugin.renderArguments( //$NON-NLS-1$
-									createTernServerArgs().toArray(
+									createNodejsArgs().toArray(
 											new String[0]), null));
 
 			notifyCreateProcess(Collections.<String> emptyList(), projectDir);

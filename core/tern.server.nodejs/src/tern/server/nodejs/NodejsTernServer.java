@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.websocket.ClientEndpoint;
@@ -35,6 +36,7 @@ import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
 import tern.server.TernPlugin;
 import tern.server.WebSocketContainerProvider;
+import tern.server.nodejs.process.INodejsArgsProvider;
 import tern.server.nodejs.process.INodejsProcess;
 import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessAdapter;
@@ -50,7 +52,7 @@ import tern.server.protocol.html.ScriptTagRegion;
  * Tern server implemented with node.js
  * 
  */
-public class NodejsTernServer extends AbstractTernServer {
+public class NodejsTernServer extends AbstractTernServer implements INodejsArgsProvider {
 
 	private static final String BASE_URL = "http://127.0.0.1:";
 	private static final String HTTP_PROTOCOL = "http:";
@@ -67,12 +69,41 @@ public class NodejsTernServer extends AbstractTernServer {
 
 	private int testNumber = NodejsTernHelper.DEFAULT_TEST_NUMBER;
 
+	/**
+	 * Port of the node.js server.
+	 */
+	private Integer port;
+
+	/**
+	 * true if tern server must be verbose and false otherwise.
+	 */
+	private boolean verbose;
+
+	/**
+	 * true if tern server server don't write a .tern-port file and false
+	 * otherwise.
+	 */
+	private boolean noPortFile = true;
+
+	/**
+	 * false if the server will shut itself down after five minutes of
+	 * inactivity and true otherwise.
+	 */
+	private boolean persistent;
+
+	/**
+	 * true if tern plugins can be loaded from the project root and false
+	 * otherwise
+	 */
+	private boolean loadingLocalPlugins;
+
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
 		@Override
 		public void onStart(INodejsProcess server) {
 			NodejsTernServer.this.fireStartServer();
-			// initialize WebSocket client session if "push" tern plugin is declared in the tern-project.
+			// initialize WebSocket client session if "push" tern plugin is
+			// declared in the tern-project.
 			initializeWebSocketIfNeeded();
 		}
 
@@ -101,7 +132,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		}
 
 	};
-	
+
 	@ClientEndpoint
 	public class WebSocketMessageDispatcher {
 
@@ -110,13 +141,12 @@ public class NodejsTernServer extends AbstractTernServer {
 			JsonObject value = Json.parse(data).asObject();
 			String type = value.getString("type", null);
 			JsonValue json = value.get("data");
-			if (type != null && json != null) {				
+			if (type != null && json != null) {
 				NodejsTernServer.this.fireOnMessage(type, json);
 			}
 		}
 	}
-	
-	private boolean persistent;
+
 	// WebSocket session
 	private Session session;
 
@@ -130,27 +160,23 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	public NodejsTernServer(ITernProject project) throws TernException {
-		this(project, NodejsProcessManager.getInstance().create(
-				project.getProjectDir()));
+		this(project, NodejsProcessManager.getInstance().create(project.getProjectDir()));
 	}
 
-	public NodejsTernServer(ITernProject project, File nodejsBaseDir)
-			throws TernException {
-		this(project, NodejsProcessManager.getInstance().create(
-				project.getProjectDir(), nodejsBaseDir));
+	public NodejsTernServer(ITernProject project, File nodejsBaseDir) throws TernException {
+		this(project, NodejsProcessManager.getInstance().create(project.getProjectDir(), nodejsBaseDir));
 	}
 
-	public NodejsTernServer(ITernProject project, File nodejsBaseDir,
-			File nodejsTernBaseDir) throws TernException {
-		this(project, NodejsProcessManager.getInstance().create(
-				project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
+	public NodejsTernServer(ITernProject project, File nodejsBaseDir, File nodejsTernBaseDir) throws TernException {
+		this(project,
+				NodejsProcessManager.getInstance().create(project.getProjectDir(), nodejsBaseDir, nodejsTernBaseDir));
 	}
 
 	public NodejsTernServer(ITernProject project, INodejsProcess process) {
 		super(project);
 		this.process = process;
+		process.setNodejsArgsProvider(this);
 		process.addProcessListener(listener);
-		initProcess(process);
 	}
 
 	private String computeBaseURL(Integer port) {
@@ -163,7 +189,7 @@ public class NodejsTernServer extends AbstractTernServer {
 		t.addFile(name, text, tags, null);
 		try {
 			makeRequest(t);
-		} catch (Exception e) {			
+		} catch (Exception e) {
 			onError("Error while adding file.", e);
 		}
 
@@ -173,15 +199,13 @@ public class NodejsTernServer extends AbstractTernServer {
 	public void request(TernDoc doc, IResponseHandler handler) {
 		try {
 			JsonObject json = makeRequest(doc);
-			handler.onSuccess(json,
-					handler.isDataAsJsonString() ? json.toString() : null);
+			handler.onSuccess(json, handler.isDataAsJsonString() ? json.toString() : null);
 		} catch (Exception e) {
 			handler.onError(e.getMessage(), e);
 		}
 	}
 
-	private JsonObject makeRequest(TernDoc doc) throws IOException,
-			InterruptedException, TernException {
+	private JsonObject makeRequest(TernDoc doc) throws IOException, InterruptedException, TernException {
 		String baseURL = null;
 		try {
 			baseURL = getBaseURL();
@@ -208,8 +232,7 @@ public class NodejsTernServer extends AbstractTernServer {
 			endReadState();
 		}
 
-		JsonObject json = NodejsTernHelper.makeRequest(baseURL, doc, false,
-				interceptors, this);
+		JsonObject json = NodejsTernHelper.makeRequest(baseURL, doc, false, interceptors, this);
 		return json;
 	}
 
@@ -263,17 +286,10 @@ public class NodejsTernServer extends AbstractTernServer {
 	private INodejsProcess getProcess() throws TernException {
 		if (process == null) {
 			ITernProject project = super.getProject();
-			process = NodejsProcessManager.getInstance().create(
-					project.getProjectDir());
+			process = NodejsProcessManager.getInstance().create(project.getProjectDir());
 			process.addProcessListener(listener);
 		}
-		initProcess(process);
 		return process;
-	}
-
-	private void initProcess(INodejsProcess process) {
-		process.setPersistent(persistent);
-		process.setLoadingLocalPlugins(isLoadingLocalPlugins());
 	}
 
 	public void addProcessListener(INodejsProcessListener listener) {
@@ -358,6 +374,44 @@ public class NodejsTernServer extends AbstractTernServer {
 	}
 
 	/**
+	 * Set the verbose.
+	 * 
+	 * @param verbose
+	 */
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+
+	/**
+	 * Returns true if tern is verbose and false otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isVerbose() {
+		return verbose;
+	}
+
+	/**
+	 * Set true if tern server server won't write a .tern-port file and false
+	 * otherwise.
+	 * 
+	 * @param noPortFile
+	 */
+	public void setNoPortFile(boolean noPortFile) {
+		this.noPortFile = noPortFile;
+	}
+
+	/**
+	 * return true if tern server server won't write a .tern-port file and false
+	 * otherwise.
+	 * 
+	 * @return
+	 */
+	public boolean isNoPortFile() {
+		return noPortFile;
+	}
+
+	/**
 	 * Set false if the server will shut itself down after five minutes of
 	 * inactivity and true otherwise.
 	 * 
@@ -376,9 +430,64 @@ public class NodejsTernServer extends AbstractTernServer {
 	public boolean isPersistent() {
 		return persistent;
 	}
-	
+
+	/**
+	 * Set true if tern plugins can be loaded from the project root and false
+	 * otherwise.
+	 * 
+	 * @see https://github.com/marijnh/tern/pull/394
+	 */
+	public void setLoadingLocalPlugins(boolean loadingLocalPlugins) {
+		this.loadingLocalPlugins = loadingLocalPlugins;
+	}
+
+	/**
+	 * Returns true if tern plugins can be loaded from the project root and
+	 * false otherwise.
+	 * 
+	 * @return true if tern plugins can be loaded from the project root and
+	 *         false otherwise.
+	 * @see https://github.com/marijnh/tern/pull/394
+	 */
+	public boolean isLoadingLocalPlugins() {
+		return loadingLocalPlugins;
+	}
+
+	/**
+	 * Return the node.js port and null if it is not a remote tern server.
+	 * 
+	 * @return
+	 */
+	public Integer getPort() {
+		return port;
+	}
+
 	protected void onError(String message, Throwable e) {
 		e.printStackTrace();
+	}
+
+	@Override
+	public List<String> createNodeArgs() {
+		List<String> args = new LinkedList<String>();
+		Integer port = getPort();
+		if (port != null) {
+			args.add("--port");
+			args.add(port.toString());
+		}
+		if (isVerbose()) {
+			args.add("--verbose");
+			args.add("1");
+		}
+		if (isNoPortFile()) {
+			args.add("--no-port-file");
+		}
+		if (isPersistent()) {
+			args.add("--persistent");
+		}
+		if (!isLoadingLocalPlugins()) {
+			args.add("--disable-loading-local");
+		}
+		return args;
 	}
 
 }

@@ -14,14 +14,10 @@ package tern.server.nodejs.process;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import tern.TernException;
 import tern.server.nodejs.NodejsTernHelper;
-import tern.server.nodejs.process.INodejsProcess;
-import tern.server.nodejs.process.INodejsProcessListener;
-import tern.server.nodejs.process.NodejsProcessException;
 
 /**
  * node.js process which starts tern server with node.js
@@ -38,6 +34,8 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 */
 	protected final File projectDir;
 
+	private INodejsArgsProvider argsProvider;
+
 	/**
 	 * Port of the node.js server.
 	 */
@@ -47,29 +45,6 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 * Elapsed time to start node.js process.
 	 */
 	private long elapsedSartTime = 0;
-
-	/**
-	 * true if tern server must be verbose and false otherwise.
-	 */
-	private boolean verbose;
-
-	/**
-	 * true if tern server server won�t write a .tern-port file and false
-	 * otherwise.
-	 */
-	private boolean noPortFile;
-
-	/**
-	 * false if the server will shut itself down after five minutes of
-	 * inactivity and true otherwise.
-	 */
-	private boolean persistent;
-
-	/**
-	 * true if tern plugins can be loaded from the project root and false
-	 * otherwise
-	 */
-	private boolean loadingLocalPlugins;
 
 	/**
 	 * Process listeners.
@@ -101,30 +76,6 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.listeners = new ArrayList<INodejsProcessListener>();
 		this.hasError = false;
-		setNoPortFile(true);
-	}
-
-	protected List<String> createTernServerArgs() {
-		List<String> args = new LinkedList<String>();
-		Integer port = getPort();
-		if (port != null) {
-			args.add("--port");
-			args.add(port.toString());
-		}
-		if (isVerbose()) {
-			args.add("--verbose");
-			args.add("1");
-		}
-		if (isNoPortFile()) {
-			args.add("--no-port-file");
-		}
-		if (isPersistent()) {
-			args.add("--persistent");
-		}
-		if (!isLoadingLocalPlugins()) {
-			args.add("--disable-loading-local");
-		}
-		return args;
 	}
 
 	/**
@@ -138,8 +89,7 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 * @throws IOException
 	 * @throws TernException
 	 */
-	public int start(long timeout, int testNumber)
-			throws NodejsProcessException, InterruptedException {
+	public int start(long timeout, int testNumber) throws NodejsProcessException, InterruptedException {
 		if (!isStarted()) {
 			start();
 		}
@@ -160,15 +110,14 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 * @throws NodejsProcessException
 	 *             throw this exception if node.js process cannot be started.
 	 */
-	private void waitOnStartNodejs(long timeout, int testNumber)
-			throws InterruptedException, NodejsProcessException {
+	private void waitOnStartNodejs(long timeout, int testNumber) throws InterruptedException, NodejsProcessException {
 		if (port == null) {
 			// node.js process is not started, loop for test number and wait on
 			// timeout.
 			if (!hasError) {
 				for (int i = 0; i < testNumber; i++) {
 					synchronized (lock) {
-						// wait untim timeout.
+						// wait until timeout.
 						lock.wait(timeout);
 						if (port != null || hasError) {
 							// here node.js is started, stop teh wait.
@@ -200,86 +149,6 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 */
 	protected void setPort(Integer port) {
 		this.port = port;
-	}
-
-	/**
-	 * Set the verbose.
-	 * 
-	 * @param verbose
-	 */
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
-
-	/**
-	 * Returns true if tern is verbose and false otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isVerbose() {
-		return verbose;
-	}
-
-	/**
-	 * Set true if tern server server won't write a .tern-port file and false
-	 * otherwise.
-	 * 
-	 * @param noPortFile
-	 */
-	public void setNoPortFile(boolean noPortFile) {
-		this.noPortFile = noPortFile;
-	}
-
-	/**
-	 * return true if tern server server won't write a .tern-port file and false
-	 * otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isNoPortFile() {
-		return noPortFile;
-	}
-
-	/**
-	 * Set false if the server will shut itself down after five minutes of
-	 * inactivity and true otherwise.
-	 * 
-	 * @param persistent
-	 */
-	public void setPersistent(boolean persistent) {
-		this.persistent = persistent;
-	}
-
-	/**
-	 * Returns false if the server will shut itself down after five minutes of
-	 * inactivity and true otherwise.
-	 * 
-	 * @return
-	 */
-	public boolean isPersistent() {
-		return persistent;
-	}
-
-	/**
-	 * Set true if tern plugins can be loaded from the project root and false
-	 * otherwise.
-	 * 
-	 * @see https://github.com/marijnh/tern/pull/394
-	 */
-	public void setLoadingLocalPlugins(boolean loadingLocalPlugins) {
-		this.loadingLocalPlugins = loadingLocalPlugins;
-	}
-
-	/**
-	 * Returns true if tern plugins can be loaded from the project root and
-	 * false otherwise.
-	 * 
-	 * @return true if tern plugins can be loaded from the project root and
-	 *         false otherwise.
-	 * @see https://github.com/marijnh/tern/pull/394
-	 */
-	public boolean isLoadingLocalPlugins() {
-		return loadingLocalPlugins;
 	}
 
 	/**
@@ -384,4 +253,12 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 		}
 	}
 
+	protected List<String> createNodejsArgs() {
+		return argsProvider.createNodeArgs();
+	}
+	
+	@Override
+	public void setNodejsArgsProvider(INodejsArgsProvider argsProvider) {
+		this.argsProvider = argsProvider;		
+	}
 }
