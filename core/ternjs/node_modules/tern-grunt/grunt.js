@@ -8,8 +8,12 @@
 (function(infer, tern) {
   "use strict";
 
+  function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  }
+  
   function isGrunfile(filename) {
-    return filename === "[doc]" || filename === "Gruntfile.js";
+    return filename === "[doc]" || endsWith(filename, "Gruntfile.js");
   }
   
   function getTasks(filename) {
@@ -75,7 +79,7 @@
           taskName = taskName.substring(0, index); 
           targetName = name.substring(index+1, name.length);
         }
-        var filename = file.name, tasks = getTasks(filename), task = tasks[taskName];
+        var filename = file.name, tasks = getTasks(filename), task = tasks ? tasks[taskName] : null;
         if (task) {
           if (targetName && task.targets) task = task.targets[targetName];
           var node = task && task.node;                    

@@ -1,7 +1,7 @@
 {
   "name": "tern-grunt",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "grunt.js",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
   "description": "A Tern plugin for Grunt.",
@@ -14,11 +14,11 @@
     "publish": "node ./scripts/git-tag.js"
   },  
   "dependencies": {
-    "tern": ">=0.15.0"
+    "tern": ">=0.17.0"
   },
   "devDependencies": { 
   	"test": ">=0.0.5",
-  	"codemirror": "^5.8.0",
+  	"codemirror": "^5.10.0",
   	"codemirror-extension": "^0.2.0",
     "codemirror-javascript": "^0.2.0"
   },   

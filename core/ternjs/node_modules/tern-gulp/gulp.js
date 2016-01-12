@@ -7,8 +7,12 @@
 })(function(infer, tern) {
   "use strict";
 
+  function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+  }
+  
   function isGulpfile(filename) {
-    return filename === "[doc]" || filename === "gulpfile.js";
+    return filename === "[doc]" || endsWith(filename, "gulpfile.js");
   }
   
   function getTasks(filename) {
