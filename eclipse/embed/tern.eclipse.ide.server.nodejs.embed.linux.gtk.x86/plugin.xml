@@ -19,10 +19,10 @@
 
 	<extension point="tern.eclipse.ide.server.nodejs.core.nodeJSInstalls" >
 		<install
-        id="node-v0.10.22-linux-x86"
-        name="%nodeJSInstall_v0.10.22.name"
-        path="/node-v0.10.22-linux-x86/bin/node"
-        zip="/node-v0.10.22-linux-x86.zip"/>
+        id="node-v4.2.4-linux-x86"
+        name="%nodeJSInstall_v4.2.4.name"
+        path="/node-v4.2.4-linux-x86/bin/node"
+        zip="/node-v4.2.4-linux-x86.zip"/>
 	 </extension>
 	 
 </plugin>        
