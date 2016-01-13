@@ -94,5 +94,5 @@ public interface INodejsProcess {
 	 */
 	public void removeProcessListener(INodejsProcessListener listener);
 
-	void setNodejsArgsProvider(INodejsArgsProvider argsProvider);
+	void setLaunchConfiguration(INodejsLaunchConfiguration argsProvider);
 }

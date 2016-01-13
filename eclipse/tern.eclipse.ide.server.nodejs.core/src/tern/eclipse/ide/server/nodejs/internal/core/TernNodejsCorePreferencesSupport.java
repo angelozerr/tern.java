@@ -9,7 +9,7 @@
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  *  Piotr Tomiak <piotr@genuitec.com> - support for tern.js debugging
  */
-package tern.eclipse.ide.server.nodejs.internal.core.preferences;
+package tern.eclipse.ide.server.nodejs.internal.core;
 
 import java.io.File;
 

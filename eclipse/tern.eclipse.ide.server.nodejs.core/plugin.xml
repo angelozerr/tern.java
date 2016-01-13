@@ -30,5 +30,15 @@
 		<initializer
 			class="tern.eclipse.ide.server.nodejs.internal.core.preferences.TernNodejsCorePreferenceInitializer" />
 	</extension>
-		 	
+	
+	<!-- Run debugger -->	 	
+   <extension
+         point="tern.eclipse.ide.server.nodejs.core.nodeJSDebuggers">
+      <debugger
+            class="tern.eclipse.ide.server.nodejs.internal.core.debugger.ProgramNodejsDebugger"
+            id="Program"
+            name="Run node.js">
+      </debugger>
+   </extension>
+   		 	
 </plugin>

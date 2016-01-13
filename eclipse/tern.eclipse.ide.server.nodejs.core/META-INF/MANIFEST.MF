@@ -15,4 +15,6 @@ Bundle-ActivationPolicy: lazy
 Export-Package: tern.eclipse.ide.server.nodejs.core,
  tern.eclipse.ide.server.nodejs.core.debugger
 Bundle-Activator: tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin
-Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"
+Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)",
+ org.eclipse.core.externaltools.internal,
+ org.eclipse.core.variables

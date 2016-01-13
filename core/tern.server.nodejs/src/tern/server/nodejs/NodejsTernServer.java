@@ -36,7 +36,7 @@ import tern.server.IInterceptor;
 import tern.server.IResponseHandler;
 import tern.server.TernPlugin;
 import tern.server.WebSocketContainerProvider;
-import tern.server.nodejs.process.INodejsArgsProvider;
+import tern.server.nodejs.process.INodejsLaunchConfiguration;
 import tern.server.nodejs.process.INodejsProcess;
 import tern.server.nodejs.process.INodejsProcessListener;
 import tern.server.nodejs.process.NodejsProcessAdapter;
@@ -52,7 +52,7 @@ import tern.server.protocol.html.ScriptTagRegion;
  * Tern server implemented with node.js
  * 
  */
-public class NodejsTernServer extends AbstractTernServer implements INodejsArgsProvider {
+public class NodejsTernServer extends AbstractTernServer implements INodejsLaunchConfiguration {
 
 	private static final String BASE_URL = "http://127.0.0.1:";
 	private static final String HTTP_PROTOCOL = "http:";
@@ -96,6 +96,10 @@ public class NodejsTernServer extends AbstractTernServer implements INodejsArgsP
 	 * otherwise
 	 */
 	private boolean loadingLocalPlugins;
+
+	private boolean isDebugLaunch;
+
+	private boolean isSaveLaunch;
 
 	private final INodejsProcessListener listener = new NodejsProcessAdapter() {
 
@@ -175,7 +179,7 @@ public class NodejsTernServer extends AbstractTernServer implements INodejsArgsP
 	public NodejsTernServer(ITernProject project, INodejsProcess process) {
 		super(project);
 		this.process = process;
-		process.setNodejsArgsProvider(this);
+		process.setLaunchConfiguration(this);
 		process.addProcessListener(listener);
 	}
 
@@ -192,7 +196,6 @@ public class NodejsTernServer extends AbstractTernServer implements INodejsArgsP
 		} catch (Exception e) {
 			onError("Error while adding file.", e);
 		}
-
 	}
 
 	@Override
@@ -490,4 +493,31 @@ public class NodejsTernServer extends AbstractTernServer implements INodejsArgsP
 		return args;
 	}
 
+	@Override
+	public String generateLaunchConfigurationName() {
+		return "tern.js for " + getProject().getProjectDir().getName();
+	}
+
+	@Override
+	public String getLaunchMode() {
+		return isDebugLaunch ? "debug" : "run";
+	}
+
+	public void setDebugLaunch(boolean isDebugLaunch) {
+		this.isDebugLaunch = isDebugLaunch;
+	}
+
+	@Override
+	public boolean isSaveLaunch() {
+		return isSaveLaunch;
+	}
+
+	public void setSaveLaunch(boolean isSaveLaunch) {
+		this.isSaveLaunch = isSaveLaunch;
+	}
+
+	@Override
+	public boolean isWaitOnPort() {
+		return true;
+	}
 }

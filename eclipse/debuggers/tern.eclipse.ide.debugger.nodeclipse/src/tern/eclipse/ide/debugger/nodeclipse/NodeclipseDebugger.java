@@ -13,27 +13,27 @@ package tern.eclipse.ide.debugger.nodeclipse;
 import java.io.File;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.debug.core.DebugPlugin;
+import org.eclipse.core.resources.IProject;
 
 import tern.TernException;
-import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebuggerDelegate;
+import tern.eclipse.ide.server.nodejs.core.debugger.AbstractNodejsDebuggerDelegate;
 import tern.server.nodejs.process.INodejsProcess;
 
-public class NodeclipseDebugger implements INodejsDebuggerDelegate {
+/**
+ * Nodeclipse debugger delegate implementation.
+ */
+public class NodeclipseDebugger extends AbstractNodejsDebuggerDelegate {
 
 	static final String LAUNCH_CONFIG_ID = "org.nodeclipse.debug.launch.LaunchConfigurationType"; //$NON-NLS-1$
 
-	@Override
-	public boolean isInstalled() {
-		return DebugPlugin.getDefault().getLaunchManager()
-				.getLaunchConfigurationType(LAUNCH_CONFIG_ID) != null;
+	public NodeclipseDebugger() {
+		super(LAUNCH_CONFIG_ID, true);
 	}
 
 	@Override
-	public INodejsProcess createProcess(File projectDir, File nodejsBaseDir,
-			IFile ternServerFile) throws TernException {
-		return new NodeclipseNodejsDebugProcess(nodejsBaseDir, ternServerFile,
-				projectDir);
+	public INodejsProcess createProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath)
+			throws TernException {
+		return new NodeclipseNodejsDebugProcess(jsFile, workingDir, nodejsInstallPath, getLaunchId());
 	}
 
 }

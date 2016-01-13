@@ -34,7 +34,7 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 */
 	protected final File projectDir;
 
-	private INodejsArgsProvider argsProvider;
+	private INodejsLaunchConfiguration launchConfiguration;
 
 	/**
 	 * Port of the node.js server.
@@ -70,8 +70,7 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 	 *            the project base dir where .tern-project is hosted.
 	 * @throws TernException
 	 */
-	public AbstractNodejsProcess(File nodejsBaseDir, File projectDir)
-			throws TernException {
+	public AbstractNodejsProcess(File nodejsBaseDir, File projectDir) throws TernException {
 		this.projectDir = projectDir;
 		this.nodejsBaseDir = nodejsBaseDir;
 		this.listeners = new ArrayList<INodejsProcessListener>();
@@ -253,12 +252,19 @@ public abstract class AbstractNodejsProcess implements INodejsProcess {
 		}
 	}
 
-	protected List<String> createNodejsArgs() {
-		return argsProvider.createNodeArgs();
+	protected List<String> createNodejsArgs() throws NodejsProcessException {
+		return getLaunchConfiguration().createNodeArgs();
 	}
-	
+
+	protected INodejsLaunchConfiguration getLaunchConfiguration() throws NodejsProcessException {
+		if (launchConfiguration == null) {
+			throw new NodejsProcessException("Launch configuration cannot be null.");
+		}
+		return launchConfiguration;
+	}
+
 	@Override
-	public void setNodejsArgsProvider(INodejsArgsProvider argsProvider) {
-		this.argsProvider = argsProvider;		
+	public void setLaunchConfiguration(INodejsLaunchConfiguration launchConfiguration) {
+		this.launchConfiguration = launchConfiguration;
 	}
 }
