@@ -17,6 +17,8 @@ import tern.utils.ZipUtils;
 
 public class PathHelper {
 
+	private static final String NODE_VERSION = "4.2.4";
+	
 	/**
 	 * Returns nodejs base dir switch OS.
 	 *
@@ -51,14 +53,14 @@ public class PathHelper {
 		if ("win32".equals(os)) {
 			file = new File(
 					"../../eclipse/embed/tern.eclipse.ide.server.nodejs.embed." + os
-							+ "." + ws + "." + arch + "/node-v0.10.22-" + os
+							+ "." + ws + "." + arch + "/node-v" + NODE_VERSION + "-" + os
 							+ "-" + arch + "/node");
 
 		} else {
 			// Linux, mac...
 			file = new File(
 					"../../eclipse/embed/tern.eclipse.ide.server.nodejs.embed." + os
-							+ "." + ws + "." + arch + "/node-v0.10.22-" + os
+							+ "." + ws + "." + arch + "/node-v" + NODE_VERSION + "-" + os
 							+ "-" + arch + "/bin/node");
 		}
 
@@ -69,7 +71,7 @@ public class PathHelper {
 
 	private static void unZipIfNecessary(String os, String ws, String arch) {
 		String folderName = "../../eclipse/embed/tern.eclipse.ide.server.nodejs.embed."
-				+ os + "." + ws + "." + arch + "/node-v0.10.22-" + os
+				+ os + "." + ws + "." + arch + "/node-v" + NODE_VERSION + "-" + os
 				+ "-" + arch;
 		File file = new File(folderName);
 		if (!file.exists()) {
