@@ -91,7 +91,7 @@ public class TernAngularScope extends JsonObject {
 				String keyIdentifier = matcher.group(2);
 
 				JsonObject repeat = new JsonObject();
-				repeat.add("repeat", rhs);
+				repeat.add("ngRepeat", rhs);
 				if (keyIdentifier != null) {
 					getProps().add(keyIdentifier, repeat);
 				}

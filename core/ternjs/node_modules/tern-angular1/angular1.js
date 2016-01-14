@@ -58,7 +58,7 @@
   function getInclude(mod, name) {
     var glob = globalInclude(name);
     if (glob) {
-      if (glob.getType() && glob.getType().hasProp && glob.getType().hasProp("prototype")) return new infer.Obj(glob.getType().hasProp("prototype").getType()); // ex : $routeProvider
+      if (glob.getType && glob.getType() && glob.getType().metaData && glob.getType().metaData.instance == true) return new infer.Obj(glob.getType().hasProp("prototype").getType()); // ex : $routeProvider
       return glob;
     }
     if (!mod.injector) return infer.ANull;
@@ -1649,6 +1649,9 @@
           }
         },         
         $routeProvider: {
+          "!data": {
+            "instance": true
+          },
           prototype: {
             "!url": "https://docs.angularjs.org/api/ngRoute/provider/$routeProvider",
             "!doc": "Checks current value of $location.hash() and scroll to related element.",
@@ -1879,10 +1882,10 @@
 
   function getExpressionType(root, controllerAs, context, index, scopeProps, isArray) {
     var obj = root, prop = context[index];
-    if (index == 0) {      
-      if (scopeProps && scopeProps[prop] && scopeProps[prop].repeat) {
-        var arrProp = scopeProps[prop].repeat;
-        obj = getExpressionType(root, controllerAs, arrProp.split("."), 0, null, true); 
+    if (index == 0) {
+      var ngRepeat = scopeProps && scopeProps[prop] && scopeProps[prop].ngRepeat;
+      if (ngRepeat) {
+        obj = getExpressionType(root, controllerAs, ngRepeat.split("."), 0, null, true); 
         index++;
       } else if (controllerAs) {
         index++;
@@ -2326,9 +2329,10 @@
                   for ( var prop in scopeProps) {
                     if (startsWithString(prop, word)) {
                       var obj = null;
-                      if (scopeProps[prop].repeat) {
-                        var arrProp = scopeProps[prop].repeat; // case when ngRepeat;
-                        obj = getExpressionType(scopeCtrl, controllerAs, arrProp.split("."), 0, scopeProps, true);                   
+                      var ngRepeat = scopeProps && scopeProps[prop] && scopeProps[prop].ngRepeat;
+                      if (ngRepeat) {
+                        // case when ngRepeat;
+                        obj = getExpressionType(scopeCtrl, controllerAs, ngRepeat.split("."), 0, scopeProps, true);                   
                       }
                       gather(prop, obj, null, true);
                     }
@@ -2349,7 +2353,7 @@
         if (!context && scopeProps) {
           // case when ngModel defines a simple variable (which cannot be defined in the $scope).
           for ( var prop in scopeProps) {
-              if (!scopeProps[prop].repeat) gather(prop, null, null, true);
+              if (!scopeProps[prop].ngRepeat) gather(prop, null, null, true);
           }
         }
         // $rootScope of module
@@ -2506,9 +2510,10 @@
                             for ( var prop in scopeProps) {
                               if (prop ===  word) {
                                 var obj = null;
-                                if (scopeProps[prop].repeat) {
-                                  var arrProp = scopeProps[prop].repeat; // case when ngRepeat;
-                                  obj = getExpressionType(scopeCtrl, controllerAs, arrProp.split("."), 0, scopeProps, true);                   
+                                var ngRepeat = scopeProps && scopeProps[prop] && scopeProps[prop].ngRepeat;
+                                if (ngRepeat) { 
+                                  // case when ngRepeat;
+                                  obj = getExpressionType(scopeCtrl, controllerAs, ngRepeat.split("."), 0, scopeProps, true);                   
                                 }
                                 gather(prop, obj, null, true);
                               }
@@ -2614,11 +2619,8 @@
                 if (scopeProps) {
                   for ( var prop in scopeProps) {
                     if (prop ===  word) {
-                      var obj = null;
-                      if (scopeProps[prop].repeat) {
-                        var arrProp = scopeProps[prop].repeat; // case when ngRepeat;
-                        obj = getExpressionType(scopeCtrl, controllerAs, arrProp.split("."), 0, scopeProps, true);                   
-                      }
+                      var obj = null, ngRepeat = scopeProps && scopeProps[prop] && scopeProps[prop].ngRepeat;
+                      if (ngRepeat) obj = getExpressionType(scopeCtrl, controllerAs, ngRepeat.split("."), 0, scopeProps, true);                                         
                       gather(prop, obj, null, true);
                     }
                   }

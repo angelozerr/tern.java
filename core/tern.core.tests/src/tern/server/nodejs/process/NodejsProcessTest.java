@@ -12,6 +12,8 @@ package tern.server.nodejs.process;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Ignore;
@@ -49,8 +51,7 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
-		INodejsProcess process = NodejsProcessManager.getInstance().create(
-				projectDir, nodejsBaseDir, nodejsTernBaseDir);
+		INodejsProcess process = createProcess(nodejsBaseDir, nodejsTernBaseDir, projectDir);
 		process.addProcessListener(new NodejsProcessAdapter() {
 
 			@Override
@@ -66,6 +67,41 @@ public class NodejsProcessTest {
 		}
 	}
 
+	protected INodejsProcess createProcess(File nodejsBaseDir, File nodejsTernBaseDir, File projectDir)
+			throws TernException {
+		INodejsProcess process = NodejsProcessManager.getInstance().create(
+				projectDir, nodejsBaseDir, nodejsTernBaseDir);
+		process.setLaunchConfiguration(new INodejsLaunchConfiguration() {
+			
+			@Override
+			public boolean isWaitOnPort() {
+				return true;
+			}
+			
+			@Override
+			public boolean isSaveLaunch() {
+				return false;
+			}
+			
+			@Override
+			public String getLaunchMode() {
+				return null;
+			}
+			
+			@Override
+			public String generateLaunchConfigurationName() {
+				return null;
+			}
+			
+			@Override
+			public List<String> createNodeArgs() {
+				List<String> args = new LinkedList<String>();
+				return args;
+			}
+		});
+		return process;
+	}
+
 	@Ignore("fail on macosx")
 	@Test
 	public void badNodejsTernBaseDir() throws IOException,
@@ -76,8 +112,7 @@ public class NodejsProcessTest {
 		File projectDir = new File(".");
 
 		try {
-			NodejsProcessManager.getInstance().create(projectDir,
-					nodejsBaseDir, nodejsTernBaseDir);
+			createProcess(nodejsBaseDir, nodejsTernBaseDir, projectDir);
 			Assert.assertTrue(false);
 		} catch (Exception e) {
 			Assert.assertTrue(e.getMessage(), true);
@@ -91,8 +126,7 @@ public class NodejsProcessTest {
 		File nodejsTernBaseDir = PathHelper.getNodejsTernBaseDir();
 		File projectDir = new File(".");
 
-		INodejsProcess process = NodejsProcessManager.getInstance().create(
-				projectDir, nodejsBaseDir, nodejsTernBaseDir);
+		INodejsProcess process = createProcess(nodejsBaseDir, nodejsTernBaseDir, projectDir);
 
 		final StringBuilder error = new StringBuilder();
 		process.addProcessListener(new NodejsProcessAdapter() {
