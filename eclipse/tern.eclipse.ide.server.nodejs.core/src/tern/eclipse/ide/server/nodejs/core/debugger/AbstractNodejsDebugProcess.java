@@ -16,10 +16,12 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
+import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
@@ -31,6 +33,10 @@ import tern.server.nodejs.process.AbstractNodejsProcess;
 import tern.server.nodejs.process.NodejsProcessException;
 import tern.utils.TernModuleHelper;
 
+/**
+ * Abstract class for node debug process.
+ *
+ */
 public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 
 	private final IProject workingDir;
@@ -54,8 +60,7 @@ public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 	}
 
 	protected String getWorkingDir() {
-		return VariablesPlugin.getDefault().getStringVariableManager().generateVariableExpression("workspace_loc",
-				workingDir.getName());
+		return VariableHelper.getWorkspaceLoc(workingDir);
 	}
 
 	@Override
@@ -75,18 +80,37 @@ public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
 		try {
 			ILaunchConfigurationType type = manager.getLaunchConfigurationType(launchConfigId);
-			ILaunchConfigurationWorkingCopy workingCopy = type.newInstance(null,
-					manager.generateLaunchConfigurationName(generateConfigurationName()));
+			String launchName = generateConfigurationName();
+			ILaunchConfigurationWorkingCopy workingCopy = null;
+			// Try to find existing launch
+			/*ILaunchConfiguration configuration = getExistingLaunchConfiguration(type, launchName);
+			if (configuration != null) {
+				workingCopy = configuration.getWorkingCopy();
+			} else {*/
+				workingCopy = type.newInstance(null, manager.generateLaunchConfigurationName(launchName));
+			//}
 			start(workingCopy);
-			if (isSaveLaunch()) {
+			/*if (isSaveLaunch()) {
 				workingCopy.doSave();
-			}
+			}*/
 		} catch (Exception e) {
 			if (e instanceof NodejsProcessException) {
 				throw (NodejsProcessException) e;
 			}
 			throw new NodejsProcessException(e);
 		}
+	}
+
+	private ILaunchConfiguration getExistingLaunchConfiguration(ILaunchConfigurationType type, String launchName)
+			throws CoreException {
+		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
+		ILaunchConfiguration[] configs = manager.getLaunchConfigurations(type);
+		for (ILaunchConfiguration config : configs) {
+			if (launchName.equals(config.getName())) {
+				return config;
+			}
+		}
+		return null;
 	}
 
 	@Override

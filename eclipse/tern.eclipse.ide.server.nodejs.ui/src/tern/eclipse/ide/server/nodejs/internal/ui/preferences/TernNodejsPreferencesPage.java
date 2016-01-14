@@ -25,13 +25,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
 
 import tern.eclipse.ide.core.TernCorePlugin;
-import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
@@ -152,7 +150,7 @@ public class TernNodejsPreferencesPage extends FieldEditorPreferencePage impleme
 		addField(nativeNodePath);
 	}
 
-	public void createSeparator(Composite parent) {
+	private void createSeparator(Composite parent) {
 		Label separator = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		gd.horizontalSpan = 4;
