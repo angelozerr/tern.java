@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
+package tern.eclipse.ide.ui.preferences;
 
 import java.io.File;
 

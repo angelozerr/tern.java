@@ -18,6 +18,8 @@ import java.io.File;
  */
 public interface INodejsInstall {
 
+	public static final String NODE_NATIVE = "node-native";
+	
 	/**
 	 * Returns the id of this Nodejs install. Each known Nodejs install has a
 	 * distinct id. Ids are intended to be used internally as keys; they are not

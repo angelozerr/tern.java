@@ -18,3 +18,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide
 Bundle-Activator: tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin
 Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"
+Export-Package: tern.eclipse.ide.server.nodejs.ui.preferences

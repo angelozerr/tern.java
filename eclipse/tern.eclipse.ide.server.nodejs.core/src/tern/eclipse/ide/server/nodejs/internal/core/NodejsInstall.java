@@ -22,8 +22,6 @@ import tern.utils.ZipUtils;
 
 public class NodejsInstall implements INodejsInstall {
 
-	public static final String NODE_NATIVE = "node-native";
-
 	private final String id;
 	private final String name;
 	private File path;
