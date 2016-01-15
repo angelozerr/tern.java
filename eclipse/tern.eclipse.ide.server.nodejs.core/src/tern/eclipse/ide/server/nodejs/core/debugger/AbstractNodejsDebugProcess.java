@@ -83,16 +83,16 @@ public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 			String launchName = generateConfigurationName();
 			ILaunchConfigurationWorkingCopy workingCopy = null;
 			// Try to find existing launch
-			/*ILaunchConfiguration configuration = getExistingLaunchConfiguration(type, launchName);
+			ILaunchConfiguration configuration = getExistingLaunchConfiguration(type, launchName);
 			if (configuration != null) {
 				workingCopy = configuration.getWorkingCopy();
-			} else {*/
+			} else {
 				workingCopy = type.newInstance(null, manager.generateLaunchConfigurationName(launchName));
-			//}
+			}
 			start(workingCopy);
-			/*if (isSaveLaunch()) {
+			if (isSaveLaunch()) {
 				workingCopy.doSave();
-			}*/
+			}
 		} catch (Exception e) {
 			if (e instanceof NodejsProcessException) {
 				throw (NodejsProcessException) e;
@@ -106,7 +106,7 @@ public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 		ILaunchManager manager = DebugPlugin.getDefault().getLaunchManager();
 		ILaunchConfiguration[] configs = manager.getLaunchConfigurations(type);
 		for (ILaunchConfiguration config : configs) {
-			if (launchName.equals(config.getName())) {
+			if (config.getName().startsWith(launchName)) {
 				return config;
 			}
 		}
