@@ -10,15 +10,21 @@
  */
 package tern.eclipse.ide.server.nodejs.ui.debugger.launchConfigurations;
 
+import java.io.File;
+
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.accessibility.AccessibleAdapter;
 import org.eclipse.swt.accessibility.AccessibleEvent;
@@ -32,19 +38,27 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.ResourceSelectionDialog;
-import org.eclipse.ui.externaltools.internal.launchConfigurations.ExternalToolsLaunchConfigurationMessages;
-import org.eclipse.ui.externaltools.internal.model.ExternalToolsPlugin;
-
+import tern.eclipse.ide.server.nodejs.core.IDENodejsProcessHelper;
+import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
+import tern.eclipse.ide.server.nodejs.core.INodejsInstallManager;
+import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.core.debugger.launchConfigurations.INodejsCliFileLaunchConfigurationConstants;
+import tern.eclipse.ide.server.nodejs.core.debugger.launchConfigurations.NodejsCliFileHelper;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
+import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin;
 import tern.eclipse.ide.server.nodejs.internal.ui.preferences.DebuggerFieldEditor;
 import tern.eclipse.ide.server.nodejs.internal.ui.preferences.NodeJSConfigEditor;
+import tern.utils.StringUtils;
 
+/**
+ * Abstract class for tab of launch of client file (ex: protractor tab).
+ */
 public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends AbstractLaunchConfigurationTab {
 
 	private Text cliFileField;
@@ -56,10 +70,13 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 	protected WidgetListener fListener = new WidgetListener();
 	private Combo debuggerField;
 	private String[][] debuggers;
+
 	private Label nodePathTitle;
-	private Text nodePath;
+	private Text nodePathInfo;
 	private Combo nodeInstallField;
 	private String[][] nodeInstalls;
+	private Combo nodePathField;
+	private Button nodePathButton;
 
 	/**
 	 * A listener to update for text modification and widget selection.
@@ -84,25 +101,12 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 			Object source = e.getSource();
 			if (source == workspaceLocationButton) {
 				handleWorkspaceLocationButtonSelected();
-			} else if(source == debuggerField) {
+			} else if (source == debuggerField || source == nodeInstallField || source == nodePathField) {
 				updateLaunchConfiguration();
+			} else if (source == nodePathButton) {
+				handleNodePathButtonSelected();
 			}
-			/*
-			 * else if (source == fileLocationButton) {
-			 * handleFileLocationButtonSelected(); } else if (source ==
-			 * workspaceWorkingDirectoryButton) {
-			 * handleWorkspaceWorkingDirectoryButtonSelected(); } else if
-			 * (source == fileWorkingDirectoryButton) {
-			 * handleFileWorkingDirectoryButtonSelected(); } else if (source ==
-			 * argumentVariablesButton) {
-			 * handleVariablesButtonSelected(argumentField); } else if (source
-			 * == variablesLocationButton) {
-			 * handleVariablesButtonSelected(locationField); } else if (source
-			 * == variablesWorkingDirectoryButton) {
-			 * handleVariablesButtonSelected(workDirectoryField); }
-			 */
 		}
-
 	}
 
 	@Override
@@ -148,21 +152,19 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 		buttonComposite.setLayoutData(gridData);
 		buttonComposite.setFont(parent.getFont());
 
-		workspaceLocationButton = createPushButton(buttonComposite,
-				ExternalToolsLaunchConfigurationMessages.ExternalToolsMainTab__Browse_Workspace____3, null);
+		workspaceLocationButton = createPushButton(buttonComposite, TernNodejsUIMessages.Button_browse_workspace, null);
 		workspaceLocationButton.addSelectionListener(fListener);
 		addControlAccessibleListener(workspaceLocationButton,
 				group.getText() + " " + workspaceLocationButton.getText()); //$NON-NLS-1$
 
 		// fileLocationButton= createPushButton(buttonComposite,
-		// ExternalToolsLaunchConfigurationMessages.ExternalToolsMainTab_Brows_e_File_System____4,
+		// TernNodejsUIMessages.ExternalToolsMainTab_Brows_e_File_System____4,
 		// null);
 		// fileLocationButton.addSelectionListener(fListener);
 		// addControlAccessibleListener(fileLocationButton, group.getText() + "
 		// " + fileLocationButton.getText()); //$NON-NLS-1$
 
-		variablesLocationButton = createPushButton(buttonComposite,
-				ExternalToolsLaunchConfigurationMessages.ExternalToolsMainTab_31, null);
+		variablesLocationButton = createPushButton(buttonComposite, TernNodejsUIMessages.Button_variables, null);
 		variablesLocationButton.addSelectionListener(fListener);
 		addControlAccessibleListener(variablesLocationButton,
 				group.getText() + " " + variablesLocationButton.getText()); //$NON-NLS-1$
@@ -188,7 +190,7 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 		debuggerField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		debuggerField.addSelectionListener(fListener);
 		addControlAccessibleListener(debuggerField, group.getText());
-		
+
 		Link debuggerWikiLink = DebuggerFieldEditor.newWikiLink(group, SWT.NONE);
 		GridData gd = new GridData(GridData.FILL_HORIZONTAL);
 		debuggerWikiLink.setLayoutData(gd);
@@ -211,12 +213,48 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 		}
 		nodeInstallField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		nodeInstallField.addSelectionListener(fListener);
+		nodeInstallField.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				int nodeInstallSelectionIndex = nodeInstallField.getSelectionIndex();
+				String nodeInstallId = nodeInstalls[nodeInstallSelectionIndex][1];
+				INodejsInstall install = TernNodejsCorePlugin.getNodejsInstallManager()
+						.findNodejsInstall(nodeInstallId);
+				if (install == null || install.isNative()) {
+					nodePathField.setEnabled(true);
+					String defaultPath = IDENodejsProcessHelper.getNodejsPath();
+					nodePathField.setText(defaultPath);
+					nodePathInfo.setText(defaultPath);
+
+				} else {
+					nodePathField.setEnabled(false);
+					nodePathInfo.setText(install.getPath().getAbsolutePath());
+				}
+			}
+		});
 		addControlAccessibleListener(nodeInstallField, group.getText());
+
+		Composite pathComponent = new Composite(group, SWT.NONE);
+		pathComponent.setLayout(new GridLayout(2, false));
+		pathComponent.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+		nodePathField = new Combo(pathComponent, SWT.NONE);
+		nodePathField.setFont(pathComponent.getFont());
+		nodePathField.setItems(IDENodejsProcessHelper.getDefaultNodejsPaths());
+		nodePathField.addSelectionListener(fListener);
+		nodePathField.addModifyListener(fListener);
+		nodePathField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		addControlAccessibleListener(nodePathField, group.getText());
+
+		nodePathButton = createPushButton(pathComponent, TernNodejsUIMessages.Button_browse, null);
+		nodePathButton.addSelectionListener(fListener);
+		addControlAccessibleListener(nodePathButton, group.getText() + " " + nodePathButton.getText()); //$NON-NLS-1$
+
 		group.setLayoutData(gridData);
-		
+
 		createNodePathInfo(group);
 	}
-	
+
 	private void createNodePathInfo(Composite parent) {
 		// Node path label
 		nodePathTitle = new Label(parent, SWT.NONE);
@@ -224,20 +262,20 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 		GridData gridData = new GridData(GridData.VERTICAL_ALIGN_BEGINNING);
 		nodePathTitle.setLayoutData(gridData);
 
-		nodePath = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
-		nodePath.setText(""); //$NON-NLS-1$
+		nodePathInfo = new Text(parent, SWT.WRAP | SWT.READ_ONLY);
+		nodePathInfo.setText(""); //$NON-NLS-1$
 		gridData = new GridData(GridData.FILL_BOTH);
 		gridData.horizontalSpan = 2;
 		gridData.widthHint = 200;
-		nodePath.setLayoutData(gridData);
+		nodePathInfo.setLayoutData(gridData);
 	}
 
-	
 	@Override
 	public void initializeFrom(ILaunchConfiguration configuration) {
 		fInitializing = true;
 		updateCliFile(configuration);
 		updateDebugger(configuration);
+		updateNodeInstallPath(configuration);
 		fInitializing = false;
 		setDirty(false);
 	}
@@ -247,15 +285,15 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 		try {
 			cliFile = configuration.getAttribute(getCliFileLaunchAttrId(), "");
 		} catch (CoreException ce) {
-			ExternalToolsPlugin.getDefault().log(
-					ExternalToolsLaunchConfigurationMessages.ExternalToolsMainTab_Error_reading_configuration_10, ce);
+			TernNodejsUIPlugin.getDefault().getLog().log(new Status(IStatus.ERROR, TernNodejsUIPlugin.PLUGIN_ID,
+					TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_Error_reading_configuration, ce));
 		}
 		cliFileField.setText(cliFile);
 	}
 
 	private void updateDebugger(ILaunchConfiguration configuration) {
 		try {
-			String debuggerId = configuration.getAttribute(INodejsCliFileLaunchConfigurationConstants.ATTR_DEBUGGER, "");
+			String debuggerId = configuration.getAttribute(getDebuggerLaunchAttrId(), "");
 			for (int i = 0; i < debuggers.length; i++) {
 				if (debuggers[i][1].equals(debuggerId)) {
 					debuggerField.setText(debuggers[i][0]);
@@ -263,8 +301,28 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 				}
 			}
 		} catch (CoreException ce) {
-			ExternalToolsPlugin.getDefault().log(
-					ExternalToolsLaunchConfigurationMessages.ExternalToolsMainTab_Error_reading_configuration_10, ce);
+			TernNodejsUIPlugin.getDefault().getLog().log(new Status(IStatus.ERROR, TernNodejsUIPlugin.PLUGIN_ID,
+					TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_Error_reading_configuration, ce));
+		}
+	}
+
+	private void updateNodeInstallPath(ILaunchConfiguration configuration) {
+		try {
+			String nodeInstall = configuration.getAttribute(getNodeInstallLaunchAttrId(), "");
+			for (int i = 0; i < nodeInstalls.length; i++) {
+				if (nodeInstalls[i][1].equals(nodeInstall)) {
+					nodeInstallField.setText(nodeInstalls[i][0]);
+					break;
+				}
+			}
+			String nodePath = configuration.getAttribute(getNodePathLaunchAttrId(), "");
+			nodePathField.setText(nodePath);
+			INodejsInstallManager installManager = TernNodejsCorePlugin.getNodejsInstallManager();
+			INodejsInstall nodejsInstall = installManager.findNodejsInstall(nodeInstall);
+			nodePathField.setEnabled(nodejsInstall != null && nodejsInstall.isNative());
+		} catch (CoreException ce) {
+			TernNodejsUIPlugin.getDefault().getLog().log(new Status(IStatus.ERROR, TernNodejsUIPlugin.PLUGIN_ID,
+					TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_Error_reading_configuration, ce));
 		}
 	}
 
@@ -278,15 +336,54 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 			configuration.setAttribute(getCliFileLaunchAttrId(), cliFile);
 		}
 		// debugger
-		int selectionIndex = debuggerField.getSelectionIndex();
-		if (selectionIndex >= 0) {
-			configuration.setAttribute(INodejsCliFileLaunchConfigurationConstants.ATTR_DEBUGGER,
-					debuggers[selectionIndex][1]);
+		int debuggerSelectionIndex = debuggerField.getSelectionIndex();
+		if (debuggerSelectionIndex >= 0) {
+			configuration.setAttribute(getDebuggerLaunchAttrId(), debuggers[debuggerSelectionIndex][1]);
+		}
+		// node install
+		int nodeInstallSelectionIndex = nodeInstallField.getSelectionIndex();
+		if (nodeInstallSelectionIndex >= 0) {
+			configuration.setAttribute(getNodeInstallLaunchAttrId(), nodeInstalls[nodeInstallSelectionIndex][1]);
+		}
+		// node path
+		String nodePath = nodePathField.getText();
+		if (nodePath.length() == 0) {
+			configuration.setAttribute(getNodePathLaunchAttrId(), (String) null);
+		} else {
+			configuration.setAttribute(getNodePathLaunchAttrId(), nodePath);
 		}
 	}
 
 	@Override
 	public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+		// cli file
+		IFile cliFile = getDefaultCliFile();
+		if (cliFile == null) {
+			configuration.setAttribute(getCliFileLaunchAttrId(), (String) null);
+		} else {
+			configuration.setAttribute(getCliFileLaunchAttrId(), NodejsCliFileHelper.getWorkspaceLoc(cliFile));
+		}
+		// debugger
+		String debugger = getDefaultDebugger();
+		if (StringUtils.isEmpty(debugger)) {
+			configuration.setAttribute(getDebuggerLaunchAttrId(), (String) null);
+		} else {
+			configuration.setAttribute(getDebuggerLaunchAttrId(), debugger);
+		}
+		// node install
+		String nodeInstall = getDefaultNodeInstall();
+		if (StringUtils.isEmpty(nodeInstall)) {
+			configuration.setAttribute(getNodeInstallLaunchAttrId(), (String) null);
+		} else {
+			configuration.setAttribute(getNodeInstallLaunchAttrId(), nodeInstall);
+		}
+		// node path
+		String nodePath = getDefaultNodePath();
+		if (StringUtils.isEmpty(nodePath)) {
+			configuration.setAttribute(getNodePathLaunchAttrId(), (String) null);
+		} else {
+			configuration.setAttribute(getNodePathLaunchAttrId(), nodePath);
+		}
 
 	}
 
@@ -298,24 +395,23 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 	protected void handleWorkspaceLocationButtonSelected() {
 		ResourceSelectionDialog dialog;
 		dialog = new ResourceSelectionDialog(getShell(), ResourcesPlugin.getWorkspace().getRoot(),
-				ExternalToolsLaunchConfigurationMessages.ExternalToolsMainTab_Select_a_resource_22);
+				TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_Select_a_client_file);
 		dialog.open();
 		Object[] results = dialog.getResult();
 		if (results == null || results.length < 1) {
 			return;
 		}
 		IResource resource = (IResource) results[0];
-		cliFileField.setText(newVariableExpression("workspace_loc", resource.getFullPath().toString())); //$NON-NLS-1$
+		cliFileField.setText(NodejsCliFileHelper.getWorkspaceLoc(resource));
 	}
 
-	/**
-	 * Returns a new variable expression with the given variable and the given
-	 * argument.
-	 * 
-	 * @see IStringVariableManager#generateVariableExpression(String, String)
-	 */
-	protected String newVariableExpression(String varName, String arg) {
-		return VariablesPlugin.getDefault().getStringVariableManager().generateVariableExpression(varName, arg);
+	protected void handleNodePathButtonSelected() {
+		FileDialog fileDialog = new FileDialog(getShell(), SWT.NONE);
+		fileDialog.setFileName(nodePathField.getText());
+		String text = fileDialog.open();
+		if (text != null) {
+			nodePathField.setText(text);
+		}
 	}
 
 	/*
@@ -346,9 +442,131 @@ public abstract class AbstractNodejsCliFileLaunchConfigurationTab extends Abstra
 
 	}
 
-	protected abstract String getCliFileLabel();
-
-	protected String getCliFileLaunchAttrId() {
+	private String getCliFileLaunchAttrId() {
 		return INodejsCliFileLaunchConfigurationConstants.ATTR_CLI_FILE;
 	}
+
+	private String getDebuggerLaunchAttrId() {
+		return INodejsCliFileLaunchConfigurationConstants.ATTR_DEBUGGER;
+	}
+
+	private String getNodeInstallLaunchAttrId() {
+		return INodejsCliFileLaunchConfigurationConstants.ATTR_NODE_INSTALL;
+	}
+
+	private String getNodePathLaunchAttrId() {
+		return INodejsCliFileLaunchConfigurationConstants.ATTR_NODE_PATH;
+	}
+
+	@Override
+	public boolean isValid(ILaunchConfiguration launchConfig) {
+		setErrorMessage(null);
+		setMessage(null);
+		return (validateCliFile() && validateDebugger() && validateNodeInstallPath());
+	}
+
+	private boolean validateCliFile() {
+		String cliFile = this.cliFileField.getText().trim();
+		if (StringUtils.isEmpty(cliFile)) {
+			return true;
+		}
+		String expandedLocation = null;
+		try {
+			expandedLocation = resolveValue(cliFile);
+			if (expandedLocation == null)
+				return true;
+		} catch (CoreException e) {
+			setErrorMessage(e.getStatus().getMessage());
+			return false;
+		}
+
+		File file = new File(expandedLocation);
+		if (!(file.exists())) {
+			setErrorMessage(
+					TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_client_file_does_not_exist);
+			return false;
+		}
+		if (!(file.isFile())) {
+			setErrorMessage(TernNodejsUIMessages.ExternalToolsMainTab_client_file_specified_is_not_a_file);
+			return false;
+		}
+		return true;
+	}
+
+	private String resolveValue(String expression) throws CoreException {
+		String expanded = null;
+		try {
+			expanded = getValue(expression);
+		} catch (CoreException localCoreException) {
+			validateVariables(expression);
+			throw localCoreException;
+		}
+		return expanded;
+	}
+
+	private String getValue(String expression) throws CoreException {
+		IStringVariableManager manager = VariablesPlugin.getDefault().getStringVariableManager();
+		return manager.performStringSubstitution(expression);
+	}
+
+	private void validateVariables(String expression) throws CoreException {
+		IStringVariableManager manager = VariablesPlugin.getDefault().getStringVariableManager();
+		manager.validateStringVariables(expression);
+	}
+
+	private boolean validateDebugger() {
+		int debuggerSelectionIndex = debuggerField.getSelectionIndex();
+		if (debuggerSelectionIndex <= 0) {
+			setErrorMessage(TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_debugger_required);
+			return false;
+		}
+		String debuggerId = debuggers[debuggerSelectionIndex][1];
+		if (StringUtils.isEmpty(debuggerId)) {
+			setErrorMessage(TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_debugger_not_installed);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean validateNodeInstallPath() {
+		int nodeInstallSelectionIndex = nodeInstallField.getSelectionIndex();
+		if (nodeInstallSelectionIndex <= 0) {
+			setErrorMessage(TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_nodeInstall_required);
+			return false;
+		}
+		INodejsInstallManager installManager = TernNodejsCorePlugin.getNodejsInstallManager();
+		String nodeInstallId = nodeInstalls[nodeInstallSelectionIndex][1];
+		INodejsInstall nodejsInstall = installManager.findNodejsInstall(nodeInstallId);
+		if (nodejsInstall == null) {
+			setErrorMessage(
+					NLS.bind(TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_nodeInstall_not_found,
+							nodeInstallId));
+			return false;
+		}
+		if (nodejsInstall.isNative()) {
+			// validate node path
+			String nodePath = nodePathField.getText();
+			if (StringUtils.isEmpty(nodePath)) {
+				setErrorMessage(TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_nodePath_required);
+				return false;
+			}
+			if (!new File(nodePath).exists() && !nodePath.equals("node")) {
+				setErrorMessage(NLS.bind(
+						TernNodejsUIMessages.AbstractNodejsCliFileLaunchConfigurationTab_nodePath_not_found, nodePath));
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected abstract String getCliFileLabel();
+
+	protected abstract IFile getDefaultCliFile();
+
+	protected abstract String getDefaultDebugger();
+
+	protected abstract String getDefaultNodeInstall();
+
+	protected abstract String getDefaultNodePath();
+
 }

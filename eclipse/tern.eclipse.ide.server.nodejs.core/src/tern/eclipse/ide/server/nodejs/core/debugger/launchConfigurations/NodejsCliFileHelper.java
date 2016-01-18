@@ -20,6 +20,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.variables.VariablesPlugin;
 
+import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
+import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebugger;
 import tern.eclipse.ide.server.nodejs.core.debugger.NodejsDebuggersManager;
 import tern.utils.StringUtils;
@@ -54,15 +56,36 @@ public class NodejsCliFileHelper {
 		throw new NodejsCliFileConfigException("Cannot find client file");
 	}
 
-	public static File getNodeInstallPath(String param) throws NodejsCliFileConfigException, CoreException {
-		if (StringUtils.isEmpty(param)) {
-			throw new NodejsCliFileConfigException("Node.js install path cannot be empty.");
+	public static File getNodeInstallPath(String nodeInstall, String nodePath)
+			throws NodejsCliFileConfigException, CoreException {
+		if (StringUtils.isEmpty(nodeInstall)) {
+			throw new NodejsCliFileConfigException("Node.js install cannot be empty.");
 		}
-		File nodeInstallPath = new File(param);
-		if (nodeInstallPath.exists()) {
-			return nodeInstallPath;
+		INodejsInstall install = getNodejsInstall(nodeInstall);
+		if (install != null) {
+			if (install.isNative()) {
+				if (StringUtils.isEmpty(nodePath)) {
+					throw new NodejsCliFileConfigException("Node.js path cannot be empty.");
+				}
+				File nodeInstallPath = new File(nodePath);
+				if (nodeInstallPath.exists()) {
+					return nodeInstallPath;
+				}
+				throw new NodejsCliFileConfigException("Cannot find node install path " + nodeInstallPath.toString());
+			} else {
+				return install.getPath();
+			}
 		}
-		throw new NodejsCliFileConfigException("Cannot find node install path " + nodeInstallPath.toString());
+		return new File("node");
+	}
+
+	/**
+	 * Returns the node install from the workspace preferences.
+	 * 
+	 * @return
+	 */
+	private static INodejsInstall getNodejsInstall(String nodeInstall) {
+		return TernNodejsCorePlugin.getNodejsInstallManager().findNodejsInstall(nodeInstall);
 	}
 
 	public static INodejsDebugger getDebugger(String debuggerId) throws CoreException, NodejsCliFileConfigException {

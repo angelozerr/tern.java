@@ -67,9 +67,11 @@ public abstract class AbstractNodejsCliFileLauncher implements INodejsLaunchConf
 
 	private static File getNodeInstallPath(ILaunchConfiguration configuration)
 			throws NodejsCliFileConfigException, CoreException {
-		String param = configuration.getAttribute(INodejsCliFileLaunchConfigurationConstants.ATTR_NODE_INSTALL_PATH,
+		String nodeInstall = configuration.getAttribute(INodejsCliFileLaunchConfigurationConstants.ATTR_NODE_INSTALL,
 				(String) null);
-		return NodejsCliFileHelper.getNodeInstallPath(param);
+		String nodePath = configuration.getAttribute(INodejsCliFileLaunchConfigurationConstants.ATTR_NODE_INSTALL,
+				(String) null);
+		return NodejsCliFileHelper.getNodeInstallPath(nodeInstall, nodePath);
 	}
 
 	private static INodejsDebugger getDebugger(ILaunchConfiguration configuration)

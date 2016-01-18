@@ -27,6 +27,8 @@ public interface INodejsCliFileLaunchConfigurationConstants {
 	 */
 	String ATTR_DEBUGGER = "debugger";
 
-	String ATTR_NODE_INSTALL_PATH = "nodeinstallpath";
+	String ATTR_NODE_INSTALL = "nodeinstall";
+	
+	String ATTR_NODE_PATH = "nodepath";
 
 }

@@ -26,6 +26,10 @@ public final class TernNodejsUIMessages extends NLS {
 
 	private static ResourceBundle fResourceBundle;
 
+	public static String Button_browse;
+	public static String Button_browse_workspace;
+	public static String Button_variables;
+	
 	// Preferences
 	public static String TernNodejsPreferencesPage_desc;
 
@@ -49,6 +53,18 @@ public final class TernNodejsUIMessages extends NLS {
 	public static String TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
 	public static String TernNodejsPreferencesPage_nativeNodeJSPath;
 	public static String TernNodejsPreferencesPage_nodeJSPath;
+
+	// Launch client file
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_Error_reading_configuration;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_client_file_does_not_exist;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_Select_a_client_file;
+	public static String ExternalToolsMainTab_client_file_specified_is_not_a_file;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_debugger_required;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_debugger_not_installed;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_nodeInstall_required;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_nodeInstall_not_found;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_nodePath_required;
+	public static String AbstractNodejsCliFileLaunchConfigurationTab_nodePath_not_found;
 
 	private TernNodejsUIMessages() {
 	}
