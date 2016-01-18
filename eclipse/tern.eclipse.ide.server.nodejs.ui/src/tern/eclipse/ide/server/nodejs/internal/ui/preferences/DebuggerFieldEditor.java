@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.server.nodejs.ui.preferences;
+package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 
 import java.net.URL;
 import java.util.Collection;
@@ -71,7 +71,7 @@ public class DebuggerFieldEditor extends CheckComboFieldEditor {
 		return isValid;
 	}
 
-	private static String[][] createDebuggers() {
+	public static String[][] createDebuggers() {
 		Collection<INodejsDebugger> list = NodejsDebuggersManager.getDebuggers();
 		String[][] debuggers = new String[list.size() + 1][2];
 		debuggers[0][0] = TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_none;
@@ -92,7 +92,11 @@ public class DebuggerFieldEditor extends CheckComboFieldEditor {
 	}
 
 	public Link createWikiLink(Composite parent, int style) {
-		this.wikiLink = new Link(parent, style);
+		return this.wikiLink = newWikiLink(parent, style);
+	}
+
+	public static Link newWikiLink(Composite parent, int style) {
+		Link wikiLink = new Link(parent, style);
 		wikiLink.setText(TernNodejsUIMessages.TernNodejsPreferencesPage_debugger_wiki_link);
 		wikiLink.addSelectionListener(new SelectionAdapter() {
 			@Override

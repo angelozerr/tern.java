@@ -34,8 +34,6 @@ import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCoreConstants;
 import tern.eclipse.ide.server.nodejs.core.TernNodejsCorePlugin;
 import tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIMessages;
-import tern.eclipse.ide.server.nodejs.ui.preferences.DebuggerFieldEditor;
-import tern.eclipse.ide.server.nodejs.ui.preferences.NodeJSConfigEditor;
 import tern.eclipse.ide.ui.ImageResource;
 import tern.eclipse.ide.ui.preferences.FileComboFieldEditor;
 import tern.eclipse.ide.ui.preferences.TernRepositoryFieldEditor;

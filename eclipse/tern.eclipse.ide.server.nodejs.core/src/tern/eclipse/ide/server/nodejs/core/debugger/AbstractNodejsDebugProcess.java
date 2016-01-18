@@ -29,6 +29,7 @@ import org.eclipse.debug.core.IStreamListener;
 import org.eclipse.debug.core.model.IStreamMonitor;
 
 import tern.TernException;
+import tern.eclipse.ide.server.nodejs.core.debugger.launchConfigurations.NodejsCliFileHelper;
 import tern.server.nodejs.process.AbstractNodejsProcess;
 import tern.server.nodejs.process.NodejsProcessException;
 import tern.utils.TernModuleHelper;
@@ -60,7 +61,7 @@ public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 	}
 
 	protected String getWorkingDir() {
-		return VariableHelper.getWorkspaceLoc(workingDir);
+		return NodejsCliFileHelper.getWorkspaceLoc(workingDir);
 	}
 
 	@Override

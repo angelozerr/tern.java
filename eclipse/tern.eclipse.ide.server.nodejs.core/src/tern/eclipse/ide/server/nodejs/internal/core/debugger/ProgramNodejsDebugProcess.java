@@ -26,7 +26,7 @@ import org.eclipse.debug.core.model.RuntimeProcess;
 
 import tern.TernException;
 import tern.eclipse.ide.server.nodejs.core.debugger.AbstractNodejsDebugProcess;
-import tern.eclipse.ide.server.nodejs.core.debugger.VariableHelper;
+import tern.eclipse.ide.server.nodejs.core.debugger.launchConfigurations.NodejsCliFileHelper;
 import tern.server.nodejs.process.NodejsProcessException;
 
 /**
@@ -94,7 +94,7 @@ public class ProgramNodejsDebugProcess extends AbstractNodejsDebugProcess {
 
 	private String getArgs() throws NodejsProcessException {
 		StringBuilder args = new StringBuilder();
-		args.append(VariableHelper.getWorkspaceLoc(getJsFile()));
+		args.append(NodejsCliFileHelper.getWorkspaceLoc(getJsFile()));
 		for (String arg : createNodejsArgs()) {
 			args.append(" ");
 			args.append(arg);

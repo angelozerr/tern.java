@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.server.nodejs.ui.preferences;
+package tern.eclipse.ide.server.nodejs.internal.ui.preferences;
 
 import org.eclipse.jface.preference.ComboFieldEditor;
 import org.eclipse.swt.SWT;
@@ -43,15 +43,7 @@ public class NodeJSConfigEditor {
 
 	private ComboFieldEditor createNodeJSInstall(final Composite parent, String nodeJSInstallPreferenceName) {
 		// Node js install path
-		INodejsInstall[] installs = TernNodejsCorePlugin.getNodejsInstallManager().getNodejsInstalls();
-		String[][] data = new String[installs.length + 1][2];
-		data[0][0] = TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
-		data[0][1] = ""; //$NON-NLS-1$
-
-		for (int i = 0; i < installs.length; i++) {
-			data[i + 1][0] = installs[i].getName();
-			data[i + 1][1] = installs[i].getId();
-		}
+		String[][] data = createNodeInstalls();
 
 		return new ComboFieldEditor(nodeJSInstallPreferenceName,
 				TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall, data, parent) {
@@ -72,6 +64,19 @@ public class NodeJSConfigEditor {
 				super.fireValueChanged(property, oldValue, newValue);
 			}
 		};
+	}
+
+	public static String[][] createNodeInstalls() {
+		INodejsInstall[] installs = TernNodejsCorePlugin.getNodejsInstallManager().getNodejsInstalls();
+		String[][] data = new String[installs.length + 1][2];
+		data[0][0] = TernNodejsUIMessages.TernNodejsPreferencesPage_nodeJSInstall_emptyValue;
+		data[0][1] = ""; //$NON-NLS-1$
+
+		for (int i = 0; i < installs.length; i++) {
+			data[i + 1][0] = installs[i].getName();
+			data[i + 1][1] = installs[i].getId();
+		}
+		return data;
 	}
 
 	private FileComboFieldEditor createNativeNodePath(Composite parent, String nodeJSPathPrefrenceName) {

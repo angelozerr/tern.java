@@ -15,7 +15,11 @@ Require-Bundle: org.eclipse.ui,
  tern.eclipse.ide.ui,
  tern.server.nodejs,
  org.eclipse.core.resources,
- org.eclipse.ui.ide
+ org.eclipse.ui.ide,
+ org.eclipse.debug.ui,
+ org.eclipse.ui.externaltools,
+ org.eclipse.core.variables
 Bundle-Activator: tern.eclipse.ide.server.nodejs.internal.ui.TernNodejsUIPlugin
 Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)"
-Export-Package: tern.eclipse.ide.server.nodejs.ui.preferences
+Export-Package: tern.eclipse.ide.server.nodejs.ui.debugger.launchConfigurations,
+ tern.eclipse.ide.server.nodejs.ui.debugger.preferences
