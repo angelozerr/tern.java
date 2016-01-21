@@ -80,7 +80,7 @@ public class ProgramNodejsDebugProcess extends AbstractNodejsDebugProcess {
 			}
 		});
 
-		launch = workingCopy.launch(super.getMode(), null);
+		launch = workingCopy.launch("run", null); //only works in run mode
 
 		// setup std and err listeners
 		for (IProcess process : launch.getProcesses()) {

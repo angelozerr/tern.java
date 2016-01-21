@@ -14,6 +14,7 @@ import java.io.File;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -114,7 +115,11 @@ public class NodejsCliFileHelper {
 			return null;
 		}
 		IPath filePath = new Path(path);
-		IFile file = null;
+		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+		IFile file = root.getFile(filePath);
+		if (file.exists()) {
+			return file;
+		}
 		IFile[] files = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocation(filePath);
 		if (files.length > 0) {
 			return files[0];
