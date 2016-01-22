@@ -46,14 +46,17 @@ public class TernGuessTypesResultProcessor implements ITernResultProcessor<ITern
 				for (int i = 0; i < argTypes.length; i++) {
 					argType= argTypes[i];
 					namesForArg = objectHelper.getList(jsonObject, argType);
-					for (Object argValue : namesForArg) {
-						if (objectHelper.isString(argValue)) {
-							collector.addProposal(argIndex,
-									new TernCompletionProposalRec(objectHelper.getText(argValue),
-											objectHelper.getText(argValue), argType, null, null, null, 0, 0, false, false, false),
-									argValue, objectHelper);
-						} else {
-							addProposal(argIndex, objectHelper, argValue, collector);
+					// It can be null when argument type cannot be guessed. See https://github.com/angelozerr/tern.java/issues/390
+					if (namesForArg != null) {						
+						for (Object argValue : namesForArg) {
+							if (objectHelper.isString(argValue)) {
+								collector.addProposal(argIndex,
+										new TernCompletionProposalRec(objectHelper.getText(argValue),
+												objectHelper.getText(argValue), argType, null, null, null, 0, 0, false, false, false),
+										argValue, objectHelper);
+							} else {
+								addProposal(argIndex, objectHelper, argValue, collector);
+							}
 						}
 					}
 				}
