@@ -34,13 +34,13 @@ public class MinimalJSONHelper implements IJSONObjectHelper {
 	@Override
 	public Long getCh(Object jsonObj, String name) {
 		JsonValue loc = ((JsonObject) jsonObj).get(name);
-		if (loc == null) {
+		if (loc == null || loc.isNull()) {
 			return null;
 		}
 		if (loc.isNumber()) {
 			return loc.asLong();
 		}
-		return loc != null ? JsonHelper.getLong((JsonObject) loc, "ch") : null;
+		return JsonHelper.getLong((JsonObject) loc, "ch");
 	}
 
 	@Override

@@ -51,6 +51,12 @@ public class TernReporterCollector implements ITernLintCollector {
 	@Override
 	public void addMessage(String messageId, String messageText, Long start, Long end, Long line, String severity,
 			String file, Object messageObject, IJSONObjectHelper helper) {
+		if (start == null) {
+			start = 0L;
+		}
+		if (end == null) {
+			end = start + 1;
+		}
 		IResource resource = (IResource) ternProject.getFile(file).getAdapter(
 				IFile.class);
 		LocalizedMessage message = new LocalizedMessage(getSeverity(severity),
