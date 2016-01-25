@@ -35,6 +35,7 @@ import tern.server.protocol.TernFile.FileType;
 import tern.server.protocol.TernQuery;
 import tern.server.protocol.completions.TernCompletionsQuery;
 import tern.server.protocol.definition.TernDefinitionQuery;
+import tern.server.protocol.lint.TernLintQuery;
 import tern.server.protocol.type.TernTypeQuery;
 import tern.utils.StringUtils;
 
@@ -251,7 +252,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 						String queryType = query.getType();
 						if (TernCompletionsQuery.isQueryType(queryType) ||
 								TernDefinitionQuery.isQueryType(queryType) ||
-								TernTypeQuery.isQueryType(queryType)) {
+								query instanceof TernLintQuery ) {
 							addHTMLFile(doc, file);
 							return;
 						}	
