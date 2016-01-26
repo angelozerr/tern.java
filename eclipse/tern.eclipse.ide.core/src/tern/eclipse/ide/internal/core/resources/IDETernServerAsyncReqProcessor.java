@@ -104,11 +104,10 @@ public class IDETernServerAsyncReqProcessor extends Job implements
 			TernResultsProcessorsFactory.makeRequestAndProcess(doc, server,
 					collector);
 		} catch (Throwable e) {
-			TernCorePlugin
-					.getDefault()
-					.getLog()
-					.log(new Status(IStatus.ERROR, TernCorePlugin.PLUGIN_ID, e
-							.getMessage(), e));
+			if (!isIgnoreError(e)) {
+				TernCorePlugin.getDefault().getLog()
+						.log(new Status(IStatus.ERROR, TernCorePlugin.PLUGIN_ID, e.getMessage(), e));
+			}
 		}
 		// mark collection as done if not timed out earlier
 		synchronized (this) {
@@ -118,6 +117,24 @@ public class IDETernServerAsyncReqProcessor extends Job implements
 			collector = null;
 		}
 		return Status.OK_STATUS;
+	}
+
+	/**
+	 * Return true if the give exception must be ignored to log (Error Log View) and false otherwise.
+	 * @param e
+	 * @return true if the give exception must be ignored to log (Error Log View) and false otherwise.
+	 */
+	private boolean isIgnoreError(Throwable e) {
+		if (e instanceof TernException) {
+			if (((TernException) e).getType() == TernException.Type.NoTypeFoundAt) {
+				// case when user open hyperlink on javascript element like 'function'. In this case tern throws the error
+				// tern.TernException: TernError: No type found at the given position.
+				// This error must be ignored.
+				// See https://github.com/angelozerr/tern.java/issues/392
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

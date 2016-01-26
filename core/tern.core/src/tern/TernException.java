@@ -18,15 +18,35 @@ public class TernException extends Exception {
 
 	private static final long serialVersionUID = 4202429014735034363L;
 
+	public enum Type {
+		NoTypeFoundAt, Other;
+	}
+
+	private Type type;
+
 	public TernException(String message) {
 		super(message);
+
 	}
 
 	public TernException(String message, Throwable e) {
 		super(message, e);
 	}
-	
+
 	public TernException(Throwable e) {
 		super(e);
 	}
+
+	public Type getType() {
+		if (type == null) {
+			String message = super.getMessage();
+			if ("TernError: No type found at the given position.".equals(message)) {
+				type = Type.NoTypeFoundAt;
+			} else {
+				type = Type.Other;
+			}
+		}
+		return type;
+	}
+
 }
