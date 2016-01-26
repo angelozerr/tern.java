@@ -1,27 +1,19 @@
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") { // CommonJS
-    return mod(require("tern/lib/infer"), require("tern/lib/tern"), require("jshint/src/jshint").JSHINT, require("jshint/src/cli"));
+    return mod(require("tern/lib/infer"), require("tern/lib/tern"), require("jshint/src/jshint").JSHINT, require);
   }
   if (typeof define == "function" && define.amd) // AMD
-    return define([ "tern/lib/infer", "tern/lib/tern", "jshint/src/jshint", "jshint/src/cli" ], mod);
+    return define([ "tern/lib/infer", "tern/lib/tern", "jshint/src/jshint" ], mod);
   mod(tern, tern, JSHINT);
-})(function(infer, tern, JSHINT, cli) {
+})(function(infer, tern, JSHINT, require) {
   "use strict";
   
-  var fs, shjs;
-  if (require) {
+  var fs, shjs, cli;
+  if (require) (function() {
+    cli = require("jshint/src/cli");
     fs  = require("fs");  
     shjs = require("jshint/node_modules/shelljs");
-  }
-  
-  var bogus = [ "Dangerous comment" ];
-
-  var warnings = [ [ "Expected '{'",
-                     "Statement body should be inside '{ }' braces." ] ];
-
-  var errors = [ "Missing semicolon", "Extra comma", "Missing property name",
-                 "Unmatched ", " and instead saw", " is not defined",
-                 "Unclosed string", "Stopping, unable to continue" ];
+  }())
   
   var slashAtEndRegEx = /\/$/;
   
@@ -30,44 +22,6 @@
   var fileNameRegEx = /([^\\]+)\.[^\\]+$/;
   
   var doubleAsteriskAtEndRegEx = /\*\*$/;
-  
-  function cleanup(error) {
-    // All problems are warnings by default
-    fixWith(error, warnings, "warning", true);
-    fixWith(error, errors, "error");
-
-    return isBogus(error) ? null : error;
-  }
-
-  function fixWith(error, fixes, severity, force) {
-    var description, fix, find, replace, found;
-
-    description = error.description;
-
-    for ( var i = 0; i < fixes.length; i++) {
-      fix = fixes[i];
-      find = (typeof fix === "string" ? fix : fix[0]);
-      replace = (typeof fix === "string" ? null : fix[1]);
-      found = description.indexOf(find) !== -1;
-
-      if (force || found) {
-        error.severity = severity;
-      }
-      if (found && replace) {
-        error.description = replace;
-      }
-    }
-  }
-
-  function isBogus(error) {
-    var description = error.description;
-    for ( var i = 0; i < bogus.length; i++) {
-      if (description.indexOf(bogus[i]) !== -1) {
-        return true;
-      }
-    }
-    return false;
-  }
 
   function normPath(name) { return name.replace(/\\/g, "//"); }
   
@@ -85,12 +39,9 @@
       this.ignoresFile = ".jshintignore";
       // Override cli.error to avoid calling cli.exit when cli.exit is called in cli.loadConfig.
       var _this = this, cli = require("jshint/node_modules/cli");
-      cli.error = function(msg) {
-        _this.error = msg;
+      cli.error = function(msg) {        
+        throw new Error(msg);
       };
-      cli.exit = function() {
-        throw new Error();
-    };
     }
   }
   
@@ -106,13 +57,14 @@
   
   JSHintConfig.prototype.update = function() {
     try {
+      this.config = null;
       // load JSHint config
       var filepath = this.configFile;
       this.config = cli.loadConfig(filepath);
       this.init();
       this.error = null;
     } catch(e) {
-      //this.error = String(e);
+      this.error = String(e);
     }
   }
   
@@ -150,15 +102,19 @@
     }
       
     if (!this.ignoresFile) return false; // Browser context
-    
+
     if (!fs.existsSync(this.ignoresFile)) {
-      if (!fs.existsSync(file.name)) return false;
-      // If .jshintignore does not exist, then simply
-      // ask cli.gather if filename should be excluded
-      var gather = cli.gather({
-    	args: [file.name]
-      });
-      return gather.indexOf(file.name) < 0;
+      try {
+        // If .jshintignore does not exist, then simply
+        // ask cli.gather if filename should be excluded
+        var gather = cli.gather({
+      	args: [file.name]
+        });
+        return gather.indexOf(file.name) < 0;
+      } catch(e) {
+        if (!fs.existsSync(file.name)) return false;
+        return true;
+      }
     }
     
     // watch the .jshintignore to update the ignore patterns, when file content changes.
@@ -220,15 +176,10 @@
   
   function validate(server, query, file, messages) {
 	
-    function getSeverity(error) {
-      switch(error.severity) {
-        case 1:
-          return "warning";
-        case 2:
-          return "error";     
-        default:
-          return "error";
-      }    
+    function getSeverity(err) {
+      // E: Error, W: Warning, I: Info
+      var isError = err.code && err.code[0] === 'E';
+      return isError ? "error" : "warning";
     }
 
     function makeError(message) {
@@ -237,7 +188,7 @@
 	    to = tern.resolvePos(file, {line: message.line - 1, ch: message.end});
 	  } catch(e) {}
   	  var error = {
-	    message: message.description,
+	    message: message.reason,
 	    severity: getSeverity(message),
 	    from: tern.outputPos(query, file, from),
 	    to: tern.outputPos(query, file, to)	      
@@ -297,14 +248,11 @@
             }
           }
 
-          // Convert to format expected by validation service
-          error.description = error.reason;// + "(jshint)";
+          // Adust start/end
           error.start = start;
           error.end = end;
-          error = cleanup(error);
   
-          if (error)
-            output.push(makeError(error));
+          output.push(makeError(error));
         }
       }
     }
@@ -313,7 +261,7 @@
 	var config = jshintCfg.getConfig(), globals = jshintCfg.globals;	
 	if (jshintCfg.error) { 
 	  // .jshintrc file doesn't exist
-	  messages.push(makeError({line:1 , start: 0, end: 1, description: jshintCfg.error, severity: "error"}))
+	  messages.push(makeError({line:1 , start: 0, end: 1, reason: jshintCfg.error, severity: "error"}))
 	  return;
 	}
 	if (jshintCfg.isIgnored(file)) return; // Just skip, this file does not need to be linted
