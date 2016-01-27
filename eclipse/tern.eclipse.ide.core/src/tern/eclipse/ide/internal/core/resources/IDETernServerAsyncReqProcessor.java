@@ -19,11 +19,12 @@ import tern.TernException;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.server.ITernServer;
 import tern.server.ITernServerRequestProcessor;
+import tern.server.TernNoTypeFoundAtPositionException;
 import tern.server.protocol.ITernResultsAsyncCollector;
-import tern.server.protocol.ITernResultsCollector;
-import tern.server.protocol.TernResultsProcessorsFactory;
 import tern.server.protocol.ITernResultsAsyncCollector.TimeoutReason;
+import tern.server.protocol.ITernResultsCollector;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.TernResultsProcessorsFactory;
 
 public class IDETernServerAsyncReqProcessor extends Job implements
 		ITernServerRequestProcessor {
@@ -103,11 +104,15 @@ public class IDETernServerAsyncReqProcessor extends Job implements
 			monitor.beginTask("", IProgressMonitor.UNKNOWN); //$NON-NLS-1$
 			TernResultsProcessorsFactory.makeRequestAndProcess(doc, server,
 					collector);
+		} catch(TernNoTypeFoundAtPositionException e) {
+			// ignore error
+			// case when user open hyperlink on javascript element like 'function'. In this case tern throws the error
+			// tern.TernException: TernError: No type found at the given position.
+			// This error must be ignored.
+			// See https://github.com/angelozerr/tern.java/issues/392
 		} catch (Throwable e) {
-			if (!isIgnoreError(e)) {
 				TernCorePlugin.getDefault().getLog()
-						.log(new Status(IStatus.ERROR, TernCorePlugin.PLUGIN_ID, e.getMessage(), e));
-			}
+						.log(new Status(IStatus.ERROR, TernCorePlugin.PLUGIN_ID, e.getMessage(), e));			
 		}
 		// mark collection as done if not timed out earlier
 		synchronized (this) {
@@ -117,24 +122,6 @@ public class IDETernServerAsyncReqProcessor extends Job implements
 			collector = null;
 		}
 		return Status.OK_STATUS;
-	}
-
-	/**
-	 * Return true if the give exception must be ignored to log (Error Log View) and false otherwise.
-	 * @param e
-	 * @return true if the give exception must be ignored to log (Error Log View) and false otherwise.
-	 */
-	private boolean isIgnoreError(Throwable e) {
-		if (e instanceof TernException) {
-			if (((TernException) e).getType() == TernException.Type.NoTypeFoundAt) {
-				// case when user open hyperlink on javascript element like 'function'. In this case tern throws the error
-				// tern.TernException: TernError: No type found at the given position.
-				// This error must be ignored.
-				// See https://github.com/angelozerr/tern.java/issues/392
-				return true;
-			}
-		}
-		return false;
 	}
 
 }

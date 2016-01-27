@@ -27,6 +27,7 @@ import tern.eclipse.ide.core.resources.TernDocumentFile;
 import tern.eclipse.ide.internal.ui.Trace;
 import tern.eclipse.ide.ui.utils.EditorUtils;
 import tern.eclipse.jface.text.TernBrowserInformationControlInput;
+import tern.server.TernNoTypeFoundAtPositionException;
 import tern.server.protocol.DocFormat;
 import tern.server.protocol.type.TernTypeQuery;
 import tern.utils.StringUtils;
@@ -78,8 +79,10 @@ public class TernHover extends AbstractTernHover
 				ternProject.request(query, file, collector);
 				String text = collector.getInfo();
 				return StringUtils.isEmpty(text) ? null : new TernBrowserInformationControlInput(null, text, 20);
+			} catch (TernNoTypeFoundAtPositionException e) {
+				// ignore error
 			} catch (Exception e) {
-				Trace.trace(Trace.WARNING, "Error while tern hyperlink", e);
+				Trace.trace(Trace.WARNING, "Error while tern hover", e);
 			}
 		}
 		return null;

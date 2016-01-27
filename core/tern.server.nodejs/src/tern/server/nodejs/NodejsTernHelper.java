@@ -32,6 +32,7 @@ import com.eclipsesource.json.ParseException;
 import tern.TernException;
 import tern.server.IInterceptor;
 import tern.server.ITernServer;
+import tern.server.TernExceptionFactory;
 import tern.server.protocol.TernDoc;
 import tern.server.protocol.TernQuery;
 import tern.utils.IOUtils;
@@ -87,7 +88,7 @@ public class NodejsTernHelper {
 				if (StringUtils.isEmpty(message)) {
 					throw new TernException(statusLine.toString());
 				}
-				throw new TernException(message);
+				throw TernExceptionFactory.create(message);
 			}
 
 			try {

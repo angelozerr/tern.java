@@ -6,7 +6,8 @@ Bundle-Version: 1.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: tern.core,
  tern.server.nodejs,
- org.junit;bundle-version="4.11.0"
+ org.junit;bundle-version="4.11.0",
+ tern.server.rhino
 Import-Package: com.eclipsesource.json;version="[0.9.4,0.9.5)",
  org.apache.commons.logging
 

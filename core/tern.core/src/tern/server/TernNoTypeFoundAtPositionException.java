@@ -8,27 +8,18 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern;
+package tern.server;
+
+import tern.TernException;
 
 /**
- * Tern Exception.
- * 
+ * Exception throw when ternjs throws "No type found at the given position."
+ *
  */
-public class TernException extends Exception {
+public class TernNoTypeFoundAtPositionException extends TernException {
 
-	private static final long serialVersionUID = 4202429014735034363L;
-
-	public TernException(String message) {
+	public TernNoTypeFoundAtPositionException(String message) {
 		super(message);
-
-	}
-
-	public TernException(String message, Throwable e) {
-		super(message, e);
-	}
-
-	public TernException(Throwable e) {
-		super(e);
 	}
 
 }

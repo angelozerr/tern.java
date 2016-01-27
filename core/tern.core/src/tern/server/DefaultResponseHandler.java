@@ -29,8 +29,14 @@ public class DefaultResponseHandler implements IResponseHandler {
 	public void onError(String error, Throwable t) {
 		this.error = error;
 		this.t = t;
-		if (this.error == null && t != null) {
-			this.error = t.getMessage();
+		if (t == null) {
+			if (this.error != null) {
+				this.t = TernExceptionFactory.create(error);
+			}
+		} else {
+			if (this.error == null) {
+				this.error = t.getMessage();
+			}
 		}
 	}
 
@@ -42,6 +48,9 @@ public class DefaultResponseHandler implements IResponseHandler {
 
 	public Object getData() throws TernException {
 		if (error != null || t != null) {
+			if (t instanceof TernException) {
+				throw (TernException) t;
+			}
 			throw new TernException(error, t);
 		}
 		return data;
