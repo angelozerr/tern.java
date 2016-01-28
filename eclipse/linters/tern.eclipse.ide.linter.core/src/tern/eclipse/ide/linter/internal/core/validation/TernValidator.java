@@ -25,6 +25,7 @@ import org.eclipse.wst.validation.internal.provisional.core.IReporter;
 import org.eclipse.wst.validation.internal.provisional.core.IValidationContext;
 import org.eclipse.wst.validation.internal.provisional.core.IValidatorJob;
 
+import tern.TernResourcesManager;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.IIDETernScriptPathReporter;
 import tern.eclipse.ide.core.IScopeContext;
@@ -54,10 +55,17 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 			IIDETernProject ternProject = context.getTernProject();
 			if (isInScope(resource, ternProject, context)) {
 				IReporter reporter = result.getReporter(monitor);
-				// validate is called for each file, the synchronization of tern
-				// file must be done for the first file which must be validated.
-				TernValidationHelper.validate(resource, ternProject, true, context.isSynch(), reporter, this);
-				context.setSynch(false);
+				// Validate is called for each file, the synchronization of tern
+				// file must be done for :
+				// 1) the first JavaScript file which must be validated.
+				// 2) for any HTML file because it is deleted from the tern
+				// server.
+				boolean jsFile = TernResourcesManager.isJSFile(resource);
+				boolean synch = !jsFile || context.isSynch();
+				TernValidationHelper.validate(resource, ternProject, true, synch, reporter, this);
+				if (jsFile) {
+					context.setSynch(false);
+				}
 			}
 		}
 		return result;
