@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,6 +30,7 @@ import java.util.Set;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
+import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonArray;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonValue;
@@ -102,7 +104,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	private ITernFileSynchronizer fileSynchronizer;
 
-	private String lastTernProjectFileContent;
+	private JsonObject lastTernProject;
 
 	private Object libLock = new Object();
 
@@ -332,8 +334,12 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	@Override
 	public boolean hasPlugin(String plugin) {
-		JsonObject plugins = (JsonObject) super.get(PLUGINS_FIELD_NAME);
-		return plugins == null ? false : plugins.get(plugin) != null;
+		return getPlugin(this, plugin) != null;
+	}
+
+	private static JsonValue getPlugin(JsonObject json, String plugin) {
+		JsonObject plugins = (JsonObject) json.get(PLUGINS_FIELD_NAME);
+		return plugins == null ? null : plugins.get(plugin);
 	}
 
 	/**
@@ -407,7 +413,7 @@ public class TernProject extends JsonObject implements ITernProject {
 		try {
 			doSave();
 		} finally {
-			reset();
+			// reset();
 		}
 	}
 
@@ -439,10 +445,11 @@ public class TernProject extends JsonObject implements ITernProject {
 	public final void load() throws IOException {
 		try {
 			Collection<ITernPlugin> lastLinters = getLastLinters();
+			JsonObject lastTernProject = this.lastTernProject;
 			doLoad();
 			if (lastLinters != null) {
 				ITernPlugin[] newLinters = getLinters();
-				if (isLintersChanged(lastLinters, newLinters)) {
+				if (isLintersChanged(Arrays.asList(newLinters), this, lastLinters, lastTernProject)) {
 					onLintersChanged();
 				}
 			}
@@ -465,18 +472,33 @@ public class TernProject extends JsonObject implements ITernProject {
 	 * 
 	 * @param oldLinters
 	 * @param newLinters
+	 * @param lastTernProject
 	 * @return true if linters has changed and false otherwise.
 	 */
-	private boolean isLintersChanged(Collection<ITernPlugin> oldLinters, ITernPlugin[] newLinters) {
-		if (oldLinters.size() != newLinters.length) {
+	private boolean isLintersChanged(Collection<ITernPlugin> newLinters, JsonObject newTernProject,
+			Collection<ITernPlugin> lastLinters, JsonObject lastTernProject) {
+		if (!lastLinters.equals(newLinters)) {
+			// some linter was added/removed
 			return true;
 		}
-		// TODO : implement changes of linter options
+		if (lastTernProject == null) {
+			return false;
+		}
+		// check if linter options has changed.
+		JsonValue lastOptions = null;
+		JsonValue newOptions = null;
+		for (ITernPlugin linter : lastLinters) {
+			lastOptions = getPlugin(lastTernProject, linter.getName());
+			newOptions = getPlugin(newTernProject, linter.getName());
+			if (!JsonHelper.isSameJson(lastOptions, newOptions)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	protected void reset() {
-		this.lastTernProjectFileContent = toString();
+		this.lastTernProject = Json.parse(toString()).asObject();
 		this.linters = null;
 	}
 
@@ -633,7 +655,7 @@ public class TernProject extends JsonObject implements ITernProject {
 	}
 
 	public boolean isDirty() {
-		return !toString().equals(lastTernProjectFileContent);
+		return !JsonHelper.isSameJson(this, lastTernProject);
 	}
 
 	@Override

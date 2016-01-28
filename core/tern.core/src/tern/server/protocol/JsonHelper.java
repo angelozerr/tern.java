@@ -13,6 +13,7 @@ package tern.server.protocol;
 import java.io.IOException;
 import java.io.Reader;
 
+import com.eclipsesource.json.Json;
 import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
 import com.eclipsesource.json.JsonValue;
@@ -88,7 +89,7 @@ public class JsonHelper {
 	 */
 	public static void readFrom(Reader reader, JsonObject to)
 			throws IOException {
-		copy(JsonObject.readFrom(reader), to);
+		copy(Json.parse(reader).asObject(), to);
 	}
 
 	/**
@@ -109,7 +110,10 @@ public class JsonHelper {
 		if (value1 == null) {
 			return value2 == null;
 		}
-		return value1.equals(value2);
+		if (value2 == null) {
+			return false;
+		}
+		return value1.toString().equals(value2.toString());
 
 	}
 }

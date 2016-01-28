@@ -14,7 +14,7 @@ package tern.server;
  * Tern module information.
  *
  */
-public class TernModuleInfo {
+public class TernModuleInfo implements ITernModuleInfo {
 
 	private final String name;
 	private final String type;
@@ -48,30 +48,35 @@ public class TernModuleInfo {
 		return -1;
 	}
 
-	/**
-	 * Returns the name of the module.
-	 * 
-	 * @return the name of the module.
-	 */
+	@Override
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * Returns the type of the module.
-	 * 
-	 * @return the type of the module.
-	 */
+	@Override
 	public String getType() {
 		return type;
 	}
 
-	/**
-	 * Returns the version of the module.
-	 * 
-	 * @return the version of the module.
-	 */
+	@Override
 	public String getVersion() {
 		return version;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if ((o instanceof ITernModuleInfo)) {
+			ITernModuleInfo module = (ITernModuleInfo) o;
+			return (equals(name, module.getName()) && equals(type, module.getType())
+					&& equals(version, module.getVersion()));
+		}
+		return false;
+	}
+
+	private boolean equals(Object o1, Object o2) {
+		if (o1 == null) {
+			return (o2 == null);
+		}
+		return o1.equals(o2);
 	}
 }

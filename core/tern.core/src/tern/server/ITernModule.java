@@ -19,16 +19,9 @@ import tern.metadata.TernModuleMetadata;
  * @see http://ternjs.net/doc/manual.html#plugins
  * 
  */
-public interface ITernModule {
+public interface ITernModule extends ITernModuleInfo {
 
 	public static final ITernModule[] EMPTY_MODULE = new ITernModule[0];
-
-	/**
-	 * Return the def or plugin name.
-	 * 
-	 * @return
-	 */
-	String getName();
 
 	/**
 	 * Return the origin.
@@ -36,20 +29,6 @@ public interface ITernModule {
 	 * @return
 	 */
 	String getOrigin();
-	
-	/**
-	 * Returns the type of the def or plugin.
-	 * 
-	 * @return the type of the def or plugin.
-	 */
-	String getType();
-
-	/**
-	 * Returns the version of the def or plugin.
-	 * 
-	 * @return the version of the def or plugin.
-	 */
-	String getVersion();
 
 	/**
 	 * Returns the module type.
