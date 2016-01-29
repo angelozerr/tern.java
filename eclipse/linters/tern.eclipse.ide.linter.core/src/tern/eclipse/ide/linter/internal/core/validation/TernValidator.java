@@ -62,7 +62,7 @@ public class TernValidator extends AbstractValidator implements IValidatorJob {
 				// server.
 				boolean jsFile = TernResourcesManager.isJSFile(resource);
 				boolean synch = !jsFile || context.isSynch();
-				TernValidationHelper.validate(resource, ternProject, true, synch, reporter, this);
+				TernValidationHelper.validate(resource, ternProject, true, synch, false, reporter, this);
 				if (jsFile) {
 					context.setSynch(false);
 				}

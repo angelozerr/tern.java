@@ -11,11 +11,18 @@
  */
 package tern.eclipse.ide.jsdt.internal.ui;
 
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.wst.jsdt.internal.ui.JavaScriptPlugin;
+import org.eclipse.wst.jsdt.ui.PreferenceConstants;
 import org.osgi.framework.BundleContext;
 
 import tern.eclipse.ide.jsdt.internal.ui.contentassist.ITernContextProvider;
 import tern.eclipse.ide.jsdt.internal.ui.contentassist.JSDTTernContextProvider;
+import tern.eclipse.ide.ui.utils.HTMLTernPrinter;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -46,6 +53,15 @@ public class JSDTTernUIPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		
+		HTMLTernPrinter.setColorInfoBackround(getHoverBackgroundColorRGB());
+	}
+	
+	private static RGB getHoverBackgroundColorRGB() {
+		IPreferenceStore store= JavaScriptPlugin.getDefault().getPreferenceStore();
+		return store.getBoolean(PreferenceConstants.EDITOR_SOURCE_HOVER_BACKGROUND_COLOR_SYSTEM_DEFAULT)
+			? null
+			: PreferenceConverter.getColor(store, PreferenceConstants.EDITOR_SOURCE_HOVER_BACKGROUND_COLOR);
 	}
 
 	/*

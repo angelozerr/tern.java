@@ -8,7 +8,7 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.eclipse.ide.linter.internal.core.validation;
+package tern.eclipse.ide.linter.core.validation;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -32,12 +32,12 @@ public class TernReporterCollector implements ITernLintCollector {
 	private static final String CHAR_END = "charEnd";
 	private static final String CHAR_START = "charStart";
 	private static final String WARNING_SEVERITY = "warning";
+
 	private final IIDETernProject ternProject;
 	private final IReporter reporter;
 	private final IValidator validator;
 
-	public TernReporterCollector(IIDETernProject ternProject,
-			IReporter reporter, IValidator validator) {
+	public TernReporterCollector(IIDETernProject ternProject, IReporter reporter, IValidator validator) {
 		this.ternProject = ternProject;
 		this.reporter = reporter;
 		this.validator = validator;
@@ -57,10 +57,8 @@ public class TernReporterCollector implements ITernLintCollector {
 		if (end == null) {
 			end = start + 1;
 		}
-		IResource resource = (IResource) ternProject.getFile(file).getAdapter(
-				IFile.class);
-		LocalizedMessage message = new LocalizedMessage(getSeverity(severity),
-				messageText, resource);
+		IResource resource = (IResource) ternProject.getFile(file).getAdapter(IFile.class);
+		LocalizedMessage message = new LocalizedMessage(getSeverity(severity), messageText, resource);
 		message.setOffset(start.intValue());
 		message.setLength(end.intValue() - start.intValue());
 		message.setAttribute(CHAR_START, start.intValue());
@@ -69,6 +67,10 @@ public class TernReporterCollector implements ITernLintCollector {
 		if (lineNumber != null) {
 			message.setLineNo(lineNumber);
 		}
+		addMessage(message, messageObject, helper);
+	}
+
+	protected void addMessage(LocalizedMessage message, Object messageObject, IJSONObjectHelper helper) {
 		reporter.addMessage(validator, message);
 	}
 
@@ -86,8 +88,7 @@ public class TernReporterCollector implements ITernLintCollector {
 	}
 
 	private int getSeverity(String severity) {
-		return WARNING_SEVERITY.equals(severity) ? IMessage.NORMAL_SEVERITY
-				: IMessage.HIGH_SEVERITY;
+		return WARNING_SEVERITY.equals(severity) ? IMessage.NORMAL_SEVERITY : IMessage.HIGH_SEVERITY;
 	}
 
 	@Override
@@ -95,4 +96,11 @@ public class TernReporterCollector implements ITernLintCollector {
 
 	}
 
+	public IReporter getReporter() {
+		return reporter;
+	}
+
+	public IValidator getValidator() {
+		return validator;
+	}
 }

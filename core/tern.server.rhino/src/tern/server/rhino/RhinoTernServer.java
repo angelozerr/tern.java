@@ -170,12 +170,16 @@ public class RhinoTernServer extends AbstractScriptEngineTernServer {
 
 		@Override
 		public Long getCh(Object data, String name) {
-			Double d;
+			Double d = null;
 			if (data instanceof Double) {
 				d = (Double) data;
 			} else {
-				NativeObject loc = (NativeObject) ((NativeObject) data).get(name, (NativeObject) data);
-				d = (Double) loc.get("ch", loc); //$NON-NLS-1$
+				Object loc = ((NativeObject) data).get(name, (NativeObject) data);
+				if (loc instanceof NativeObject) {
+					d = (Double) ((NativeObject)loc).get("ch", ((NativeObject)loc)); //$NON-NLS-1$
+				} else if (loc instanceof Double) {
+					d = (Double) loc;
+				}
 			}
 			if (d != null) {
 				return d.longValue();
@@ -214,6 +218,11 @@ public class RhinoTernServer extends AbstractScriptEngineTernServer {
 		public boolean getBoolean(Object jsonObject, String name, boolean defaultValue) {
 			String val = getText(jsonObject, name);
 			return val != null ? Boolean.valueOf(val) : defaultValue;
+		}
+
+		@Override
+		public Object getObject(Object jsonObj, String name) {
+			return ((Scriptable) jsonObj).get(name, (Scriptable) jsonObj);
 		}
 
 	}

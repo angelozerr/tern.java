@@ -14,6 +14,8 @@ public interface IJSONObjectHelper {
 
 	Iterable<Object> getList(Object jsonObj, String name);
 
+	Object getObject(Object jsonObj, String name);
+	
 	Long getCh(Object jsonObj, String name);
 
 	String getText(Object jsonObj, String property);

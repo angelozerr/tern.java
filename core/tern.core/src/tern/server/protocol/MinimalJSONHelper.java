@@ -67,4 +67,12 @@ public class MinimalJSONHelper implements IJSONObjectHelper {
 	public Long getLong(Object jsonObject, String name) {
 		return JsonHelper.getLong((JsonObject) jsonObject, name);
 	}
+
+	@Override
+	public Object getObject(Object jsonObj, String name) {
+		if (jsonObj == null) {
+			return null;
+		}
+		return ((JsonObject) jsonObj).get(name);
+	}
 }

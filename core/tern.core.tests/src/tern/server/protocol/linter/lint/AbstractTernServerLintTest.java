@@ -8,8 +8,9 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.server.protocol.lint;
+package tern.server.protocol.linter.lint;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import tern.ITernProject;
@@ -18,6 +19,7 @@ import tern.server.AbstractTernServerTest;
 import tern.server.TernDef;
 import tern.server.TernPlugin;
 import tern.server.protocol.TernDoc;
+import tern.server.protocol.lint.TernLintQuery;
 
 public abstract class AbstractTernServerLintTest extends AbstractTernServerTest {
 
@@ -32,9 +34,20 @@ public abstract class AbstractTernServerLintTest extends AbstractTernServerTest 
 	@Test
 	public void lint() throws TernException {
 		TernDoc doc = createDoc();
-		ITernLintCollector collector = new MockTernLintCollector();
-		server.request(doc, collector);
+		MockTernLintCollector messages = new MockTernLintCollector();
+		server.request(doc, messages);
+		// {"messages":[{"message":"Unknown property
+		// 'getElem'","from":9,"to":16,"severity":"warning","file":"myfile.js"}]}
 
+		Assert.assertEquals(1, messages.size());
+		MockLintMessage message = messages.get(0);
+		Assert.assertEquals("[lint]: Unknown property 'getElem'", message.message);
+		Assert.assertNotNull(message.start);
+		Assert.assertEquals(9L, message.start.longValue());
+		Assert.assertNotNull(message.end);
+		Assert.assertEquals(16L, message.end.longValue());
+		Assert.assertEquals("warning", message.severity);
+		Assert.assertEquals("myfile.js", message.file);
 	}
 
 	private TernDoc createDoc() throws TernException {

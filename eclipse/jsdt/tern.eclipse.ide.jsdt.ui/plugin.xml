@@ -207,4 +207,19 @@
          </includes>
       </viewerContentBinding>
    </extension>
+   
+	<!-- Quick Fix -->
+	<extension
+         point="org.eclipse.wst.jsdt.ui.quickFixProcessors">
+      <quickFixProcessor
+            name="Tern Quick Fix Processor"
+            class="tern.eclipse.ide.jsdt.internal.ui.text.correction.TernLintQuickFixProcessor"
+            id="tern.eclipse.ide.jsdt.ui.text.correction.TernLintQuickFixProcessor">
+            <handledMarkerTypes>
+               <markerType
+                     id="org.eclipse.wst.sse.ui.temp.error">
+               </markerType>
+            </handledMarkerTypes>
+      </quickFixProcessor>
+   </extension>
 </plugin>        

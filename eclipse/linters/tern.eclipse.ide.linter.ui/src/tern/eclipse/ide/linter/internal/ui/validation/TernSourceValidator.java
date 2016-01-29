@@ -25,6 +25,7 @@ import tern.ITernFile;
 import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.TernCorePlugin;
 import tern.eclipse.ide.core.resources.TernDocumentFile;
+import tern.eclipse.ide.linter.core.validation.TernReporterCollector;
 import tern.eclipse.ide.linter.core.validation.TernValidationHelper;
 import tern.eclipse.ide.linter.internal.ui.Trace;
 import tern.eclipse.ide.ui.utils.EditorUtils;
@@ -69,8 +70,9 @@ public class TernSourceValidator implements IValidator, ISourceValidator {
 			ITernPlugin[] lintPlugins = ternProject.getLinters();
 			if (lintPlugins.length > 0) {
 				ITernFile ternFile = new TernDocumentFile(file, document);
+				ITernLintCollector collector = new UITernReporterCollector(ternProject, reporter, this);
 				TernValidationHelper.validate(ternFile, ternProject, false,
-						true, reporter, this);
+						true, true, collector);
 			}
 		} catch (CoreException e) {
 			Trace.trace(Trace.SEVERE, "Error while tern validation.", e);

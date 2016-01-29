@@ -8,13 +8,13 @@
  *  Contributors:
  *  Angelo Zerr <angelo.zerr@gmail.com> - initial API and implementation
  */
-package tern.server.nodejs.lint;
+package tern.server.nodejs.linter.lint;
 
 import tern.ITernProject;
 import tern.TernException;
 import tern.server.ITernServer;
 import tern.server.nodejs.NodejsTernServerFactory;
-import tern.server.protocol.lint.AbstractTernServerLintTest;
+import tern.server.protocol.linter.lint.AbstractTernServerLintTest;
 
 public class NodejsLintTest extends AbstractTernServerLintTest {
 
