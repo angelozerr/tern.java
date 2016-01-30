@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.lint.TernLintQuery;
 
 public class MockTernLintCollector extends ArrayList<MockLintMessage>implements ITernLintCollector {
 
@@ -24,7 +25,7 @@ public class MockTernLintCollector extends ArrayList<MockLintMessage>implements 
 
 	@Override
 	public void addMessage(String messageId, String message, Long start, Long end, Long lineNumber, String severity,
-			String file, Object messageObject, IJSONObjectHelper helper) {
+			String file, Object messageObject, TernLintQuery query, IJSONObjectHelper helper) {
 		super.add(new MockLintMessage(messageId, message, start, end, lineNumber, severity, file));
 	}
 

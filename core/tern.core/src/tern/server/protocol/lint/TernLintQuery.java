@@ -112,5 +112,9 @@ public class TernLintQuery extends TernQuery {
 		}
 		return message;
 	}
+	
+	public ITernPlugin getLinter() {
+		return linter;
+	}
 
 }

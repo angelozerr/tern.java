@@ -42,7 +42,7 @@ public class TernLintResultHelper {
 		return helper.getLong(messageObject, LINE_NUMBER_FIELD);
 	}
 
-	public static Fix getFix(Object messageObject, IJSONObjectHelper helper) {
+	public static Fix getFix(Object messageObject, TernLintQuery query, IJSONObjectHelper helper) {
 		Object f = helper.getObject(messageObject, FIX_FIELD);
 		if (f == null) {
 			return null;
@@ -50,7 +50,7 @@ public class TernLintResultHelper {
 		Long start = getStart(f, helper);
 		Long end = getEnd(f, helper);
 		String text = helper.getText(f, TEXT_FIELD);
-		return new Fix(getMessageId(messageObject, helper), start, end, text);
+		return new Fix(getMessageId(messageObject, helper), start, end, text, query.getLinter());
 	}
 
 }

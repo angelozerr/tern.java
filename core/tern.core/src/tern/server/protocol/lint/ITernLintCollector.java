@@ -50,11 +50,12 @@ public interface ITernLintCollector extends ITernResultsCollector {
 	 *            the owner file name.
 	 * @param messageObject
 	 *            JSON object of message.
+	 * @param query 
 	 * @param helper
 	 *            the JSON Object helper to visit the given JSON message object.            
 	 */
 	void addMessage(String messageId, String message, Long start, Long end, Long lineNumber, String severity,
-			String file, Object messageObject, IJSONObjectHelper helper);
+			String file, Object messageObject, TernLintQuery query, IJSONObjectHelper helper);
 
 	/**
 	 * This method is call when lint end for the given file after calling the

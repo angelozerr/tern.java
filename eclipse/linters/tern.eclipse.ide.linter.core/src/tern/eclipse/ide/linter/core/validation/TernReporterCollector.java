@@ -21,6 +21,7 @@ import tern.eclipse.ide.core.IIDETernProject;
 import tern.eclipse.ide.core.utils.FileUtils;
 import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.lint.ITernLintCollector;
+import tern.server.protocol.lint.TernLintQuery;
 
 /**
  * Tern report collector to add in WTP {@link IReporter} messages coming from
@@ -50,7 +51,7 @@ public class TernReporterCollector implements ITernLintCollector {
 
 	@Override
 	public void addMessage(String messageId, String messageText, Long start, Long end, Long line, String severity,
-			String file, Object messageObject, IJSONObjectHelper helper) {
+			String file, Object messageObject, TernLintQuery query, IJSONObjectHelper helper) {
 		if (start == null) {
 			start = 0L;
 		}
@@ -67,10 +68,10 @@ public class TernReporterCollector implements ITernLintCollector {
 		if (lineNumber != null) {
 			message.setLineNo(lineNumber);
 		}
-		addMessage(message, messageObject, helper);
+		addMessage(message, messageObject, query, helper);
 	}
 
-	protected void addMessage(LocalizedMessage message, Object messageObject, IJSONObjectHelper helper) {
+	protected void addMessage(LocalizedMessage message, Object messageObject, TernLintQuery query, IJSONObjectHelper helper) {
 		reporter.addMessage(validator, message);
 	}
 

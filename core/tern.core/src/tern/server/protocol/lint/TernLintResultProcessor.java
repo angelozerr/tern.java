@@ -15,6 +15,10 @@ import tern.server.protocol.IJSONObjectHelper;
 import tern.server.protocol.ITernResultProcessor;
 import tern.server.protocol.TernDoc;
 
+/**
+ * Tern lint resulr processor.
+ *
+ */
 public class TernLintResultProcessor implements ITernResultProcessor<ITernLintCollector> {
 
 	private static final String MESSAGES_FIELD = "messages";
@@ -68,7 +72,8 @@ public class TernLintResultProcessor implements ITernResultProcessor<ITernLintCo
 			Long endCh = TernLintResultHelper.getEnd(messageObject, helper);
 			Long line = TernLintResultHelper.getLine(messageObject, helper);
 			file = TernLintResultHelper.getFile(messageObject, helper);
-			collector.addMessage(messageId, message, startCh, endCh, line, severity, file, messageObject, helper);
+			collector.addMessage(messageId, message, startCh, endCh, line, severity, file, messageObject, query,
+					helper);
 		}
 	}
 
