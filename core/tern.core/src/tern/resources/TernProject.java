@@ -434,6 +434,7 @@ public class TernProject extends JsonObject implements ITernProject {
 					IOUtils.closeQuietly(writer);
 				}
 			}
+			reset();
 		}
 	}
 
