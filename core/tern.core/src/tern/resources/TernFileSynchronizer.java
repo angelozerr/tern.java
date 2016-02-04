@@ -302,7 +302,7 @@ public class TernFileSynchronizer implements ITernFileSynchronizer {
 			Set<String> perPath = new HashSet<String>();
 			syncedFilesPerPath.put(path, perPath);
 
-			requestedFiles.remove(Arrays.asList(forced));
+			requestedFiles.removeAll(Arrays.asList(forced));
 
 			long totalSize = 0;
 			for (String file : requestedFiles) {
