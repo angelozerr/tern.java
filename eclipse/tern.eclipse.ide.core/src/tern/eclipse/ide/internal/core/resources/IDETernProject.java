@@ -529,6 +529,19 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 		return super.equals(value);
 	}
 
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (project != null ? project.hashCode() : 0);
+		result = 31 * result + (ternServer != null ? ternServer.hashCode() : 0);
+		result = 31 * result + (scriptPaths != null ? scriptPaths.hashCode() : 0);
+		result = 31 * result + (sortedScriptPaths != null ? sortedScriptPaths.hashCode() : 0);
+		result = 31 * result + (data != null ? data.hashCode() : 0);
+		result = 31 * result + (listeners != null ? listeners.hashCode() : 0);
+		result = 31 * result + (workingCopy != null ? workingCopy.hashCode() : 0);
+		return result;
+	}
+
 	/**
 	 * Returns the script path instance from the given path and null otherwise.
 	 * 

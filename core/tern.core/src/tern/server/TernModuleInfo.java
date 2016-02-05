@@ -73,6 +73,15 @@ public class TernModuleInfo implements ITernModuleInfo {
 		return false;
 	}
 
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (name != null ? name.hashCode() : 0);
+		result = 31 * result + (type != null ? type.hashCode() : 0);
+		result = 31 * result + (version != null ? version.hashCode() : 0);
+		return result;
+	}
+
 	private boolean equals(Object o1, Object o2) {
 		if (o1 == null) {
 			return (o2 == null);
