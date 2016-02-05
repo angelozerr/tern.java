@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Start {
 
+	private Start() {
+	}
+
 	public static void main(String[] args) throws IOException, InterruptedException {
 		File nodejsTernFile = new File(".");
 		ProcessBuilder builder = new ProcessBuilder(createCommands(

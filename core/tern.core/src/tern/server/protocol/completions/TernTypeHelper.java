@@ -29,6 +29,9 @@ public class TernTypeHelper {
 	private static final String FUNCTION_START = "fn(";
 	private static final String FUNCTION_ARRAY_START = "[fn(";
 
+	private TernTypeHelper() {
+	}
+
 	/**
 	 * Returns true if the given type is fn() and false otherwise.
 	 * 

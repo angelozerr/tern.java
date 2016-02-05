@@ -17,7 +17,10 @@ import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.Region;
 
 public class JavaWordFinder {
-	
+
+	private JavaWordFinder() {
+	}
+
 	public static IRegion findWord(IDocument document, int offset) {
 
 		int start= -2;

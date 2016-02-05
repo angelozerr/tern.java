@@ -16,6 +16,9 @@ package tern.server.protocol.html;
  */
 public class HtmlHelper {
 
+	private HtmlHelper() {
+	}
+
 	/**
 	 * Extract JS content from the given HTML content. The HTML elements are
 	 * replaced with space and JS content is kept. The JS content is declared

@@ -18,6 +18,9 @@ import tern.eclipse.ide.ui.console.LineType;
 
 public class TernRepositoryConsoleHelper {
 
+	private TernRepositoryConsoleHelper() {
+	}
+
 	public static void doAppendLine(final LineType lineType, final String line) {
 		TernRepositoryConsole console = TernRepositoryConsole.getConsole();
 		showConsole(console);

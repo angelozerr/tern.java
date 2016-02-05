@@ -59,8 +59,11 @@ public class NodejsTernHelper {
 
 	// tern uses UTF-8 encoding
 	private static final String UTF_8 = "UTF-8";
-	
-	public static JsonObject makeRequest(String baseURL, TernDoc doc,
+
+	public NodejsTernHelper() {
+	}
+
+	public static JsonObject makeRequest(String baseURL, TernDoc doc, 
 			boolean silent, List<IInterceptor> interceptors, ITernServer server)
 			throws IOException, TernException {
 		TernQuery query = doc.getQuery();

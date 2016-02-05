@@ -22,6 +22,9 @@ import tern.server.nodejs.process.PrintNodejsProcessListener;
 
 public class NodejsTernServerFactory {
 
+	private NodejsTernServerFactory() {
+	}
+
 	public static ITernServer createServer(ITernProject project)
 			throws TernException {
 		NodejsProcessManager.getInstance().init(

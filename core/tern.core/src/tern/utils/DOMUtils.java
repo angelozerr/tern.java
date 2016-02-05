@@ -28,6 +28,9 @@ import org.w3c.dom.Text;
  */
 public class DOMUtils {
 
+	private DOMUtils() {
+	}
+
 	/**
 	 * Returns the node value from the DOM NOde.
 	 * 

@@ -47,6 +47,9 @@ public class NodejsDebuggersManager {
 		debuggers = Collections.unmodifiableMap(debuggers);
 	}
 
+	private NodejsDebuggersManager() {
+	}
+
 	public static Collection<INodejsDebugger> getDebuggers() {
 		return debuggers.values();
 	}

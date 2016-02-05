@@ -33,6 +33,9 @@ public class NodejsProcessHelper {
 	private static final String[] LINUX_NODE_PATHS = new String[] {
 			"/usr/local/bin/node", "node" };
 
+	private NodejsProcessHelper() {
+	}
+
 	public static String getNodejsPath(OS os) {
 		String path = getDefaultNodejsPath(os);
 		if (path != null) {

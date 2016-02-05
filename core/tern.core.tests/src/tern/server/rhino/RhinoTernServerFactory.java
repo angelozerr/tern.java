@@ -18,6 +18,9 @@ import tern.server.nodejs.process.PathHelper;
 
 public class RhinoTernServerFactory {
 
+	private RhinoTernServerFactory() {
+	}
+
 	public static ITernServer createServer(ITernProject project) throws TernException {
 		project.setRepository(new TernRepository("ternjs", PathHelper.getTernRepositoryDir()));
 		RhinoTernServer server = new RhinoTernServer(project);		

@@ -77,6 +77,9 @@ public class TernImagesRegistry {
 				TernImagesRegistry.class, "import.png"));
 	}
 
+	private TernImagesRegistry() {
+	}
+
 	/**
 	 * Returns the image from the image registry with the given key.
 	 * 

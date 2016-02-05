@@ -16,6 +16,9 @@ import org.eclipse.ui.console.IConsoleManager;
 
 public class TernConsoleHelper {
 
+	private TernConsoleHelper() {
+	}
+
 	public static void showConsole(TernConsole console) {
 		if (console != null) {
 			IConsoleManager manager = ConsolePlugin.getDefault()

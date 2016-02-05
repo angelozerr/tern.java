@@ -20,6 +20,9 @@ public class PathUtils {
 
 	private static final String SLASH_STAR = "/*";
 
+	private PathUtils() {
+	}
+
 	/**
 	 * Returns true if the given path belongs to the given container and false
 	 * otherwise.

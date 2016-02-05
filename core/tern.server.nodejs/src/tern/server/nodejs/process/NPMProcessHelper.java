@@ -33,6 +33,9 @@ public class NPMProcessHelper {
 	private static final String[] LINUX_NODE_PATHS = new String[] {
 			"/usr/local/bin/npm", "npm" };
 
+	private NPMProcessHelper() {
+	}
+
 	public static String getNPMPath(OS os) {
 		String path = getDefaultNPMPath(os);
 		if (path != null) {

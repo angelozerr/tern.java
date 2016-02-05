@@ -12,6 +12,9 @@ import tern.server.nodejs.process.PrintNodejsProcessListener;
 // http://localhost:12345/ping
 public class StartNodejsTernServer {
 
+	private StartNodejsTernServer() {
+	}
+
 	public static void main(String[] args) throws MalformedURLException,
 			IOException, InterruptedException {
 		File nodejsTernBaseDir = new File(".");

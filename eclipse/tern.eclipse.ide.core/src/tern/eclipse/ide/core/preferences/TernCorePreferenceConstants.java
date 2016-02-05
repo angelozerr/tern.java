@@ -59,6 +59,10 @@ public class TernCorePreferenceConstants {
 	public static final String DEFAULT_TERN_MODULES = "defaultTernModules"; //$NON-NLS-1$
 	public static final String DEFAULT_TERN_MODULES_VALUE = getDefaultModules(); //$NON-NLS-1$
 
+
+	private TernCorePreferenceConstants() {
+	}
+
 	/**
 	 * Returns the tern modules to add to .tern-project when project is
 	 * converted to tern project.

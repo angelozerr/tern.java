@@ -28,6 +28,9 @@ public class ZipUtils {
 	private static final String JAR_EXTENSION = ".jar";
 	private static final String BIN_FOLDER = "/bin";
 
+	private ZipUtils() {
+	}
+
 	/**
 	 * Returns true if the given file is a zip file and false otherwise.
 	 * 

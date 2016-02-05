@@ -9,6 +9,9 @@ import tern.server.protocol.TernDoc;
 
 public class RunCommand {
 
+	private RunCommand() {
+	}
+
 	public static void main(String[] args) throws IOException {
 
 		TernDoc doc = new TernDoc();

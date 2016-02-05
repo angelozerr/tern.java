@@ -29,4 +29,6 @@ public class TernUIPreferenceConstants {
 	public static final String OMIT_OBJECT_PROTOTYPE_CONTENT_ASSIST = "omitObjectPrototype"; //$NON-NLS-1$
 	public static final String GUESS_CONTENT_ASSIST = "guess"; //$NON-NLS-1$
 
+	private TernUIPreferenceConstants() {
+	}
 }

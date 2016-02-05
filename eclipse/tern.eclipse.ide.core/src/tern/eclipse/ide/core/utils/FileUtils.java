@@ -23,6 +23,9 @@ public class FileUtils {
 
 	private static ILineOfOffsetProvider provider;
 
+	private FileUtils() {
+	}
+
 	/**
 	 * Set the line offset provider singleton.
 	 */
