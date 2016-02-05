@@ -2240,64 +2240,74 @@
         }
       },
       assert: {
+        "!url": "https://nodejs.org/api/assert.html",
+        "!doc": "The assert module provides a simple set of assertion tests that can be used to test invariants. The module is intended for internal use by Node.js, but can be used in application code via require('assert'). However, assert is not a testing framework, and is not intended to be used as a general purpose assertion library.",
         "!type": "fn(value: ?, message?: string)",
-        fail: {
-          "!type": "fn(actual: ?, expected: ?, message: string, operator: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_fail_actual_expected_message_operator",
-          "!doc": "Throws an exception that displays the values for actual and expected separated by the provided operator."
-        },
         ok: {
           "!type": "fn(value: ?, message?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert",
-          "!doc": "This module is used for writing unit tests for your applications, you can access it with require('assert')."
-        },
-        equal: {
-          "!type": "fn(actual: ?, expected: ?, message?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message",
-          "!doc": "Tests shallow, coercive equality with the equal comparison operator ( == )."
-        },
-        notEqual: {
-          "!type": "fn(actual: ?, expected: ?, message?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message",
-          "!doc": "Tests shallow, coercive non-equality with the not equal comparison operator ( != )."
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_value_message_assert_ok_value_message",
+          "!doc": "Tests if value is truthy. It is equivalent to assert.equal(!!value, true, message)."
         },
         deepEqual: {
           "!type": "fn(actual: ?, expected: ?, message?: string)",
           "!url": "https://nodejs.org/api/assert.html#assert_assert_deepequal_actual_expected_message",
-          "!doc": "Tests for deep equality."
+          "!doc": "Tests for deep equality between the actual and expected parameters. Primitive values are compared with the equal comparison operator ( == )."
         },
-        notDeepEqual: {
-          "!type": "fn(acutal: ?, expected: ?, message?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message",
-          "!doc": "Tests for any deep inequality."
-        },
-        strictEqual: {
+        deepStrictEqual: {
           "!type": "fn(actual: ?, expected: ?, message?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_strictequal_actual_expected_message",
-          "!doc": "Tests strict equality, as determined by the strict equality operator ( === )"
-        },
-        notStrictEqual: {
-          "!type": "fn(actual: ?, expected: ?, message?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_notstrictequal_actual_expected_message",
-          "!doc": "Tests strict non-equality, as determined by the strict not equal operator ( !== )"
-        },
-        "throws": {
-          "!type": "fn(block: fn(), error?: ?, messsage?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message",
-          "!doc": "Expects block to throw an error. error can be constructor, regexp or validation function."
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_deepstrictequal_actual_expected_message",
+          "!doc": "Generally identical to assert.deepEqual with the exception that primitive values are compared using the strict equality operator ( === )."
         },
         doesNotThrow: {
-          "!type": "fn(block: fn(), error?: ?, messsage?: string)",
-          "!url": "https://nodejs.org/api/assert.html#assert_assert_doesnotthrow_block_message",
-          "!doc": "Expects block not to throw an error."
+          "!type": "fn(block: fn(), error?: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_doesnotthrow_block_error_message",
+          "!doc": "Asserts that the function block does not throw an error. See assert.throws() for more details."
+        },
+        equal: {
+          "!type": "fn(actual: ?, expected: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_equal_actual_expected_message",
+          "!doc": "Tests shallow, coercive equality between the actual and expected parameters using the equal comparison operator ( == )."
+        },
+        fail: {
+          "!type": "fn(actual: ?, expected: ?, message: string, operator: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_fail_actual_expected_message_operator",
+          "!doc": "Throws an AssertionError. If message is falsy, the error message is set as the values of actual and expected separated by the provided operator. Otherwise, the error message is the value of message."
         },
         ifError: {
           "!type": "fn(value: ?)",
           "!url": "https://nodejs.org/api/assert.html#assert_assert_iferror_value",
-          "!doc": "Tests if value is not a false value, throws if it is a true value. Useful when testing the first argument, error in callbacks."
+          "!doc": "Throws value if value is truthy. This is useful when testing the error argument in callbacks."
         },
-        "!url": "https://nodejs.org/api/assert.html#assert_assert",
-        "!doc": "This module is used for writing unit tests for your applications, you can access it with require('assert')."
+        notDeepEqual: {
+          "!type": "fn(actual: ?, expected: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_notdeepequal_actual_expected_message",
+          "!doc": "Tests for any deep inequality. Opposite of assert.deepEqual."
+        },
+        notDeepStrictEqual: {
+          "!type": "fn(actual: ?, expected: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_notdeepstrictequal_actual_expected_message",
+          "!doc": "Tests for deep strict inequality. Opposite of assert.deepStrictEqual."
+        },
+        notEqual: {
+          "!type": "fn(actual: ?, expected: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_notequal_actual_expected_message",
+          "!doc": "Tests shallow, coercive inequality with the not equal comparison operator ( != )."
+        },
+        notStrictEqual: {
+          "!type": "fn(actual: ?, expected: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_notstrictequal_actual_expected_message",
+          "!doc": "Tests strict inequality as determined by the strict not equal operator ( !== )."
+        },
+        strictEqual: {
+          "!type": "fn(actual: ?, expected: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_strictequal_actual_expected_message",
+          "!doc": "Tests strict equality as determined by the strict equality operator ( === )."
+        },
+        throws: {
+          "!type": "fn(block: fn(), error?: ?, message?: string)",
+          "!url": "https://nodejs.org/api/assert.html#assert_assert_throws_block_error_message",
+          "!doc": "Expects the function block to throw an error. If specified, error can be a constructor, RegExp, or validation function."
+        }
       },
       tty: {
         "!url": "https://nodejs.org/api/tty.html",
@@ -2414,52 +2424,58 @@
         ciphers: "string"
       },
       buffer: {
+        "!url": "https://nodejs.org/api/buffer.html",
+        "!doc": "Prior to the introduction of TypedArray in ECMAScript 2015 (ES6), the JavaScript language had no mechanism for reading or manipulating streams of binary data. The Buffer class was introduced as part of the Node.js API to make it possible to interact with octet streams in the context of things like TCP streams and file system operations.",
         Buffer: "Buffer",
-        INSPECT_MAX_BYTES: "number",
-        SlowBuffer: "Buffer"
+        SlowBuffer: "Buffer",
+        INSPECT_MAX_BYTES: {
+          "!type": "number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buffer_inspect_max_bytes",
+          "!doc": "Returns the maximum number of bytes that will be returned when buffer.inspect() is called. This can be overridden by user modules. See util.inspect() for more details on buffer.inspect() behavior."
+        }
       },
       module: {},
       timers: {
-        setTimeout: {
-          "!type": "fn(callback: fn(), ms: number) -> timers.Timer",
-          "!url": "https://nodejs.org/api/globals.html#globals_settimeout_cb_ms",
-          "!doc": "Run callback cb after at least ms milliseconds. The actual delay depends on external factors like OS timer granularity and system load."
-        },
-        clearTimeout: {
-          "!type": "fn(id: timers.Timer)",
-          "!url": "https://nodejs.org/api/globals.html#globals_cleartimeout_t",
-          "!doc": "Stop a timer that was previously created with setTimeout(). The callback will not execute."
-        },
-        setInterval: {
-          "!type": "fn(callback: fn(), ms: number) -> timers.Timer",
-          "!url": "https://nodejs.org/api/globals.html#globals_setinterval_cb_ms",
-          "!doc": "Run callback cb repeatedly every ms milliseconds. Note that the actual interval may vary, depending on external factors like OS timer granularity and system load. It's never less than ms but it may be longer."
-        },
-        clearInterval: {
-          "!type": "fn(id: timers.Timer)",
-          "!url": "https://nodejs.org/api/globals.html#globals_clearinterval_t",
-          "!doc": "Stop a timer that was previously created with setInterval(). The callback will not execute."
-        },
-        setImmediate: {
-          "!type": "fn(callback: fn()) -> timers.Timer",
-          "!url": "https://nodejs.org/api/timers.html#timers_setimmediate_callback_arg",
-          "!doc": "Schedule the 'immediate' execution of callback after I/O events callbacks."
-        },
         clearImmediate: {
-          "!type": "fn(id: timers.Timer)",
-          "!url": "https://nodejs.org/api/timers.html#timers_clearimmediate_immediateid",
+          "!type": "fn(immediateObject: ?)",
+          "!url": "https://nodejs.org/api/timers.html#timers_clearimmediate_immediateobject",
           "!doc": "Stops an immediate from triggering."
         },
+        clearInterval: {
+          "!type": "fn(intervalObject: timers.Timer)",
+          "!url": "https://nodejs.org/api/timers.html#timers_clearinterval_intervalobject",
+          "!doc": "Stops an interval from triggering."
+        },
+        clearTimeout: {
+          "!type": "fn(timeoutObject: timers.Timer)",
+          "!url": "https://nodejs.org/api/timers.html#timers_cleartimeout_timeoutobject",
+          "!doc": "Prevents a timeout from triggering."
+        },
+        setImmediate: {
+          "!type": "fn(callback: fn(), args?: ?) -> ?",
+          "!url": "https://nodejs.org/api/timers.html#timers_setimmediate_callback_arg",
+          "!doc": "To schedule the \"immediate\" execution of callback after I/O events callbacks and before setTimeout and setInterval. Returns an immediateObject for possible use with clearImmediate(). Optionally you can also pass arguments to the callback."
+        },
+        setInterval: {
+          "!type": "fn(callback: fn(), delay: number, args?: ?) -> timers.Timer",
+          "!url": "https://nodejs.org/api/timers.html#timers_setinterval_callback_delay_arg",
+          "!doc": "To schedule the repeated execution of callback every delay milliseconds. Returns a intervalObject for possible use with clearInterval(). Optionally you can also pass arguments to the callback."
+        },
+        setTimeout: {
+          "!type": "fn(callback: fn(), delay: number, args?: ?) -> timers.Timer",
+          "!url": "https://nodejs.org/api/timers.html#timers_settimeout_callback_delay_arg",
+          "!doc": "To schedule execution of a one-time callback after delay milliseconds. Returns a timeoutObject for possible use with clearTimeout(). Optionally you can also pass arguments to the callback."
+        },
         Timer: {
-          unref: {
-            "!type": "fn()",
-            "!url": "https://nodejs.org/api/timers.html#timers_unref",
-            "!doc": "Create a timer that is active but if it is the only item left in the event loop won't keep the program running."
-          },
           ref: {
-            "!type": "fn()",
+            "!type": "fn() -> timers.Timer",
+            "!url": "https://nodejs.org/api/timers.html#timers_ref",
+            "!doc": "If you had previously unref()d a timer you can call ref() to explicitly request the timer hold the program open. If the timer is already refd calling ref again will have no effect."
+          },
+          unref: {
+            "!type": "fn() -> timers.Timer",
             "!url": "https://nodejs.org/api/timers.html#timers_unref",
-            "!doc": "Explicitly request the timer hold the program open (cancel the effect of 'unref')."
+            "!doc": "The opaque value returned by setTimeout and setInterval also has the method timer.unref() which will allow you to create a timer that is active but if it is the only item left in the event loop, it won't keep the program running. If the timer is already unrefd calling unref again will have no effect."
           }
         }
       }
@@ -2700,54 +2716,294 @@
       "!url": "https://nodejs.org/api/globals.html#globals_dirname",
       "!doc": "The name of the directory that the currently executing script resides in."
     },
-    setTimeout: "timers.setTimeout",
-    clearTimeout: "timers.clearTimeout",
-    setInterval: "timers.setInterval",
+    clearImmediate: "timers.clearImmediate",
     clearInterval: "timers.clearInterval",
+    clearTimeout: "timers.clearTimeout",
+    setImmediate: "timers.setImmediate",
+    setInterval: "timers.setInterval",
+    setTimeout: "timers.setTimeout",
     Buffer: {
-      "!type": "fn(str: string, encoding?: string) -> +Buffer",
-      prototype: {
-        "!proto": "String.prototype",
-        write: "fn(string: string, offset?: number, length?: number, encoding?: string) -> number",
-        toString: "fn(encoding?: string, start?: number, end?: number) -> string",
-        length: "number",
-        copy: "fn(targetBuffer: +Buffer, targetStart?: number, sourceStart?: number, sourceEnd?: number)",
-        slice: "fn(start?: number, end?: number) -> +Buffer",
-        readUInt8: "fn(offset: number, noAssert?: bool) -> number",
-        readUInt16LE: "fn(offset: number, noAssert?: bool) -> number",
-        readUInt16BE: "fn(offset: number, noAssert?: bool) -> number",
-        readUInt32LE: "fn(offset: number, noAssert?: bool) -> number",
-        readUInt32BE: "fn(offset: number, noAssert?: bool) -> number",
-        readInt8: "fn(offset: number, noAssert?: bool) -> number",
-        readInt16LE: "fn(offset: number, noAssert?: bool) -> number",
-        readInt16BE: "fn(offset: number, noAssert?: bool) -> number",
-        readInt32LE: "fn(offset: number, noAssert?: bool) -> number",
-        readInt32BE: "fn(offset: number, noAssert?: bool) -> number",
-        readFloatLE: "fn(offset: number, noAssert?: bool) -> number",
-        readFloatBE: "fn(offset: number, noAssert?: bool) -> number",
-        readDoubleLE: "fn(offset: number, noAssert?: bool) -> number",
-        readDoubleBE: "fn(offset: number, noAssert?: bool) -> number",
-        writeUInt8: "fn(value: number, offset: number, noAssert?: bool)",
-        writeUInt16LE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeUInt16BE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeUInt32LE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeUInt32BE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeInt8: "fn(value: number, offset: number, noAssert?: bool)",
-        writeInt16LE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeInt16BE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeInt32LE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeInt32BE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeFloatLE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeFloatBE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeDoubleLE: "fn(value: number, offset: number, noAssert?: bool)",
-        writeDoubleBE: "fn(value: number, offset: number, noAssert?: bool)",
-        fill: "fn(value: ?, offset?: number, end?: number)"
+      "!type": "fn() -> +Buffer",
+      "!url": "https://nodejs.org/api/buffer.html#buffer_class_buffer",
+      "!doc": "The Buffer class is a global type for dealing with binary data directly. It can be constructed in a variety of ways.",
+      byteLength: {
+        "!type": "fn(string: string, encoding?: string) -> number",
+        "!url": "https://nodejs.org/api/buffer.html#buffer_class_method_buffer_bytelength_string_encoding",
+        "!doc": "Returns the actual byte length of a string. This is not the same as String.prototype.length since that returns the number of characters in a string."
       },
-      isBuffer: "fn(obj: ?) -> bool",
-      byteLength: "fn(string: string, encoding?: string) -> number",
-      concat: "fn(list: [+Buffer], totalLength?: number) -> +Buffer",
-      "!url": "https://nodejs.org/api/globals.html#globals_class_buffer",
-      "!doc": "Used to handle binary data."
+      compare: {
+        "!type": "fn(buf1: +Buffer, buf2: +Buffer) -> number",
+        "!url": "https://nodejs.org/api/buffer.html#buffer_class_method_buffer_compare_buf1_buf2",
+        "!doc": "Compares buf1 to buf2 typically for the purpose of sorting arrays of Buffers. This is equivalent is calling buf1.compare(buf2)."
+      },
+      concat: {
+        "!type": "fn(list: ?, totalLength?: number) -> +Buffer",
+        "!url": "https://nodejs.org/api/buffer.html#buffer_class_method_buffer_concat_list_totallength",
+        "!doc": "Returns a new Buffer which is the result of concatenating all the Buffers in the list together."
+      },
+      isBuffer: {
+        "!type": "fn(obj: ?) -> bool",
+        "!url": "https://nodejs.org/api/buffer.html#buffer_class_method_buffer_isbuffer_obj",
+        "!doc": "Returns 'true' if obj is a Buffer."
+      },
+      isEncoding: {
+        "!type": "fn(encoding: string) -> bool",
+        "!url": "https://nodejs.org/api/buffer.html#buffer_class_method_buffer_isencoding_encoding",
+        "!doc": "Returns true if the encoding is a valid encoding argument, or false otherwise."
+      },
+      prototype: {
+        "!proto": "Uint8Array.prototype",
+        length: {
+          "!type": "number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_length",
+          "!doc": "Returns the amount of memory allocated for the Buffer in number of bytes. Note that this does not necessarily reflect the amount of usable data within the Buffer. For instance, in the example below, a Buffer with 1234 bytes is allocated, but only 11 ASCII bytes are written."
+        },
+        compare: {
+          "!type": "fn(otherBuffer: +Buffer) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_compare_otherbuffer",
+          "!doc": "Compares two Buffer instances and returns a number indicating whether buf comes before, after, or is the same as the otherBuffer in sort order. Comparison is based on the actual sequence of bytes in each Buffer."
+        },
+        copy: {
+          "!type": "fn(targetBuffer: +Buffer, targetStart?: number, sourceStart?: number, sourceEnd?: number) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_copy_targetbuffer_targetstart_sourcestart_sourceend",
+          "!doc": "Copies data from a region of this Buffer to a region in the target Buffer even if the target memory region overlaps with the source. If undefined, the targetStart and sourceStart parameters default to 0 while sourceEnd defaults to buffer.length."
+        },
+        entries: {
+          "!type": "fn()",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_entries",
+          "!doc": "Creates and returns an iterator of [index, byte] pairs from the Buffer contents."
+        },
+        equals: {
+          "!type": "fn(otherBuffer: +Buffer) -> bool",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_equals_otherbuffer",
+          "!doc": "Returns a boolean indicating whether this and otherBuffer have exactly the same bytes."
+        },
+        fill: {
+          "!type": "fn(value: ?, offset?: number, end?: number)",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_fill_value_offset_end",
+          "!doc": "Fills the Buffer with the specified value. If the offset (defaults to 0) and end (defaults to buffer.length) are not given it will fill the entire Buffer. The method returns a reference to the Buffer so calls can be chained."
+        },
+        indexOf: {
+          "!type": "fn(value: ?, byteOffset?: number, encoding?: string) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_indexof_value_byteoffset_encoding",
+          "!doc": "Operates similar to Array#indexOf() in that it returns either the starting index position of value in Buffer or -1 if the Buffer does not contain value. The value can be a String, Buffer or Number. Strings are by default interpreted as UTF8. Buffers will use the entire Buffer (to compare a partial Buffer use Buffer#slice()). Numbers can range from 0 to 255."
+        },
+        includes: {
+          "!type": "fn(value: ?, byteOffset?: number, encoding?: string)",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_includes_value_byteoffset_encoding",
+          "!doc": "Operates similar to Array#includes(). The value can be a String, Buffer or Number. Strings are interpreted as UTF8 unless overridden with the encoding argument. Buffers will use the entire Buffer (to compare a partial Buffer use Buffer#slice()). Numbers can range from 0 to 255."
+        },
+        keys: {
+          "!type": "fn()",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_keys",
+          "!doc": "Creates and returns an iterator of Buffer keys (indices)."
+        },
+        readDoubleBE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readdoublebe_offset_noassert",
+          "!doc": "Reads a 64-bit double from the Buffer at the specified offset with specified endian format (readDoubleBE() returns big endian, readDoubleLE() returns little endian)."
+        },
+        readDoubleLE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readdoublele_offset_noassert",
+          "!doc": "Reads a 64-bit double from the Buffer at the specified offset with specified endian format (readDoubleBE() returns big endian, readDoubleLE() returns little endian)."
+        },
+        readFloatBE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readfloatbe_offset_noassert",
+          "!doc": "Reads a 32-bit float from the Buffer at the specified offset with specified endian format (readFloatBE() returns big endian, readFloatLE() returns little endian)."
+        },
+        readFloatLE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readfloatle_offset_noassert",
+          "!doc": "Reads a 32-bit float from the Buffer at the specified offset with specified endian format (readFloatBE() returns big endian, readFloatLE() returns little endian)."
+        },
+        readInt8: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readint8_offset_noassert",
+          "!doc": "Reads a signed 8-bit integer from the Buffer at the specified offset."
+        },
+        readInt16BE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readint16be_offset_noassert",
+          "!doc": "Reads a signed 16-bit integer from the Buffer at the specified offset with the specified endian format (readInt16BE() returns big endian, readInt16LE() returns little endian)."
+        },
+        readInt16LE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readint16le_offset_noassert",
+          "!doc": "Reads a signed 16-bit integer from the Buffer at the specified offset with the specified endian format (readInt16BE() returns big endian, readInt16LE() returns little endian)."
+        },
+        readInt32BE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readint32be_offset_noassert",
+          "!doc": "Reads a signed 32-bit integer from the Buffer at the specified offset with the specified endian format (readInt32BE() returns big endian, readInt32LE() returns little endian)."
+        },
+        readInt32LE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readint32le_offset_noassert",
+          "!doc": "Reads a signed 32-bit integer from the Buffer at the specified offset with the specified endian format (readInt32BE() returns big endian, readInt32LE() returns little endian)."
+        },
+        readIntBE: {
+          "!type": "fn(offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readintbe_offset_bytelength_noassert",
+          "!doc": "Reads byteLength number of bytes from the Buffer at the specified offset and interprets the result as a two's complement signed value. Supports up to 48 bits of accuracy. For example:"
+        },
+        readIntLE: {
+          "!type": "fn(offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readintle_offset_bytelength_noassert",
+          "!doc": "Reads byteLength number of bytes from the Buffer at the specified offset and interprets the result as a two's complement signed value. Supports up to 48 bits of accuracy. For example:"
+        },
+        readUInt8: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuint8_offset_noassert",
+          "!doc": "Reads an unsigned 8-bit integer from the Buffer at the specified offset."
+        },
+        readUInt16BE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuint16be_offset_noassert",
+          "!doc": "Reads an unsigned 16-bit integer from the Buffer at the specified offset with specified endian format (readInt32BE() returns big endian, readInt32LE() returns little endian)."
+        },
+        readUInt16LE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuint16le_offset_noassert",
+          "!doc": "Reads an unsigned 16-bit integer from the Buffer at the specified offset with specified endian format (readInt32BE() returns big endian, readInt32LE() returns little endian)."
+        },
+        readUInt32BE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuint32be_offset_noassert",
+          "!doc": "Reads an unsigned 32-bit integer from the Buffer at the specified offset with specified endian format (readInt32BE() returns big endian, readInt32LE() returns little endian)."
+        },
+        readUInt32LE: {
+          "!type": "fn(offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuint32le_offset_noassert",
+          "!doc": "Reads an unsigned 32-bit integer from the Buffer at the specified offset with specified endian format (readInt32BE() returns big endian, readInt32LE() returns little endian)."
+        },
+        readUIntBE: {
+          "!type": "fn(offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuintbe_offset_bytelength_noassert",
+          "!doc": "Reads byteLength number of bytes from the Buffer at the specified offset and interprets the result as an unsigned integer. Supports up to 48 bits of accuracy. For example:"
+        },
+        readUIntLE: {
+          "!type": "fn(offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_readuintle_offset_bytelength_noassert",
+          "!doc": "Reads byteLength number of bytes from the Buffer at the specified offset and interprets the result as an unsigned integer. Supports up to 48 bits of accuracy. For example:"
+        },
+        slice: {
+          "!type": "fn(start: number, end?: number)",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_slice_start_end",
+          "!doc": "Returns a new Buffer that references the same memory as the original, but offset and cropped by the start (defaults to 0) and end (defaults to buffer.length) indexes."
+        },
+        toString: {
+          "!type": "fn(encoding?: string, start?: number, end?: number) -> string",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_tostring_encoding_start_end",
+          "!doc": "Decodes and returns a string from the Buffer data using the specified character set encoding."
+        },
+        toJSON: {
+          "!type": "fn()",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_tojson",
+          "!doc": "Returns a JSON representation of the Buffer instance. JSON.stringify implicitly calls this function when stringifying a Buffer instance."
+        },
+        values: {
+          "!type": "fn()",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_values",
+          "!doc": "Creates and returns an iterator for Buffer values (bytes). This function is called automatically when the Buffer is used in a for..of statement."
+        },
+        write: {
+          "!type": "fn(string: string, offset?: number, length?: number, encoding?: string) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_write_string_offset_length_encoding",
+          "!doc": "Writes string to the Buffer at offset using the given encoding. The length parameter is the number of bytes to write. If the Buffer did not contain enough space to fit the entire string, only a partial amount of the string will be written however, the will not write only partially encoded characters."
+        },
+        writeDoubleBE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writedoublebe_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeDoubleBE() writes big endian, writeDoubleLE() writes little endian). The value argument must be a valid 64-bit double."
+        },
+        writeDoubleLE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writedoublele_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeDoubleBE() writes big endian, writeDoubleLE() writes little endian). The value argument must be a valid 64-bit double."
+        },
+        writeFloatBE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writefloatbe_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeFloatBE() writes big endian, writeFloatLE() writes little endian). Behavior is unspecified if value is anything other than a 32-bit float."
+        },
+        writeFloatLE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writefloatle_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeFloatBE() writes big endian, writeFloatLE() writes little endian). Behavior is unspecified if value is anything other than a 32-bit float."
+        },
+        writeInt8: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeint8_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset. The value must be a valid signed 8-bit integer."
+        },
+        writeInt16BE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeint16be_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeInt16BE() writes big endian, writeInt16LE() writes little endian). The value must be a valid signed 16-bit integer."
+        },
+        writeInt16LE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeint16le_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeInt16BE() writes big endian, writeInt16LE() writes little endian). The value must be a valid signed 16-bit integer."
+        },
+        writeInt32BE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeint32be_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeInt32BE() writes big endian, writeInt32LE() writes little endian). The value must be a valid signed 32-bit integer."
+        },
+        writeInt32LE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeint32le_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeInt32BE() writes big endian, writeInt32LE() writes little endian). The value must be a valid signed 32-bit integer."
+        },
+        writeIntBE: {
+          "!type": "fn(value: number, offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeintbe_value_offset_bytelength_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset and byteLength. Supports up to 48 bits of accuracy. For example:"
+        },
+        writeIntLE: {
+          "!type": "fn(value: number, offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeintle_value_offset_bytelength_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset and byteLength. Supports up to 48 bits of accuracy. For example:"
+        },
+        writeUInt8: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuint8_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset. The value must be a valid unsigned 8-bit integer."
+        },
+        writeUInt16BE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuint16be_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeUInt16BE() writes big endian, writeUInt16LE() writes little endian). The value must be a valid unsigned 16-bit integer."
+        },
+        writeUInt16LE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuint16le_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeUInt16BE() writes big endian, writeUInt16LE() writes little endian). The value must be a valid unsigned 16-bit integer."
+        },
+        writeUInt32BE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuint32be_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeUInt32BE() writes big endian, writeUInt32LE() writes little endian). The value must be a valid unsigned 32-bit integer."
+        },
+        writeUInt32LE: {
+          "!type": "fn(value: number, offset: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuint32le_value_offset_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset with specified endian format (writeUInt32BE() writes big endian, writeUInt32LE() writes little endian). The value must be a valid unsigned 32-bit integer."
+        },
+        writeUIntBE: {
+          "!type": "fn(value: number, offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuintbe_value_offset_bytelength_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset and byteLength. Supports up to 48 bits of accuracy. For example:"
+        },
+        writeUIntLE: {
+          "!type": "fn(value: number, offset: number, byteLength: number, noAssert?: bool) -> number",
+          "!url": "https://nodejs.org/api/buffer.html#buffer_buf_writeuintle_value_offset_bytelength_noassert",
+          "!doc": "Writes value to the Buffer at the specified offset and byteLength. Supports up to 48 bits of accuracy. For example:"
+        }
+      }
     }
   };
 });
