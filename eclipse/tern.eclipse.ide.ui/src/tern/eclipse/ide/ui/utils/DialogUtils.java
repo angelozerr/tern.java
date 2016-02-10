@@ -31,7 +31,10 @@ import tern.utils.StringUtils;
 
 public class DialogUtils {
 
-	public static IResource openFolderDialog(String initialFolder,
+	private DialogUtils() {
+	}
+
+	public static IResource openFolderDialog(String initialFolder, 
 			IProject project, boolean showAllProjects, Shell shell) {
 		SelectionDialog dialog = createFolderDialog(initialFolder, project,
 				showAllProjects, shell);

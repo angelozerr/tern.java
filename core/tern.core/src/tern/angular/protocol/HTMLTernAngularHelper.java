@@ -20,7 +20,10 @@ import tern.angular.modules.IDirectiveProvider;
 
 public class HTMLTernAngularHelper {
 
-	public static void populateScope(Node element, IDirectiveProvider provider,
+	private HTMLTernAngularHelper() {
+	}
+
+	public static void populateScope(Node element, IDirectiveProvider provider, 
 			Object project, TernAngularQuery query) {
 		TernAngularScope scope = query.getScope();
 		populateScope(element, scope, provider, project,

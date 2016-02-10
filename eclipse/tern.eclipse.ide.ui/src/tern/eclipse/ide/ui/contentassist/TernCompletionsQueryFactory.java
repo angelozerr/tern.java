@@ -25,7 +25,10 @@ import tern.server.protocol.completions.TernCompletionsQuery;
 
 public class TernCompletionsQueryFactory {
 
-	public static TernCompletionsQuery createQuery(IProject project,
+	private TernCompletionsQueryFactory() {
+	}
+
+	public static TernCompletionsQuery createQuery(IProject project, 
 			String file, int pos) {
 		TernCompletionsQuery query = new TernCompletionsQuery(file, pos);
 

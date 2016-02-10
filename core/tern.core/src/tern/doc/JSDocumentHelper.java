@@ -16,6 +16,9 @@ import tern.server.protocol.completions.TernCompletionsQuery;
 
 public class JSDocumentHelper {
 
+	private JSDocumentHelper() {
+	}
+
 	public static TernDoc createDoc(IJSDocument doc) {
 
 		boolean changed = doc.isChanged();

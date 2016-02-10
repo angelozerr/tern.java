@@ -145,7 +145,7 @@ public class IOUtils {
     /**
      * Instances should NOT be constructed in standard programming.
      */
-    public IOUtils() {
+    private IOUtils() {
         super();
     }
 

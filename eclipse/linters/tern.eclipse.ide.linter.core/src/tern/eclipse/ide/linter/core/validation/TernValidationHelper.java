@@ -23,7 +23,10 @@ import tern.server.protocol.lint.TernLintQuery;
 
 public class TernValidationHelper {
 
-	public static void validate(IResource resource, IIDETernProject ternProject, boolean needsLineNumber, boolean synch,
+	private TernValidationHelper() {
+	}
+
+	public static void validate(IResource resource, IIDETernProject ternProject, boolean needsLineNumber, boolean synch, 
 			boolean withFix, IReporter reporter, IValidator validator) {
 		ITernPlugin[] lintPlugins = ternProject.getLinters();
 		if (lintPlugins.length > 0) {

@@ -20,6 +20,9 @@ public class TernResourcesManager {
 	private static final InternalTernResourcesManager INSTANCE = InternalTernResourcesManager
 			.getInstance();
 
+	private TernResourcesManager() {
+	}
+
 	/**
 	 * Returns a tern project object associated with the specified resource. May
 	 * return null if resource doesn't point at a valid tern project.

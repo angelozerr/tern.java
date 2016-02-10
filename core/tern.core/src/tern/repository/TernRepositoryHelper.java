@@ -44,6 +44,9 @@ public class TernRepositoryHelper {
 	 */
 	public static final String DEFAULT_TERN_REPOSITORY_URL = "https://raw.githubusercontent.com/paulvi/tern-plugins/master/plugins.json";
 
+	private TernRepositoryHelper() {
+	}
+
 	/**
 	 * Load tern modules coming from the given repository.json URL.
 	 * 

@@ -35,4 +35,6 @@ public class TernNodejsCoreConstants {
 
 	public static final String NODEJS_TERN_REPOSITORY = "ternRepository"; //$NON-NLS-1$
 
+	private TernNodejsCoreConstants() {
+	}
 }

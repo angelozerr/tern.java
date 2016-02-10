@@ -14,6 +14,9 @@ public class TernLintResultHelper {
 	private static final String SEVERITY_FIELD = "severity";
 	private static final String TEXT_FIELD = "text";
 
+	private TernLintResultHelper() {
+	}
+
 	public static String getMessage(Object messageObject, TernLintQuery query, IJSONObjectHelper helper) {
 		return query.formatMessage(helper.getText(messageObject, MESSAGE_FIELD));
 	}

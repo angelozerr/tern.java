@@ -34,6 +34,9 @@ public class ExtensionUtils {
 			.asList(new String[] { HTM_EXTENSION, HTML_EXTENSION,
 					JSP_EXTENSION, PHP_EXTENSION, JSF_EXTENSION });
 
+	private ExtensionUtils() {
+	}
+
 	public static String getFileExtension(String fileName) {
 		int index = fileName.lastIndexOf('.');
 		if (index == -1)

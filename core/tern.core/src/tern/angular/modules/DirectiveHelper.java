@@ -36,6 +36,9 @@ public class DirectiveHelper {
 		DELIMITERS.add('_'); // underscore delimiter
 	}
 
+	private DirectiveHelper() {
+	}
+
 	/**
 	 * 
 	 * Angular normalizes an element's tag and attribute name to determine which

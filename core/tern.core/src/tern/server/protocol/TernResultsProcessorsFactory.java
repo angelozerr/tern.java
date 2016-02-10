@@ -34,6 +34,9 @@ import tern.server.protocol.type.TernTypeResultProcessor;
 
 public class TernResultsProcessorsFactory {
 
+	private TernResultsProcessorsFactory() {
+	}
+
 	public static <T extends ITernResultsCollector> void makeRequestAndProcess(
 			TernDoc doc, ITernServer server, T collector) throws TernException {
 		ITernResultProcessor<T> resultProcesor = TernResultsProcessorsFactory

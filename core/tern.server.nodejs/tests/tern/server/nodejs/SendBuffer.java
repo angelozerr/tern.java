@@ -8,6 +8,9 @@ import tern.server.protocol.TernDoc;
 
 public class SendBuffer {
 
+	private SendBuffer() {
+	}
+
 	public static void main(String[] args) throws IOException {
 
 		// {"files": [{"type": "full",

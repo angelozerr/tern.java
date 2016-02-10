@@ -28,6 +28,9 @@ import tern.eclipse.ide.internal.ui.Trace;
 
 public class BrowserSupport {
 
+	private BrowserSupport() {
+	}
+
 	/**
 	 * Opens the given url in the browser as choosen in the preferences.
 	 * 

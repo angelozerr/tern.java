@@ -47,8 +47,11 @@ public class HTMLTernPrinter {
 	private static String fgStyleSheet;
 
 	private static RGB colorInfoBackround = null;
-	private static RGB colorInfoForeground = null; 
-	
+	private static RGB colorInfoForeground = null;
+
+	private HTMLTernPrinter() {
+	}
+
 	public static void setColorInfoBackround(RGB colorInfoBackround) {
 		HTMLTernPrinter.colorInfoBackround = colorInfoBackround;
 	}

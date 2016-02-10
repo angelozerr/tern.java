@@ -18,7 +18,10 @@ import tern.utils.ZipUtils;
 public class PathHelper {
 
 	private static final String NODE_VERSION = "4.2.4";
-	
+
+	private PathHelper() {
+	}
+
 	/**
 	 * Returns nodejs base dir switch OS.
 	 *

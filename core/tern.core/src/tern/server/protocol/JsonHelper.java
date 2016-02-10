@@ -24,6 +24,9 @@ import com.eclipsesource.json.JsonValue;
  */
 public class JsonHelper {
 
+	private JsonHelper() {
+	}
+
 	public static String getString(JsonObject json, String name) {
 		JsonValue value = json.get(name);
 		return getString(value);

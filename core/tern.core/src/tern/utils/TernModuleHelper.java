@@ -46,6 +46,9 @@ import tern.server.TernModuleInfo;
  */
 public class TernModuleHelper {
 
+	private TernModuleHelper() {
+	}
+
 	/**
 	 * Group the given list tern modules by {@link ITernModule#getType()}.
 	 * 

@@ -33,6 +33,9 @@ public class IDENodejsProcessHelper {
 		}
 	}
 
+	private IDENodejsProcessHelper() {
+	}
+
 	public static String getNodejsPath() {
 		return NodejsProcessHelper.getNodejsPath(os);
 	}

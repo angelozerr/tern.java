@@ -28,6 +28,9 @@ public class StringUtils {
 
 	public static final String[] EMPTY_ARRAY = new String[0];
 
+	private StringUtils() {
+	}
+
 	public static boolean isEmpty(String str) {
 		return str == null || str.length() == 0;
 	}

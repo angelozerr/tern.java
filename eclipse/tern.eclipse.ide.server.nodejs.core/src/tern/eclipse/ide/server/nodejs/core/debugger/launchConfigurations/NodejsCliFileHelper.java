@@ -35,6 +35,9 @@ public class NodejsCliFileHelper {
 
 	private static final String WORKSPACE_LOC = "workspace_loc";
 
+	private NodejsCliFileHelper() {
+	}
+
 	public static IFile getConfigFile(String param) throws NodejsCliFileConfigException, CoreException {
 		if (StringUtils.isEmpty(param)) {
 			throw new NodejsCliFileConfigException("Configuration file cannot be empty.");
