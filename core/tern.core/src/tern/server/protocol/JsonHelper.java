@@ -18,6 +18,8 @@ import com.eclipsesource.json.JsonObject;
 import com.eclipsesource.json.JsonObject.Member;
 import com.eclipsesource.json.JsonValue;
 
+import tern.utils.IOUtils;
+
 /**
  * Helper for minimal-json.
  *
@@ -92,7 +94,11 @@ public class JsonHelper {
 	 */
 	public static void readFrom(Reader reader, JsonObject to)
 			throws IOException {
-		copy(Json.parse(reader).asObject(), to);
+		try {
+			copy(Json.parse(reader).asObject(), to);
+		} finally {
+			IOUtils.closeQuietly(reader);
+		}
 	}
 
 	/**
