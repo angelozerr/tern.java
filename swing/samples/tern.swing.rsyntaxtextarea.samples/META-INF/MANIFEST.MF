@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Tern Swing/RSyntaxTextArea Samples
+Bundle-SymbolicName: tern.swing.rsyntaxarea.samples
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: tern.core;bundle-version="1.2.0",
+ tern.server.nodejs;bundle-version="1.2.0",
+ minimal-json;bundle-version="0.9.4",
+ org.apache.commons.logging;bundle-version="1.1.1"
