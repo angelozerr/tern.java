@@ -13,7 +13,6 @@ package tern.eclipse.ide.server.nodejs.core.debugger;
 import java.io.File;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 
 import tern.TernException;
 import tern.server.nodejs.process.INodejsProcess;
@@ -55,6 +54,6 @@ public interface INodejsDebuggerDelegate {
 	 *         working directory by using the given node install.
 	 * @throws TernException
 	 */
-	INodejsProcess createProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath) throws TernException;
+	INodejsProcess createProcess(IFile jsFile, File workingDir, File nodejsInstallPath) throws TernException;
 
 }

@@ -82,7 +82,7 @@ public abstract class AbstractNodejsCliFileLauncher implements INodejsLaunchConf
 	}
 
 	public void start() throws TernException {
-		INodejsProcess process = debugger.createProcess(cliFile, configFile.getProject(), nodeInstallPath);
+		INodejsProcess process = debugger.createProcess(cliFile, configFile.getProject().getLocation().toFile(), nodeInstallPath);
 		process.setLaunchConfiguration(this);
 		process.start();
 	}

@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.DebugException;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
@@ -40,17 +38,15 @@ import tern.utils.TernModuleHelper;
  */
 public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 
-	private final IProject workingDir;
 	private final IFile jsFile; // (ex : bin/tern filde)
 	private final String launchConfigId;
 	private final List<StreamProcessor> streamProcessors;
 
 	protected ILaunch launch;
 
-	public AbstractNodejsDebugProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath, String launchConfigId)
+	public AbstractNodejsDebugProcess(IFile jsFile, File workingDir, File nodejsInstallPath, String launchConfigId)
 			throws TernException {
-		super(nodejsInstallPath, workingDir.getLocation().toFile());
-		this.workingDir = workingDir;
+		super(nodejsInstallPath, workingDir);
 		this.jsFile = jsFile;
 		this.launchConfigId = launchConfigId;
 		this.streamProcessors = new ArrayList<AbstractNodejsDebugProcess.StreamProcessor>();
@@ -61,7 +57,7 @@ public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 	}
 
 	protected String getWorkingDir() {
-		return NodejsCliFileHelper.getWorkspaceLoc(workingDir);
+		return NodejsCliFileHelper.getWorkspaceLoc(getProjectDir());
 	}
 
 	@Override

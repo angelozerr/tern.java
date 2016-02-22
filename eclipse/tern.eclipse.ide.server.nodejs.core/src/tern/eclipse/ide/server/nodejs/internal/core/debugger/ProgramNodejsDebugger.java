@@ -13,7 +13,6 @@ package tern.eclipse.ide.server.nodejs.internal.core.debugger;
 import java.io.File;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 
 import tern.TernException;
 import tern.eclipse.ide.server.nodejs.core.debugger.AbstractNodejsDebuggerDelegate;
@@ -31,7 +30,7 @@ public class ProgramNodejsDebugger extends AbstractNodejsDebuggerDelegate {
 	}
 
 	@Override
-	public INodejsProcess createProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath)
+	public INodejsProcess createProcess(IFile jsFile, File workingDir, File nodejsInstallPath)
 			throws TernException {
 		return new ProgramNodejsDebugProcess(jsFile, workingDir, nodejsInstallPath, getLaunchId());
 	}

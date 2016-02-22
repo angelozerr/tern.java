@@ -14,7 +14,6 @@ import java.io.File;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -31,7 +30,7 @@ import tern.eclipse.ide.server.nodejs.core.debugger.AbstractNodejsDebugProcess;
  */
 public class NodeclipseNodejsDebugProcess extends AbstractNodejsDebugProcess {
 
-	public NodeclipseNodejsDebugProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath,
+	public NodeclipseNodejsDebugProcess(IFile jsFile, File workingDir, File nodejsInstallPath,
 			String launchConfigId) throws TernException {
 		super(jsFile, workingDir, nodejsInstallPath, launchConfigId);
 	}

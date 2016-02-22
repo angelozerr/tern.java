@@ -10,6 +10,7 @@
  */
 package tern.eclipse.ide.core;
 
+import tern.ITernProject;
 import tern.server.ITernServer;
 
 /**
@@ -25,6 +26,6 @@ public interface ITernServerFactory {
 	 * @return an instance of tern server by using the given tern project.
 	 * @throws Exception
 	 */
-	ITernServer create(IIDETernProject project) throws Exception;
+	ITernServer create(ITernProject project) throws Exception;
 
 }
