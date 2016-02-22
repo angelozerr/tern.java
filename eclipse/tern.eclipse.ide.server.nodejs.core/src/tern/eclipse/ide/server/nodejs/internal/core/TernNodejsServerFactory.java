@@ -16,7 +16,7 @@ import java.io.File;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 
-import tern.eclipse.ide.core.IIDETernProject;
+import tern.ITernProject;
 import tern.eclipse.ide.core.ITernServerFactory;
 import tern.eclipse.ide.server.nodejs.core.debugger.INodejsDebugger;
 import tern.eclipse.ide.server.nodejs.core.debugger.NodejsDebuggersManager;
@@ -29,7 +29,7 @@ import tern.server.nodejs.NodejsTernServer;
 public class TernNodejsServerFactory implements ITernServerFactory {
 
 	@Override
-	public ITernServer create(IIDETernProject project) throws Exception {
+	public ITernServer create(ITernProject project) throws Exception {
 		NodejsTernServer server;
 		if (isRemoteAccess()) {
 			server = new NodejsTernServer(project, getRemotePort()) {
@@ -52,7 +52,7 @@ public class TernNodejsServerFactory implements ITernServerFactory {
 					&& !ternServerFile.getProject().equals(
 							project.getAdapter(IProject.class))) {
 				server = new NodejsTernServer(project, debugger.createProcess(
-						ternServerFile, project.getProject(), installPath)){
+						ternServerFile, project.getProjectDir(), installPath)){
 					@Override
 					protected void onError(String message, Throwable e) {
 						Trace.trace(Trace.SEVERE, message, e);

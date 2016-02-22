@@ -15,7 +15,6 @@ import java.util.Collections;
 
 import org.eclipse.core.externaltools.internal.IExternalToolConstants;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
@@ -32,9 +31,10 @@ import tern.server.nodejs.process.NodejsProcessException;
 /**
  * Program debugger process implementation.
  */
+@SuppressWarnings("restriction")
 public class ProgramNodejsDebugProcess extends AbstractNodejsDebugProcess {
 
-	public ProgramNodejsDebugProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath, String launchConfigId)
+	public ProgramNodejsDebugProcess(IFile jsFile, File workingDir, File nodejsInstallPath, String launchConfigId)
 			throws TernException {
 		super(jsFile, workingDir, nodejsInstallPath, launchConfigId);
 	}
@@ -80,7 +80,7 @@ public class ProgramNodejsDebugProcess extends AbstractNodejsDebugProcess {
 			}
 		});
 
-		launch = workingCopy.launch("run", null); //only works in run mode
+		launch = workingCopy.launch("run", null); //only works in run mode //$NON-NLS-1$
 
 		// setup std and err listeners
 		for (IProcess process : launch.getProcesses()) {
@@ -96,7 +96,7 @@ public class ProgramNodejsDebugProcess extends AbstractNodejsDebugProcess {
 		StringBuilder args = new StringBuilder();
 		args.append(NodejsCliFileHelper.getWorkspaceLoc(getJsFile()));
 		for (String arg : createNodejsArgs()) {
-			args.append(" ");
+			args.append(" "); //$NON-NLS-1$
 			args.append(arg);
 		}
 		return args.toString();

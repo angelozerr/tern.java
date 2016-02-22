@@ -103,6 +103,19 @@ public class NodejsCliFileHelper {
 		throw new NodejsCliFileConfigException("Cannot find tern debugger with id" + debuggerId);
 	}
 
+	public static String getWorkspaceLoc(File file) {
+		IResource[] res;
+		if (file.isDirectory()) {
+			res = ResourcesPlugin.getWorkspace().getRoot().findContainersForLocationURI(file.toURI());
+		} else {
+			res = ResourcesPlugin.getWorkspace().getRoot().findFilesForLocationURI(file.toURI());
+		}
+		if (res != null && res.length > 0) {
+			return getWorkspaceLoc(res[0]);
+		}
+		return file.toString();
+	}
+	
 	public static String getWorkspaceLoc(IResource file) {
 		return VariablesPlugin.getDefault().getStringVariableManager().generateVariableExpression(WORKSPACE_LOC,
 				file.getFullPath().toString());

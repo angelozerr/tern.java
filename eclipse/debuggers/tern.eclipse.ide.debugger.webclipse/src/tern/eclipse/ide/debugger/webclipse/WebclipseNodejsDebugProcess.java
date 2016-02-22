@@ -14,7 +14,6 @@ import java.io.File;
 import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -38,7 +37,7 @@ import tern.eclipse.ide.server.nodejs.core.debugger.AbstractNodejsDebugProcess;
  */
 public class WebclipseNodejsDebugProcess extends AbstractNodejsDebugProcess {
 
-	public WebclipseNodejsDebugProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath,
+	public WebclipseNodejsDebugProcess(IFile jsFile, File workingDir, File nodejsInstallPath,
 			String launchConfigId) throws TernException {
 		super(jsFile, workingDir, nodejsInstallPath, launchConfigId);
 	}

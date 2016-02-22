@@ -17,7 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
@@ -124,7 +123,7 @@ public class NodejsDebuggersManager {
 		}
 		
 		@Override
-		public INodejsProcess createProcess(IFile jsFile, IProject workingDir, File nodejsInstallPath)
+		public INodejsProcess createProcess(IFile jsFile, File workingDir, File nodejsInstallPath)
 				throws TernException {
 			return delegate.createProcess(jsFile, workingDir, nodejsInstallPath);
 		}
