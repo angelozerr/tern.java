@@ -10,7 +10,7 @@
  */
 package tern.eclipse.ide.server.j2v8.internal.core;
 
-import tern.eclipse.ide.core.IIDETernProject;
+import tern.ITernProject;
 import tern.eclipse.ide.core.ITernServerFactory;
 import tern.server.ITernServer;
 import tern.server.j2v8.J2V8TernServer;
@@ -21,7 +21,7 @@ import tern.server.j2v8.J2V8TernServer;
 public class TernJ2V8ServerFactory implements ITernServerFactory {
 
 	@Override
-	public ITernServer create(IIDETernProject project) throws Exception {
+	public ITernServer create(ITernProject project) throws Exception {
 		J2V8TernServer server = new J2V8TernServer(project);
 		return server;
 	}
