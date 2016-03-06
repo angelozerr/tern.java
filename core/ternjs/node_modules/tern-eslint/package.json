@@ -15,7 +15,7 @@
   },    
   "dependencies": {
     "tern": "^0.17.0",
-    "eslint": "^1.10.3"
+    "eslint": "^2.3.0"
   },
   "devDependencies": { 
   	"test": ">=0.0.5",

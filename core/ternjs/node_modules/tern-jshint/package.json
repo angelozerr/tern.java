@@ -13,12 +13,12 @@
     "test": "node ./test/all.js"
   },    
   "dependencies": {
-    "tern": "^0.15.0",
-    "jshint": "^2.9.1-rc1"
+    "tern": "^0.17.0",
+    "jshint": "^2.9.1"
   }, 
   "devDependencies": { 
   	"test": ">=0.0.5",
-  	"codemirror": "^5.9.0",
+  	"codemirror": "^5.10.0",
   	"codemirror-extension": "^0.2.0",
   	"codemirror-javascript": "^0.2.0"
   },  

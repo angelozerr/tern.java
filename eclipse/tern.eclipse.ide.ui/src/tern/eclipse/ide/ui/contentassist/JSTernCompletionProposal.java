@@ -86,6 +86,7 @@ public class JSTernCompletionProposal extends TernCompletionProposal {
 		return TernUIPlugin.getTernDescriptorManager().getImage(this);
 	}
 
+	@Override
 	public void apply(ITextViewer viewer, char trigger, int stateMask,
 			int offset) {
 

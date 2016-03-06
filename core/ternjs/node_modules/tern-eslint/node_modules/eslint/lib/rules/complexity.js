@@ -11,8 +11,15 @@
 //------------------------------------------------------------------------------
 
 module.exports = function(context) {
+    var option = context.options[0],
+        THRESHOLD = 20;
 
-    var THRESHOLD = context.options[0];
+    if (typeof option === "object" && option.hasOwnProperty("maximum") && typeof option.maximum === "number") {
+        THRESHOLD = option.maximum;
+    }
+    if (typeof option === "number") {
+        THRESHOLD = option;
+    }
 
     //--------------------------------------------------------------------------
     // Helpers
@@ -116,6 +123,21 @@ module.exports = function(context) {
 
 module.exports.schema = [
     {
-        "type": "integer"
+        "oneOf": [
+            {
+                "type": "integer",
+                "minimum": 0
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "maximum": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                },
+                "additionalProperties": false
+            }
+        ]
     }
 ];

@@ -1,2 +1,26 @@
 <linter id="ESLint">
+	<option id="Language Options" type="category"
+		url="http://eslint.org/docs/user-guide/configuring.html#specifying-language-options">
+		<doc>
+<![CDATA[ESLint allows you to specify the JavaScript language options you want to support. By default, ESLint supports only ECMAScript 5 syntax. You can override that setting to enable support for ECMAScript 6 as well as JSX by using configuration settings.
+
+Configuration settings are set in your .eslintrc file by using the ecmaFeatures property. 
+]]>
+		</doc>
+	</option>
+<option id="Rules" type="category"
+		url="http://eslint.org/docs/user-guide/configuring.html#configuring-rules">
+		<doc>
+<![CDATA[ESLint allows you to specify the JavaScript language options you want to support. By default, ESLint supports only ECMAScript 5 syntax. You can override that setting to enable support for ECMAScript 6 as well as JSX by using configuration settings.
+
+Configuration settings are set in your .eslintrc file by using the ecmaFeatures property. 
+]]>
+		</doc>
+		<option id="comma-dangle" type="boolean"
+			url="http://eslint.org/docs/rules/comma-dangle">
+			<doc>
+<![CDATA[This option allows you to force all variable names to use either camelCase style or UPPER_CASE with underscores.]]>
+			</doc>
+		</option>		
+	</option>	
 </linter>
