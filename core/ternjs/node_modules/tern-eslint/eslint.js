@@ -354,7 +354,6 @@
 	  }
 	  var from = getPos(message, true), to = getPos(message, false);
 	  if (from == to) {
-	    console.error(from)
 	    if (from == 0 && file.text.length >=1) to = 1;
 	    else from--;
 	  }	  
