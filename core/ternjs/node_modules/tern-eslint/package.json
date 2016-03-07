@@ -1,7 +1,7 @@
 {
   "name": "tern-eslint",
   "license": "MIT",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "main": "eslint.js",
   "author": "Angelo ZERR <angelo.zerr@gmail.com>",
   "description": "Tern Plugin to validate JS files with ESLint.",
