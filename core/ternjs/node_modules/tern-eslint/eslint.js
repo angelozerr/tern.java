@@ -252,7 +252,7 @@
       var fs = require("fs"), mtime = fs.statSync(filepath).mtime;
       if (this.mtime == null || (this.mtime.getTime() != mtime.getTime())) {
         var Config = require("eslint/lib/config");        
-        this.config = new Config({configFile: filepath}).getConfig(filepath);
+        this.config = new Config({configFile: filepath, cwd: process.cwd()}).getConfig(filepath);
         this.mtime = mtime;
       }
     }
