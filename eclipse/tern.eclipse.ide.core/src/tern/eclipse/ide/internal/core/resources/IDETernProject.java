@@ -815,7 +815,8 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 				}
 			}
 		}
-		return true;
+		// resource is not inside a scritp path, exclude it.
+		return false;
 	}
 
 	private List<ITernScriptPath> getSortedScriptPaths() {
