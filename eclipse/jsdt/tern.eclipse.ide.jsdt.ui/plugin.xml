@@ -54,6 +54,18 @@
               id="org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
 	      </partitionType>
 	    </contentType>
+	    
+	    <contentType
+	        id="org.eclipse.php.core.phpsource">
+	      <partitionType
+	            autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+	            id="org.eclipse.wst.html.SCRIPT">
+	      </partitionType>
+              <partitionType
+                    autoActivationDelegate="org.eclipse.wst.jsdt.web.ui.contentassist.JSDTAutoActivationDelegate"
+                    id="org.eclipse.wst.html.SCRIPT.EVENTHANDLER">
+	      </partitionType>
+	    </contentType>
 	  </proposalComputer>
 	</extension>
 	 
