@@ -64,7 +64,16 @@ See http://www.liferay.com/fr/web/gregory.amerson/blog/-/blogs/liferay-ide-2-2-r
   * node, express, support
   * mongodb native, mongoose support
   
- * [MyEclipse](https://www.genuitec.com/products/myeclipse/) :
+ * [MyEclipse](https://www.genuitec.com/products/myeclipse/) and [Webclipse (JSjet)] (https://www.genuitec.com/products/webclipse/) :
+  * content assist
+  * jump to definition
+  * element documentation
+  * tern.java is used as a base for:
+    * refactoring
+    * occurences highlighting
+    * outline
+    * type hierarchy
+    * call hierarchy
 
 See https://www.genuitec.com/tag/tern/ for more informations.
 
