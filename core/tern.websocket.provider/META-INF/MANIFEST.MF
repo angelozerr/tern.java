@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-SymbolicName: tern.websocket.provider;singleton:=true
-Bundle-Version: 1.2.0.qualifier
+Bundle-Version: 1.3.0.qualifier
 Bundle-Activator: tern.websocket.provider.internal.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: javax.websocket,
