@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
 import com.eclipsesource.json.JsonArray;
@@ -351,9 +352,12 @@ public class TernRepositoryManager implements ITernRepositoryManager, IResourceC
 	}
 
 	private void connectProject(IProject project) {
-		for (IIDETernRepository repository : repositories.values()) {
-			if (project.getLocation().equals(repository.getLocation())) {
-				((IDETernRepository) repository).setProject(project);
+		IPath location = project.getLocation();
+		if (location != null) {
+			for (IIDETernRepository repository : repositories.values()) {
+				if (location.equals(repository.getLocation())) {
+					((IDETernRepository) repository).setProject(project);
+				}
 			}
 		}
 	}

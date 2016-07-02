@@ -8,7 +8,8 @@
   <artifactId>debuggers</artifactId>
   <packaging>pom</packaging>
   <modules>
-	<module>tern.eclipse.ide.debugger.nodeclipse</module>
-  	<module>tern.eclipse.ide.debugger.webclipse</module>  	
+	<module>tern.eclipse.ide.debugger.jsdt</module>
+    <module>tern.eclipse.ide.debugger.nodeclipse</module>
+  	<module>tern.eclipse.ide.debugger.webclipse</module>
   </modules>
 </project>

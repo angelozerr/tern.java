@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: tern.eclipse.ide.debugger.jsdt;singleton:=true
+Bundle-Version: 1.3.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.runtime,
+ tern.eclipse.ide.core,
+ tern.core,
+ tern.server.nodejs,
+ org.eclipse.debug.core,
+ tern.eclipse.ide.server.nodejs.core
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: tern.eclipse.ide.debugger.jsdt.JSDTDebuggerCorePlugin
+Export-Package: tern.eclipse.ide.debugger.jsdt

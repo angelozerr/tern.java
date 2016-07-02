@@ -38,7 +38,7 @@ import tern.utils.TernModuleHelper;
  */
 public abstract class AbstractNodejsDebugProcess extends AbstractNodejsProcess {
 
-	private final IFile jsFile; // (ex : bin/tern filde)
+	private final IFile jsFile; // (ex : bin/tern file)
 	private final String launchConfigId;
 	private final List<StreamProcessor> streamProcessors;
 
