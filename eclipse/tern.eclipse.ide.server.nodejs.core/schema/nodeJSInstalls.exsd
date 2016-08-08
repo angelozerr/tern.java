@@ -45,34 +45,51 @@
    </element>
 
    <element name="install">
+      <annotation>
+         <documentation>
+            This extension point allows developers to specify their own Node.js install location. This can be done in two ways:
+&lt;ol&gt;
+&lt;li&gt;A developer can implement &lt;i&gt;INodejsInstallProvider&lt;/i&gt; interface to programmatically tell Tern.java where Node.js is installed. This is useful for situations where you need to do some computations before specifying the location path.
+&lt;li&gt;Bundle Node.js in the extending bundle and specify the location of the Node program relative to the bundle. If you ship Node.js in your bundle in the form of a ZIP archive, make sure you specify the ZIP location withing the bundle using the &lt;i&gt;zip&lt;/i&gt; attribute. 
+&lt;/ol&gt;
+         </documentation>
+      </annotation>
       <complexType>
-         <sequence>
-         </sequence>
          <attribute name="id" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The id of this Nodejs install. Each known Nodejs install has a distinct id. Ids are intended to be used internally as keys; they are not intended to be shown to end users.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  
+                  The displayable name for this Nodejs install.
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="path" type="string" use="required">
+         <attribute name="class" type="string">
             <annotation>
                <documentation>
-                  
+                  Provides a way to programmatically specify the install location of a Node.js within the system. This allows extenders to compute install locations that are not in the extending bundle. Extenders must implement &lt;i&gt;tern.eclipse.ide.server.nodejs.core.INodejsInstallProvider&lt;/i&gt; interface.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":tern.eclipse.ide.server.nodejs.core.INodejsInstallProvider"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="path" type="string">
+            <annotation>
+               <documentation>
+                  The file path for this Nodejs install.
                </documentation>
             </annotation>
          </attribute>
          <attribute name="zip" type="string">
             <annotation>
                <documentation>
-                  
+                  If path doesn&apos;t exist, specify a ZIP archive within the bundle that contains the node program. This extension will unzip it and look for the node path.
                </documentation>
             </annotation>
          </attribute>
