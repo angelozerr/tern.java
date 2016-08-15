@@ -37,9 +37,10 @@ public enum TernPlugin implements ITernPlugin {
 	
 	es_modules("es_modules"), 
 	
-	extjs_4_2_1("extjs4.2.1"), 
-	extjs_5_0_0("extjs5.0.0"), 
-
+	extjs_4_2_1("extjs_4.2.1"), 
+	extjs_5_0_0("extjs_5.0.0"), 
+	extjs_5_1_1("extjs_5.1.1"),
+	
 	grunt("grunt"), 
 	gulp("gulp"), 
 	
