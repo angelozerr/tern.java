@@ -39,8 +39,8 @@ public class TernRepositoryTest {
 		assertHasModule(repository, "dojotoolkit1.6", "dojotoolkit", "1.6");
 		assertHasModule(repository, "dojotoolkit1.8", "dojotoolkit", "1.8");
 		assertHasModule(repository, "dojotoolkit1.9", "dojotoolkit", "1.9");
-		assertHasModule(repository, "extjs4.2.1", "extjs", "4.2.1");
-		assertHasModule(repository, "extjs5.0.0", "extjs", "5.0.0");
+		assertHasModule(repository, "extjs_4.2.1", "extjs_", "4.2.1");
+		assertHasModule(repository, "extjs_5.0.0", "extjs_", "5.0.0");
 		assertHasModule(repository, "gmaps3.exp", "gmaps", "3.exp");
 		assertHasModule(repository, "gmaps3.frozen", "gmaps", "3.frozen");
 		assertHasModule(repository, "gmaps3.ref", "gmaps", "3.ref");
