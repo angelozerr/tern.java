@@ -135,7 +135,7 @@
   function findCompletionsForXtypeStrings(file, query, wordEnd, expressionsAround) {
     var thisExpr = expressionsAround.expr;
     var propExpr = expressionsAround.propExpr;
-    if (thisExpr.node.type !== 'Literal' || !propExpr ) {
+    if (!thisExpr || thisExpr.node.type !== 'Literal' || !propExpr ) {
       return;
     }
     var propNode = propExpr.node;
