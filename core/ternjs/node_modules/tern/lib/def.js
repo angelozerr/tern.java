@@ -1,6 +1,6 @@
 // Type description parser
 //
-// Type description JSON files (such as ecma5.json and browser.json)
+// Type description JSON files (such as ecmascript.json and browser.json)
 // are used to
 //
 // A) describe types that come from native code
@@ -617,16 +617,35 @@
     return arr;
   });
 
+  function makePromise() {
+    var defs = infer.cx().definitions.ecmascript
+    return defs && new infer.Obj(defs["Promise.prototype"])
+  }
+
   infer.registerFunction("Promise_ctor", function(_self, args, argNodes) {
-    var defs6 = infer.cx().definitions.ecma6
-    if (!defs6 || args.length < 1) return infer.ANull;
-    var self = new infer.Obj(defs6["Promise.prototype"]);
+    var self = makePromise()
+    if (!self || args.length < 1) return infer.ANull;
     var valProp = self.defProp(":t", argNodes && argNodes[0]);
     var valArg = new infer.AVal;
     valArg.propagate(valProp);
     var exec = new infer.Fn("execute", infer.ANull, [valArg], ["value"], infer.ANull);
-    var reject = defs6.Promise_reject;
+    var reject = infer.cx().definitions.ecmascript.Promise_reject;
     args[0].propagate(new infer.IsCallee(infer.ANull, [exec, reject], null, infer.ANull));
+    return self;
+  });
+
+  // Definition for Promise.resolve()
+  // The behavior is different for Promise and non-Promise arguments, so we
+  // need a custom definition to handle the different cases properly.
+  infer.registerFunction("Promise_resolve", function(_self, args, argNodes) {
+    var self = makePromise()
+    if (!self) return infer.ANull;
+    if (args.length) {
+      var valProp = self.defProp(":t", argNodes && argNodes[0]);
+      var valArg = new infer.AVal;
+      valArg.propagate(valProp);
+      args[0].propagate(new PromiseResolvesTo(valArg));
+    }
     return self;
   });
 
@@ -644,10 +663,10 @@
 
   infer.registerFunction("Promise_then", function(self, args, argNodes) {
     var fn = args.length && args[0].getFunctionType();
-    var defs6 = infer.cx().definitions.ecma6
-    if (!fn || !defs6) return self;
+    var defs = infer.cx().definitions.ecmascript
+    if (!fn || !defs) return self;
 
-    var result = new infer.Obj(defs6["Promise.prototype"]);
+    var result = new infer.Obj(defs["Promise.prototype"]);
     var value = result.defProp(":t", argNodes && argNodes[0]), ty;
     if (fn.retval.isEmpty() && (ty = self.getType()) instanceof infer.Obj && ty.hasProp(":t"))
       ty.getProp(":t").propagate(value, WG_PROMISE_KEEP_VALUE);
@@ -665,7 +684,7 @@
   })
 
   infer.registerFunction("getSymbol", function(_self, _args, argNodes) {
-    if (argNodes.length && argNodes[0].type == "Literal" && typeof argNodes[0].value == "string")
+    if (argNodes && argNodes.length && argNodes[0].type == "Literal" && typeof argNodes[0].value == "string")
       return infer.getSymbol(argNodes[0].value)
     else
       return infer.ANull

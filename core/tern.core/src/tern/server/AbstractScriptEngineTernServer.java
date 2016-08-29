@@ -116,12 +116,14 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 			}
 			switch (ecmaVersion) {
 			case ES5:
-				addDef(TernDef.ecma5.getName(), repository, defs, false);
+				addDef(TernDef.ecmascript.getName(), repository, defs, false);
 				break;
 			case ES6:
-				addDef(TernDef.ecma5.getName(), repository, defs, false);
-				addDef(TernDef.ecma6.getName(), repository, defs, false);
+				addDef(TernDef.ecmascript.getName(), repository, defs, false);
 				break;
+			case ES7:
+				addDef(TernDef.ecmascript.getName(), repository, defs, false);
+				break;				
 			}
 
 			// Load defs
@@ -155,7 +157,7 @@ public abstract class AbstractScriptEngineTernServer extends AbstractTernServer 
 
 	protected void addDef(String def, ITernRepository repository, List<TernResource> defs, boolean ignoreEcma)
 			throws IOException {
-		if (ignoreEcma && (def.equals(TernDef.ecma5.getName()) || def.equals(TernDef.ecma6.getName()))) {
+		if (ignoreEcma && (def.equals(TernDef.ecmascript.getName()))) {
 			return;
 		}
 		ITernModule module = repository.getModule(def);

@@ -31,7 +31,7 @@ public class TernRepositoryTest {
 		}
 		assertHasModule(repository, "browser");
 		assertHasModule(repository, "chai");
-		assertHasModule(repository, "ecma5");
+		assertHasModule(repository, "ecmascript");
 		assertHasModule(repository, "jquery");
 		assertHasModule(repository, "underscore");
 		assertHasModule(repository, "angular");

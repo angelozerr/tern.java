@@ -56,7 +56,7 @@ public class WorkingCopy implements IWorkingCopy {
 		// Filtered modules
 		filteredModules = new ArrayList<ITernModule>();
 		for (ITernModule module : workingCopyModules) {
-			if (!(isIgnoreModule(module, TernDef.ecma5.getType())
+			if (!(isIgnoreModule(module, TernDef.ecmascript.getType())
 					|| isIgnoreModule(module, TernPlugin.es_modules.getType())
 					|| isIgnoreModule(module, TernPlugin.doc_comment.getType()))) {
 				filteredModules.add(module);

@@ -43,9 +43,9 @@ public class TernProjectTest {
 		Assert.assertEquals("{\"libs\":[\"browser\"]}", project.toString());
 
 		// add new lib, project should be dirty
-		project.addLib(TernDef.ecma5);
+		project.addLib(TernDef.ecmascript);
 		Assert.assertTrue(project.isDirty());
-		Assert.assertEquals("{\"libs\":[\"browser\",\"ecma5\"]}",
+		Assert.assertEquals("{\"libs\":[\"browser\",\"ecmascript\"]}",
 				project.toString());
 	}
 
@@ -56,9 +56,9 @@ public class TernProjectTest {
 		TernProject project1 = new TernProject(projectDir);
 
 		// add new lib, project should be dirty
-		project1.addLib(TernDef.ecma5);
+		project1.addLib(TernDef.ecmascript);
 		Assert.assertTrue(project1.isDirty());
-		Assert.assertEquals("{\"libs\":[\"ecma5\"]}", project1.toString());
+		Assert.assertEquals("{\"libs\":[\"ecmascript\"]}", project1.toString());
 
 		// save the project, project should be NOT dirty
 		project1.save();
@@ -78,7 +78,7 @@ public class TernProjectTest {
 		project.addLib(TernDef.browser);
 		Assert.assertTrue(project.isDirty());
 
-		Assert.assertEquals("{\"libs\":[\"ecma5\",\"browser\"]}",
+		Assert.assertEquals("{\"libs\":[\"ecmascript\",\"browser\"]}",
 				project.toString());
 	}
 
