@@ -199,8 +199,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	@Override
 	protected void doLoad() throws IOException {
 		try {
-			
-			
+
 			disposeServer();
 			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
 					LifecycleEventType.onLoadBefore);
@@ -211,13 +210,13 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 			// the tern project is loaded on the first time, load default
 			// modules and save .tern-project.
 			initAdaptedNaturesInfos();
-			
+
 		} finally {
 			TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
 					LifecycleEventType.onLoadAfter);
 		}
 	}
-	
+
 	@Override
 	protected void onLintersChanged() {
 		TernProjectLifecycleManager.getManager().fireTernProjectLifeCycleListenerChanged(this,
@@ -376,7 +375,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	/**
 	 * Save IDE informations in the JSON file .tern-project.
 	 */
-	private void saveIDEInfos() {		
+	private void saveIDEInfos() {
 		// script path
 		if (scriptPaths.size() > 0) {
 			JsonObject ide = new JsonObject();
@@ -662,7 +661,8 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 						case IResource.PROJECT:
 							return true;
 						case IResource.FILE:
-							ITernModule module = TernModuleHelper.createModule(resource.getName(), projectRepository, defaultRepository);
+							ITernModule module = TernModuleHelper.createModule(resource.getName(), projectRepository,
+									defaultRepository);
 							if (module != null) {
 								modules.add(module);
 							}
@@ -700,7 +700,10 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	}
 
 	protected static IDETernProject getTernProject(IProject project) throws CoreException {
-		return (IDETernProject) project.getSessionProperty(TERN_PROJECT);
+		if (project.isAccessible()) {
+			return (IDETernProject) project.getSessionProperty(TERN_PROJECT);
+		}
+		return null;
 	}
 
 	@Override
@@ -780,7 +783,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 			// none script path, we consider that resource is in the scope?
 			return true;
 		}
-		
+
 		// Loop for each tern script path
 		int resourceType = resource.getType();
 		IPath path = resource.getFullPath();
@@ -791,12 +794,14 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 				// script path is an Eclipse Project or Folder
 				s = (IIDETernScriptPath) scriptPath;
 				if (s.isBelongToContainer(path)) {
-					// the resource path belongs to the Project/folder of the tern script path
+					// the resource path belongs to the Project/folder of the
+					// tern script path
 					if (!s.isInScope(path, resourceType)) {
 						// the tern script exclude or don't include the resource
 						return false;
 					} else if (resourceType == IResource.FILE) {
-						// None exclusion, check if the parent folder exclude the file
+						// None exclusion, check if the parent folder exclude
+						// the file
 						parent = resource.getParent();
 						while ((parent.getType() & IResource.PROJECT) == 0) {
 							if (context.isInclude(parent)) {
@@ -809,7 +814,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 							parent = parent.getParent();
 						}
 					}
-					// The parent folder of the resource 
+					// The parent folder of the resource
 					context.addInclude(resource.getParent());
 					return true;
 				}
@@ -834,7 +839,7 @@ public class IDETernProject extends TernProject implements IIDETernProject, ITer
 	@Override
 	public IIDETernScriptPathReporter getScriptPathReporter() {
 		// Uncomment to have trace for include/exclude files.
-		return null; //SysErrScriptPathReporter.INSTANCE;
+		return null; // SysErrScriptPathReporter.INSTANCE;
 	}
 
 }
