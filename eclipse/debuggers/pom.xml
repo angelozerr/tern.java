@@ -3,7 +3,7 @@
   <parent>
     <groupId>fr.opensagres.js</groupId>
     <artifactId>eclipse</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
   </parent>
   <artifactId>debuggers</artifactId>
   <packaging>pom</packaging>
