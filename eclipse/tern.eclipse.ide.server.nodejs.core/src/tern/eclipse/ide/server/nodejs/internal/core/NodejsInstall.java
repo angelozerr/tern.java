@@ -14,15 +14,18 @@ package tern.eclipse.ide.server.nodejs.internal.core;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.internal.runtime.InternalPlatform;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
 
 import tern.eclipse.ide.server.nodejs.core.INodejsInstall;
 import tern.eclipse.ide.server.nodejs.core.INodejsInstallProvider;
 import tern.utils.ZipUtils;
 
+@SuppressWarnings("restriction")
 public class NodejsInstall implements INodejsInstall {
 
 	private String id;
@@ -56,23 +59,31 @@ public class NodejsInstall implements INodejsInstall {
 			String pluginId = element.getNamespaceIdentifier();
 			String path = element.getAttribute("path");
 			if (path != null && path.length() > 0) {
-				File baseDir = FileLocator.getBundleFile(Platform
+				File bundleDir = FileLocator.getBundleFile(Platform
 						.getBundle(pluginId));
-				this.path = new File(baseDir, path);
+				
+				IPath stateLocationPath = InternalPlatform.getDefault().getStateLocation(Platform
+						.getBundle(pluginId));
+				
+				if (stateLocationPath != null) {
+					File baseDir = stateLocationPath.toFile();
 	
-				// check if path exists, if it doesn't look for zip
-				if (!this.path.exists()) {
-					String zip = element.getAttribute("zip");
-	
-					File zipFile = new File(baseDir, zip);
-	
-					if (zipFile.exists()) {
-						if (zipFile.getName().toLowerCase().endsWith(".zip")) {
-							ZipUtils.extract(zipFile, baseDir);
-						}
-	
-						if(this.path.exists()) {
-							this.path.setExecutable(true);
+					this.path = new File(baseDir, path);
+		
+					// check if path exists, if it doesn't look for zip
+					if (!this.path.exists()) {
+						String zip = element.getAttribute("zip");
+		
+						File zipFile = new File(bundleDir, zip);
+		
+						if (zipFile.exists()) {
+							if (zipFile.getName().toLowerCase().endsWith(".zip")) {
+								ZipUtils.extract(zipFile, baseDir);
+							}
+		
+							if(this.path.exists()) {
+								this.path.setExecutable(true);
+							}
 						}
 					}
 				}
