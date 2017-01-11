@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -505,10 +506,16 @@ public class TernProject extends JsonObject implements ITernProject {
 	 */
 	protected void doLoad() throws IOException {
 		if (ternProjectFile.exists()) {
+			Reader reader = null;
 			try {
-				JsonHelper.readFrom(new FileReader(ternProjectFile), this);
+				reader = new FileReader(ternProjectFile);
+				JsonHelper.readFrom(reader, this);
 			} catch (ParseException e) {
 				throw new IOException(e);
+			} finally {
+				if (reader != null) {
+					IOUtils.closeQuietly(reader);
+				}
 			}
 		} else {
 			createEmptyTernProjectFile();
