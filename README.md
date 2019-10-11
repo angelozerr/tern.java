@@ -1,3 +1,6 @@
+__⚠️ Tern.java is now OUTDATED, it's recommended to use [Eclipse Wild Web Developer](https://github.com/eclipse/wildwebdeveloper) instead__
+
+
 tern.java
 =========
 
