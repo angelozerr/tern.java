@@ -14,7 +14,7 @@ import tern.server.protocol.JsonHelper;
 import tern.server.protocol.TernQuery;
 
 /**
- * Tern defintion query.
+ * Tern definition query.
  * 
  * <cite> Asks for the definition of something. This will try, for a variable or
  * property, to return the point at which it was defined. If that fails, or the
