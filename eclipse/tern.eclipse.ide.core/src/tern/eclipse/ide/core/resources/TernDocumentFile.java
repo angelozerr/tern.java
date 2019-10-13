@@ -67,4 +67,11 @@ public class TernDocumentFile extends IDETernFile implements ITernFile {
 		TernDocumentFile doc = (TernDocumentFile) obj;
 		return doc.document.equals(this.document) && doc.getFile().equals(getFile());
 	}
+
+	@Override
+	public int hashCode() {
+		int result = super.hashCode();
+		result = 31 * result + (document != null ? document.hashCode() : 0);
+		return result;
+	}
 }
