@@ -7,6 +7,6 @@
   "description": "A sample tern plugin for My Library.",
   "dependencies": {
     "tern": "^0.15.0",
-    "acorn": "^2.4.0"
+    "acorn": "^7.1.1"
   }
 }
