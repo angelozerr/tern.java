@@ -186,16 +186,16 @@
 		<repository>
 			<id>kepler</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/kepler</url>
+			<url>https://download.eclipse.org/releases/kepler</url>
 		</repository>
 		<repository>
 			<id>orbit</id>
 			<layout>p2</layout>
-			<url>http://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/</url>
+			<url>https://download.eclipse.org/tools/orbit/downloads/drops/R20140114142710/repository/</url>
 		</repository>
 		<repository>
 			<id>license-feature</id>
-			<url>http://download.eclipse.org/cbi/updates/license/</url>
+			<url>https://download.eclipse.org/cbi/updates/license/</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
